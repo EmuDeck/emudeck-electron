@@ -1,0 +1,26 @@
+/*
+---
+name: fadeInUp
+category: Animations
+---
+```example.html
+<svg class="icon animated fadeInUp infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin fadeInUp {
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  animation-name: fadeInUp;
+}

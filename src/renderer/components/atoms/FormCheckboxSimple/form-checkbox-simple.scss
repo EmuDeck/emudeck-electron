@@ -1,0 +1,17 @@
+// --------------------------------------------------
+//  Checkbox
+// --------------------------------------------------
+.checkbox-simple {
+  --checkbox-simple-size: 20px;
+  --checkbox-simple-size-xs: 10px;
+  --checkbox-simple-size-sm: 15px;
+  --checkbox-simple-size-lg: 30px;
+  --checkbox-simple-border: 1px solid var(--grey1);
+  --checkbox-simple-border-check: var(--checkbox-simple-border);
+  --checkbox-simple-focus: 1px solid var(--grey1);
+  --checkbox-simple-inner-bg: #fff;
+  --checkbox-simple-inner-bg-check: var(--checkbox-simple-inner-bg);
+  --checkbox-simple-inner-transition-check: opacity 0.4s ease-in-out;
+  --checkbox-simple-inner-transition-uncheck: opacity 0.4s ease-in-out;
+  --checkbox-simple-tick: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4gICAgPGcgZmlsbD0iYXV0byIgZmlsbC1ydWxlPSJldmVub2RkIj4gICAgICAgIDxwYXRoIGZpbGw9ImF1dG8iIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTEwLjUzNiAxNi4xOTJsNi4zNjMtNi4zNjRhMSAxIDAgMSAxIDEuNDE1IDEuNDE1bC03LjA3MSA3LjA3YTEgMSAwIDAgMS0xLjQxNSAwbC0zLjUzNS0zLjUzNWExIDEgMCAwIDEgMS40MTQtMS40MTRsMi44MjkgMi44Mjh6Ii8+ICAgIDwvZz48L3N2Zz4=");
+}

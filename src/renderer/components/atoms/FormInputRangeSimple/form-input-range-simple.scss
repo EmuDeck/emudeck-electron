@@ -1,0 +1,13 @@
+input[type="range"] {
+  --form-slider-track-height: 10px;
+  --form-slider-track-bg: var(--grey3);
+  --form-slider-track-bg-hover: var(--grey3);
+  --form-slider-track-border-radius: 0;
+  --form-slider-track-transition: all 0.2s ease;
+  --form-slider-thumb-size: 30px;
+  --form-slider-thumb-border-size: 0px;
+  --form-slider-thumb-bg: var(--blue1);
+  --form-slider-thumb-border-color: green;
+  --form-slider-thumb-border-radius: 100%;
+  --form-slider-thumb-shadow: black;
+}

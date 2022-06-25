@@ -1,0 +1,20 @@
+.alert {
+  --alert-padding: 20px;
+  --alert-pr: 30px;
+  --alert-border-radius: 0;
+  --alert-mb: var(--margin-elements);
+  --alert-border-size: 1px;
+  --alert-icon-size: 20px;
+  --alert-success-color-text: white;
+  --alert-success-border-color: transparent;
+  --alert-success-icon-color: white;
+  --alert-info-color-text: white;
+  --alert-info-border-color: transparent;
+  --alert-info-icon-color: white;
+  --alert-warning-color-text: white;
+  --alert-warning-border-color: transparent;
+  --alert-warning-icon-color: white;
+  --alert-danger-color-text: white;
+  --alert-danger-border-color: transparent;
+  --alert-danger-icon-color: white;
+}

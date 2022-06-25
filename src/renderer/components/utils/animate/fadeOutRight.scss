@@ -1,0 +1,25 @@
+/*
+---
+name: fadeOutRight
+category: Animations
+---
+```example.html
+<svg class="icon animated fadeOutRight infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin fadeOutRight {
+  @keyframes fadeOutRight {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+
+  animation-name: fadeOutRight;
+}

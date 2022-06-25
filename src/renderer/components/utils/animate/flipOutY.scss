@@ -1,0 +1,31 @@
+/*
+---
+name: flipOutY
+category: Animations
+---
+```example.html
+<svg class="icon animated flipOutY infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin flipOutY {
+  @keyframes flipOutY {
+    from {
+      transform: perspective(400px);
+    }
+
+    30% {
+      transform: perspective(400px) rotate3d(0, 1, 0, -15deg);
+      opacity: 1;
+    }
+
+    to {
+      transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+      opacity: 0;
+    }
+  }
+  animation-duration: 0.75s;
+  backface-visibility: visible !important;
+  animation-name: flipOutY;
+}

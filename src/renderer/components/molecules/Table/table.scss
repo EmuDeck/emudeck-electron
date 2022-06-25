@@ -1,0 +1,14 @@
+.table {
+  --table-padding: 10px;
+  --table-mb: var(--margin-elements);
+  --table-border: 1px solid var(--color-border-1);
+
+  --table-thead-bg-color: var(--color-bg-primary);
+  --table-thead-color: white;
+
+  --table-td-bg-color: white;
+  --table-td-color: var(--color-text-1);
+
+  --table-td-bg-color-even: white;
+  --table-td-color-even: var(--color-border-1);
+}

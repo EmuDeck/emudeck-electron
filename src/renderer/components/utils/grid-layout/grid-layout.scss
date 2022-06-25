@@ -1,0 +1,35 @@
+// --------------------------------------------------
+//  Grid - CSS vars
+// --------------------------------------------------
+
+:root {
+  --grid-gutter: 32px;
+  --container-sm: 720px;
+  --container-md: 944px;
+  --container-lg: 1136px;
+  --container-xl: 1248px;
+  --container-grid-mixed-width: 1600px;
+}
+
+// --------------------------------------------------
+//  Grid - SCSS vars, can not be CSS vars
+// --------------------------------------------------
+$columns: 12;
+$columns-xs: 4;
+
+// --------------------------------------------------
+//  Media Queries - SCSS vars, can not be CSS vars
+// --------------------------------------------------
+
+//Mobile First (min)
+$screen-xs: 320px;
+$screen-sm: 768px;
+$screen-md: 992px;
+$screen-lg: 1200px;
+$screen-xl: 1440px;
+
+//Desktop First (max)
+$screen-xs-max: 767px;
+$screen-sm-max: 991px;
+$screen-md-max: 1199px;
+$screen-lg-max: 1439px;

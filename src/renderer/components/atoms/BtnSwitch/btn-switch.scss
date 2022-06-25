@@ -1,0 +1,14 @@
+.btn-switch {
+  --btn-switch-height: 30px;
+  --btn-switch-width: calc(var(--btn-switch-height) * 2);
+  --btn-switch-knob-width: calc(var(--btn-switch-height) - 2px);
+  --btn-switch-knob-top: 0px;
+  --btn-switch-knob-bg: white;
+  --btn-switch-knob-border-active: 1px solid var(--color-border-1);
+  --btn-switch-border: 1px solid var(--color-success);
+  --btn-switch-transition-in: background-color 0.3s ease-in;
+  --btn-switch-transition-out: all 0.3s ease-in 0s;
+  --btn-switch-bg-active: var(--color-success);
+  --btn-switch-bg-inactive: white;
+  --btn-switch-bg-inactive-border: 1px solid var(--color-border-1);
+}

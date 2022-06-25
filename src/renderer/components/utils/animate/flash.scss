@@ -1,0 +1,27 @@
+/*
+---
+name: Flash
+category: Animations
+---
+```example.html
+<svg class="icon animated flash infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin flash {
+  @keyframes flash {
+    from,
+    50%,
+    to {
+      opacity: 1;
+    }
+
+    25%,
+    75% {
+      opacity: 0;
+    }
+  }
+
+  animation-name: flash;
+}

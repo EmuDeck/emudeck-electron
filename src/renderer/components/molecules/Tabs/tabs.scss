@@ -1,0 +1,16 @@
+.nav-tabs,
+.tab-content {
+  --nav-tabs-border: 1px solid var(--grey1);
+  --nav-tabs-padding: 24px;
+  --nav-tabs-bg: white;
+  --nav-tabs-color: var(--grey2);
+  --nav-tabs-bg-hover: transparent;
+  --nav-tabs-color-hover: var(--blue1);
+  --nav-tabs-bg-active: var(--color-bg-secondary);
+  --nav-tabs-color-active: var(--anthracite);
+
+  --nav-tabs-content-mb: var(--margin-elements);
+  --nav-tabs-content-padding: 25px 20px;
+  --nav-tabs-content-bg: white;
+  --nav-tabs-content-border: none;
+}

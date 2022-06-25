@@ -1,0 +1,18 @@
+.accordion {
+  --accordion-border-color: var(--color-border-1);
+  --accordion-bg-color: white;
+  --accordion-bg-color-hover: var(--color-accordion--hover);
+  --accordion-color-hover: white;
+  --accordion-inner-border-color: var(--color-border-1);
+  --accordion-panel-bg-color: white;
+  --accordion-icon-color: var(--color-text-2);
+  --accordion-icon-size: 32px;
+  --accordion-icon-right: 20px;
+  --accordion-button-padding: 20px 38px 32px;
+  --accordion-button-padding-right: 40px; // Para el caret
+  --accordion-panel-padding: 30px;
+  --accordion-border-size: 1px;
+  --accordion-mb: var(--margin-elements);
+  --accordion-transition-in: 1s;
+  --accordion-transition-out: 200ms;
+}

@@ -1,0 +1,13 @@
+.breadcrumb {
+  --breadcrumb-mb: var(--margin-elements);
+  --breadcrumb-a-padding: 8px;
+  --breadcrumb-a-bg-color: #bfbfbf;
+  --breadcrumb-a-color: white;
+  --breadcrumb-a-bg-color-hover: #7f7f7f;
+  --breadcrumb-a-color-hover: white;
+  --breadcrumb-a-active-bg-color: var(--color-success);
+  --breadcrumb-a-active-color: white;
+  --breadcrumb-caret-border-color: #7f7f7f;
+  --breadcrumb-caret-height: 36px;
+  --breadcrumb-caret-width: 12px;
+}

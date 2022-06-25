@@ -1,0 +1,125 @@
+@import "/src/global.scss";
+@import "~getbasecore/src/components/_molecules/_modal/_core_modal.scss";
+$modal-backdrop-bg: rgba(0, 0, 0, 0.5);
+$modal-dialog-bg: white;
+$modal-dialog-padding: 40px;
+$modal-close-size: 20px;
+$modal-close-color: var(--color-text-1);
+$modal-close-top: 10px;
+$modal-close-right: 10px;
+
+$modal-anim-top: 10%;
+
+@keyframes modal-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-hide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-dialog-show {
+  from {
+    top: -100px;
+    opacity: 0;
+  }
+  to {
+    top: $modal-anim-top;
+    opacity: 1;
+  }
+}
+
+@keyframes modal-dialog-hide {
+  from {
+    top: $modal-anim-top;
+    opacity: 1;
+  }
+  to {
+    top: -100px;
+    opacity: 0;
+  }
+}
+
+.modal-overlay {
+  background: $modal-backdrop-bg;
+  opacity: 0;
+  &.is-visible {
+    animation-name: modal-show;
+    animation-duration: 1s;
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  &.is-hidden {
+    animation-name: modal-hide;
+    animation-duration: 1s;
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+}
+
+.modal {
+  width: 50%;
+  top: $modal-anim-top;
+
+  @media (max-width: $screen-xs-max) {
+    width: 100%;
+  }
+
+  //Opening animation
+  &.is-showing {
+    animation-name: modal-dialog-show;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  &.is-hiding.now {
+    //Closing animation
+    animation-name: modal-dialog-hide;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+
+  &__dialog {
+    background: $modal-dialog-bg;
+    padding: $modal-dialog-padding;
+  }
+
+  &__close {
+    top: $modal-close-top;
+    right: $modal-close-right;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    .icon {
+      width: $modal-close-size;
+      height: $modal-close-size;
+      fill: $modal-close-color;
+    }
+  }
+
+  &__header {
+  }
+
+  &__body {
+  }
+
+  &__footer {
+  }
+}

@@ -1,0 +1,23 @@
+/*
+---
+name: fadeOut
+category: Animations
+---
+```example.html
+<svg class="icon animated fadeOut infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin fadeOut {
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  animation-name: fadeOut;
+}

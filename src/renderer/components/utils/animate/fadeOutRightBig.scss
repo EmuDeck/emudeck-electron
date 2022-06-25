@@ -1,0 +1,25 @@
+/*
+---
+name: fadeOutRightBig
+category: Animations
+---
+```example.html
+<svg class="icon animated fadeOutRightBig infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin fadeOutRightBig {
+  @keyframes fadeOutRightBig {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+      transform: translate3d(2000px, 0, 0);
+    }
+  }
+
+  animation-name: fadeOutRightBig;
+}

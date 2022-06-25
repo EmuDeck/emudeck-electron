@@ -1,0 +1,19 @@
+.pagination {
+  --pagination-border: 1px solid var(--color-border-1);
+  --pagination-mb: var(--margin1);
+  --pagination-padding: 5px;
+  --pagination-width: 30px;
+  --pagination-height: 30px;
+  --pagination-font-size: 12px;
+  --pagination-line-height: 18px;
+  --pagination-bg: white;
+  --pagination-color: var(--color-text-1);
+  --pagination-bg-hover: var(--color-bg-2);
+  --pagination-color-hover: white;
+
+  --pagination-bg-active: var(--color-bg-3);
+  --pagination-color-active: white;
+
+  --pagination-icon-color: var(--color-text-2);
+  --pagination-icon-size: 20px;
+}

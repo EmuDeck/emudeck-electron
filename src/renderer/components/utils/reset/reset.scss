@@ -1,0 +1,81 @@
+//  --------------------------------------------------
+//  Firefox buttons
+//  --------------------------------------------------
+
+::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+//  --------------------------------------------------
+//  Webkit Input Number Fix
+//  --------------------------------------------------
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+//  --------------------------------------------------
+//   Fix input appearence on iOS
+//  --------------------------------------------------
+input,
+textarea,
+select {
+  -webkit-appearance: none;
+}
+
+//  --------------------------------------------------
+//   Outline Fix
+//  --------------------------------------------------
+a:focus,
+a:active,
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+select::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+  border: 0;
+  outline: 0;
+}
+
+//  --------------------------------------------------
+//  Fix "highlight color click" en iOS
+//  --------------------------------------------------
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+//  --------------------------------------------------
+//  Firefox hiding number spinner button
+//  --------------------------------------------------
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+//  --------------------------------------------------
+//  iPhone X Notch
+//  --------------------------------------------------
+@media only screen and (orientation: landscape) {
+  .wrapper {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+//  --------------------------------------------------
+//  Content render improvement
+//  --------------------------------------------------
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 100vh;
+}

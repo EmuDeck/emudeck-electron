@@ -1,0 +1,101 @@
+@import "~getbasecore/src/components/_molecules/_tooltip/_core_tooltip.scss";
+$tooltip-background: var(--color-bg-secondary);
+$tooltip-color: white;
+$tooltip-padding: 20px;
+$tooltip-bottom: 15px;
+$tooltip-transform-from: 60px;
+$tooltip-transition: all 0.25s ease-out;
+$tooltip-triangle-size: 10px;
+
+.tooltip {
+  &__text {
+    background: $tooltip-background;
+    color: $tooltip-color;
+    transform: translateY($tooltip-transform-from);
+    transition: $tooltip-transition;
+    left: -15px;
+    padding: $tooltip-padding;
+
+    &:after {
+      border-style: solid;
+      border-width: $tooltip-triangle-size $tooltip-triangle-size 0
+        $tooltip-triangle-size;
+      border-color: $tooltip-background transparent transparent transparent;
+    }
+  }
+
+  &:hover &__text {
+    transform: translateY(0px);
+  }
+
+  &--bottom {
+    .tooltip__text {
+      transform: translateY($tooltip-transform-from * -1);
+      bottom: auto;
+
+      &:after {
+        top: $tooltip-triangle-size * -1;
+        border-style: solid;
+        border-width: 0 $tooltip-triangle-size $tooltip-triangle-size
+          $tooltip-triangle-size;
+        border-color: transparent transparent $tooltip-background transparent;
+      }
+    }
+  }
+
+  &--right {
+    .tooltip__text {
+      bottom: auto;
+      left: 110%;
+      top: -200%;
+      right: auto;
+
+      transform: translateX($tooltip-transform-from * -1);
+      &:after {
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        height: 0px;
+        width: 0px;
+        left: $tooltip-triangle-size * -1;
+        right: auto;
+        border-style: solid;
+        border-width: $tooltip-triangle-size $tooltip-triangle-size
+          $tooltip-triangle-size 0;
+        border-color: transparent $tooltip-background transparent transparent;
+      }
+    }
+
+    &:hover .tooltip__text {
+      transform: translateX(0px);
+    }
+  }
+
+  &--left {
+    .tooltip__text {
+      bottom: auto;
+      left: auto;
+      top: -150%;
+      right: 120%;
+
+      transform: translateX($tooltip-transform-from);
+      &:after {
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        height: 0px;
+        width: 0px;
+        left: auto;
+        right: $tooltip-triangle-size * -1;
+        border-style: solid;
+        border-width: $tooltip-triangle-size 0 $tooltip-triangle-size
+          $tooltip-triangle-size;
+        border-color: transparent transparent transparent $tooltip-background;
+      }
+    }
+
+    &:hover .tooltip__text {
+      transform: translateX(0px);
+    }
+  }
+}

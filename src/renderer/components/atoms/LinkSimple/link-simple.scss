@@ -1,0 +1,16 @@
+@import "~getbasecore/src/components/atoms/Link/core_link.scss";
+@import "~getbasecore/src/components/atoms/LinkSimple/core_link-simple.scss";
+
+.link-simple {
+  --link-simple-transition: 0.5s;
+}
+
+// @mixin generate-link-simple($name, $color, $color-hover, $color-disabled, $font-weight){
+
+@include generate-link-simple(
+  1,
+  var(--blue1),
+  var(--blue2),
+  var(--color-disabled),
+  700
+);

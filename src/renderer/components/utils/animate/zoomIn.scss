@@ -1,0 +1,24 @@
+/*
+---
+name: zoomIn
+category: Animations
+---
+```example.html
+<svg class="icon animated zoomIn infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin zoomIn() {
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: scale3d(0.3, 0.3, 0.3);
+    }
+
+    50% {
+      opacity: 1;
+    }
+  }
+  animation-name: zoomIn;
+}

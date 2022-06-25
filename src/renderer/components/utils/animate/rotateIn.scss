@@ -1,0 +1,28 @@
+/*
+---
+name: rotateIn
+category: Animations
+---
+```example.html
+<svg class="icon animated rotateIn infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin rotateIn {
+  @keyframes rotateIn {
+    from {
+      transform-origin: center;
+      transform: rotate3d(0, 0, 1, -200deg);
+      opacity: 0;
+    }
+
+    to {
+      transform-origin: center;
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  animation-name: rotateIn;
+}

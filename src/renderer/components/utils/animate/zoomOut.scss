@@ -1,0 +1,29 @@
+/*
+---
+name: zoomOut
+category: Animations
+---
+```example.html
+<svg class="icon animated zoomOut infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin zoomOut() {
+  @keyframes zoomOut {
+    from {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+      transform: scale3d(0.3, 0.3, 0.3);
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  animation-name: zoomOut;
+}

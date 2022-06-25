@@ -1,0 +1,26 @@
+/*
+---
+name: lightSpeedOut
+category: Animations
+---
+```example.html
+<svg class="icon animated lightSpeedOut infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin lightSpeedOut {
+  @keyframes lightSpeedOut {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      transform: translate3d(100%, 0, 0) skewX(30deg);
+      opacity: 0;
+    }
+  }
+
+  animation-name: lightSpeedOut;
+  animation-timing-function: ease-in;
+}

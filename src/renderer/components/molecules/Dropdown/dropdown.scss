@@ -1,0 +1,11 @@
+.dropdown,
+.dropup {
+  --dropdown-icon-size: 20px;
+  --dropdown-icon-color: var(--color-bg-1);
+  --dropdown-menu-border: 1px solid var(--color-border-1);
+  --dropdown-menu-bg: white;
+  --dropdown-menu-padding: 10px;
+  --dropdown-menu-transition-open: max-height 0.8s, opacity 0.5s;
+  --dropdown-menu-transition-close: max-height 0.8s, opacity 0.5s;
+  --dropdown-menu-item-mb: 10px;
+}

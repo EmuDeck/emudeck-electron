@@ -1,0 +1,27 @@
+/*
+---
+name: rotateOutUpRight
+category: Animations
+---
+```example.html
+<svg class="icon animated rotateOutUpRight infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin rotateOutUpRight() {
+  @keyframes rotateOutUpRight {
+    from {
+      transform-origin: right bottom;
+      opacity: 1;
+    }
+
+    to {
+      transform-origin: right bottom;
+      transform: rotate3d(0, 0, 1, 90deg);
+      opacity: 0;
+    }
+  }
+
+  animation-name: rotateOutUpRight;
+}

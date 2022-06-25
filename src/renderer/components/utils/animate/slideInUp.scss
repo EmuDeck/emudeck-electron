@@ -1,0 +1,25 @@
+/*
+---
+name: slideInUp
+category: Animations
+---
+```example.html
+<svg class="icon animated slideInUp infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin slideInUp() {
+  @keyframes slideInUp {
+    from {
+      transform: translate3d(0, 100%, 0);
+      visibility: visible;
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  animation-name: slideInUp;
+}

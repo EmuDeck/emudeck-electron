@@ -1,0 +1,25 @@
+/*
+---
+name: slideOutDown
+category: Animations
+---
+```example.html
+<svg class="icon animated slideOutDown infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin slideOutDown() {
+  @keyframes slideOutDown {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      visibility: hidden;
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+
+  animation-name: slideOutDown;
+}

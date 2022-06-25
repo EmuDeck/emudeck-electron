@@ -1,0 +1,20 @@
+// --------------------------------------------------
+//  Radio
+// --------------------------------------------------
+.radio-simple {
+  --radio-simple-size: 16px;
+  --radio-simple-size-xs: 10px;
+  --radio-simple-size-sm: 15px;
+  --radio-simple-size-lg: 30px;
+  --radio-simple-border: 1px solid var(--grey1);
+  --radio-simple-fosus: 1px solid var(--grey1);
+  --radio-simple-inner-width: 8px;
+  --radio-simple-inner-left: 4px;
+  --radio-simple-inner-top: 4px;
+  --radio-simple-inner-bg: var(--blue1);
+  --radio-simple-inner-transition-check: all 0.2s ease-in-out;
+  --radio-simple-inner-transition-uncheck: all 0.2s ease-in-out;
+}
+@include radio-simple-sizes(xs, var(--radio-simple-size-xs));
+@include radio-simple-sizes(sm, var(--radio-simple-size-sm));
+@include radio-simple-sizes(lg, var(--radio-simple-size-lg));

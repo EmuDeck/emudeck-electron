@@ -1,0 +1,28 @@
+/*
+---
+name: rotateInUpLeft
+category: Animations
+---
+```example.html
+<svg class="icon animated rotateInUpLeft infinite" role="presentation">
+  <use xlink:href="../svg/sprite.svg#twitter"></use>
+</svg>
+```
+*/
+@mixin rotateInUpLeft() {
+  @keyframes rotateInUpLeft {
+    from {
+      transform-origin: left bottom;
+      transform: rotate3d(0, 0, 1, 45deg);
+      opacity: 0;
+    }
+
+    to {
+      transform-origin: left bottom;
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  animation-name: rotateInUpLeft;
+}
