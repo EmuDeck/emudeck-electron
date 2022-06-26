@@ -32,12 +32,14 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 
   exec(`echo pipi > ~/pipipipipi`, (error, stdout) => {
+
      //setOutput(stdout);
    });
 
 });
 
 exec(`pwd > ~/emudeck.log`)
+exec(`ls >> ~/emudeck.log`)
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
