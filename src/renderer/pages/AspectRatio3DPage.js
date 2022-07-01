@@ -5,33 +5,24 @@ import AspectRatio3D from "components/organisms/Wrappers/AspectRatio3D.js";
 
 const AspectRatio3DPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { bezels } = state;
+  const {ar} = state;
   const [statePage, setStatePage] = useState({
-    disabledNext: true,
+    disabledNext: false,
     disabledBack: false,
   });
   const { disabledNext, disabledBack } = statePage;
-  const copyDir = () => {
-    console.log("nah");
-  };
-  const bezelsSet = (bezelStatus) => {
-    copyDir();
+  const arSet = (arStatus) => {    
     setState({
       ...state,
-      bezels: bezelStatus,
+      ar:{
+        ...ar,
+        classic3d: arStatus,
+      }
     });
   };
-  //Enabling button when changing the global state only if we have a device selected
-  useEffect(() => {
-    if (bezels != "") {
-      setStatePage({ ...statePage, disabledNext: false });
-    }
-  }, [state]); // <-- here put the parameter to listen
-
+  
   return (
-    <AspectRatio3D disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <AspectRatio3D onClick={arSet} disabledNext={disabledNext} disabledBack={disabledBack} />
   );
 };
 

@@ -13,34 +13,24 @@ const DeviceSelectorPage = () => {
   });
   const { disabledNext, disabledBack } = statePage;
 
-  const toggleEmus = (emu, stateEmu) => {
-    // if (emu === "ra") {
-    //   setState({
-    //     ...state,
-    //     installEmus: {
-    //       ...installEmus,
-    //       ra: state,
-    //     },
-    //   });
-    // }
+  const toggleEmus = (emulatorProp) => {
+    let { id, name, status } = installEmus[emulatorProp];
 
-    for (const property in installEmus) {
-      //console.log(`${property}: ${installEmus[property]}`);
-      setState({
-        ...state,
-        installEmus: {
-          ...installEmus,
-          [emu]: stateEmu,
-        },
-      });
-
-      console.log(`${property}: ${installEmus[property]}`);
-    }
+    setState({
+      ...state,
+      installEmus: {
+        ...installEmus,
+        [emulatorProp]: { ...installEmus[emulatorProp], status: !status },
+      },
+    });
   };
 
   return (
-    <EmulatorSelector disabledNext={disabledNext}
-    disabledBack={disabledBack}/>
+    <EmulatorSelector
+      onClick={toggleEmus}
+      disabledNext={disabledNext}
+      disabledBack={disabledBack}
+    />
   );
 };
 

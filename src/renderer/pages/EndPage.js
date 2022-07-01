@@ -6,15 +6,11 @@ import End from "components/organisms/Wrappers/End.js";
 const EndPage = () => {
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
-    disabledNext: false,
-    disabledBack: false,
+    disabledNext: true,
+    disabledBack: true,
   });
   const { disabledNext, disabledBack } = statePage;
-  return (
-    <End disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />    
-  );
+  return <End disabledNext={disabledNext} disabledBack={disabledBack} />;
 };
 
 export default EndPage;

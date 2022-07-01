@@ -5,16 +5,20 @@ import PegasusTheme from "components/organisms/Wrappers/PegasusTheme.js";
 
 const PegasusThemePage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const [statePage, setStatePage] = useState({
-    disabledNext: false,
-    disabledBack: false,
+const [statePage, setStatePage] = useState({
+  disabledNext: false,
+  disabledBack: false,
+});
+const { disabledNext, disabledBack } = statePage;
+const themeSet = (themeName) => {    
+  setState({
+    ...state,
+    theme:themeName,
   });
-  const { disabledNext, disabledBack } = statePage;
+};
 
   return (
-    <PegasusTheme disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <PegasusTheme  onClick={themeSet} disabledNext={disabledNext} disabledBack={disabledBack} />
   );
 };
 

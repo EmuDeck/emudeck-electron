@@ -7,15 +7,11 @@ const RABezelsPage = () => {
   const { state, setState } = useContext(GlobalContext);
   const { bezels } = state;
   const [statePage, setStatePage] = useState({
-    disabledNext: true,
+    disabledNext: false,
     disabledBack: false,
   });
   const { disabledNext, disabledBack } = statePage;
-  const copyDir = () => {
-    console.log("nah");
-  };
   const bezelsSet = (bezelStatus) => {
-    copyDir();
     setState({
       ...state,
       bezels: bezelStatus,
@@ -31,6 +27,7 @@ const RABezelsPage = () => {
   return (
     <RABezels disabledNext={disabledNext}
       disabledBack={disabledBack}
+      onClick={bezelsSet}
     />
   );
 };

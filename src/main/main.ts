@@ -32,14 +32,12 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 
   exec(`echo pipi > ~/pipipipipi`, (error, stdout) => {
-
-     //setOutput(stdout);
-   });
-
+    //setOutput(stdout);
+  });
 });
 
-exec(`pwd > ~/emudeck.log`)
-exec(`ls >> ~/emudeck.log`)
+exec(`pwd > ~/emudeck.log`);
+exec(`ls >> ~/emudeck.log`);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -81,9 +79,10 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 1200,
+    height: 700,
     icon: getAssetPath('icon.png'),
+    resizable: false,
     webPreferences: {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')

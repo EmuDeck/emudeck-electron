@@ -1,11 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { GlobalContext } from "context/globalContext";
 
-import Footer from "components/organisms/Footer/Footer.js";
-import Header from "components/organisms/Header/Header.js";
-import Aside from "components/organisms/Aside/Aside.js";
-import Main from "components/organisms/Main/Main.js";
-
 import DeviceSelector from "components/organisms/Wrappers/DeviceSelector.js";
 
 import img552 from "assets/rg552.png";
@@ -14,7 +9,7 @@ import imgRP2 from "assets/rp2.png";
 import imgAndroid from "assets/android.png";
 import imgDeck from "assets/deck.png";
 
-const EmulatorSelectorPage = () => {
+const DeviceSelectorPage = () => {
   const { state, setState } = useContext(GlobalContext);
   const { device } = state;
   const [statePage, setStatePage] = useState({
@@ -25,21 +20,37 @@ const EmulatorSelectorPage = () => {
 
   //Setting the device
   const deviceSet = (deviceName) => {
-    if (deviceName === "Odin") {
+    setStatePage({ ...statePage, disabledNext: false });
+    if (deviceName === "Odin Lite") {
       setState({
         ...state,
         device: deviceName,
         installEmus: {
-          ra: true,
-          dolphinmmjr: true,
-          drastic: true,
-          redream: false,
-          yaba: false,
-          ppsspp: true,
-          duckstation: true,
-          citra: true,
-          aether: true,
-          mupen: false,
+          ra: { id: "ra", status: true, name: "RetroArch" },
+          dolphin: { id: "dolphin", status: true, name: "Dolphin" },
+          ppsspp: { id: "ppsspp", status: true, name: "PPSSPP" },
+          duckstation: { id: "duckstation", status: true, name: "DuckStation" },
+          citra: { id: "citra", status: true, name: "Citra" },
+          pcsx2: { id: "pcsx2", status: true, name: "PCSX2" },
+          rpcs3: { id: "rpcs3", status: true, name: "RPCS3" },
+          yuzu: { id: "yuzu", status: true, name: "Yuzu" },
+          cemu: { id: "cemu", status: true, name: "Cemu" },
+        },
+      });
+    } else if (deviceName === "Odin Base/Pro") {
+      setState({
+        ...state,
+        device: deviceName,
+        installEmus: {
+          ra: { id: "ra", status: true, name: "RetroArch" },
+          dolphin: { id: "dolphin", status: true, name: "Dolphin" },
+          ppsspp: { id: "ppsspp", status: true, name: "PPSSPP" },
+          duckstation: { id: "duckstation", status: true, name: "DuckStation" },
+          citra: { id: "citra", status: true, name: "Citra" },
+          pcsx2: { id: "pcsx2", status: true, name: "PCSX2" },
+          rpcs3: { id: "rpcs3", status: true, name: "RPCS3" },
+          yuzu: { id: "yuzu", status: true, name: "Yuzu" },
+          cemu: { id: "cemu", status: true, name: "Cemu" },
         },
       });
     } else if (deviceName === "RG552") {
@@ -47,33 +58,31 @@ const EmulatorSelectorPage = () => {
         ...state,
         device: deviceName,
         installEmus: {
-          ra: true,
-          dolphinmmjr: false,
-          drastic: true,
-          redream: false,
-          yaba: true,
-          ppsspp: true,
-          duckstation: true,
-          citra: false,
-          aether: true,
-          mupen: true,
+          ra: { id: "ra", status: true, name: "RetroArch" },
+          dolphin: { id: "dolphin", status: true, name: "Dolphin" },
+          ppsspp: { id: "ppsspp", status: true, name: "PPSSPP" },
+          duckstation: { id: "duckstation", status: true, name: "DuckStation" },
+          citra: { id: "citra", status: true, name: "Citra" },
+          pcsx2: { id: "pcsx2", status: true, name: "PCSX2" },
+          rpcs3: { id: "rpcs3", status: true, name: "RPCS3" },
+          yuzu: { id: "yuzu", status: true, name: "Yuzu" },
+          cemu: { id: "cemu", status: true, name: "Cemu" },
         },
       });
-    } else if (deviceName === "RP2") {
+    } else if (deviceName === "RP2+") {
       setState({
         ...state,
         device: deviceName,
         installEmus: {
-          ra: true,
-          dolphinmmjr: false,
-          drastic: true,
-          redream: true,
-          yaba: true,
-          ppsspp: true,
-          duckstation: true,
-          citra: true,
-          aether: true,
-          mupen: true,
+          ra: { id: "ra", status: true, name: "RetroArch" },
+          dolphin: { id: "dolphin", status: true, name: "Dolphin" },
+          ppsspp: { id: "ppsspp", status: true, name: "PPSSPP" },
+          duckstation: { id: "duckstation", status: true, name: "DuckStation" },
+          citra: { id: "citra", status: true, name: "Citra" },
+          pcsx2: { id: "pcsx2", status: true, name: "PCSX2" },
+          rpcs3: { id: "rpcs3", status: true, name: "RPCS3" },
+          yuzu: { id: "yuzu", status: true, name: "Yuzu" },
+          cemu: { id: "cemu", status: true, name: "Cemu" },
         },
       });
     } else if (deviceName === "Android") {
@@ -81,33 +90,15 @@ const EmulatorSelectorPage = () => {
         ...state,
         device: deviceName,
         installEmus: {
-          ra: true,
-          dolphinmmjr: true,
-          drastic: true,
-          redream: true,
-          yaba: true,
-          ppsspp: true,
-          duckstation: true,
-          citra: true,
-          aether: true,
-          mupen: true,
-        },
-      });
-    } else if (deviceName === "Steam Deck") {
-      setState({
-        ...state,
-        device: deviceName,
-        installEmus: {
-          ra: true,
-          dolphinmmjr: true,
-          drastic: true,
-          redream: true,
-          yaba: true,
-          ppsspp: true,
-          duckstation: true,
-          citra: true,
-          aether: true,
-          mupen: true,
+          ra: { id: "ra", status: true, name: "RetroArch" },
+          dolphin: { id: "dolphin", status: true, name: "Dolphin" },
+          ppsspp: { id: "ppsspp", status: true, name: "PPSSPP" },
+          duckstation: { id: "duckstation", status: true, name: "DuckStation" },
+          citra: { id: "citra", status: true, name: "Citra" },
+          pcsx2: { id: "pcsx2", status: true, name: "PCSX2" },
+          rpcs3: { id: "rpcs3", status: true, name: "RPCS3" },
+          yuzu: { id: "yuzu", status: true, name: "Yuzu" },
+          cemu: { id: "cemu", status: true, name: "Cemu" },
         },
       });
     }
@@ -120,7 +111,14 @@ const EmulatorSelectorPage = () => {
     }
   }, [state]); // <-- here put the parameter to listen
 
-  return <DeviceSelector />;
+  return (
+    <DeviceSelector
+      onClick={deviceSet}
+      disabledNext={disabledNext}
+      disabledBack={disabledBack}
+      next="emulator-selector"
+    />
+  );
 };
 
-export default EmulatorSelectorPage;
+export default DeviceSelectorPage;

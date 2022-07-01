@@ -5,33 +5,24 @@ import AspectRatioSNES from "components/organisms/Wrappers/AspectRatioSNES.js";
 
 const AspectRatioSNESPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { bezels } = state;
+  const {ar} = state;
   const [statePage, setStatePage] = useState({
-    disabledNext: true,
+    disabledNext: false,
     disabledBack: false,
   });
   const { disabledNext, disabledBack } = statePage;
-  const copyDir = () => {
-    console.log("nah");
-  };
-  const bezelsSet = (bezelStatus) => {
-    copyDir();
+  const arSet = (arStatus) => {    
     setState({
       ...state,
-      bezels: bezelStatus,
+      ar:{
+        ...ar,
+        snes: arStatus,
+      }
     });
   };
-  //Enabling button when changing the global state only if we have a device selected
-  useEffect(() => {
-    if (bezels != "") {
-      setStatePage({ ...statePage, disabledNext: false });
-    }
-  }, [state]); // <-- here put the parameter to listen
 
   return (
-    <AspectRatioSNES disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <AspectRatioSNES onClick={arSet} disabledNext={disabledNext} disabledBack={disabledBack} />
   );
 };
 

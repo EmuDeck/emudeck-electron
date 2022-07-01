@@ -11,7 +11,7 @@ const RomStoragePage = () => {
     disabledBack: false,
   });
   const { disabledNext, disabledBack } = statePage;
-
+  const { mode } = state;
   const storageSet = (storageName) => {
     setState({
       ...state,
@@ -28,9 +28,14 @@ const RomStoragePage = () => {
   const getSDCardName = async () => {
     return "deck";
   };
-  return <RomStorage disabledNext={disabledNext}
-    disabledBack={disabledBack}
-  />;
+  return (
+    <RomStorage
+      onClick={storageSet}
+      disabledNext={disabledNext}
+      disabledBack={disabledBack}
+      next={mode === "easy" ? "end" : "emulator-selector"}
+    />
+  );
 };
 
 export default RomStoragePage;
