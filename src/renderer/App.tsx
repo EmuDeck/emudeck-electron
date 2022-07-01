@@ -24,7 +24,8 @@ export default function App() {
   const [state, setState] = useState({
     debug: 'initial',
     mode: '',
-    device: 'Steam Deck',
+    system: '',
+    device: '',
     storage: 'SD-Card',
     SDID: '',
     bezels: true,
