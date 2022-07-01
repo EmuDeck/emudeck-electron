@@ -24,16 +24,15 @@ const WelcomePage = () => {
 
   useEffect(() => {
     //Sending data
-    ipcChannel.sendMessage('bash-in', [
-      'mkdir -p ~/emudeck/ && cd ~/emudeck/ && git clone https://github.com/dragoonDorise/EmuDeck.git .',
-    ]);
+    ipcChannel.sendMessage('bash', ['pwd']);
     ipcChannel.sendMessage('system-info');
 
     //Receiving data
     ipcChannel.once('bash-out', (stdout) => {
-      console.log({ stdout });
-      ipcChannel.sendMessage('bash-in', [`echo ${stdout} > ~/emudek.log`]);
       setStatePage({ ...statePage, data: stdout });
+    });
+    ipcChannel.once('console', (stdout) => {
+      console.log({ stdout });
     });
     ipcChannel.once('system-info-out', (platform) => {
       setState({ ...statePage, system: platform });
