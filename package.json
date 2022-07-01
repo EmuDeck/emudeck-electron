@@ -184,8 +184,8 @@
     "getbasecore": "^2.0.12"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "EmuDeck",
+    "appId": "org.emudeck.com",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
