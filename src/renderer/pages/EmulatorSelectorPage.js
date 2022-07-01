@@ -3,15 +3,16 @@ import { GlobalContext } from "context/globalContext";
 
 import EmulatorSelector from "components/organisms/Wrappers/EmulatorSelector.js";
 
-const DeviceSelectorPage = () => {
+const EmulatorSelectorPage = () => {
   const { state, setState } = useContext(GlobalContext);
   const { device, installEmus } = state;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
+    data: "",
   });
-  const { disabledNext, disabledBack } = statePage;
+  const { disabledNext, disabledBack, data } = statePage;
 
   const toggleEmus = (emulatorProp) => {
     let { id, name, status } = installEmus[emulatorProp];
@@ -27,6 +28,7 @@ const DeviceSelectorPage = () => {
 
   return (
     <EmulatorSelector
+      data={data}
       onClick={toggleEmus}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
@@ -34,4 +36,4 @@ const DeviceSelectorPage = () => {
   );
 };
 
-export default DeviceSelectorPage;
+export default EmulatorSelectorPage;

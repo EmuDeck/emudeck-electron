@@ -8,11 +8,14 @@ const PegasusInstallPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
+    data: "",
   });
-  const { disabledNext, disabledBack } = statePage;
+  const { disabledNext, disabledBack, data } = statePage;
 
   return (
-    <PegasusInstall disabledNext={disabledNext}
+    <PegasusInstall
+      data={data}
+      disabledNext={disabledNext}
       disabledBack={disabledBack}
     />
   );

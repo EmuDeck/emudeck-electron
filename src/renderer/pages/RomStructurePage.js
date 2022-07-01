@@ -10,16 +10,21 @@ const RomStoragePage = () => {
     disabledNext: false,
     disabledBack: false,
     structureCreated: true,
+    data: "",
   });
-  const { disabledNext, disabledBack, structureCreated } = statePage;
+  const { disabledNext, disabledBack, structureCreated, data } = statePage;
 
   //Enabling button when changing the global state only if we have a device selected
   useEffect(() => {}, [state]); // <-- here put the parameter to listen
 
-  return <RomStructure disabledNext={disabledNext}
-    disabledBack={disabledBack}
-    structureCreated={structureCreated}
-  />;
+  return (
+    <RomStructure
+      data={data}
+      disabledNext={disabledNext}
+      disabledBack={disabledBack}
+      structureCreated={structureCreated}
+    />
+  );
 };
 
 export default RomStoragePage;

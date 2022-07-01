@@ -9,9 +9,9 @@ const RAConfigPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
-    overlaysInstalled: false,
+    data: "",
   });
-  const { disabledNext, disabledBack, overlaysInstalled } = statePage;
+  const { disabledNext, disabledBack, overlaysInstalled, data } = statePage;
 
   const snesSet = (snesAR) => {
     setState({
@@ -26,10 +26,14 @@ const RAConfigPage = () => {
     }
   }, [state]); // <-- here put the parameter to listen
 
-  return <RAConfig disabledNext={disabledNext}
-    disabledBack={disabledBack}
-    overlaysInstalled={overlaysInstalled}
-  />;
+  return (
+    <RAConfig
+      data={data}
+      disabledNext={disabledNext}
+      disabledBack={disabledBack}
+      overlaysInstalled={overlaysInstalled}
+    />
+  );
 };
 
 export default RAConfigPage;

@@ -5,39 +5,34 @@ import EmulatorConfiguration from "components/organisms/Wrappers/EmulatorConfigu
 
 const EmulatorConfigurationPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { installEmus } = state;
+  const { device, keepConfigEmus } = state;
+
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    downloads: {
-      ra: true,
-      dolphinmmjr: true,
-      citra: true,
-    },
+    data: "",
   });
-  const { disabledNext, disabledBack, downloads } = statePage;
+  const { disabledNext, disabledBack, data } = statePage;
 
-  const emusApks = {
-    ra: "https://buildbot.libretro.com/stable/1.9.14/android/RetroArch.apk",
-    dolphinmmjr:
-      "https://github.com/Bankaimaster999/Dolphin-MMJR/releases/download/1.0-11460/Dolphin.MMJR.v11460.apk",
-    citra:
-      "https://github.com/weihuoya/citra/releases/download/20220127/Citra_MMJ_20220127.apk",
-  };
+  const toggleEmus = (emulatorProp) => {
+    let { id, name, status } = keepConfigEmus[emulatorProp];
 
-  const openDLFile = () => {
-    console.log("nah");
-  };
-
-  const emusFiles = {
-    ra: "RetroArch.apk",
-    dolphinmmjr: "Dolphin.MMJR.v11460.apk",
-    citra: "Citra_MMJ_20220127.apk",
+    setState({
+      ...state,
+      keepConfigEmus: {
+        ...keepConfigEmus,
+        [emulatorProp]: { ...keepConfigEmus[emulatorProp], status: !status },
+      },
+    });
   };
 
   return (
-    <EmulatorConfiguration disabledNext={disabledNext}
-    disabledBack={disabledBack} downloads={downloads}/>
+    <EmulatorConfiguration
+      data={data}
+      onClick={toggleEmus}
+      disabledNext={disabledNext}
+      disabledBack={disabledBack}
+    />
   );
 };
 

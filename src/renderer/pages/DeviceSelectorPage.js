@@ -15,8 +15,9 @@ const DeviceSelectorPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
+    data: "",
   });
-  const { disabledNext, disabledBack } = statePage;
+  const { disabledNext, disabledBack, data } = statePage;
 
   //Setting the device
   const deviceSet = (deviceName) => {
@@ -113,6 +114,7 @@ const DeviceSelectorPage = () => {
 
   return (
     <DeviceSelector
+      data={data}
       onClick={deviceSet}
       disabledNext={disabledNext}
       disabledBack={disabledBack}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { GlobalContext } from './context/globalContext';
@@ -23,6 +23,7 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 export default function App() {
   const [state, setState] = useState({
     debug: 'initial',
+    second: false,
     mode: '',
     system: '',
     device: '',
@@ -35,19 +36,45 @@ export default function App() {
       classic3d: '43',
       dolphin: '43',
     },
-    theme: 'darkNoir',
+    theme: 'EPICNOIR',
     installEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
       dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
+      primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
       ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
       duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
       citra: { id: 'citra', status: true, name: 'Citra' },
       pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
       yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
+      xemu: { id: 'xemu', status: true, name: 'Xemu' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
+      srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
+    },
+    keepConfigEmus: {
+      ra: { id: 'ra', status: true, name: 'RetroArch' },
+      dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
+      primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
+      ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
+      duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
+      citra: { id: 'citra', status: true, name: 'Citra' },
+      pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
+      rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
+      yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
+      xemu: { id: 'xemu', status: true, name: 'Xemu' },
+      cemu: { id: 'cemu', status: true, name: 'Cemu' },
+      srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
     },
   });
+
+  //Second install?
+  useEffect(() => {
+    //const settingsStorage = localStorage.getItem('settings_emudeck');
+    //if (!!settingsStorage) {
+    //setState(JSON.parse(settingsStorage));
+    // }
+  }, []);
+
   return (
     <GlobalContext.Provider
       value={{

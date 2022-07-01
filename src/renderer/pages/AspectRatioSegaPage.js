@@ -5,24 +5,30 @@ import AspectRatioSega from "components/organisms/Wrappers/AspectRatioSega.js";
 
 const AspectRatioSegaPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const {ar} = state;
+  const { ar } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
+    data: "",
   });
-  const { disabledNext, disabledBack } = statePage;
-  const arSet = (arStatus) => {    
+  const { disabledNext, disabledBack, data } = statePage;
+  const arSet = (arStatus) => {
     setState({
       ...state,
-      ar:{
+      ar: {
         ...ar,
         sega: arStatus,
-      }
+      },
     });
   };
 
   return (
-    <AspectRatioSega onClick={arSet} disabledNext={disabledNext} disabledBack={disabledBack} />
+    <AspectRatioSega
+      data={data}
+      onClick={arSet}
+      disabledNext={disabledNext}
+      disabledBack={disabledBack}
+    />
   );
 };
 

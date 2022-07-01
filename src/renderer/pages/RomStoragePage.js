@@ -9,8 +9,9 @@ const RomStoragePage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
+    data: "",
   });
-  const { disabledNext, disabledBack } = statePage;
+  const { disabledNext, disabledBack, data } = statePage;
   const { mode } = state;
   const storageSet = (storageName) => {
     setState({
@@ -30,10 +31,11 @@ const RomStoragePage = () => {
   };
   return (
     <RomStorage
+      data={data}
       onClick={storageSet}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
-      next={mode === "easy" ? "end" : "emulator-selector"}
+      next={mode === "easy" ? "end" : "device-selector"}
     />
   );
 };

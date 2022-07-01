@@ -15,10 +15,9 @@ const WelcomePage = () => {
 
   const selectMode = (value) => {
     setState({ ...state, mode: value });
-    setStatePage({ ...statePage, disabledNext: false });
   };
 
-  const { device, system } = state;
+  const { device, system, mode } = state;
 
   const ipcChannel = window.electron.ipcRenderer;
 
@@ -39,6 +38,12 @@ const WelcomePage = () => {
     });
   }, []); // <-- here put the parameter to listen
 
+  useEffect(() => {
+    if (mode != '') {
+      setStatePage({ ...statePage, disabledNext: false });
+    }
+  }, [mode]); // <-- here put the parameter to listen
+
   return (
     <Welcome
       data={data}
@@ -47,7 +52,7 @@ const WelcomePage = () => {
       downloadComplete={downloadComplete}
       onClick={selectMode}
       back={false}
-      next={device === 'Steam Deck' ? 'rom-storage' : 'device-selector'}
+      next="rom-storage"
     />
   );
 };

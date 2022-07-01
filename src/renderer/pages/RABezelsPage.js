@@ -9,8 +9,9 @@ const RABezelsPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
+    data: "",
   });
-  const { disabledNext, disabledBack } = statePage;
+  const { disabledNext, disabledBack, data } = statePage;
   const bezelsSet = (bezelStatus) => {
     setState({
       ...state,
@@ -25,7 +26,9 @@ const RABezelsPage = () => {
   }, [state]); // <-- here put the parameter to listen
 
   return (
-    <RABezels disabledNext={disabledNext}
+    <RABezels
+      data={data}
+      disabledNext={disabledNext}
       disabledBack={disabledBack}
       onClick={bezelsSet}
     />
