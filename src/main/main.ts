@@ -9,7 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { exec } from 'child_process';
+import { exec, spawn } from 'child_process';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
@@ -26,18 +26,16 @@ export default class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-
-  exec(`echo pipi > ~/pipipipipi`, (error, stdout) => {
-    //setOutput(stdout);
+ipcMain.on('bash-in', async (event, command) => {
+  exec(`${command}`, (error, stdout, stderr) => {
+    event.reply('bash-out', stdout + stderr);
   });
 });
 
-exec(`pwd > ~/emudeck.log`);
-exec(`ls >> ~/emudeck.log`);
+ipcMain.on('system-info', async (event, command) => {
+  const os = require('os');
+  event.reply('system-info-out', os.platform());
+});
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -79,10 +77,11 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1200,
-    height: 700,
+    width: 1280,
+    height: 720,
     icon: getAssetPath('icon.png'),
     resizable: false,
+    fullscreen: false,
     webPreferences: {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')

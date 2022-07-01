@@ -9,18 +9,40 @@ const WelcomePage = () => {
     disabledNext: true,
     disabledBack: true,
     downloadComplete: true,
+    data: '',
   });
-  const { disabledNext, disabledBack, downloadComplete } = statePage;
+  const { disabledNext, disabledBack, downloadComplete, data } = statePage;
 
   const selectMode = (value) => {
     setState({ ...state, mode: value });
     setStatePage({ ...statePage, disabledNext: false });
   };
 
-  const { device } = state;
+  const { device, system } = state;
+
+  const ipcChannel = window.electron.ipcRenderer;
+
+  useEffect(() => {
+    //Sending data
+    ipcChannel.sendMessage('bash-in', [
+      'mkdir -p ~/emudeck/ && cd ~/emudeck/ && git clone https://github.com/dragoonDorise/EmuDeck.git .',
+    ]);
+    ipcChannel.sendMessage('system-info');
+
+    //Receiving data
+    ipcChannel.once('bash-out', (stdout) => {
+      console.log({ stdout });
+      ipcChannel.sendMessage('bash-in', [`echo ${stdout} > ~/emudek.log`]);
+      setStatePage({ ...statePage, data: stdout });
+    });
+    ipcChannel.once('system-info-out', (platform) => {
+      setState({ ...statePage, system: platform });
+    });
+  }, []); // <-- here put the parameter to listen
 
   return (
     <Welcome
+      data={data}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       downloadComplete={downloadComplete}
