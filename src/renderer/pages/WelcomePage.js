@@ -35,7 +35,7 @@ const WelcomePage = () => {
       console.log({ stdout });
     });
     ipcChannel.once('system-info-out', (platform) => {
-      setState({ ...statePage, system: platform });
+      setState({ ...state, system: platform });
     });
   }, []); // <-- here put the parameter to listen
 
