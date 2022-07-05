@@ -161,6 +161,9 @@ const EndPage = () => {
       `echo RABezels=${state.bezels ? true : false} >> ~/emudeck/settings.sh`,
     ]);
 
+    //AutoSave
+    ipcChannel.sendMessage('bash', [`echo RAautoSave=false`]);
+
     //Paths
     ipcChannel.sendMessage('bash', [
       `echo emulationPath=${
@@ -195,6 +198,14 @@ const EndPage = () => {
         state.storage == 'SD-Card'
           ? '/run/media/mmcblk0p1/Emulation/storage/'
           : '~/Emulation/storage/'
+      } >> ~/emudeck/settings.sh`,
+    ]);
+
+    ipcChannel.sendMessage('bash', [
+      `echo ESDEscrapData=${
+        state.storage == 'SD-Card'
+          ? '/run/media/mmcblk0p1/Emulation/tools/downloaded_media'
+          : '~/Emulation/tools/downloaded_media'
       } >> ~/emudeck/settings.sh`,
     ]);
 
