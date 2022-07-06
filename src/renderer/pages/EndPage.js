@@ -257,7 +257,7 @@ const EndPage = () => {
     ]);
 
     ipcChannel.sendMessage('bash', [
-      `finish|||bash ~/DragoonDoriseTools/EmuDeck/functions/ElectronISFinished.sh && clear && echo true`,
+      `finish|||bash ~/dragoonDoriseTools/EmuDeck/functions/ElectronISFinished.sh && clear && echo true`,
     ]);
     ipcChannel.on('finish', (stdout) => {
       if (stdout.includes('true')) {
