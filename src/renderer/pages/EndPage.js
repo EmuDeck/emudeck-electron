@@ -245,7 +245,11 @@ const EndPage = () => {
     ]);
 
     ipcChannel.sendMessage('bash', [
-      `finish|||curl https://raw.githubusercontent.com/dragoonDorise/EmuDeck/${debug}/install.sh | bash -s -- INTERNAL false && clear && echo true`,
+      `curl https://raw.githubusercontent.com/dragoonDorise/EmuDeck/${debug}/install.sh | bash -s -- INTERNAL false`,
+    ]);
+
+    ipcChannel.sendMessage('bash', [
+      `finish|||bash ~/DragoonDoriseTools/EmuDeck/functions/ElectronISFinished.sh && clear && echo true`,
     ]);
     ipcChannel.on('finish', (stdout) => {
       if (stdout.includes('true')) {
