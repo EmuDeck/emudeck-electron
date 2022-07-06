@@ -72,8 +72,23 @@ const EndPage = () => {
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
+      `echo doSetupXenia=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doSetupRyujinx=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doSetupESDE=true >> ~/emudeck/settings.sh`,
+    ]);
+
+    ipcChannel.sendMessage('bash', [
       `echo doSetupPrimeHacks=${
         state.keepConfigEmus.primehacks.status ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doSetupXemu=${
+        state.keepConfigEmus.xemu.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
@@ -81,6 +96,7 @@ const EndPage = () => {
         state.keepConfigEmus.ppsspp.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
+
     ipcChannel.sendMessage('bash', [
       `echo doSetupSRM=${
         state.keepConfigEmus.srm.status ? true : false
@@ -129,6 +145,11 @@ const EndPage = () => {
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
+      `echo doInstallXenia=false >> ~/emudeck/settings.sh`,
+    ]);
+
+    doInstallXenia;
+    ipcChannel.sendMessage('bash', [
       `echo doInstallPrimeHacks=${
         state.installEmus.primehacks.status ? true : false
       } >> ~/emudeck/settings.sh`,
@@ -139,9 +160,26 @@ const EndPage = () => {
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
+      `echo doInstallXemu=${
+        state.installEmus.xemu.status ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
       `echo doInstallSRM=${
         state.installEmus.srm.status ? true : false
       } >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doInstallESDE=true >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doInstallCHD=true >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doInstallPowertools=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doInstallGyro=false >> ~/emudeck/settings.sh`,
     ]);
 
     //Aspect Ratios
@@ -168,12 +206,33 @@ const EndPage = () => {
       `echo RAautoSave=false >> ~/emudeck/settings.sh`,
     ]);
 
+    ipcChannel.sendMessage('bash', [
+      `echo duckWide=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo DolphinWide=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo DreamcastWide=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo BeetleWide=false >> ~/emudeck/settings.sh`,
+    ]);
+
     //Paths
     ipcChannel.sendMessage('bash', [
       `echo emulationPath=${
         state.storage == 'SD-Card'
           ? '/run/media/mmcblk0p1/Emulation/'
           : '~/Emulation/'
+      } >> ~/emudeck/settings.sh`,
+    ]);
+
+    ipcChannel.sendMessage('bash', [
+      `echo romsPath=${
+        state.storage == 'SD-Card'
+          ? '/run/media/mmcblk0p1/Emulation/roms/'
+          : '~/Emulation/roms/'
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
@@ -206,14 +265,6 @@ const EndPage = () => {
     ]);
 
     ipcChannel.sendMessage('bash', [
-      `echo romsPath=${
-        state.storage == 'SD-Card'
-          ? '/run/media/mmcblk0p1/Emulation/roms/'
-          : '~/Emulation/roms/'
-      } >> ~/emudeck/settings.sh`,
-    ]);
-
-    ipcChannel.sendMessage('bash', [
       `echo ESDEscrapData=${
         state.storage == 'SD-Card'
           ? '/run/media/mmcblk0p1/Emulation/tools/downloaded_media'
@@ -233,10 +284,6 @@ const EndPage = () => {
 
     ipcChannel.sendMessage('bash', [
       `echo doRASignIn=false >> ~/emudeck/settings.sh`,
-    ]);
-
-    ipcChannel.sendMessage('bash', [
-      `echo doSelectWideScreen=false >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doRAEnable=false >> ~/emudeck/settings.sh`,
