@@ -22,6 +22,8 @@ const EndPage = () => {
     //localStorage.setItem('settings_emudeck', JSON.stringify(state));
     let json = JSON.stringify(state);
 
+    ipcChannel.sendMessage('bash', [`echo ${json} > ~/emudeck/settings.json`]);
+
     ipcChannel.sendMessage('bash', [
       `echo expert=${
         state.mode === 'expert' ? true : false
@@ -257,7 +259,7 @@ const EndPage = () => {
     ]);
 
     ipcChannel.sendMessage('bash', [
-      `finish|||bash ~/dragoonDoriseTools/EmuDeck/functions/ElectronISFinished.sh && clear && echo true`,
+      `finish|||bash ~/Sites/EmuDeck/functions/ElectronISFinished.sh && clear && echo true`,
     ]);
     ipcChannel.on('finish', (stdout) => {
       if (stdout.includes('true')) {
