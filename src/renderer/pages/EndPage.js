@@ -253,7 +253,7 @@ const EndPage = () => {
     ]);
 
     ipcChannel.sendMessage('bash', [
-      `curl https://raw.githubusercontent.com/dragoonDorise/EmuDeck/${debug}/install.sh | bash -s -- INTERNAL false`,
+      `curl https://raw.githubusercontent.com/dragoonDorise/EmuDeck/${debug}/install.sh | bash -s -- EmuReorg false`,
     ]);
 
     ipcChannel.sendMessage('bash', [
