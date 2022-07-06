@@ -12,6 +12,8 @@ import AspectRatioSegaPage from 'pages/AspectRatioSegaPage';
 import AspectRatioSNESPage from 'pages/AspectRatioSNESPage';
 import AspectRatio3DPage from 'pages/AspectRatio3DPage';
 import AspectRatioDolphinPage from 'pages/AspectRatioDolphinPage';
+import ShadersHandheldsPage from 'pages/ShadersHandheldsPage';
+import Shaders2DPage from 'pages/Shaders2DPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import EndPage from 'pages/EndPage';
@@ -35,6 +37,10 @@ export default function App() {
       snes: '43',
       classic3d: '43',
       dolphin: '43',
+    },
+    shaders: {
+      handhelds: false,
+      classic: false,
     },
     theme: 'EPICNOIR',
     installEmus: {
@@ -124,6 +130,12 @@ export default function App() {
             path="/aspect-ratio-dolphin"
             element={<AspectRatioDolphinPage />}
           />
+          <Route
+            exact
+            path="/shaders-handhelds"
+            element={<ShadersHandheldsPage />}
+          />
+          <Route exact path="/shaders-classic" element={<Shaders2DPage />} />
 
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />

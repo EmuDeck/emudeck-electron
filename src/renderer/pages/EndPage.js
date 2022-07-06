@@ -272,6 +272,19 @@ const EndPage = () => {
       } >> ~/emudeck/settings.sh`,
     ]);
 
+    //Shaders
+    ipcChannel.sendMessage('bash', [
+      `echo RAHandHeldShader=${
+        state.shaders.handhelds ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
+
+    ipcChannel.sendMessage('bash', [
+      `echo RAHandClassic2D=${
+        state.shaders.classic ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
+
     //theme
     ipcChannel.sendMessage('bash', [
       `echo esdeTheme=\""${state.theme}\"" >> ~/emudeck/settings.sh`,
