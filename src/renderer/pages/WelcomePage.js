@@ -60,10 +60,12 @@ const WelcomePage = () => {
   useEffect(() => {
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
-        'clone|||mkdir -p ~/dragoonDoriseTools/EmuDeck && git clone https://github.com/dragoonDorise/EmuDeck.git ~/dragoonDoriseTools/EmuDeck && cd ~/dragoonDoriseTools/EmuDeck && git checkout EmuReorg  && mkdir -p ~/emudeck/ && touch ~/emudeck/.cloned',
+        'clone|||mkdir -p ~/dragoonDoriseTools/EmuDeck && git clone https://github.com/dragoonDorise/EmuDeck.git ~/dragoonDoriseTools/EmuDeck && cd ~/dragoonDoriseTools/EmuDeck && git checkout EmuReorg  && mkdir -p ~/emudeck/ && touch ~/emudeck/.cloned && clear && echo true',
       ]);
       ipcChannel.on('clone', (stdout) => {
-        setStatePage({ ...statePage, downloadComplete: true });
+        if (stdout.includes('true')) {
+          setStatePage({ ...statePage, downloadComplete: true });
+        }
       });
     } else if (cloned == true) {
       console.log('git pull');

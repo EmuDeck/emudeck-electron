@@ -27,11 +27,19 @@ export default class AppUpdater {
 let mainWindow: BrowserWindow | null = null;
 
 ipcMain.on('bash', async (event, command) => {
-  const tempCommand = command[0].split('|||');
-  const backChannel = tempCommand[0];
-  const bashCommand = tempCommand[1];
+  let backChannel;
+  let bashCommand;
 
-  return exec(`${tempCommand[1]}`, (error, stdout, stderr) => {
+  if (command[0].includes('|||')) {
+    const tempCommand = command[0].split('|||');
+    backChannel = tempCommand[0];
+    bashCommand = tempCommand[1];
+  } else {
+    backChannel = 'none';
+    bashCommand = command;
+  }
+
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
     //event.reply('console', { backChannel });
     event.reply(backChannel, stdout);
   });
