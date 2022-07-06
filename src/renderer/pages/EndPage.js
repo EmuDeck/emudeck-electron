@@ -33,114 +33,114 @@ const EndPage = () => {
     //Setup Emus
     ipcChannel.sendMessage('bash', [
       `echo doSetupRA=${
-        state.keepConfigEmus.ra.status ? false : true
+        state.keepConfigEmus.ra.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupDolphin=${
-        state.keepConfigEmus.dolphin.status ? false : true
+        state.keepConfigEmus.dolphin.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupPCSX2=${
-        state.keepConfigEmus.pcsx2.status ? false : true
+        state.keepConfigEmus.pcsx2.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupRPCS3=${
-        state.keepConfigEmus.rpcs3.status ? false : true
+        state.keepConfigEmus.rpcs3.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupYuzu=${
-        state.keepConfigEmus.yuzu.status ? false : true
+        state.keepConfigEmus.yuzu.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupCitra=${
-        state.keepConfigEmus.citra.status ? false : true
+        state.keepConfigEmus.citra.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupDuck=${
-        state.keepConfigEmus.duckstation.status ? false : true
+        state.keepConfigEmus.duckstation.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupCemu=${
-        state.keepConfigEmus.cemu.status ? false : true
+        state.keepConfigEmus.cemu.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupPrimeHacks=${
-        state.keepConfigEmus.primehacks.status ? false : true
+        state.keepConfigEmus.primehacks.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupPPSSPP=${
-        state.keepConfigEmus.ppsspp.status ? false : true
+        state.keepConfigEmus.ppsspp.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupSRM=${
-        state.keepConfigEmus.srm.status ? false : true
+        state.keepConfigEmus.srm.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
 
     //Install Emus
     ipcChannel.sendMessage('bash', [
       `echo doInstallRA=${
-        state.installEmus.ra.status ? false : true
+        state.installEmus.ra.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doInstallDolphin=${
-        state.installEmus.dolphin.status ? false : true
+        state.installEmus.dolphin.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doInstallPCSX2=${
-        state.installEmus.pcsx2.status ? false : true
+        state.installEmus.pcsx2.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doInstallRPCS3=${
-        state.installEmus.rpcs3.status ? false : true
+        state.installEmus.rpcs3.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doInstallYuzu=${
-        state.installEmus.yuzu.status ? false : true
+        state.installEmus.yuzu.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doInstallCitra=${
-        state.installEmus.citra.status ? false : true
+        state.installEmus.citra.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doInstallDuck=${
-        state.installEmus.duckstation.status ? false : true
+        state.installEmus.duckstation.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doInstallCemu=${
-        state.installEmus.cemu.status ? false : true
+        state.installEmus.cemu.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doInstallPrimeHacks=${
-        state.installEmus.primehacks.status ? false : true
+        state.installEmus.primehacks.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doInstallPPSSPP=${
-        state.installEmus.ppsspp.status ? false : true
+        state.installEmus.ppsspp.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doInstallSRM=${
-        state.installEmus.srm.status ? false : true
+        state.installEmus.srm.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
 
@@ -259,7 +259,7 @@ const EndPage = () => {
     ]);
 
     ipcChannel.sendMessage('bash', [
-      `finish|||bash ~/Sites/EmuDeck/functions/ElectronISFinished.sh && clear && echo true`,
+      `finish|||bash ~/dragoonDoriseTools/EmuDeck/functions/ElectronISFinished.sh && clear && echo true`,
     ]);
     ipcChannel.on('finish', (stdout) => {
       if (stdout.includes('true')) {
