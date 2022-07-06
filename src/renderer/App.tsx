@@ -22,7 +22,7 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 
 export default function App() {
   const [state, setState] = useState({
-    debug: 'initial',
+    debug: true,
     second: false,
     mode: '',
     system: '',

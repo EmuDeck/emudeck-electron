@@ -11,7 +11,7 @@ const EndPage = () => {
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-  const { second } = state;
+  const { second, debug } = state;
   const ipcChannel = window.electron.ipcRenderer;
   //Saving the config
   useEffect(() => {
@@ -243,6 +243,15 @@ const EndPage = () => {
     ipcChannel.sendMessage('bash', [
       `echo XemuWide=false >> ~/emudeck/settings.sh`,
     ]);
+
+    ipcChannel.sendMessage('bash', [
+      `finish|||curl https://raw.githubusercontent.com/dragoonDorise/EmuDeck/${debug}/install.sh | bash -s -- INTERNAL false && clear && echo true`,
+    ]);
+    ipcChannel.on('finish', (stdout) => {
+      if (stdout.includes('true')) {
+        setStatePage({ ...statePage, disabledNext: false });
+      }
+    });
   }, [second]);
 
   return (
