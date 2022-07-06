@@ -27,16 +27,12 @@ const WelcomePage = () => {
     //
     //Cloning project
     //
-    //Already cloned?
-    // ipcChannel.sendMessage('bash', [
-    //   'bash-out|||test -f ~/emudeck/.cloned  && echo true',
-    // ]);
 
+    //Already cloned?
     ipcChannel.sendMessage('bash', [
       'check-clone|||test -f ~/emudeck/.cloned  && echo true',
     ]);
     ipcChannel.on('check-clone', (stdout) => {
-      console.log({ stdout });
       stdout = stdout.replace('\n', '');
       stdout.includes('true') ? (stdout = true) : (stdout = false);
       setStatePage({
@@ -63,16 +59,12 @@ const WelcomePage = () => {
 
   useEffect(() => {
     if (cloned == false) {
-      console.log('git clone');
-
       ipcChannel.sendMessage('bash', [
         'clone|||mkdir -p ~/dragoonDoriseTools/EmuDeck && git clone https://github.com/dragoonDorise/EmuDeck.git ~/dragoonDoriseTools/EmuDeck && cd ~/dragoonDoriseTools/EmuDeck && git checkout EmuReorg  && mkdir -p ~/emudeck/ && touch ~/emudeck/.cloned',
       ]);
       ipcChannel.on('clone', (stdout) => {
-        console.log({ stdout });
+        setStatePage({ ...statePage, downloadComplete: true });
       });
-
-      setStatePage({ ...statePage, downloadComplete: true });
     } else if (cloned == true) {
       console.log('git pull');
 
@@ -80,7 +72,6 @@ const WelcomePage = () => {
         'pull|||cd ~/dragoonDoriseTools/EmuDeck && git pull',
       ]);
       ipcChannel.on('pull', (stdout) => {
-        console.log({ stdout });
         setStatePage({ ...statePage, downloadComplete: true });
       });
     }
