@@ -21,8 +21,9 @@ const EndPage = () => {
   useEffect(() => {
     //localStorage.setItem('settings_emudeck', JSON.stringify(state));
     let json = JSON.stringify(state);
-
+    ipcChannel.sendMessage('bash', [`mkdir -p ~/emudeck/`]);
     ipcChannel.sendMessage('bash', [`echo ${json} > ~/emudeck/settings.json`]);
+    ipcChannel.sendMessage('bash', [`echo ${state} > ~/emudeck/state.json`]);
 
     ipcChannel.sendMessage('bash', [
       `echo expert=${
@@ -148,7 +149,6 @@ const EndPage = () => {
       `echo doInstallXenia=false >> ~/emudeck/settings.sh`,
     ]);
 
-    doInstallXenia;
     ipcChannel.sendMessage('bash', [
       `echo doInstallPrimeHacks=${
         state.installEmus.primehacks.status ? true : false
