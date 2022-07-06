@@ -268,8 +268,26 @@ const EndPage = () => {
     });
   }, [second]);
 
+  const openSRM = () => {
+    if (state.storage == 'SD-Card') {
+      ipcChannel.sendMessage('bash', [
+        `cd /run/media/mmcblk0p1/Emulation/tools/srm && ./Steam-ROM-Manager.AppImage`,
+      ]);
+    } else {
+      ipcChannel.sendMessage('bash', [
+        `cd ~/Emulation/tools/srm && ./Steam-ROM-Manager.AppImage`,
+      ]);
+    }
+    exit;
+  };
+
   return (
-    <End data={data} disabledNext={disabledNext} disabledBack={disabledBack} />
+    <End
+      onClick={openSRM}
+      data={data}
+      disabledNext={disabledNext}
+      disabledBack={disabledBack}
+    />
   );
 };
 
