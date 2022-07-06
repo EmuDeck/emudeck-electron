@@ -27,22 +27,13 @@ export default class AppUpdater {
 let mainWindow: BrowserWindow | null = null;
 
 ipcMain.on('bash', async (event, command) => {
-  // event.reply('console', command);
-  // const spawnCommand = spawn('ls');
-  // let response;
-  // spawnCommand.stdout.on('data', (data) => {
-  //   response += JSON.stringify(data.toString('utf8'));
-  //   event.reply('console', response);
-  // });
-  // spawnCommand.stderr.on('data', (data) => {
-  //   response += JSON.stringify(data.toString('utf8'));
-  //   event.reply('console', response);
-  // });
+  const tempCommand = command[0].split('|||');
+  const backChannel = tempCommand[0];
+  const bashCommand = tempCommand[1];
 
-  exec(`${command}`, (error, stdout, stderr) => {
-    event.reply('console', { stdout });
-    event.reply('console', { stderr });
-    event.reply('bash-out', stdout + stderr);
+  return exec(`${tempCommand[1]}`, (error, stdout, stderr) => {
+    //event.reply('console', { backChannel });
+    event.reply(backChannel, stdout);
   });
 });
 

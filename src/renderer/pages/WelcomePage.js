@@ -8,10 +8,12 @@ const WelcomePage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: true,
-    downloadComplete: true,
+    downloadComplete: false,
+    cloned: undefined,
     data: '',
   });
-  const { disabledNext, disabledBack, downloadComplete, data } = statePage;
+  const { disabledNext, disabledBack, downloadComplete, data, cloned } =
+    statePage;
 
   const selectMode = (value) => {
     setState({ ...state, mode: value });
@@ -22,27 +24,67 @@ const WelcomePage = () => {
   const ipcChannel = window.electron.ipcRenderer;
 
   useEffect(() => {
-    //Sending data
-    ipcChannel.sendMessage('bash', ['pwd']);
+    //
+    //Cloning project
+    //
+    //Already cloned?
+    // ipcChannel.sendMessage('bash', [
+    //   'bash-out|||test -f ~/emudeck/.cloned  && echo true',
+    // ]);
+
+    ipcChannel.sendMessage('bash', [
+      'check-clone|||test -f ~/emudeck/.cloned  && echo true',
+    ]);
+    ipcChannel.on('check-clone', (stdout) => {
+      console.log({ stdout });
+      stdout = stdout.replace('\n', '');
+      stdout.includes('true') ? (stdout = true) : (stdout = false);
+      setStatePage({
+        ...statePage,
+        cloned: stdout,
+      });
+    });
+
     ipcChannel.sendMessage('system-info');
 
-    //Receiving data
-    ipcChannel.once('bash-out', (stdout) => {
-      setStatePage({ ...statePage, data: stdout });
-    });
     ipcChannel.once('console', (stdout) => {
       console.log({ stdout });
     });
     ipcChannel.once('system-info-out', (platform) => {
       setState({ ...state, system: platform });
     });
-  }, []); // <-- here put the parameter to listen
+  }, []);
 
   useEffect(() => {
     if (mode != '') {
       setStatePage({ ...statePage, disabledNext: false });
     }
-  }, [mode]); // <-- here put the parameter to listen
+  }, [mode]);
+
+  useEffect(() => {
+    if (cloned == false) {
+      console.log('git clone');
+
+      ipcChannel.sendMessage('bash', [
+        'clone|||mkdir -p ~/dragoonDoriseTools/EmuDeck && git clone https://github.com/dragoonDorise/EmuDeck.git ~/dragoonDoriseTools/EmuDeck && cd ~/dragoonDoriseTools/EmuDeck && git checkout EmuReorg  && mkdir -p ~/emudeck/ && touch ~/emudeck/.cloned',
+      ]);
+      ipcChannel.on('clone', (stdout) => {
+        console.log({ stdout });
+      });
+
+      setStatePage({ ...statePage, downloadComplete: true });
+    } else if (cloned == true) {
+      console.log('git pull');
+
+      ipcChannel.sendMessage('bash', [
+        'pull|||cd ~/dragoonDoriseTools/EmuDeck && git pull',
+      ]);
+      ipcChannel.on('pull', (stdout) => {
+        console.log({ stdout });
+        setStatePage({ ...statePage, downloadComplete: true });
+      });
+    }
+  }, [cloned]);
 
   return (
     <Welcome
