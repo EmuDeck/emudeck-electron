@@ -278,12 +278,17 @@ const EndPage = () => {
         `cd ~/Emulation/tools/srm && ./Steam-ROM-Manager.AppImage`,
       ]);
     }
-    exit;
+    window.close();
+  };
+
+  const close = () => {
+    window.close();
   };
 
   return (
     <End
       onClick={openSRM}
+      onClose={close}
       data={data}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
