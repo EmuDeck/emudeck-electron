@@ -69,11 +69,11 @@ const EndPage = () => {
         state.keepConfigEmus.cemu.status ? false : true
       } >> ~/emudeck/settings.sh`,
     ]);
-    // ipcChannel.sendMessage('bash', [
-    //   `echo doSetupPrimeHacks=${
-    //     state.keepConfigEmus.primehacks.status ? false : true
-    //   } >> ~/emudeck/settings.sh`,
-    // ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doSetupPrimeHacks=${
+        state.keepConfigEmus.primehacks.status ? false : true
+      } >> ~/emudeck/settings.sh`,
+    ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupPPSSPP=${
         state.keepConfigEmus.ppsspp.status ? false : true
@@ -162,7 +162,9 @@ const EndPage = () => {
     ]);
 
     //AutoSave
-    ipcChannel.sendMessage('bash', [`echo RAautoSave=false`]);
+    ipcChannel.sendMessage('bash', [
+      `echo RAautoSave=false >> ~/emudeck/settings.sh`,
+    ]);
 
     //Paths
     ipcChannel.sendMessage('bash', [
@@ -211,7 +213,35 @@ const EndPage = () => {
 
     //theme
     ipcChannel.sendMessage('bash', [
-      `echo esdeTheme=${state.theme} >> ~/emudeck/settings.sh`,
+      `echo esdeTheme=\""${state.theme}\"" >> ~/emudeck/settings.sh`,
+    ]);
+
+    //AdvancedSettings
+    ipcChannel.sendMessage('bash', [
+      `echo doSelectWideScreen=false >> ~/emudeck/settings.sh`,
+    ]);
+
+    ipcChannel.sendMessage('bash', [
+      `echo doRASignIn=false >> ~/emudeck/settings.sh`,
+    ]);
+
+    ipcChannel.sendMessage('bash', [
+      `echo doSelectWideScreen=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doRAEnable=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doESDEThemePicker=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doSelectEmulators=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doResetEmulators=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo XemuWide=false >> ~/emudeck/settings.sh`,
     ]);
   }, [second]);
 
