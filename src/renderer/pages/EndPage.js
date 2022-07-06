@@ -204,6 +204,14 @@ const EndPage = () => {
     ]);
 
     ipcChannel.sendMessage('bash', [
+      `echo romsPath=${
+        state.storage == 'SD-Card'
+          ? '/run/media/mmcblk0p1/Emulation/roms/'
+          : '~/Emulation/roms/'
+      } >> ~/emudeck/settings.sh`,
+    ]);
+
+    ipcChannel.sendMessage('bash', [
       `echo ESDEscrapData=${
         state.storage == 'SD-Card'
           ? '/run/media/mmcblk0p1/Emulation/tools/downloaded_media'
