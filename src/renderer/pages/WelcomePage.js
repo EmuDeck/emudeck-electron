@@ -87,7 +87,7 @@ const WelcomePage = () => {
       downloadComplete={downloadComplete}
       onClick={selectMode}
       back={false}
-      next="rom-storage"
+      next="powertools"
     />
   );
 };

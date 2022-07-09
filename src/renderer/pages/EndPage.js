@@ -19,8 +19,9 @@ const EndPage = () => {
   }, []);
 
   useEffect(() => {
-    //localStorage.setItem('settings_emudeck', JSON.stringify(state));
     let json = JSON.stringify(state);
+    localStorage.setItem('settings_emudeck', json);
+
     ipcChannel.sendMessage('bash', [`mkdir -p ~/emudeck/`]);
     ipcChannel.sendMessage('bash', [`echo ${json} > ~/emudeck/settings.json`]);
     ipcChannel.sendMessage('bash', [`echo ${state} > ~/emudeck/state.json`]);
@@ -176,10 +177,14 @@ const EndPage = () => {
       `echo doInstallCHD=true >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo doInstallPowertools=false >> ~/emudeck/settings.sh`,
+      `echo doInstallPowertools=${
+        state.powerTools ? true : false
+      } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo doInstallGyro=false >> ~/emudeck/settings.sh`,
+      `echo doInstallGyro=${
+        state.GyroDSU ? true : false
+      } >> ~/emudeck/settings.sh`,
     ]);
 
     //Aspect Ratios
@@ -315,7 +320,6 @@ const EndPage = () => {
     ]);
 
     //Achievements
-
     ipcChannel.sendMessage('bash', [
       `echo achievementsUser=${state.achievements.user} >> ~/emudeck/settings.sh`,
     ]);
@@ -324,6 +328,9 @@ const EndPage = () => {
       `echo achievementsPass=${state.achievements.user} >> ~/emudeck/settings.sh`,
     ]);
 
+    //
+
+    //Installation
     ipcChannel.sendMessage('bash', [
       `curl https://raw.githubusercontent.com/dragoonDorise/EmuDeck/EmuReorg/install.sh | bash -s -- EmuReorg false`,
     ]);

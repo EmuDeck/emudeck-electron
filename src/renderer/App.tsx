@@ -14,9 +14,11 @@ import AspectRatio3DPage from 'pages/AspectRatio3DPage';
 import AspectRatioDolphinPage from 'pages/AspectRatioDolphinPage';
 import ShadersHandheldsPage from 'pages/ShadersHandheldsPage';
 import Shaders2DPage from 'pages/Shaders2DPage';
-import RAAchievements from 'pages/RAAchievements';
+import RAAchievementsPage from 'pages/RAAchievementsPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
+import PowerToolsPage from 'pages/PowerToolsPage';
+import GyroDSUPage from 'pages/GyroDSUPage';
 import EndPage from 'pages/EndPage';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
@@ -33,6 +35,8 @@ export default function App() {
     storage: 'SD-Card',
     SDID: '',
     bezels: true,
+    powerTools: false,
+    GyroDSU: false,
     achievements: {
       user: '',
       pass: '',
@@ -115,7 +119,11 @@ export default function App() {
           <Route exact path="/rom-storage" element={<RomStoragePage />} />
           <Route exact path="/rom-structure" element={<RomStructurePage />} />
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
-          <Route exact path="/RA-achievements" element={<RAAchievements />} />
+          <Route
+            exact
+            path="/RA-achievements"
+            element={<RAAchievementsPage />}
+          />
 
           <Route
             exact
@@ -143,6 +151,8 @@ export default function App() {
             element={<ShadersHandheldsPage />}
           />
           <Route exact path="/shaders-classic" element={<Shaders2DPage />} />
+          <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
+          <Route exact path="/powertools" element={<PowerToolsPage />} />
 
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
