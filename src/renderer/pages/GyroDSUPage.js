@@ -10,8 +10,12 @@ const GyroDSUPage = () => {
     disabledNext: false,
     disabledBack: false,
     data: '',
+    hasSudo: false,
   });
-  const { disabledNext, disabledBack, data } = statePage;
+  const { disabledNext, disabledBack, hasSudo } = statePage;
+
+  const ipcChannel = window.electron.ipcRenderer;
+
   const setGyro = (data) => {
     if (data.target.value != '') {
       setState({
@@ -24,21 +28,37 @@ const GyroDSUPage = () => {
         GyroDSU: false,
       });
     }
-    //echo -e "cacadevaca\ncacadevaca" | passwd deck
   };
 
   const createSudo = (data) => {
-    console.log('hi');
-    //echo -e "cacadevaca\ncacadevaca" | passwd deck
+    ipcChannel.sendMessage('bash', [
+      'cp ~/emudeck/backend/tools/passwd.desktop ~/Desktop/passwd.desktop && chmod +x ~/Desktop/passwd.desktop && ~/Desktop/passwd.desktop && rm ~/Desktop/passwd.desktop ',
+    ]);
   };
+
+  useEffect(() => {
+    ipcChannel.sendMessage('bash', [
+      'checkPWD|||passwd -S $(whoami) | awk -F " " "{print $2}" & exit',
+    ]);
+
+    ipcChannel.on('checkPWD', (stdout) => {
+      console.log({ stdout });
+      stdout = stdout.replace('\n', '');
+      stdout.includes('NP') ? (stdout = false) : (stdout = true);
+      setStatePage({
+        ...statePage,
+        hasSudo: stdout,
+      });
+    });
+  }, []);
 
   return (
     <GyroDSU
-      data={data}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       onChange={setGyro}
       onClick={createSudo}
+      hasSudo={hasSudo}
     />
   );
 };
