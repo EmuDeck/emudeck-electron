@@ -14,6 +14,7 @@ import AspectRatio3DPage from 'pages/AspectRatio3DPage';
 import AspectRatioDolphinPage from 'pages/AspectRatioDolphinPage';
 import ShadersHandheldsPage from 'pages/ShadersHandheldsPage';
 import Shaders2DPage from 'pages/Shaders2DPage';
+import RAAchievements from 'pages/RAAchievements';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import EndPage from 'pages/EndPage';
@@ -32,6 +33,10 @@ export default function App() {
     storage: 'SD-Card',
     SDID: '',
     bezels: true,
+    achievements: {
+      user: '',
+      pass: '',
+    },
     ar: {
       sega: '43',
       snes: '43',
@@ -110,6 +115,8 @@ export default function App() {
           <Route exact path="/rom-storage" element={<RomStoragePage />} />
           <Route exact path="/rom-structure" element={<RomStructurePage />} />
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
+          <Route exact path="/RA-achievements" element={<RAAchievements />} />
+
           <Route
             exact
             path="/aspect-ratio-sega"

@@ -314,6 +314,16 @@ const EndPage = () => {
       `echo XemuWide=false >> ~/emudeck/settings.sh`,
     ]);
 
+    //Achievements
+
+    ipcChannel.sendMessage('bash', [
+      `echo achievementsUser=${state.achievements.user} >> ~/emudeck/settings.sh`,
+    ]);
+
+    ipcChannel.sendMessage('bash', [
+      `echo achievementsPass=${state.achievements.user} >> ~/emudeck/settings.sh`,
+    ]);
+
     ipcChannel.sendMessage('bash', [
       `curl https://raw.githubusercontent.com/dragoonDorise/EmuDeck/EmuReorg/install.sh | bash -s -- EmuReorg false`,
     ]);
