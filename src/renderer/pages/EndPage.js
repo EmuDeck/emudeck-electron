@@ -233,22 +233,22 @@ const EndPage = () => {
     ]);
     //
     ipcChannel.sendMessage('bash', [
-      `echo romsPath=${path}Emulation/roms >> ~/emudeck/settings.sh`,
+      `echo romsPath=${path}Emulation/roms/ >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo toolsPath=${path}Emulation/tools >> ~/emudeck/settings.sh`,
+      `echo toolsPath=${path}Emulation/tools/ >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo biosPath=${path}Emulation/bios >> ~/emudeck/settings.sh`,
+      `echo biosPath=${path}Emulation/bios/ >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo savesPath=${path}Emulation/saves >> ~/emudeck/settings.sh`,
+      `echo savesPath=${path}Emulation/saves/ >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo storagePath=${path}Emulation/storage >> ~/emudeck/settings.sh`,
+      `echo storagePath=${path}Emulation/storage/ >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo ESDEscrapData=${path}Emulation/tools/downloaded_media >> ~/emudeck/settings.sh`,
+      `echo ESDEscrapData=${path}Emulation/tools/downloaded_media/ >> ~/emudeck/settings.sh`,
     ]);
 
     //Shaders
@@ -304,7 +304,7 @@ const EndPage = () => {
 
     //Installation
     ipcChannel.sendMessage('bash', [
-      `curl https://raw.githubusercontent.com/dragoonDorise/EmuDeck/EmuReorg/install.sh | bash -s -- EmuReorg false`,
+      `bash ~/emudeck/backend/install.sh -- EmuReorg false`,
     ]);
 
     ipcChannel.sendMessage('bash', [
