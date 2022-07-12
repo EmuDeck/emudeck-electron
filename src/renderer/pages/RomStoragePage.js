@@ -46,17 +46,22 @@ const RomStoragePage = () => {
         sdCardValid: stdout,
       });
     });
-
-    ipcChannel.sendMessage('bash', ['SDCardName|||getSDPath']);
-
-    ipcChannel.on('SDCardName', (stdout) => {
-      stdout = stdout.replace('\n', '');
-      setStatePage({
-        ...statePage,
-        sdCardName: stdout,
-      });
-    });
   }, []);
+
+  //Let's get the SD Card name
+  useEffect(() => {
+    if (sdCardValid === true) {
+      ipcChannel.sendMessage('bash', ['SDCardName|||getSDPath']);
+
+      ipcChannel.on('SDCardName', (stdout) => {
+        stdout = stdout.replace('\n', '');
+        setStatePage({
+          ...statePage,
+          sdCardName: stdout,
+        });
+      });
+    }
+  }, [sdCardValid]);
 
   const getSDCardName = async () => {
     return 'deck';
@@ -65,7 +70,7 @@ const RomStoragePage = () => {
     <RomStorage
       data={data}
       sdCardValid={sdCardValid}
-      sdCardName="/run/media/mmcblk0p1"
+      sdCardName={sdCardName}
       onClick={storageSet}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
