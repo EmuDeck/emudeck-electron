@@ -16,12 +16,41 @@ const RomStoragePage = () => {
   });
   const { disabledNext, disabledBack, data, sdCardValid, sdCardName } =
     statePage;
-  const { mode } = state;
+  const { mode, system } = state;
   const storageSet = (storageName) => {
-    setState({
-      ...state,
-      storage: storageName,
-    });
+    if (system != 'darwin') {
+      // Mac testing
+      if (storageName === 'Custom') {
+        ipcChannel.sendMessage('bash', ['customLocation|||customLocation']);
+
+        ipcChannel.on('customLocation', (stdout) => {
+          stdout = stdout.replace('\n', '');
+          setState({
+            ...state,
+            storage: storageName,
+            storagePath: stdout,
+          });
+        });
+      } else if (storageName === 'SD-Card') {
+        setState({
+          ...state,
+          storage: storageName,
+          storagePath: sdCardName,
+        });
+      } else {
+        setState({
+          ...state,
+          storage: storageName,
+          storagePath: '~/',
+        });
+      }
+    } else {
+      setState({
+        ...state,
+        storage: storageName,
+        storagePath: '~/',
+      });
+    }
   };
   //Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
@@ -32,20 +61,29 @@ const RomStoragePage = () => {
 
   //Do we have a valid SD Card?
   useEffect(() => {
-    ipcChannel.sendMessage('bash', ['source ~/emudeck/functions/all.sh']);
+    if (system != 'darwin') {
+      // Mac testing
+      ipcChannel.sendMessage('bash', ['source ~/emudeck/functions/all.sh']);
 
-    ipcChannel.sendMessage('bash', [
-      'SDCardValid|||testLocationValid "SD" $(getSDPath)',
-    ]);
+      ipcChannel.sendMessage('bash', [
+        'SDCardValid|||testLocationValid "SD" $(getSDPath)',
+      ]);
 
-    ipcChannel.on('SDCardValid', (stdout) => {
-      stdout = stdout.replace('\n', '');
-      stdout.includes('Valid') ? (stdout = true) : (stdout = false);
+      ipcChannel.on('SDCardValid', (stdout) => {
+        stdout = stdout.replace('\n', '');
+        stdout.includes('Valid') ? (stdout = true) : (stdout = false);
+        setStatePage({
+          ...statePage,
+          sdCardValid: stdout,
+        });
+      });
+    } else {
       setStatePage({
         ...statePage,
-        sdCardValid: stdout,
+        sdCardValid: true,
+        sdCardName: 'Fake SD Card',
       });
-    });
+    }
   }, []);
 
   //Let's get the SD Card name
@@ -55,6 +93,9 @@ const RomStoragePage = () => {
 
       ipcChannel.on('SDCardName', (stdout) => {
         stdout = stdout.replace('\n', '');
+        if (system === 'darwin') {
+          stdout = 'Test Mac';
+        }
         setStatePage({
           ...statePage,
           sdCardName: stdout,
@@ -63,15 +104,15 @@ const RomStoragePage = () => {
     }
   }, [sdCardValid]);
 
-  const getSDCardName = async () => {
-    return 'deck';
-  };
+  const onClickGetCustom = () => {};
+
   return (
     <RomStorage
       data={data}
       sdCardValid={sdCardValid}
       sdCardName={sdCardName}
       onClick={storageSet}
+      onClickGetCustom={onClickGetCustom}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       next={mode === 'easy' ? 'end' : 'device-selector'}

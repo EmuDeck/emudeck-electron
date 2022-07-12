@@ -22,9 +22,11 @@ const EndPage = () => {
     let json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
 
+    const path = state.storagePath;
+
     ipcChannel.sendMessage('bash', [`mkdir -p ~/emudeck/`]);
-    ipcChannel.sendMessage('bash', [`echo ${json} > ~/emudeck/settings.json`]);
-    ipcChannel.sendMessage('bash', [`echo ${state} > ~/emudeck/state.json`]);
+    // ipcChannel.sendMessage('bash', [`echo ${json} > ~/emudeck/settings.json`]);
+    // ipcChannel.sendMessage('bash', [`echo ${state} > ~/emudeck/state.json`]);
 
     ipcChannel.sendMessage('bash', [
       `echo expert=${
@@ -43,6 +45,7 @@ const EndPage = () => {
         state.keepConfigEmus.dolphin.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
+
     ipcChannel.sendMessage('bash', [
       `echo doSetupPCSX2=${
         state.keepConfigEmus.pcsx2.status ? true : false
@@ -226,55 +229,26 @@ const EndPage = () => {
 
     //Paths
     ipcChannel.sendMessage('bash', [
-      `echo emulationPath=${
-        state.storage == 'SD-Card'
-          ? '/run/media/mmcblk0p1/Emulation/'
-          : '~/Emulation/'
-      } >> ~/emudeck/settings.sh`,
+      `echo emulationPath=${path}Emulation/ >> ~/emudeck/settings.sh`,
     ]);
-
+    //
     ipcChannel.sendMessage('bash', [
-      `echo romsPath=${
-        state.storage == 'SD-Card'
-          ? '/run/media/mmcblk0p1/Emulation/roms/'
-          : '~/Emulation/roms/'
-      } >> ~/emudeck/settings.sh`,
+      `echo romsPath=${path}Emulation/roms >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo toolsPath=${
-        state.storage == 'SD-Card'
-          ? '/run/media/mmcblk0p1/Emulation/tools/'
-          : '~/Emulation/tools/'
-      } >> ~/emudeck/settings.sh`,
+      `echo toolsPath=${path}Emulation/tools >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo biosPath=${
-        state.storage == 'SD-Card'
-          ? '/run/media/mmcblk0p1/Emulation/bios/'
-          : '~/Emulation/bios/'
-      } >> ~/emudeck/settings.sh`,
+      `echo biosPath=${path}Emulation/bios >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo savesPath=${
-        state.storage == 'SD-Card'
-          ? '/run/media/mmcblk0p1/Emulation/saves/'
-          : '~/Emulation/saves/'
-      } >> ~/emudeck/settings.sh`,
+      `echo savesPath=${path}Emulation/saves >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo storagePath=${
-        state.storage == 'SD-Card'
-          ? '/run/media/mmcblk0p1/Emulation/storage/'
-          : '~/Emulation/storage/'
-      } >> ~/emudeck/settings.sh`,
+      `echo storagePath=${path}Emulation/storage >> ~/emudeck/settings.sh`,
     ]);
-
     ipcChannel.sendMessage('bash', [
-      `echo ESDEscrapData=${
-        state.storage == 'SD-Card'
-          ? '/run/media/mmcblk0p1/Emulation/tools/downloaded_media'
-          : '~/Emulation/tools/downloaded_media'
-      } >> ~/emudeck/settings.sh`,
+      `echo ESDEscrapData=${path}Emulation/tools/downloaded_media >> ~/emudeck/settings.sh`,
     ]);
 
     //Shaders
@@ -328,15 +302,13 @@ const EndPage = () => {
       `echo achievementsPass=${state.achievements.user} >> ~/emudeck/settings.sh`,
     ]);
 
-    //
-
     //Installation
     ipcChannel.sendMessage('bash', [
       `curl https://raw.githubusercontent.com/dragoonDorise/EmuDeck/EmuReorg/install.sh | bash -s -- EmuReorg false`,
     ]);
 
     ipcChannel.sendMessage('bash', [
-      `finish|||bash ~/dragoonDoriseTools/EmuDeck/functions/ElectronISFinished.sh && clear && echo true`,
+      `finish|||bash ~/emudeck/backend/functions/ElectronISFinished.sh && clear && echo true`,
     ]);
     ipcChannel.on('finish', (stdout) => {
       if (stdout.includes('true')) {
