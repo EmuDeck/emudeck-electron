@@ -45,6 +45,32 @@ ipcMain.on('bash', async (event, command) => {
   });
 });
 
+ipcMain.on('emudeck', async (event, command) => {
+  let backChannel;
+  let bashCommand;
+
+  if (command[0].includes('|||')) {
+    const tempCommand = command[0].split('|||');
+    backChannel = tempCommand[0];
+    bashCommand = tempCommand[1];
+  } else {
+    backChannel = 'none';
+    bashCommand = command;
+  }
+
+  return exec(
+    `source ~/emudeck/backend/functions/all.sh && ${bashCommand}`,
+    (error, stdout, stderr) => {
+      //event.reply('console', { backChannel });
+      event.reply(backChannel, {
+        stdout: stdout,
+        stderr: stderr,
+        error: error,
+      });
+    }
+  );
+});
+
 ipcMain.on('system-info', async (event, command) => {
   const os = require('os');
   event.reply('system-info-out', os.platform());

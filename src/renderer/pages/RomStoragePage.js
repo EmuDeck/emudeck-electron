@@ -18,19 +18,18 @@ const RomStoragePage = () => {
     statePage;
   const { mode, system } = state;
   const storageSet = (storageName) => {
-    if (system != 'darwin') {
+    if (system === 'darwin') {
       // Mac testing
       if (storageName === 'Custom') {
-        ipcChannel.sendMessage('bash', [
-          'customLocation|||customLocation >> ~/emudeck/electron.log',
-        ]);
+        ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
-        ipcChannel.on('customLocation', (stdout) => {
-          stdout = stdout.replace('\n', '');
+        ipcChannel.on('customLocation', (message) => {
+          stdout = message.stdout.replace('\n', '');
           setState({
             ...state,
             storage: storageName,
             storagePath: stdout,
+            debugText: message,
           });
         });
       } else if (storageName === 'SD-Card') {
@@ -64,21 +63,19 @@ const RomStoragePage = () => {
   //Do we have a valid SD Card?
   useEffect(() => {
     if (system != 'darwin') {
-      // Mac testing
-      ipcChannel.sendMessage('bash', [
-        'source ~/emudeck/backend/functions/all.sh >> ~/emudeck/electron.log',
+      ipcChannel.sendMessage('emudeck', [
+        'SDCardValid|||testLocationValid "SD" $(getSDPath)',
       ]);
 
-      ipcChannel.sendMessage('bash', [
-        'SDCardValid|||testLocationValid "SD" $(getSDPath) >> ~/emudeck/electron.log',
-      ]);
-
-      ipcChannel.on('SDCardValid', (stdout) => {
-        stdout = stdout.replace('\n', '');
+      ipcChannel.on('SDCardValid', (message) => {
+        stdout = message.stdout.replace('\n', '');
         stdout.includes('Valid') ? (stdout = true) : (stdout = false);
         setStatePage({
           ...statePage,
           sdCardValid: stdout,
+        });
+        setState({
+          debugText: message,
         });
       });
     } else {
@@ -93,18 +90,20 @@ const RomStoragePage = () => {
   //Let's get the SD Card name
   useEffect(() => {
     if (sdCardValid === true) {
-      ipcChannel.sendMessage('bash', [
-        'SDCardName|||getSDPath >> ~/emudeck/electron.log',
-      ]);
+      ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
 
-      ipcChannel.on('SDCardName', (stdout) => {
-        stdout = stdout.replace('\n', '');
+      ipcChannel.on('SDCardName', (message) => {
+        console.log({ stdout });
+        stdout = message.stdout.replace('\n', '');
         if (system === 'darwin') {
           stdout = 'Test Mac';
         }
         setStatePage({
           ...statePage,
           sdCardName: stdout,
+        });
+        setState({
+          debugText: message,
         });
       });
     }
