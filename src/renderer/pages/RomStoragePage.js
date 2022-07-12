@@ -63,7 +63,7 @@ const RomStoragePage = () => {
 
   //Do we have a valid SD Card?
   useEffect(() => {
-    if (system != 'darwin') {
+    if (system !== 'darwin') {
       ipcChannel.sendMessage('emudeck', [
         'SDCardValid|||testLocationValid "SD" $(getSDPath)',
       ]);

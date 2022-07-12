@@ -58,14 +58,17 @@ ipcMain.on('emudeck', async (event, command) => {
     bashCommand = command;
   }
 
-  return exec(`${bashCommand}`, (error, stdout, stderr) => {
-    //event.reply('console', { backChannel });
-    event.reply(backChannel, {
-      stdout: stdout,
-      stderr: stderr,
-      error: error,
-    });
-  });
+  return exec(
+    `source ~/emudeck/backend/functions/all.sh && ${bashCommand}`,
+    (error, stdout, stderr) => {
+      //event.reply('console', { backChannel });
+      event.reply(backChannel, {
+        stdout: stdout,
+        stderr: stderr,
+        error: error,
+      });
+    }
+  );
 });
 
 ipcMain.on('system-info', async (event, command) => {
