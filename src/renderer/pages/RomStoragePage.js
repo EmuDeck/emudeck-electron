@@ -66,7 +66,7 @@ const RomStoragePage = () => {
     if (system != 'darwin') {
       // Mac testing
       ipcChannel.sendMessage('bash', [
-        'source ~/emudeck/functions/all.sh >> ~/emudeck/electron.log',
+        'source ~/emudeck/backend/functions/all.sh >> ~/emudeck/electron.log',
       ]);
 
       ipcChannel.sendMessage('bash', [
