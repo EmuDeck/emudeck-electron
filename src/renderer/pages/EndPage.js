@@ -25,8 +25,6 @@ const EndPage = () => {
     const path = state.storagePath;
 
     ipcChannel.sendMessage('bash', [`mkdir -p ~/emudeck/`]);
-    // ipcChannel.sendMessage('bash', [`echo ${json} > ~/emudeck/settings.json`]);
-    // ipcChannel.sendMessage('bash', [`echo ${state} > ~/emudeck/state.json`]);
 
     ipcChannel.sendMessage('bash', [
       `echo expert=${

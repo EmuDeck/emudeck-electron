@@ -21,7 +21,9 @@ const RomStoragePage = () => {
     if (system != 'darwin') {
       // Mac testing
       if (storageName === 'Custom') {
-        ipcChannel.sendMessage('bash', ['customLocation|||customLocation']);
+        ipcChannel.sendMessage('bash', [
+          'customLocation|||customLocation >> ~/emudeck/electron.log',
+        ]);
 
         ipcChannel.on('customLocation', (stdout) => {
           stdout = stdout.replace('\n', '');
@@ -63,10 +65,12 @@ const RomStoragePage = () => {
   useEffect(() => {
     if (system != 'darwin') {
       // Mac testing
-      ipcChannel.sendMessage('bash', ['source ~/emudeck/functions/all.sh']);
+      ipcChannel.sendMessage('bash', [
+        'source ~/emudeck/functions/all.sh >> ~/emudeck/electron.log',
+      ]);
 
       ipcChannel.sendMessage('bash', [
-        'SDCardValid|||testLocationValid "SD" $(getSDPath)',
+        'SDCardValid|||testLocationValid "SD" $(getSDPath) >> ~/emudeck/electron.log',
       ]);
 
       ipcChannel.on('SDCardValid', (stdout) => {
@@ -89,7 +93,9 @@ const RomStoragePage = () => {
   //Let's get the SD Card name
   useEffect(() => {
     if (sdCardValid === true) {
-      ipcChannel.sendMessage('bash', ['SDCardName|||getSDPath']);
+      ipcChannel.sendMessage('bash', [
+        'SDCardName|||getSDPath >> ~/emudeck/electron.log',
+      ]);
 
       ipcChannel.on('SDCardName', (stdout) => {
         stdout = stdout.replace('\n', '');
