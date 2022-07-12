@@ -24,6 +24,7 @@ const RomStoragePage = () => {
         ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
         ipcChannel.on('customLocation', (message) => {
+          console.log(message);
           stdout = message.stdout.replace('\n', '');
           setState({
             ...state,
@@ -68,6 +69,7 @@ const RomStoragePage = () => {
       ]);
 
       ipcChannel.on('SDCardValid', (message) => {
+        console.log(message);
         stdout = message.stdout.replace('\n', '');
         stdout.includes('Valid') ? (stdout = true) : (stdout = false);
         setStatePage({
@@ -93,7 +95,7 @@ const RomStoragePage = () => {
       ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
 
       ipcChannel.on('SDCardName', (message) => {
-        console.log({ stdout });
+        console.log(message);
         stdout = message.stdout.replace('\n', '');
         if (system === 'darwin') {
           stdout = 'Test Mac';
