@@ -4,6 +4,7 @@ import { GlobalContext } from 'context/globalContext';
 import Welcome from 'components/organisms/Wrappers/Welcome.js';
 
 const WelcomePage = () => {
+  const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: true,
@@ -20,8 +21,6 @@ const WelcomePage = () => {
   };
 
   const { device, system, mode } = state;
-
-  const ipcChannel = window.electron.ipcRenderer;
 
   useEffect(() => {
     //
