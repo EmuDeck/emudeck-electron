@@ -18,7 +18,7 @@ const RomStoragePage = () => {
     statePage;
   const { mode, system } = state;
   const storageSet = (storageName) => {
-    if (system === 'darwin') {
+    if (system !== 'darwin') {
       // Mac testing
       if (storageName === 'Custom') {
         ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
