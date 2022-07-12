@@ -59,7 +59,7 @@ const WelcomePage = () => {
   useEffect(() => {
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
-        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout EmuReorg && touch ~/emudeck/.cloned && clear && echo true',
+        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout EmuReorg && touch ~/emudeck/.cloned && source ~/emudeck/backend/functions/all.sh && clear && echo true',
       ]);
       ipcChannel.on('clone', (stdout) => {
         if (stdout.includes('true')) {
@@ -69,10 +69,11 @@ const WelcomePage = () => {
     } else if (cloned == true) {
       console.log('git pull');
 
-      ipcChannel.sendMessage('bash', [
-        'pull|||cd ~/emudeck/backend && git pull',
+      ipcChannel.sendMessage('emudeck', [
+        'pull|||cd ~/emudeck/backend && git pull && source ~/emudeck/backend/functions/all.sh',
       ]);
       ipcChannel.on('pull', (stdout) => {
+        console.log(stdout);
         setStatePage({ ...statePage, downloadComplete: true });
       });
     }
