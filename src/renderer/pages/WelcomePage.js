@@ -20,7 +20,17 @@ const WelcomePage = () => {
     setState({ ...state, mode: value });
   };
 
-  const { device, system, mode } = state;
+  const { device, system, mode, command } = state;
+
+  const runCommand = () => {
+    ipcChannel.sendMessage('bash', [`TEST|||${command}`]);
+    ipcChannel.on('TEST', (message) => {
+      console.log(message);
+    });
+  };
+  const saveCommand = (e) => {
+    setState({ ...state, command: e.target.value });
+  };
 
   useEffect(() => {
     //
@@ -28,12 +38,6 @@ const WelcomePage = () => {
     //
     //
     //     //Already cloned?
-
-    ipcChannel.sendMessage('emudeck', ['esde|||ESDE.install']);
-    ipcChannel.on('esde', (message) => {
-      console.log(message);
-    });
-
     ipcChannel.sendMessage('bash', [
       'check-clone|||test -f ~/emudeck/.cloned  && echo true',
     ]);
@@ -92,6 +96,8 @@ const WelcomePage = () => {
       disabledBack={disabledBack}
       downloadComplete={downloadComplete}
       onClick={selectMode}
+      saveCommand={saveCommand}
+      runCommand={runCommand}
       back={false}
       next="rom-storage"
     />
