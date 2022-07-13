@@ -23,7 +23,7 @@ const WelcomePage = () => {
   const { device, system, mode, command } = state;
 
   const runCommand = () => {
-    ipcChannel.sendMessage('bash', [`TEST|||${command}`]);
+    ipcChannel.sendMessage('emudeck', [`TEST|||${command}`]);
     ipcChannel.on('TEST', (message) => {
       console.log(message);
     });
