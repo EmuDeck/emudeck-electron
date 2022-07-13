@@ -69,8 +69,8 @@ const WelcomePage = () => {
     } else if (cloned == true) {
       console.log('git pull');
 
-      ipcChannel.sendMessage('emudeck', [
-        'pull|||cd ~/emudeck/backend && git pull && source ~/emudeck/backend/functions/all.sh',
+      ipcChannel.sendMessage('bash', [
+        'pull|||cd ~/emudeck/backend && git pull',
       ]);
       ipcChannel.on('pull', (stdout) => {
         console.log(stdout);

@@ -59,7 +59,7 @@ ipcMain.on('emudeck', async (event, command) => {
   }
 
   return exec(
-    `source ~/emudeck/backend/functions/all.sh && ${bashCommand}`,
+    `/bin/bash "$HOME/emudeck/backend/execFnList.sh"  ${bashCommand}`,
     (error, stdout, stderr) => {
       //event.reply('console', { backChannel });
       event.reply(backChannel, {
