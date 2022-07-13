@@ -28,6 +28,12 @@ const WelcomePage = () => {
     //
     //
     //     //Already cloned?
+
+    // ipcChannel.sendMessage('emudeck', ['esde|||ESDE.install']);
+    // ipcChannel.on('esde', (message) => {
+    //   console.log(message);
+    // });
+
     ipcChannel.sendMessage('bash', [
       'check-clone|||test -f ~/emudeck/.cloned  && echo true',
     ]);
