@@ -69,7 +69,7 @@ const WelcomePage = () => {
   useEffect(() => {
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
-        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout EmuReorg && touch ~/emudeck/.cloned && source ~/emudeck/backend/functions/all.sh && clear && echo true',
+        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout EmuReorg && touch ~/emudeck/.cloned && clear && echo true',
       ]);
       ipcChannel.on('clone', (stdout) => {
         if (stdout.includes('true')) {
