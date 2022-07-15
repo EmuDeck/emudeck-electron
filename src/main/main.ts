@@ -59,7 +59,7 @@ ipcMain.on('emudeck', async (event, command) => {
   }
 
   return exec(
-    `/bin/bash "$HOME/emudeck/backend/execFn.sh"  ${bashCommand}`,
+  `source ~/emudeck/backend/functions/all.sh && ${bashCommand}`,
     (error, stdout, stderr) => {
       //event.reply('console', { backChannel });
       event.reply(backChannel, {
@@ -69,6 +69,10 @@ ipcMain.on('emudeck', async (event, command) => {
       });
     }
   );
+});
+
+ipcMain.on('debug', async (event, command) => {
+  mainWindow.webContents.openDevTools();
 });
 
 ipcMain.on('system-info', async (event, command) => {
@@ -129,7 +133,7 @@ const createWindow = async () => {
     },
   });
 
-  mainWindow.webContents.openDevTools();
+
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
   mainWindow.on('ready-to-show', () => {

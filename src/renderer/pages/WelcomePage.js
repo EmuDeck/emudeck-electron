@@ -22,15 +22,6 @@ const WelcomePage = () => {
 
   const { device, system, mode, command } = state;
 
-  const runCommand = () => {
-    ipcChannel.sendMessage('emudeck', [`TEST|||${command}`]);
-    ipcChannel.on('TEST', (message) => {
-      console.log(message);
-    });
-  };
-  const saveCommand = (e) => {
-    setState({ ...state, command: e.target.value });
-  };
 
   useEffect(() => {
     //
@@ -96,8 +87,6 @@ const WelcomePage = () => {
       disabledBack={disabledBack}
       downloadComplete={downloadComplete}
       onClick={selectMode}
-      saveCommand={saveCommand}
-      runCommand={runCommand}
       back={false}
       next="rom-storage"
     />

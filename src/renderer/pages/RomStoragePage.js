@@ -65,7 +65,7 @@ const RomStoragePage = () => {
   useEffect(() => {
     if (system !== 'darwin') {
       ipcChannel.sendMessage('emudeck', [
-        'SDCardValid|||testLocationValid "SD" "/run/media/mmcblk0p1"',
+        'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
       ]);
 
       ipcChannel.on('SDCardValid', (message) => {
