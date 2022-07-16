@@ -18,7 +18,7 @@ const RomStoragePage = () => {
     statePage;
   const { mode, system } = state;
   const storageSet = (storageName) => {
-    if (system === 'darwin') {
+    if (system !== 'darwin') {
       // Mac testing
       if (storageName === 'Custom') {
         ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
@@ -63,7 +63,7 @@ const RomStoragePage = () => {
 
   //Do we have a valid SD Card?
   useEffect(() => {
-    if (system === 'darwin') {
+    if (system !== 'darwin') {
       ipcChannel.sendMessage('emudeck', [
         'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
       ]);
