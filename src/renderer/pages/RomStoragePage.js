@@ -67,50 +67,49 @@ const RomStoragePage = () => {
       ipcChannel.sendMessage('emudeck', [
         'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
       ]);
-
-      ipcChannel.on('SDCardValid', (message) => {
-        console.log(message);
-        let stdout = message.stdout.replace('\n', '');
-        stdout.includes('Valid') ? (status = true) : (status = false);
-        setStatePage({
-          ...statePage,
-          sdCardValid: status,
-        });
-        setState({
-          ...state,
-          debugText: message,
-        });
-      });
     } else {
+      ipcChannel.sendMessage('emudeck', [
+        'SDCardValid|||testLocationValid "SD" ~/SDCARD',
+      ]);
+    }
+
+    ipcChannel.on('SDCardValid', (message) => {
+      console.log(message);
+      let stdout = message.stdout.replace('\n', '');
+      let status;
+      stdout.includes('Valid') ? (status = true) : (status = false);
       setStatePage({
         ...statePage,
-        sdCardValid: true,
-        sdCardName: 'Fake SD Card',
+        sdCardValid: status,
       });
-    }
+      setState({
+        ...state,
+        debugText: message,
+      });
+    });
   }, []);
 
   //Let's get the SD Card name
   useEffect(() => {
-   // if (sdCardValid === true) {
+    // if (sdCardValid === true) {
+    if (system !== 'darwin') {
       ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
-
-      ipcChannel.on('SDCardName', (message) => {
-        console.log(message);
-        let stdout = message.stdout.replace('\n', '');
-        if (system === 'darwin') {
-          stdout = 'Test Mac';
-        }
-        setStatePage({
-          ...statePage,
-          sdCardName: stdout,
-        });
-        setState({
-          ...state,
-          debugText: message,
-        });
+    } else {
+      ipcChannel.sendMessage('emudeck', ['SDCardName|||echo ~/SDCARD']);
+    }
+    ipcChannel.on('SDCardName', (message) => {
+      console.log(message);
+      let stdout = message.stdout.replace('\n', '');
+      setStatePage({
+        ...statePage,
+        sdCardName: stdout,
       });
-  //  }
+      setState({
+        ...state,
+        debugText: message,
+      });
+    });
+    //  }
   }, [sdCardValid]);
 
   const onClickGetCustom = () => {};

@@ -59,7 +59,7 @@ ipcMain.on('emudeck', async (event, command) => {
   }
 
   return exec(
-  `source ~/emudeck/backend/functions/all.sh && ${bashCommand}`,
+    `source ~/emudeck/backend/functions/all.sh && ${bashCommand}`,
     (error, stdout, stderr) => {
       //event.reply('console', { backChannel });
       event.reply(backChannel, {
@@ -132,7 +132,6 @@ const createWindow = async () => {
         : path.join(__dirname, '../../.erb/dll/preload.js'),
     },
   });
-
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 

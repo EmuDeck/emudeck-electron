@@ -22,7 +22,6 @@ const WelcomePage = () => {
 
   const { device, system, mode, command } = state;
 
-
   useEffect(() => {
     //
     //Cloning project
@@ -71,7 +70,7 @@ const WelcomePage = () => {
       console.log('git pull');
 
       ipcChannel.sendMessage('bash', [
-        'pull|||cd ~/emudeck/backend && git pull',
+        'pull|||cd ~/emudeck/backend && git reset --hard && git pull',
       ]);
       ipcChannel.on('pull', (stdout) => {
         console.log(stdout);
