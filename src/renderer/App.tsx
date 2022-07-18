@@ -40,6 +40,7 @@ export default function App() {
     bezels: true,
     powerTools: false,
     GyroDSU: false,
+    sudoPass: '',
     achievements: {
       user: '',
       pass: '',

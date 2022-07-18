@@ -5,7 +5,7 @@ import PowerTools from 'components/organisms/Wrappers/PowerTools.js';
 
 const PowerToolsPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { achievements } = state;
+  const { sudoPass } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -59,6 +59,7 @@ const PowerToolsPage = () => {
       onChange={setPowerTools}
       onClick={createSudo}
       hasSudo={hasSudo}
+      nextText={sudoPass ? 'Continue' : 'Skip'}
     />
   );
 };

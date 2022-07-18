@@ -5,7 +5,7 @@ import GyroDSU from 'components/organisms/Wrappers/GyroDSU.js';
 
 const GyroDSUPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { achievements } = state;
+  const { sudoPass } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -59,6 +59,7 @@ const GyroDSUPage = () => {
       onChange={setGyro}
       onClick={createSudo}
       hasSudo={hasSudo}
+      nextText={sudoPass ? 'Continue' : 'Skip'}
     />
   );
 };

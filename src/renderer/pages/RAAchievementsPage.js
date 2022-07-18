@@ -31,6 +31,7 @@ const RAAchievementsPage = () => {
       data={data}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
+      nextText={achievements.pass ? 'Continue' : 'Skip'}
       onChange={setAchievements}
     />
   );
