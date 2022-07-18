@@ -155,7 +155,7 @@ export default function App() {
           />
           <Route exact path="/shaders-classic" element={<Shaders2DPage />} />
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
-          <Route exact path="/powertools" element={<PowerToolsPage />} />
+          <Route exact path="/power-tools" element={<PowerToolsPage />} />
 
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
