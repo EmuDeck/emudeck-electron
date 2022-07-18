@@ -29,7 +29,7 @@ const RomStoragePage = () => {
           setState({
             ...state,
             storage: storageName,
-            storagePath: stdout,
+            storagePath: stdout.'/',
             debugText: message,
           });
         });
