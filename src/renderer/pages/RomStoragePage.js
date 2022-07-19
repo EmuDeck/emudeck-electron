@@ -17,6 +17,14 @@ const RomStoragePage = () => {
   const { disabledNext, disabledBack, data, sdCardValid, sdCardName } =
     statePage;
   const { mode, system } = state;
+
+  useEffect(() => {
+    setState({
+      ...state,
+      second: false,
+    });
+  }, []); // <-- here put the parameter to listen
+
   const storageSet = (storageName) => {
     if (storageName === 'Custom') {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);

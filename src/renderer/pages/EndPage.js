@@ -305,10 +305,13 @@ const EndPage = () => {
       `bash ~/emudeck/backend/install.sh -- EmuReorg false`,
     ]);
 
-    ipcChannel.sendMessage('bash', [
-      `finish|||bash ~/emudeck/backend/functions/checkForFile.sh ~/emudeck/.electron-finished delete  && clear && echo true`,
+    ipcChannel.sendMessage('emudeck', [
+      `finish|||checkForFile ~/emudeck/.electron-finished delete && clear && echo true`,
     ]);
-    ipcChannel.on('finish', (stdout) => {
+
+    ipcChannel.on('finish', (message) => {
+      console.log({ message });
+      let stdout = message.stdout;
       if (stdout.includes('true')) {
         setStatePage({ ...statePage, disabledNext: false });
       }
