@@ -86,14 +86,6 @@ export default function App() {
     },
   });
 
-  //Second install?
-  useEffect(() => {
-    //const settingsStorage = localStorage.getItem('settings_emudeck');
-    //if (!!settingsStorage) {
-    //setState(JSON.parse(settingsStorage));
-    // }
-  }, []);
-
   return (
     <GlobalContext.Provider
       value={{

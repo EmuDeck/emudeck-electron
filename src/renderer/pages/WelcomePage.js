@@ -20,7 +20,7 @@ const WelcomePage = () => {
     setState({ ...state, mode: value });
   };
 
-  const { device, system, mode, command } = state;
+  const { device, system, mode, command, second } = state;
 
   useEffect(() => {
     //
@@ -58,6 +58,13 @@ const WelcomePage = () => {
   }, [mode]);
 
   useEffect(() => {
+    const settingsStorage = localStorage.getItem('settings_emudeck');
+
+    if (!!settingsStorage) {
+      console.log({ settingsStorage });
+      setState(JSON.parse(settingsStorage));
+      setStatePage({ ...statePage, disabledNext: false });
+    }
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
         'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout EmuReorg && touch ~/emudeck/.cloned && clear && echo true',
@@ -83,7 +90,7 @@ const WelcomePage = () => {
   return (
     <Welcome
       data={data}
-      disabledNext={disabledNext}
+      disabledNext={second ? false : disabledNext}
       disabledBack={disabledBack}
       downloadComplete={downloadComplete}
       onClick={selectMode}
