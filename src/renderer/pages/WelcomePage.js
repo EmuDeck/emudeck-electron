@@ -28,8 +28,9 @@ const WelcomePage = () => {
     //
     //
     //     //Already cloned?
+
     ipcChannel.sendMessage('bash', [
-      'check-clone|||test -f ~/emudeck/.cloned  && echo true',
+      `check-clone|||bash ~/emudeck/backend/functions/checkForFile.sh ~/emudeck/.cloned keep  && clear && echo true`,
     ]);
     ipcChannel.on('check-clone', (stdout) => {
       stdout = stdout.replace('\n', '');

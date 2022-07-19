@@ -306,7 +306,7 @@ const EndPage = () => {
     ]);
 
     ipcChannel.sendMessage('bash', [
-      `finish|||bash ~/emudeck/backend/functions/ElectronISFinished.sh && clear && echo true`,
+      `finish|||bash ~/emudeck/backend/functions/checkForFile.sh ~/emudeck/.electron-finished delete  && clear && echo true`,
     ]);
     ipcChannel.on('finish', (stdout) => {
       if (stdout.includes('true')) {
