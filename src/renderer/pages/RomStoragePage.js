@@ -18,34 +18,27 @@ const RomStoragePage = () => {
     statePage;
   const { mode, system } = state;
   const storageSet = (storageName) => {
-    if (system !== 'darwin') {
-      // Mac testing
-      if (storageName === 'Custom') {
-        ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
+    if (storageName === 'Custom') {
+      ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
-        ipcChannel.on('customLocation', (message) => {
-          console.log(message);
-          let stdout = message.stdout.replace('\n', '');
-          setState({
-            ...state,
-            storage: storageName,
-            storagePath: stdout.'/',
-            debugText: message,
-          });
-        });
-      } else if (storageName === 'SD-Card') {
+      ipcChannel.on('customLocation', (message) => {
+        console.log(message);
+        let stdout = message.stdout.replace('\n', '');
+        stdout = `${stdout}/`;
         setState({
           ...state,
           storage: storageName,
-          storagePath: sdCardName,
+          storagePath: stdout,
+          debugText: message,
         });
-      } else {
-        setState({
-          ...state,
-          storage: storageName,
-          storagePath: '~/',
-        });
-      }
+      });
+    } else if (storageName === 'SD-Card') {
+      let sdCardPath = sdCardName + '/';
+      setState({
+        ...state,
+        storage: storageName,
+        storagePath: sdCardPath,
+      });
     } else {
       setState({
         ...state,
