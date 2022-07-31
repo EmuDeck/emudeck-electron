@@ -81,7 +81,7 @@ const WelcomePage = () => {
 
   return (
     <Welcome
-      data={data}
+      alert="This version of EmuDeck comes with a mayor update of the PS2 Emulator, please update your PS2 games using Steam Rom Manager at the end of this installation."
       disabledNext={second ? false : disabledNext}
       disabledBack={disabledBack}
       downloadComplete={downloadComplete}

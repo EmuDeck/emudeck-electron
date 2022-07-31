@@ -118,13 +118,18 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
+  const { screen } = require('electron')
+  const primaryDisplay = screen.getPrimaryDisplay()
+  const { width, height } = primaryDisplay.workAreaSize
+  const screenHeight = height < 601 ? 600 : 720;
+  const isFullscreen = height < 601 ? true : false;
   mainWindow = new BrowserWindow({
     show: false,
     width: 1280,
-    height: 600,
+    height: screenHeight,
     icon: getAssetPath('icon.png'),
-    resizable: true,
-    fullscreen: false,
+    resizable: false,
+    fullscreen: isFullscreen,
     autoHideMenuBar: true,
     webPreferences: {
       preload: app.isPackaged
@@ -180,6 +185,8 @@ app
   .whenReady()
   .then(() => {
     createWindow();
+
+
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
