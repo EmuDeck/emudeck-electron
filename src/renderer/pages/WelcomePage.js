@@ -42,10 +42,6 @@ const WelcomePage = () => {
     });
 
     ipcChannel.sendMessage('system-info');
-    //
-    //     ipcChannel.once('console', (stdout) => {
-    //       console.log({ stdout });
-    //     });
     ipcChannel.once('system-info-out', (platform) => {
       setState({ ...state, system: platform });
     });
@@ -61,28 +57,22 @@ const WelcomePage = () => {
     const settingsStorage = localStorage.getItem('settings_emudeck');
 
     if (!!settingsStorage) {
-      console.log({ settingsStorage });
       setState(JSON.parse(settingsStorage));
       setStatePage({ ...statePage, disabledNext: false });
     }
     if (cloned == false) {
-      console.log('cloning');
       ipcChannel.sendMessage('bash', [
         'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout beta && touch ~/emudeck/.cloned && printf "\ec" && echo true',
       ]);
 
       ipcChannel.on('clone', (stdout) => {
-        console.log('clone msg '+stdout);
         if (stdout.includes('true')) {
-          console.log('cloned');
           setStatePage({ ...statePage, downloadComplete: true });
         }
       });
     } else if (cloned == true) {
-      console.log('git pull');
-
       ipcChannel.sendMessage('bash', [
-        'pull|||cd ~/emudeck/backend && git reset --hard && git pull && git checkout beta',
+        'pull|||cd ~/emudeck/backend && git reset --hard && git clean -fd && git checkout beta && git pull',
       ]);
       ipcChannel.on('pull', (stdout) => {
         console.log(stdout);
