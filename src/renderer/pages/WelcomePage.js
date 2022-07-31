@@ -52,12 +52,11 @@ const WelcomePage = () => {
   }, [mode]);
 
   useEffect(() => {
-//     const settingsStorage = localStorage.getItem('settings_emudeck');
-//
-//     if (!!settingsStorage) {
-//       setState(JSON.parse(settingsStorage));
-//       setStatePage({ ...statePage, disabledNext: false });
-//     }
+    const settingsStorage = JSON.parse(localStorage.getItem('settings_emudeck'));
+    if (!!settingsStorage) {
+      setState({...state, ...settingsStorage});
+      setStatePage({ ...statePage, disabledNext: false });
+    }
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
         'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout '+branch+' && touch ~/emudeck/.cloned && printf "\ec" && echo true',
@@ -73,7 +72,6 @@ const WelcomePage = () => {
         'pull|||cd ~/emudeck/backend && git reset --hard && git clean -fd && git checkout '+branch+' && git pull',
       ]);
       ipcChannel.on('pull', (stdout) => {
-        console.log(stdout);
         setStatePage({ ...statePage, downloadComplete: true });
       });
     }
@@ -81,7 +79,7 @@ const WelcomePage = () => {
 
   return (
     <Welcome
-      alert="This version of EmuDeck comes with a mayor update of the PS2 Emulator, please update your PS2 games using Steam Rom Manager at the end of this installation."
+      alert="This version of EmuDeck comes with a mayor update of the PS2 Emulator, you'll need to refresh your PS2 Steam Games using Steam Rom Manager at the end of this installation."
       disabledNext={second ? false : disabledNext}
       disabledBack={disabledBack}
       downloadComplete={downloadComplete}
