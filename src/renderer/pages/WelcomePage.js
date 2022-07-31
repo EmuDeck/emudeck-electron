@@ -79,12 +79,13 @@ const WelcomePage = () => {
 
   return (
     <Welcome
-      alert="This version of EmuDeck comes with a mayor update of the PS2 Emulator, you'll need to refresh your PS2 Steam Games using Steam Rom Manager at the end of this installation."
+      alert="This version of EmuDeck comes with a major update of the PS2 Emulator, make sure to refresh your PS2 Steam Games using Steam Rom Manager at the end of this installation."
       disabledNext={second ? false : disabledNext}
-      disabledBack={disabledBack}
+      disabledBack={second ? false : disabledBack}
       downloadComplete={downloadComplete}
       onClick={selectMode}
-      back={false}
+      back={second ? "tools-and-stuff" : false}
+      backText={second ? "Tools & stuff" : "Install EmuDeck First"}
       next="rom-storage"
     />
   );

@@ -19,6 +19,7 @@ import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
+import ToolsAndStuff from 'pages/ToolsAndStuffPage';
 import EndPage from 'pages/EndPage';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
@@ -153,7 +154,7 @@ export default function App() {
           <Route exact path="/shaders-classic" element={<Shaders2DPage />} />
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
-
+          <Route exact path="/tools-and-stuff" element={<ToolsAndStuff />} />
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
