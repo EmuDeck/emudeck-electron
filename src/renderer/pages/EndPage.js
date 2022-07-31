@@ -212,6 +212,7 @@ const EndPage = () => {
       `echo RAautoSave=false >> ~/emudeck/settings.sh`,
     ]);
 
+    //old ar
     ipcChannel.sendMessage('bash', [
       `echo duckWide=false >> ~/emudeck/settings.sh`,
     ]);
@@ -223,6 +224,9 @@ const EndPage = () => {
     ]);
     ipcChannel.sendMessage('bash', [
       `echo BeetleWide=false >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo pcsx2QTWide=false >> ~/emudeck/settings.sh`,
     ]);
 
     //Paths

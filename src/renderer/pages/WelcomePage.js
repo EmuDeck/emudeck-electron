@@ -66,10 +66,13 @@ const WelcomePage = () => {
       setStatePage({ ...statePage, disabledNext: false });
     }
     if (cloned == false) {
+      console.log('cloning');
       ipcChannel.sendMessage('bash', [
-        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout EmuReorg && touch ~/emudeck/.cloned && clear && echo true',
+        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout beta && touch ~/emudeck/.cloned && clear && echo true',
       ]);
+      console.log('cloned');
       ipcChannel.on('clone', (stdout) => {
+        console.log('clone msg '+stdout);
         if (stdout.includes('true')) {
           setStatePage({ ...statePage, downloadComplete: true });
         }
@@ -79,8 +82,9 @@ const WelcomePage = () => {
         `check-clone2|||bash ~/emudeck/backend/functions/checkForFile.sh ~/emudeck/.cloned keep  && clear && echo true`,
       ]);
 
-      ipcChannel.on('check-clone2', (stdout) => {
-        stdout = stdout.replace('\n', '');
+      ipcChannel.on('check-clone2', (message) => {
+        console.log('clone2 msg '+message);
+        let stdout = message.stdout;
         if (stdout.includes('true')) {
           setStatePage({ ...statePage, downloadComplete: true });
         }
@@ -89,7 +93,7 @@ const WelcomePage = () => {
       console.log('git pull');
 
       ipcChannel.sendMessage('bash', [
-        'pull|||cd ~/emudeck/backend && git reset --hard && git pull',
+        'pull|||cd ~/emudeck/backend && git reset --hard && git pull && git checkout beta',
       ]);
       ipcChannel.on('pull', (stdout) => {
         console.log(stdout);
