@@ -313,7 +313,7 @@ const EndPage = () => {
       `finish|||checkForFile ~/emudeck/.electron-finished delete && echo 'Starting...' > ~/emudeck/msg.log && printf "\ec" && echo true`,
     ]);
 
-    ipcChannel.on('finish', (message) => {
+    ipcChannel.once('finish', (message) => {
       console.log({ message });
       let stdout = message.stdout;
       if (stdout.includes('true')) {

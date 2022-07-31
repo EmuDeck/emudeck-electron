@@ -30,7 +30,7 @@ const WelcomePage = () => {
     ipcChannel.sendMessage('bash', [
       'check-clone|||test -f ~/emudeck/.cloned  && echo true',
     ]);
-    ipcChannel.on('check-clone', (stdout) => {
+    ipcChannel.once('check-clone', (stdout) => {
       stdout = stdout.replace('\n', '');
       stdout.includes('true') ? (stdout = true) : (stdout = false);
       setStatePage({
@@ -62,7 +62,7 @@ const WelcomePage = () => {
         'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout '+branch+' && touch ~/emudeck/.cloned && printf "\ec" && echo true',
       ]);
 
-      ipcChannel.on('clone', (stdout) => {
+      ipcChannel.once('clone', (stdout) => {
         if (stdout.includes('true')) {
           setStatePage({ ...statePage, downloadComplete: true });
         }
@@ -71,7 +71,7 @@ const WelcomePage = () => {
       ipcChannel.sendMessage('bash', [
         'pull|||cd ~/emudeck/backend && git reset --hard && git clean -fd && git checkout '+branch+' && git pull',
       ]);
-      ipcChannel.on('pull', (stdout) => {
+      ipcChannel.once('pull', (stdout) => {
         setStatePage({ ...statePage, downloadComplete: true });
       });
     }

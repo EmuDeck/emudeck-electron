@@ -29,7 +29,7 @@ const RomStoragePage = () => {
     if (storageName === 'Custom') {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
-      ipcChannel.on('customLocation', (message) => {
+      ipcChannel.once('customLocation', (message) => {
         console.log(message);
         let stdout = message.stdout.replace('\n', '');
         stdout = `${stdout}/`;
@@ -74,7 +74,7 @@ const RomStoragePage = () => {
       ]);
     }
 
-    ipcChannel.on('SDCardValid', (message) => {
+    ipcChannel.once('SDCardValid', (message) => {
       console.log(message);
       let stdout = message.stdout.replace('\n', '');
       let status;
@@ -98,7 +98,7 @@ const RomStoragePage = () => {
     } else {
       ipcChannel.sendMessage('emudeck', ['SDCardName|||echo ~/SDCARD']);
     }
-    ipcChannel.on('SDCardName', (message) => {
+    ipcChannel.once('SDCardName', (message) => {
       console.log(message);
       let stdout = message.stdout.replace('\n', '');
       setStatePage({

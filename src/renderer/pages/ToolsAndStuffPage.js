@@ -42,7 +42,7 @@ const ToolsAndStuffPage = () => {
       'checkPWD|||passwd -S $(whoami) | awk -F " " "{print $2}" & exit',
     ]);
 
-    ipcChannel.on('checkPWD', (stdout) => {
+    ipcChannel.once('checkPWD', (stdout) => {
       console.log({ stdout });
       stdout = stdout.replace('\n', '');
       stdout.includes('NP') ? (stdout = false) : (stdout = true);
