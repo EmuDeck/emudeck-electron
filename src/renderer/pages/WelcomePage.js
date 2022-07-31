@@ -68,7 +68,7 @@ const WelcomePage = () => {
     if (cloned == false) {
       console.log('cloning');
       ipcChannel.sendMessage('bash', [
-        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout beta && touch ~/emudeck/.cloned && clear && echo true',
+        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout beta && touch ~/emudeck/.cloned && printf "\ec" && echo true',
       ]);
 
       ipcChannel.on('clone', (stdout) => {
