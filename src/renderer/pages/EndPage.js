@@ -306,7 +306,7 @@ const EndPage = () => {
 
     //Installation
     ipcChannel.sendMessage('bash', [
-      `bash ~/emudeck/backend/install.sh -- beta`,
+      `bash ~/emudeck/backend/install.sh -- beta false`,
     ]);
 
     ipcChannel.sendMessage('emudeck', [
