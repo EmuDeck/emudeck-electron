@@ -11,7 +11,7 @@ const EndPage = () => {
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-  const { second, debug } = state;
+  const { second, debug, branch } = state;
   const ipcChannel = window.electron.ipcRenderer;
   //Saving the config
   useEffect(() => {
@@ -306,7 +306,7 @@ const EndPage = () => {
 
     //Installation
     ipcChannel.sendMessage('bash', [
-      `bash ~/emudeck/backend/install.sh -- beta false`,
+      `bash ~/emudeck/backend/install.sh ${branch} false`,
     ]);
 
     ipcChannel.sendMessage('emudeck', [

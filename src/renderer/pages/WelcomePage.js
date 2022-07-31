@@ -20,7 +20,7 @@ const WelcomePage = () => {
     setState({ ...state, mode: value });
   };
 
-  const { device, system, mode, command, second } = state;
+  const { device, system, mode, command, second, branch } = state;
 
   useEffect(() => {
     //
@@ -62,7 +62,7 @@ const WelcomePage = () => {
     }
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
-        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout beta && touch ~/emudeck/.cloned && printf "\ec" && echo true',
+        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout '+branch+' && touch ~/emudeck/.cloned && printf "\ec" && echo true',
       ]);
 
       ipcChannel.on('clone', (stdout) => {
@@ -72,7 +72,7 @@ const WelcomePage = () => {
       });
     } else if (cloned == true) {
       ipcChannel.sendMessage('bash', [
-        'pull|||cd ~/emudeck/backend && git reset --hard && git clean -fd && git checkout beta && git pull',
+        'pull|||cd ~/emudeck/backend && git reset --hard && git clean -fd && git checkout '+branch+' && git pull',
       ]);
       ipcChannel.on('pull', (stdout) => {
         console.log(stdout);
