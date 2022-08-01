@@ -20,7 +20,9 @@ import PegasusThemePage from 'pages/PegasusThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
 import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
-import ToolsAndStuff from 'pages/ToolsAndStuffPage';
+import ToolsAndStuffPage from 'pages/ToolsAndStuffPage';
+import UpdateEmusPage from 'pages/UpdateEmusPage';
+
 import UninstallPage from 'pages/UninstallPage';
 
 
@@ -159,8 +161,10 @@ export default function App() {
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
-          <Route exact path="/tools-and-stuff" element={<ToolsAndStuff />} />
+          <Route exact path="/tools-and-stuff" element={<ToolsAndStuffPage />} />
           <Route exact path="/uninstall" element={<UninstallPage />} />
+          <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
+
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
