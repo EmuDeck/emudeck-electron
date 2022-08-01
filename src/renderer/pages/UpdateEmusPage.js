@@ -15,7 +15,13 @@ const UpdateEmusPage = () => {
   const ipcChannel = window.electron.ipcRenderer;
 
 
-  const updateEmus = (data) => {
+  const updateFlatpak = (data) => {
+    ipcChannel.sendMessage('bash', [
+      'bash ~/emudeck/backend/tools/flatpakupdate/flatpakupdate.sh',
+    ]);
+  };
+
+  const updateAppImage = (data) => {
     ipcChannel.sendMessage('bash', [
       'bash ~/emudeck/backend/tools/binupdate/binupdate.sh',
     ]);
@@ -25,7 +31,8 @@ const UpdateEmusPage = () => {
     <UpdateEmus
       disabledNext={disabledNext}
       disabledBack={disabledBack}
-      onClick={updateEmus}
+      onClickFlatpak={updateFlatpak}
+      onClickAppImage={updateAppImage}
     />
   );
 };
