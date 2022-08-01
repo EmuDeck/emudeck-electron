@@ -5,7 +5,7 @@ import EmulatorConfiguration from "components/organisms/Wrappers/EmulatorConfigu
 
 const EmulatorConfigurationPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { device, keepConfigEmus } = state;
+  const { device, overwriteConfigEmus } = state;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -15,13 +15,13 @@ const EmulatorConfigurationPage = () => {
   const { disabledNext, disabledBack, data } = statePage;
 
   const toggleEmus = (emulatorProp) => {
-    let { id, name, status } = keepConfigEmus[emulatorProp];
+    let { id, name, status } = overwriteConfigEmus[emulatorProp];
 
     setState({
       ...state,
-      keepConfigEmus: {
-        ...keepConfigEmus,
-        [emulatorProp]: { ...keepConfigEmus[emulatorProp], status: !status },
+      overwriteConfigEmus: {
+        ...overwriteConfigEmus,
+        [emulatorProp]: { ...overwriteConfigEmus[emulatorProp], status: !status },
       },
     });
   };

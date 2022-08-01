@@ -35,43 +35,43 @@ const EndPage = () => {
     //Setup Emus
     ipcChannel.sendMessage('bash', [
       `echo doSetupRA=${
-        state.keepConfigEmus.ra.status ? true : false
+        state.overwriteConfigEmus.ra.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupDolphin=${
-        state.keepConfigEmus.dolphin.status ? true : false
+        state.overwriteConfigEmus.dolphin.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
 
     ipcChannel.sendMessage('bash', [
       `echo doSetupPCSX2=${
-        state.keepConfigEmus.pcsx2.status ? true : false
+        state.overwriteConfigEmus.pcsx2.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupRPCS3=${
-        state.keepConfigEmus.rpcs3.status ? true : false
+        state.overwriteConfigEmus.rpcs3.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupYuzu=${
-        state.keepConfigEmus.yuzu.status ? true : false
+        state.overwriteConfigEmus.yuzu.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupCitra=${
-        state.keepConfigEmus.citra.status ? true : false
+        state.overwriteConfigEmus.citra.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupDuck=${
-        state.keepConfigEmus.duckstation.status ? true : false
+        state.overwriteConfigEmus.duckstation.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupCemu=${
-        state.keepConfigEmus.cemu.status ? true : false
+        state.overwriteConfigEmus.cemu.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
@@ -86,23 +86,23 @@ const EndPage = () => {
 
     ipcChannel.sendMessage('bash', [
       `echo doSetupPrimeHacks=${
-        state.keepConfigEmus.primehacks.status ? true : false
+        state.overwriteConfigEmus.primehacks.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupXemu=${
-        state.keepConfigEmus.xemu.status ? true : false
+        state.overwriteConfigEmus.xemu.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupPPSSPP=${
-        state.keepConfigEmus.ppsspp.status ? true : false
+        state.overwriteConfigEmus.ppsspp.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
 
     ipcChannel.sendMessage('bash', [
       `echo doSetupSRM=${
-        state.keepConfigEmus.srm.status ? true : false
+        state.overwriteConfigEmus.srm.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
 

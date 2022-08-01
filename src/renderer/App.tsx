@@ -18,8 +18,12 @@ import RAAchievementsPage from 'pages/RAAchievementsPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
+import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
 import ToolsAndStuff from 'pages/ToolsAndStuffPage';
+import UninstallPage from 'pages/UninstallPage';
+
+
 import EndPage from 'pages/EndPage';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
@@ -70,9 +74,9 @@ export default function App() {
       yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
-      srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
+      srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
     },
-    keepConfigEmus: {
+    overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
       dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
       primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
@@ -84,7 +88,7 @@ export default function App() {
       yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
-      srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
+      srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
     },
   });
 
@@ -154,7 +158,9 @@ export default function App() {
           <Route exact path="/shaders-classic" element={<Shaders2DPage />} />
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
+          <Route exact path="/chd-tool" element={<CHDToolPage />} />
           <Route exact path="/tools-and-stuff" element={<ToolsAndStuff />} />
+          <Route exact path="/uninstall" element={<UninstallPage />} />
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
