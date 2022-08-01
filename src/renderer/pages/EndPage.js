@@ -301,7 +301,14 @@ const EndPage = () => {
     ]);
 
     ipcChannel.sendMessage('bash', [
-      `echo achievementsPass=${state.achievements.user} >> ~/emudeck/settings.sh`,
+      `echo achievementsPass=${state.achievements.pass} >> ~/emudeck/settings.sh`,
+    ]);
+
+    //CloudSync
+    ipcChannel.sendMessage('bash', [
+      `echo doSetupSaveSync=${
+        state.CloudSync ? true : false
+      } >> ~/emudeck/settings.sh`,
     ]);
 
     //Installation

@@ -22,6 +22,7 @@ import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
 import ToolsAndStuffPage from 'pages/ToolsAndStuffPage';
 import UpdateEmusPage from 'pages/UpdateEmusPage';
+import CloudSyncPage from 'pages/CloudSyncPage';
 
 import UninstallPage from 'pages/UninstallPage';
 
@@ -48,6 +49,7 @@ export default function App() {
     bezels: true,
     powerTools: false,
     GyroDSU: false,
+    cloudSync:false,
     sudoPass: '',
     achievements: {
       user: '',
@@ -164,7 +166,7 @@ export default function App() {
           <Route exact path="/tools-and-stuff" element={<ToolsAndStuffPage />} />
           <Route exact path="/uninstall" element={<UninstallPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
-
+            <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
