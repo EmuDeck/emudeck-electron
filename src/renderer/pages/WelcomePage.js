@@ -43,6 +43,11 @@ const WelcomePage = () => {
     ipcChannel.once('system-info-out', (platform) => {
       setState({ ...state, system: platform });
     });
+
+    ipcChannel.sendMessage('version');
+    ipcChannel.once('version-out', (version) => {
+      setState({ ...state, version: version });
+    });
   }, []);
 
   useEffect(() => {
