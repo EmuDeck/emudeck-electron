@@ -52,4 +52,9 @@ jobs:
         run: |
           npm run postinstall
           npm run build
-          npm exec electron-builder -- --publish always --linux
+          npm exec electron-builder -- --publish always --linux --x64
+
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: linux-x86-appimage
+      #     path: ./release/build/EmuDeck-*.AppImage
