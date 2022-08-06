@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
-import { GlobalContext } from "context/globalContext";
+import React, { useEffect, useState, useContext } from 'react';
+import { GlobalContext } from 'context/globalContext';
 
-import EmulatorConfiguration from "components/organisms/Wrappers/EmulatorConfiguration.js";
+import EmulatorConfiguration from 'components/organisms/Wrappers/EmulatorConfiguration.js';
 
 const EmulatorConfigurationPage = () => {
   const { state, setState } = useContext(GlobalContext);
@@ -10,18 +10,21 @@ const EmulatorConfigurationPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    data: "",
+    data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
 
   const toggleEmus = (emulatorProp) => {
-    let { id, name, status } = overwriteConfigEmus[emulatorProp];
+    const { id, name, status } = overwriteConfigEmus[emulatorProp];
 
     setState({
       ...state,
       overwriteConfigEmus: {
         ...overwriteConfigEmus,
-        [emulatorProp]: { ...overwriteConfigEmus[emulatorProp], status: !status },
+        [emulatorProp]: {
+          ...overwriteConfigEmus[emulatorProp],
+          status: !status,
+        },
       },
     });
   };

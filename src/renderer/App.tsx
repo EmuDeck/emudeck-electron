@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { GlobalContext } from './context/globalContext';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
@@ -26,8 +25,8 @@ import CloudSyncPage from 'pages/CloudSyncPage';
 
 import UninstallPage from 'pages/UninstallPage';
 
-
 import EndPage from 'pages/EndPage';
+import { GlobalContext } from './context/globalContext';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
 import 'getbasecore/src/utils/grid-layout/core_grid-layout.scss';
@@ -35,7 +34,7 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 
 export default function App() {
   const [state, setState] = useState({
-    version:'',
+    version: '',
     branch: 'beta',
     command: '',
     debug: false,
@@ -50,7 +49,7 @@ export default function App() {
     bezels: true,
     powerTools: false,
     GyroDSU: false,
-    cloudSync:false,
+    cloudSync: false,
     sudoPass: '',
     achievements: {
       user: '',
@@ -96,9 +95,6 @@ export default function App() {
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
     },
   });
-
-
-
 
   return (
     <GlobalContext.Provider
@@ -164,10 +160,14 @@ export default function App() {
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
-          <Route exact path="/tools-and-stuff" element={<ToolsAndStuffPage />} />
+          <Route
+            exact
+            path="/tools-and-stuff"
+            element={<ToolsAndStuffPage />}
+          />
           <Route exact path="/uninstall" element={<UninstallPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
-            <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
+          <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
         </Routes>

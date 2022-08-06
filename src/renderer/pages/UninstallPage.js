@@ -8,16 +8,14 @@ const UninstallPage = () => {
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
-    disabledBack: false
+    disabledBack: false,
   });
   const { disabledNext, disabledBack } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
   const uninstall = (data) => {
-    ipcChannel.sendMessage('bash', [
-      'bash ~/emudeck/backend/uninstall.sh',
-    ]);
+    ipcChannel.sendMessage('bash', ['bash ~/emudeck/backend/uninstall.sh']);
     window.close();
   };
 

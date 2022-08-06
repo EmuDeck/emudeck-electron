@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
-import { GlobalContext } from "context/globalContext";
+import React, { useEffect, useState, useContext } from 'react';
+import { GlobalContext } from 'context/globalContext';
 
-import RAConfig from "components/organisms/Wrappers/RAConfig.js";
+import RAConfig from 'components/organisms/Wrappers/RAConfig.js';
 
 const RAConfigPage = () => {
   const { state, setState } = useContext(GlobalContext);
@@ -9,7 +9,7 @@ const RAConfigPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
-    data: "",
+    data: '',
   });
   const { disabledNext, disabledBack, overlaysInstalled, data } = statePage;
 
@@ -19,9 +19,9 @@ const RAConfigPage = () => {
       snes: snesAR,
     });
   };
-  //Enabling button when changing the global state only if we have a device selected
+  // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
-    if (snes != "") {
+    if (snes != '') {
       setStatePage({ ...statePage, disabledNext: false });
     }
   }, [state]); // <-- here put the parameter to listen

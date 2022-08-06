@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
-import { GlobalContext } from "context/globalContext";
+import React, { useEffect, useState, useContext } from 'react';
+import { GlobalContext } from 'context/globalContext';
 
-import AspectRatio3D from "components/organisms/Wrappers/AspectRatio3D.js";
+import AspectRatio3D from 'components/organisms/Wrappers/AspectRatio3D.js';
 
 const AspectRatio3DPage = () => {
   const { state, setState } = useContext(GlobalContext);
@@ -9,7 +9,7 @@ const AspectRatio3DPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    data: "",
+    data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
   const arSet = (arStatus) => {

@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
-import { GlobalContext } from "context/globalContext";
+import React, { useEffect, useState, useContext } from 'react';
+import { GlobalContext } from 'context/globalContext';
 
-import AspectRatioDolphin from "components/organisms/Wrappers/AspectRatioDolphin.js";
+import AspectRatioDolphin from 'components/organisms/Wrappers/AspectRatioDolphin.js';
 
 const AspectRatioDolphinPage = () => {
   const { state, setState } = useContext(GlobalContext);
@@ -9,7 +9,7 @@ const AspectRatioDolphinPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    data: "",
+    data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
   const arSet = (arStatus) => {

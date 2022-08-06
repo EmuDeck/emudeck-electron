@@ -41,7 +41,7 @@ const RomStoragePage = () => {
         });
       });
     } else if (storageName === 'SD-Card') {
-      let sdCardPath = sdCardName + '/';
+      const sdCardPath = `${sdCardName}/`;
       setState({
         ...state,
         storage: storageName,
@@ -55,14 +55,14 @@ const RomStoragePage = () => {
       });
     }
   };
-  //Enabling button when changing the global state only if we have a device selected
+  // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
     if (storage != '') {
       setStatePage({ ...statePage, disabledNext: false });
     }
   }, [state]); // <-- here put the parameter to listen
 
-  //Do we have a valid SD Card?
+  // Do we have a valid SD Card?
   useEffect(() => {
     if (system !== 'darwin') {
       ipcChannel.sendMessage('emudeck', [
@@ -76,7 +76,7 @@ const RomStoragePage = () => {
 
     ipcChannel.once('SDCardValid', (message) => {
       console.log(message);
-      let stdout = message.stdout.replace('\n', '');
+      const stdout = message.stdout.replace('\n', '');
       let status;
       stdout.includes('Valid') ? (status = true) : (status = false);
       setStatePage({
@@ -90,7 +90,7 @@ const RomStoragePage = () => {
     });
   }, []);
 
-  //Let's get the SD Card name
+  // Let's get the SD Card name
   useEffect(() => {
     // if (sdCardValid === true) {
     if (system !== 'darwin') {
@@ -100,7 +100,7 @@ const RomStoragePage = () => {
     }
     ipcChannel.once('SDCardName', (message) => {
       console.log(message);
-      let stdout = message.stdout.replace('\n', '');
+      const stdout = message.stdout.replace('\n', '');
       setStatePage({
         ...statePage,
         sdCardName: stdout,

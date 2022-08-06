@@ -40,7 +40,7 @@ ipcMain.on('bash', async (event, command) => {
   }
 
   return exec(`${bashCommand}`, (error, stdout, stderr) => {
-    //event.reply('console', { backChannel });
+    // event.reply('console', { backChannel });
     event.reply(backChannel, stdout);
   });
 });
@@ -61,11 +61,11 @@ ipcMain.on('emudeck', async (event, command) => {
   return exec(
     `source ~/emudeck/backend/functions/all.sh && ${bashCommand}`,
     (error, stdout, stderr) => {
-      //event.reply('console', { backChannel });
+      // event.reply('console', { backChannel });
       event.reply(backChannel, {
-        stdout: stdout,
-        stderr: stderr,
-        error: error,
+        stdout,
+        stderr,
+        error,
       });
     }
   );
@@ -83,7 +83,6 @@ ipcMain.on('system-info', async (event, command) => {
 ipcMain.on('version', async (event, command) => {
   event.reply('version-out', app.getVersion());
 });
-
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -123,11 +122,11 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
-  const { screen } = require('electron')
-  const primaryDisplay = screen.getPrimaryDisplay()
-  const { width, height } = primaryDisplay.workAreaSize
+  const { screen } = require('electron');
+  const primaryDisplay = screen.getPrimaryDisplay();
+  const { width, height } = primaryDisplay.workAreaSize;
   const screenHeight = height < 601 ? 600 : 720;
-  const isFullscreen = height < 601 ? true : false;
+  const isFullscreen = height < 601;
   mainWindow = new BrowserWindow({
     show: false,
     width: 1280,
@@ -212,7 +211,6 @@ app
   .whenReady()
   .then(() => {
     createWindow();
-
 
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

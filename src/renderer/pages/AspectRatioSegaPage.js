@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
-import { GlobalContext } from "context/globalContext";
+import React, { useEffect, useState, useContext } from 'react';
+import { GlobalContext } from 'context/globalContext';
 
-import AspectRatioSega from "components/organisms/Wrappers/AspectRatioSega.js";
+import AspectRatioSega from 'components/organisms/Wrappers/AspectRatioSega.js';
 
 const AspectRatioSegaPage = () => {
   const { state, setState } = useContext(GlobalContext);
@@ -9,7 +9,7 @@ const AspectRatioSegaPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    data: "",
+    data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
   const arSet = (arStatus) => {

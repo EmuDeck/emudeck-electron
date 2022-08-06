@@ -19,7 +19,7 @@ const DeviceSelectorPage = () => {
   });
   const { disabledNext, disabledBack, data } = statePage;
 
-  //Setting the device
+  // Setting the device
   const deviceSet = (deviceName) => {
     setStatePage({ ...statePage, disabledNext: false });
     if (deviceName === 'Odin Lite') {
@@ -158,7 +158,7 @@ const DeviceSelectorPage = () => {
     }
   };
 
-  //Enabling button when changing the global state only if we have a device selected
+  // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
     if (device != '') {
       setStatePage({ ...statePage, disabledNext: false });

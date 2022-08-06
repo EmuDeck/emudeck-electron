@@ -8,12 +8,11 @@ const UpdateEmusPage = () => {
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
-    disabledBack: false
+    disabledBack: false,
   });
   const { disabledNext, disabledBack } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
-
 
   const updateFlatpak = (data) => {
     ipcChannel.sendMessage('bash', [
