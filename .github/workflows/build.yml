@@ -37,6 +37,9 @@ jobs:
         if: steps.cache-node_modules.outputs.cache-hit != 'true'
         run: npm ci
 
+      - name: Git Sumbodule Update
+        run: git submodule update --init --recursive
+
       - name: Publish releases
         env:
           # These values are used for auto updates signing
@@ -50,6 +53,3 @@ jobs:
           npm run postinstall
           npm run build
           npm exec electron-builder -- --publish always --linux
-
-      - name: Git Sumbodule Update
-        run: git submodule update --init --recursive
