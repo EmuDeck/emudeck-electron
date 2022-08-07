@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useGlobalContext } from "context/globalContext";
 
 import AspectRatio2D from "components/organisms/Wrappers/AspectRatio2D.js";
