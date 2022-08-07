@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
-import { GlobalContext } from "context/globalContext";
+import React, { useState, useContext } from "react";
+import { useGlobalContext } from "context/globalContext";
 
 import AspectRatio2D from "components/organisms/Wrappers/AspectRatio2D.js";
 
 const AspectRatio2DPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState } = useGlobalContext();
   const { bezels } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
