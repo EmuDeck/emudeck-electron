@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { GlobalContext } from './context/globalContext';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
@@ -26,79 +25,15 @@ import CloudSyncPage from 'pages/CloudSyncPage';
 
 import UninstallPage from 'pages/UninstallPage';
 
-
 import EndPage from 'pages/EndPage';
+import { GlobalContext, initialState } from './context/globalContext';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
 import 'getbasecore/src/utils/grid-layout/core_grid-layout.scss';
 import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 
 export default function App() {
-  const [state, setState] = useState({
-    version:'',
-    branch: 'beta',
-    command: '',
-    debug: false,
-    debugText: '',
-    second: false,
-    mode: '',
-    system: '',
-    device: '',
-    storage: '',
-    storagePath: '',
-    SDID: '',
-    bezels: true,
-    powerTools: false,
-    GyroDSU: false,
-    cloudSync:false,
-    sudoPass: '',
-    achievements: {
-      user: '',
-      pass: '',
-    },
-    ar: {
-      sega: '43',
-      snes: '43',
-      classic3d: '43',
-      dolphin: '43',
-    },
-    shaders: {
-      handhelds: false,
-      classic: false,
-    },
-    theme: 'EPICNOIR',
-    installEmus: {
-      ra: { id: 'ra', status: true, name: 'RetroArch' },
-      dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-      primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-      ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-      duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-      citra: { id: 'citra', status: true, name: 'Citra' },
-      pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-      rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-      yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-      xemu: { id: 'xemu', status: true, name: 'Xemu' },
-      cemu: { id: 'cemu', status: true, name: 'Cemu' },
-      srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
-    },
-    overwriteConfigEmus: {
-      ra: { id: 'ra', status: true, name: 'RetroArch' },
-      dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-      primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-      ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-      duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-      citra: { id: 'citra', status: true, name: 'Citra' },
-      pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-      rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-      yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-      xemu: { id: 'xemu', status: true, name: 'Xemu' },
-      cemu: { id: 'cemu', status: true, name: 'Cemu' },
-      srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
-    },
-  });
-
-
-
+  const [state, setState] = useState(initialState);
 
   return (
     <GlobalContext.Provider
@@ -164,10 +99,14 @@ export default function App() {
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
-          <Route exact path="/tools-and-stuff" element={<ToolsAndStuffPage />} />
+          <Route
+            exact
+            path="/tools-and-stuff"
+            element={<ToolsAndStuffPage />}
+          />
           <Route exact path="/uninstall" element={<UninstallPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
-            <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
+          <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
