@@ -1,5 +1,4 @@
 import {
-  Context,
   createContext,
   Dispatch,
   FC,
@@ -95,5 +94,4 @@ export const GlobalContextProvider: FC<{ children: JSX.Element }> = ({
 };
 
 // TODO: fix this
-export const useGlobalContext: Context<GlobalContextInterface> = () =>
-  useContext(GlobalContext);
+export const useGlobalContext = () => useContext(GlobalContext);
