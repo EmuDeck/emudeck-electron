@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import WelcomePage from 'pages/WelcomePage';
@@ -26,83 +26,15 @@ import CloudSyncPage from 'pages/CloudSyncPage';
 import UninstallPage from 'pages/UninstallPage';
 
 import EndPage from 'pages/EndPage';
-import { GlobalContext } from './context/globalContext';
+import { GlobalContextProvider } from './context/globalContext';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
 import 'getbasecore/src/utils/grid-layout/core_grid-layout.scss';
 import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 
 export default function App() {
-  const [state, setState] = useState({
-    version: '',
-    branch: 'beta',
-    command: '',
-    debug: false,
-    debugText: '',
-    second: false,
-    mode: '',
-    system: '',
-    device: '',
-    storage: '',
-    storagePath: '',
-    SDID: '',
-    bezels: true,
-    powerTools: false,
-    GyroDSU: false,
-    cloudSync: false,
-    sudoPass: '',
-    achievements: {
-      user: '',
-      pass: '',
-    },
-    ar: {
-      sega: '43',
-      snes: '43',
-      classic3d: '43',
-      dolphin: '43',
-    },
-    shaders: {
-      handhelds: false,
-      classic: false,
-    },
-    theme: 'EPICNOIR',
-    installEmus: {
-      ra: { id: 'ra', status: true, name: 'RetroArch' },
-      dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-      primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-      ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-      duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-      citra: { id: 'citra', status: true, name: 'Citra' },
-      pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-      rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-      yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-      xemu: { id: 'xemu', status: true, name: 'Xemu' },
-      cemu: { id: 'cemu', status: true, name: 'Cemu' },
-      srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
-    },
-    overwriteConfigEmus: {
-      ra: { id: 'ra', status: true, name: 'RetroArch' },
-      dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-      primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-      ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-      duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-      citra: { id: 'citra', status: true, name: 'Citra' },
-      pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-      rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-      yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-      xemu: { id: 'xemu', status: true, name: 'Xemu' },
-      cemu: { id: 'cemu', status: true, name: 'Cemu' },
-      srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
-    },
-  });
-
   return (
-    <GlobalContext.Provider
-      value={{
-        state,
-        setState,
-      }}
-    >
+    <GlobalContextProvider>
       <Router>
         <Routes>
           <Route exact path="/" element={<WelcomePage />} />
@@ -172,6 +104,6 @@ export default function App() {
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
       </Router>
-    </GlobalContext.Provider>
+    </GlobalContextProvider>
   );
 }
