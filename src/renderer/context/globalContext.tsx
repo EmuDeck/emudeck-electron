@@ -93,5 +93,4 @@ export const GlobalContextProvider: FC<{ children: JSX.Element }> = ({
   );
 };
 
-// TODO: fix this
 export const useGlobalContext = () => useContext(GlobalContext);
