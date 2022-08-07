@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useGlobalContext, EmuConfigKeys } from 'context/globalContext';
-
+import { useGlobalContext } from 'context/globalContext';
+import type { EmuConfigKeys } from 'context/index';
 import EmulatorConfiguration from 'components/organisms/Wrappers/EmulatorConfiguration.js';
 
 const EmulatorConfigurationPage = () => {

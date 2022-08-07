@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useGlobalContext, EmuConfigKeys } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
+import type { EmuConfigKeys } from 'context/index';
 
 import EmulatorSelector from 'components/organisms/Wrappers/EmulatorSelector.js';
 

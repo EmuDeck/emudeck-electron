@@ -8,8 +8,6 @@ import {
 } from 'react';
 import { GlobalState } from '.';
 
-export * from '.';
-
 export interface GlobalContextInterface {
   state: GlobalState;
   setState: Dispatch<SetStateAction<GlobalState>>;
