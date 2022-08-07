@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
 import RomStorage from 'components/organisms/Wrappers/RomStorage.js';
 
 const RomStoragePage = () => {
   const ipcChannel = window.electron.ipcRenderer;
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState } = useGlobalContext();
   const { storage, SDID } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
@@ -25,7 +25,7 @@ const RomStoragePage = () => {
     });
   }, []); // <-- here put the parameter to listen
 
-  const storageSet = (storageName) => {
+  const storageSet = (storageName: string) => {
     if (storageName === 'Custom') {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 

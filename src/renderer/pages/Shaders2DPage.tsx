@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useState, useContext } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
 import Shaders2D from 'components/organisms/Wrappers/Shaders2D.js';
 
 const Shaders2DPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState } = useGlobalContext();
   const { shaders } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -12,7 +12,7 @@ const Shaders2DPage = () => {
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-  const shaderSet = (shaderStatus) => {
+  const shaderSet = (shaderStatus: boolean) => {
     setState({
       ...state,
       shaders: {

@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
-import AspectRatioSega from 'components/organisms/Wrappers/AspectRatioSega.js';
+import AspectRatio3D from 'components/organisms/Wrappers/AspectRatio3D.js';
 
-const AspectRatioSegaPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+const AspectRatio3DPage = () => {
+  const { state, setState } = useGlobalContext();
   const { ar } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -12,18 +12,18 @@ const AspectRatioSegaPage = () => {
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-  const arSet = (arStatus) => {
+  const arSet = (arStatus: string) => {
     setState({
       ...state,
       ar: {
         ...ar,
-        sega: arStatus,
+        classic3d: arStatus,
       },
     });
   };
 
   return (
-    <AspectRatioSega
+    <AspectRatio3D
       data={data}
       onClick={arSet}
       disabledNext={disabledNext}
@@ -32,4 +32,4 @@ const AspectRatioSegaPage = () => {
   );
 };
 
-export default AspectRatioSegaPage;
+export default AspectRatio3DPage;

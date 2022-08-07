@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
 import RomStructure from 'components/organisms/Wrappers/RomStructure.js';
 
 const RomStoragePage = () => {
-  const { state, setState } = useContext(GlobalContext);
-  const { SDID, storage } = state;
+  const { state, setState } = useGlobalContext();
+  // const { SDID, storage } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,

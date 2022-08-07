@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { EventHandler, useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
-import ToolsAndStuff from 'components/organisms/Wrappers/ToolsAndStuff.js';
+import PowerTools from 'components/organisms/Wrappers/PowerTools.js';
 
-const ToolsAndStuffPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+const PowerToolsPage = () => {
+  const { state, setState } = useGlobalContext();
   const { sudoPass } = state;
-
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -17,16 +16,16 @@ const ToolsAndStuffPage = () => {
 
   const ipcChannel = window.electron.ipcRenderer;
 
-  const setToolsAndStuff = (data) => {
-    if (data.target.value != '') {
+  const setPowerTools = (data) => {
+    if (data.target.value !== '') {
       setState({
         ...state,
-        ToolsAndStuff: true,
+        powerTools: true,
       });
     } else {
       setState({
         ...state,
-        ToolsAndStuff: false,
+        powerTools: false,
       });
     }
   };
@@ -54,10 +53,10 @@ const ToolsAndStuffPage = () => {
   }, []);
 
   return (
-    <ToolsAndStuff
+    <PowerTools
       disabledNext={disabledNext}
       disabledBack={disabledBack}
-      onChange={setToolsAndStuff}
+      onChange={setPowerTools}
       onClick={createSudo}
       hasSudo={hasSudo}
       nextText={sudoPass ? 'Continue' : 'Skip'}
@@ -65,4 +64,4 @@ const ToolsAndStuffPage = () => {
   );
 };
 
-export default ToolsAndStuffPage;
+export default PowerToolsPage;

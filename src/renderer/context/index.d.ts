@@ -37,6 +37,8 @@ export interface EmuConfigs {
   srm: EmuConfig;
 }
 
+export type EmuConfigKeys = keyof EmuConfigs;
+
 export interface GlobalState {
   version: string;
   branch: string;

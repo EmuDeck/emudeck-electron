@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
 import RABezels from 'components/organisms/Wrappers/RABezels.js';
 
 const RABezelsPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState } = useGlobalContext();
   const { bezels } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -12,7 +12,7 @@ const RABezelsPage = () => {
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-  const bezelsSet = (bezelStatus) => {
+  const bezelsSet = (bezelStatus: boolean) => {
     setState({
       ...state,
       bezels: bezelStatus,
@@ -20,7 +20,7 @@ const RABezelsPage = () => {
   };
   // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
-    if (bezels != '') {
+    if (bezels) {
       setStatePage({ ...statePage, disabledNext: false });
     }
   }, [state]); // <-- here put the parameter to listen

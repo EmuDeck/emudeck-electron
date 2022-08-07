@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
 import RAConfig from 'components/organisms/Wrappers/RAConfig.js';
 
 const RAConfigPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState } = useGlobalContext();
   const { snes } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,

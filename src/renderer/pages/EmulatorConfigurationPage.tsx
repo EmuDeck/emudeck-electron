@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import React, { useEffect, useState } from 'react';
+import { useGlobalContext, EmuConfigKeys } from 'context/globalContext';
 
 import EmulatorConfiguration from 'components/organisms/Wrappers/EmulatorConfiguration.js';
 
 const EmulatorConfigurationPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState } = useGlobalContext();
   const { device, overwriteConfigEmus } = state;
 
   const [statePage, setStatePage] = useState({
@@ -14,7 +14,7 @@ const EmulatorConfigurationPage = () => {
   });
   const { disabledNext, disabledBack, data } = statePage;
 
-  const toggleEmus = (emulatorProp) => {
+  const toggleEmus = (emulatorProp: EmuConfigKeys) => {
     const { id, name, status } = overwriteConfigEmus[emulatorProp];
 
     setState({

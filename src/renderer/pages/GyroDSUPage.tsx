@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
-import PowerTools from 'components/organisms/Wrappers/PowerTools.js';
+import GyroDSU from 'components/organisms/Wrappers/GyroDSU.js';
 
-const PowerToolsPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+const GyroDSUPage = () => {
+  const { state, setState } = useGlobalContext();
   const { sudoPass } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -16,16 +16,16 @@ const PowerToolsPage = () => {
 
   const ipcChannel = window.electron.ipcRenderer;
 
-  const setPowerTools = (data) => {
-    if (data.target.value != '') {
+  const setGyro = (data) => {
+    if (data.target.value !== '') {
       setState({
         ...state,
-        powerTools: true,
+        GyroDSU: true,
       });
     } else {
       setState({
         ...state,
-        powerTools: false,
+        GyroDSU: false,
       });
     }
   };
@@ -53,10 +53,10 @@ const PowerToolsPage = () => {
   }, []);
 
   return (
-    <PowerTools
+    <GyroDSU
       disabledNext={disabledNext}
       disabledBack={disabledBack}
-      onChange={setPowerTools}
+      onChange={setGyro}
       onClick={createSudo}
       hasSudo={hasSudo}
       nextText={sudoPass ? 'Continue' : 'Skip'}
@@ -64,4 +64,4 @@ const PowerToolsPage = () => {
   );
 };
 
-export default PowerToolsPage;
+export default GyroDSUPage;

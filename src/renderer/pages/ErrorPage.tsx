@@ -1,3 +1,5 @@
+// TODO: import Main ?
+
 export const ErrorPage = () => {
   // let history = useHistory();
 
@@ -9,3 +11,5 @@ export const ErrorPage = () => {
     </Main>
   );
 };
+
+export default ErrorPage;

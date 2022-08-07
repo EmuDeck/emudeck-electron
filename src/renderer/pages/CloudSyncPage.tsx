@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
 import CloudSync from 'components/organisms/Wrappers/CloudSync.js';
 
 const CloudSyncPage = () => {
-  const { state, setState } = useContext(GlobalContext);
-  const { ar } = state;
+  const { state, setState } = useGlobalContext();
+  // const { ar } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-  const cloudSyncSet = (cloudSyncStatus) => {
+  const cloudSyncSet = (cloudSyncStatus: boolean) => {
     setState({
       ...state,
       cloudSync: cloudSyncStatus,

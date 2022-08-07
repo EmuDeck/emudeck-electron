@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
 import RAAchievements from 'components/organisms/Wrappers/RAAchievements.js';
 
 const RAAchievementsPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState } = useGlobalContext();
   const { achievements } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -13,7 +13,7 @@ const RAAchievementsPage = () => {
   });
   const { disabledNext, disabledBack, data } = statePage;
   const setAchievements = (data) => {
-    if (data.target.name == 'user') {
+    if (data.target.name === 'user') {
       setState({
         ...state,
         achievements: { ...achievements, user: data.target.value },

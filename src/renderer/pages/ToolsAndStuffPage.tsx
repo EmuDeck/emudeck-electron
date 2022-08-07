@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
-import GyroDSU from 'components/organisms/Wrappers/GyroDSU.js';
+import ToolsAndStuff from 'components/organisms/Wrappers/ToolsAndStuff.js';
 
-const GyroDSUPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+const ToolsAndStuffPage = () => {
+  const { state, setState } = useGlobalContext();
   const { sudoPass } = state;
+
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -16,16 +17,16 @@ const GyroDSUPage = () => {
 
   const ipcChannel = window.electron.ipcRenderer;
 
-  const setGyro = (data) => {
+  const setToolsAndStuff = (data) => {
     if (data.target.value != '') {
       setState({
         ...state,
-        GyroDSU: true,
+        ToolsAndStuff: true,
       });
     } else {
       setState({
         ...state,
-        GyroDSU: false,
+        ToolsAndStuff: false,
       });
     }
   };
@@ -53,10 +54,10 @@ const GyroDSUPage = () => {
   }, []);
 
   return (
-    <GyroDSU
+    <ToolsAndStuff
       disabledNext={disabledNext}
       disabledBack={disabledBack}
-      onChange={setGyro}
+      onChange={setToolsAndStuff}
       onClick={createSudo}
       hasSudo={hasSudo}
       nextText={sudoPass ? 'Continue' : 'Skip'}
@@ -64,4 +65,4 @@ const GyroDSUPage = () => {
   );
 };
 
-export default GyroDSUPage;
+export default ToolsAndStuffPage;

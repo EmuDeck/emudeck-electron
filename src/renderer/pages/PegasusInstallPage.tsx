@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+// import { useGlobalContext } from 'context/globalContext';
 
 import PegasusInstall from 'components/organisms/Wrappers/PegasusInstall.js';
 
 const PegasusInstallPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  // const { state, setState } = useGlobalContext();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,

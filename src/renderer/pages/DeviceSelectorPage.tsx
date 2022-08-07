@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
 import DeviceSelector from 'components/organisms/Wrappers/DeviceSelector.js';
 
@@ -10,7 +10,7 @@ import imgAndroid from 'assets/android.png';
 import imgDeck from 'assets/deck.png';
 
 const DeviceSelectorPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState } = useGlobalContext();
   const { device, installEmus } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
@@ -20,7 +20,7 @@ const DeviceSelectorPage = () => {
   const { disabledNext, disabledBack, data } = statePage;
 
   // Setting the device
-  const deviceSet = (deviceName) => {
+  const deviceSet = (deviceName: string) => {
     setStatePage({ ...statePage, disabledNext: false });
     if (deviceName === 'Odin Lite') {
       setState({
@@ -160,7 +160,7 @@ const DeviceSelectorPage = () => {
 
   // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
-    if (device != '') {
+    if (device !== '') {
       setStatePage({ ...statePage, disabledNext: false });
     }
   }, [state]); // <-- here put the parameter to listen

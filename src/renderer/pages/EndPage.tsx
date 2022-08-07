@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+// TODO: figure out ipChannel types
+
+import React, { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
 import End from 'components/organisms/Wrappers/End.js';
 
 const EndPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState } = useGlobalContext();
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: true,
@@ -296,7 +298,7 @@ const EndPage = () => {
   }, [second]);
 
   const openSRM = () => {
-    if (state.storage == 'SD-Card') {
+    if (state.storage === 'SD-Card') {
       ipcChannel.sendMessage('bash', [
         `cd /run/media/mmcblk0p1/Emulation/tools/srm && ./Steam-ROM-Manager.AppImage`,
       ]);

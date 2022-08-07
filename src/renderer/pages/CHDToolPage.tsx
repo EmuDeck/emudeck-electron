@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useState } from 'react';
+// import { useGlobalContext } from 'context/globalContext';
 
 import CHDTool from 'components/organisms/Wrappers/CHDTool.js';
 
 const CHDToolPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  // const { state, setState } = useGlobalContext();
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -14,7 +14,8 @@ const CHDToolPage = () => {
 
   const ipcChannel = window.electron.ipcRenderer;
 
-  const runCHD = (data) => {
+  const runCHD = (data: any) => {
+    // TODO: figure out ipcChannel types
     ipcChannel.sendMessage('bash', [
       'bash ~/emudeck/backend/tools/chdconv/chddeck.sh',
     ]);

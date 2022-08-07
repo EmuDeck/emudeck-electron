@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
 import PegasusTheme from 'components/organisms/Wrappers/PegasusTheme.js';
 
 const PegasusThemePage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState } = useGlobalContext();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-  const themeSet = (themeName) => {
+  const themeSet = (themeName: string) => {
     setState({
       ...state,
       theme: themeName,

@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useEffect, useState } from 'react';
+import { useGlobalContext } from 'context/globalContext';
 
 import Welcome from 'components/organisms/Wrappers/Welcome.js';
 
 const WelcomePage = () => {
   const ipcChannel = window.electron.ipcRenderer;
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState } = useGlobalContext();
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: true,
     downloadComplete: false,
-    cloned: undefined,
+    cloned: undefined, // string?
     data: '',
   });
   const { disabledNext, disabledBack, downloadComplete, data, cloned } =
@@ -54,14 +54,14 @@ const WelcomePage = () => {
   }, []);
 
   useEffect(() => {
-    if (mode != '') {
+    if (mode !== '') {
       setStatePage({ ...statePage, disabledNext: false });
     }
   }, [mode]);
 
   useEffect(() => {
     const settingsStorage = JSON.parse(
-      localStorage.getItem('settings_emudeck')
+      localStorage.getItem('settings_emudeck') || '{}'
     );
     if (settingsStorage) {
       setState({ ...state, ...settingsStorage });

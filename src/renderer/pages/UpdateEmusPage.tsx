@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import { useState } from 'react';
+// import { useGlobalContext } from 'context/globalContext';
 
 import UpdateEmus from 'components/organisms/Wrappers/UpdateEmus.js';
 
 const UpdateEmusPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+  // const { state, setState } = useGlobalContext();
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
