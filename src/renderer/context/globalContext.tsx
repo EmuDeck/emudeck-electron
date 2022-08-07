@@ -1,9 +1,17 @@
-import { createContext } from 'react';
+import {
+  Context,
+  createContext,
+  Dispatch,
+  FC,
+  SetStateAction,
+  useContext,
+  useState,
+} from 'react';
 import { GlobalState } from '.';
 
 export interface GlobalContextInterface {
   state: GlobalState;
-  setState: (state: any) => void;
+  setState: Dispatch<SetStateAction<GlobalState>>;
 }
 
 export const initialState: GlobalState = {
@@ -69,4 +77,23 @@ export const initialState: GlobalState = {
   },
 };
 
-export const GlobalContext = createContext<GlobalContextInterface>(null);
+export const GlobalContext = createContext<GlobalContextInterface>({
+  state: initialState,
+  setState: () => {},
+});
+
+// TODO: I shouldn't have to type JSX.Element here, but it's not working.
+export const GlobalContextProvider: FC<{ children: JSX.Element }> = ({
+  children,
+}) => {
+  const [state, setState] = useState(initialState);
+  return (
+    <GlobalContext.Provider value={{ state, setState }}>
+      {children}
+    </GlobalContext.Provider>
+  );
+};
+
+// TODO: fix this
+export const useGlobalContext: Context<GlobalContextInterface> = () =>
+  useContext(GlobalContext);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import WelcomePage from 'pages/WelcomePage';
@@ -26,22 +26,15 @@ import CloudSyncPage from 'pages/CloudSyncPage';
 import UninstallPage from 'pages/UninstallPage';
 
 import EndPage from 'pages/EndPage';
-import { GlobalContext, initialState } from './context/globalContext';
+import { GlobalContextProvider } from './context/globalContext';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
 import 'getbasecore/src/utils/grid-layout/core_grid-layout.scss';
 import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 
 export default function App() {
-  const [state, setState] = useState(initialState);
-
   return (
-    <GlobalContext.Provider
-      value={{
-        state,
-        setState,
-      }}
-    >
+    <GlobalContextProvider>
       <Router>
         <Routes>
           <Route exact path="/" element={<WelcomePage />} />
@@ -111,6 +104,6 @@ export default function App() {
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
       </Router>
-    </GlobalContext.Provider>
+    </GlobalContextProvider>
   );
 }
