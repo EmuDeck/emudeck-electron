@@ -22,22 +22,7 @@ export interface EmuConfig {
   name: string;
 }
 
-export interface InstallEmus {
-  ra: EmuConfig;
-  dolphin: EmuConfig;
-  primehacks: EmuConfig;
-  ppsspp: EmuConfig;
-  duckstation: EmuConfig;
-  citra: EmuConfig;
-  pcsx2: EmuConfig;
-  rpcs3: EmuConfig;
-  yuzu: EmuConfig;
-  xemu: EmuConfig;
-  cemu: EmuConfig;
-  srm: EmuConfig;
-}
-
-export interface OverwriteConfigEmus {
+export interface EmuConfigs {
   ra: EmuConfig;
   dolphin: EmuConfig;
   primehacks: EmuConfig;
@@ -74,6 +59,6 @@ export interface GlobalState {
   ar: Ar;
   shaders: Shaders;
   theme: string;
-  installEmus: InstallEmus;
-  overwriteConfigEmus: OverwriteConfigEmus;
+  installEmus: EmuConfigs;
+  overwriteConfigEmus: EmuConfigs;
 }
