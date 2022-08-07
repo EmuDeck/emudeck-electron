@@ -31,6 +31,7 @@ jobs:
       - name: Install Node and NPM
         uses: actions/setup-node@v3
         with:
+          cache: 'npm'
           node-version-file: .nvmrc
 
       - name: Install dependencies
