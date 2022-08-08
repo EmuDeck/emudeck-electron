@@ -96,6 +96,8 @@ const WelcomePage = () => {
       back={second ? "tools-and-stuff" : false}
       backText={second ? "Tools & stuff" : "Install EmuDeck First"}
       next="rom-storage"
+      third="change-log"
+      thirdText="See changelog"
     />
   );
 };

@@ -23,6 +23,7 @@ import GyroDSUPage from 'pages/GyroDSUPage';
 import ToolsAndStuffPage from 'pages/ToolsAndStuffPage';
 import UpdateEmusPage from 'pages/UpdateEmusPage';
 import CloudSyncPage from 'pages/CloudSyncPage';
+import ChangeLogPage from 'pages/ChangeLogPage';
 
 import UninstallPage from 'pages/UninstallPage';
 
@@ -43,9 +44,9 @@ export default function App() {
     second: false,
     mode: '',
     system: '',
-    device: '',
-    storage: '',
-    storagePath: '',
+    device: 'Steam Deck',
+    storage: 'Internal Storage',
+    storagePath: '~/',
     SDID: '',
     bezels: true,
     powerTools: false,
@@ -166,6 +167,8 @@ export default function App() {
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
+          <Route exact path="/change-log" element={<ChangeLogPage />} />
+
           <Route exact path="/tools-and-stuff" element={<ToolsAndStuffPage />} />
           <Route exact path="/uninstall" element={<UninstallPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
