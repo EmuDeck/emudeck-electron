@@ -20,7 +20,7 @@ const WelcomePage = () => {
     setState({ ...state, mode: value });
   };
 
-  const { device, system, mode, command, second, branch } = state;
+  const { device, system, mode, command, second, branch, installEmus,overwriteConfigEmus } = state;
 
   useEffect(() => {
     //
@@ -60,7 +60,8 @@ const WelcomePage = () => {
   useEffect(() => {
     const settingsStorage = JSON.parse(localStorage.getItem('settings_emudeck'));
     if (!!settingsStorage) {
-      setState({...state, ...settingsStorage});
+      //Theres probably a better way to do this...
+      setState({...state, ...settingsStorage, installEmus : state.installEmus, overwriteConfigEmus : state.overwriteConfigEmus});
       setStatePage({ ...statePage, disabledNext: false });
     }
     if (cloned == false) {
