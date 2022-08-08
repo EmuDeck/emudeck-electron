@@ -317,7 +317,7 @@ const EndPage = () => {
     ]);
 
     ipcChannel.sendMessage('emudeck', [
-      `finish|||checkForFile ~/emudeck/.electron-finished delete && echo 'Starting...' > ~/emudeck/msg.log && printf "\ec" && echo true`,
+      `finish|||checkForFile ~/emudeck/.ui-finished delete && echo 'Starting...' > ~/emudeck/msg.log && printf "\ec" && echo true`,
     ]);
 
     ipcChannel.once('finish', (message) => {
