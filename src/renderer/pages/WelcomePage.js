@@ -28,7 +28,7 @@ const WelcomePage = () => {
     //
     //     //Already cloned?
     ipcChannel.sendMessage('bash', [
-      'check-clone|||test -f ~/emudeck/.cloned  && echo true',
+      'check-clone|||test -e ~/emudeck/backend/.git/config  && echo true',
     ]);
     ipcChannel.once('check-clone', (cloneStatus) => {
       console.log({cloneStatus})
@@ -59,10 +59,10 @@ const WelcomePage = () => {
 
   useEffect(() => {
     const settingsStorage = JSON.parse(localStorage.getItem('settings_emudeck'));
-    // if (!!settingsStorage) {
-    //   setState({...state, ...settingsStorage});
-    //   setStatePage({ ...statePage, disabledNext: false });
-    // }
+    if (!!settingsStorage) {
+      setState({...state, ...settingsStorage});
+      setStatePage({ ...statePage, disabledNext: false });
+    }
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
         'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout '+branch+' && touch ~/emudeck/.cloned && printf "\ec" && echo true',
