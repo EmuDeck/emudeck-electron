@@ -60,6 +60,11 @@ const EndPage = () => {
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
+      `echo doSetupRyujinx=${
+        state.overwriteConfigEmus.ryujinx.status ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
       `echo doSetupCitra=${
         state.overwriteConfigEmus.citra.status ? true : false
       } >> ~/emudeck/settings.sh`,
@@ -130,6 +135,11 @@ const EndPage = () => {
     ipcChannel.sendMessage('bash', [
       `echo doInstallYuzu=${
         state.installEmus.yuzu.status ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doInstallRyujinx=${
+        state.installEmus.ryujinx.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
