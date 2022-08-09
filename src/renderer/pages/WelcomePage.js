@@ -62,6 +62,9 @@ const WelcomePage = () => {
     if (!!settingsStorage) {
       //Theres probably a better way to do this...
       setState({...state, ...settingsStorage, installEmus : state.installEmus, overwriteConfigEmus : state.overwriteConfigEmus});
+
+      //setState({...state, installEmus : state.installEmus, overwriteConfigEmus : state.overwriteConfigEmus, installEmus : settingsStorage.installEmus, overwriteConfigEmus : settingsStorage.overwriteConfigEmus, });
+
       setStatePage({ ...statePage, disabledNext: false });
     }
     if (cloned == false) {
