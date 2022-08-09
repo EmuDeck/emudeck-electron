@@ -21,11 +21,13 @@ const PowerToolsPage = () => {
       setState({
         ...state,
         powerTools: true,
+        sudoPass: data.target.value
       });
     } else {
       setState({
         ...state,
         powerTools: false,
+        sudoPass:''
       });
     }
   };
@@ -35,6 +37,19 @@ const PowerToolsPage = () => {
       'cp ~/emudeck/backend/tools/passwd.desktop ~/Desktop/passwd.desktop && chmod +x ~/Desktop/passwd.desktop && ~/Desktop/passwd.desktop && rm ~/Desktop/passwd.desktop ',
     ]);
   };
+
+  const installPowerTools = (data)=>{
+    ipcChannel.sendMessage('emudeck', [
+      `powerTools|||echo "${sudPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools`,
+    ]);
+
+    ipcChannel.once('powerTools', (stdout) => {
+      console.log({ stdout });
+    });
+
+  }
+
+//
 
   useEffect(() => {
     ipcChannel.sendMessage('bash', [
@@ -54,6 +69,7 @@ const PowerToolsPage = () => {
 
   return (
     <PowerTools
+      install={installPowerTools}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       onChange={setPowerTools}
