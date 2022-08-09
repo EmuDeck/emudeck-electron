@@ -5,29 +5,25 @@ import PowerTools from 'components/organisms/Wrappers/PowerTools.js';
 
 const PowerToolsPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { sudoPass } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
     hasSudo: false,
+    sudoPass:''
   });
-  const { disabledNext, disabledBack, hasSudo } = statePage;
+  const { disabledNext, disabledBack, hasSudo, sudoPass } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
   const setPowerTools = (data) => {
     if (data.target.value != '') {
-      setState({
-        ...state,
-        powerTools: true,
+      setStatePage({
         sudoPass: data.target.value
       });
     } else {
-      setState({
-        ...state,
-        powerTools: false,
-        sudoPass:''
+      setStatePage({
+        sudoPass: ''
       });
     }
   };
@@ -45,6 +41,11 @@ const PowerToolsPage = () => {
 
     ipcChannel.once('powerTools', (stdout) => {
       console.log({ stdout });
+      alert('Installed!')
+    });
+
+    setStatePage({
+      sudoPass: ''
     });
 
   }

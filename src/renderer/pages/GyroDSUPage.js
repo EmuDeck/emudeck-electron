@@ -5,27 +5,25 @@ import GyroDSU from 'components/organisms/Wrappers/GyroDSU.js';
 
 const GyroDSUPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { sudoPass } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
     hasSudo: false,
+    sudoPass:''
   });
-  const { disabledNext, disabledBack, hasSudo } = statePage;
+  const { disabledNext, disabledBack, hasSudo, sudoPass } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
   const setGyro = (data) => {
     if (data.target.value != '') {
-      setState({
-        ...state,
-        GyroDSU: true,
+      setStatePage({
+        sudoPass: data.target.value
       });
     } else {
-      setState({
-        ...state,
-        GyroDSU: false,
+      setStatePage({
+        sudoPass: ''
       });
     }
   };
@@ -35,6 +33,22 @@ const GyroDSUPage = () => {
       'cp ~/emudeck/backend/tools/passwd.desktop ~/Desktop/passwd.desktop && chmod +x ~/Desktop/passwd.desktop && ~/Desktop/passwd.desktop && rm ~/Desktop/passwd.desktop ',
     ]);
   };
+
+  const installGyro = (data)=>{
+    ipcChannel.sendMessage('emudeck', [
+      `Gyro|||echo "${sudoPass}" | sudo -v -S && Plugins_installSteamDeckGyroDSU`,
+    ]);
+
+    ipcChannel.once('Gyro', (stdout) => {
+      console.log({ stdout });
+      alert('Installed!')
+    });
+
+    setStatePage({
+      sudoPass: ''
+    });
+
+  }
 
   useEffect(() => {
     ipcChannel.sendMessage('bash', [
@@ -58,6 +72,7 @@ const GyroDSUPage = () => {
       disabledBack={disabledBack}
       onChange={setGyro}
       onClick={createSudo}
+      install={installGyro}
       hasSudo={hasSudo}
       nextText={sudoPass ? 'Continue' : 'Skip'}
     />
