@@ -40,7 +40,7 @@ const PowerToolsPage = () => {
 
   const installPowerTools = (data)=>{
     ipcChannel.sendMessage('emudeck', [
-      `powerTools|||echo "${sudPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools`,
+      `powerTools|||echo "${sudoPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools`,
     ]);
 
     ipcChannel.once('powerTools', (stdout) => {
