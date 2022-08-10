@@ -24,9 +24,8 @@ import ToolsAndStuffPage from 'pages/ToolsAndStuffPage';
 import UpdateEmusPage from 'pages/UpdateEmusPage';
 import CloudSyncPage from 'pages/CloudSyncPage';
 import ChangeLogPage from 'pages/ChangeLogPage';
-
+import SettingsPage from 'pages/SettingsPage';
 import UninstallPage from 'pages/UninstallPage';
-
 
 import EndPage from 'pages/EndPage';
 
@@ -36,7 +35,7 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 
 export default function App() {
   const [state, setState] = useState({
-    version:'',
+    version: '',
     branch: 'beta',
     command: '',
     debug: false,
@@ -51,7 +50,7 @@ export default function App() {
     bezels: true,
     powerTools: false,
     GyroDSU: false,
-    cloudSync:false,
+    cloudSync: false,
     sudoPass: '',
     achievements: {
       user: '',
@@ -98,12 +97,9 @@ export default function App() {
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
-     // supermodelista: { id: 'supermodelista', status: true, name: 'Supermodelista' }
+      // supermodelista: { id: 'supermodelista', status: true, name: 'Supermodelista' }
     },
   });
-
-
-
 
   return (
     <GlobalContext.Provider
@@ -171,10 +167,15 @@ export default function App() {
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
           <Route exact path="/change-log" element={<ChangeLogPage />} />
 
-          <Route exact path="/tools-and-stuff" element={<ToolsAndStuffPage />} />
+          <Route
+            exact
+            path="/tools-and-stuff"
+            element={<ToolsAndStuffPage />}
+          />
+          <Route exact path="/settings" element={<SettingsPage />} />
           <Route exact path="/uninstall" element={<UninstallPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
-            <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
+          <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
