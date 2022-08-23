@@ -20,7 +20,16 @@ const WelcomePage = () => {
     setState({ ...state, mode: value });
   };
 
-  const { device, system, mode, command, second, branch, installEmus,overwriteConfigEmus } = state;
+  const {
+    device,
+    system,
+    mode,
+    command,
+    second,
+    branch,
+    installEmus,
+    overwriteConfigEmus,
+  } = state;
 
   useEffect(() => {
     //
@@ -31,9 +40,11 @@ const WelcomePage = () => {
       'check-clone|||test -e ~/emudeck/backend/.git/config  && echo true',
     ]);
     ipcChannel.once('check-clone', (cloneStatus) => {
-      console.log({cloneStatus})
+      console.log({ cloneStatus });
       cloneStatus = cloneStatus.replace('\n', '');
-      cloneStatus.includes('true') ? (cloneStatus = true) : (cloneStatus = false);
+      cloneStatus.includes('true')
+        ? (cloneStatus = true)
+        : (cloneStatus = false);
       setStatePage({
         ...statePage,
         cloned: cloneStatus,
@@ -58,10 +69,17 @@ const WelcomePage = () => {
   }, [mode]);
 
   useEffect(() => {
-    const settingsStorage = JSON.parse(localStorage.getItem('settings_emudeck'));
+    const settingsStorage = JSON.parse(
+      localStorage.getItem('settings_emudeck')
+    );
     if (!!settingsStorage) {
       //Theres probably a better way to do this...
-      setState({...state, ...settingsStorage, installEmus : state.installEmus, overwriteConfigEmus : state.overwriteConfigEmus});
+      setState({
+        ...state,
+        ...settingsStorage,
+        installEmus: state.installEmus,
+        overwriteConfigEmus: state.overwriteConfigEmus,
+      });
 
       //setState({...state, installEmus : state.installEmus, overwriteConfigEmus : state.overwriteConfigEmus, installEmus : settingsStorage.installEmus, overwriteConfigEmus : settingsStorage.overwriteConfigEmus, });
 
@@ -69,21 +87,25 @@ const WelcomePage = () => {
     }
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
-        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout '+branch+' && touch ~/emudeck/.cloned && printf "\ec" && echo true',
+        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout ' +
+          branch +
+          ' && touch ~/emudeck/.cloned && printf "ec" && echo true',
       ]);
 
       ipcChannel.once('clone', (cloneStatus) => {
-        console.log({cloneStatus})
+        console.log({ cloneStatus });
         if (cloneStatus.includes('true')) {
           setStatePage({ ...statePage, downloadComplete: true });
         }
       });
     } else if (cloned == true) {
       ipcChannel.sendMessage('bash', [
-        'pull|||cd ~/emudeck/backend && git reset --hard && git clean -fd && git checkout '+branch+' && git pull',
+        'pull|||cd ~/emudeck/backend && git reset --hard && git clean -fd && git checkout ' +
+          branch +
+          ' && git pull',
       ]);
       ipcChannel.once('pull', (pullStatus) => {
-        console.log({pullStatus})
+        console.log({ pullStatus });
         setStatePage({ ...statePage, downloadComplete: true });
       });
     }
@@ -91,13 +113,13 @@ const WelcomePage = () => {
 
   return (
     <Welcome
-      alert="This version of EmuDeck comes with a major update of the PS2 Emulator, make sure to refresh your PS2 Steam Games using Steam Rom Manager at the end of this installation."
+      alert="This version of EmuDeck comes with a major update of the PS2 Emulator, if any of your PS2 games stop working make sure to launch Steam Rom Manager at the end of the installation"
       disabledNext={second ? false : disabledNext}
       disabledBack={second ? false : disabledBack}
       downloadComplete={downloadComplete}
       onClick={selectMode}
-      back={second ? "tools-and-stuff" : false}
-      backText={second ? "Tools & stuff" : "Install EmuDeck First"}
+      back={second ? 'tools-and-stuff' : false}
+      backText={second ? 'Tools & stuff' : 'Install EmuDeck First'}
       next="rom-storage"
       third="change-log"
       thirdText="See changelog"
