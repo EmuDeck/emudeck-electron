@@ -10,20 +10,26 @@ const PowerToolsPage = () => {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass:''
+    sudoPass: '',
+    showNotification: false,
   });
-  const { disabledNext, disabledBack, hasSudo, sudoPass } = statePage;
+  const { disabledNext, disabledBack, hasSudo, sudoPass, showNotification } =
+    statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
   const setPowerTools = (data) => {
     if (data.target.value != '') {
       setStatePage({
-        sudoPass: data.target.value
+        ...statePage,
+        hasSudo: true,
+        sudoPass: data.target.value,
       });
     } else {
       setStatePage({
-        sudoPass: ''
+        ...statePage,
+        hasSudo: false,
+        sudoPass: '',
       });
     }
   };
@@ -34,23 +40,30 @@ const PowerToolsPage = () => {
     ]);
   };
 
-  const installPowerTools = (data)=>{
+  const installPowerTools = (data) => {
     ipcChannel.sendMessage('emudeck', [
       `powerTools|||echo "${sudoPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools`,
     ]);
 
     ipcChannel.once('powerTools', (stdout) => {
       console.log({ stdout });
-      alert('Installed!')
+      setStatePage({
+        ...statePage,
+        showNotification: true,
+        sudoPass: '',
+      });
+      if (showNotification === true) {
+        setTimeout(() => {
+          setStatePage({
+            ...statePage,
+            showNotification: false,
+          });
+        }, 2000);
+      }
     });
+  };
 
-    setStatePage({
-      sudoPass: ''
-    });
-
-  }
-
-//
+  //
 
   useEffect(() => {
     ipcChannel.sendMessage('bash', [
@@ -70,12 +83,14 @@ const PowerToolsPage = () => {
 
   return (
     <PowerTools
-      install={installPowerTools}
+      showNotification={showNotification}
+      installClick={installPowerTools}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       onChange={setPowerTools}
       onClick={createSudo}
       hasSudo={hasSudo}
+      sudoPass={sudoPass}
       nextText={sudoPass ? 'Continue' : 'Skip'}
     />
   );

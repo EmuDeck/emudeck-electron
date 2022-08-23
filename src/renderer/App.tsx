@@ -26,6 +26,7 @@ import CloudSyncPage from 'pages/CloudSyncPage';
 import ChangeLogPage from 'pages/ChangeLogPage';
 import SettingsPage from 'pages/SettingsPage';
 import UninstallPage from 'pages/UninstallPage';
+import ResetPage from 'pages/ResetPage';
 
 import EndPage from 'pages/EndPage';
 
@@ -173,6 +174,7 @@ export default function App() {
             element={<ToolsAndStuffPage />}
           />
           <Route exact path="/settings" element={<SettingsPage />} />
+          <Route exact path="/reset" element={<ResetPage />} />
           <Route exact path="/uninstall" element={<UninstallPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
           <Route exact path="/cloud-sync" element={<CloudSyncPage />} />

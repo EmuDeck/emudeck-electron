@@ -10,20 +10,24 @@ const GyroDSUPage = () => {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass:''
+    sudoPass: '',
+    showNotification: false,
   });
-  const { disabledNext, disabledBack, hasSudo, sudoPass } = statePage;
+  const { disabledNext, disabledBack, hasSudo, sudoPass, showNotification } =
+    statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
   const setGyro = (data) => {
     if (data.target.value != '') {
       setStatePage({
-        sudoPass: data.target.value
+        ...statePage,
+        sudoPass: data.target.value,
       });
     } else {
       setStatePage({
-        sudoPass: ''
+        ...statePage,
+        sudoPass: '',
       });
     }
   };
@@ -34,21 +38,28 @@ const GyroDSUPage = () => {
     ]);
   };
 
-  const installGyro = (data)=>{
+  const installGyro = (data) => {
     ipcChannel.sendMessage('emudeck', [
       `Gyro|||echo "${sudoPass}" | sudo -v -S && Plugins_installSteamDeckGyroDSU`,
     ]);
 
     ipcChannel.once('Gyro', (stdout) => {
       console.log({ stdout });
-      alert('Installed!')
+      setStatePage({
+        ...statePage,
+        showNotification: true,
+        sudoPass: '',
+      });
+      if (showNotification === true) {
+        setTimeout(() => {
+          setStatePage({
+            ...statePage,
+            showNotification: false,
+          });
+        }, 2000);
+      }
     });
-
-    setStatePage({
-      sudoPass: ''
-    });
-
-  }
+  };
 
   useEffect(() => {
     ipcChannel.sendMessage('bash', [
@@ -68,11 +79,13 @@ const GyroDSUPage = () => {
 
   return (
     <GyroDSU
+      showNotification={showNotification}
+      sudoPass={sudoPass}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       onChange={setGyro}
       onClick={createSudo}
-      install={installGyro}
+      installClick={installGyro}
       hasSudo={hasSudo}
       nextText={sudoPass ? 'Continue' : 'Skip'}
     />

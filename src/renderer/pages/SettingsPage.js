@@ -10,15 +10,23 @@ const SettingsPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    data: '',
+    notificationText: '',
+    showNotification: false,
   });
-  const { disabledNext, disabledBack, data } = statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    data,
+    notificationText,
+    showNotification,
+  } = statePage;
   const onClickBezel = (arStatus) => {
     setState({
       ...state,
       bezels: arStatus,
     });
     ipcChannel.sendMessage('emudeck', ['bezels|||RetroArch_setBezels']);
+    notificationShow('🎉 Bezels updated!');
   };
   const onClickSega = (arStatus) => {
     setState({
@@ -46,6 +54,7 @@ const SettingsPage = () => {
         }
         break;
     }
+    notificationShow('🎉 Sega Aspect Ratio updated!');
   };
   const onClickSNES = (arStatus) => {
     setState({
@@ -82,6 +91,7 @@ const SettingsPage = () => {
         }
         break;
     }
+    notificationShow('🎉 SNES Aspect Ratio updated!');
   };
   const onClick3D = (arStatus) => {
     setState({
@@ -108,6 +118,7 @@ const SettingsPage = () => {
         }
         break;
     }
+    notificationShow('🎉 3D Aspect Ratio updated!');
   };
   const onClickGC = (arStatus) => {
     setState({
@@ -122,6 +133,7 @@ const SettingsPage = () => {
     } else {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOff']);
     }
+    notificationShow('🎉 Dolphin Aspect Ratio updated!');
   };
   const onClickCRT = (arStatus) => {
     setState({
@@ -132,6 +144,7 @@ const SettingsPage = () => {
       },
     });
     ipcChannel.sendMessage('emudeck', ['CRT|||RetroArch_setShadersCRT']);
+    notificationShow('🎉 CRT Shader updated!');
   };
   const onClickLCD = (arStatus) => {
     setState({
@@ -142,11 +155,30 @@ const SettingsPage = () => {
       },
     });
     ipcChannel.sendMessage('emudeck', ['LCD|||RetroArch_setShadersMAT']);
+    notificationShow('🎉 LCD Shader updated!');
+  };
+
+  const notificationShow = (text) => {
+    setStatePage({
+      ...statePage,
+      notificationText: text,
+      showNotification: true,
+    });
+
+    if (showNotification === true) {
+      setTimeout(() => {
+        setStatePage({
+          ...statePage,
+          showNotification: false,
+        });
+      }, 2000);
+    }
   };
 
   return (
     <Settings
-      data={data}
+      showNotification={showNotification}
+      notificationText={notificationText}
       onClickBezel={onClickBezel}
       onClickSega={onClickSega}
       onClickSNES={onClickSNES}
