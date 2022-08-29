@@ -51,14 +51,12 @@ const WelcomePage = () => {
       });
     });
 
-    ipcChannel.sendMessage('system-info');
-    ipcChannel.once('system-info-out', (platform) => {
-      setState({ ...state, system: platform });
-    });
-
     ipcChannel.sendMessage('version');
     ipcChannel.once('version-out', (version) => {
-      setState({ ...state, version: version });
+      ipcChannel.sendMessage('system-info-in');
+      ipcChannel.once('system-info-out', (platform) => {
+        setState({ ...state, system: platform, version: version });
+      });
     });
   }, []);
 

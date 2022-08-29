@@ -75,7 +75,7 @@ ipcMain.on('debug', async (event, command) => {
   mainWindow.webContents.openDevTools();
 });
 
-ipcMain.on('system-info', async (event, command) => {
+ipcMain.on('system-info-in', async (event, command) => {
   const os = require('os');
   event.reply('system-info-out', os.platform());
 });
@@ -83,7 +83,6 @@ ipcMain.on('system-info', async (event, command) => {
 ipcMain.on('version', async (event, command) => {
   event.reply('version-out', app.getVersion());
 });
-
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -123,9 +122,9 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
-  const { screen } = require('electron')
-  const primaryDisplay = screen.getPrimaryDisplay()
-  const { width, height } = primaryDisplay.workAreaSize
+  const { screen } = require('electron');
+  const primaryDisplay = screen.getPrimaryDisplay();
+  const { width, height } = primaryDisplay.workAreaSize;
   const screenHeight = height < 601 ? 600 : 720;
   const isFullscreen = height < 601 ? true : false;
   mainWindow = new BrowserWindow({
@@ -212,7 +211,6 @@ app
   .whenReady()
   .then(() => {
     createWindow();
-
 
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

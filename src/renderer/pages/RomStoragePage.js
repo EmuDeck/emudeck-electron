@@ -64,15 +64,9 @@ const RomStoragePage = () => {
 
   //Do we have a valid SD Card?
   useEffect(() => {
-    if (system !== 'darwin') {
-      ipcChannel.sendMessage('emudeck', [
-        'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
-      ]);
-    } else {
-      ipcChannel.sendMessage('emudeck', [
-        'SDCardValid|||testLocationValid "SD" ~/SDCARD',
-      ]);
-    }
+    ipcChannel.sendMessage('emudeck', [
+      'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
+    ]);
 
     ipcChannel.once('SDCardValid', (message) => {
       console.log(message);
@@ -93,11 +87,8 @@ const RomStoragePage = () => {
   //Let's get the SD Card name
   useEffect(() => {
     // if (sdCardValid === true) {
-    if (system !== 'darwin') {
-      ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
-    } else {
-      ipcChannel.sendMessage('emudeck', ['SDCardName|||echo ~/SDCARD']);
-    }
+
+    ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
       console.log(message);
       let stdout = message.stdout.replace('\n', '');
