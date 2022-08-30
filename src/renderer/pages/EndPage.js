@@ -340,15 +340,8 @@ const EndPage = () => {
   }, [second]);
 
   const openSRM = () => {
-    if (state.storage == 'SD-Card') {
-      ipcChannel.sendMessage('bash', [
-        `cd /run/media/mmcblk0p1/Emulation/tools/srm && ./Steam-ROM-Manager.AppImage`,
-      ]);
-    } else {
-      ipcChannel.sendMessage('bash', [
-        `cd ~/Emulation/tools/srm && ./Steam-ROM-Manager.AppImage`,
-      ]);
-    }
+    ipcChannel.sendMessage('emudeck', [`SRM|||runSRM ${storagePath}`]);
+
     setTimeout(() => {
       window.close();
     }, 1000);
