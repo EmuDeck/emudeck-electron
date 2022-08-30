@@ -11,7 +11,7 @@ const EndPage = () => {
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-  const { second, debug, branch, storagePath } = state;
+  const { second, debug, branch } = state;
   const ipcChannel = window.electron.ipcRenderer;
   //Saving the config
   useEffect(() => {
@@ -340,11 +340,7 @@ const EndPage = () => {
   }, [second]);
 
   const openSRM = () => {
-    alert(`SRM|||runSRM ${storagePath}`);
-
-    ipcChannel.sendMessage('bash', [
-      `cd ~/Desktop/ && ./SteamRomManager.desktop`,
-    ]);
+    ipcChannel.sendMessage('emudeck', [`SRM|||runSRM`]);
 
     setTimeout(() => {
       window.close();
