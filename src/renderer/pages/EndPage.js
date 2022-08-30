@@ -11,7 +11,7 @@ const EndPage = () => {
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-  const { second, debug, branch } = state;
+  const { second, debug, branch, storagePath } = state;
   const ipcChannel = window.electron.ipcRenderer;
   //Saving the config
   useEffect(() => {
