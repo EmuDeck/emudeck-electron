@@ -342,7 +342,9 @@ const EndPage = () => {
   const openSRM = () => {
     alert(`SRM|||runSRM ${storagePath}`);
 
-    ipcChannel.sendMessage('emudeck', [`SRM|||runSRM ${storagePath}`]);
+    ipcChannel.sendMessage('bash', [
+      `cd ~/Desktop/ && ./SteamRomManager.desktop`,
+    ]);
 
     setTimeout(() => {
       window.close();
