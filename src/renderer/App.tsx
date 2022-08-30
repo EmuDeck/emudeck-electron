@@ -53,6 +53,7 @@ export default function App() {
     GyroDSU: false,
     cloudSync: false,
     sudoPass: '',
+    language: 'en',
     achievements: {
       user: '',
       pass: '',

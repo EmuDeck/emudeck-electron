@@ -349,7 +349,9 @@ const EndPage = () => {
         `cd ~/Emulation/tools/srm && ./Steam-ROM-Manager.AppImage`,
       ]);
     }
-    window.close();
+    setTimeout(() => {
+      window.close();
+    }, 1000);
   };
 
   const close = () => {
