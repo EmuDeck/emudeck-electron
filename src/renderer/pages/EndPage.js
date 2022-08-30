@@ -340,11 +340,13 @@ const EndPage = () => {
   }, [second]);
 
   const openSRM = () => {
+    alert(`SRM|||runSRM ${storagePath}`);
+
     ipcChannel.sendMessage('emudeck', [`SRM|||runSRM ${storagePath}`]);
 
     setTimeout(() => {
       window.close();
-    }, 1000);
+    }, 5000);
   };
 
   const close = () => {
