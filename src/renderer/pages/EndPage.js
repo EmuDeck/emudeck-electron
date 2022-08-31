@@ -340,8 +340,9 @@ const EndPage = () => {
   }, [second]);
 
   const openSRM = () => {
-    ipcChannel.sendMessage('emudeck', [`SRM|||runSRM`]);
-
+    ipcChannel.sendMessage('bash', [
+      'chmod +x ~/Desktop/SteamRomManager.desktop && ~/Desktop/SteamRomManager.desktop',
+    ]);
     setTimeout(() => {
       window.close();
     }, 5000);
