@@ -51,13 +51,7 @@ const WelcomePage = () => {
       });
     });
 
-    ipcChannel.sendMessage('version');
-    ipcChannel.once('version-out', (version) => {
-      ipcChannel.sendMessage('system-info-in');
-      ipcChannel.once('system-info-out', (platform) => {
-        setState({ ...state, system: platform, version: version });
-      });
-    });
+
   }, []);
 
   useEffect(() => {
@@ -70,6 +64,9 @@ const WelcomePage = () => {
     const settingsStorage = JSON.parse(
       localStorage.getItem('settings_emudeck')
     );
+
+
+
     if (!!settingsStorage) {
       //Theres probably a better way to do this...
       setState({
@@ -79,10 +76,16 @@ const WelcomePage = () => {
         overwriteConfigEmus: state.overwriteConfigEmus,
       });
 
-      //setState({...state, installEmus : state.installEmus, overwriteConfigEmus : state.overwriteConfigEmus, installEmus : settingsStorage.installEmus, overwriteConfigEmus : settingsStorage.overwriteConfigEmus, });
-
       setStatePage({ ...statePage, disabledNext: false });
     }
+
+    ipcChannel.sendMessage('version');
+    ipcChannel.once('version-out', (version) => {
+      ipcChannel.sendMessage('system-info-in');
+      ipcChannel.once('system-info-out', (platform) => {
+        setState({ ...state, system: platform, version: version });
+      });
+    });
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
         'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout ' +

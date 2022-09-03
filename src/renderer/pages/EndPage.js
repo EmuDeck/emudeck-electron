@@ -341,7 +341,7 @@ const EndPage = () => {
 
   const openSRM = () => {
     ipcChannel.sendMessage('bash', [
-      'chmod +x ~/Desktop/SteamRomManager.desktop && ~/Desktop/SteamRomManager.desktop',
+      `kill -15 $(pidof steam) & ${path}/Emulation/tools/srm/Steam-ROM-Manager.AppImage`,
     ]);
     setTimeout(() => {
       window.close();
