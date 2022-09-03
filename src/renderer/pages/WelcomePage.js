@@ -69,23 +69,31 @@ const WelcomePage = () => {
 
     if (!!settingsStorage) {
       //Theres probably a better way to do this...
-      setState({
-        ...state,
-        ...settingsStorage,
-        installEmus: state.installEmus,
-        overwriteConfigEmus: state.overwriteConfigEmus,
+        ipcChannel.sendMessage('version');
+        ipcChannel.once('version-out', (version) => {
+          ipcChannel.sendMessage('system-info-in');
+          ipcChannel.once('system-info-out', (platform) => {
+            setState({
+              ...state,
+              ...settingsStorage,
+              installEmus: state.installEmus,
+              overwriteConfigEmus: state.overwriteConfigEmus,
+              system: platform, version: version
+            });
+          });
+        });
+        setStatePage({ ...statePage, disabledNext: false });
+    }else{
+      ipcChannel.sendMessage('version');
+      ipcChannel.once('version-out', (version) => {
+        ipcChannel.sendMessage('system-info-in');
+        ipcChannel.once('system-info-out', (platform) => {
+          setState({ ...state, system: platform, version: version });
+        });
       });
-
-      setStatePage({ ...statePage, disabledNext: false });
     }
 
-    ipcChannel.sendMessage('version');
-    ipcChannel.once('version-out', (version) => {
-      ipcChannel.sendMessage('system-info-in');
-      ipcChannel.once('system-info-out', (platform) => {
-        setState({ ...state, system: platform, version: version });
-      });
-    });
+
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
         'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout ' +
@@ -114,7 +122,7 @@ const WelcomePage = () => {
 
   return (
     <Welcome
-      alert="This version of EmuDeck comes with a major update of the PS2 Emulator, if any of your PS2 games stop working make sure to launch Steam Rom Manager at the end of the installation"
+      alert=""
       disabledNext={second ? false : disabledNext}
       disabledBack={second ? false : disabledBack}
       downloadComplete={downloadComplete}

@@ -28,6 +28,8 @@ import SettingsPage from 'pages/SettingsPage';
 import UninstallPage from 'pages/UninstallPage';
 import ResetPage from 'pages/ResetPage';
 
+import CheckBiosPage from 'pages/CheckBiosPage';
+
 import EndPage from 'pages/EndPage';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
@@ -175,6 +177,7 @@ export default function App() {
             element={<ToolsAndStuffPage />}
           />
           <Route exact path="/settings" element={<SettingsPage />} />
+            <Route exact path="/check-bios" element={<CheckBiosPage />} />
           <Route exact path="/reset" element={<ResetPage />} />
           <Route exact path="/uninstall" element={<UninstallPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
