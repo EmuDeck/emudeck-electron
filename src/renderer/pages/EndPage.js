@@ -22,8 +22,6 @@ const EndPage = () => {
     let json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
 
-    const path = state.storagePath;
-
     ipcChannel.sendMessage('bash', [`mkdir -p ~/emudeck/`]);
 
     ipcChannel.sendMessage('bash', [
@@ -241,26 +239,26 @@ const EndPage = () => {
 
     //Paths
     ipcChannel.sendMessage('bash', [
-      `echo emulationPath=${path}Emulation/ >> ~/emudeck/settings.sh`,
+      `echo emulationPath=${storagePath}Emulation/ >> ~/emudeck/settings.sh`,
     ]);
     //
     ipcChannel.sendMessage('bash', [
-      `echo romsPath=${path}Emulation/roms/ >> ~/emudeck/settings.sh`,
+      `echo romsPath=${storagePath}Emulation/roms/ >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo toolsPath=${path}Emulation/tools/ >> ~/emudeck/settings.sh`,
+      `echo toolsPath=${storagePath}Emulation/tools/ >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo biosPath=${path}Emulation/bios/ >> ~/emudeck/settings.sh`,
+      `echo biosPath=${storagePath}Emulation/bios/ >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo savesPath=${path}Emulation/saves/ >> ~/emudeck/settings.sh`,
+      `echo savesPath=${storagePath}Emulation/saves/ >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo storagePath=${path}Emulation/storage/ >> ~/emudeck/settings.sh`,
+      `echo storagePath=${storagePath}Emulation/storage/ >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo ESDEscrapData=${path}Emulation/tools/downloaded_media/ >> ~/emudeck/settings.sh`,
+      `echo ESDEscrapData=${storagePath}Emulation/tools/downloaded_media/ >> ~/emudeck/settings.sh`,
     ]);
 
     //Shaders
