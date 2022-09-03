@@ -341,8 +341,11 @@ const EndPage = () => {
 
   const openSRM = () => {
     ipcChannel.sendMessage('bash', [
-      `kill -15 $(pidof steam) & ${path}/Emulation/tools/srm/Steam-ROM-Manager.AppImage`,
+      `zenity --question --width 450 --title \"Close Steam/Steam Input?\" --text \"Exit Steam to launch Steam Rom Manager? Desktop controls will temporarily revert to touch/trackpad/L2/R2\" && (kill -15 $(pidof steam) & ${path}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
     ]);
+
+
+
     setTimeout(() => {
       window.close();
     }, 5000);
