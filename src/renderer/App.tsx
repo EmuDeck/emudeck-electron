@@ -75,7 +75,7 @@ export default function App() {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
       dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
       primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-      ppsspp: { id: 'ppsspp', status: false, name: 'PPSSPP' },
+      ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
       duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
       citra: { id: 'citra', status: true, name: 'Citra' },
       pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
