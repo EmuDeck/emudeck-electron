@@ -186,7 +186,7 @@ const SettingsPage = () => {
       onClickGC={onClickGC}
       onClickCRT={onClickCRT}
       onClickLCD={onClickLCD}
-      disabledNext={disabledNext}
+      disabledNext={true}
       disabledBack={disabledBack}
     />
   );

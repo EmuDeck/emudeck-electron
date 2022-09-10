@@ -207,6 +207,14 @@ app.on('window-all-closed', () => {
 //   sendStatusToWindow('Update downloaded');
 // });
 
+ipcMain.on('isGameMode', async (event, command) => {
+  const os = app.commandLine.hasSwitch('GameMode');
+  event.reply('isGameMode-out', os);
+});
+
+
+
+
 app
   .whenReady()
   .then(() => {

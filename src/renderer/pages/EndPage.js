@@ -9,8 +9,9 @@ const EndPage = () => {
     disabledNext: true,
     disabledBack: true,
     data: '',
+    isGameMode: false
   });
-  const { disabledNext, disabledBack, data } = statePage;
+  const { disabledNext, disabledBack, data, isGameMode } = statePage;
   const { second, debug, branch, storagePath } = state;
   const ipcChannel = window.electron.ipcRenderer;
   //Saving the config
@@ -19,6 +20,14 @@ const EndPage = () => {
   }, []);
 
   useEffect(() => {
+
+
+    ipcChannel.sendMessage('isGameMode');
+    ipcChannel.once('isGameMode-out', (isGameMode) => {
+      setStatePage({ ...statePage, isGameMode: isGameMode });
+    });
+
+
     let json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
 
@@ -365,6 +374,7 @@ const EndPage = () => {
 
   return (
     <End
+      isGameMode={isGameMode}
       onClick={openSRM}
       onClose={close}
       data={data}

@@ -51,7 +51,6 @@ const WelcomePage = () => {
       });
     });
 
-
   }, []);
 
   useEffect(() => {
