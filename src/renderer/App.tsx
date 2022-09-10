@@ -85,6 +85,7 @@ export default function App() {
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
+      mame: { id: 'mame', status: false, name: 'Mame Standalone' },
       //supermodelista: { id: 'supermodelista', status: true, name: 'Supermodelista' },
     },
     overwriteConfigEmus: {
@@ -101,6 +102,7 @@ export default function App() {
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
+      mame: { id: 'mame', status: true, name: 'Mame Standalone' },
       // supermodelista: { id: 'supermodelista', status: true, name: 'Supermodelista' }
     },
   });

@@ -102,6 +102,11 @@ const EndPage = () => {
         state.overwriteConfigEmus.ppsspp.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doSetupMAME=${
+        state.overwriteConfigEmus.mame.status ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
 
     ipcChannel.sendMessage('bash', [
       `echo doSetupSRM=${
@@ -172,6 +177,11 @@ const EndPage = () => {
     ipcChannel.sendMessage('bash', [
       `echo doInstallXemu=${
         state.installEmus.xemu.status ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doInstallMame=${
+        state.installEmus.mame.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
