@@ -16,19 +16,19 @@ const CheckBiosPage = () => {
   const ipcChannel = window.electron.ipcRenderer;
 
   const checkBiosPS1 = () => {
-    ipcChannel.sendMessage('emudeck', ['CheckBiosPS1|||checkPS1BIOS']);
+    ipcChannel.sendMessage('emudeck', ['CheckBiosPS1|||checkPS1BIOS false']);
   };
   const checkBiosPS2 = () => {
-    ipcChannel.sendMessage('emudeck', ['CheckBiosPS2|||checkPS1BIOS']);
+    ipcChannel.sendMessage('emudeck', ['CheckBiosPS2|||checkPS1BIOS false']);
   };
   const checkBiosSwitch = () => {
-    ipcChannel.sendMessage('emudeck', ['CheckBiosSwitch|||checkYuzuBios']);
+    ipcChannel.sendMessage('emudeck', ['CheckBiosSwitch|||checkYuzuBios false']);
   };
   const checkBiosSegaCD = () => {
-    ipcChannel.sendMessage('emudeck', ['CheckBiosSegaCD|||checkSegaCDBios']);
+    ipcChannel.sendMessage('emudeck', ['CheckBiosSegaCD|||checkSegaCDBios false']);
   };
   const checkBiosSaturn = () => {
-    ipcChannel.sendMessage('emudeck', ['CheckBiosSaturn|||checkSaturnBios']);
+    ipcChannel.sendMessage('emudeck', ['CheckBiosSaturn|||checkSaturnBios false']);
   };
 
   return (
