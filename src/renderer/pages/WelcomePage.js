@@ -32,6 +32,10 @@ const WelcomePage = () => {
   } = state;
 
   useEffect(() => {
+    ipcChannel.sendMessage('update-check');
+    ipcChannel.once('update-check-out', (message) => {
+      console.log(message);
+    });
     //
     //Cloning project
     //

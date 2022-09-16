@@ -20,7 +20,8 @@ export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.autoDownload = false;
+    //autoUpdater.checkForUpdatesAndNotify();
   }
 }
 
@@ -73,6 +74,18 @@ ipcMain.on('emudeck', async (event, command) => {
 
 ipcMain.on('debug', async (event, command) => {
   mainWindow.webContents.openDevTools();
+});
+
+ipcMain.on('update-check', async (event, command) => {
+  const result = autoUpdater.checkForUpdates();
+  result
+    .then((checkResult: UpdateCheckResult) => {
+      const { updateInfo } = checkResult;
+      event.reply('update-check-out', updateInfo);
+    })
+    .catch(() => {
+      event.reply('update-check-out', 'Error');
+    });
 });
 
 ipcMain.on('system-info-in', async (event, command) => {
