@@ -29,7 +29,7 @@ let mainWindow: BrowserWindow | null = null;
 ipcMain.on('bash', async (event, command) => {
   let backChannel;
   let bashCommand;
-
+  mainWindow.webContents.send('message', 'Testing');
   if (command[0].includes('|||')) {
     const tempCommand = command[0].split('|||');
     backChannel = tempCommand[0];
@@ -109,10 +109,10 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
-function sendStatusToWindow(text, ver) {
-  log.info(text);
-  mainWindow.webContents.send('message', text, ver);
-}
+// function sendStatusToWindow(text, ver) {
+//   log.info(text);
+//   mainWindow.webContents.send('message', text, ver);
+// }
 
 const createWindow = async () => {
   if (isDebug) {
@@ -164,6 +164,8 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
+  mainWindow.webContents.send('message', 'pepito');
+
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
@@ -189,39 +191,40 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+//
 
 autoUpdater.on('checking-for-update', () => {
-  sendStatusToWindow('Checking for update...');
+  //sendStatusToWindow('Checking for update...');
 });
-autoUpdater.on('update-available', (info) => {
-  sendStatusToWindow(
-    'Update available! Please wait until it is completed. Restart EmuDeck when completed'
-  );
-});
-autoUpdater.on('update-not-available', (info) => {
-  sendStatusToWindow(
-    'You are already using the latest version available of EmuDeck.'
-  );
-});
-autoUpdater.on('error', (err) => {
-  sendStatusToWindow('Error in auto-updater. ' + err);
-});
-autoUpdater.on('download-progress', (progressObj) => {
-  let log_message = 'Download speed: ' + progressObj.bytesPerSecond;
-  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-  log_message =
-    log_message +
-    ' (' +
-    progressObj.transferred +
-    '/' +
-    progressObj.total +
-    ')';
-  sendStatusToWindow(log_message);
-});
-autoUpdater.on('update-downloaded', (info) => {
-  sendStatusToWindow('Update downloaded');
-  autoUpdater.quitAndInstall();
-});
+// autoUpdater.on('update-available', (info) => {
+//   sendStatusToWindow(
+//     'Update available! Please wait until it is completed. Restart EmuDeck when completed'
+//   );
+// });
+// autoUpdater.on('update-not-available', (info) => {
+//   sendStatusToWindow(
+//     'You are already using the latest version available of EmuDeck.'
+//   );
+// });
+// autoUpdater.on('error', (err) => {
+//   sendStatusToWindow('Error in auto-updater. ' + err);
+// });
+// autoUpdater.on('download-progress', (progressObj) => {
+//   let log_message = 'Download speed: ' + progressObj.bytesPerSecond;
+//   log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+//   log_message =
+//     log_message +
+//     ' (' +
+//     progressObj.transferred +
+//     '/' +
+//     progressObj.total +
+//     ')';
+//   sendStatusToWindow(log_message);
+// });
+// autoUpdater.on('update-downloaded', (info) => {
+//   sendStatusToWindow('Update downloaded');
+//   autoUpdater.quitAndInstall();
+// });
 
 ipcMain.on('isGameMode', async (event, command) => {
   const os = app.commandLine.hasSwitch('GameMode');
