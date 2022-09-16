@@ -50,7 +50,6 @@ const WelcomePage = () => {
         cloned: cloneStatus,
       });
     });
-
   }, []);
 
   useEffect(() => {
@@ -64,25 +63,24 @@ const WelcomePage = () => {
       localStorage.getItem('settings_emudeck')
     );
 
-
-
     if (!!settingsStorage) {
       //Theres probably a better way to do this...
-        ipcChannel.sendMessage('version');
-        ipcChannel.once('version-out', (version) => {
-          ipcChannel.sendMessage('system-info-in');
-          ipcChannel.once('system-info-out', (platform) => {
-            setState({
-              ...state,
-              ...settingsStorage,
-              installEmus: state.installEmus,
-              overwriteConfigEmus: state.overwriteConfigEmus,
-              system: platform, version: version
-            });
+      ipcChannel.sendMessage('version');
+      ipcChannel.once('version-out', (version) => {
+        ipcChannel.sendMessage('system-info-in');
+        ipcChannel.once('system-info-out', (platform) => {
+          setState({
+            ...state,
+            ...settingsStorage,
+            installEmus: state.installEmus,
+            overwriteConfigEmus: state.overwriteConfigEmus,
+            system: platform,
+            version: version,
           });
         });
-        setStatePage({ ...statePage, disabledNext: false });
-    }else{
+      });
+      setStatePage({ ...statePage, disabledNext: false });
+    } else {
       ipcChannel.sendMessage('version');
       ipcChannel.once('version-out', (version) => {
         ipcChannel.sendMessage('system-info-in');
@@ -91,7 +89,6 @@ const WelcomePage = () => {
         });
       });
     }
-
 
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
@@ -121,7 +118,11 @@ const WelcomePage = () => {
 
   return (
     <Welcome
-      alert=""
+      alert={
+        second
+          ? ''
+          : 'If you came from an old installarion of EmuDeck your settings will be overwritten on first install, next time you update you can keep your changes by choosing Custom Update'
+      }
       disabledNext={second ? false : disabledNext}
       disabledBack={second ? false : disabledBack}
       downloadComplete={downloadComplete}
