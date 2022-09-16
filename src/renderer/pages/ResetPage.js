@@ -27,7 +27,7 @@ const ResetPage = () => {
       system: '',
       device: 'Steam Deck',
       storage: 'Internal Storage',
-      storagePath: '~/',
+      storagePath: '$HOME',
       SDID: '',
       bezels: true,
       powerTools: false,

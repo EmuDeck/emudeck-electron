@@ -48,7 +48,7 @@ export default function App() {
     system: '',
     device: 'Steam Deck',
     storage: 'Internal Storage',
-    storagePath: '~/',
+    storagePath: '$HOME',
     SDID: '',
     bezels: true,
     powerTools: false,
@@ -179,7 +179,7 @@ export default function App() {
             element={<ToolsAndStuffPage />}
           />
           <Route exact path="/settings" element={<SettingsPage />} />
-            <Route exact path="/check-bios" element={<CheckBiosPage />} />
+          <Route exact path="/check-bios" element={<CheckBiosPage />} />
           <Route exact path="/reset" element={<ResetPage />} />
           <Route exact path="/uninstall" element={<UninstallPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />

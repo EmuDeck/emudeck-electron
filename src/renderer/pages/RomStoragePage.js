@@ -51,7 +51,7 @@ const RomStoragePage = () => {
       setState({
         ...state,
         storage: storageName,
-        storagePath: '~/',
+        storagePath: '$HOME',
       });
     }
   };

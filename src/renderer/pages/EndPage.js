@@ -9,7 +9,7 @@ const EndPage = () => {
     disabledNext: true,
     disabledBack: true,
     data: '',
-    isGameMode: false
+    isGameMode: false,
   });
   const { disabledNext, disabledBack, data, isGameMode } = statePage;
   const { second, debug, branch, storagePath } = state;
@@ -20,13 +20,10 @@ const EndPage = () => {
   }, []);
 
   useEffect(() => {
-
-
     ipcChannel.sendMessage('isGameMode');
     ipcChannel.once('isGameMode-out', (isGameMode) => {
       setStatePage({ ...statePage, isGameMode: isGameMode });
     });
-
 
     let json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
@@ -258,26 +255,26 @@ const EndPage = () => {
 
     //Paths
     ipcChannel.sendMessage('bash', [
-      `echo emulationPath=${storagePath}Emulation/ >> ~/emudeck/settings.sh`,
+      `echo emulationPath=${storagePath}/Emulation >> ~/emudeck/settings.sh`,
     ]);
     //
     ipcChannel.sendMessage('bash', [
-      `echo romsPath=${storagePath}Emulation/roms/ >> ~/emudeck/settings.sh`,
+      `echo romsPath=${storagePath}/Emulation/roms >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo toolsPath=${storagePath}Emulation/tools/ >> ~/emudeck/settings.sh`,
+      `echo toolsPath=${storagePath}/Emulation/tools >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo biosPath=${storagePath}Emulation/bios/ >> ~/emudeck/settings.sh`,
+      `echo biosPath=${storagePath}/Emulation/bios >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo savesPath=${storagePath}Emulation/saves/ >> ~/emudeck/settings.sh`,
+      `echo savesPath=${storagePath}/Emulation/saves >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo storagePath=${storagePath}Emulation/storage/ >> ~/emudeck/settings.sh`,
+      `echo storagePath=${storagePath}/Emulation/storage >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo ESDEscrapData=${storagePath}Emulation/tools/downloaded_media/ >> ~/emudeck/settings.sh`,
+      `echo ESDEscrapData=${storagePath}/Emulation/tools/downloaded_media >> ~/emudeck/settings.sh`,
     ]);
 
     //Shaders
@@ -360,8 +357,6 @@ const EndPage = () => {
     ipcChannel.sendMessage('bash', [
       `zenity --question --width 450 --title \"Close Steam/Steam Input?\" --text \"Exit Steam to launch Steam Rom Manager? Desktop controls will temporarily revert to touch/trackpad/L2/R2\" && (kill -15 \$(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
     ]);
-
-
 
     setTimeout(() => {
       window.close();
