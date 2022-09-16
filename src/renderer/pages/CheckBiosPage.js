@@ -11,33 +11,74 @@ const CheckBiosPage = () => {
     disabledBack: false,
     showNotification: false,
   });
+
+  const [ps1Bios, setps1Bios] = useState(false);
+  const [ps2Bios, setps2Bios] = useState(false);
+  const [switchBios, setSwitchBios] = useState(false);
+  const [segaCDBios, setSegaCDBios] = useState(false);
+  const [saturnBios, setSaturnBios] = useState(false);
+  const [dreamcastBios, setDreamcastBios] = useState(false);
+  const [DSBios, setDSBios] = useState(false);
+
   const { disabledNext, disabledBack, showNotification } = statePage;
   const navigate = useNavigate();
   const ipcChannel = window.electron.ipcRenderer;
 
-  const checkBiosPS1 = () => {
-    ipcChannel.sendMessage('emudeck', ['CheckBiosPS1|||checkPS1BIOS true']);
+  const checkBios = (biosCommand) => {
+    ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
+    ipcChannel.once(`${biosCommand}`, (status) => {
+      status = status.stdout;
+      console.log({ status });
+      status = status.replace('\n', '');
+      let biosStatus;
+      status.includes('true') ? (biosStatus = true) : (biosStatus = false);
+
+      switch (biosCommand) {
+        case 'checkPS1BIOS':
+          setps1Bios(biosStatus);
+          break;
+        case 'checkPS2BIOS':
+          setps2Bios(biosStatus);
+          break;
+        case 'checkYuzuBios':
+          setSwitchBios(biosStatus);
+          break;
+        case 'checkSegaCDBios':
+          setSegaCDBios(biosStatus);
+          break;
+        case 'checkSaturnBios':
+          setSaturnBios(biosStatus);
+          break;
+        case 'checkDreamcastBios':
+          setDreamcastBios(biosStatus);
+          break;
+        case 'checkDSBios':
+          setDSBios(biosStatus);
+          break;
+      }
+    });
   };
-  const checkBiosPS2 = () => {
-    ipcChannel.sendMessage('emudeck', ['CheckBiosPS2|||checkPS2BIOS true']);
-  };
-  const checkBiosSwitch = () => {
-    ipcChannel.sendMessage('emudeck', ['CheckBiosSwitch|||checkYuzuBios true']);
-  };
-  const checkBiosSegaCD = () => {
-    ipcChannel.sendMessage('emudeck', ['CheckBiosSegaCD|||checkSegaCDBios true']);
-  };
-  const checkBiosSaturn = () => {
-    ipcChannel.sendMessage('emudeck', ['CheckBiosSaturn|||checkSaturnBios true']);
-  };
+
+  useEffect(() => {
+    checkBios('checkPS1BIOS');
+    checkBios('checkPS1BIOS');
+    checkBios('checkPS2BIOS');
+    checkBios('checkYuzuBios');
+    checkBios('checkSegaCDBios');
+    checkBios('checkSaturnBios');
+    checkBios('checkDreamcastBios');
+    checkBios('checkDSBios');
+  }, []);
 
   return (
     <CheckBios
-      onClickPS1={checkBiosPS1}
-      onClickPS2={checkBiosPS2}
-      onClickSwitch={checkBiosSwitch}
-      onClickSegaCD={checkBiosSegaCD}
-      onClickSaturn={checkBiosSaturn}
+      ps1Bios={ps1Bios}
+      ps2Bios={ps2Bios}
+      switchBios={switchBios}
+      segaCDBios={segaCDBios}
+      saturnBios={saturnBios}
+      dreamcastBios={dreamcastBios}
+      DSBios={DSBios}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       showNotification={showNotification}

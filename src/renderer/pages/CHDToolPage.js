@@ -8,16 +8,15 @@ const CHDToolPage = () => {
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
-    disabledBack: false
+    disabledBack: false,
   });
   const { disabledNext, disabledBack } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
-
   const runCHD = (data) => {
-    ipcChannel.sendMessage('bash', [
-      'bash ~/emudeck/backend/tools/chdconv/chddeck.sh',
+    ipcChannel.sendMessage('emudeck', [
+      'chdtool|||bash $toolsPath/chdconv/chddeck.sh',
     ]);
   };
 
