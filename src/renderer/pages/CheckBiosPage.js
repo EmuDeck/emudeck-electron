@@ -27,6 +27,7 @@ const CheckBiosPage = () => {
   const checkBios = (biosCommand) => {
     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
+      console.log({ status });
       status = status.stdout;
       console.log({ status });
       status = status.replace('\n', '');
@@ -59,8 +60,17 @@ const CheckBiosPage = () => {
     });
   };
 
-  useEffect(() => {
+  const checkBiosAgain = () => {
     checkBios('checkPS1BIOS');
+    checkBios('checkPS2BIOS');
+    checkBios('checkYuzuBios');
+    checkBios('checkSegaCDBios');
+    checkBios('checkSaturnBios');
+    checkBios('checkDreamcastBios');
+    checkBios('checkDSBios');
+  };
+
+  useEffect(() => {
     checkBios('checkPS1BIOS');
     checkBios('checkPS2BIOS');
     checkBios('checkYuzuBios');
@@ -72,6 +82,7 @@ const CheckBiosPage = () => {
 
   return (
     <CheckBios
+      checkBiosAgain={checkBiosAgain}
       ps1Bios={ps1Bios}
       ps2Bios={ps2Bios}
       switchBios={switchBios}
