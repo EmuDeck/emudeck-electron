@@ -98,29 +98,23 @@ ipcMain.on('update-check', async (event, command) => {
 
       const version = app.getVersion();
       const versionOnline = updateInfo.version;
-      console.log({ updateInfo });
-      console.log(`you have version ${version}`);
-      console.log(`Online latest version is ${versionOnline}`);
-
       if (version == versionOnline) {
         event.reply('update-check-out', 'up-to-date');
       } else {
         event.reply('update-check-out', 'updating');
 
-        const result = autoUpdater.downloadUpdate();
-        console.log({ result });
-        if (!!result) {
-          result
-            .then(() => {
-              autoUpdater.quitAndInstall(
-                true, // isSilent
-                true // isForceRunAfter, restart app after update is installed
-              );
-            })
-            .catch(() => {
-              sender.send('update-check-out', 'up-to-date');
-            });
-        }
+        const doUpdate = autoUpdater.downloadUpdate();
+
+        doUpdate
+          .then(() => {
+            autoUpdater.quitAndInstall(
+              true, // isSilent
+              true // isForceRunAfter, restart app after update is installed
+            );
+          })
+          .catch(() => {
+            sender.send('update-check-out', 'updating');
+          });
       }
     })
     .catch(() => {
