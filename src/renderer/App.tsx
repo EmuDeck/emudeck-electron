@@ -18,6 +18,7 @@ import RAAchievementsPage from 'pages/RAAchievementsPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
+import CheckBiosPage from 'pages/CheckBiosPage';
 import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
 import ToolsAndStuffPage from 'pages/ToolsAndStuffPage';
@@ -27,8 +28,8 @@ import ChangeLogPage from 'pages/ChangeLogPage';
 import SettingsPage from 'pages/SettingsPage';
 import UninstallPage from 'pages/UninstallPage';
 import ResetPage from 'pages/ResetPage';
-
-import CheckBiosPage from 'pages/CheckBiosPage';
+import CHDToolPage from 'pages/CHDToolPage';
+import RemotePlayWhatever from 'pages/RemotePlayWhateverPage';
 
 import EndPage from 'pages/EndPage';
 
@@ -182,6 +183,12 @@ export default function App() {
           <Route exact path="/check-bios" element={<CheckBiosPage />} />
           <Route exact path="/reset" element={<ResetPage />} />
           <Route exact path="/uninstall" element={<UninstallPage />} />
+          <Route
+            exact
+            path="/remote-play-whatever"
+            element={<RemotePlayWhatever />}
+          />
+
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
           <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
