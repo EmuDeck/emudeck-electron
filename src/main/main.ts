@@ -77,6 +77,10 @@ ipcMain.on('debug', async (event, command) => {
 });
 
 ipcMain.on('update-check', async (event, command) => {
+  // Force no autoupdate
+  // event.reply('update-check-out', 'up-to-date');
+  // return;
+
   if (process.env.NODE_ENV === 'development') {
     event.reply('update-check-out', 'up-to-date');
     return;
@@ -86,7 +90,7 @@ ipcMain.on('update-check', async (event, command) => {
   result
     .then((checkResult: UpdateCheckResult) => {
       const { updateInfo } = checkResult;
-
+      console.log({ updateInfo });
       //  updateInfo:
       // path: "EmuDeck-1.0.27.AppImage"
       // releaseDate: "2022-09-16T22:48:39.803Z"
