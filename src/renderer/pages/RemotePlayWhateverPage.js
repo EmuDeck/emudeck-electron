@@ -9,8 +9,11 @@ const RemotePlayWhateverPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
+    showNotification: false,
+    notificationText: '',
   });
-  const { disabledNext, disabledBack } = statePage;
+  const { disabledNext, disabledBack, showNotification, notificationText } =
+    statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
@@ -18,6 +21,8 @@ const RemotePlayWhateverPage = () => {
     ipcChannel.sendMessage('emudeck', [
       'RemotePlayWhatever|||RemotePlayWhatever_install',
     ]);
+
+    notificationShow('🎉 RemotePlayWhatEver installed! Open SteamRomManager');
   };
 
   const openSRM = () => {
@@ -26,8 +31,27 @@ const RemotePlayWhateverPage = () => {
     ]);
   };
 
+  const notificationShow = (text) => {
+    setStatePage({
+      ...statePage,
+      notificationText: text,
+      showNotification: true,
+    });
+
+    if (showNotification === true) {
+      setTimeout(() => {
+        setStatePage({
+          ...statePage,
+          showNotification: false,
+        });
+      }, 2000);
+    }
+  };
+
   return (
     <RemotePlayWhatever
+      showNotification={showNotification}
+      notificationText={notificationText}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       onClick={installRPW}
