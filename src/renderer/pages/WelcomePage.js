@@ -10,10 +10,11 @@ const WelcomePage = () => {
     disabledNext: true,
     disabledBack: true,
     downloadComplete: false,
+    update: 'updating',
     cloned: undefined,
     data: '',
   });
-  const { disabledNext, disabledBack, downloadComplete, data, cloned } =
+  const { disabledNext, disabledBack, downloadComplete, data, cloned, update } =
     statePage;
 
   const selectMode = (value) => {
@@ -34,8 +35,14 @@ const WelcomePage = () => {
   useEffect(() => {
     ipcChannel.sendMessage('update-check');
     ipcChannel.once('update-check-out', (message) => {
-      console.log(message);
+      setStatePage({
+        ...statePage,
+        update: message,
+      });
     });
+  }, []);
+
+  useEffect(() => {
     //
     //Cloning project
     //
@@ -54,7 +61,7 @@ const WelcomePage = () => {
         cloned: cloneStatus,
       });
     });
-  }, []);
+  }, [update]);
 
   useEffect(() => {
     if (mode != '') {
@@ -122,6 +129,7 @@ const WelcomePage = () => {
 
   return (
     <Welcome
+      update={update}
       alert={
         second
           ? ''
