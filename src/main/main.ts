@@ -101,7 +101,13 @@ ipcMain.on('update-check', async (event, command) => {
 
     const version = app.getVersion();
     const versionOnline = updateInfo.version;
-    if (version == versionOnline) {
+
+    const versionCheck = version.localeCompare(versionOnline, undefined, {
+      numeric: true,
+      sensitivity: 'base',
+    });
+
+    if (versionCheck == -1) {
       event.reply('update-check-out', 'up-to-date');
     } else {
       event.reply('update-check-out', 'updating');
