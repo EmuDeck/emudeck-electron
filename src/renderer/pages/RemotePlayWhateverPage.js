@@ -22,7 +22,9 @@ const RemotePlayWhateverPage = () => {
       'RemotePlayWhatever|||RemotePlayWhatever_install',
     ]);
 
-    notificationShow('🎉 RemotePlayWhatEver installed! Open SteamRomManager');
+    notificationShow(
+      '🎉 RemotePlayWhatEver installed! Steam Rom Manager will launch now'
+    );
   };
 
   const notificationShow = (text) => {
