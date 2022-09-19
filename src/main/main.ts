@@ -87,43 +87,35 @@ ipcMain.on('update-check', async (event, command) => {
   }
 
   const result = autoUpdater.checkForUpdates();
-  result
-    .then((checkResult: UpdateCheckResult) => {
-      const { updateInfo } = checkResult;
-      console.log({ updateInfo });
-      //  updateInfo:
-      // path: "EmuDeck-1.0.27.AppImage"
-      // releaseDate: "2022-09-16T22:48:39.803Z"
-      // releaseName: "1.0.27"
-      // releaseNotes: "<p>IMPROVED: New Bios Check Page.<br>\nFIXED: Bug running compression tool</p>"
-      // sha512: "/0ChuBwKvG7zBQQRXABssTnoCPnbG/FE4K3gqCGvfhLwfhRcIlOgIFXXu0Fqo3QF2wNz8/H3OrHfYVyplsVnJA=="
-      // tag: "v1.0.27"
-      // version: "1.0.27"
+  result.then((checkResult: UpdateCheckResult) => {
+    const { updateInfo } = checkResult;
+    console.log({ updateInfo });
+    //  updateInfo:
+    // path: "EmuDeck-1.0.27.AppImage"
+    // releaseDate: "2022-09-16T22:48:39.803Z"
+    // releaseName: "1.0.27"
+    // releaseNotes: "<p>IMPROVED: New Bios Check Page.<br>\nFIXED: Bug running compression tool</p>"
+    // sha512: "/0ChuBwKvG7zBQQRXABssTnoCPnbG/FE4K3gqCGvfhLwfhRcIlOgIFXXu0Fqo3QF2wNz8/H3OrHfYVyplsVnJA=="
+    // tag: "v1.0.27"
+    // version: "1.0.27"
 
-      const version = app.getVersion();
-      const versionOnline = updateInfo.version;
-      if (version == versionOnline) {
-        event.reply('update-check-out', 'up-to-date');
-      } else {
-        event.reply('update-check-out', 'updating');
-
-        const doUpdate = autoUpdater.downloadUpdate();
-
-        doUpdate
-          .then(() => {
-            autoUpdater.quitAndInstall(
-              true, // isSilent
-              true // isForceRunAfter, restart app after update is installed
-            );
-          })
-          .catch(() => {
-            sender.send('update-check-out', 'updating');
-          });
-      }
-    })
-    .catch(() => {
+    const version = app.getVersion();
+    const versionOnline = updateInfo.version;
+    if (version == versionOnline) {
       event.reply('update-check-out', 'up-to-date');
-    });
+    } else {
+      event.reply('update-check-out', 'updating');
+
+      const doUpdate = autoUpdater.downloadUpdate();
+
+      doUpdate.then(() => {
+        autoUpdater.quitAndInstall(
+          true, // isSilent
+          true // isForceRunAfter, restart app after update is installed
+        );
+      });
+    }
+  });
 });
 
 ipcMain.on('system-info-in', async (event, command) => {
