@@ -99,31 +99,26 @@ ipcMain.on('update-check', async (event, command) => {
     // tag: "v1.0.27"
     // version: "1.0.27"
 
-    const version = app.getVersion();
-    const versionOnline = updateInfo.version;
+    const version = '1.0.30';
+    const versionOnline = '1.0.28';
 
     const versionCheck = version.localeCompare(versionOnline, undefined, {
       numeric: true,
       sensitivity: 'base',
     });
-    console.log('versionCheck');
-    console.log({ versionCheck });
-    if (versionCheck == -1) {
-      console.log('versionCheck = -1');
+
+    if (versionCheck == 1 || versionCheck == 0) {
       event.reply('update-check-out', 'up-to-date');
     } else {
-      console.log('versionCheck != -1');
       event.reply('update-check-out', 'updating');
-      console.log('autoUpdater.downloadUpdate start');
+
       const doUpdate = autoUpdater.downloadUpdate();
-      console.log('autoUpdater.downloadUpdate finish');
+
       doUpdate.then(() => {
-        console.log('autoUpdater.downloadUpdate then start');
         autoUpdater.quitAndInstall(
           true, // isSilent
           true // isForceRunAfter, restart app after update is installed
         );
-        console.log('autoUpdater.downloadUpdate then finish');
       });
     }
   });
