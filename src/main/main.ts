@@ -106,19 +106,24 @@ ipcMain.on('update-check', async (event, command) => {
       numeric: true,
       sensitivity: 'base',
     });
-
+    console.log('versionCheck');
+    console.log({ versionCheck });
     if (versionCheck == -1) {
+      console.log('versionCheck = -1');
       event.reply('update-check-out', 'up-to-date');
     } else {
+      console.log('versionCheck != -1');
       event.reply('update-check-out', 'updating');
-
+      console.log('autoUpdater.downloadUpdate start');
       const doUpdate = autoUpdater.downloadUpdate();
-
+      console.log('autoUpdater.downloadUpdate finish');
       doUpdate.then(() => {
+        console.log('autoUpdater.downloadUpdate then start');
         autoUpdater.quitAndInstall(
           true, // isSilent
           true // isForceRunAfter, restart app after update is installed
         );
+        console.log('autoUpdater.downloadUpdate then finish');
       });
     }
   });
