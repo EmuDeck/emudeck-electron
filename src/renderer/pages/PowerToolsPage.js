@@ -22,13 +22,11 @@ const PowerToolsPage = () => {
     if (data.target.value != '') {
       setStatePage({
         ...statePage,
-        hasSudo: true,
         sudoPass: data.target.value,
       });
     } else {
       setStatePage({
         ...statePage,
-        hasSudo: false,
         sudoPass: '',
       });
     }
