@@ -45,6 +45,13 @@ const GyroDSUPage = () => {
     ipcChannel.sendMessage('bash', [
       `echo ${pass1} > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
+    setStatePage({
+      ...statePage,
+      hasSudo: true,
+      sudoPass: pass1,
+      showNotification: true,
+      textNotification: '🎉 Password created!',
+    });
   };
 
   const setPassword = (data) => {
@@ -71,6 +78,7 @@ const GyroDSUPage = () => {
       setStatePage({
         ...statePage,
         showNotification: true,
+        textNotification: '🎉 GyroDSU Installed!',
         sudoPass: '',
       });
       if (showNotification === true) {

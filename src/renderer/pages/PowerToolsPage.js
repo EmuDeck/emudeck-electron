@@ -14,6 +14,7 @@ const PowerToolsPage = () => {
     showNotification: false,
     pass1: 'a',
     pass2: 'b',
+    textNotification:''
   });
   const {
     disabledNext,
@@ -45,6 +46,13 @@ const PowerToolsPage = () => {
     ipcChannel.sendMessage('bash', [
       `echo ${pass1} > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
+    setStatePage({
+      ...statePage,
+      hasSudo: true,
+      sudoPass: pass1,
+      showNotification: true,
+      textNotification: "🎉 Password created!"
+    });
   };
 
   const setPassword = (data) => {
@@ -71,6 +79,7 @@ const PowerToolsPage = () => {
       setStatePage({
         ...statePage,
         showNotification: true,
+        textNotification: "🎉 PowerTools Installed!",
         sudoPass: '',
       });
       if (showNotification === true) {
@@ -116,6 +125,7 @@ const PowerToolsPage = () => {
       sudoPass={sudoPass}
       passValidates={pass1 === pass2 ? true : false}
       nextText={sudoPass ? 'Continue' : 'Skip'}
+      textNotification={}
     />
   );
 };
