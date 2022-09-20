@@ -106,10 +106,15 @@ ipcMain.on('update-check', async (event, command) => {
       numeric: true,
       sensitivity: 'base',
     });
+    console.log('versionCheck is '.versionCheck);
+    console.log('- 1 means up to date');
+    console.log('1 and 0 means update');
 
     if (versionCheck == 1 || versionCheck == 0) {
+      console.log('Up to date, mate');
       event.reply('update-check-out', 'up-to-date');
     } else {
+      console.log('Lets update!');
       event.reply('update-check-out', 'updating');
 
       const doUpdate = autoUpdater.downloadUpdate();
