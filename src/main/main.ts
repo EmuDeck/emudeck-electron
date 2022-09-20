@@ -99,8 +99,8 @@ ipcMain.on('update-check', async (event, command) => {
     // tag: "v1.0.27"
     // version: "1.0.27"
 
-    const version = '1.0.30';
-    const versionOnline = '1.0.28';
+    const version = app.getVersion();
+    const versionOnline = updateInfo.version;
 
     const versionCheck = version.localeCompare(versionOnline, undefined, {
       numeric: true,
