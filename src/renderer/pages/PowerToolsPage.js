@@ -12,13 +12,22 @@ const PowerToolsPage = () => {
     hasSudo: false,
     sudoPass: '',
     showNotification: false,
+    pass1: 'a',
+    pass2: 'b',
   });
-  const { disabledNext, disabledBack, hasSudo, sudoPass, showNotification } =
-    statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    hasSudo,
+    sudoPass,
+    showNotification,
+    pass1,
+    pass2,
+  } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
-  const setPowerTools = (data) => {
+  const setSudoPass = (data) => {
     if (data.target.value != '') {
       setStatePage({
         ...statePage,
@@ -34,8 +43,22 @@ const PowerToolsPage = () => {
 
   const createSudo = (data) => {
     ipcChannel.sendMessage('bash', [
-      'cp ~/emudeck/backend/tools/passwd.desktop ~/Desktop/passwd.desktop && chmod +x ~/Desktop/passwd.desktop && ~/Desktop/passwd.desktop && rm ~/Desktop/passwd.desktop ',
+      `echo ${pass1} > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
+  };
+
+  const setPassword = (data) => {
+    setStatePage({
+      ...statePage,
+      pass1: data.target.value,
+    });
+  };
+
+  const checkPassword = (data) => {
+    setStatePage({
+      ...statePage,
+      pass2: data.target.value,
+    });
   };
 
   const installPowerTools = (data) => {
@@ -85,10 +108,13 @@ const PowerToolsPage = () => {
       installClick={installPowerTools}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
-      onChange={setPowerTools}
+      onChange={setSudoPass}
+      onChangeSetPass={setPassword}
+      onChangeCheckPass={checkPassword}
       onClick={createSudo}
       hasSudo={hasSudo}
       sudoPass={sudoPass}
+      passValidates={pass1 === pass2 ? true : false}
       nextText={sudoPass ? 'Continue' : 'Skip'}
     />
   );
