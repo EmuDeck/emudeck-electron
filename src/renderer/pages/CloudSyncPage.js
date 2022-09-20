@@ -20,7 +20,9 @@ const CloudSyncPage = () => {
       ...state,
       cloudSync: item,
     });
+  };
 
+  const createDesktopIcon = () => {
     ipcChannel.sendMessage('bash', [
       `create-icon|||echo "#!/usr/bin/env xdg-open
        [Desktop Entry]
@@ -29,7 +31,7 @@ const CloudSyncPage = () => {
        Icon=steamdeck-gaming-return
        Terminal=true
        Type=Application
-       StartupNotify=false" > $HOME/Desktop/EmuDeckSaveSync.desktop && chmod +x $HOME/Desktop/EmuDeckSaveSync.desktop && zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck Save Sync icon. We will delete that icon automatically."`,
+       StartupNotify=false" > $HOME/Desktop/EmuDeckSaveSync.desktop && chmod +x $HOME/Desktop/EmuDeckSaveSync.desktop" && zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck Save Sync icon. We will delete that icon automatically.`,
     ]);
   };
 
@@ -43,6 +45,7 @@ const CloudSyncPage = () => {
     <CloudSync
       data={data}
       onClick={cloudSyncSet}
+      onClickInstall={createDesktopIcon}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
     />
