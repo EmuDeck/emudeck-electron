@@ -107,8 +107,8 @@ ipcMain.on('update-check', async (event, command) => {
       sensitivity: 'base',
     });
     console.log({ versionCheck });
-    console.log('- 1 means up to date');
-    console.log('1 and 0 means update');
+    console.log('- 1 means update');
+    console.log('1 and 0 means up to date');
 
     if (versionCheck == 1 || versionCheck == 0) {
       console.log('Up to date, mate');
