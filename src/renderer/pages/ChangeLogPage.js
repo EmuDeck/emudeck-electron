@@ -12,16 +12,7 @@ const ChangeLogPage = () => {
   });
   const { disabledNext, disabledBack, hasSudo } = statePage;
 
-  return (
-    <ChangeLog
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      onChange={setGyro}
-      onClick={createSudo}
-      hasSudo={hasSudo}
-      nextText={sudoPass ? 'Continue' : 'Skip'}
-    />
-  );
+  return <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack} />;
 };
 
 export default ChangeLogPage;

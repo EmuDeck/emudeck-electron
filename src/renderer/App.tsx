@@ -54,7 +54,7 @@ export default function App() {
     bezels: true,
     powerTools: false,
     GyroDSU: false,
-    cloudSync: false,
+    cloudSync: '',
     sudoPass: '',
     language: 'en',
     achievements: {
