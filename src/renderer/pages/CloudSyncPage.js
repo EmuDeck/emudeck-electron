@@ -29,7 +29,7 @@ const CloudSyncPage = () => {
        Icon=steamdeck-gaming-return
        Terminal=true
        Type=Application
-       StartupNotify=false" > $HOME/Desktop/EmuDeckSaveSync.desktop && chmod +x $HOME/Desktop/EmuDeckSaveSync.desktop`,
+       StartupNotify=false" > $HOME/Desktop/EmuDeckSaveSync.desktop && chmod +x $HOME/Desktop/EmuDeckSaveSync.desktop && zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck Save Sync icon. We will delete that icon automatically."`,
     ]);
   };
 
