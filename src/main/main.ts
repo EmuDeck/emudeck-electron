@@ -75,6 +75,9 @@ ipcMain.on('emudeck', async (event, command) => {
 ipcMain.on('debug', async (event, command) => {
   mainWindow.webContents.openDevTools();
 });
+ipcMain.on('close', async (event, command) => {
+  app.quit();
+});
 
 ipcMain.on('update-check', async (event, command) => {
   // Force no autoupdate

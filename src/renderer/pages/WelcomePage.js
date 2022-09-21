@@ -144,6 +144,7 @@ const WelcomePage = () => {
       next="rom-storage"
       third="change-log"
       thirdText="See changelog"
+      fourthText="Exit EmuDeck"
     />
   );
 };
