@@ -12,13 +12,13 @@ const CheckBiosPage = () => {
     showNotification: false,
   });
 
-  const [ps1Bios, setps1Bios] = useState(false);
-  const [ps2Bios, setps2Bios] = useState(false);
-  const [switchBios, setSwitchBios] = useState(false);
-  const [segaCDBios, setSegaCDBios] = useState(false);
-  const [saturnBios, setSaturnBios] = useState(false);
-  const [dreamcastBios, setDreamcastBios] = useState(false);
-  const [DSBios, setDSBios] = useState(false);
+  const [ps1Bios, setps1Bios] = useState(null);
+  const [ps2Bios, setps2Bios] = useState(null);
+  const [switchBios, setSwitchBios] = useState(null);
+  const [segaCDBios, setSegaCDBios] = useState(null);
+  const [saturnBios, setSaturnBios] = useState(null);
+  const [dreamcastBios, setDreamcastBios] = useState(null);
+  const [DSBios, setDSBios] = useState(null);
 
   const { disabledNext, disabledBack, showNotification } = statePage;
   const navigate = useNavigate();
