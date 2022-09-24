@@ -49,7 +49,7 @@ const EndPage = () => {
     ]);
 
     ipcChannel.sendMessage('bash', [
-      `echo doSetupPCSX2=${
+      `echo doSetupPCSX2QT=${
         state.overwriteConfigEmus.pcsx2.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
@@ -142,7 +142,7 @@ const EndPage = () => {
       } >> ~/emudeck/settings.sh`,
     ]);
     ipcChannel.sendMessage('bash', [
-      `echo doInstallPCSX2=${
+      `echo doInstallPCSX2QT=${
         state.installEmus.pcsx2.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
