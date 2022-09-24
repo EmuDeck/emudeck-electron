@@ -17,13 +17,13 @@ const UpdateEmusPage = () => {
 
   const updateFlatpak = (data) => {
     ipcChannel.sendMessage('bash', [
-      'bash ~/emudeck/backend/tools/flatpakupdate/flatpakupdate.sh',
+      'bash ~/.config/EmuDeck/backend/tools/flatpakupdate/flatpakupdate.sh',
     ]);
   };
 
   const updateAppImage = (data) => {
     ipcChannel.sendMessage('bash', [
-      'bash ~/emudeck/backend/tools/binupdate/binupdate.sh',
+      'bash ~/.config/EmuDeck/backend/tools/binupdate/binupdate.sh',
     ]);
   };
 

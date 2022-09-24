@@ -28,7 +28,7 @@ const EndPage = () => {
     let json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
 
-    ipcChannel.sendMessage('bash', [`mkdir -p ~/emudeck/`]);
+    ipcChannel.sendMessage('bash', [`mkdir -p ~/.config/EmuDeck/`]);
 
     ipcChannel.sendMessage('bash', [
       `echo expert=${
@@ -358,11 +358,11 @@ const EndPage = () => {
 
     //Installation
     ipcChannel.sendMessage('bash', [
-      `bash ~/emudeck/backend/setup.sh ${branch} false`,
+      `bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
     ]);
 
     ipcChannel.sendMessage('emudeck', [
-      `finish|||checkForFile ~/emudeck/.ui-finished delete && echo 'Starting...' > ~/emudeck/msg.log && printf "\ec" && echo true`,
+      `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > ~/.config/EmuDeck/msg.log && printf "\ec" && echo true`,
     ]);
 
     ipcChannel.once('finish', (message) => {

@@ -16,7 +16,7 @@ const UninstallPage = () => {
 
   const uninstall = (data) => {
     ipcChannel.sendMessage('bash', [
-      'bash ~/emudeck/backend/uninstall.sh',
+      'bash ~/.config/EmuDeck/backend/uninstall.sh',
     ]);
     window.close();
   };

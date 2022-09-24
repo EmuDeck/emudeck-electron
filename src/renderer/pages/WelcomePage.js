@@ -48,7 +48,7 @@ const WelcomePage = () => {
     //
     //     //Already cloned?
     ipcChannel.sendMessage('bash', [
-      'check-clone|||test -e ~/emudeck/backend/.git/config  && echo true',
+      'check-clone|||test -e ~/.config/EmuDeck/backend/.git/config  && echo true',
     ]);
     ipcChannel.once('check-clone', (cloneStatus) => {
       console.log({ cloneStatus });
@@ -103,9 +103,9 @@ const WelcomePage = () => {
 
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
-        'clone|||mkdir -p ~/emudeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/emudeck/backend/ && cd ~/emudeck/backend && git checkout ' +
+        'clone|||mkdir -p ~/.config/EmuDeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ' +
           branch +
-          ' && touch ~/emudeck/.cloned && printf "ec" && echo true',
+          ' && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true',
       ]);
 
       ipcChannel.once('clone', (cloneStatus) => {
@@ -116,7 +116,7 @@ const WelcomePage = () => {
       });
     } else if (cloned == true) {
       ipcChannel.sendMessage('bash', [
-        'pull|||cd ~/emudeck/backend && git reset --hard && git clean -fd && git checkout ' +
+        'pull|||cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ' +
           branch +
           ' && git pull',
       ]);
