@@ -89,9 +89,6 @@ const EndPage = () => {
     ipcChannel.sendMessage('bash', [
       `echo doSetupRyujinx=false >> ~/emudeck/settings.sh`,
     ]);
-    ipcChannel.sendMessage('bash', [
-      `echo doSetupESDE=true >> ~/emudeck/settings.sh`,
-    ]);
 
     ipcChannel.sendMessage('bash', [
       `echo doSetupPrimeHacks=${
@@ -113,7 +110,20 @@ const EndPage = () => {
         state.overwriteConfigEmus.mame.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doSetupVita3K=${
+        state.overwriteConfigEmus.vita3k.status ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doSetupScummVM=${
+        state.overwriteConfigEmus.scummvm.status ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
 
+    ipcChannel.sendMessage('bash', [
+      `echo doSetupESDE=true >> ~/emudeck/settings.sh`,
+    ]);
     ipcChannel.sendMessage('bash', [
       `echo doSetupSRM=${
         state.overwriteConfigEmus.srm.status ? true : false
@@ -190,6 +200,17 @@ const EndPage = () => {
         state.installEmus.mame.status ? true : false
       } >> ~/emudeck/settings.sh`,
     ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doInstallScummVM=${
+        state.installEmus.scummvm.status ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `echo doInstallVita3K=${
+        state.installEmus.vita3k.status ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
+
     ipcChannel.sendMessage('bash', [
       `echo doInstallSRM=${
         state.installEmus.srm.status ? true : false

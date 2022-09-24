@@ -29,7 +29,9 @@ import SettingsPage from 'pages/SettingsPage';
 import UninstallPage from 'pages/UninstallPage';
 import ResetPage from 'pages/ResetPage';
 import CHDToolPage from 'pages/CHDToolPage';
-import RemotePlayWhatever from 'pages/RemotePlayWhateverPage';
+import RemotePlayWhateverPage from 'pages/RemotePlayWhateverPage';
+import VideoGuidePage from 'pages/VideoGuidePage';
+import EmuGuidePage from 'pages/EmuGuidePage';
 
 import EndPage from 'pages/EndPage';
 
@@ -87,6 +89,8 @@ export default function App() {
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
       mame: { id: 'mame', status: false, name: 'Mame Standalone' },
+      vita3k: { id: 'vita3k', status: true, name: 'Vita 3K (Experimental)' },
+      scummvm: { id: 'scummvm', status: true, name: 'Scumm VM' },
       //supermodelista: { id: 'supermodelista', status: true, name: 'Supermodelista' },
     },
     overwriteConfigEmus: {
@@ -104,6 +108,8 @@ export default function App() {
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
       mame: { id: 'mame', status: true, name: 'Mame Standalone' },
+      vita3k: { id: 'vita3k', status: true, name: 'Vita 3K (Experimental)' },
+      scummvm: { id: 'scummvm', status: true, name: 'Scumm VM' },
       // supermodelista: { id: 'supermodelista', status: true, name: 'Supermodelista' }
     },
   });
@@ -182,13 +188,17 @@ export default function App() {
           <Route exact path="/settings" element={<SettingsPage />} />
           <Route exact path="/check-bios" element={<CheckBiosPage />} />
           <Route exact path="/reset" element={<ResetPage />} />
+          <Route exact path="/emulator-guide" element={<EmuGuidePage />}>
+            <Route path=":emulator" element={<EmuGuidePage />} />
+          </Route>
           <Route exact path="/uninstall" element={<UninstallPage />} />
           <Route
             exact
             path="/remote-play-whatever"
-            element={<RemotePlayWhatever />}
+            element={<RemotePlayWhateverPage />}
           />
 
+          <Route exact path="/video-guide" element={<VideoGuidePage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
           <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />

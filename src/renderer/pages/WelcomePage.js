@@ -10,7 +10,7 @@ const WelcomePage = () => {
     disabledNext: true,
     disabledBack: true,
     downloadComplete: false,
-    update: 'updating',
+    update: null,
     cloned: undefined,
     data: '',
   });
