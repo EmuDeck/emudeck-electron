@@ -6,6 +6,7 @@
     "special_configuration": "",
     "bios": ["ps1", "segacd", "saturn", "nds", "dreamcast"],
     "systems": "Genesis/Mega Drive , Sega CD, Sega 32X, PC Engine, NES, SNES, MAME, FinalBurn Neo, Master System,Game Boy, Neo Geo Pocket, Game Gear, NDS, Dreamcast, Playstation, Nintendo 64, Doom, Atari, and more 2D Retro Game Systems",
+    "special_configuration": "You can use custom HD Textures for NES by copying them to the Emulation/hdpacks/Mesen folder and for Nintendo 64 using the Emulation/hdpacks/Mupen64plus_next folder.<br/>You can download HD Packs from https://emulationking.com/nintendo64/",
     "hotkeys": {
       "0": ["Action", "Keys"],
       "1": ["Menu", "L3+R3"],
@@ -92,7 +93,8 @@
       "3": ["Save State", "SELECT+R1"],
       "4": ["Exit", "SELECT+START"],
       "5": ["Fast Forward", "SELECT+R2"],
-      "6": ["Pause", "SELECT+A"]
+      "6": ["Pause", "SELECT+A"],
+      "7": ["Change Disc", "SELECT+L2"]
     }
   },
   "citra": {
