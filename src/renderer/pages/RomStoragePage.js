@@ -41,7 +41,7 @@ const RomStoragePage = () => {
         });
       });
     } else if (storageName === 'SD-Card') {
-      let sdCardPath = sdCardName + '/';
+      let sdCardPath = sdCardName;
       setState({
         ...state,
         storage: storageName,

@@ -88,13 +88,7 @@
     "systems": "Playstation 1",
     "hotkeys": {
       "0": ["Action", "Keys"],
-      "1": ["Menu", "L3+R3"],
-      "2": ["Load State", "SELECT+L1"],
-      "3": ["Save State", "SELECT+R1"],
-      "4": ["Exit", "SELECT+START"],
-      "5": ["Fast Forward", "SELECT+R2"],
-      "6": ["Pause", "SELECT+A"],
-      "7": ["Change Disc", "SELECT+L2"]
+      "1": ["Menu", "STEAM+DPAD"]
     }
   },
   "citra": {
