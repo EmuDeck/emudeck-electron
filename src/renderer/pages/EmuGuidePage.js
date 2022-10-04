@@ -5,14 +5,22 @@ import EmuGuide from 'components/organisms/Wrappers/EmuGuide.js';
 
 const EmuGuidePage = () => {
   const { state, setState } = useContext(GlobalContext);
+  const { installEmus } = state;
   const emuData = require('data/emuData.json');
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
     showNotification: false,
     emulatorSelected: 'citra',
+    textNotification: '',
   });
-  const { disabledNext, disabledBack, emulatorSelected } = statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    emulatorSelected,
+    showNotification,
+    textNotification,
+  } = statePage;
 
   const [ps1Bios, setps1Bios] = useState(null);
   const [ps2Bios, setps2Bios] = useState(null);
@@ -58,6 +66,77 @@ const EmuGuidePage = () => {
     });
   };
 
+  const resetEmu = (emulator, name) => {
+    let biosCommand = 'RetroArch_resetCoreConfigs';
+    ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
+    ipcChannel.once(`${biosCommand}`, (status) => {
+      console.log({ status });
+      status = status.stdout;
+      console.log({ status });
+      status = status.replace('\n', '');
+      let biosStatus;
+      status.includes('true') ? (biosStatus = true) : (biosStatus = false);
+
+      setStatePage({
+        ...statePage,
+        textNotification: `${name} configuration reset to EmuDeck's default configuration 🎉`,
+        showNotification: true,
+      });
+    });
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setStatePage({
+        ...statePage,
+        showNotification: false,
+      });
+    }, 3000);
+  }, [showNotification]);
+
+  const installEmu = (emulator, name) => {
+    let biosCommand = 'RetroArch_resetCoreConfigs';
+    ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
+    ipcChannel.once(`${biosCommand}`, (status) => {
+      // console.log({ status });
+      status = status.stdout;
+      console.log({ status });
+      status = status.replace('\n', '');
+      let biosStatus;
+      status.includes('true') ? (biosStatus = true) : (biosStatus = false);
+
+      setStatePage({
+        ...statePage,
+        textNotification: `${name} installed properly! 🎉`,
+        showNotification: true,
+      });
+    });
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setStatePage({
+        ...statePage,
+        showNotification: false,
+      });
+    }, 3000);
+  }, [showNotification]);
+
+  const checkInstallation = (emulator, name) => {
+    console.log(`Checking ${name} status`);
+    //alert(emulator);
+    // setState(
+    //   ...state,
+    //   (installEmus: {
+    //     ...installEmus,
+    //     (emulator:{
+    //       ...emulator,
+    //       status: true,
+    //     })
+    //   })
+    // );
+  };
+
   useEffect(() => {
     checkBios('checkPS1BIOS');
     checkBios('checkPS2BIOS');
@@ -66,6 +145,8 @@ const EmuGuidePage = () => {
     checkBios('checkSaturnBios');
     checkBios('checkDreamcastBios');
     checkBios('checkDSBios');
+
+    checkInstallation('ra', 'RetroArch');
   }, []);
 
   const selectEmu = (e) => {
@@ -91,7 +172,11 @@ const EmuGuidePage = () => {
         saturn={saturnBios}
         dreamcast={dreamcastBios}
         onChange={selectEmu}
-        nds={DSBios}
+        onClick={resetEmu}
+        onClickInstall={installEmu}
+        showNotification={showNotification}
+        textNotification={textNotification}
+        installEmus={installEmus[emulatorSelected]}
       />
     </>
   );
