@@ -183,7 +183,7 @@ const createWindow = async () => {
   const primaryDisplay = screen.getPrimaryDisplay();
   const { width, height } = primaryDisplay.workAreaSize;
   const screenHeight = height < 701 ? 600 : 720;
-  const isFullscreen = height < 701 ? true : false;
+  const isFullscreen = height < 701 ? false : false;
   mainWindow = new BrowserWindow({
     show: false,
     width: 1280,
