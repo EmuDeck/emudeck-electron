@@ -225,5 +225,17 @@
       "0": ["Action", "Keys"],
       "1": ["Menu", "START"]
     }
+  },
+  "xenia": {
+    "id": "xenia",
+    "name": "Xenia",
+    "description": "Xenia is free and an experimental, open-source Xbox 360 emulator. Outside of Microsoft's own backward compatibility on successive consoles, Xenia is the first and only unofficial Xbox 360 emulator that exists.",
+    "special_configuration": "Due to Xenia's experimental stage, it can only be installed from this page.Almost no games work today ",
+    "bios": [],
+    "systems": "Xbox 360",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "STEAM BUTTON"]
+    }
   }
 }

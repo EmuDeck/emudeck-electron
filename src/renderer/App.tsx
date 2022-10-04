@@ -62,6 +62,7 @@ export default function App() {
     achievements: {
       user: '',
       pass: '',
+      hardcore: false,
     },
     ar: {
       sega: '43',
@@ -91,6 +92,7 @@ export default function App() {
       mame: { id: 'mame', status: false, name: 'Mame Standalone' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita 3K (Experimental)' },
       scummvm: { id: 'scummvm', status: true, name: 'Scumm VM' },
+      xenia: { id: 'xenia', status: false, name: 'Xenia' },
       //supermodelista: { id: 'supermodelista', status: true, name: 'Supermodelista' },
     },
     overwriteConfigEmus: {
