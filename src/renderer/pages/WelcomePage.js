@@ -103,7 +103,7 @@ const WelcomePage = () => {
 
     if (cloned == false) {
       ipcChannel.sendMessage('bash', [
-        'clone|||mkdir -p ~/.config/EmuDeck/backend && git clone https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ' +
+        'clone|||mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ' +
           branch +
           ' && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true',
       ]);
