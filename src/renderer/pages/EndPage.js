@@ -348,6 +348,9 @@ const EndPage = () => {
     ipcChannel.sendMessage('bash', [
       `echo achievementsPass=${state.achievements.pass} >> ~/emudeck/settings.sh`,
     ]);
+    ipcChannel.sendMessage('bash', [
+      `echo achievementsHardcore=${state.achievements.hardcore} >> ~/emudeck/settings.sh`,
+    ]);
 
     //CloudSync
     ipcChannel.sendMessage('bash', [

@@ -26,6 +26,13 @@ const RAAchievementsPage = () => {
     }
   };
 
+  const setAchievementsHardCore = (data) => {
+    setState({
+      ...state,
+      achievements: { ...achievements, hardcore: !achievements.hardcore },
+    });
+  };
+
   return (
     <RAAchievements
       data={data}
@@ -33,6 +40,7 @@ const RAAchievementsPage = () => {
       disabledBack={disabledBack}
       nextText={achievements.pass ? 'Continue' : 'Skip'}
       onChange={setAchievements}
+      onToggle={setAchievementsHardCore}
     />
   );
 };
