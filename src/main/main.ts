@@ -216,6 +216,11 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
+  mainWindow.webContents.on('new-window', function (e, url) {
+    e.preventDefault();
+    require('electron').shell.openExternal(url);
+  });
+
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
