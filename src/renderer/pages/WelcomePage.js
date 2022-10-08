@@ -87,6 +87,7 @@ const WelcomePage = () => {
             overwriteConfigEmus: state.overwriteConfigEmus,
             system: platform,
             version: version,
+            branch: 'beta',
           });
         });
       });
