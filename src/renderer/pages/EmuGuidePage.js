@@ -95,21 +95,28 @@ const EmuGuidePage = () => {
   }, [showNotification]);
 
   const installEmu = (emulator, name) => {
-    let biosCommand = 'RetroArch_resetCoreConfigs';
-    ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
-    ipcChannel.once(`${biosCommand}`, (status) => {
+    ipcChannel.sendMessage('emudeck', [
+      `${name}_resetConfig|||${name}_resetConfig`,
+    ]);
+    ipcChannel.once(`${command}`, (status) => {
       // console.log({ status });
       status = status.stdout;
       console.log({ status });
       status = status.replace('\n', '');
-      let biosStatus;
-      status.includes('true') ? (biosStatus = true) : (biosStatus = false);
 
-      setStatePage({
-        ...statePage,
-        textNotification: `${name} installed properly! 🎉`,
-        showNotification: true,
-      });
+      if (status.includes('true')) {
+        setStatePage({
+          ...statePage,
+          textNotification: `${name} configuration reset to EmuDeck's defaults! 🎉`,
+          showNotification: true,
+        });
+      } else {
+        setStatePage({
+          ...statePage,
+          textNotification: `There was an issue trying to reset ${name} configuration 😥`,
+          showNotification: true,
+        });
+      }
     });
   };
 
