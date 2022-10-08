@@ -14,6 +14,7 @@ const EmuGuidePage = () => {
     emulatorSelected: 'citra',
     textNotification: '',
     disableInstallButton: false,
+    disableResetButton: false,
   });
   const {
     disabledNext,
@@ -22,6 +23,7 @@ const EmuGuidePage = () => {
     showNotification,
     textNotification,
     disableInstallButton,
+    disableResetButton,
   } = statePage;
 
   const [ps1Bios, setps1Bios] = useState(null);
@@ -69,23 +71,33 @@ const EmuGuidePage = () => {
   };
 
   const installEmu = (emulator, name) => {
-    //     let biosCommand = 'RetroArch_resetCoreConfigs';
-    //     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
-    //     ipcChannel.once(`${biosCommand}`, (status) => {
-    //       console.log({ status });
-    //       status = status.stdout;
-    //       console.log({ status });
-    //       status = status.replace('\n', '');
-    //       let biosStatus;
-    //       status.includes('true') ? (biosStatus = true) : (biosStatus = false);
-    //
-    //       setStatePage({
-    //         ...statePage,
-    //         textNotification: `${name} configuration reset to EmuDeck's default configuration 🎉`,
-    //         showNotification: true,
-    //       });
-    //     });
-    console.log('yei');
+    setStatePage({
+      ...statePage,
+      disableResetButton: true,
+    });
+    ipcChannel.sendMessage('emudeck', [`${name}_install|||${name}_install`]);
+    ipcChannel.once(`${name}_install`, (status) => {
+      // console.log({ status });
+      status = status.stdout;
+      console.log({ status });
+      status = status.replace('\n', '');
+
+      if (status.includes('true')) {
+        setStatePage({
+          ...statePage,
+          textNotification: `${name} installed! 🎉`,
+          showNotification: true,
+          disableResetButton: false,
+        });
+      } else {
+        setStatePage({
+          ...statePage,
+          textNotification: `There was an issue trying to install ${name} 😥`,
+          showNotification: true,
+          disableResetButton: false,
+        });
+      }
+    });
   };
 
   const resetEmu = (emulator, name) => {
@@ -107,14 +119,14 @@ const EmuGuidePage = () => {
           ...statePage,
           textNotification: `${name} configuration reset to EmuDeck's defaults! 🎉`,
           showNotification: true,
-          disableInstallButton: false,
+          disableResetButton: false,
         });
       } else {
         setStatePage({
           ...statePage,
           textNotification: `There was an issue trying to reset ${name} configuration 😥`,
           showNotification: true,
-          disableInstallButton: false,
+          disableResetButton: false,
         });
       }
     });
@@ -185,6 +197,7 @@ const EmuGuidePage = () => {
         textNotification={textNotification}
         installEmus={installEmus[emulatorSelected]}
         disableInstallButton={disableInstallButton ? true : false}
+        disableResetButton={disableResetButton ? true : false}
       />
     </>
   );

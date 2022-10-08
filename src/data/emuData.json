@@ -2,10 +2,11 @@
   "ra": {
     "id": "ra",
     "name": "RetroArch",
+    "wiki": "",
     "description": "",
     "special_configuration": "",
     "bios": ["ps1", "segacd", "saturn", "nds", "dreamcast"],
-    "systems": "Genesis/Mega Drive , Sega CD, Sega 32X, PC Engine, NES, SNES, MAME, FinalBurn Neo, Master System,Game Boy, Neo Geo Pocket, Game Gear, NDS, Dreamcast, Playstation, Nintendo 64, Doom, Atari, and more 2D Retro Game Systems",
+    "systems": "2D Retro Game Systems and some less modern 3D like Nintendo 64, Saturn and Dreamcast",
     "special_configuration": "You can use custom HD Textures for NES by copying them to the Emulation/hdpacks/Mesen folder and for Nintendo 64 using the Emulation/hdpacks/Mupen64plus_next folder.<br/>You can download HD Packs from https://emulationking.com/nintendo64/",
     "hotkeys": {
       "0": ["Action", "Keys"],
@@ -20,6 +21,7 @@
   "cemu": {
     "id": "cemu",
     "name": "Cemu",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/CEMU",
     "description": "Cemu is a free and open-source Wii U video game console emulator developed by Exzap who serves as the core and GPU developer, and Petergov as the core and audio emulation developer",
     "special_configuration": "Cemu roms needs to be placed in Emulation/roms/wiiu/roms because Cemu runs on Proton.<br/>In order to use hotkeys you need to add our cutom Steam Input preset. More info about using custom Steam Input presets <strong><a href='https://www.emudeck.com/#steam_input' target='_blank'>here</a></strong><br/>You can use your SteamDeck's Gyro if you install GyroDSU from ToolsAndStuff page",
     "bios": [],
@@ -33,6 +35,7 @@
   "dolphin": {
     "id": "dolphin",
     "name": "Dolphin",
+    "wiki": "Dolphin (Gamecube and Wii)",
     "description": "Dolphin was the first GameCube emulator that could successfully run commercial games. After troubled development in the first years, Dolphin became free and open-source software and subsequently gained support for Wii emulation.",
     "special_configuration": "We recommend installing PowerTools to improve performance bu limiting the number of active cores to 3. You can install PowerTools from the ToolsAndStuff page",
     "bios": [],
@@ -53,6 +56,7 @@
   "primehacks": {
     "id": "primehacks",
     "name": "PrimeHack",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Primehack",
     "description": "PrimeHack is a version of Dolphin created by shiiion that has been modified to play Metroid Prime: Trilogy on PC with keyboard and mouse controls.",
     "special_configuration": "",
     "bios": [],
@@ -70,6 +74,7 @@
   "ppsspp": {
     "id": "ppsspp",
     "name": "PPSSPP",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/PPSSPP",
     "description": "PPSSPP is a Standalone free and open-source PSP emulator for multiple platforms with an increased focus on speed and portability.",
     "special_configuration": "",
     "bios": [],
@@ -82,6 +87,7 @@
   "duckstation": {
     "id": "duckstation",
     "name": "DuckStation",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Duckstation",
     "description": "DuckStation is a free and open-source PlayStation emulator developed primarily by stenzek. It features PGXP, upscaling, texture filtering, overclocking, advanced cheat code support, CHD support, and a graphical interface.",
     "special_configuration": "",
     "bios": ["ps1"],
@@ -94,6 +100,7 @@
   "citra": {
     "id": "citra",
     "name": "Citra",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Citra",
     "description": "Citra is a free and open-source emulator of the handheld Nintendo 3DS. Citra's name is derived from CTR, which is the model name of the original 3DS.",
     "special_configuration": "Citra only runs Decrypted roms<br/>In order to use hotkeys you need to add our cutom Steam Input preset, more info about using custom Steam Input presets <strong><a href='https://www.emudeck.com/#steam_input' target='_blank'>here</a></strong>",
     "bios": [],
@@ -109,6 +116,7 @@
   "pcsx2": {
     "id": "pcsx2",
     "name": "PCSX2",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/PCSX2-QT",
     "description": "PCSX2 is a free and open-source PlayStation 2 emulator that supports a wide range of PlayStation 2 video games with a high level of compatibility and functionality.",
     "special_configuration": "",
     "bios": [],
@@ -128,6 +136,7 @@
   "rpcs3": {
     "id": "rpcs3",
     "name": "RPCS3",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/RPCS3",
     "description": "RPCS3 is an open-source PlayStation 3 emulator/debugger. It is the only emulator that can run commercial games, with over 2,000 considered playable.",
     "special_configuration": "You need to download Playstation 3 firmware from Sony's page <a className='link' target='_blank' href='https://www.playstation.com/support/hardware/ps3/system-software/'>here</a> and install it manually by opening the emulator before you can play any games",
     "bios": [],
@@ -140,7 +149,8 @@
   "yuzu": {
     "id": "yuzu",
     "name": "Yuzu",
-    "description": "Yuzu is a free and open-source emulator of the Nintendo Switch, The emulator is made by the developers of the Nintendo 3DS emulator Citra, with significant code shared between the projects.",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Yuzu",
+    "description": "Yuzu is a free and open-source emulator of the Nintendo Switch",
     "special_configuration": "You need both firmware and keys to run games. You have to copy them to the Emulation/bios/yuzu/firmware and Emulation/bios/yuzu/keys folders",
     "bios": ["nswitch"],
     "systems": "Nintendo Switch",
@@ -154,6 +164,7 @@
   "ryujinx": {
     "id": "ryujinx",
     "name": "Ryujinx",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Ryujinx",
     "description": "Ryujinx is an open-source Nintendo Switch emulator created by gdkchan, aims at providing excellent accuracy and performance, a user-friendly interface, and consistent builds.",
     "special_configuration": "Ryujinx is an optional Emulator only available on Custom Mode. You need to open Ryuijnx to install your Nintendo Switch firmware before playing any games.",
     "bios": [],
@@ -171,6 +182,7 @@
   "xemu": {
     "id": "xemu",
     "name": "Xemu",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Xemu",
     "description": "Xemu is a free and open-source low-level Xbox emulator by Matt Borgerson continuing much of the work done on XQEMU. Focuses on stability, performance, and ease of use.",
     "special_configuration": "You need a MCPX Boot ROM Image, Flash ROM Image (BIOS) and a Hard Disk Image to play your games",
     "bios": [],
@@ -188,6 +200,7 @@
   "mame": {
     "id": "mame",
     "name": "MAME",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/MAME",
     "description": "MAME is a multi-platform, open-source, multi-system emulator. The philosophy behind the project is to focus on recreating the workings of various machines through emulation",
     "special_configuration": "You need to have rom sets specifically tailored for each Mame version, we support the current versions:<br/>MAME Current as a Standalone emulator(as an optional Emulator only available on Custom Mode.)<br/>Mame 2003, MAME 2003+ and MAME 2010 as RetroArch Cores",
     "bios": [],
@@ -205,6 +218,7 @@
   "vita3k": {
     "id": "vita3k",
     "name": "Vita3K",
+    "wiki": "",
     "description": "Vita3K is the world's first functional experimental open-source PlayStation Vita emulator.",
     "special_configuration": "You need to download Playstation Vita firmware and a fonts firmware and install it manually by opening the emulator before you can play any games. Vita3K will give you the links to download both <br/>To install the firmwares press on the top left of the screen (the menu is all black and the text can't be read at the moment<br/>Vita3K is still experimental, please check its compatibility list <strong><a href='https://vita3k.org/compatibility.html' target='_blank'>here</a></strong>",
     "bios": [],
@@ -217,6 +231,7 @@
   "scummvm": {
     "id": "scummvm",
     "name": "ScummVM",
+    "wiki": "",
     "description": "ScummVM is an open-source collection of game engine recreations and source ports based around various adventure games and RPGs from the late 80s and 90s, and supports over 280 games (over 1800 if you count text adventures), making it the biggest project of its kind.",
     "special_configuration": "You need to create a folder for each game you put on the Emulation/roms/scummvm/ folder<br/>The folder has to be named after the game like this 'name of the game.scummvm'<br/>Unzip your game inside that folder and create a new file with the same name as the folder: 'name of the game.scummvm'<br> So the structure will be like this:<br/>/Emulation/roms/scummvm/name of the game.scummvm/name of the game.scummvm",
     "bios": [],
@@ -229,6 +244,7 @@
   "xenia": {
     "id": "xenia",
     "name": "Xenia",
+    "wiki": "",
     "description": "Xenia is free and an experimental, open-source Xbox 360 emulator. Outside of Microsoft's own backward compatibility on successive consoles, Xenia is the first and only unofficial Xbox 360 emulator that exists.",
     "special_configuration": "Due to Xenia's experimental stage, it can only be installed from this page.Almost no games work today ",
     "bios": [],
