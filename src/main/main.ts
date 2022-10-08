@@ -196,6 +196,9 @@ const createWindow = async () => {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
+      nodeIntegration: true,
+      contextIsolation: true,
+      enableRemoteModule: true,
     },
   });
 
@@ -214,11 +217,6 @@ const createWindow = async () => {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
-  });
-
-  mainWindow.webContents.on('new-window', function (e, url) {
-    e.preventDefault();
-    require('electron').shell.openExternal(url);
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);
