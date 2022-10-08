@@ -28,7 +28,7 @@ const CloudSyncPage = () => {
 
   const createDesktopIcon = () => {
     ipcChannel.sendMessage('emudeck', [
-      `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" "source $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" "true"`,
+      `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" "source $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
     ]);
 
     ipcChannel.sendMessage('bash', [
