@@ -73,11 +73,6 @@ ipcMain.on('emudeck', async (event, command) => {
 });
 
 ipcMain.on('debug', async (event, command) => {
-  const win = new BrowserWindow({ width: 1000, height: 600 });
-  win.loadURL('http://github.com');
-
-  const contents = win.webContents;
-  console.log(contents);
   mainWindow.webContents.openDevTools();
 });
 ipcMain.on('close', async (event, command) => {
@@ -229,7 +224,13 @@ const createWindow = async () => {
 
   // Open urls in the user's browser
   mainWindow.webContents.setWindowOpenHandler((edata) => {
-    shell.openExternal(edata.url);
+    const win = new BrowserWindow({ width: 1000, height: 600 });
+    win.loadURL(edata.url);
+
+    const contents = win.webContents;
+    console.log(contents);
+
+    //shell.openExternal(edata.url);
     return { action: 'deny' };
   });
 
