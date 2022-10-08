@@ -27,16 +27,10 @@ const CloudSyncPage = () => {
   // };
 
   const createDesktopIcon = () => {
-    ipcChannel.sendMessage('bash', [
-      `create-icon|||echo "#!/usr/bin/env xdg-open
-       [Desktop Entry]
-       Name=EmuDeck SaveBackup
-       Exec=source $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup
-       Icon=steamdeck-gaming-return
-       Terminal=true
-       Type=Application
-       StartupNotify=false" > $HOME/Desktop/EmuDeckSaveBackup.desktop && chmod +x $HOME/Desktop/EmuDeckSaveBackup.desktop"`,
+    ipcChannel.sendMessage('emudeck', [
+      `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" "source $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" "true"`,
     ]);
+
     ipcChannel.sendMessage('bash', [
       `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
     ]);
