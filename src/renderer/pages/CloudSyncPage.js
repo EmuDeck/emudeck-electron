@@ -23,21 +23,12 @@ const CloudSyncPage = () => {
   };
 
   const createDesktopIcon = () => {
-    ipcChannel.sendMessage('bash', [
-      `create-icon|||echo "#!/usr/bin/env xdg-open
-       [Desktop Entry]
-       Name=EmuDeck SaveSync
-       Exec=chmod +x $HOME/emudeck/backend/tools/savesync.sh && $HOME/emudeck/backend/tools/savesync.sh
-       Icon=steamdeck-gaming-return
-       Terminal=true
-       Type=Application
-       StartupNotify=false" > $HOME/Desktop/EmuDeckSaveSync.desktop && chmod +x $HOME/Desktop/EmuDeckSaveSync.desktop" && zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck Save Sync icon. We will delete that icon automatically.`,
-    ]);
+    ipcChannel.sendMessage('emudeck', [`save-setting|||rclone_setup`]);
   };
 
   useEffect(() => {
-    ipcChannel.sendMessage('bash', [
-      `save-setting|||echo ${cloudSync} > $HOME/emudeck/.cloudprovider`,
+    ipcChannel.sendMessage('emudeck', [
+      `save-setting|||setSetting rclone_provider ${cloudSync}`,
     ]);
   }, [cloudSync]);
 
