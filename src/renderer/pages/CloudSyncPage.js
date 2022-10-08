@@ -22,8 +22,24 @@ const CloudSyncPage = () => {
     });
   };
 
+  // const createDesktopIcon = () => {
+  //   ipcChannel.sendMessage('emudeck', [`save-setting|||rclone_setup`]);
+  // };
+
   const createDesktopIcon = () => {
-    ipcChannel.sendMessage('emudeck', [`save-setting|||rclone_setup`]);
+    ipcChannel.sendMessage('bash', [
+      `create-icon|||echo "#!/usr/bin/env xdg-open
+       [Desktop Entry]
+       Name=EmuDeck SaveBackup
+       Exec=source $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup
+       Icon=steamdeck-gaming-return
+       Terminal=true
+       Type=Application
+       StartupNotify=false" > $HOME/Desktop/EmuDeckSaveBackup.desktop && chmod +x $HOME/Desktop/EmuDeckSaveBackup.desktop"`,
+    ]);
+    ipcChannel.sendMessage('bash', [
+      `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
+    ]);
   };
 
   useEffect(() => {

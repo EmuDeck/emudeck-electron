@@ -6,6 +6,7 @@ import EmuGuide from 'components/organisms/Wrappers/EmuGuide.js';
 const EmuGuidePage = () => {
   const { state, setState } = useContext(GlobalContext);
   const { installEmus } = state;
+  const { ryujinx } = installEmus;
   const emuData = require('data/emuData.json');
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -71,11 +72,15 @@ const EmuGuidePage = () => {
   };
 
   const installEmu = (emulator, name) => {
+    console.log(emulator);
+
     setStatePage({
       ...statePage,
-      disableResetButton: true,
+      disableInstallButton: true,
     });
-    ipcChannel.sendMessage('emudeck', [`${name}_install|||${name}_install`]);
+    ipcChannel.sendMessage('emudeck', [
+      `${name}_install|||${name}_install && ${name}_init`,
+    ]);
     ipcChannel.once(`${name}_install`, (status) => {
       // console.log({ status });
       status = status.stdout;
@@ -97,14 +102,26 @@ const EmuGuidePage = () => {
             ...statePage,
             textNotification: `${name} installed! 🎉`,
             showNotification: true,
-            disableResetButton: false,
+            disableInstallButton: false,
+          });
+          //We set the emu as install = yes
+          setState({
+            ...state,
+            installEmus: {
+              ...installEmus,
+              [emulator]: {
+                id: emulator,
+                name: name,
+                status: true,
+              },
+            },
           });
         } else {
           setStatePage({
             ...statePage,
             textNotification: `There was an issue trying to install ${name} 😥`,
             showNotification: true,
-            disableResetButton: false,
+            disableInstallButton: false,
           });
         }
       });
