@@ -81,22 +81,33 @@ const EmuGuidePage = () => {
       status = status.stdout;
       console.log({ status });
       status = status.replace('\n', '');
+      //Lets check if it did install
+      ipcChannel.sendMessage('emudeck', [
+        `${name}_IsInstalled|||${name}_IsInstalled`,
+      ]);
 
-      if (status.includes('true')) {
-        setStatePage({
-          ...statePage,
-          textNotification: `${name} installed! 🎉`,
-          showNotification: true,
-          disableResetButton: false,
-        });
-      } else {
-        setStatePage({
-          ...statePage,
-          textNotification: `There was an issue trying to install ${name} 😥`,
-          showNotification: true,
-          disableResetButton: false,
-        });
-      }
+      ipcChannel.once(`${name}_IsInstalled`, (status) => {
+        // console.log({ status });
+        status = status.stdout;
+        console.log({ status });
+        status = status.replace('\n', '');
+
+        if (status.includes('true')) {
+          setStatePage({
+            ...statePage,
+            textNotification: `${name} installed! 🎉`,
+            showNotification: true,
+            disableResetButton: false,
+          });
+        } else {
+          setStatePage({
+            ...statePage,
+            textNotification: `There was an issue trying to install ${name} 😥`,
+            showNotification: true,
+            disableResetButton: false,
+          });
+        }
+      });
     });
   };
 
