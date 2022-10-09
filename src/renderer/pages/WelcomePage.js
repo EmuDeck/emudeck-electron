@@ -33,13 +33,24 @@ const WelcomePage = () => {
   } = state;
 
   useEffect(() => {
-    ipcChannel.sendMessage('update-check');
-    ipcChannel.once('update-check-out', (message) => {
-      setStatePage({
-        ...statePage,
-        update: message,
-      });
-    });
+    if (!navigator.onLine) {
+      setTimeout(() => {
+        setStatePage({
+          ...statePage,
+          update: 'up-to-date',
+        });
+      }, 500);
+    } else {
+      setTimeout(() => {
+        ipcChannel.sendMessage('update-check');
+        ipcChannel.once('update-check-out', (message) => {
+          setStatePage({
+            ...statePage,
+            update: message,
+          });
+        });
+      }, 500);
+    }
   }, []);
 
   useEffect(() => {
@@ -103,28 +114,36 @@ const WelcomePage = () => {
     }
 
     if (cloned == false) {
-      ipcChannel.sendMessage('bash', [
-        'clone|||mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ' +
-          branch +
-          ' && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true',
-      ]);
+      if (navigator.onLine) {
+        ipcChannel.sendMessage('bash', [
+          'clone|||mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ' +
+            branch +
+            ' && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true',
+        ]);
 
-      ipcChannel.once('clone', (cloneStatus) => {
-        console.log({ cloneStatus });
-        if (cloneStatus.includes('true')) {
-          setStatePage({ ...statePage, downloadComplete: true });
-        }
-      });
+        ipcChannel.once('clone', (cloneStatus) => {
+          console.log({ cloneStatus });
+          if (cloneStatus.includes('true')) {
+            setStatePage({ ...statePage, downloadComplete: true });
+          }
+        });
+      } else {
+        alert('You need to be connected to the internet');
+      }
     } else if (cloned == true) {
-      ipcChannel.sendMessage('bash', [
-        'pull|||cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ' +
-          branch +
-          ' && git pull',
-      ]);
-      ipcChannel.once('pull', (pullStatus) => {
-        console.log({ pullStatus });
+      if (navigator.onLine) {
+        ipcChannel.sendMessage('bash', [
+          'pull|||cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ' +
+            branch +
+            ' && git pull',
+        ]);
+        ipcChannel.once('pull', (pullStatus) => {
+          console.log({ pullStatus });
+          setStatePage({ ...statePage, downloadComplete: true });
+        });
+      } else {
         setStatePage({ ...statePage, downloadComplete: true });
-      });
+      }
     }
   }, [cloned]);
 
@@ -133,8 +152,8 @@ const WelcomePage = () => {
       update={update}
       alert={
         second
-          ? ''
-          : 'If you came from an old installarion of EmuDeck your settings will be overwritten on first install, next time you update you can keep your changes by choosing Custom Update'
+          ? 'Welcome back! Make sure to check the Tools & Stuff section!'
+          : 'Do you need help installing EmuDeck for the first time? <a href="https://www.emudeck.com" target="_blank">Check out this guide</a>'
       }
       disabledNext={second ? false : disabledNext}
       disabledBack={second ? false : disabledBack}
