@@ -27,6 +27,7 @@ const EmuGuidePage = () => {
     disableResetButton,
   } = statePage;
 
+  //TODO: Use only one state for bioses, doing it this way is quick but madness
   const [ps1Bios, setps1Bios] = useState(null);
   const [ps2Bios, setps2Bios] = useState(null);
   const [switchBios, setSwitchBios] = useState(null);
@@ -190,8 +191,8 @@ const EmuGuidePage = () => {
     checkBios('checkYuzuBios');
     checkBios('checkSegaCDBios');
     checkBios('checkSaturnBios');
-    checkBios('checkDreamcastBios');
     checkBios('checkDSBios');
+    checkBios('checkDreamcastBios');
   }, []);
 
   const selectEmu = (e) => {
@@ -216,6 +217,7 @@ const EmuGuidePage = () => {
         segacd={segaCDBios}
         saturn={saturnBios}
         dreamcast={dreamcastBios}
+        nds={DSBios}
         onChange={selectEmu}
         onClick={resetEmu}
         onClickInstall={installEmu}

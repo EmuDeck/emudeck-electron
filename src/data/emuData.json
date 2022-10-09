@@ -7,7 +7,7 @@
     "special_configuration": "",
     "bios": ["ps1", "segacd", "saturn", "nds", "dreamcast"],
     "systems": "2D Retro Game Systems and some less modern 3D like Nintendo 64, Saturn and Dreamcast",
-    "special_configuration": "You can use custom HD Textures for NES by copying them to the Emulation/hdpacks/Mesen folder and for Nintendo 64 using the Emulation/hdpacks/Mupen64plus_next folder.<br/>You can download HD Packs from https://emulationking.com/nintendo64/",
+    "special_configuration": "You can use custom HD Textures for NES and N64 by using the Emulation/hdpacks folders",
     "hotkeys": {
       "0": ["Action", "Keys"],
       "1": ["Menu", "L3+R3"],

@@ -12,6 +12,7 @@ const CheckBiosPage = () => {
     showNotification: false,
   });
 
+  //TODO: Use only one state for bioses, doing it this way is quick but madness
   const [ps1Bios, setps1Bios] = useState(null);
   const [ps2Bios, setps2Bios] = useState(null);
   const [switchBios, setSwitchBios] = useState(null);
