@@ -218,7 +218,7 @@
   "vita3k": {
     "id": "vita3k",
     "name": "Vita3K",
-    "wiki": "",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Vita3K",
     "description": "Vita3K is the world's first functional experimental open-source PlayStation Vita emulator.",
     "special_configuration": "You need to download Playstation Vita firmware and a fonts firmware and install it manually by opening the emulator before you can play any games. Vita3K will give you the links to download both <br/>To install the firmwares press on the top left of the screen (the menu is all black and the text can't be read at the moment<br/>Vita3K is still experimental, please check its compatibility list <strong><a href='https://vita3k.org/compatibility.html' target='_blank'>here</a></strong>",
     "bios": [],
@@ -231,7 +231,7 @@
   "scummvm": {
     "id": "scummvm",
     "name": "ScummVM",
-    "wiki": "",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/ScummVM",
     "description": "ScummVM is an open-source collection of game engine recreations and source ports based around various adventure games and RPGs from the late 80s and 90s, and supports over 280 games (over 1800 if you count text adventures), making it the biggest project of its kind.",
     "special_configuration": "You need to create a folder for each game you put on the Emulation/roms/scummvm/ folder<br/>The folder has to be named after the game like this 'name of the game.scummvm'<br/>Unzip your game inside that folder and create a new file with the same name as the folder: 'name of the game.scummvm'<br> So the structure will be like this:<br/>/Emulation/roms/scummvm/name of the game.scummvm/name of the game.scummvm",
     "bios": [],
