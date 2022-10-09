@@ -38,7 +38,7 @@ const EmuGuidePage = () => {
   const checkBios = (biosCommand) => {
     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
-      console.log({ status });
+      console.log({ biosCommand });
       status = status.stdout;
       console.log({ status });
       status = status.replace('\n', '');
@@ -192,8 +192,6 @@ const EmuGuidePage = () => {
     checkBios('checkSaturnBios');
     checkBios('checkDreamcastBios');
     checkBios('checkDSBios');
-
-    checkInstallation('ra', 'RetroArch');
   }, []);
 
   const selectEmu = (e) => {
