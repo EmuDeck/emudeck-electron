@@ -7,6 +7,7 @@ const SettingsPage = () => {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { ar, shaders, bezels } = state;
+  let json = JSON.stringify(state);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -20,12 +21,24 @@ const SettingsPage = () => {
     notificationText,
     showNotification,
   } = statePage;
+
+  useEffect(() => {
+    localStorage.setItem('settings_emudeck', json);
+  }, [state]);
+
   const onClickBezel = (arStatus) => {
     setState({
       ...state,
       bezels: arStatus,
     });
-    ipcChannel.sendMessage('emudeck', ['bezels|||RetroArch_setBezels']);
+
+    let functionBezel;
+
+    arStatus
+      ? (functionBezel = 'RetroArch_bezelOnAll')
+      : (functionBezel = 'RetroArch_bezelOffAll');
+
+    ipcChannel.sendMessage('emudeck', [`bezels|||${functionBezel}`]);
     ipcChannel.once('bezels', (message) => {
       console.log(message);
       notificationShow('🎉 Bezels updated!');
@@ -127,19 +140,30 @@ const SettingsPage = () => {
         ipcChannel.sendMessage('emudeck', [
           '3d169|||RetroArch_Beetle_PSX_HW_wideScreenOn && DuckStation_wideScreenOn && RetroArch_Flycast_wideScreenOn && Xemu_wideScreenOn && RetroArch_Flycast_bezelOff && RetroArch_Beetle_PSX_HW_bezelOff',
         ]);
+        ipcChannel.once('3d169', (message) => {
+          console.log(message);
+          notificationShow('🎉 3D Aspect Ratio updated!');
+        });
         break;
       case '43':
         ipcChannel.sendMessage('emudeck', [
           '3d43|||RetroArch_Flycast_wideScreenOff && RetroArch_Beetle_PSX_HW_wideScreenOff && DuckStation_wideScreenOff && Xemu_wideScreenOff',
         ]);
+        ipcChannel.once('3d43', (message) => {
+          console.log(message);
+          notificationShow('🎉 3D Aspect Ratio updated!');
+        });
         if (bezels == true) {
           ipcChannel.sendMessage('emudeck', [
             '3d43Bezels|||RetroArch_Flycast_bezelOn && RetroArch_Beetle_PSX_HW_bezelOn',
           ]);
+          ipcChannel.once('3d43Bezels', (message) => {
+            console.log(message);
+            notificationShow('🎉 3D Aspect Ratio updated!');
+          });
         }
         break;
     }
-    notificationShow('🎉 3D Aspect Ratio updated!');
   };
   const onClickGC = (arStatus) => {
     setState({
@@ -151,10 +175,17 @@ const SettingsPage = () => {
     });
     if (arStatus == '169') {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOn']);
+      ipcChannel.once('dolphin', (message) => {
+        console.log(message);
+        notificationShow('🎉 Dolphin Aspect Ratio updated!');
+      });
     } else {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOff']);
+      ipcChannel.once('dolphin', (message) => {
+        console.log(message);
+        notificationShow('🎉 Dolphin Aspect Ratio updated!');
+      });
     }
-    notificationShow('🎉 Dolphin Aspect Ratio updated!');
   };
   const onClickCRT = (arStatus) => {
     setState({
@@ -165,7 +196,10 @@ const SettingsPage = () => {
       },
     });
     ipcChannel.sendMessage('emudeck', ['CRT|||RetroArch_setShadersCRT']);
-    notificationShow('🎉 CRT Shader updated!');
+    ipcChannel.once('RetroArch_setShadersCRT', (message) => {
+      console.log(message);
+      notificationShow('🎉 CRT Shader updated!');
+    });
   };
   const onClickLCD = (arStatus) => {
     setState({
@@ -176,7 +210,10 @@ const SettingsPage = () => {
       },
     });
     ipcChannel.sendMessage('emudeck', ['LCD|||RetroArch_setShadersMAT']);
-    notificationShow('🎉 LCD Shader updated!');
+    ipcChannel.once('RetroArch_setShadersMAT', (message) => {
+      console.log(message);
+      notificationShow('🎉 LCD Shader updated!');
+    });
   };
 
   const notificationShow = (text) => {
