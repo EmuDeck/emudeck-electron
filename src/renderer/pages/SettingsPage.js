@@ -195,8 +195,15 @@ const SettingsPage = () => {
         classic: arStatus,
       },
     });
-    ipcChannel.sendMessage('emudeck', ['CRT|||RetroArch_setShadersCRT']);
-    ipcChannel.once('RetroArch_setShadersCRT', (message) => {
+
+    let functionCRT;
+
+    arStatus
+      ? (functionCRT = 'RetroArch_CRTshaderOnAll')
+      : (functionCRT = 'RetroArch_CRTshaderOffAll');
+
+    ipcChannel.sendMessage('emudeck', [`CRT|||${functionCRT}`]);
+    ipcChannel.once('CRT', (message) => {
       console.log(message);
       notificationShow('🎉 CRT Shader updated!');
     });
@@ -209,8 +216,14 @@ const SettingsPage = () => {
         handhelds: arStatus,
       },
     });
-    ipcChannel.sendMessage('emudeck', ['LCD|||RetroArch_setShadersMAT']);
-    ipcChannel.once('RetroArch_setShadersMAT', (message) => {
+    let functionLCD;
+
+    arStatus
+      ? (functionLCD = 'RetroArch_MATshadersOnAll')
+      : (functionLCD = 'RetroArch_MATshadersOffAll');
+
+    ipcChannel.sendMessage('emudeck', [`LCD|||${functionLCD}`]);
+    ipcChannel.once('LCD', (message) => {
       console.log(message);
       notificationShow('🎉 LCD Shader updated!');
     });
