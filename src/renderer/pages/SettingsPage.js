@@ -26,7 +26,10 @@ const SettingsPage = () => {
       bezels: arStatus,
     });
     ipcChannel.sendMessage('emudeck', ['bezels|||RetroArch_setBezels']);
-    notificationShow('🎉 Bezels updated!');
+    ipcChannel.once('bezels', (message) => {
+      console.log(message);
+      notificationShow('🎉 Bezels updated!');
+    });
   };
   const onClickSega = (arStatus) => {
     setState({
@@ -42,11 +45,19 @@ const SettingsPage = () => {
         ipcChannel.sendMessage('emudeck', [
           'sega32|||RetroArch_mastersystem_ar32 && RetroArch_genesis_ar32  && RetroArch_segacd_ar32 && RetroArch_sega32x_ar32',
         ]);
+        ipcChannel.once('sega32', (message) => {
+          console.log(message);
+          notificationShow('🎉 Sega Aspect Ratio updated!');
+        });
         break;
       case '43':
         ipcChannel.sendMessage('emudeck', [
           'sega43|||RetroArch_mastersystem_ar43 && RetroArch_genesis_ar43  && RetroArch_segacd_ar43 && RetroArch_sega32x_ar43',
         ]);
+        ipcChannel.once('sega43', (message) => {
+          console.log(message);
+          notificationShow('🎉 Sega Aspect Ratio updated!');
+        });
         if (bezels == true) {
           ipcChannel.sendMessage('emudeck', [
             'sega43Bezels|||RetroArch_mastersystem_bezelOn && RetroArch_genesis_bezelOn && RetroArch_segacd_bezelOn && RetroArch_sega32x_bezelOn',
@@ -54,7 +65,6 @@ const SettingsPage = () => {
         }
         break;
     }
-    notificationShow('🎉 Sega Aspect Ratio updated!');
   };
   const onClickSNES = (arStatus) => {
     setState({
@@ -67,8 +77,12 @@ const SettingsPage = () => {
     switch (arStatus) {
       case '87':
         ipcChannel.sendMessage('emudeck', [
-          'snes32|||RetroArch_snes_ar87 && RetroArch_nes_ar87',
+          'snes87|||RetroArch_snes_ar87 && RetroArch_nes_ar87',
         ]);
+        ipcChannel.once('snes87', (message) => {
+          console.log(message);
+          notificationShow('🎉 SNES Aspect Ratio updated!');
+        });
         if (bezels == true) {
           ipcChannel.sendMessage('emudeck', [
             'snes87Bezels|||RetroArch_snes_bezelOn',
@@ -79,11 +93,19 @@ const SettingsPage = () => {
         ipcChannel.sendMessage('emudeck', [
           'snes32|||RetroArch_snes_ar32 && RetroArch_nes_ar32',
         ]);
+        ipcChannel.once('snes32', (message) => {
+          console.log(message);
+          notificationShow('🎉 SNES Aspect Ratio updated!');
+        });
         break;
       case '43':
         ipcChannel.sendMessage('emudeck', [
           'snes43|||RetroArch_snes_ar43 && RetroArch_nes_ar43',
         ]);
+        ipcChannel.once('snes43', (message) => {
+          console.log(message);
+          notificationShow('🎉 SNES Aspect Ratio updated!');
+        });
         if (bezels == true) {
           ipcChannel.sendMessage('emudeck', [
             'snes43Bezels|||RetroArch_snes_bezelOn',
@@ -91,7 +113,6 @@ const SettingsPage = () => {
         }
         break;
     }
-    notificationShow('🎉 SNES Aspect Ratio updated!');
   };
   const onClick3D = (arStatus) => {
     setState({
