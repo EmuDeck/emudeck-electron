@@ -2,7 +2,7 @@
   "ra": {
     "id": "ra",
     "name": "RetroArch",
-    "wiki": "",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Retroarch",
     "description": "",
     "special_configuration": "",
     "bios": ["ps1", "segacd", "saturn", "nds", "dreamcast"],
