@@ -27,6 +27,9 @@ export default class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
+//Prevent two instances
+const gotTheLock = app.requestSingleInstanceLock();
+
 ipcMain.on('bash', async (event, command) => {
   let backChannel;
   let bashCommand;
@@ -251,6 +254,10 @@ app.on('window-all-closed', () => {
   }
 });
 
+app.on('session-created', (session) => {
+  console.log(session);
+});
+
 // autoUpdater.on('checking-for-update', () => {
 //   sendStatusToWindow('Checking for update...');
 // })
@@ -278,15 +285,30 @@ ipcMain.on('isGameMode', async (event, command) => {
   event.reply('isGameMode-out', os);
 });
 
-app
-  .whenReady()
-  .then(() => {
-    createWindow();
+//no second instances
+if (!gotTheLock) {
+  app.quit();
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    // Print out data received from the second instance.
 
-    app.on('activate', () => {
-      // On macOS it's common to re-create a window in the app when the
-      // dock icon is clicked and there are no other windows open.
-      if (mainWindow === null) createWindow();
-    });
-  })
-  .catch(console.log);
+    // Someone tried to run a second instance, we should focus our window.
+    if (myWindow) {
+      if (myWindow.isMinimized()) myWindow.restore();
+      myWindow.focus();
+    }
+  });
+
+  app
+    .whenReady()
+    .then(() => {
+      createWindow();
+
+      app.on('activate', () => {
+        // On macOS it's common to re-create a window in the app when the
+        // dock icon is clicked and there are no other windows open.
+        if (mainWindow === null) createWindow();
+      });
+    })
+    .catch(console.log);
+}
