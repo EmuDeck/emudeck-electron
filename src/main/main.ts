@@ -203,7 +203,7 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 1280 * scaleFactorW,
-    height: screenHeight * scaleFactorW,
+    height: screenHeight,
     icon: getAssetPath('icon.png'),
     resizable: true,
     fullscreen: isFullscreen,
