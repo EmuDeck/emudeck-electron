@@ -205,7 +205,7 @@ const createWindow = async () => {
     width: 1280 * scaleFactorW,
     height: screenHeight * scaleFactorW,
     icon: getAssetPath('icon.png'),
-    resizable: false,
+    resizable: true,
     fullscreen: isFullscreen,
     autoHideMenuBar: true,
     webPreferences: {
