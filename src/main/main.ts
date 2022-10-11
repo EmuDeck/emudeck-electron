@@ -188,18 +188,22 @@ const createWindow = async () => {
   const screenHeight = height < 701 ? 600 : 720;
   const isFullscreen = height < 701 ? false : false;
   const os = require('os');
-
-  let scaleFactor;
+  let scaleFactorW;
+  let scaleFactorH;
+  let dpi;
   if (os.platform() == 'darwin') {
-    scaleFactor = 1 / (2560 / width);
+    dpi = 2;
   } else {
-    scaleFactor = 1 / (1280 / width);
+    dpi = 2;
   }
+
+  scaleFactorW = 1 / ((1280 * dpi) / width);
+  scaleFactorH = 1 / ((screenHeight * dpi) / height);
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1280 * scaleFactor,
-    height: screenHeight * scaleFactor,
+    width: 1280 * scaleFactorW,
+    height: screenHeight * scaleFactorW,
     icon: getAssetPath('icon.png'),
     resizable: false,
     fullscreen: isFullscreen,
@@ -208,7 +212,7 @@ const createWindow = async () => {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
-      nodeIntegration: true,
+      nodeIntegration: false,
       contextIsolation: true,
       enableRemoteModule: true,
     },
@@ -227,8 +231,8 @@ const createWindow = async () => {
     }
 
     //Adjust zoom factor according to DPI or scale factor that we determined before
-    console.log('Display with current scale factor: %o', scaleFactor);
-    mainWindow.webContents.setZoomFactor(scaleFactor);
+    console.log('Display with current scale factor: %o', scaleFactorW);
+    mainWindow.webContents.setZoomFactor(scaleFactorW);
     mainWindow.show();
   });
 
@@ -307,13 +311,7 @@ if (!gotTheLock) {
   app.quit();
 } else {
   app.on('second-instance', (event, commandLine, workingDirectory) => {
-    // Print out data received from the second instance.
-
-    // Someone tried to run a second instance, we should focus our window.
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) mainWindow.restore();
-      mainWindow.focus();
-    }
+    app.quit();
   });
 
   app
