@@ -187,6 +187,15 @@ const createWindow = async () => {
   const { width, height } = primaryDisplay.workAreaSize;
   const screenHeight = height < 701 ? 600 : 720;
   const isFullscreen = height < 701 ? false : false;
+  const os = require('os');
+
+  let scaleFactor;
+  if (os.platform() == 'darwin') {
+    scaleFactor = 1 / (2560 / width);
+  } else {
+    scaleFactor = 1 / (1280 / width);
+  }
+
   mainWindow = new BrowserWindow({
     show: false,
     width: 1280,
@@ -216,6 +225,11 @@ const createWindow = async () => {
     } else {
       mainWindow.show();
     }
+
+    //Adjust zoom factor according to DPI or scale factor that we determined before
+    console.log('Display with current scale factor: %o', scaleFactor);
+    mainWindow.webContents.setZoomFactor(scaleFactor);
+    mainWindow.show();
   });
 
   mainWindow.on('closed', () => {
