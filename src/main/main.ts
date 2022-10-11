@@ -194,7 +194,7 @@ const createWindow = async () => {
   if (os.platform() == 'darwin') {
     dpi = 2;
   } else {
-    dpi = 2;
+    dpi = 1;
   }
 
   scaleFactorW = 1 / ((1280 * dpi) / width);
@@ -232,7 +232,7 @@ const createWindow = async () => {
 
     //Adjust zoom factor according to DPI or scale factor that we determined before
     console.log('Display with current scale factor: %o', scaleFactorW);
-    mainWindow.webContents.setZoomFactor(scaleFactorW);
+    // mainWindow.webContents.setZoomFactor(scaleFactorW);
     mainWindow.show();
   });
 
@@ -305,14 +305,24 @@ ipcMain.on('isGameMode', async (event, command) => {
   const os = app.commandLine.hasSwitch('GameMode');
   event.reply('isGameMode-out', os);
 });
-
+let myWindow = null;
 //no second instances
 if (!gotTheLock) {
   app.quit();
 } else {
-  app.on('second-instance', (event, commandLine, workingDirectory) => {
-    app.quit();
-  });
+  app.on(
+    'second-instance',
+    (event, commandLine, workingDirectory, additionalData) => {
+      // Print out data received from the second instance.
+      console.log(additionalData);
+
+      // Someone tried to run a second instance, we should focus our window.
+      if (myWindow) {
+        if (myWindow.isMinimized()) myWindow.restore();
+        myWindow.focus();
+      }
+    }
+  );
 
   app
     .whenReady()
