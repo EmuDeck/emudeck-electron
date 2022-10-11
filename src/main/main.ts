@@ -198,8 +198,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1280,
-    height: screenHeight,
+    width: 1280 * scaleFactor,
+    height: screenHeight * scaleFactor,
     icon: getAssetPath('icon.png'),
     resizable: false,
     fullscreen: isFullscreen,
@@ -255,6 +255,9 @@ const createWindow = async () => {
   // eslint-disable-next-line
   new AppUpdater();
 };
+
+// app.commandLine.appendSwitch('high-dpi-support', 1)
+// app.commandLine.appendSwitch('force-device-scale-factor', 1)
 
 /**
  * Add event listeners...
