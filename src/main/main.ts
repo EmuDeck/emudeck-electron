@@ -82,6 +82,16 @@ ipcMain.on('close', async (event, command) => {
   app.quit();
 });
 
+ipcMain.on('moreZoom', async (event, command) => {
+  const currentZoom = mainWindow.webContents.getZoomFactor();
+  mainWindow.webContents.zoomFactor = currentZoom + 0.2;
+});
+
+ipcMain.on('lessZoom', async (event, command) => {
+  const currentZoom = mainWindow.webContents.getZoomFactor();
+  mainWindow.webContents.zoomFactor = currentZoom - 0.2;
+});
+
 ipcMain.on('update-check', async (event, command) => {
   // Force no autoupdate
   // event.reply('update-check-out', 'up-to-date');
