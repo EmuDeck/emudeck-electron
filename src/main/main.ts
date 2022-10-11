@@ -293,9 +293,9 @@ if (!gotTheLock) {
     // Print out data received from the second instance.
 
     // Someone tried to run a second instance, we should focus our window.
-    if (myWindow) {
-      if (myWindow.isMinimized()) myWindow.restore();
-      myWindow.focus();
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
     }
   });
 
