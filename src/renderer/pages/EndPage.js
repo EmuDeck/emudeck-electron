@@ -355,9 +355,7 @@ const EndPage = () => {
 
     //CloudSync
     ipcChannel.sendMessage('bash', [
-      `echo doSetupSaveSync=${
-        state.cloudSync ? true : false
-      } >> ~/emudeck/settings.sh`,
+      `echo doSetupSaveSync=${state.cloudSync} >> ~/emudeck/settings.sh`,
     ]);
 
     //Installation

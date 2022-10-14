@@ -5,6 +5,7 @@ import CloudSync from 'components/organisms/Wrappers/CloudSync.js';
 
 const CloudSyncPage = () => {
   const { state, setState } = useContext(GlobalContext);
+  let json = JSON.stringify(state);
   const { cloudSync } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -40,6 +41,7 @@ const CloudSyncPage = () => {
     ipcChannel.sendMessage('emudeck', [
       `save-setting|||setSetting rclone_provider ${cloudSync}`,
     ]);
+    localStorage.setItem('settings_emudeck', json);
   }, [cloudSync]);
 
   return (
