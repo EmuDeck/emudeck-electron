@@ -39,9 +39,9 @@ const EmuGuidePage = () => {
   const checkBios = (biosCommand) => {
     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
-      console.log({ biosCommand });
+      // console.log({ biosCommand });
       status = status.stdout;
-      console.log({ status });
+      //console.log({ status });
       status = status.replace('\n', '');
       let biosStatus;
       status.includes('true') ? (biosStatus = true) : (biosStatus = false);
@@ -85,7 +85,7 @@ const EmuGuidePage = () => {
     ipcChannel.once(`${name}_install`, (status) => {
       // console.log({ status });
       status = status.stdout;
-      console.log({ status });
+      //console.log({ status });
       status = status.replace('\n', '');
       //Lets check if it did install
       ipcChannel.sendMessage('emudeck', [
@@ -140,7 +140,7 @@ const EmuGuidePage = () => {
     ipcChannel.once(`${name}_resetConfig`, (status) => {
       // console.log({ status });
       status = status.stdout;
-      console.log({ status });
+      //console.log({ status });
       status = status.replace('\n', '');
 
       if (status.includes('true')) {
@@ -162,12 +162,14 @@ const EmuGuidePage = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setStatePage({
-        ...statePage,
-        showNotification: false,
-      });
-    }, 3000);
+    if (showNotification === true) {
+      setTimeout(() => {
+        setStatePage({
+          ...statePage,
+          showNotification: false,
+        });
+      }, 3000);
+    }
   }, [showNotification]);
 
   const checkInstallation = (emulator, name) => {

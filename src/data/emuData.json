@@ -15,7 +15,11 @@
       "3": ["Save State", "SELECT+R1"],
       "4": ["Exit", "SELECT+START"],
       "5": ["Fast Forward", "SELECT+R2"],
-      "6": ["Pause", "SELECT+A"]
+      "6": ["Pause", "SELECT+A"],
+      "8": ["Swap Screens", "R2"],
+      "9": ["Next Save Slot", "SELECT+DPAD➡️"],
+      "10": ["Previous Save Slot", "SELECT+DPAD⬅️"],
+      "11": ["Toggle Runahead", "SELECT+DPAD⬆️"]
     }
   },
   "cemu": {
@@ -29,7 +33,9 @@
     "hotkeys": {
       "0": ["Action", "Keys"],
       "1": ["Exit", "START+SELECT"],
-      "2": ["Swap Screens", "R4"]
+      "2": ["Toggle Screens", "R4"],
+      "3": ["Swap Screens", "R5"],
+      "4": ["Blow Mic", "R3"]
     }
   },
   "dolphin": {
@@ -47,10 +53,9 @@
       "3": ["Save State", "SELECT+R1"],
       "4": ["Exit", "SELECT+START"],
       "5": ["Fast Forward", "SELECT+R2"],
-      "6": ["Aspect Ratio", "SELECT+RIGHT"],
-      "7": ["Increase IR", "SELECT+UP"],
-      "8": ["Decrease IR", "SELECT+DOWN"],
-      "9": ["Change Controller profile", "SELECT+LEFT"]
+      "6": ["Shake Wiimote", "L2"],
+      "7": ["Shake Nunchuck", "R2"],
+      "8": ["Attach Wiimote", "SELECT + Left Stick ⬇️"]
     }
   },
   "primehacks": {
@@ -58,7 +63,7 @@
     "name": "PrimeHack",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Primehack",
     "description": "PrimeHack is a version of Dolphin created by shiiion that has been modified to play Metroid Prime: Trilogy on PC with keyboard and mouse controls.",
-    "special_configuration": "",
+    "special_configuration": "PrimeHack is to be used only for the PrimeHack custom ROM",
     "bios": [],
     "systems": "Wii - Only PrimeHack",
     "hotkeys": {
@@ -68,7 +73,9 @@
       "3": ["Save State", "SELECT+R1"],
       "4": ["Exit", "SELECT+START"],
       "5": ["Fast Forward", "SELECT+R2"],
-      "6": ["Pause", "SELECT+A"]
+      "6": ["Pause", "SELECT+A"],
+      "7": ["Next Save Slot", "START+R1"],
+      "8": ["Previous Save Slot", "START+L1"]
     }
   },
   "ppsspp": {
@@ -76,20 +83,24 @@
     "name": "PPSSPP",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/PPSSPP",
     "description": "PPSSPP is a Standalone free and open-source PSP emulator for multiple platforms with an increased focus on speed and portability.",
-    "special_configuration": "",
+    "special_configuration": "In order to use hotkeys you need to add our cutom Steam Input preset, more info about using custom Steam Input presets <strong><a href='https://www.emudeck.com/#steam_input' target='_blank'>here</a></strong>",
     "bios": [],
     "systems": "Sony PSP",
     "hotkeys": {
       "0": ["Action", "Keys"],
-      "1": ["Menu", "STEAM+LEFT"]
+      "1": ["Quick Menu", "Left Trackpad"],
+      "2": ["Save State", "Left Trackpad"],
+      "3": ["Load State", "Left Trackpad"],
+      "4": ["Next Save Slot", "Left Trackpad"],
+      "5": ["Fast Forward", "Left Trackpad"]
     }
   },
   "duckstation": {
     "id": "duckstation",
     "name": "DuckStation",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Duckstation",
-    "description": "DuckStation is a free and open-source PlayStation emulator developed primarily by stenzek. It features PGXP, upscaling, texture filtering, overclocking, advanced cheat code support, CHD support, and a graphical interface.",
-    "special_configuration": "",
+    "description": "DuckStation is a free and open-source PlayStation emulator developed primarily by stenzek",
+    "special_configuration": "In order to use hotkeys you need to add our cutom Steam Input preset, more info about using custom Steam Input presets <strong><a href='https://www.emudeck.com/#steam_input' target='_blank'>here</a></strong>",
     "bios": ["ps1"],
     "systems": "Playstation 1",
     "hotkeys": {
@@ -107,19 +118,24 @@
     "systems": "Nintendo 3DS",
     "hotkeys": {
       "0": ["Action", "Keys"],
-      "1": ["Exit", "R5"],
+      "1": ["Exit", "R5 (Longpress)"],
       "2": ["FullScreen", "L4"],
       "3": ["Swap Screens", "R4"],
-      "4": ["Toggle Layout", "L5"]
+      "4": ["Toggle Layout", "L5"],
+      "5": ["Toggle Layout", "L5"],
+      "6": ["Save State", "Left Trackpad"],
+      "7": ["Load State", "Left Trackpad"],
+      "8": ["Fast Forward", "Left Trackpad"],
+      "9": ["Pause", "Left Trackpad"]
     }
   },
   "pcsx2": {
     "id": "pcsx2",
     "name": "PCSX2",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/PCSX2-QT",
-    "description": "PCSX2 is a free and open-source PlayStation 2 emulator that supports a wide range of PlayStation 2 video games with a high level of compatibility and functionality.",
-    "special_configuration": "",
-    "bios": [],
+    "description": "PCSX2 is a free and open-source PS2 emulator that supports a wide range of PS2 video games.",
+    "special_configuration": " ",
+    "bios": ["ps2"],
     "systems": "Playstation 2",
     "hotkeys": {
       "0": ["Action", "Keys"],
@@ -127,7 +143,7 @@
       "2": ["Save State", "SELECT+R1"],
       "3": ["Exit", "SELECT+START"],
       "4": ["Fast Forward", "SELECT+R2"],
-      "5": ["Aspect Ratio", "SELECT+RIGHT"],
+      "5": ["Pause", "SELECT+A"],
       "6": ["Software Rendering", "SELECT+LEFT"],
       "7": ["Increase Upscale", "SELECT+UP"],
       "8": ["Decrease Upscale", "SELECT+DOWN"]
@@ -158,7 +174,11 @@
       "0": ["Action", "Keys"],
       "1": ["Exit", "SELECT+START"],
       "2": ["Fast Forward", "SELECT+R2"],
-      "3": ["Pause", "SELECT+A"]
+      "3": ["Pause", "SELECT+A"],
+      "4": ["Menu", "SELECT+R3"],
+      "5": ["Docked Mode", "START+DPAD ⬆️"],
+      "6": ["GPU Accuracy", "START+DPAD ⬇️"],
+      "7": ["Filter", "START+DPAD ⬅️"]
     }
   },
   "ryujinx": {
@@ -207,12 +227,10 @@
     "systems": "Arcade",
     "hotkeys": {
       "0": ["Action", "Keys"],
-      "1": ["Menu", "L3+R3"],
-      "2": ["Load State", "SELECT+L1"],
-      "3": ["Save State", "SELECT+R1"],
-      "4": ["Exit", "SELECT+START"],
-      "5": ["Fast Forward", "SELECT+R2"],
-      "6": ["Pause", "SELECT+A"]
+      "1": ["Coin", "SELECT"],
+      "2": ["Start", "START"],
+      "3": ["Fast Forward", "SELECT+R2"],
+      "4": ["Exit", "STEAM BUTTON"]
     }
   },
   "vita3k": {
