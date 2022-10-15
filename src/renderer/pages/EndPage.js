@@ -311,6 +311,12 @@ const EndPage = () => {
       } >> ~/emudeck/settings.sh`,
     ]);
 
+    ipcChannel.sendMessage('bash', [
+      `echo RAHandClassic3D=${
+        state.shaders.classic3d ? true : false
+      } >> ~/emudeck/settings.sh`,
+    ]);
+
     //theme
     ipcChannel.sendMessage('bash', [
       `echo esdeTheme=\""${state.theme}\"" >> ~/emudeck/settings.sh`,

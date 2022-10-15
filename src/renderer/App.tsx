@@ -14,6 +14,7 @@ import AspectRatio3DPage from 'pages/AspectRatio3DPage';
 import AspectRatioDolphinPage from 'pages/AspectRatioDolphinPage';
 import ShadersHandheldsPage from 'pages/ShadersHandheldsPage';
 import Shaders2DPage from 'pages/Shaders2DPage';
+import Shaders3DPage from 'pages/Shaders3DPage';
 import RAAchievementsPage from 'pages/RAAchievementsPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
@@ -73,6 +74,7 @@ export default function App() {
     shaders: {
       handhelds: false,
       classic: false,
+      classic3d: false,
     },
     theme: 'EPICNOIR',
     installEmus: {
@@ -177,6 +179,7 @@ export default function App() {
             element={<ShadersHandheldsPage />}
           />
           <Route exact path="/shaders-classic" element={<Shaders2DPage />} />
+          <Route exact path="/shaders-3d-classic" element={<Shaders3DPage />} />
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
           <Route exact path="/chd-tool" element={<CHDToolPage />} />

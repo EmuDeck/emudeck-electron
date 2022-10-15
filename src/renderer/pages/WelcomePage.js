@@ -30,6 +30,7 @@ const WelcomePage = () => {
     branch,
     installEmus,
     overwriteConfigEmus,
+    shaders,
   } = state;
 
   useEffect(() => {
@@ -84,8 +85,9 @@ const WelcomePage = () => {
     const settingsStorage = JSON.parse(
       localStorage.getItem('settings_emudeck')
     );
-
+    console.log({ settingsStorage });
     if (!!settingsStorage) {
+      const shadersStored = settingsStorage.shaders;
       //Theres probably a better way to do this...
       ipcChannel.sendMessage('version');
       ipcChannel.once('version-out', (version) => {
@@ -96,6 +98,7 @@ const WelcomePage = () => {
             ...settingsStorage,
             installEmus: state.installEmus,
             overwriteConfigEmus: state.overwriteConfigEmus,
+            shaders: { ...shaders, ...shadersStored },
             system: platform,
             version: version,
             branch: 'beta',

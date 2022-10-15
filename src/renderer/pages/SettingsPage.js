@@ -208,6 +208,27 @@ const SettingsPage = () => {
       notificationShow('🎉 CRT Shader updated!');
     });
   };
+  const onClickCRT3D = (arStatus) => {
+    setState({
+      ...state,
+      shaders: {
+        ...shaders,
+        classic3d: arStatus,
+      },
+    });
+
+    let functionCRT3D;
+
+    arStatus
+      ? (functionCRT3D = 'RetroArch_3DCRTshaderOnAll')
+      : (functionCRT3D = 'RetroArch_3DCRTshaderOffAll');
+
+    ipcChannel.sendMessage('emudeck', [`CRT3D|||${functionCRT3D}`]);
+    ipcChannel.once('CRT3D', (message) => {
+      console.log(message);
+      notificationShow('🎉 3D CRT Shader updated!');
+    });
+  };
   const onClickLCD = (arStatus) => {
     setState({
       ...state,
@@ -256,6 +277,7 @@ const SettingsPage = () => {
       onClick3D={onClick3D}
       onClickGC={onClickGC}
       onClickCRT={onClickCRT}
+      onClickCRT3D={onClickCRT3D}
       onClickLCD={onClickLCD}
       disabledNext={true}
       disabledBack={disabledBack}
