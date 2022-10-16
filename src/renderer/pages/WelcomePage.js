@@ -156,7 +156,7 @@ const WelcomePage = () => {
       alert={
         second
           ? 'Welcome back! Make sure to check the Tools & Stuff section!'
-          : 'Do you need help installing EmuDeck for the first time? <a href="https://www.emudeck.com" target="_blank">Check out this guide</a>'
+          : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/rs9jDHIDKkU" target="_blank">Check out this guide</a>'
       }
       disabledNext={second ? false : disabledNext}
       disabledBack={second ? false : disabledBack}
