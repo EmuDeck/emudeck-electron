@@ -15,13 +15,13 @@ const UninstallPage = () => {
   const ipcChannel = window.electron.ipcRenderer;
 
   const uninstall = (data) => {
-    alert(
-      'Open Konsole and paste this code: bash ~/.config/EmuDeck/backend/uninstall.sh'
-    );
-    // ipcChannel.sendMessage('bash', [
-    //   'bash ~/.config/EmuDeck/backend/uninstall.sh',
-    // ]);
-    window.close();
+    // alert(
+    //   'Open Konsole and paste this code: bash ~/.config/EmuDeck/backend/uninstall.sh'
+    // );
+    ipcChannel.sendMessage('bash', [
+      'bash ~/.config/EmuDeck/backend/uninstall.sh',
+    ]);
+    //window.close();
   };
 
   return (
