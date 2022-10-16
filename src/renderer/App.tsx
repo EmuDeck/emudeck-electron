@@ -43,7 +43,7 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 export default function App() {
   const [state, setState] = useState({
     version: '',
-    branch: 'beta',
+    branch: 'main',
     command: '',
     debug: false,
     debugText: '',

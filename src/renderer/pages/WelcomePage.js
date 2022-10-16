@@ -101,7 +101,7 @@ const WelcomePage = () => {
             shaders: { ...shaders, ...shadersStored },
             system: platform,
             version: version,
-            branch: 'beta',
+            branch: 'main',
           });
         });
       });

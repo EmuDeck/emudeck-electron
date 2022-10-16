@@ -18,7 +18,7 @@ const ResetPage = () => {
   const reset = () => {
     setState({
       version: '',
-      branch: 'beta',
+      branch: 'main',
       command: '',
       debug: false,
       debugText: '',
