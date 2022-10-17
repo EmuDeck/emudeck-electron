@@ -60,7 +60,7 @@
   },
   "primehacks": {
     "id": "primehacks",
-    "name": "PrimeHack",
+    "name": "Primehack",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Primehack",
     "description": "PrimeHack is a version of Dolphin created by shiiion that has been modified to play Metroid Prime: Trilogy on PC with keyboard and mouse controls.",
     "special_configuration": "PrimeHack is to be used only for the PrimeHack custom ROM",
@@ -131,7 +131,7 @@
   },
   "pcsx2": {
     "id": "pcsx2",
-    "name": "PCSX2",
+    "name": "PCSX2QT",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/PCSX2-QT",
     "description": "PCSX2 is a free and open-source PS2 emulator that supports a wide range of PS2 video games.",
     "special_configuration": " ",

@@ -64,30 +64,30 @@ const RomStoragePage = () => {
 
   //Do we have a valid SD Card?
   useEffect(() => {
-    ipcChannel.sendMessage('emudeck', [
-      'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
-    ]);
+    setTimeout(() => {
+      ipcChannel.sendMessage('emudeck', [
+        'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
+      ]);
 
-    ipcChannel.once('SDCardValid', (message) => {
-      console.log(message);
-      let stdout = message.stdout.replace('\n', '');
-      let status;
-      stdout.includes('Valid') ? (status = true) : (status = false);
-      setStatePage({
-        ...statePage,
-        sdCardValid: status,
+      ipcChannel.once('SDCardValid', (message) => {
+        console.log(message);
+        let stdout = message.stdout.replace('\n', '');
+        let status;
+        stdout.includes('Valid') ? (status = true) : (status = false);
+        setStatePage({
+          ...statePage,
+          sdCardValid: status,
+        });
+        setState({
+          ...state,
+          debugText: message,
+        });
       });
-      setState({
-        ...state,
-        debugText: message,
-      });
-    });
+    }, 500);
   }, []);
 
   //Let's get the SD Card name
   useEffect(() => {
-    // if (sdCardValid === true) {
-
     ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
       console.log(message);
@@ -101,7 +101,6 @@ const RomStoragePage = () => {
         debugText: message,
       });
     });
-    //  }
   }, [sdCardValid]);
 
   const onClickGetCustom = () => {};

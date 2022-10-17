@@ -58,11 +58,12 @@ const WelcomePage = () => {
     //
     //Cloning project
     //
-    //     //Already cloned?
+
+    //is the git repo cloned?
     ipcChannel.sendMessage('bash', [
-      'check-clone|||test -e ~/.config/EmuDeck/backend/.git/config  && echo true',
+      'check-git|||cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree',
     ]);
-    ipcChannel.once('check-clone', (cloneStatus) => {
+    ipcChannel.once('check-git', (cloneStatus) => {
       console.log({ cloneStatus });
       cloneStatus = cloneStatus.replace('\n', '');
       cloneStatus.includes('true')
@@ -119,7 +120,7 @@ const WelcomePage = () => {
     if (cloned == false) {
       if (navigator.onLine) {
         ipcChannel.sendMessage('bash', [
-          'clone|||mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ' +
+          'clone|||rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ' +
             branch +
             ' && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true',
         ]);

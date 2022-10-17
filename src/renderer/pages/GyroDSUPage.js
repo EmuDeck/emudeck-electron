@@ -23,6 +23,7 @@ const GyroDSUPage = () => {
     showNotification,
     pass1,
     pass2,
+    textNotification,
   } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
@@ -70,24 +71,45 @@ const GyroDSUPage = () => {
 
   const installGyro = (data) => {
     ipcChannel.sendMessage('emudeck', [
-      `Gyro|||echo "${sudoPass}" | sudo -v -S && Plugins_installSteamDeckGyroDSU`,
+      `Gyro|||echo "${sudoPass}" | sudo -v -S && Plugins_installSteamDeckGyroDSU && echo true`,
     ]);
 
-    ipcChannel.once('Gyro', (stdout) => {
-      console.log({ stdout });
-      setStatePage({
-        ...statePage,
-        showNotification: true,
-        textNotification: '🎉 GyroDSU Installed!',
-        sudoPass: '',
-      });
-      if (showNotification === true) {
-        setTimeout(() => {
-          setStatePage({
-            ...statePage,
-            showNotification: false,
-          });
-        }, 2000);
+    ipcChannel.once('Gyro', (status) => {
+      console.log({ status });
+      stdout = status.stdout;
+      const sterr = status.stdout;
+      const error = status.error;
+
+      if (stdout.includes('true')) {
+        setStatePage({
+          ...statePage,
+          showNotification: true,
+          textNotification: '🎉 GyroDSU Installed!',
+          sudoPass: '',
+        });
+        if (showNotification === true) {
+          setTimeout(() => {
+            setStatePage({
+              ...statePage,
+              showNotification: false,
+            });
+          }, 2000);
+        }
+      } else {
+        setStatePage({
+          ...statePage,
+          showNotification: true,
+          textNotification: JSON.stringify(status.stderr),
+          sudoPass: '',
+        });
+        if (showNotification === true) {
+          setTimeout(() => {
+            setStatePage({
+              ...statePage,
+              showNotification: false,
+            });
+          }, 2000);
+        }
       }
     });
   };
@@ -123,6 +145,7 @@ const GyroDSUPage = () => {
       sudoPass={sudoPass}
       passValidates={pass1 === pass2 ? true : false}
       nextText={sudoPass ? 'Continue' : 'Skip'}
+      textNotification={textNotification}
     />
   );
 };

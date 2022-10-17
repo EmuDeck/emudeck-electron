@@ -138,9 +138,9 @@ const EmuGuidePage = () => {
       `${name}_resetConfig|||${name}_resetConfig`,
     ]);
     ipcChannel.once(`${name}_resetConfig`, (status) => {
-      // console.log({ status });
+      console.log(`${name}_resetConfig`);
       status = status.stdout;
-      //console.log({ status });
+      console.log({ status });
       status = status.replace('\n', '');
 
       if (status.includes('true')) {

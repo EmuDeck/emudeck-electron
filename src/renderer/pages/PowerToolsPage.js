@@ -14,7 +14,7 @@ const PowerToolsPage = () => {
     showNotification: false,
     pass1: 'a',
     pass2: 'b',
-    textNotification:''
+    textNotification: '',
   });
   const {
     disabledNext,
@@ -24,6 +24,7 @@ const PowerToolsPage = () => {
     showNotification,
     pass1,
     pass2,
+    textNotification,
   } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
@@ -51,7 +52,7 @@ const PowerToolsPage = () => {
       hasSudo: true,
       sudoPass: pass1,
       showNotification: true,
-      textNotification: "🎉 Password created!"
+      textNotification: '🎉 Password created!',
     });
   };
 
@@ -71,24 +72,45 @@ const PowerToolsPage = () => {
 
   const installPowerTools = (data) => {
     ipcChannel.sendMessage('emudeck', [
-      `powerTools|||echo "${sudoPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools`,
+      `powerTools|||echo "${sudoPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools && echo true`,
     ]);
 
-    ipcChannel.once('powerTools', (stdout) => {
-      console.log({ stdout });
-      setStatePage({
-        ...statePage,
-        showNotification: true,
-        textNotification: "🎉 PowerTools Installed!",
-        sudoPass: '',
-      });
-      if (showNotification === true) {
-        setTimeout(() => {
-          setStatePage({
-            ...statePage,
-            showNotification: false,
-          });
-        }, 2000);
+    ipcChannel.once('powerTools', (status) => {
+      console.log({ status });
+      const stdout = status.stdout;
+      const sterr = status.stdout;
+      const error = status.error;
+
+      if (stdout.includes('true')) {
+        setStatePage({
+          ...statePage,
+          showNotification: true,
+          textNotification: '🎉 PowerTools Installed!',
+          sudoPass: '',
+        });
+        if (showNotification === true) {
+          setTimeout(() => {
+            setStatePage({
+              ...statePage,
+              showNotification: false,
+            });
+          }, 2000);
+        }
+      } else {
+        setStatePage({
+          ...statePage,
+          showNotification: true,
+          textNotification: JSON.stringify(status.stderr),
+          sudoPass: '',
+        });
+        if (showNotification === true) {
+          setTimeout(() => {
+            setStatePage({
+              ...statePage,
+              showNotification: false,
+            });
+          }, 2000);
+        }
       }
     });
   };
@@ -125,7 +147,7 @@ const PowerToolsPage = () => {
       sudoPass={sudoPass}
       passValidates={pass1 === pass2 ? true : false}
       nextText={sudoPass ? 'Continue' : 'Skip'}
-      textNotification={}
+      textNotification={textNotification}
     />
   );
 };

@@ -348,11 +348,11 @@ const EndPage = () => {
 
     //Achievements
     ipcChannel.sendMessage('bash', [
-      `echo ${state.achievements.user} >> $HOME/.config/EmuDeck/.rau`,
+      `echo ${state.achievements.user} > $HOME/.config/EmuDeck/.rau`,
     ]);
 
     ipcChannel.sendMessage('bash', [
-      `echo ${state.achievements.pass} >> $HOME/.config/EmuDeck/.rap`,
+      `echo ${state.achievements.pass} > $HOME/.config/EmuDeck/.rap`,
     ]);
 
     ipcChannel.sendMessage('bash', [
