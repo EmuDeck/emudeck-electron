@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 
 import Welcome from 'components/organisms/Wrappers/Welcome.js';
@@ -9,7 +9,7 @@ const WelcomePage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: true,
-    downloadComplete: false,
+    downloadComplete: null,
     update: null,
     cloned: undefined,
     data: '',
@@ -33,6 +33,9 @@ const WelcomePage = () => {
     shaders,
   } = state;
 
+  const updateRef = useRef(update);
+  updateRef.current = update;
+
   useEffect(() => {
     ipcChannel.sendMessage('clean-log');
     if (!navigator.onLine) {
@@ -55,7 +58,7 @@ const WelcomePage = () => {
     }
     //Update timeout
     setTimeout(() => {
-      if (update === null) {
+      if (updateRef === null) {
         setStatePage({
           ...statePage,
           update: 'up-to-date',
