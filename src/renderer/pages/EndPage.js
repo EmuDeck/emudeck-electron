@@ -365,7 +365,7 @@ const EndPage = () => {
     ]);
 
     //Installation
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-nolog', [
       `bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
     ]);
 

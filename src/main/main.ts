@@ -45,6 +45,39 @@ ipcMain.on('bash', async (event, command) => {
 
   return exec(`${bashCommand}`, (error, stdout, stderr) => {
     //event.reply('console', { backChannel });
+    exec(
+      `echo "[$(date)] ${bashCommand}" >> $HOME/emudeck/Emudeck.AppImage.log`
+    );
+    if (stdout) {
+      exec(
+        `echo "[$(date)] stdout: ${stdout}" >> $HOME/emudeck/Emudeck.AppImage.log`
+      );
+    }
+    if (stderr) {
+      exec(
+        `echo "[$(date)] stderr: ${stderr}" >> $HOME/emudeck/Emudeck.AppImage.log`
+      );
+    }
+    event.reply(backChannel, stdout);
+  });
+});
+
+ipcMain.on('bash-nolog', async (event, command) => {
+  let backChannel;
+  let bashCommand;
+
+  if (command[0].includes('|||')) {
+    const tempCommand = command[0].split('|||');
+    backChannel = tempCommand[0];
+    bashCommand = tempCommand[1];
+  } else {
+    backChannel = 'none';
+    bashCommand = command;
+  }
+
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    //event.reply('console', { backChannel });
+
     event.reply(backChannel, stdout);
   });
 });
@@ -66,6 +99,19 @@ ipcMain.on('emudeck', async (event, command) => {
     `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`,
     (error, stdout, stderr) => {
       //event.reply('console', { backChannel });
+      exec(
+        `echo "[$(date)] ${bashCommand}" >> $HOME/emudeck/Emudeck.AppImage.log`
+      );
+      if (stdout) {
+        exec(
+          `echo "[$(date)] stdout: ${stdout}" >> $HOME/emudeck/Emudeck.AppImage.log`
+        );
+      }
+      if (stderr) {
+        exec(
+          `echo "[$(date)] stderr: ${stderr}" >> $HOME/emudeck/Emudeck.AppImage.log`
+        );
+      }
       event.reply(backChannel, {
         stdout: stdout,
         stderr: stderr,
@@ -75,6 +121,9 @@ ipcMain.on('emudeck', async (event, command) => {
   );
 });
 
+ipcMain.on('clean-log', async (event, command) => {
+  exec(`echo "[$(date)] App Installed" > $HOME/emudeck/Emudeck.AppImage.log`);
+});
 ipcMain.on('debug', async (event, command) => {
   mainWindow.webContents.openDevTools();
 });

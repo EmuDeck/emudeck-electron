@@ -34,6 +34,7 @@ const WelcomePage = () => {
   } = state;
 
   useEffect(() => {
+    ipcChannel.sendMessage('clean-log');
     if (!navigator.onLine) {
       setTimeout(() => {
         setStatePage({
