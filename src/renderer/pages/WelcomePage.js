@@ -53,6 +53,15 @@ const WelcomePage = () => {
         });
       }, 500);
     }
+    //Update timeout
+    setTimeout(() => {
+      if (update === null) {
+        setStatePage({
+          ...statePage,
+          update: 'up-to-date',
+        });
+      }
+    }, 15000);
   }, []);
 
   useEffect(() => {

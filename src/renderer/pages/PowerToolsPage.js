@@ -12,6 +12,7 @@ const PowerToolsPage = () => {
     hasSudo: false,
     sudoPass: '',
     showNotification: false,
+    disableButton: false,
     pass1: 'a',
     pass2: 'b',
     textNotification: '',
@@ -25,6 +26,7 @@ const PowerToolsPage = () => {
     pass1,
     pass2,
     textNotification,
+    disableButton,
   } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
@@ -71,6 +73,11 @@ const PowerToolsPage = () => {
   };
 
   const installPowerTools = (data) => {
+    setStatePage({
+      ...statePage,
+      disableButton: true,
+    });
+
     ipcChannel.sendMessage('emudeck', [
       `powerTools|||echo "${sudoPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools && echo true`,
     ]);
@@ -101,7 +108,6 @@ const PowerToolsPage = () => {
           ...statePage,
           showNotification: true,
           textNotification: JSON.stringify(status.stderr),
-          sudoPass: '',
         });
         if (showNotification === true) {
           setTimeout(() => {
@@ -137,14 +143,15 @@ const PowerToolsPage = () => {
     <PowerTools
       showNotification={showNotification}
       installClick={installPowerTools}
+      sudoPass={sudoPass}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       onChange={setSudoPass}
       onChangeSetPass={setPassword}
       onChangeCheckPass={checkPassword}
       onClick={createSudo}
+      disableButton={disableButton}
       hasSudo={hasSudo}
-      sudoPass={sudoPass}
       passValidates={pass1 === pass2 ? true : false}
       nextText={sudoPass ? 'Continue' : 'Skip'}
       textNotification={textNotification}

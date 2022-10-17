@@ -12,8 +12,10 @@ const GyroDSUPage = () => {
     hasSudo: false,
     sudoPass: '',
     showNotification: false,
+    disableButton: false,
     pass1: 'a',
     pass2: 'b',
+    textNotification: '',
   });
   const {
     disabledNext,
@@ -24,6 +26,7 @@ const GyroDSUPage = () => {
     pass1,
     pass2,
     textNotification,
+    disableButton,
   } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
@@ -70,6 +73,10 @@ const GyroDSUPage = () => {
   };
 
   const installGyro = (data) => {
+    setStatePage({
+      ...statePage,
+      disableButton: true,
+    });
     ipcChannel.sendMessage('emudeck', [
       `Gyro|||echo "${sudoPass}" | sudo -v -S && Plugins_installSteamDeckGyroDSU && echo true`,
     ]);
@@ -100,7 +107,6 @@ const GyroDSUPage = () => {
           ...statePage,
           showNotification: true,
           textNotification: JSON.stringify(status.stderr),
-          sudoPass: '',
         });
         if (showNotification === true) {
           setTimeout(() => {
@@ -141,8 +147,8 @@ const GyroDSUPage = () => {
       onChangeSetPass={setPassword}
       onChangeCheckPass={checkPassword}
       onClick={createSudo}
+      disableButton={disableButton}
       hasSudo={hasSudo}
-      sudoPass={sudoPass}
       passValidates={pass1 === pass2 ? true : false}
       nextText={sudoPass ? 'Continue' : 'Skip'}
       textNotification={textNotification}
