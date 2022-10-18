@@ -173,7 +173,7 @@ ipcMain.on('update-check', async (event, command) => {
   // return;
 
   if (process.env.NODE_ENV === 'development') {
-    event.reply('update-check-out', ['up-to-date','DEV MODE']);
+    event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
     exec(
       `echo "[$(date)] UPDATE: DEV MODE" > $HOME/emudeck/Emudeck.AppImage.log`
     );
@@ -206,13 +206,13 @@ ipcMain.on('update-check', async (event, command) => {
 
     if (versionCheck == 1 || versionCheck == 0) {
       console.log('Up to date, mate');
-      event.reply('update-check-out', ['up-to-date',updateInfo]);
+      event.reply('update-check-out', ['up-to-date', '']);
       exec(
         `echo "[$(date)] ${updateInfo}" > $HOME/emudeck/Emudeck.AppImage.log`
       );
     } else {
       console.log('Lets update!');
-      event.reply('update-check-out', ['updating',updateInfo]);
+      event.reply('update-check-out', ['updating', '']);
       exec(
         `echo "[$(date)] ${updateInfo}" > $HOME/emudeck/Emudeck.AppImage.log`
       );
