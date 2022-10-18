@@ -184,66 +184,89 @@ ipcMain.on('update-check', async (event, command) => {
   exec(
     `echo "[$(date)] UPDATE: STARTING CHECK" > $HOME/emudeck/Emudeck.Update.log`
   );
-  result.then((checkResult: UpdateCheckResult) => {
-    const { updateInfo } = checkResult;
-    console.log({ updateInfo });
-    exec(
-      `echo "[$(date)] UPDATE: CHECKING" >> $HOME/emudeck/Emudeck.Update.log`
-    );
-    //  updateInfo:
-    // path: "EmuDeck-1.0.27.AppImage"
-    // releaseDate: "2022-09-16T22:48:39.803Z"
-    // releaseName: "1.0.27"
-    // releaseNotes: "<p>IMPROVED: New Bios Check Page.<br>\nFIXED: Bug running compression tool</p>"
-    // sha512: "/0ChuBwKvG7zBQQRXABssTnoCPnbG/FE4K3gqCGvfhLwfhRcIlOgIFXXu0Fqo3QF2wNz8/H3OrHfYVyplsVnJA=="
-    // tag: "v1.0.27"
-    // version: "1.0.27"
-
-    const version = app.getVersion();
-    const versionOnline = updateInfo.version;
-
-    const versionCheck = version.localeCompare(versionOnline, undefined, {
-      numeric: true,
-      sensitivity: 'base',
-    });
-    console.log({ versionCheck });
-    console.log('- 1 means update');
-    console.log('1 and 0 means up to date');
-    exec(
-      `echo "[$(date)] UPDATE: COMPARING VERSIONS" >> $HOME/emudeck/Emudeck.Update.log`
-    );
-    if (versionCheck == 1 || versionCheck == 0) {
+  result
+    .then((checkResult: UpdateCheckResult) => {
+      const { updateInfo } = checkResult;
+      console.log({ updateInfo });
       exec(
-        `echo "[$(date)] UPDATE: UP TO DATE" >> $HOME/emudeck/Emudeck.Update.log`
+        `echo "[$(date)] UPDATE: CHECKING" >> $HOME/emudeck/Emudeck.Update.log`
       );
-      console.log('Up to date, mate');
-      event.reply('update-check-out', ['up-to-date', updateInfo]);
-      exec(
-        `echo "[$(date)] ${JSON.stringify(
-          updateInfo
-        )}" > $HOME/emudeck/Emudeck.AppImage.log`
-      );
-    } else {
-      exec(
-        `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/Emudeck.Update.log`
-      );
-      console.log('Lets update!');
-      event.reply('update-check-out', ['updating', updateInfo]);
-      exec(
-        `echo "[$(date)] ${JSON.stringify(
-          updateInfo
-        )}" > $HOME/emudeck/Emudeck.AppImage.log`
-      );
+      //  updateInfo:
+      // path: "EmuDeck-1.0.27.AppImage"
+      // releaseDate: "2022-09-16T22:48:39.803Z"
+      // releaseName: "1.0.27"
+      // releaseNotes: "<p>IMPROVED: New Bios Check Page.<br>\nFIXED: Bug running compression tool</p>"
+      // sha512: "/0ChuBwKvG7zBQQRXABssTnoCPnbG/FE4K3gqCGvfhLwfhRcIlOgIFXXu0Fqo3QF2wNz8/H3OrHfYVyplsVnJA=="
+      // tag: "v1.0.27"
+      // version: "1.0.27"
 
-      const doUpdate = autoUpdater.downloadUpdate();
+      const version = app.getVersion();
+      const versionOnline = updateInfo.version;
 
-      doUpdate.then(() => {
-        autoUpdater.quitAndInstall(
-          true, // isSilent
-          true // isForceRunAfter, restart app after update is installed
-        );
+      const versionCheck = version.localeCompare(versionOnline, undefined, {
+        numeric: true,
+        sensitivity: 'base',
       });
-    }
+      console.log({ versionCheck });
+      console.log('- 1 means update');
+      console.log('1 and 0 means up to date');
+      exec(
+        `echo "[$(date)] UPDATE: COMPARING VERSIONS" >> $HOME/emudeck/Emudeck.Update.log`
+      );
+      if (versionCheck == 1 || versionCheck == 0) {
+        exec(
+          `echo "[$(date)] UPDATE: UP TO DATE" >> $HOME/emudeck/Emudeck.Update.log`
+        );
+        console.log('Up to date, mate');
+        event.reply('update-check-out', ['up-to-date', updateInfo]);
+        exec(
+          `echo "[$(date)] ${JSON.stringify(
+            updateInfo
+          )}" > $HOME/emudeck/Emudeck.AppImage.log`
+        );
+      } else {
+        exec(
+          `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/Emudeck.Update.log`
+        );
+        console.log('Lets update!');
+        event.reply('update-check-out', ['updating', updateInfo]);
+        exec(
+          `echo "[$(date)] ${JSON.stringify(
+            updateInfo
+          )}" > $HOME/emudeck/Emudeck.AppImage.log`
+        );
+
+        const doUpdate = autoUpdater.downloadUpdate();
+
+        doUpdate.then(() => {
+          autoUpdater.quitAndInstall(
+            true, // isSilent
+            true // isForceRunAfter, restart app after update is installed
+          );
+        });
+      }
+    })
+    .catch((reason) => {
+      exec(
+        `echo "[$(date)] ${JSON.stringify(
+          reason
+        )}" >> $HOME/emudeck/Emudeck.Update.log`
+      );
+    });
+
+  //Abort the update if it hangs
+  var abortPromise = new Promise(function (resolve, reject) {
+    setTimeout(resolve, 10000, 'abort');
+  });
+
+  Promise.race([result, abortPromise]).then(function (value) {
+    if (value == 'abort') {
+      exec(
+        `echo "[$(date)] UPDATE: ABORTED TIMEOUT" >> $HOME/emudeck/Emudeck.Update.log`
+      );
+      event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
+    } // "two"
+    // Both resolve, but p2 is faster
   });
 });
 
