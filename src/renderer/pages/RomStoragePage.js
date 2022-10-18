@@ -12,7 +12,7 @@ const RomStoragePage = () => {
     disabledBack: false,
     data: '',
     sdCardValid: null,
-    sdCardName: null,
+    sdCardName: undefined,
   });
   const { disabledNext, disabledBack, data, sdCardValid, sdCardName } =
     statePage;
@@ -86,15 +86,15 @@ const RomStoragePage = () => {
   const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
-      console.log('SDCardName');
       console.log(message);
       let stdout = message.stdout.replace('\n', '');
       if (stdout == '') {
-        stdout = 'nope';
+        stdout = null;
       }
       setStatePage({
         ...statePage,
         sdCardName: stdout,
+        sdCardValid: stdout == null ? false : true,
       });
       setState({
         ...state,
@@ -108,7 +108,7 @@ const RomStoragePage = () => {
     <RomStorage
       data={data}
       sdCardValid={sdCardValid}
-      reloadSDcard={getSDName}
+      reloadSDcard={checkSDValid}
       sdCardName={sdCardName}
       onClick={storageSet}
       onClickGetCustom={onClickGetCustom}
