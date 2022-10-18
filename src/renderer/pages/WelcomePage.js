@@ -86,6 +86,7 @@ const WelcomePage = () => {
       setStatePage({
         ...statePage,
         update: message[0],
+        data: message[1],
       });
     });
 
@@ -175,7 +176,7 @@ const WelcomePage = () => {
   return (
     <Welcome
       update={update}
-      data=""
+      data={data}
       alert={
         second
           ? 'Welcome back! Make sure to check the Tools & Stuff section!'
