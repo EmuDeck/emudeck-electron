@@ -7,11 +7,11 @@ const WelcomePage = () => {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
-    disabledNext: true,
+    disabledNext: null,
     disabledBack: true,
-    downloadComplete: null,
+    downloadComplete: !navigator.onLine ?  true : null ,
     update: null,
-    cloned: undefined,
+    cloned: null,
     data: '',
   });
   const { disabledNext, disabledBack, downloadComplete, data, cloned, update } =
@@ -30,72 +30,21 @@ const WelcomePage = () => {
     branch,
     installEmus,
     overwriteConfigEmus,
-    shaders,
+    shaders
   } = state;
 
   const updateRef = useRef(update);
   updateRef.current = update;
 
-  useEffect(() => {
-    ipcChannel.sendMessage('clean-log');
-    if (!navigator.onLine) {
-      setTimeout(() => {
-        setStatePage({
-          ...statePage,
-          update: 'up-to-date',
-        });
-      }, 500);
-    } else {
-      setTimeout(() => {
-        ipcChannel.sendMessage('update-check');
-        ipcChannel.once('update-check-out', (message) => {
-          setStatePage({
-            ...statePage,
-            update: message,
-          });
-        });
-      }, 500);
-    }
-    //Update timeout
-    setTimeout(() => {
-      if (updateRef === null) {
-        setStatePage({
-          ...statePage,
-          update: 'up-to-date',
-        });
-      }
-    }, 15000);
-  }, []);
+  const downloadCompleteRef = useRef(downloadComplete);
+  downloadCompleteRef.current = downloadComplete;
 
   useEffect(() => {
-    //
-    //Cloning project
-    //
-
-    //is the git repo cloned?
-    ipcChannel.sendMessage('bash', [
-      'check-git|||cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree',
-    ]);
-    ipcChannel.once('check-git', (cloneStatus) => {
-      console.log({ cloneStatus });
-      cloneStatus = cloneStatus.replace('\n', '');
-      cloneStatus.includes('true')
-        ? (cloneStatus = true)
-        : (cloneStatus = false);
-      setStatePage({
-        ...statePage,
-        cloned: cloneStatus,
-      });
-    });
-  }, [update]);
+    console.log({statePage})
+  }, [statePage]);
 
   useEffect(() => {
-    if (mode != '') {
-      setStatePage({ ...statePage, disabledNext: false });
-    }
-  }, [mode]);
 
-  useEffect(() => {
     const settingsStorage = JSON.parse(
       localStorage.getItem('settings_emudeck')
     );
@@ -119,7 +68,7 @@ const WelcomePage = () => {
           });
         });
       });
-      setStatePage({ ...statePage, disabledNext: false });
+
     } else {
       ipcChannel.sendMessage('version');
       ipcChannel.once('version-out', (version) => {
@@ -130,6 +79,68 @@ const WelcomePage = () => {
       });
     }
 
+    //ipcChannel.sendMessage('clean-log');
+
+    //  setTimeout(() => {
+        ipcChannel.sendMessage('update-check');
+
+        ipcChannel.once('update-check-out', (message) => {
+          setStatePage({
+            ...statePage,
+            update: message[0],
+            data: message[1],
+          });
+        });
+
+    //  }, 500);
+
+    //Update timeout + Force clone check
+    setTimeout(() => {
+      if (updateRef === null) {
+        setStatePage({
+          ...statePage,
+          update: 'up-to-date',
+          cloned: null
+        });
+      }
+    }, 15000);
+  }, []);
+
+  useEffect(() => {
+    //
+    //Cloning project
+    //
+
+    if (update == 'up-to-date'){
+      //is the git repo cloned?
+      ipcChannel.sendMessage('bash', [
+        'check-git|||cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree',
+      ]);
+      ipcChannel.once('check-git', (cloneStatusCheck) => {
+        console.log({ cloneStatusCheck });
+        cloneStatusCheck = cloneStatusCheck.replace('\n', '');
+        cloneStatusCheck.includes('true')
+          ? (cloneStatusCheck = true)
+          : (cloneStatusCheck = false);
+        setStatePage({
+          ...statePage,
+          cloned: cloneStatusCheck,
+        });
+      });
+    }
+
+  }, [update]);
+
+  useEffect(() => {
+    console.log({mode})
+    if (mode != null && downloadComplete == true) {
+      setStatePage({ ...statePage, disabledNext: false });
+    }
+  }, [mode]);
+
+  useEffect(() => {
+    //settings here
+
     if (cloned == false) {
       if (navigator.onLine) {
         ipcChannel.sendMessage('bash', [
@@ -138,9 +149,9 @@ const WelcomePage = () => {
             ' && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true',
         ]);
 
-        ipcChannel.once('clone', (cloneStatus) => {
-          console.log({ cloneStatus });
-          if (cloneStatus.includes('true')) {
+        ipcChannel.once('clone', (cloneStatusClone) => {
+          console.log({ cloneStatusClone });
+          if (cloneStatusClone.includes('true')) {
             setStatePage({ ...statePage, downloadComplete: true });
           }
         });
@@ -157,6 +168,7 @@ const WelcomePage = () => {
         ipcChannel.once('pull', (pullStatus) => {
           console.log({ pullStatus });
           setStatePage({ ...statePage, downloadComplete: true });
+          //Update timeout
         });
       } else {
         setStatePage({ ...statePage, downloadComplete: true });
@@ -167,6 +179,7 @@ const WelcomePage = () => {
   return (
     <Welcome
       update={update}
+      data={data}
       alert={
         second
           ? 'Welcome back! Make sure to check the Tools & Stuff section!'

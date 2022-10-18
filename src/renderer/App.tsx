@@ -48,7 +48,7 @@ export default function App() {
     debug: false,
     debugText: '',
     second: false,
-    mode: '',
+    mode: null,
     system: '',
     device: 'Steam Deck',
     storage: 'Internal Storage',
