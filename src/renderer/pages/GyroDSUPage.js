@@ -83,7 +83,7 @@ const GyroDSUPage = () => {
 
     ipcChannel.once('Gyro', (status) => {
       console.log({ status });
-      stdout = status.stdout;
+      const stdout = status.stdout;
       const sterr = status.stdout;
       const error = status.error;
 
