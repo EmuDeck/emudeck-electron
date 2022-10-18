@@ -77,9 +77,15 @@ const RomStoragePage = () => {
       let stdout = message.stdout.replace('\n', '');
       let status;
       stdout.includes('Valid') ? (status = true) : (status = false);
-      // if (status) {
-      getSDName();
-      // }
+      if (status === true) {
+        getSDName();
+      } else {
+        setStatePage({
+          ...statePage,
+          sdCardName: null,
+          sdCardValid: null,
+        });
+      }
     });
   };
 
