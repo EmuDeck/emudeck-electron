@@ -86,9 +86,6 @@ const EndPage = () => {
     ipcChannel.sendMessage('bash', [
       `echo doSetupXenia=false >> ~/emudeck/settings.sh`,
     ]);
-    ipcChannel.sendMessage('bash', [
-      `echo doSetupRyujinx=false >> ~/emudeck/settings.sh`,
-    ]);
 
     ipcChannel.sendMessage('bash', [
       `echo doSetupPrimeHacks=${
