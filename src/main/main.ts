@@ -181,9 +181,15 @@ ipcMain.on('update-check', async (event, command) => {
   }
 
   const result = autoUpdater.checkForUpdates();
+  exec(
+    `echo "[$(date)] UPDATE: STARTING CHECK" > $HOME/emudeck/Emudeck.Update.log`
+  );
   result.then((checkResult: UpdateCheckResult) => {
     const { updateInfo } = checkResult;
     console.log({ updateInfo });
+    exec(
+      `echo "[$(date)] UPDATE: CHECKING" >> $HOME/emudeck/Emudeck.Update.log`
+    );
     //  updateInfo:
     // path: "EmuDeck-1.0.27.AppImage"
     // releaseDate: "2022-09-16T22:48:39.803Z"
@@ -203,8 +209,13 @@ ipcMain.on('update-check', async (event, command) => {
     console.log({ versionCheck });
     console.log('- 1 means update');
     console.log('1 and 0 means up to date');
-
+    exec(
+      `echo "[$(date)] UPDATE: COMPARING VERSIONS" >> $HOME/emudeck/Emudeck.Update.log`
+    );
     if (versionCheck == 1 || versionCheck == 0) {
+      exec(
+        `echo "[$(date)] UPDATE: UP TO DATE" >> $HOME/emudeck/Emudeck.Update.log`
+      );
       console.log('Up to date, mate');
       event.reply('update-check-out', ['up-to-date', updateInfo]);
       exec(
@@ -213,6 +224,9 @@ ipcMain.on('update-check', async (event, command) => {
         )}" > $HOME/emudeck/Emudeck.AppImage.log`
       );
     } else {
+      exec(
+        `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/Emudeck.Update.log`
+      );
       console.log('Lets update!');
       event.reply('update-check-out', ['updating', updateInfo]);
       exec(

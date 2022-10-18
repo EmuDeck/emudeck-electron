@@ -44,6 +44,19 @@ const WelcomePage = () => {
   }, [statePage]);
 
   useEffect(() => {
+    //Update timeout + Force clone check
+    console.log('UPDATE - SETTING TIMER FOR TIMEOUT');
+    setTimeout(() => {
+      if (updateRef === null) {
+        console.log('UPDATE - TIMEOUT');
+        setStatePage({
+          ...statePage,
+          update: 'up-to-date',
+          cloned: null,
+        });
+      }
+    }, 15000);
+
     const settingsStorage = JSON.parse(
       localStorage.getItem('settings_emudeck')
     );
@@ -94,17 +107,6 @@ const WelcomePage = () => {
     });
 
     //  }, 500);
-
-    //Update timeout + Force clone check
-    setTimeout(() => {
-      if (updateRef === null) {
-        setStatePage({
-          ...statePage,
-          update: 'up-to-date',
-          cloned: null,
-        });
-      }
-    }, 15000);
   }, []);
 
   useEffect(() => {
