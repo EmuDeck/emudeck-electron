@@ -11,7 +11,7 @@ const RomStoragePage = () => {
     disabledNext: true,
     disabledBack: false,
     data: '',
-    sdCardValid: false,
+    sdCardValid: null,
     sdCardName: '',
   });
   const { disabledNext, disabledBack, data, sdCardValid, sdCardName } =
@@ -64,30 +64,36 @@ const RomStoragePage = () => {
 
   //Do we have a valid SD Card?
   useEffect(() => {
-    setTimeout(() => {
-      ipcChannel.sendMessage('emudeck', [
-        'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
-      ]);
-
-      ipcChannel.once('SDCardValid', (message) => {
-        console.log(message);
-        let stdout = message.stdout.replace('\n', '');
-        let status;
-        stdout.includes('Valid') ? (status = true) : (status = false);
-        setStatePage({
-          ...statePage,
-          sdCardValid: status,
-        });
-        setState({
-          ...state,
-          debugText: message,
-        });
-      });
-    }, 500);
+    checkSDValid();
   }, []);
 
   //Let's get the SD Card name
   useEffect(() => {
+    getSDName();
+  }, [sdCardValid]);
+
+  const checkSDValid = () => {
+    ipcChannel.sendMessage('emudeck', [
+      'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
+    ]);
+
+    ipcChannel.once('SDCardValid', (message) => {
+      console.log(message);
+      let stdout = message.stdout.replace('\n', '');
+      let status;
+      stdout.includes('Valid') ? (status = true) : (status = false);
+      setStatePage({
+        ...statePage,
+        sdCardValid: status,
+      });
+      setState({
+        ...state,
+        debugText: message,
+      });
+    });
+  };
+
+  const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
       console.log(message);
@@ -101,7 +107,7 @@ const RomStoragePage = () => {
         debugText: message,
       });
     });
-  }, [sdCardValid]);
+  };
 
   const onClickGetCustom = () => {};
 
@@ -109,6 +115,7 @@ const RomStoragePage = () => {
     <RomStorage
       data={data}
       sdCardValid={sdCardValid}
+      reloadSDcard={getSDName}
       sdCardName={sdCardName}
       onClick={storageSet}
       onClickGetCustom={onClickGetCustom}
