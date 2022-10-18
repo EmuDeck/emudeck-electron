@@ -7,9 +7,9 @@ const WelcomePage = () => {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
-    disabledNext: null,
+    disabledNext: true,
     disabledBack: true,
-    downloadComplete: !navigator.onLine ?  true : null ,
+    downloadComplete: !navigator.onLine ? true : null,
     update: null,
     cloned: null,
     data: '',
@@ -30,7 +30,7 @@ const WelcomePage = () => {
     branch,
     installEmus,
     overwriteConfigEmus,
-    shaders
+    shaders,
   } = state;
 
   const updateRef = useRef(update);
@@ -40,11 +40,10 @@ const WelcomePage = () => {
   downloadCompleteRef.current = downloadComplete;
 
   useEffect(() => {
-    console.log({statePage})
+    console.log({ statePage });
   }, [statePage]);
 
   useEffect(() => {
-
     const settingsStorage = JSON.parse(
       localStorage.getItem('settings_emudeck')
     );
@@ -68,7 +67,6 @@ const WelcomePage = () => {
           });
         });
       });
-
     } else {
       ipcChannel.sendMessage('version');
       ipcChannel.once('version-out', (version) => {
@@ -82,15 +80,15 @@ const WelcomePage = () => {
     //ipcChannel.sendMessage('clean-log');
 
     //  setTimeout(() => {
-        ipcChannel.sendMessage('update-check');
+    ipcChannel.sendMessage('update-check');
 
-        ipcChannel.once('update-check-out', (message) => {
-          setStatePage({
-            ...statePage,
-            update: message[0],
-            data: message[1],
-          });
-        });
+    ipcChannel.once('update-check-out', (message) => {
+      setStatePage({
+        ...statePage,
+        update: message[0],
+        data: message[1],
+      });
+    });
 
     //  }, 500);
 
@@ -100,7 +98,7 @@ const WelcomePage = () => {
         setStatePage({
           ...statePage,
           update: 'up-to-date',
-          cloned: null
+          cloned: null,
         });
       }
     }, 15000);
@@ -111,7 +109,7 @@ const WelcomePage = () => {
     //Cloning project
     //
 
-    if (update == 'up-to-date'){
+    if (update == 'up-to-date') {
       //is the git repo cloned?
       ipcChannel.sendMessage('bash', [
         'check-git|||cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree',
@@ -128,11 +126,10 @@ const WelcomePage = () => {
         });
       });
     }
-
   }, [update]);
 
   useEffect(() => {
-    console.log({mode})
+    console.log({ mode });
     if (mode != null && downloadComplete == true) {
       setStatePage({ ...statePage, disabledNext: false });
     }

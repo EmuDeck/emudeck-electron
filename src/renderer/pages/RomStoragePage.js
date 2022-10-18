@@ -12,18 +12,11 @@ const RomStoragePage = () => {
     disabledBack: false,
     data: '',
     sdCardValid: null,
-    sdCardName: '',
+    sdCardName: null,
   });
   const { disabledNext, disabledBack, data, sdCardValid, sdCardName } =
     statePage;
   const { mode, system } = state;
-
-  useEffect(() => {
-    setState({
-      ...state,
-      second: false,
-    });
-  }, []); // <-- here put the parameter to listen
 
   const storageSet = (storageName) => {
     if (storageName === 'Custom') {
@@ -57,7 +50,9 @@ const RomStoragePage = () => {
   };
   //Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
-    if (storage != '') {
+    console.log({ storage });
+    if (storage != null) {
+      console.log('Storage found, enable button');
       setStatePage({ ...statePage, disabledNext: false });
     }
   }, [state]); // <-- here put the parameter to listen
@@ -68,9 +63,9 @@ const RomStoragePage = () => {
   }, []);
 
   //Let's get the SD Card name
-  useEffect(() => {
-    getSDName();
-  }, [sdCardValid]);
+  // useEffect(() => {
+  //   getSDName();
+  // }, [sdCardValid]);
 
   const checkSDValid = () => {
     ipcChannel.sendMessage('emudeck', [
@@ -82,29 +77,27 @@ const RomStoragePage = () => {
       let stdout = message.stdout.replace('\n', '');
       let status;
       stdout.includes('Valid') ? (status = true) : (status = false);
-      setStatePage({
-        ...statePage,
-        sdCardValid: status,
-      });
-      setState({
-        ...state,
-        debugText: message,
-      });
+      // if (status) {
+      getSDName();
+      // }
     });
   };
 
   const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
+      console.log('SDCardName');
       console.log(message);
       let stdout = message.stdout.replace('\n', '');
+      if (stdout == '') {
+        stdout = 'nope';
+      }
       setStatePage({
         ...statePage,
         sdCardName: stdout,
       });
       setState({
         ...state,
-        debugText: message,
       });
     });
   };
