@@ -265,8 +265,8 @@ ipcMain.on('update-check', async (event, command) => {
         `echo "[$(date)] UPDATE: ABORTED TIMEOUT" >> $HOME/emudeck/Emudeck.Update.log`
       );
       event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
-    } // "two"
-    // Both resolve, but p2 is faster
+      //mainWindow.reload()
+    }
   });
 });
 
