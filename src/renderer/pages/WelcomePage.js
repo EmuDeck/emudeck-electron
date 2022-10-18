@@ -80,9 +80,12 @@ const WelcomePage = () => {
     //ipcChannel.sendMessage('clean-log');
 
     //  setTimeout(() => {
+    console.log('UPDATE - CHECKING');
     ipcChannel.sendMessage('update-check');
-
+    console.log('UPDATE - WAITING');
     ipcChannel.once('update-check-out', (message) => {
+      console.log('UPDATE - GETTING INFO:');
+      console.log({ message });
       setStatePage({
         ...statePage,
         update: message[0],
