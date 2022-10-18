@@ -82,8 +82,11 @@ const RomStoragePage = () => {
       } else {
         setStatePage({
           ...statePage,
-          sdCardName: null,
-          sdCardValid: null,
+          sdCardName: false,
+          sdCardValid: false,
+        });
+        setState({
+          ...state,
         });
       }
     });
