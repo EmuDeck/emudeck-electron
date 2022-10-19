@@ -191,12 +191,7 @@
     "systems": "Nintendo Switch",
     "hotkeys": {
       "0": ["Action", "Keys"],
-      "1": ["Menu", "L3+R3"],
-      "2": ["Load State", "SELECT+L1"],
-      "3": ["Save State", "SELECT+R1"],
-      "4": ["Exit", "SELECT+START"],
-      "5": ["Fast Forward", "SELECT+R2"],
-      "6": ["Pause", "SELECT+A"]
+      "1": ["Exit", "STEAM BUTTON"]
     }
   },
   "xemu": {
