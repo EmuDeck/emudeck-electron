@@ -39,6 +39,21 @@ const WelcomePage = () => {
   const downloadCompleteRef = useRef(downloadComplete);
   downloadCompleteRef.current = downloadComplete;
 
+  //Download files
+  const [counter, setCounter] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter((prevCounter) => {
+        if (prevCounter === 110) {
+          prevCounter = -10;
+        }
+        return prevCounter + 1;
+      });
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     console.log({ statePage });
   }, [statePage]);
@@ -182,6 +197,7 @@ const WelcomePage = () => {
     <Welcome
       update={update}
       data={data}
+      counter={counter}
       alert={
         second
           ? 'Welcome back! Make sure to check the Tools & Stuff section!'
