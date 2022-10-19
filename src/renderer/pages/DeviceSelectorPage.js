@@ -8,6 +8,14 @@ import imgOdin from 'assets/odin.png';
 import imgRP2 from 'assets/rp2.png';
 import imgAndroid from 'assets/android.png';
 import imgDeck from 'assets/deck.png';
+import Card from 'components/molecules/Card/Card.js';
+
+// import img552 from 'assets/rg552.png';
+// import imgOdin from 'assets/odin.png';
+// import imgRP2 from 'assets/rp2.png';
+// import imgAndroid from 'assets/android.png';
+import imgDeck from 'assets/deck.png';
+import imgWin600 from 'assets/win600.png';
 
 const DeviceSelectorPage = () => {
   const { state, setState } = useContext(GlobalContext);
@@ -22,140 +30,10 @@ const DeviceSelectorPage = () => {
   //Setting the device
   const deviceSet = (deviceName) => {
     setStatePage({ ...statePage, disabledNext: false });
-    if (deviceName === 'Odin Lite') {
-      setState({
-        ...state,
-        device: deviceName,
-        installEmus: {
-          ...installEmus,
-          ra: { id: 'ra', status: true, name: 'RetroArch' },
-          dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-          primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-          ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-          duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-          citra: { id: 'citra', status: true, name: 'Citra' },
-          pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-          rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-          yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-          xemu: { id: 'xemu', status: true, name: 'Xemu' },
-          cemu: { id: 'cemu', status: true, name: 'Cemu' },
-        },
-      });
-    } else if (deviceName === 'Odin Base/Pro') {
-      setState({
-        ...state,
-        device: deviceName,
-        installEmus: {
-          ...installEmus,
-          ra: { id: 'ra', status: true, name: 'RetroArch' },
-          dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-          primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-          ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-          duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-          citra: { id: 'citra', status: true, name: 'Citra' },
-          pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-          rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-          yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-          xemu: { id: 'xemu', status: true, name: 'Xemu' },
-          cemu: { id: 'cemu', status: true, name: 'Cemu' },
-        },
-      });
-    } else if (deviceName === 'RG552') {
-      setState({
-        ...state,
-        device: deviceName,
-        installEmus: {
-          ...installEmus,
-          ra: { id: 'ra', status: true, name: 'RetroArch' },
-          dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-          primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-          ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-          duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-          citra: { id: 'citra', status: true, name: 'Citra' },
-          pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-          rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-          yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-          xemu: { id: 'xemu', status: true, name: 'Xemu' },
-          cemu: { id: 'cemu', status: true, name: 'Cemu' },
-        },
-      });
-    } else if (deviceName === 'RP2+') {
-      setState({
-        ...state,
-        device: deviceName,
-        installEmus: {
-          ...installEmus,
-          ra: { id: 'ra', status: true, name: 'RetroArch' },
-          dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-          primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-          ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-          duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-          citra: { id: 'citra', status: true, name: 'Citra' },
-          pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-          rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-          yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-          xemu: { id: 'xemu', status: true, name: 'Xemu' },
-          cemu: { id: 'cemu', status: true, name: 'Cemu' },
-        },
-      });
-    } else if (deviceName === 'Android') {
-      setState({
-        ...state,
-        device: deviceName,
-        installEmus: {
-          ...installEmus,
-          ra: { id: 'ra', status: true, name: 'RetroArch' },
-          dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-          primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-          ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-          duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-          citra: { id: 'citra', status: true, name: 'Citra' },
-          pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-          rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-          yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-          xemu: { id: 'xemu', status: true, name: 'Xemu' },
-          cemu: { id: 'cemu', status: true, name: 'Cemu' },
-        },
-      });
-    } else if (deviceName === 'Steam Deck') {
-      setState({
-        ...state,
-        device: deviceName,
-        installEmus: {
-          ...installEmus,
-          ra: { id: 'ra', status: true, name: 'RetroArch' },
-          dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-          primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-          ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-          duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-          citra: { id: 'citra', status: true, name: 'Citra' },
-          pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-          rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-          yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-          xemu: { id: 'xemu', status: true, name: 'Xemu' },
-          cemu: { id: 'cemu', status: true, name: 'Cemu' },
-        },
-      });
-    } else if (deviceName === 'Anbernic Win600') {
-      setState({
-        ...state,
-        device: deviceName,
-        installEmus: {
-          ...installEmus,
-          ra: { id: 'ra', status: true, name: 'RetroArch' },
-          dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-          primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-          ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-          duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-          citra: { id: 'citra', status: true, name: 'Citra' },
-          pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-          rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-          yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-          xemu: { id: 'xemu', status: true, name: 'Xemu' },
-          cemu: { id: 'cemu', status: true, name: 'Cemu' },
-        },
-      });
-    }
+    setState({
+      ...state,
+      device: deviceName,
+    });
   };
 
   //Enabling button when changing the global state only if we have a device selected
@@ -172,7 +50,66 @@ const DeviceSelectorPage = () => {
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       next="emulator-selector"
-    />
+    >
+      <Card
+        css={device == 'Steam Deck' && 'is-selected'}
+        onClick={() => deviceSet('Steam Deck')}
+      >
+        <img src={imgDeck} width="100" alt="Background" />
+        <span className="h6">Steam Deck</span>
+      </Card>
+      <Card
+        css={device == 'Anbernic Win600' && 'is-selected'}
+        onClick={() => deviceSet('Anbernic Win600')}
+      >
+        <img src={imgWin600} width="100" alt="Background" />
+        <span className="h6">Anbernic WIN600</span>
+      </Card>
+
+      {/*
+
+
+
+    <Card
+      css={device == 'RG552' && 'is-selected'}
+      onClick={() => onClick('RG552')}
+    >
+      <img src={img552} width="100" alt="Background" />
+      <span className="h6">Anbernic RG552</span>
+    </Card>
+
+    <Card
+      css={device == 'Odin Base/Pro' && 'is-selected'}
+      onClick={() => onClick('Odin Base/Pro')}
+    >
+      <img src={imgOdin} width="100" alt="Background" />
+      <span className="h6">AYN Odin Base/Pro</span>
+    </Card>
+
+    <Card
+      css={device == 'Odin Lite' && 'is-selected'}
+      onClick={() => onClick('Odin Lite')}
+    >
+      <img src={imgOdin} width="100" alt="Background" />
+      <span className="h6">AYN Odin Lite</span>
+    </Card>
+    <Card
+      css={device == 'RP2+' && 'is-selected'}
+      onClick={() => onClick('RP2+')}
+    >
+      <img src={imgRP2} width="100" alt="Background" />
+      <span className="h6">Retroid Pocket 2+</span>
+    </Card>
+
+    <Card
+      css={device == 'Android' && 'is-selected'}
+      onClick={() => onClick('Android')}
+    >
+      <img src={imgAndroid} width="100" alt="Background" />
+      <span className="h6">Android Phone</span>
+    </Card>
+    */}
+    </DeviceSelector>
   );
 };
 
