@@ -87,6 +87,8 @@ const RomStoragePage = () => {
         });
         setState({
           ...state,
+          storage: 'Internal Storage',
+          storagePath: '$HOME',
         });
       }
     });
