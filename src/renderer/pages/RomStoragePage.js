@@ -16,7 +16,7 @@ const RomStoragePage = () => {
   });
   const { disabledNext, disabledBack, data, sdCardValid, sdCardName } =
     statePage;
-  const { mode, system } = state;
+  const { mode, system, storagePath } = state;
 
   const storageSet = (storageName) => {
     //console.log({ storageName });
@@ -37,21 +37,23 @@ const RomStoragePage = () => {
           ...statePage,
           disabledNext: true,
         });
+        setState({
+          ...state,
+          storage: storageName,
+          storagePath: stdout,
+        });
         //is it valid?
 
         ipcChannel.sendMessage('emudeck', [
-          `testLocation|||testLocationValid "custom" "${stdout}"`,
+          `testLocation|||sleep 1 && testLocationValid "custom" "${stdout}"`,
         ]);
 
         ipcChannel.once('testLocation', (message) => {
+          console.log({ stdout });
           let stdout = message.stdout.replace('\n', '');
           let status;
           stdout.includes('Valid') ? (status = true) : (status = false);
-          setState({
-            ...state,
-            storage: storageName,
-            storagePath: stdout,
-          });
+
           if (status == true) {
             setStatePage({
               ...statePage,
@@ -61,6 +63,11 @@ const RomStoragePage = () => {
             setStatePage({
               ...statePage,
               disabledNext: true,
+            });
+            setState({
+              ...state,
+              storage: null,
+              storagePath: null,
             });
           }
         });
@@ -152,6 +159,7 @@ const RomStoragePage = () => {
       sdCardValid={sdCardValid}
       reloadSDcard={checkSDValid}
       sdCardName={sdCardName}
+      customPath={storagePath}
       onClick={storageSet}
       onClickGetCustom={onClickGetCustom}
       disabledNext={disabledNext}
