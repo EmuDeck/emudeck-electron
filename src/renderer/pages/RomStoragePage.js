@@ -53,7 +53,7 @@ const RomStoragePage = () => {
           let stdout = message.stdout.replace('\n', '');
           let status;
           stdout.includes('Valid') ? (status = true) : (status = false);
-
+          console.log({ status });
           if (status == true) {
             setStatePage({
               ...statePage,
