@@ -8,7 +8,7 @@ const RomStoragePage = () => {
   const { state, setState } = useContext(GlobalContext);
   const { storage, SDID } = state;
   const [statePage, setStatePage] = useState({
-    disabledNext: true,
+    disabledNext: storage == null ? true : false,
     disabledBack: false,
     data: '',
     sdCardValid: null,
@@ -19,6 +19,14 @@ const RomStoragePage = () => {
   const { mode, system } = state;
 
   const storageSet = (storageName) => {
+    //console.log({ storageName });
+    //This could be problematic, note for possible future problems
+    // setState({
+    //   ...state,
+    //   storage: null,
+    //   storagePath: null,
+    // });
+
     if (storageName === 'Custom') {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
@@ -49,6 +57,11 @@ const RomStoragePage = () => {
               ...statePage,
               disabledNext: false,
             });
+          } else {
+            setStatePage({
+              ...statePage,
+              disabledNext: true,
+            });
           }
         });
       });
@@ -58,6 +71,10 @@ const RomStoragePage = () => {
         ...state,
         storage: storageName,
         storagePath: sdCardPath,
+      });
+      setStatePage({
+        ...statePage,
+        disabledNext: false,
       });
     } else {
       setState({
@@ -103,11 +120,6 @@ const RomStoragePage = () => {
           ...statePage,
           sdCardName: false,
           sdCardValid: false,
-        });
-        setState({
-          ...state,
-          storage: 'Internal Storage',
-          storagePath: '$HOME',
         });
       }
     });
