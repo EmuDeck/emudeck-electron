@@ -15,8 +15,8 @@ const CHDToolPage = () => {
   const ipcChannel = window.electron.ipcRenderer;
 
   const runCHD = (data) => {
-    ipcChannel.sendMessage('emudeck', [
-      'chdtool|||bash $toolsPath/chdconv/chddeck.sh',
+    ipcChannel.sendMessage('bash-nolog', [
+      'konsole -e /bin/bash --rcfile <(bash $toolsPath/chdconv/chddeck.sh)',
     ]);
   };
 
