@@ -10,13 +10,15 @@ const CHDToolPage = () => {
     disabledNext: false,
     disabledBack: false,
   });
+
+  const { storagePath } = state;
   const { disabledNext, disabledBack } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
   const runCHD = (data) => {
     ipcChannel.sendMessage('bash-nolog', [
-      `konsole -e /bin/bash --rcfile <(bash ${toolsPath}/chdconv/chddeck.sh)`,
+      `konsole -e /bin/bash --rcfile <(bash ${storagePath}tools/chdconv/chddeck.sh)`,
     ]);
   };
 
