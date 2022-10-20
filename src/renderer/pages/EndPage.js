@@ -39,6 +39,12 @@ const EndPage = () => {
 
   const [counter, setCounter] = useState(0);
 
+  const showLog = () => {
+    ipcChannel.sendMessage('bash-nolog', [
+      'konsole -e /bin/bash --rcfile <(bash tail $HOME/emudeck/emudeck.log)',
+    ]);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       let msg = readMSG('cat ~/.config/EmuDeck/msg.log');
@@ -445,6 +451,7 @@ const EndPage = () => {
     <End
       isGameMode={isGameMode}
       onClick={openSRM}
+      onClickLog={showLog}
       onClose={close}
       data={data}
       disabledNext={disabledNext}
