@@ -132,7 +132,7 @@ const WelcomePage = () => {
     if (update == 'up-to-date') {
       //is the git repo cloned?
       ipcChannel.sendMessage('bash', [
-        'check-git|||cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree',
+        'check-git|||mkdir -p $HOME/emudeck/ && cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree',
       ]);
       ipcChannel.once('check-git', (cloneStatusCheck) => {
         console.log({ cloneStatusCheck });
