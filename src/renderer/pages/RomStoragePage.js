@@ -49,8 +49,8 @@ const RomStoragePage = () => {
         ]);
 
         ipcChannel.once('testLocation', (message) => {
-          console.log({ stdout });
           let stdout = message.stdout.replace('\n', '');
+          console.log({ stdout });
           let status;
           stdout.includes('Valid') ? (status = true) : (status = false);
           console.log({ status });
