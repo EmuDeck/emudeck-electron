@@ -18,7 +18,7 @@ const CHDToolPage = () => {
 
   const runCHD = (data) => {
     ipcChannel.sendMessage('bash-nolog', [
-      `konsole -e /bin/bash --rcfile <(bash ${storagePath}/Emulation/tools/chdconv/chddeck.sh)`,
+      `konsole -e "${storagePath}/Emulation/tools/chdconv/chddeck.sh"`,
     ]);
   };
 
