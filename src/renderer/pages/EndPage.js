@@ -41,7 +41,7 @@ const EndPage = () => {
 
   const showLog = () => {
     ipcChannel.sendMessage('bash-nolog', [
-      `konsole -e /bin/bash --rcfile <(bash tail -f "$HOME/emudeck/emudeck.log")`,
+      `konsole -e tail -f "$HOME/emudeck/emudeck.log"`,
     ]);
   };
 
