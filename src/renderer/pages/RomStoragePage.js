@@ -13,26 +13,19 @@ const RomStoragePage = () => {
     data: '',
     sdCardValid: null,
     sdCardName: undefined,
+    status: undefined,
   });
-  const { disabledNext, disabledBack, data, sdCardValid, sdCardName } =
+  const { disabledNext, disabledBack, data, sdCardValid, sdCardName, status } =
     statePage;
   const { mode, system, storagePath } = state;
 
   const storageSet = (storageName) => {
-    //console.log({ storageName });
-    //This could be problematic, note for possible future problems
-    // setState({
-    //   ...state,
-    //   storage: null,
-    //   storagePath: null,
-    // });
+    //We prevent the function to continue if the custom location testing is still in progress
+    if (status == 'testing') {
+      return;
+    }
 
     if (storageName === 'Custom') {
-      // setState({
-      //   ...state,
-      //   storage: null,
-      //   storagePath: null,
-      // });
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
@@ -41,6 +34,7 @@ const RomStoragePage = () => {
         setStatePage({
           ...statePage,
           disabledNext: true,
+          status: 'testing',
         });
         setState({
           ...state,
@@ -63,12 +57,14 @@ const RomStoragePage = () => {
             setStatePage({
               ...statePage,
               disabledNext: false,
+              status: undefined,
             });
           } else {
             alert('Non writable directory selected, please choose another.');
             setStatePage({
               ...statePage,
               disabledNext: true,
+              status: undefined,
             });
             setState({
               ...state,
@@ -95,26 +91,17 @@ const RomStoragePage = () => {
         storage: storageName,
         storagePath: '$HOME',
       });
+      setStatePage({
+        ...statePage,
+        disabledNext: false,
+      });
     }
   };
-  //Enabling button when changing the global state only if we have a device selected
-  // useEffect(() => {
-  //   console.log({ storage });
-  //   if (storage != null) {
-  //     console.log('Storage found, enable button');
-  //     setStatePage({ ...statePage, disabledNext: false });
-  //   }
-  // }, [state]); // <-- here put the parameter to listen
 
   //Do we have a valid SD Card?
   useEffect(() => {
     checkSDValid();
   }, []);
-
-  //Let's get the SD Card name
-  // useEffect(() => {
-  //   getSDName();
-  // }, [sdCardValid]);
 
   const checkSDValid = () => {
     ipcChannel.sendMessage('emudeck', [
@@ -157,17 +144,14 @@ const RomStoragePage = () => {
     });
   };
 
-  const onClickGetCustom = () => {};
-
   return (
     <RomStorage
-      data={data}
+      status={status}
       sdCardValid={sdCardValid}
       reloadSDcard={checkSDValid}
       sdCardName={sdCardName}
       customPath={storagePath}
       onClick={storageSet}
-      onClickGetCustom={onClickGetCustom}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       next={mode === 'easy' ? 'end' : 'device-selector'}
