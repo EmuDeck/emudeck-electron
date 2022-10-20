@@ -381,11 +381,11 @@ const EndPage = () => {
       ]);
 
       //Achievements
-      ipcChannel.sendMessage('bash', [
+      ipcChannel.sendMessage('bash-nolog', [
         `echo ${state.achievements.user} > $HOME/.config/EmuDeck/.rau`,
       ]);
 
-      ipcChannel.sendMessage('bash', [
+      ipcChannel.sendMessage('bash-nolog', [
         `echo ${state.achievements.pass} > $HOME/.config/EmuDeck/.rap`,
       ]);
 
