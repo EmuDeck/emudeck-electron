@@ -28,6 +28,11 @@ const RomStoragePage = () => {
     // });
 
     if (storageName === 'Custom') {
+      // setState({
+      //   ...state,
+      //   storage: null,
+      //   storagePath: null,
+      // });
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
@@ -60,6 +65,7 @@ const RomStoragePage = () => {
               disabledNext: false,
             });
           } else {
+            alert('Non writable directory selected, please choose another.');
             setStatePage({
               ...statePage,
               disabledNext: true,
@@ -92,13 +98,13 @@ const RomStoragePage = () => {
     }
   };
   //Enabling button when changing the global state only if we have a device selected
-  useEffect(() => {
-    console.log({ storage });
-    if (storage != null) {
-      console.log('Storage found, enable button');
-      setStatePage({ ...statePage, disabledNext: false });
-    }
-  }, [state]); // <-- here put the parameter to listen
+  // useEffect(() => {
+  //   console.log({ storage });
+  //   if (storage != null) {
+  //     console.log('Storage found, enable button');
+  //     setStatePage({ ...statePage, disabledNext: false });
+  //   }
+  // }, [state]); // <-- here put the parameter to listen
 
   //Do we have a valid SD Card?
   useEffect(() => {
