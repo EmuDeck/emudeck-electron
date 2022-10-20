@@ -14,17 +14,18 @@ const ChangeLogPage = () => {
 
   return (
     <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
-      <strong>2.0.1 & 2.0.2</strong>
+      <strong>2.0.4</strong>
       <ul className="list-two-cols">
         <li>- FIX: Reset Config for PrimeHack and PCSX2</li>
         <li>- FIX: Distorted images in certain resolutions</li>
         <li>- FIX: Messages on PowerTools and Gyro Pages</li>
         <li>- FIX: Improved SD Card detection</li>
         <li>- FIX: Improved Backend detection</li>
+        <li>- FIX: Compressor Tool</li>
         <li>- FIX: RetroAchievments</li>
         <li>- FIX: Powertools & GyuroDSU Installation</li>
         <li>- FIX: Checking for updates screen freeze</li>
-        <li>- NEW: Appimage logs</li>
+        <li>- NEW: Appimage & installation live log</li>
       </ul>
       <br />
       <strong>2.0</strong>
