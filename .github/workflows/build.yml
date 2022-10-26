@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - beta
+      - public
 
 jobs:
   publish:
@@ -44,5 +46,5 @@ jobs:
           GH_TOKEN: ${{ secrets.github_token }}
         run: |
           npm run postinstall
-          npm run build
+          npm run build:${GITHUB_REF##*/}
           npm exec electron-builder -- --publish always --linux

@@ -278,6 +278,10 @@ ipcMain.on('system-info-in', async (event, command) => {
 ipcMain.on('version', async (event, command) => {
   event.reply('version-out', app.getVersion());
 });
+ipcMain.on('branch', async (event, command) => {
+  console.log(process.env);
+  event.reply('branch-out', process.env.BRANCH);
+});
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
