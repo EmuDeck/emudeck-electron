@@ -8,29 +8,70 @@ const RomStoragePage = () => {
   const { state, setState } = useContext(GlobalContext);
   const { storage, SDID } = state;
   const [statePage, setStatePage] = useState({
-    disabledNext: true,
+    disabledNext: storage == null ? true : false,
     disabledBack: false,
     data: '',
     sdCardValid: null,
     sdCardName: undefined,
+    status: undefined,
   });
-  const { disabledNext, disabledBack, data, sdCardValid, sdCardName } =
+  const { disabledNext, disabledBack, data, sdCardValid, sdCardName, status } =
     statePage;
-  const { mode, system } = state;
+  const { mode, system, storagePath } = state;
 
   const storageSet = (storageName) => {
+    //We prevent the function to continue if the custom location testing is still in progress
+    if (status == 'testing') {
+      return;
+    }
+
     if (storageName === 'Custom') {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
-        console.log(message);
         let stdout = message.stdout.replace('\n', '');
-        stdout = `${stdout}/`;
+
+        setStatePage({
+          ...statePage,
+          disabledNext: true,
+          status: 'testing',
+        });
         setState({
           ...state,
           storage: storageName,
           storagePath: stdout,
-          debugText: message,
+        });
+        //is it valid?
+
+        ipcChannel.sendMessage('emudeck', [
+          `testLocation|||sleep 1 && testLocationValid "custom" "${stdout}"`,
+        ]);
+
+        ipcChannel.once('testLocation', (message) => {
+          let stdout = message.stdout.replace('\n', '');
+          console.log({ stdout });
+          let status;
+          stdout.includes('Valid') ? (status = true) : (status = false);
+          console.log({ status });
+          if (status == true) {
+            setStatePage({
+              ...statePage,
+              disabledNext: false,
+              status: undefined,
+            });
+          } else {
+            alert('Non writable directory selected, please choose another.');
+            setStatePage({
+              ...statePage,
+              disabledNext: true,
+              status: undefined,
+            });
+            setState({
+              ...state,
+              storage: null,
+              storagePath: null,
+            });
+          }
         });
       });
     } else if (storageName === 'SD-Card') {
@@ -40,32 +81,27 @@ const RomStoragePage = () => {
         storage: storageName,
         storagePath: sdCardPath,
       });
+      setStatePage({
+        ...statePage,
+        disabledNext: false,
+      });
     } else {
       setState({
         ...state,
         storage: storageName,
         storagePath: '$HOME',
       });
+      setStatePage({
+        ...statePage,
+        disabledNext: false,
+      });
     }
   };
-  //Enabling button when changing the global state only if we have a device selected
-  useEffect(() => {
-    console.log({ storage });
-    if (storage != null) {
-      console.log('Storage found, enable button');
-      setStatePage({ ...statePage, disabledNext: false });
-    }
-  }, [state]); // <-- here put the parameter to listen
 
   //Do we have a valid SD Card?
   useEffect(() => {
     checkSDValid();
   }, []);
-
-  //Let's get the SD Card name
-  // useEffect(() => {
-  //   getSDName();
-  // }, [sdCardValid]);
 
   const checkSDValid = () => {
     ipcChannel.sendMessage('emudeck', [
@@ -84,9 +120,6 @@ const RomStoragePage = () => {
           ...statePage,
           sdCardName: false,
           sdCardValid: false,
-        });
-        setState({
-          ...state,
         });
       }
     });
@@ -111,16 +144,14 @@ const RomStoragePage = () => {
     });
   };
 
-  const onClickGetCustom = () => {};
-
   return (
     <RomStorage
-      data={data}
+      status={status}
       sdCardValid={sdCardValid}
       reloadSDcard={checkSDValid}
       sdCardName={sdCardName}
+      customPath={storagePath}
       onClick={storageSet}
-      onClickGetCustom={onClickGetCustom}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
       next={mode === 'easy' ? 'end' : 'device-selector'}

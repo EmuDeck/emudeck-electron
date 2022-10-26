@@ -32,7 +32,7 @@ const CloudSyncPage = () => {
       `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" "source $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
     ]);
 
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-nolog', [
       `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
     ]);
   };

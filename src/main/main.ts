@@ -207,9 +207,9 @@ ipcMain.on('update-check', async (event, command) => {
         numeric: true,
         sensitivity: 'base',
       });
-      console.log({ versionCheck });
-      console.log('- 1 means update');
-      console.log('1 and 0 means up to date');
+      //console.log({ versionCheck });
+      //console.log('- 1 means update');
+      //console.log('1 and 0 means up to date');
       exec(
         `echo "[$(date)] UPDATE: COMPARING VERSIONS" >> $HOME/emudeck/Emudeck.Update.log`
       );

@@ -10,13 +10,15 @@ const CHDToolPage = () => {
     disabledNext: false,
     disabledBack: false,
   });
+
+  const { storagePath } = state;
   const { disabledNext, disabledBack } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
   const runCHD = (data) => {
-    ipcChannel.sendMessage('emudeck', [
-      'chdtool|||bash $toolsPath/chdconv/chddeck.sh',
+    ipcChannel.sendMessage('bash-nolog', [
+      `konsole -e "${storagePath}/Emulation/tools/chdconv/chddeck.sh"`,
     ]);
   };
 

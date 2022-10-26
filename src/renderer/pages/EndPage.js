@@ -39,6 +39,12 @@ const EndPage = () => {
 
   const [counter, setCounter] = useState(0);
 
+  const showLog = () => {
+    ipcChannel.sendMessage('bash-nolog', [
+      `konsole -e tail -f "$HOME/emudeck/emudeck.log"`,
+    ]);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       let msg = readMSG('cat ~/.config/EmuDeck/msg.log');
@@ -381,11 +387,11 @@ const EndPage = () => {
       ]);
 
       //Achievements
-      ipcChannel.sendMessage('bash', [
+      ipcChannel.sendMessage('bash-nolog', [
         `echo ${state.achievements.user} > $HOME/.config/EmuDeck/.rau`,
       ]);
 
-      ipcChannel.sendMessage('bash', [
+      ipcChannel.sendMessage('bash-nolog', [
         `echo ${state.achievements.pass} > $HOME/.config/EmuDeck/.rap`,
       ]);
 
@@ -445,6 +451,7 @@ const EndPage = () => {
     <End
       isGameMode={isGameMode}
       onClick={openSRM}
+      onClickLog={showLog}
       onClose={close}
       data={data}
       disabledNext={disabledNext}
