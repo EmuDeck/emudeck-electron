@@ -40,10 +40,12 @@ import 'getbasecore/src/utils/reset/core_reset.scss';
 import 'getbasecore/src/utils/grid-layout/core_grid-layout.scss';
 import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 
+const branch = require('data/branch.json');
+
 export default function App() {
   const [state, setState] = useState({
     version: '',
-    branch: 'main',
+    branch: branch.branch,
     command: '',
     debug: false,
     debugText: '',

@@ -73,47 +73,45 @@ const WelcomePage = () => {
     }, 15000);
 
     //Ask for branch
+    const branch = require('data/branch.json');
 
-    ipcChannel.sendMessage('branch');
-    ipcChannel.once('branch-out', (branchNode) => {
-      const settingsStorage = JSON.parse(
-        localStorage.getItem('settings_emudeck')
-      );
-      console.log({ settingsStorage });
-      if (!!settingsStorage) {
-        const shadersStored = settingsStorage.shaders;
-        //Theres probably a better way to do this...
-        ipcChannel.sendMessage('version');
-        ipcChannel.once('version-out', (version) => {
-          ipcChannel.sendMessage('system-info-in');
-          ipcChannel.once('system-info-out', (platform) => {
-            setState({
-              ...state,
-              ...settingsStorage,
-              installEmus: state.installEmus,
-              overwriteConfigEmus: state.overwriteConfigEmus,
-              shaders: { ...shaders, ...shadersStored },
-              system: platform,
-              version: version,
-              branch: branchNode,
-            });
+    const settingsStorage = JSON.parse(
+      localStorage.getItem('settings_emudeck')
+    );
+    console.log({ settingsStorage });
+    if (!!settingsStorage) {
+      const shadersStored = settingsStorage.shaders;
+      //Theres probably a better way to do this...
+      ipcChannel.sendMessage('version');
+      ipcChannel.once('version-out', (version) => {
+        ipcChannel.sendMessage('system-info-in');
+        ipcChannel.once('system-info-out', (platform) => {
+          setState({
+            ...state,
+            ...settingsStorage,
+            installEmus: state.installEmus,
+            overwriteConfigEmus: state.overwriteConfigEmus,
+            shaders: { ...shaders, ...shadersStored },
+            system: platform,
+            version: version,
+            branch: branch.branch,
           });
         });
-      } else {
-        ipcChannel.sendMessage('version');
-        ipcChannel.once('version-out', (version) => {
-          ipcChannel.sendMessage('system-info-in');
-          ipcChannel.once('system-info-out', (platform) => {
-            setState({
-              ...state,
-              system: platform,
-              version: version,
-              branch: branchNode,
-            });
+      });
+    } else {
+      ipcChannel.sendMessage('version');
+      ipcChannel.once('version-out', (version) => {
+        ipcChannel.sendMessage('system-info-in');
+        ipcChannel.once('system-info-out', (platform) => {
+          setState({
+            ...state,
+            system: platform,
+            version: version,
+            branch: branchNode,
           });
         });
-      }
-    });
+      });
+    }
 
     //ipcChannel.sendMessage('clean-log');
 
