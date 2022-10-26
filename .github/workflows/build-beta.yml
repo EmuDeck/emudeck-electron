@@ -35,7 +35,7 @@ jobs:
           npm install
       - name: Set Beta Build
         run: |
-          cp ./src/data/branch-beta.json ./src/data/branch.json
+          sed -i "s|main|beta|g" "./branch.json"
           sed -i "s|emudeck-electron|emudeck-electron-beta|g" "./package.json"
       - name: Publish releases
         env:
