@@ -104,7 +104,12 @@ const WelcomePage = () => {
         ipcChannel.once('version-out', (version) => {
           ipcChannel.sendMessage('system-info-in');
           ipcChannel.once('system-info-out', (platform) => {
-            setState({ ...state, system: platform, version: version });
+            setState({
+              ...state,
+              system: platform,
+              version: version,
+              branch: branchNode,
+            });
           });
         });
       }
