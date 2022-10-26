@@ -35,7 +35,8 @@
   "main": "./src/main/main.ts",
   "scripts": {
     "build:public": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
-    "build:beta": "concurrently \"npm run build:main\" \"npm run build:betarenderer\"",
+    "build:beta": "concurrently \"npm run build:betamain\" \"npm run build:betarenderer\"",
+    "build:betamain": "cross-env BRANCH=beta NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
     "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
     "build:renderer": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.prod.ts",
     "build:betarenderer": "cross-env BRANCH=beta NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.prod.ts",
