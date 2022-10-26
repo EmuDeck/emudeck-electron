@@ -248,7 +248,7 @@
     "publish": {
       "provider": "github",
       "owner": "EmuDeck",
-      "repo": "emudeck-electron"
+      "repo": "emudeck-electron-beta"
     }
   },
   "collective": {
