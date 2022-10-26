@@ -138,7 +138,7 @@ const SettingsPage = () => {
     switch (arStatus) {
       case '169':
         ipcChannel.sendMessage('emudeck', [
-          '3d169|||RetroArch_Beetle_PSX_HW_wideScreenOn && DuckStation_wideScreenOn && RetroArch_Flycast_wideScreenOn && Xemu_wideScreenOn && RetroArch_Flycast_bezelOff && RetroArch_Beetle_PSX_HW_bezelOff',
+          '3d169|||RetroArch_Beetle_PSX_HW_wideScreenOn && DuckStation_wideScreenOn && RetroArch_Flycast_wideScreenOn && Xemu_wideScreenOn && RetroArch_dreamcast_bezelOff && RetroArch_psx_bezelOff',
         ]);
         ipcChannel.once('3d169', (message) => {
           console.log(message);
@@ -155,7 +155,7 @@ const SettingsPage = () => {
         });
         if (bezels == true) {
           ipcChannel.sendMessage('emudeck', [
-            '3d43Bezels|||RetroArch_Flycast_bezelOn && RetroArch_Beetle_PSX_HW_bezelOn',
+            '3d43Bezels|||RetroArch_dreamcast_bezelOn && RetroArch_psx_bezelOn',
           ]);
           ipcChannel.once('3d43Bezels', (message) => {
             console.log(message);
