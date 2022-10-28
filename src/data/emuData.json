@@ -4,7 +4,7 @@
     "name": "RetroArch",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Retroarch",
     "description": "RetroArch is a multifaceted front-end for emulators, developed by the libretro organization. Emulate your favorite retro systems using one of RetroArch's many cores.",
-    "special_configuration": "| BIOS: BIOS are required for a few RetroArch cores, use our BIOS checker for more information | Additional Configuration 1: Install custom textures for the NES and N64 using EmuDeck's pre-created folder here: /Emulation/hdpacks | Additional Configuration 2: EmuDeck configures a selection of RetroArch cores for you. However, EmuDeck does install many additional RetroArch cores, which you can configure on your own, using libretro's wiki as a reference.|",
+    "special_configuration": "| BIOS: BIOS are required for a few RetroArch cores, use the BIOS checker on the Tools & Stuff page for more information | Additional Configuration 1: Install custom textures for the NES and N64 using EmuDeck's pre-created folder here: /Emulation/hdpacks | Additional Configuration 2: EmuDeck configures a selection of RetroArch cores for you. However, EmuDeck does install many additional RetroArch cores, which you can configure on your own, using libretro's wiki as a reference.|",
     "bios": ["ps1", "segacd", "saturn", "nds", "dreamcast"],
     "systems": "Retro Game Systems, including but not limited to, Nintendo 64, Saturn and Dreamcast",
     "hotkeys": {
