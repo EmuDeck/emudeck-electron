@@ -4,7 +4,7 @@
     "name": "RetroArch",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Retroarch",
     "description": "RetroArch is a multifaceted front-end for emulators, developed by the libretro organization. Emulate your favorite retro systems using one of RetroArch's many cores.",
-    "special_configuration": "| BIOS: BIOS are required for a few RetroArch cores, use our BIOS checker for more information | Additional Configuration: Install custom textures for the NES and N64 using our pre-created folder here: /Emulation/hdpacks |",
+    "special_configuration": "| BIOS: BIOS are required for a few RetroArch cores, use our BIOS checker for more information | Additional Configuration 1: Install custom textures for the NES and N64 using EmuDeck's pre-created folder here: /Emulation/hdpacks | Additional Configuration 2: EmuDeck configures a selection of RetroArch cores for you. However, EmuDeck does install many additional RetroArch cores, which you can configure on your own, using libretro's wiki as a reference.|",
     "bios": ["ps1", "segacd", "saturn", "nds", "dreamcast"],
     "systems": "Retro Game Systems, including but not limited to, Nintendo 64, Saturn and Dreamcast",
     "hotkeys": {
@@ -26,7 +26,7 @@
     "name": "Cemu",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/CEMU",
     "description":  "Cemu is a Nintendo Wii U emulator, developed by Exzap and Petergov. That's right, you can emulate Breath of the Wild on the Steam Deck with Cemu.",
-    "special_configuration": "| BIOS: No additional BIOS are required, keys are required for encrypted ROMs | Hotkeys: EmuDeck's Steam Input profile is required for hotkeys | Additional Configuration: Place your Wii U ROMs here: /Emulation/roms/wiiu/roms | Additional Configuration: To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page |",
+    "special_configuration": "| BIOS: No additional BIOS are required, keys are required for encrypted ROMs | Hotkeys: EmuDeck's Steam Input profile is required for hotkeys | Additional Configuration 1: Place your Wii U ROMs here: /Emulation/roms/wiiu/roms | Additional Configuration 2: To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page |",
     "bios": [],
     "systems": "Nintendo Wii U",
     "hotkeys": {
@@ -42,7 +42,7 @@
     "name": "Dolphin",
     "wiki": "Dolphin (Gamecube and Wii)",
     "description": "Dolphin is a Nintendo Gamecube and Wii emulator, developed by the Dolphin Emulator Project. Re-live your Wii Sports days on the go with this emulator.",
-    "special_configuration": "| BIOS: No additional BIOS are required | Additional Configuration: To improve performance, install Power Tools from the Tools & Stuff page | Additional Configuration: To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page |",
+    "special_configuration": "| BIOS: No additional BIOS are required | Additional Configuration 1: To improve performance, install Power Tools from the Tools & Stuff page | Additional Configuration 2: To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page |",
     "bios": [],
     "systems": "Nintendo Gamecube, Nintendo Wii",
     "hotkeys": {
@@ -62,7 +62,7 @@
     "name": "Primehack",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Primehack",
     "description": "Primehack is a fork of Dolphin, intended to modernize the Metroid Prime trilogy, developed by shiiion. Modern FPS controls for the Metroid Prime Trilogy? You got it.",
-    "special_configuration": "| BIOS: No additional BIOS are required | Additional Configuration: Only Metroid Prime Trilogy (Wii) is configured at this time |",
+    "special_configuration": "| BIOS: No additional BIOS are required | Additional Configuration 1: Only Metroid Prime Trilogy (Wii) is configured at this time |",
     "bios": [],
     "systems": "Nintendo Wii - Metroid Prime Trilogy",
     "hotkeys": {
@@ -216,7 +216,7 @@
     "name": "MAME",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/MAME",
     "description": "MAME is a Multiple Arcade Machine Emulator, originally developed by Nicola Salmoria. Invite a friend over, and re-live the arcade days over a match of 1943 or Bubble Bobble.",
-    "special_configuration": "| BIOS: BIOS are required for some MAME ROMs | Additional Configuration: Ideally use ROMS that are the same version as MAME's version. MAME often releases improved versions of ROMS to improve compatibility | Additional Configuration: EmuDeck currently supports the current versions:<br/>MAME (Standalone) <br/>MAME (Current), MAME 2010, MAME 2003, and as RetroArch Cores |",
+    "special_configuration": "| BIOS: BIOS are required for some MAME ROMs | Additional Configuration 1: Ideally use ROMS that are the same version as MAME's version. MAME often releases improved versions of ROMS to improve compatibility | Additional Configuration 2: EmuDeck currently supports the current versions:<br/>MAME (Standalone) <br/>MAME (Current), MAME 2010, MAME 2003, and as RetroArch Cores |",
     "bios": [],
     "systems": "Arcade",
     "hotkeys": {
