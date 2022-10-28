@@ -62,7 +62,7 @@
     "name": "Primehack",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Primehack",
     "description": "Primehack is a fork of Dolphin, intended to modernize the Metroid Prime trilogy, developed by shiiion. Modern FPS controls for the Metroid Prime Trilogy? You got it.",
-    "special_configuration": "| BIOS: No additional BIOS are required | Additional Configuration 1: Only Metroid Prime Trilogy (Wii) is configured at this time |",
+    "special_configuration": "| BIOS: No additional BIOS are required | Additional Configuration: Only Metroid Prime Trilogy (Wii) is configured at this time |",
     "bios": [],
     "systems": "Nintendo Wii - Metroid Prime Trilogy",
     "hotkeys": {
