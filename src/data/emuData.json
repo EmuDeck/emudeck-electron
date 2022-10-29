@@ -40,7 +40,7 @@
   "dolphin": {
     "id": "dolphin",
     "name": "Dolphin",
-    "wiki": "Dolphin (Gamecube and Wii)",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Dolphin",
     "description": "Dolphin is a Nintendo Gamecube and Wii emulator, developed by the Dolphin Emulator Project. Re-live your Wii Sports days on the go with this emulator.",
     "special_configuration": "| BIOS: No additional BIOS are required | Additional Configuration 1: To improve performance, install Power Tools from the Tools & Stuff page | Additional Configuration 2: To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page |",
     "bios": [],
