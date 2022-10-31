@@ -72,6 +72,9 @@ const WelcomePage = () => {
       }
     }, 15000);
 
+    //Ask for branch
+    const branch = require('data/branch.json');
+
     const settingsStorage = JSON.parse(
       localStorage.getItem('settings_emudeck')
     );
@@ -91,7 +94,7 @@ const WelcomePage = () => {
             shaders: { ...shaders, ...shadersStored },
             system: platform,
             version: version,
-            branch: 'main',
+            branch: branch.branch,
           });
         });
       });
@@ -100,7 +103,12 @@ const WelcomePage = () => {
       ipcChannel.once('version-out', (version) => {
         ipcChannel.sendMessage('system-info-in');
         ipcChannel.once('system-info-out', (platform) => {
-          setState({ ...state, system: platform, version: version });
+          setState({
+            ...state,
+            system: platform,
+            version: version,
+            branch: branchNode,
+          });
         });
       });
     }

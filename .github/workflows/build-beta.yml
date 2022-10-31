@@ -3,9 +3,7 @@ name: Publish
 on:
   push:
     branches:
-      - main
       - beta
-      - dev
 
 jobs:
   publish:
@@ -35,6 +33,10 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
+      - name: Set Beta Build
+        run: |
+          sed -i "s|main|beta|g" "./branch.json"
+          sed -i "s|emudeck-electron|emudeck-electron-beta|g" "./package.json"
       - name: Publish releases
         env:
           # These values are used for auto updates signing
