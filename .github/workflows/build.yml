@@ -4,9 +4,7 @@ on:
   push:
     branches:
       - main
-      - beta
       - dev
-
 jobs:
   publish:
     # To enable auto publishing to github, update your electron publisher
