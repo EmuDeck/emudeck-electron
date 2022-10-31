@@ -1,3 +1,16 @@
+# 2.0.4
+
+- FIX: Reset Config for PrimeHack and PCSX2
+- FIX: Distorted images in certain resolutions
+- FIX: Messages on PowerTools and Gyro Pages
+- FIX: Improved SD Card detection
+- FIX: Improved Backend detection
+- FIX: Compressor Tool
+- FIX: RetroAchievments
+- FIX: Powertools & GyuroDSU Installation
+- FIX: Checking for updates screen freeze
+- NEW: Appimage & installation live log
+
 # 2.0.1
 
 - FIX: Reset Config for PrimeHack and PCSX2

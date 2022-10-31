@@ -33,6 +33,7 @@ import CHDToolPage from 'pages/CHDToolPage';
 import RemotePlayWhateverPage from 'pages/RemotePlayWhateverPage';
 import VideoGuidePage from 'pages/VideoGuidePage';
 import EmuGuidePage from 'pages/EmuGuidePage';
+import AutoSavePage from 'pages/AutoSavePage';
 
 import EndPage from 'pages/EndPage';
 
@@ -67,6 +68,7 @@ export default function App() {
       pass: '',
       hardcore: false,
     },
+    autosave: false,
     ar: {
       sega: '43',
       snes: '43',
@@ -149,6 +151,9 @@ export default function App() {
           <Route exact path="/rom-storage" element={<RomStoragePage />} />
           <Route exact path="/rom-structure" element={<RomStructurePage />} />
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
+
+          <Route exact path="/auto-save" element={<AutoSavePage />} />
+
           <Route
             exact
             path="/RA-achievements"

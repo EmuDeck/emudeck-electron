@@ -294,7 +294,9 @@ const EndPage = () => {
 
       //AutoSave
       ipcChannel.sendMessage('bash', [
-        `echo RAautoSave=false >> ~/emudeck/settings.sh`,
+        `echo RAautoSave=${
+          state.autosave ? true : false
+        } >> ~/emudeck/settings.sh`,
       ]);
 
       //old ar
@@ -388,11 +390,11 @@ const EndPage = () => {
 
       //Achievements
       ipcChannel.sendMessage('bash-nolog', [
-        `echo ${state.achievements.user} > $HOME/.config/EmuDeck/.rau`,
+        `echo '${state.achievements.user}' > $HOME/.config/EmuDeck/.rau`,
       ]);
 
       ipcChannel.sendMessage('bash-nolog', [
-        `echo ${state.achievements.pass} > $HOME/.config/EmuDeck/.rap`,
+        `echo '${state.achievements.pass}' > $HOME/.config/EmuDeck/.rap`,
       ]);
 
       ipcChannel.sendMessage('bash', [
