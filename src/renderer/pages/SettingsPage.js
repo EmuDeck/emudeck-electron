@@ -267,6 +267,24 @@ const SettingsPage = () => {
     }
   };
 
+  const autoSaveSet = (status) => {
+    setState({
+      ...state,
+      autosave: status,
+    });
+
+    let functionAutoSave;
+    status
+      ? (functionAutoSave = 'RetroArch_autoSaveOn')
+      : (functionAutoSave = 'RetroArch_autoSaveOff');
+
+    ipcChannel.sendMessage('emudeck', [`autoSave|||${functionAutoSave}`]);
+    ipcChannel.once('autoSave', (message) => {
+      console.log(message);
+      notificationShow('🎉 AutoSave updated!');
+    });
+  };
+
   return (
     <Settings
       showNotification={showNotification}
@@ -279,6 +297,7 @@ const SettingsPage = () => {
       onClickCRT={onClickCRT}
       onClickCRT3D={onClickCRT3D}
       onClickLCD={onClickLCD}
+      onClickAutoSave={autoSaveSet}
       disabledNext={true}
       disabledBack={disabledBack}
     />
