@@ -3,8 +3,8 @@
     "id": "ra",
     "name": "RetroArch",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Retroarch",
-    "description": "RetroArch is a multifaceted front-end for emulators, developed by the libretro organization. Emulate your favorite retro systems using one of RetroArch's many cores.",
-    "special_configuration": "| BIOS: BIOS are required for a few RetroArch cores, use the BIOS checker on the Tools & Stuff page for more information | Additional Configuration 1: Install custom textures for the NES and N64 using EmuDeck's pre-created folder here: /Emulation/hdpacks | Additional Configuration 2: EmuDeck configures a selection of RetroArch cores for you. However, EmuDeck does install many additional RetroArch cores, which you can configure on your own, using libretro's wiki as a reference|",
+    "description": "",
+    "special_configuration": "Custom textures for the NES and N64 using EmuDeck's pre-created folder: /Emulation/hdpacks",
     "bios": ["ps1", "segacd", "saturn", "nds", "dreamcast"],
     "systems": "Retro Game Systems, including but not limited to, Nintendo 64, Saturn and Dreamcast",
     "hotkeys": {
@@ -25,8 +25,8 @@
     "id": "cemu",
     "name": "Cemu",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/CEMU",
-    "description":  "Cemu is a Nintendo Wii U emulator, developed by Exzap and Petergov. That's right, you can emulate Breath of the Wild on the Steam Deck with Cemu.",
-    "special_configuration": "| BIOS: No additional BIOS are required, keys are required for encrypted ROMs | Hotkeys: EmuDeck's Steam Input profile is required for hotkeys | Additional Configuration 1: Place your Wii U ROMs here: /Emulation/roms/wiiu/roms | Additional Configuration 2: To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page |",
+    "description": "Cemu is a Nintendo Wii U emulator, developed by Exzap and Petergov. That's right, you can emulate Breath of the Wild on the Steam Deck with Cemu.",
+    "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys. Place your Wii U ROMs here: /Emulation/roms/wiiu/roms. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
     "bios": [],
     "systems": "Nintendo Wii U",
     "hotkeys": {
@@ -42,7 +42,7 @@
     "name": "Dolphin",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Dolphin",
     "description": "Dolphin is a Nintendo Gamecube and Wii emulator, developed by the Dolphin Emulator Project. Re-live your Wii Sports days on the go with this emulator.",
-    "special_configuration": "| BIOS: No additional BIOS are required | Additional Configuration 1: To improve performance, install Power Tools from the Tools & Stuff page | Additional Configuration 2: To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page |",
+    "special_configuration": "BIOS: No additional BIOS are required. To improve performance, install Power Tools from the Tools & Stuff page. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
     "bios": [],
     "systems": "Nintendo Gamecube, Nintendo Wii",
     "hotkeys": {
@@ -62,7 +62,7 @@
     "name": "Primehack",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Primehack",
     "description": "Primehack is a fork of Dolphin, intended to modernize the Metroid Prime trilogy, developed by shiiion. Modern FPS controls for the Metroid Prime Trilogy? You got it.",
-    "special_configuration": "| BIOS: No additional BIOS are required | Additional Configuration: Only Metroid Prime Trilogy (Wii) is configured at this time |",
+    "special_configuration": "BIOS: No additional BIOS are required. Only Metroid Prime Trilogy (Wii) is configured at this time.",
     "bios": [],
     "systems": "Nintendo Wii - Metroid Prime Trilogy",
     "hotkeys": {
@@ -82,7 +82,7 @@
     "name": "PPSSPP",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/PPSSPP",
     "description": "PPSSPP is a Sony PSP emulator, originally developed by Henrik Rydgård. Portable games on the go, again.",
-    "special_configuration": "| BIOS: No additional BIOS are required | Hotkeys: EmuDeck's Steam Input profile is required for hotkeys |",
+    "special_configuration": "BIOS: No additional BIOS are required. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys.",
     "bios": [],
     "systems": "Sony Playstation Portable",
     "hotkeys": {
@@ -98,8 +98,8 @@
     "id": "duckstation",
     "name": "DuckStation",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Duckstation",
-    "description": "DuckStation is a Sony PlayStation 1 emulator, developed primarily by stenzek. Bask in the glory of the low-poly models.",
-    "special_configuration": "| BIOS: BIOS are required, ROMs do need region specific BIOS | EmuDeck's Steam Input profile is required for hotkeys |",
+    "description": "DuckStation is a Sony PlayStation 1 emulator, developed primarily by stenzek.",
+    "special_configuration": "BIOS: BIOS are required, ROMs do need region specific BIOS. EmuDeck's Steam Input profile is required for hotkeys.",
     "bios": ["ps1"],
     "systems": "Sony Playstation 1",
     "hotkeys": {
@@ -112,7 +112,7 @@
     "name": "Citra",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Citra",
     "description": "Citra is a Nintendo 3DS emulator, developed by the Citra team. Unfortunately, the Steam Deck does not come with a 3D slider. ",
-    "special_configuration": "| BIOS: No additional BIOS are required, keys are required for encrypted ROMs | Hotkeys: EmuDeck's Steam Input profile is required for hotkeys | Additional Configuration: To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page |",
+    "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
     "bios": [],
     "systems": "Nintendo 3DS",
     "hotkeys": {
@@ -133,7 +133,7 @@
     "name": "PCSX2QT",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/PCSX2-QT",
     "description": "PCSX2 is a Sony Playstation 2 emulator, developed by the PCSX2 team. JRPGs galore.",
-    "special_configuration": "| BIOS: BIOS are required, ROMs do not need region specific BIOS |",
+    "special_configuration": "BIOS: BIOS are required, ROMs do not need region specific BIOS.",
     "bios": ["ps2"],
     "systems": "Sony Playstation 2",
     "hotkeys": {
@@ -153,7 +153,7 @@
     "name": "RPCS3",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/RPCS3",
     "description": "RPCS3 is a Sony PlayStation 3 emulator, originally developed by DH, Hykem, and AlexAltea. That's right, the Steam Deck can emulate PS3 too.",
-    "special_configuration": "| Firmware: Install firmware through the RPCS3 UI. Follow RPSC3's Quickstart Guide: <a className='link' target='_blank' href='https://rpcs3.net/quickstart'>here</a> | Additional Configuration: You will need to tweak settings for most games. Check RPCS3's Wiki for specific setting recommendations |",
+    "special_configuration": "Firmware: Install firmware through the RPCS3 UI. Follow RPSC3's Quickstart Guide: <a className='link' target='_blank' href='https://rpcs3.net/quickstart'>here</a>. You will need to tweak settings for most games. Check RPCS3's Wiki for specific setting recommendations.",
     "bios": [],
     "systems": "Sony Playstation 3",
     "hotkeys": {
@@ -166,7 +166,7 @@
     "name": "Yuzu",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Yuzu",
     "description": "Yuzu is a Nintendo Switch emulator, developed by the Yuzu team. Dock sold separately. ",
-    "special_configuration": "| Firmware: Place keys and firmware place in: /Emulation/bios/yuzu | Additional Configuration: To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page |",
+    "special_configuration": "Firmware: Place keys and firmware place in: /Emulation/bios/yuzu. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
     "bios": ["nswitch"],
     "systems": "Nintendo Switch",
     "hotkeys": {
@@ -185,7 +185,7 @@
     "name": "Ryujinx",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Ryujinx",
     "description": "Ryujinx is a Nintendo Switch emulator, originally developed by gdkchan. Ryujinx can promise excellent accuracy for your favorite Nintendo Switch games.",
-    "special_configuration": "| Firmware: Install firmware through the Ryujinx UI. Place keys in: /Emulation/bios/ryujinx/keys | Additional Configuration: To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page |",
+    "special_configuration": "Firmware: Install firmware through the Ryujinx UI. Place keys in: /Emulation/bios/ryujinx/keys. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
     "bios": [],
     "systems": "Nintendo Switch",
     "hotkeys": {
@@ -198,7 +198,7 @@
     "name": "Xemu",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Xemu",
     "description": "Xemu is a Microsoft Xbox emulator, originally developed by Matt Borgerson. Master Chief: I think we're just getting started. ",
-    "special_configuration": "| BIOS: BIOS are required: mcpx_1.0.bin and modified retail BIOS, Complex_4627v1.03.bin |",
+    "special_configuration": "BIOS: BIOS are required: mcpx_1.0.bin and modified retail BIOS, Complex_4627v1.03.bin.",
     "bios": [],
     "systems": "Microsoft Xbox",
     "hotkeys": {
@@ -216,7 +216,7 @@
     "name": "MAME",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/MAME",
     "description": "MAME is a Multiple Arcade Machine Emulator, originally developed by Nicola Salmoria. Invite a friend over, and re-live the arcade days over a match of 1943 or Bubble Bobble.",
-    "special_configuration": "| BIOS: BIOS are required for some MAME ROMs | Additional Configuration 1: Ideally use ROMS that are the same version as MAME's version. MAME often releases improved versions of ROMS to improve compatibility | Additional Configuration 2: EmuDeck currently supports the current versions:<br/>MAME (Standalone) <br/>MAME (Current), MAME 2010, MAME 2003, and as RetroArch Cores |",
+    "special_configuration": "BIOS: BIOS are required for some MAME ROMs. Ideally use ROMS that are the same version as MAME's version. MAME often releases improved versions of ROMS to improve compatibility. EmuDeck currently supports the current versions:<br/>MAME (Standalone) <br/>MAME (Current), MAME 2010, MAME 2003, and as RetroArch Cores.",
     "bios": [],
     "systems": "Arcade",
     "hotkeys": {
@@ -232,7 +232,7 @@
     "name": "Vita3K",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Vita3K",
     "description": "Vita3K is a Sony Playstation Vita emulator, developed by the Vita3K team. No memory card needed.",
-    "special_configuration": "| Firmware: Install firmware through the Vita3K UI. Follow Vita3K's instructions in the UI | Additional Configuration: You will need to tweak settings for most games. Many are still not playable. Check Vita3K's compatibility list <strong><a href='https://vita3k.org/compatibility.html' target='_blank'>here</a></strong> |",
+    "special_configuration": "Firmware: Install firmware through the Vita3K UI. Follow Vita3K's instructions in the UI. You will need to tweak settings for most games. Many are still not playable. Check Vita3K's compatibility list <strong><a href='https://vita3k.org/compatibility.html' target='_blank'>here</a></strong>.",
     "bios": [],
     "systems": "PlayStation Vita",
     "hotkeys": {
@@ -245,7 +245,7 @@
     "name": "ScummVM",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/ScummVM",
     "description": "ScummVM is a program that allows users to play supported adventure games, originally developed by Ludvig Strigeus and Vincent Hamm. Look behind you, a three-headed monkey!",
-    "special_configuration": "| BIOS: No additional BIOS are required | Additional Configuration: Read the wiki, <a className='link' target='_blank' href='https://github.com/dragoonDorise/EmuDeck/wiki/ScummVM'>here</a>, for guides on how to configure ScummVM for Steam ROM Manager and EmulationStation-DE |",
+    "special_configuration": "BIOS: No additional BIOS are required. Read the wiki, <a className='link' target='_blank' href='https://github.com/dragoonDorise/EmuDeck/wiki/ScummVM'>here</a>, for guides on how to configure ScummVM for Steam ROM Manager and EmulationStation-DE.",
     "bios": [],
     "systems": "Scumm and DOS Games",
     "hotkeys": {
@@ -258,7 +258,7 @@
     "name": "Xenia",
     "wiki": "",
     "description": "Xenia is a Microsoft Xbox 360 emulator, originally developed by benvanik. Coming soon to a Steam Deck near you.",
-    "special_configuration": "| BIOS: No additional BIOS are required | Additional Configuration: Xenia is not currently supported by EmuDeck |",
+    "special_configuration": "BIOS: No additional BIOS are required. Xenia is not currently supported by EmuDeck.",
     "bios": [],
     "systems": "Microsoft Xbox 360",
     "hotkeys": {
