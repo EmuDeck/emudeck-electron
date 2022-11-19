@@ -19,24 +19,33 @@ jobs:
 
     steps:
       - name: Checkout git repo
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
-      - name: Git Sumbodule Update
+      - name: Git Submodule Update
         run: git submodule update --init --recursive
 
-      - name: Install Node and NPM
-        uses: actions/setup-node@v1
+      - name: Use cached node_modules
+        id: cache-node_modules
+        uses: actions/cache@v3
         with:
-          node-version: 18
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Node and NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install dependencies
-        run: |
-          npm install
+        if: steps.cache-node_modules.outputs.cache-hit != 'true'
+        run: npm ci
+
       - name: Set Beta Build
         run: |
           sed -i "s|main|beta|g" "./src/data/branch.json"
           sed -i "s|emudeck-electron|emudeck-electron-beta|g" "./package.json"
+
       - name: Publish releases
         env:
           # These values are used for auto updates signing
