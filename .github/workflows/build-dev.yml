@@ -36,7 +36,7 @@ jobs:
       - name: Set Beta Build
         run: |
           sed -i "s|main|dev|g" "./src/data/branch.json"
-          sed -i "s|version\": \"|version\": \"dev-|g" "./package.json"
+          sed -i "s|version\": \"|version\": \"dev-|g" "./release/app/package.json"
 
       - name: Publish releases
         env:
