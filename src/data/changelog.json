@@ -1,0 +1,32 @@
+[
+  {
+    "title": "ChangeLog Revamp",
+    "type": "NEW",
+    "description": "The app will show the changelog after being updated so the user can know what has changed.<br/><strong>This will be acitvated on the next update.</strong>",
+    "image": "true"
+  },
+  {
+    "title": "AutoSave & AutoLoad",
+    "type": "NEW",
+    "description": "You can activate this new option on <strong>Tools & Stuff - Quick Settings</strong> so your game is saved when you leave and it's automaticaly loaded when you came back. <strong>Only for RetroArch systems</strong>",
+    "image": "true"
+  },
+  {
+    "title": "DeckyControl",
+    "type": "NEW",
+    "description": "New Decky Plugin to check EmuDecks controls for each Emulator while on game mode.<br> <strong>Install it from Tools & Stuff</strong>",
+    "image": "true"
+  },
+  {
+    "title": "SameBoy Parser",
+    "type": "FIX",
+    "description": "Added support for the SameBoy core on Steam Rom Manager.<strong>If you want to use it insted of Gambatte you need to manually activate it on Steam Rom Manager when adding GameBoy games.</strong>",
+    "image": "true"
+  },
+  {
+    "title": "Other Bug Fixes",
+    "type": "FIX",
+    "description": "- Solved an issue that prevented RetroAchievements to work when the username / password contained special characters.<br/>- Solved an issue with sudo passwords contaning special characters.<br/>- Solved some fixes when launching Proton emulators<br/>- Added Progress Bar to Appimage & Binary updater<br/>- Fixed an issue that overwrote RetroArch configurations even when asking not to.",
+    "image": "false"
+  }
+]

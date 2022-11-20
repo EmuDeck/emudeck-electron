@@ -29,7 +29,7 @@ import CloudSyncPage from 'pages/CloudSyncPage';
 import ChangeLogPage from 'pages/ChangeLogPage';
 import SettingsPage from 'pages/SettingsPage';
 import UninstallPage from 'pages/UninstallPage';
-import ResetPage from 'pages/ResetPage';
+
 import CHDToolPage from 'pages/CHDToolPage';
 import RemotePlayWhateverPage from 'pages/RemotePlayWhateverPage';
 import VideoGuidePage from 'pages/VideoGuidePage';
@@ -202,7 +202,6 @@ export default function App() {
           />
           <Route exact path="/settings" element={<SettingsPage />} />
           <Route exact path="/check-bios" element={<CheckBiosPage />} />
-          <Route exact path="/reset" element={<ResetPage />} />
           <Route exact path="/emulator-guide" element={<EmuGuidePage />}>
             <Route path=":emulator" element={<EmuGuidePage />} />
           </Route>

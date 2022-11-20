@@ -47,7 +47,7 @@ const DeckyControlsPage = () => {
 
   const createSudo = (data) => {
     ipcChannel.sendMessage('bash', [
-      `echo ${pass1} > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
+      `echo '${pass1}' > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
     setStatePage({
       ...statePage,
@@ -79,7 +79,7 @@ const DeckyControlsPage = () => {
     });
 
     ipcChannel.sendMessage('emudeck', [
-      `DeckyControls|||echo "${sudoPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installDeckyControls && echo true`,
+      `DeckyControls|||echo '${sudoPass}' | sudo -v -S && Plugins_installPluginLoader && Plugins_installDeckyControls && echo true`,
     ]);
 
     ipcChannel.once('DeckyControls', (status) => {

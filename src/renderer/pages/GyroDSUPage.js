@@ -47,7 +47,7 @@ const GyroDSUPage = () => {
 
   const createSudo = (data) => {
     ipcChannel.sendMessage('bash', [
-      `echo ${pass1} > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
+      `echo '${pass1}' > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
     setStatePage({
       ...statePage,
@@ -78,7 +78,7 @@ const GyroDSUPage = () => {
       disableButton: true,
     });
     ipcChannel.sendMessage('emudeck', [
-      `Gyro|||echo "${sudoPass}" | sudo -v -S && Plugins_installSteamDeckGyroDSU && echo true`,
+      `Gyro|||echo '${sudoPass}' | sudo -v -S && Plugins_installSteamDeckGyroDSU && echo true`,
     ]);
 
     ipcChannel.once('Gyro', (status) => {
