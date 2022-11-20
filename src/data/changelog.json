@@ -2,13 +2,13 @@
   {
     "title": "ChangeLog Revamp",
     "type": "NEW",
-    "description": "After every update the app will show the changelog for that update so the user can know what's new.<br/><strong>This will be acitvated on the next update.</strong>",
+    "description": "The app will show the changelog after being updated so the user can know what has changed.<br/><strong>This will be acitvated on the next update.</strong>",
     "image": "true"
   },
   {
     "title": "AutoSave & AutoLoad",
     "type": "NEW",
-    "description": "You can activate this new option on Tools & Stuff - Quick Settings so your game is saved when you leave and its loaded when you came back. <strong>Only for RetroArch systems</strong>",
+    "description": "You can activate this new option on <strong>Tools & Stuff - Quick Settings</strong> so your game is saved when you leave and it's automaticaly loaded when you came back. <strong>Only for RetroArch systems</strong>",
     "image": "true"
   },
   {
@@ -18,15 +18,15 @@
     "image": "true"
   },
   {
-    "title": "RetroAchievements Fix",
+    "title": "SameBoy Parser",
     "type": "FIX",
-    "description": "Solves an issue with RetroAchievements usernames/passwords containing the $ character.<br/><br/>",
+    "description": "Added support for the SameBoy core on Steam Rom Manager.<strong>If you want to use it insted of Gambatte you need to manually activate it on Steam Rom Manager when adding GameBoy games.</strong>",
     "image": "true"
   },
   {
-    "title": "Bug Fixes",
+    "title": "Other Bug Fixes",
     "type": "FIX",
-    "description": "Solves an issue with RetroAchievements usernames/passwords containing the $ character.<br/><br/>",
+    "description": "- Solved an issue that prevented RetroAchievements to work when the username / password contained special characters.<br/>- Solved an issue with sudo passwords contaning special characters.<br/>- Solved some fixes when launching Proton emulators<br/>- Added Progress Bar to Appimage & Binary updater<br/>- Fixed an issue that overwrote RetroArch configurations even when asking not to.",
     "image": "false"
   }
 ]

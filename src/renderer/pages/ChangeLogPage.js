@@ -5,7 +5,7 @@ import ChangeLog from 'components/organisms/Wrappers/ChangeLog.js';
 import img0 from 'assets/emudek-banner.png';
 import img1 from 'assets/ra_banner.jpg';
 import img2 from 'assets/DeckyControls.jpg';
-import img3 from 'assets/RetroAchievements.png';
+import img3 from 'assets/srm.jpg';
 import img4 from 'assets/1x1.png';
 
 const ChangeLogPage = () => {
