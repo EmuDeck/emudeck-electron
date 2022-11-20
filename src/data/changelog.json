@@ -1,0 +1,32 @@
+[
+  {
+    "title": "ChangeLog Revamp",
+    "type": "NEW",
+    "description": "After every update the app will show the changelog for that update so the user can know what's new.<br/><strong>This will be acitvated on the next update.</strong>",
+    "image": "true"
+  },
+  {
+    "title": "AutoSave & AutoLoad",
+    "type": "NEW",
+    "description": "You can activate this new option on Tools & Stuff - Quick Settings so your game is saved when you leave and its loaded when you came back. <strong>Only for RetroArch systems</strong>",
+    "image": "true"
+  },
+  {
+    "title": "DeckyControl",
+    "type": "NEW",
+    "description": "New Decky Plugin to check EmuDecks controls for each Emulator while on game mode.<br> <strong>Install it from Tools & Stuff</strong>",
+    "image": "true"
+  },
+  {
+    "title": "RetroAchievements Fix",
+    "type": "FIX",
+    "description": "Solves an issue with RetroAchievements usernames/passwords containing the $ character.<br/><br/>",
+    "image": "true"
+  },
+  {
+    "title": "Bug Fixes",
+    "type": "FIX",
+    "description": "Solves an issue with RetroAchievements usernames/passwords containing the $ character.<br/><br/>",
+    "image": "false"
+  }
+]

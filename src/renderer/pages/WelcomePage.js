@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
-
+import { useNavigate } from 'react-router-dom';
 import Welcome from 'components/organisms/Wrappers/Welcome.js';
 
 const WelcomePage = () => {
@@ -16,7 +16,7 @@ const WelcomePage = () => {
   });
   const { disabledNext, disabledBack, downloadComplete, data, cloned, update } =
     statePage;
-
+  const navigate = useNavigate();
   const selectMode = (value) => {
     setState({ ...state, mode: value });
   };
@@ -137,7 +137,19 @@ const WelcomePage = () => {
     //Cloning project
     //
 
+    //Force changelog after update
+    if (update == 'updating') {
+      localStorage.setItem('show_changelog', true);
+    }
+
     if (update == 'up-to-date') {
+      //show changelog after update
+      const showChangelog = localStorage.getItem('show_changelog');
+      if (showChangelog == 'true') {
+        localStorage.setItem('show_changelog', false);
+        navigate('/change-log');
+      }
+
       //is the git repo cloned?
       ipcChannel.sendMessage('bash', [
         'check-git|||mkdir -p $HOME/emudeck/ && cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree',
