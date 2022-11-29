@@ -4,7 +4,7 @@
     "name": "RetroArch",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Retroarch",
     "description": "",
-    "special_configuration": "Custom textures for the NES and N64 using EmuDeck's pre-created folder: /Emulation/hdpacks",
+    "special_configuration": "Custom textures for the NES and N64 using EmuDeck's pre-created folder: Emulation/hdpacks",
     "bios": ["ps1", "segacd", "saturn", "nds", "dreamcast"],
     "systems": "Retro Game Systems, including but not limited to, Nintendo 64, Saturn and Dreamcast",
     "hotkeys": {
@@ -26,7 +26,7 @@
     "name": "Cemu",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/CEMU",
     "description": "Cemu is a Nintendo Wii U emulator, developed by Exzap and Petergov. That's right, you can emulate Breath of the Wild on the Steam Deck with Cemu.",
-    "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys. Place your Wii U ROMs here: /Emulation/roms/wiiu/roms. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
+    "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys. Place your Wii U ROMs here: Emulation/roms/wiiu/roms. To use Gyro, install SteamDeckGyro from the Tools & Stuff page.",
     "bios": [],
     "systems": "Nintendo Wii U",
     "hotkeys": {
@@ -42,7 +42,7 @@
     "name": "Dolphin",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Dolphin",
     "description": "Dolphin is a Nintendo Gamecube and Wii emulator, developed by the Dolphin Emulator Project. Re-live your Wii Sports days on the go with this emulator.",
-    "special_configuration": "BIOS: No additional BIOS are required. To improve performance, install Power Tools from the Tools & Stuff page. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
+    "special_configuration": "BIOS: No additional BIOS are required. To improve performance, install Power Tools from the Tools & Stuff page. To use Gyro, install SteamDeckGyro from the Tools & Stuff page.",
     "bios": [],
     "systems": "Nintendo Gamecube, Nintendo Wii",
     "hotkeys": {
@@ -98,7 +98,7 @@
     "id": "duckstation",
     "name": "DuckStation",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Duckstation",
-    "description": "DuckStation is a Sony PlayStation 1 emulator, developed primarily by stenzek.",
+    "description": "DuckStation is a Sony PlayStation 1 emulator, developed primarily by stenzek. Bask in the glory of the low-poly models.",
     "special_configuration": "BIOS: BIOS are required, ROMs do need region specific BIOS. EmuDeck's Steam Input profile is required for hotkeys.",
     "bios": ["ps1"],
     "systems": "Sony Playstation 1",
@@ -112,7 +112,7 @@
     "name": "Citra",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Citra",
     "description": "Citra is a Nintendo 3DS emulator, developed by the Citra team. Unfortunately, the Steam Deck does not come with a 3D slider. ",
-    "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
+    "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys. To use Gyro, install SteamDeckGyro from the Tools & Stuff page.",
     "bios": [],
     "systems": "Nintendo 3DS",
     "hotkeys": {
@@ -166,7 +166,7 @@
     "name": "Yuzu",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Yuzu",
     "description": "Yuzu is a Nintendo Switch emulator, developed by the Yuzu team. Dock sold separately. ",
-    "special_configuration": "Firmware: Place keys and firmware place in: /Emulation/bios/yuzu. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
+    "special_configuration": "Firmware: Place keys and firmware place in: Emulation/bios/yuzu. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
     "bios": ["nswitch"],
     "systems": "Nintendo Switch",
     "hotkeys": {
@@ -185,7 +185,7 @@
     "name": "Ryujinx",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Ryujinx",
     "description": "Ryujinx is a Nintendo Switch emulator, originally developed by gdkchan. Ryujinx can promise excellent accuracy for your favorite Nintendo Switch games.",
-    "special_configuration": "Firmware: Install firmware through the Ryujinx UI. Place keys in: /Emulation/bios/ryujinx/keys. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
+    "special_configuration": "Firmware: Install firmware through the Ryujinx UI. Place keys in: Emulation/bios/ryujinx/keys. To use Gyro, install SteamDeckGyro from the Tools & Stuff page.",
     "bios": [],
     "systems": "Nintendo Switch",
     "hotkeys": {
@@ -216,7 +216,7 @@
     "name": "MAME",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/MAME",
     "description": "MAME is a Multiple Arcade Machine Emulator, originally developed by Nicola Salmoria. Invite a friend over, and re-live the arcade days over a match of 1943 or Bubble Bobble.",
-    "special_configuration": "BIOS: BIOS are required for some MAME ROMs. Ideally use ROMS that are the same version as MAME's version. MAME often releases improved versions of ROMS to improve compatibility. EmuDeck currently supports the current versions:<br/>MAME (Standalone) <br/>MAME (Current), MAME 2010, MAME 2003, and as RetroArch Cores.",
+    "special_configuration": "BIOS: BIOS are required for some MAME ROMs. Ideally use ROMS that are the same version as MAME's version. MAME often releases improved versions of ROMS to improve compatibility. EmuDeck currently supports the current versions:<br/>MAME (Standalone) <br/>MAME (Current), MAME 2010, MAME 2003, as RetroArch Cores.",
     "bios": [],
     "systems": "Arcade",
     "hotkeys": {
