@@ -98,7 +98,7 @@ const SettingsPage = () => {
         });
         if (bezels == true) {
           ipcChannel.sendMessage('emudeck', [
-            'snes87Bezels|||RetroArch_snes_bezelOn',
+            'snes87Bezels|||RetroArch_snes_bezelOn && RetroArch_snes_ar87 && RetroArch_nes_ar87',
           ]);
         }
         break;
