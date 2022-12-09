@@ -2,7 +2,7 @@
   {
     "title": "ChangeLog Revamp",
     "type": "NEW",
-    "description": "The app will show the changelog after being updated so the user can know what has changed.<br/><strong>This will be acitvated on the next update.</strong>",
+    "description": "The app will show the changelog after being updated so the user can know what has changed.<br/><strong>This will be activated on the next update.</strong>",
     "image": "true"
   },
   {
@@ -18,15 +18,15 @@
     "image": "true"
   },
   {
-    "title": "SameBoy Parser",
+    "title": "New Parsers",
     "type": "FIX",
-    "description": "Added support for the SameBoy core on Steam Rom Manager.<strong>If you want to use it insted of Gambatte you need to manually activate it on Steam Rom Manager when adding GameBoy games.</strong>",
+    "description": "Added support for the new parsers on Steam Rom Manager.  <strong>Sameboy</strong>, <strong>PS1 on RPCS3</strong>, <strong>Sharp X68000</strong>,<strong>Commodore Vic-20</strong>,<strong>Commodore C16</strong> ",
     "image": "true"
   },
   {
     "title": "Other Bug Fixes",
     "type": "FIX",
-    "description": "- Solved an issue that prevented RetroAchievements to work when the username / password contained special characters.<br/>- Solved an issue with sudo passwords contaning special characters.<br/>- Solved some fixes when launching Proton emulators<br/>- Added Progress Bar to Appimage & Binary updater<br/>- Fixed an issue that overwrote RetroArch configurations even when asking not to.",
+    "description": "- Solved an issue that prevented RetroAchievements to work when the username / password contained special characters.<br/>- Solved an issue with sudo passwords contaning special characters.<br/>- Solved some fixes when launching Proton emulators.<br/>- Added Progress Bar to Appimage & Binary updater.<br/>- Fixed an issue that overwrote RetroArch configurations even when asking not to.<br/>- Optimization of all images used on the AppImage so they take less space.<br/>- New SRM page on Emulators Guides",
     "image": "false"
   }
 ]
