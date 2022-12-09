@@ -259,7 +259,9 @@ const EndPage = () => {
         } >> ~/emudeck/settings.sh`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallESDE=true >> ~/emudeck/settings.sh`,
+        `echo doInstallESDE=${
+          state.installEmus.esde.status ? true : false
+        } >> ~/emudeck/settings.sh`,
       ]);
       ipcChannel.sendMessage('bash', [
         `echo doInstallCHD=true >> ~/emudeck/settings.sh`,
