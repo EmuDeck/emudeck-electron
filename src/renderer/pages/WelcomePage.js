@@ -81,6 +81,11 @@ const WelcomePage = () => {
     console.log({ settingsStorage });
     if (!!settingsStorage) {
       const shadersStored = settingsStorage.shaders;
+      const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
+
+      console.log({ overwriteConfigEmusStored });
+      console.log({ overwriteConfigEmus });
+      const installEmusStored = settingsStorage.installEmus;
       //Theres probably a better way to do this...
       ipcChannel.sendMessage('version');
       ipcChannel.once('version-out', (version) => {
@@ -89,8 +94,11 @@ const WelcomePage = () => {
           setState({
             ...state,
             ...settingsStorage,
-            installEmus: state.installEmus,
-            overwriteConfigEmus: state.overwriteConfigEmus,
+            installEmus: { ...installEmus, ...installEmusStored },
+            overwriteConfigEmus: {
+              ...overwriteConfigEmus,
+              ...overwriteConfigEmusStored,
+            },
             shaders: { ...shaders, ...shadersStored },
             system: platform,
             version: version,
