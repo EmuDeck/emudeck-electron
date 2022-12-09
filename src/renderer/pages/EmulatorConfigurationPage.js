@@ -20,6 +20,7 @@ import imgvita3k from 'assets/emulators/vita3k.png';
 import imgscummvm from 'assets/emulators/scummvm.png';
 import imgsupermodelista from 'assets/emulators/supermodelista.png';
 import imgsrm from 'assets/emulators/srm.png';
+import imgesde from 'assets/emulators/esde.png';
 
 const images = {
   ra: imgra,
@@ -39,6 +40,7 @@ const images = {
   scummvm: imgscummvm,
   supermodelista: imgsupermodelista,
   srm: imgsrm,
+  esde: imgesde,
 };
 
 const EmulatorConfigurationPage = () => {

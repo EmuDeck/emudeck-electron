@@ -162,7 +162,9 @@ const EndPage = () => {
       ]);
 
       ipcChannel.sendMessage('bash', [
-        `echo doSetupESDE=true >> ~/emudeck/settings.sh`,
+        `echo doSetupESDE=${
+          state.overwriteConfigEmus.esde.status ? true : false
+        } >> ~/emudeck/settings.sh`,
       ]);
       ipcChannel.sendMessage('bash', [
         `echo doSetupSRM=${
