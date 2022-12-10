@@ -26,7 +26,7 @@
   {
     "title": "Other Bug Fixes",
     "type": "FIX",
-    "description": "- Solved an issue that prevented RetroAchievements to work when the username / password contained special characters.<br/>- Solved an issue with sudo passwords contaning special characters.<br/>- Solved some fixes when launching Proton emulators.<br/>- Added Progress Bar to Appimage & Binary updater.<br/>- Fixed an issue that overwrote RetroArch configurations even when asking not to.<br/>- Optimization of all images used on the AppImage so they take less space.<br/>- New SRM page on Emulators Guides.<br/>- SNES 8:7 Bezels fix<br/>- DOSBox-pure legacy .conf support<br/>- Option to prevent ESDE config overwrite<br/>- Option to prevent ESDE installation<br/>- Emulators overwrite/disable selection is now persistent between installations",
+    "description": "- Solved an issue that prevented RetroAchievements to work when the username / password contained special characters.<br/>- Solved an issue with sudo passwords contaning special characters.<br/>- Solved some fixes when launching Proton emulators.<br/>- Added Progress Bar to Appimage & Binary updater.<br/>- Fixed an issue that overwrote RetroArch configurations even when asking not to.<br/>- Optimization of all images used on the AppImage so they take less space.<br/>- New SRM page on Emulators Guides.<br/>- SNES 8:7 Bezels fix<br/>- DOSBox-pure legacy .conf support<br/>- Option to prevent ESDE config overwrite<br/>- Option to prevent ESDE installation<br/>- Emulators overwrite/disable selection is now persistent between installations<br/>- Added Big Picture argument to Duckstation and PCSX2",
     "image": "false"
   }
 ]
