@@ -162,7 +162,9 @@ const EndPage = () => {
       ]);
 
       ipcChannel.sendMessage('bash', [
-        `echo doSetupESDE=true >> ~/emudeck/settings.sh`,
+        `echo doSetupESDE=${
+          state.overwriteConfigEmus.esde.status ? true : false
+        } >> ~/emudeck/settings.sh`,
       ]);
       ipcChannel.sendMessage('bash', [
         `echo doSetupSRM=${
@@ -257,7 +259,9 @@ const EndPage = () => {
         } >> ~/emudeck/settings.sh`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallESDE=true >> ~/emudeck/settings.sh`,
+        `echo doInstallESDE=${
+          state.installEmus.esde.status ? true : false
+        } >> ~/emudeck/settings.sh`,
       ]);
       ipcChannel.sendMessage('bash', [
         `echo doInstallCHD=true >> ~/emudeck/settings.sh`,
