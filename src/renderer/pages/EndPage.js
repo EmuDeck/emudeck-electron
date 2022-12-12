@@ -276,6 +276,11 @@ const EndPage = () => {
           state.GyroDSU ? true : false
         } >> ~/emudeck/settings.sh`,
       ]);
+      ipcChannel.sendMessage('bash', [
+        `echo doInstallHomeBrewGames=${
+          state.homebrewGames ? true : false
+        } >> ~/emudeck/settings.sh`,
+      ]);
 
       //Aspect Ratios
       ipcChannel.sendMessage('bash', [
