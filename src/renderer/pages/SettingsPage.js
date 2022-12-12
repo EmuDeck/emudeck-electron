@@ -285,6 +285,24 @@ const SettingsPage = () => {
     });
   };
 
+  const HomeBrew = (status) => {
+    setState({
+      ...state,
+      homebrewGames: status,
+    });
+
+    let functionHomebrewGames;
+    status
+      ? (functionHomebrewGames = 'emuDeckInstallHomebrewGames')
+      : (functionHomebrewGames = 'emuDeckUninstallHomebrewGames');
+
+    ipcChannel.sendMessage('emudeck', [`autoSave|||${functionHomebrewGames}`]);
+    ipcChannel.once('autoSave', (message) => {
+      console.log(message);
+      notificationShow('🎉 HomeBrew Games updated!');
+    });
+  };
+
   return (
     <Settings
       showNotification={showNotification}
@@ -298,6 +316,7 @@ const SettingsPage = () => {
       onClickCRT3D={onClickCRT3D}
       onClickLCD={onClickLCD}
       onClickAutoSave={autoSaveSet}
+      onClickHomeBrew={HomeBrew}
       disabledNext={true}
       disabledBack={disabledBack}
     />

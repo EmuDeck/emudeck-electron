@@ -1,8 +1,8 @@
 [
   {
-    "title": "ChangeLog Revamp",
+    "title": "HomeBrew Games",
     "type": "NEW",
-    "description": "The app will show the changelog after being updated so the user can know what has changed.<br/><strong>This will be activated on the next update.</strong>",
+    "description": "Install our curated selection of non commercial free games directly from Emudeck inside <strong>Tools & Stuff -> Quicksettings</strong>. In order to prevent cluttering your Steam Library this games are only availabe on EmulationStation DE",
     "image": "true"
   },
   {

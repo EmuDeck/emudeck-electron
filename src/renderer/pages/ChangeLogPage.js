@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Card from 'components/molecules/Card/Card.js';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog.js';
-import img0 from 'assets/emudek-banner.png';
+import img0 from 'assets/homebrew-banner.png';
 import img1 from 'assets/ra_banner.jpg';
 import img2 from 'assets/DeckyControls.jpg';
 import img3 from 'assets/srm.jpg';
