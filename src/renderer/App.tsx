@@ -48,6 +48,7 @@ const branch = require('data/branch.json');
 export default function App() {
   const [state, setState] = useState({
     version: '',
+    gamemode: false,
     branch: branch.branch,
     command: '',
     debug: false,

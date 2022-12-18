@@ -5,7 +5,7 @@ import ToolsAndStuff from 'components/organisms/Wrappers/ToolsAndStuff.js';
 
 const ToolsAndStuffPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { sudoPass } = state;
+  const { gamemode } = state;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -20,7 +20,7 @@ const ToolsAndStuffPage = () => {
     <ToolsAndStuff
       disabledNext={disabledNext}
       disabledBack={disabledBack}
-      nextText={sudoPass ? 'Continue' : 'Skip'}
+      isGameMode={gamemode}
     />
   );
 };

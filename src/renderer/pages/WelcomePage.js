@@ -88,7 +88,9 @@ const WelcomePage = () => {
       const installEmusStored = settingsStorage.installEmus;
       //Theres probably a better way to do this...
       ipcChannel.sendMessage('version');
+
       ipcChannel.once('version-out', (version) => {
+        console.log({ version });
         ipcChannel.sendMessage('system-info-in');
         ipcChannel.once('system-info-out', (platform) => {
           setState({
@@ -101,7 +103,8 @@ const WelcomePage = () => {
             },
             shaders: { ...shaders, ...shadersStored },
             system: platform,
-            version: version,
+            version: version[0],
+            gamemode: version[1],
             branch: branch.branch,
           });
         });
