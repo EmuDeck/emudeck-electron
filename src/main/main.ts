@@ -275,6 +275,14 @@ ipcMain.on('system-info-in', async (event, command) => {
   event.reply('system-info-out', os.platform());
 });
 
+let testttt = app.commandLine.hasSwitch('no-sandbox');
+console.log('testttt');
+console.log(testttt);
+
+let testttt2 = app.commandLine.hasSwitch('--no-sandbox');
+console.log('testttt2');
+console.log(testttt2);
+
 ipcMain.on('version', async (event, command) => {
   event.reply('version-out', app.getVersion());
 });
