@@ -19,6 +19,7 @@ import RAAchievementsPage from 'pages/RAAchievementsPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
+import DeckyControlsPage from 'pages/DeckyControlsPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
 import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
@@ -28,11 +29,13 @@ import CloudSyncPage from 'pages/CloudSyncPage';
 import ChangeLogPage from 'pages/ChangeLogPage';
 import SettingsPage from 'pages/SettingsPage';
 import UninstallPage from 'pages/UninstallPage';
-import ResetPage from 'pages/ResetPage';
+
 import CHDToolPage from 'pages/CHDToolPage';
 import RemotePlayWhateverPage from 'pages/RemotePlayWhateverPage';
 import VideoGuidePage from 'pages/VideoGuidePage';
 import EmuGuidePage from 'pages/EmuGuidePage';
+import AutoSavePage from 'pages/AutoSavePage';
+import HomebrewGames from 'pages/HomebrewGamesPage';
 
 import EndPage from 'pages/EndPage';
 
@@ -67,6 +70,7 @@ export default function App() {
       pass: '',
       hardcore: false,
     },
+    autosave: false,
     ar: {
       sega: '43',
       snes: '43',
@@ -79,6 +83,7 @@ export default function App() {
       classic3d: false,
     },
     theme: 'EPICNOIR',
+    homebrewGames: false,
     installEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
       dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
@@ -93,6 +98,7 @@ export default function App() {
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
+      esde: { id: 'esde', status: true, name: 'EmulationStation' },
       mame: { id: 'mame', status: false, name: 'Mame Standalone' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita 3K (Experimental)' },
       scummvm: { id: 'scummvm', status: true, name: 'Scumm VM' },
@@ -113,6 +119,7 @@ export default function App() {
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
+      esde: { id: 'esde', status: true, name: 'EmulationStation' },
       mame: { id: 'mame', status: true, name: 'Mame Standalone' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita 3K (Experimental)' },
       scummvm: { id: 'scummvm', status: true, name: 'Scumm VM' },
@@ -149,6 +156,10 @@ export default function App() {
           <Route exact path="/rom-storage" element={<RomStoragePage />} />
           <Route exact path="/rom-structure" element={<RomStructurePage />} />
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
+
+          <Route exact path="/auto-save" element={<AutoSavePage />} />
+          <Route exact path="/homebrew-games" element={<HomebrewGames />} />
+
           <Route
             exact
             path="/RA-achievements"
@@ -184,6 +195,8 @@ export default function App() {
           <Route exact path="/shaders-3d-classic" element={<Shaders3DPage />} />
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
+          <Route exact path="/decky-controls" element={<DeckyControlsPage />} />
+
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
           <Route exact path="/change-log" element={<ChangeLogPage />} />
 
@@ -194,7 +207,6 @@ export default function App() {
           />
           <Route exact path="/settings" element={<SettingsPage />} />
           <Route exact path="/check-bios" element={<CheckBiosPage />} />
-          <Route exact path="/reset" element={<ResetPage />} />
           <Route exact path="/emulator-guide" element={<EmuGuidePage />}>
             <Route path=":emulator" element={<EmuGuidePage />} />
           </Route>

@@ -162,7 +162,9 @@ const EndPage = () => {
       ]);
 
       ipcChannel.sendMessage('bash', [
-        `echo doSetupESDE=true >> ~/emudeck/settings.sh`,
+        `echo doSetupESDE=${
+          state.overwriteConfigEmus.esde.status ? true : false
+        } >> ~/emudeck/settings.sh`,
       ]);
       ipcChannel.sendMessage('bash', [
         `echo doSetupSRM=${
@@ -257,7 +259,9 @@ const EndPage = () => {
         } >> ~/emudeck/settings.sh`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallESDE=true >> ~/emudeck/settings.sh`,
+        `echo doInstallESDE=${
+          state.installEmus.esde.status ? true : false
+        } >> ~/emudeck/settings.sh`,
       ]);
       ipcChannel.sendMessage('bash', [
         `echo doInstallCHD=true >> ~/emudeck/settings.sh`,
@@ -270,6 +274,11 @@ const EndPage = () => {
       ipcChannel.sendMessage('bash', [
         `echo doInstallGyro=${
           state.GyroDSU ? true : false
+        } >> ~/emudeck/settings.sh`,
+      ]);
+      ipcChannel.sendMessage('bash', [
+        `echo doInstallHomeBrewGames=${
+          state.homebrewGames ? true : false
         } >> ~/emudeck/settings.sh`,
       ]);
 
@@ -294,7 +303,9 @@ const EndPage = () => {
 
       //AutoSave
       ipcChannel.sendMessage('bash', [
-        `echo RAautoSave=false >> ~/emudeck/settings.sh`,
+        `echo RAautoSave=${
+          state.autosave ? true : false
+        } >> ~/emudeck/settings.sh`,
       ]);
 
       //old ar
@@ -388,11 +399,11 @@ const EndPage = () => {
 
       //Achievements
       ipcChannel.sendMessage('bash-nolog', [
-        `echo ${state.achievements.user} > $HOME/.config/EmuDeck/.rau`,
+        `echo '${state.achievements.user}' > $HOME/.config/EmuDeck/.rau`,
       ]);
 
       ipcChannel.sendMessage('bash-nolog', [
-        `echo ${state.achievements.pass} > $HOME/.config/EmuDeck/.rap`,
+        `echo '${state.achievements.pass}' > $HOME/.config/EmuDeck/.rap`,
       ]);
 
       ipcChannel.sendMessage('bash', [

@@ -98,7 +98,7 @@ const SettingsPage = () => {
         });
         if (bezels == true) {
           ipcChannel.sendMessage('emudeck', [
-            'snes87Bezels|||RetroArch_snes_bezelOn',
+            'snes87Bezels|||RetroArch_snes_bezelOn && RetroArch_snes_ar87 && RetroArch_nes_ar87',
           ]);
         }
         break;
@@ -267,6 +267,42 @@ const SettingsPage = () => {
     }
   };
 
+  const autoSaveSet = (status) => {
+    setState({
+      ...state,
+      autosave: status,
+    });
+
+    let functionAutoSave;
+    status
+      ? (functionAutoSave = 'RetroArch_autoSaveOn')
+      : (functionAutoSave = 'RetroArch_autoSaveOff');
+
+    ipcChannel.sendMessage('emudeck', [`autoSave|||${functionAutoSave}`]);
+    ipcChannel.once('autoSave', (message) => {
+      console.log(message);
+      notificationShow('🎉 AutoSave updated!');
+    });
+  };
+
+  const HomeBrew = (status) => {
+    setState({
+      ...state,
+      homebrewGames: status,
+    });
+
+    let functionHomebrewGames;
+    status
+      ? (functionHomebrewGames = 'emuDeckInstallHomebrewGames')
+      : (functionHomebrewGames = 'emuDeckUninstallHomebrewGames');
+
+    ipcChannel.sendMessage('emudeck', [`autoSave|||${functionHomebrewGames}`]);
+    ipcChannel.once('autoSave', (message) => {
+      console.log(message);
+      notificationShow('🎉 HomeBrew Games updated!');
+    });
+  };
+
   return (
     <Settings
       showNotification={showNotification}
@@ -279,6 +315,8 @@ const SettingsPage = () => {
       onClickCRT={onClickCRT}
       onClickCRT3D={onClickCRT3D}
       onClickLCD={onClickLCD}
+      onClickAutoSave={autoSaveSet}
+      onClickHomeBrew={HomeBrew}
       disabledNext={true}
       disabledBack={disabledBack}
     />

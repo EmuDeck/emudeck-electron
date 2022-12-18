@@ -47,7 +47,7 @@ const PowerToolsPage = () => {
 
   const createSudo = (data) => {
     ipcChannel.sendMessage('bash', [
-      `echo ${pass1} > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
+      `echo '${pass1}' > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
     setStatePage({
       ...statePage,
@@ -79,7 +79,7 @@ const PowerToolsPage = () => {
     });
 
     ipcChannel.sendMessage('emudeck', [
-      `powerTools|||echo "${sudoPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools && echo true`,
+      `powerTools|||echo '${sudoPass}' | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools && echo true`,
     ]);
 
     ipcChannel.once('powerTools', (status) => {

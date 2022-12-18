@@ -20,6 +20,7 @@ import imgvita3k from 'assets/emulators/vita3k.png';
 import imgscummvm from 'assets/emulators/scummvm.png';
 import imgsupermodelista from 'assets/emulators/supermodelista.png';
 import imgsrm from 'assets/emulators/srm.png';
+import imgesde from 'assets/emulators/esde.png';
 
 const images = {
   ra: imgra,
@@ -39,6 +40,7 @@ const images = {
   scummvm: imgscummvm,
   supermodelista: imgsupermodelista,
   srm: imgsrm,
+  esde: imgesde,
 };
 
 const EmulatorConfigurationPage = () => {
@@ -67,12 +69,26 @@ const EmulatorConfigurationPage = () => {
     });
   };
 
+  let nextPage;
+
+  if (overwriteConfigEmus.ra.status == true) {
+    nextPage = 'auto-save';
+  } else if (
+    overwriteConfigEmus.ra.status == false &&
+    overwriteConfigEmus.dolphin.status == false
+  ) {
+    nextPage = 'pegasus-theme';
+  } else {
+    nextPage = 'aspect-ratio-dolphin';
+  }
+
   return (
     <EmulatorConfiguration
       data={data}
       onClick={toggleEmus}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
+      next={nextPage}
       images={images}
     />
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
-
+import { useNavigate } from 'react-router-dom';
 import Welcome from 'components/organisms/Wrappers/Welcome.js';
 
 const WelcomePage = () => {
@@ -16,7 +16,7 @@ const WelcomePage = () => {
   });
   const { disabledNext, disabledBack, downloadComplete, data, cloned, update } =
     statePage;
-
+  const navigate = useNavigate();
   const selectMode = (value) => {
     setState({ ...state, mode: value });
   };
@@ -81,6 +81,11 @@ const WelcomePage = () => {
     console.log({ settingsStorage });
     if (!!settingsStorage) {
       const shadersStored = settingsStorage.shaders;
+      const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
+
+      console.log({ overwriteConfigEmusStored });
+      console.log({ overwriteConfigEmus });
+      const installEmusStored = settingsStorage.installEmus;
       //Theres probably a better way to do this...
       ipcChannel.sendMessage('version');
       ipcChannel.once('version-out', (version) => {
@@ -89,8 +94,11 @@ const WelcomePage = () => {
           setState({
             ...state,
             ...settingsStorage,
-            installEmus: state.installEmus,
-            overwriteConfigEmus: state.overwriteConfigEmus,
+            installEmus: { ...installEmus, ...installEmusStored },
+            overwriteConfigEmus: {
+              ...overwriteConfigEmus,
+              ...overwriteConfigEmusStored,
+            },
             shaders: { ...shaders, ...shadersStored },
             system: platform,
             version: version,
@@ -137,7 +145,19 @@ const WelcomePage = () => {
     //Cloning project
     //
 
+    //Force changelog after update
+    if (update == 'updating') {
+      localStorage.setItem('show_changelog', true);
+    }
+
     if (update == 'up-to-date') {
+      //show changelog after update
+      const showChangelog = localStorage.getItem('show_changelog');
+      if (showChangelog == 'true') {
+        localStorage.setItem('show_changelog', false);
+        navigate('/change-log');
+      }
+
       //is the git repo cloned?
       ipcChannel.sendMessage('bash', [
         'check-git|||mkdir -p $HOME/emudeck/ && cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree',
@@ -208,7 +228,7 @@ const WelcomePage = () => {
       counter={counter}
       alert={
         second
-          ? 'Welcome back! Make sure to check the Tools & Stuff section!'
+          ? `Don't forget to check the changelog after every update!<br>If you like EmuDeck consider supporting us on <a href="https://www.patreon.com/bePatron?u=29065992" target="_blank">Patreon</a>`
           : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/rs9jDHIDKkU" target="_blank">Check out this guide</a>'
       }
       disabledNext={second ? false : disabledNext}

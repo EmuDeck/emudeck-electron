@@ -19,6 +19,7 @@ import imgmame from 'assets/emulators/mame.png';
 import imgvita3k from 'assets/emulators/vita3k.png';
 import imgscummvm from 'assets/emulators/scummvm.png';
 import imgsupermodelista from 'assets/emulators/supermodelista.png';
+import imgesde from 'assets/emulators/esde.png';
 
 const images = {
   ra: imgra,
@@ -37,6 +38,7 @@ const images = {
   vita3k: imgvita3k,
   scummvm: imgscummvm,
   supermodelista: imgsupermodelista,
+  esde: imgesde,
 };
 
 const EmulatorSelectorPage = () => {
