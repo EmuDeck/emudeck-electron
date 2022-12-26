@@ -55,6 +55,7 @@ jobs:
           #CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
           # This is used for uploading release assets to github
           #npm run build:${GITHUB_REF##*/} -> Branch name
+          #npm exec electron-builder -- --publish always --linux --win
           GH_TOKEN: ${{ secrets.github_token }}
         run: |
           npm run postinstall

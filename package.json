@@ -224,8 +224,11 @@
     },
     "win": {
       "target": [
-        "nsis"
+        "portable"
       ]
+    },
+    "portable": {
+      "artifactName": "EmuDeck.exe"
     },
     "linux": {
       "target": [
