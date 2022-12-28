@@ -103,6 +103,16 @@ const RomStoragePage = () => {
     checkSDValid();
   }, []);
 
+  //We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation
+  useEffect(() => {
+    if (storage == 'SD-Card') {
+      setState({
+        ...state,
+        storagePath: sdCardName,
+      });
+    }
+  }, [sdCardName]);
+
   const checkSDValid = () => {
     ipcChannel.sendMessage('emudeck', [
       'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
