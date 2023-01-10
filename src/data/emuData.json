@@ -110,7 +110,7 @@
     "systems": "Sony Playstation 1",
     "hotkeys": {
       "0": ["Action", "Keys"],
-      "1": ["Menu", "STEAM+DPAD"]
+      "1": ["Menu", "STEAM+DPAD Left"]
     }
   },
   "citra": {
@@ -221,6 +221,23 @@
       "4": ["Exit", "SELECT+START"],
       "5": ["Fast Forward", "SELECT+R2"],
       "6": ["Pause", "SELECT+A"]
+    }
+  },
+  "rmg": {
+    "id": "rmg",
+    "name": "Rosalies Mupen Gui",
+    "code": "RMG",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/RMG",
+    "description": "Rosalies Mupen Gui is a fork of Mupen64Plus-Next with a better gui and is usable outside of RetroArch.",
+    "special_configuration": "DD games require a bios file. EmuDeck's Steam Input profile is required for hotkeys.",
+    "bios": [],
+    "systems": "Nintendo 64 and 64DD",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Save State", "Left Trackpad"],
+      "2": ["Load State", "Left Trackpad"],
+      "3": ["Fast Forward", "Left Trackpad"],
+      "4": ["Pause", "Left Trackpad"]
     }
   },
   "mame": {

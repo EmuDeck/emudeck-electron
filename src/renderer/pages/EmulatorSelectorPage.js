@@ -13,6 +13,7 @@ import imgpcsx2 from 'assets/emulators/pcsx2.png';
 import imgrpcs3 from 'assets/emulators/rpcs3.png';
 import imgyuzu from 'assets/emulators/yuzu.png';
 import imgryujinx from 'assets/emulators/ryujinx.png';
+import imgrmg from 'assets/emulators/rmg.png';
 import imgcemu from 'assets/emulators/cemu.png';
 import imgxemu from 'assets/emulators/xemu.png';
 import imgmame from 'assets/emulators/mame.png';
@@ -39,6 +40,7 @@ const images = {
   scummvm: imgscummvm,
   supermodelista: imgsupermodelista,
   esde: imgesde,
+  rmg: imgrmg,
 };
 
 const EmulatorSelectorPage = () => {

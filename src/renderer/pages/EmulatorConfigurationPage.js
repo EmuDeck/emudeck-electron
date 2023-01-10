@@ -14,6 +14,7 @@ import imgrpcs3 from 'assets/emulators/rpcs3.png';
 import imgyuzu from 'assets/emulators/yuzu.png';
 import imgryujinx from 'assets/emulators/ryujinx.png';
 import imgcemu from 'assets/emulators/cemu.png';
+import imgrmg from 'assets/emulators/rmg.png';
 import imgxemu from 'assets/emulators/xemu.png';
 import imgmame from 'assets/emulators/mame.png';
 import imgvita3k from 'assets/emulators/vita3k.png';
@@ -31,6 +32,7 @@ const images = {
   citra: imgcitra,
   pcsx2: imgpcsx2,
   rpcs3: imgrpcs3,
+  rmg: imgrmg,
   yuzu: imgyuzu,
   ryujinx: imgryujinx,
   cemu: imgcemu,
