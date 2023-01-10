@@ -35,7 +35,8 @@ import RemotePlayWhateverPage from 'pages/RemotePlayWhateverPage';
 import VideoGuidePage from 'pages/VideoGuidePage';
 import EmuGuidePage from 'pages/EmuGuidePage';
 import AutoSavePage from 'pages/AutoSavePage';
-import HomebrewGames from 'pages/HomebrewGamesPage';
+import HomebrewGamesPage from 'pages/HomebrewGamesPage';
+import ConfirmationPage from 'pages/ConfirmationPage';
 
 import EndPage from 'pages/EndPage';
 
@@ -161,7 +162,8 @@ export default function App() {
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
 
           <Route exact path="/auto-save" element={<AutoSavePage />} />
-          <Route exact path="/homebrew-games" element={<HomebrewGames />} />
+          <Route exact path="/homebrew-games" element={<HomebrewGamesPage />} />
+          <Route exact path="/confirmation" element={<ConfirmationPage />} />
 
           <Route
             exact

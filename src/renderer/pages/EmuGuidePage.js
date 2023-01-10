@@ -5,7 +5,7 @@ import EmuGuide from 'components/organisms/Wrappers/EmuGuide.js';
 
 const EmuGuidePage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { installEmus } = state;
+  const { installEmus, mode } = state;
   const { ryujinx } = installEmus;
   const emuData = require('data/emuData.json');
   const [statePage, setStatePage] = useState({
@@ -210,6 +210,7 @@ const EmuGuidePage = () => {
   return (
     <>
       <EmuGuide
+        mode={mode}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
         emuData={emuData[emulatorSelected]}
