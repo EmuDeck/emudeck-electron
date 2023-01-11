@@ -116,6 +116,11 @@ const EndPage = () => {
         } >> ~/emudeck/settings.sh`,
       ]);
       ipcChannel.sendMessage('bash', [
+        `echo doSetupmelonDS=${
+          state.overwriteConfigEmus.melonds.status ? true : false
+        } >> ~/emudeck/settings.sh`,
+      ]);
+      ipcChannel.sendMessage('bash', [
         `echo doSetupCemu=${
           state.overwriteConfigEmus.cemu.status ? true : false
         } >> ~/emudeck/settings.sh`,
@@ -205,6 +210,11 @@ const EndPage = () => {
       ipcChannel.sendMessage('bash', [
         `echo doInstallDuck=${
           state.installEmus.duckstation.status ? true : false
+        } >> ~/emudeck/settings.sh`,
+      ]);
+      ipcChannel.sendMessage('bash', [
+        `echo doInstallmelonDS=${
+          state.installEmus.melonds.status ? true : false
         } >> ~/emudeck/settings.sh`,
       ]);
       ipcChannel.sendMessage('bash', [

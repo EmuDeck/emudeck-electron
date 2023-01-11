@@ -113,6 +113,20 @@
       "1": ["Menu", "STEAM+DPAD Left"]
     }
   },
+  "melonds": {
+    "id": "melonds",
+    "name": "melonDS",
+    "code": "melonDS",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/melonDS",
+    "description": "melonDS is a Nintendo DS Emulator",
+    "special_configuration": "BIOS: BIOS bios files are optional.",
+    "bios": ["nds"],
+    "systems": "Nintendo DS",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Menu", "Update Me"]
+    }
+  },
   "citra": {
     "id": "citra",
     "name": "Citra",

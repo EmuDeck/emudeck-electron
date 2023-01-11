@@ -8,6 +8,7 @@ import imgdolphin from 'assets/emulators/dolphin.png';
 import imgprimehacks from 'assets/emulators/primehacks.png';
 import imgppsspp from 'assets/emulators/ppsspp.png';
 import imgduckstation from 'assets/emulators/duckstation.png';
+import imgmelonds from 'assets/emulators/melonds.png';
 import imgcitra from 'assets/emulators/citra.png';
 import imgpcsx2 from 'assets/emulators/pcsx2.png';
 import imgrpcs3 from 'assets/emulators/rpcs3.png';
@@ -32,6 +33,7 @@ const images = {
   pcsx2: imgpcsx2,
   rpcs3: imgrpcs3,
   yuzu: imgyuzu,
+  melonds: imgmelonds,
   ryujinx: imgryujinx,
   cemu: imgcemu,
   xemu: imgxemu,
