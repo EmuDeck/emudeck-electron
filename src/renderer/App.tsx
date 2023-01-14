@@ -16,6 +16,7 @@ import ShadersHandheldsPage from 'pages/ShadersHandheldsPage';
 import Shaders2DPage from 'pages/Shaders2DPage';
 import Shaders3DPage from 'pages/Shaders3DPage';
 import RAAchievementsPage from 'pages/RAAchievementsPage';
+import RAAchievementsConfigPage from 'pages/RAAchievementsConfigPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
@@ -70,6 +71,7 @@ export default function App() {
     achievements: {
       user: '',
       pass: '',
+      token: '',
       hardcore: false,
     },
     autosave: false,
@@ -171,6 +173,12 @@ export default function App() {
             exact
             path="/RA-achievements"
             element={<RAAchievementsPage />}
+          />
+
+          <Route
+            exact
+            path="/RA-achievements-config"
+            element={<RAAchievementsConfigPage />}
           />
 
           <Route

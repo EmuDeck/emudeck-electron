@@ -3,7 +3,8 @@ import { GlobalContext } from 'context/globalContext';
 
 import RAAchievements from 'components/organisms/Wrappers/RAAchievements.js';
 
-const RAAchievementsPage = () => {
+const RAAchievementsConfigPage = () => {
+  const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { achievements } = state;
   const [statePage, setStatePage] = useState({
@@ -11,7 +12,6 @@ const RAAchievementsPage = () => {
     disabledBack: false,
     data: '',
   });
-  const ipcChannel = window.electron.ipcRenderer;
   const { disabledNext, disabledBack, data } = statePage;
   const setAchievements = (data) => {
     if (data.target.name == 'user') {
@@ -32,14 +32,27 @@ const RAAchievementsPage = () => {
       ...state,
       achievements: { ...achievements, hardcore: !achievements.hardcore },
     });
+    if (!achievements.hardcore) {
+      ipcChannel.sendMessage('emudeck', [
+        `setHardcore|||RetroArch_retroAchievementsHardCoreOn`,
+      ]);
+    } else {
+      ipcChannel.sendMessage('emudeck', [
+        `setHardcore|||RetroArch_retroAchievementsHardCoreOff`,
+      ]);
+    }
+
+    ipcChannel.once('setHardcore', (message) => {
+      console.log(message);
+    });
   };
 
   return (
     <RAAchievements
       data={data}
       disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      next="ra-bezels"
+      disabledBack={true}
+      next="tools-and-stuff"
       nextText={achievements.pass ? 'Continue' : 'Skip'}
       onChange={setAchievements}
       onToggle={setAchievementsHardCore}
@@ -47,4 +60,4 @@ const RAAchievementsPage = () => {
   );
 };
 
-export default RAAchievementsPage;
+export default RAAchievementsConfigPage;

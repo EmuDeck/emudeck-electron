@@ -31,6 +31,7 @@ const WelcomePage = () => {
     installEmus,
     overwriteConfigEmus,
     shaders,
+    achievements,
   } = state;
 
   const updateRef = useRef(update);
@@ -82,6 +83,7 @@ const WelcomePage = () => {
     if (!!settingsStorage) {
       const shadersStored = settingsStorage.shaders;
       const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
+      const achievementsStored = settingsStorage.achievements;
 
       console.log({ overwriteConfigEmusStored });
       console.log({ overwriteConfigEmus });
@@ -100,6 +102,10 @@ const WelcomePage = () => {
             overwriteConfigEmus: {
               ...overwriteConfigEmus,
               ...overwriteConfigEmusStored,
+            },
+            achievements: {
+              ...achievements,
+              ...achievementsStored,
             },
             shaders: { ...shaders, ...shadersStored },
             system: platform,
