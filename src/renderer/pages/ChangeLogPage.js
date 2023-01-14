@@ -2,10 +2,10 @@ import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Card from 'components/molecules/Card/Card.js';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog.js';
-import img0 from 'assets/homebrew-banner.png';
-import img1 from 'assets/ra_banner.jpg';
-import img2 from 'assets/DeckyControls.jpg';
-import img3 from 'assets/srm.jpg';
+import img0 from 'assets/emudeck_banner.png';
+import img1 from 'assets/ui_banner.png';
+import img2 from 'assets/melonds_banner.png';
+import img3 from 'assets/dolphin_banner.png';
 import img4 from 'assets/1x1.png';
 
 const ChangeLogPage = () => {
@@ -73,9 +73,9 @@ const ChangeLogPage = () => {
                     {item.image == 'true' && (
                       <div
                         style={{
-                          height: 332,
+                          maxHeight: 280,
                           overflow: 'hidden',
-                          marginBottom: 20,
+                          marginBottom: 10,
                           borderRadius: 10,
                         }}
                       >
