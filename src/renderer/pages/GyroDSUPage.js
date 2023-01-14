@@ -78,7 +78,7 @@ const GyroDSUPage = () => {
       disableButton: true,
     });
     ipcChannel.sendMessage('emudeck', [
-      `Gyro|||sh -c '. ~/.config/EmuDeck/backend/functions/all.sh &&  echo '${sudoPass}' | sudo -v -S && Plugins_installSteamDeckGyroDSU && echo true'`,
+      `Gyro|||konsole --noclose -e  sh -c '. ~/.config/EmuDeck/backend/functions/all.sh &&  echo '${sudoPass}' | sudo -v -S && Plugins_installSteamDeckGyroDSU && echo true'`,
     ]);
 
     ipcChannel.once('Gyro', (status) => {
