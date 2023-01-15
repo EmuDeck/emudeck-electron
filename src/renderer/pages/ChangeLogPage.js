@@ -42,6 +42,11 @@ const ChangeLogPage = () => {
     setStatePage({ ...statePage, current: id, img: imgID });
   };
 
+  //Hide changelog after seen
+  useEffect(() => {
+    localStorage.setItem('show_changelog', false);
+  }, []);
+
   return (
     <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
       <div className="container--grid">

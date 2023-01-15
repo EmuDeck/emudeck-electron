@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { GlobalContext } from './context/globalContext';
+import CheckUpdatePage from 'pages/CheckUpdatePage';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
@@ -144,7 +145,7 @@ export default function App() {
     >
       <Router>
         <Routes>
-          <Route exact path="/" element={<WelcomePage />} />
+          <Route exact path="/" element={<CheckUpdatePage />} />
           <Route exact path="/welcome" element={<WelcomePage />} />
           <Route
             exact

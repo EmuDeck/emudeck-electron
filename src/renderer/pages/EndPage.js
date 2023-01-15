@@ -426,9 +426,9 @@ const EndPage = () => {
       let stdout = message.stdout;
 
       //Installation
-      ipcChannel.sendMessage('bash-nolog', [
-        `bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
-      ]);
+      // ipcChannel.sendMessage('bash-nolog', [
+      //   `bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
+      // ]);
 
       ipcChannel.sendMessage('emudeck', [
         `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > ~/.config/EmuDeck/msg.log && printf "\ec" && echo true`,
