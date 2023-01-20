@@ -46,6 +46,7 @@ jobs:
           sed -i "s|main|beta|g" "./src/data/branch.json"
           sed -i "s|emudeck-electron|emudeck-electron-beta|g" "./package.json"
           sed -i "s|EmuDeck|EmuDeck-beta|g" "./release/app/package.json"
+          sed -i 's|"productName": "EmuDeck"|"productName": "EmuDeck-beta"|g' "./package.json"
       - name: Publish releases
         env:
           # These values are used for auto updates signing
