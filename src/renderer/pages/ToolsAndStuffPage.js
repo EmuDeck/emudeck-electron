@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 
-import ToolsAndStuff from 'components/organisms/Wrappers/ToolsAndStuff.js';
+import ToolsAndStuff from 'components/organisms/Wrappers/ToolsAndStuff';
 
 const ToolsAndStuffPage = () => {
   const { state, setState } = useContext(GlobalContext);

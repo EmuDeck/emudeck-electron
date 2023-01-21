@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { GlobalContext } from './context/globalContext';
+
 import CheckUpdatePage from 'pages/CheckUpdatePage';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
@@ -32,15 +32,19 @@ import ChangeLogPage from 'pages/ChangeLogPage';
 import SettingsPage from 'pages/SettingsPage';
 import UninstallPage from 'pages/UninstallPage';
 
-import CHDToolPage from 'pages/CHDToolPage';
 import RemotePlayWhateverPage from 'pages/RemotePlayWhateverPage';
 import VideoGuidePage from 'pages/VideoGuidePage';
+import MigrationPage from 'pages/MigrationPage';
+import CopyGamesPage from 'pages/CopyGamesPage';
+
 import EmuGuidePage from 'pages/EmuGuidePage';
 import AutoSavePage from 'pages/AutoSavePage';
 import HomebrewGamesPage from 'pages/HomebrewGamesPage';
 import ConfirmationPage from 'pages/ConfirmationPage';
 
 import EndPage from 'pages/EndPage';
+
+import { GlobalContext } from './context/globalContext';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
 import 'getbasecore/src/utils/grid-layout/core_grid-layout.scss';
@@ -170,7 +174,6 @@ export default function App() {
         installed: undefined,
         name: 'Xenia',
       },
-      //supermodelista: { id: 'supermodelista', status: true, name: 'Supermodelista' },
     },
     overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
@@ -192,7 +195,6 @@ export default function App() {
       mame: { id: 'mame', status: true, name: 'Mame Standalone' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita 3K (Experimental)' },
       scummvm: { id: 'scummvm', status: true, name: 'Scumm VM' },
-      // supermodelista: { id: 'supermodelista', status: true, name: 'Supermodelista' }
     },
   });
 
@@ -294,6 +296,8 @@ export default function App() {
           />
 
           <Route exact path="/video-guide" element={<VideoGuidePage />} />
+          <Route exact path="/migration" element={<MigrationPage />} />
+          <Route exact path="/copy-games" element={<CopyGamesPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
           <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
