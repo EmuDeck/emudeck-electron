@@ -61,4 +61,4 @@ jobs:
         run: |
           npm run postinstall
           npm run build
-          npm exec electron-builder -- --publish always --linux --win
+          npm exec electron-builder -- --publish always --linux
