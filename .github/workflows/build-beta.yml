@@ -72,7 +72,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [macOS-latest]
 
     steps:
       - name: Checkout git repo
