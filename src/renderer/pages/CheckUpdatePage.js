@@ -244,13 +244,6 @@ const CheckUpdatePage = () => {
     }
   }, [downloadComplete]);
 
-  //Redirect if windows - testing only
-  useEffect(() => {
-    if (system == 'win32') {
-      navigate('/welcome');
-    }
-  }, [system]);
-
   return (
     <>
       {update == null && (
