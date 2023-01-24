@@ -42,6 +42,13 @@ const WelcomePage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    console.log({ mode });
+    if (mode != null) {
+      setStatePage({ ...statePage, disabledNext: false });
+    }
+  }, [mode]);
+
   return (
     <Welcome
       data={data}
