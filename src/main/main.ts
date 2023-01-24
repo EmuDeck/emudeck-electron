@@ -15,7 +15,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-
+const os = require('os');
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -25,274 +25,30 @@ export default class AppUpdater {
   }
 }
 
+// Vars and consts
 let mainWindow: BrowserWindow | null = null;
-
 //Prevent two instances
 const gotTheLock = app.requestSingleInstanceLock();
 
-ipcMain.on('bash', async (event, command) => {
-  let backChannel;
-  let bashCommand;
+const logCommand = (bashCommand, stdout, stderr) => {
+  let logFile = '$HOME/emudeck/Emudeck.AppImage.log';
 
-  if (command[0].includes('|||')) {
-    const tempCommand = command[0].split('|||');
-    backChannel = tempCommand[0];
-    bashCommand = tempCommand[1];
-  } else {
-    backChannel = 'none';
-    bashCommand = command;
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  const yyyy = today.getFullYear();
+  const date = mm + '/' + dd + '/' + yyyy;
+  if (os.platform().includes('win32')) {
+    logFile = '%userprofile%\\Emudeck.AppImage.log';
   }
-
-  return exec(`${bashCommand}`, (error, stdout, stderr) => {
-    //event.reply('console', { backChannel });
-    exec(
-      `echo "[$(date)] ${bashCommand}" >> $HOME/emudeck/Emudeck.AppImage.log`
-    );
-    if (stdout) {
-      exec(
-        `echo "[$(date)] stdout: ${stdout}" >> $HOME/emudeck/Emudeck.AppImage.log`
-      );
-    }
-    if (stderr) {
-      exec(
-        `echo "[$(date)] stderr: ${stderr}" >> $HOME/emudeck/Emudeck.AppImage.log`
-      );
-    }
-    event.reply(backChannel, stdout);
-  });
-});
-
-ipcMain.on('bash-nolog', async (event, command) => {
-  let backChannel;
-  let bashCommand;
-
-  if (command[0].includes('|||')) {
-    const tempCommand = command[0].split('|||');
-    backChannel = tempCommand[0];
-    bashCommand = tempCommand[1];
-  } else {
-    backChannel = 'none';
-    bashCommand = command;
+  exec(`echo "[${date}] ${bashCommand}" >> ${logFile}`);
+  if (stdout) {
+    exec(`echo "[${date}] stdout: ${stdout}" >> ${logFile}`);
   }
-
-  return exec(`${bashCommand}`, (error, stdout, stderr) => {
-    //event.reply('console', { backChannel });
-
-    event.reply(backChannel, stdout);
-  });
-});
-
-ipcMain.on('emudeck', async (event, command) => {
-  let backChannel;
-  let bashCommand;
-
-  if (command[0].includes('|||')) {
-    const tempCommand = command[0].split('|||');
-    backChannel = tempCommand[0];
-    bashCommand = tempCommand[1];
-  } else {
-    backChannel = 'none';
-    bashCommand = command;
+  if (stderr) {
+    exec(`echo "[${date}] stderr: ${stderr}" >> ${logFile}`);
   }
-
-  return exec(
-    `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`,
-    (error, stdout, stderr) => {
-      //event.reply('console', { backChannel });
-      exec(
-        `echo "[$(date)] ${bashCommand}" >> $HOME/emudeck/Emudeck.AppImage.log`
-      );
-      if (stdout) {
-        exec(
-          `echo "[$(date)] stdout: ${stdout}" >> $HOME/emudeck/Emudeck.AppImage.log`
-        );
-      }
-      if (stderr) {
-        exec(
-          `echo "[$(date)] stderr: ${stderr}" >> $HOME/emudeck/Emudeck.AppImage.log`
-        );
-      }
-      event.reply(backChannel, {
-        stdout: stdout,
-        stderr: stderr,
-        error: error,
-      });
-    }
-  );
-});
-
-ipcMain.on('emudeck-nolog', async (event, command) => {
-  let backChannel;
-  let bashCommand;
-
-  if (command[0].includes('|||')) {
-    const tempCommand = command[0].split('|||');
-    backChannel = tempCommand[0];
-    bashCommand = tempCommand[1];
-  } else {
-    backChannel = 'none';
-    bashCommand = command;
-  }
-
-  return exec(
-    `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`,
-    (error, stdout, stderr) => {
-      //event.reply('console', { backChannel });
-      event.reply(backChannel, {
-        stdout: stdout,
-        stderr: stderr,
-        error: error,
-      });
-    }
-  );
-});
-
-ipcMain.on('clean-log', async (event, command) => {
-  exec(`echo "[$(date)] App Installed" > $HOME/emudeck/Emudeck.AppImage.log`);
-});
-ipcMain.on('debug', async (event, command) => {
-  mainWindow.webContents.openDevTools();
-});
-ipcMain.on('close', async (event, command) => {
-  app.quit();
-});
-
-ipcMain.on('moreZoom', async (event, command) => {
-  const currentZoom = mainWindow.webContents.getZoomFactor();
-  mainWindow.webContents.zoomFactor = currentZoom + 0.2;
-});
-
-ipcMain.on('lessZoom', async (event, command) => {
-  const currentZoom = mainWindow.webContents.getZoomFactor();
-  mainWindow.webContents.zoomFactor = currentZoom - 0.2;
-});
-
-ipcMain.on('update-check', async (event, command) => {
-  // Force no autoupdate
-  // event.reply('update-check-out', 'up-to-date');
-  // return;
-
-  if (process.env.NODE_ENV === 'development') {
-    event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
-    exec(
-      `echo "[$(date)] UPDATE: DEV MODE" > $HOME/emudeck/Emudeck.AppImage.log`
-    );
-    return;
-  }
-
-  //Windows no update - temporary
-  const os = require('os');
-  if (os.platform().includes('win')) {
-    mainWindow.webContents.openDevTools();
-    event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
-  }
-
-  const result = autoUpdater.checkForUpdates();
-  exec(
-    `echo "[$(date)] UPDATE: STARTING CHECK" > $HOME/emudeck/Emudeck.Update.log`
-  );
-  result
-    .then((checkResult: UpdateCheckResult) => {
-      const { updateInfo } = checkResult;
-      console.log({ updateInfo });
-      exec(
-        `echo "[$(date)] UPDATE: CHECKING" >> $HOME/emudeck/Emudeck.Update.log`
-      );
-      //  updateInfo:
-      // path: "EmuDeck-1.0.27.AppImage"
-      // releaseDate: "2022-09-16T22:48:39.803Z"
-      // releaseName: "1.0.27"
-      // releaseNotes: "<p>IMPROVED: New Bios Check Page.<br>\nFIXED: Bug running compression tool</p>"
-      // sha512: "/0ChuBwKvG7zBQQRXABssTnoCPnbG/FE4K3gqCGvfhLwfhRcIlOgIFXXu0Fqo3QF2wNz8/H3OrHfYVyplsVnJA=="
-      // tag: "v1.0.27"
-      // version: "1.0.27"
-
-      const version = app.getVersion();
-      const versionOnline = updateInfo.version;
-
-      const versionCheck = version.localeCompare(versionOnline, undefined, {
-        numeric: true,
-        sensitivity: 'base',
-      });
-      //console.log({ versionCheck });
-      //console.log('- 1 means update');
-      //console.log('1 and 0 means up to date');
-      exec(
-        `echo "[$(date)] UPDATE: COMPARING VERSIONS" >> $HOME/emudeck/Emudeck.Update.log`
-      );
-      if (versionCheck == 1 || versionCheck == 0) {
-        exec(
-          `echo "[$(date)] UPDATE: UP TO DATE" >> $HOME/emudeck/Emudeck.Update.log`
-        );
-        console.log('Up to date, mate');
-        event.reply('update-check-out', ['up-to-date', updateInfo]);
-        exec(
-          `echo "[$(date)] ${JSON.stringify(
-            updateInfo
-          )}" > $HOME/emudeck/Emudeck.AppImage.log`
-        );
-      } else {
-        exec(
-          `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/Emudeck.Update.log`
-        );
-        console.log('Lets update!');
-        event.reply('update-check-out', ['updating', updateInfo]);
-        exec(
-          `echo "[$(date)] ${JSON.stringify(
-            updateInfo
-          )}" > $HOME/emudeck/Emudeck.AppImage.log`
-        );
-
-        const doUpdate = autoUpdater.downloadUpdate();
-
-        doUpdate.then(() => {
-          autoUpdater.quitAndInstall(
-            true, // isSilent
-            true // isForceRunAfter, restart app after update is installed
-          );
-        });
-      }
-    })
-    .catch((reason) => {
-      exec(
-        `echo "[$(date)] ${JSON.stringify(
-          reason
-        )}" >> $HOME/emudeck/Emudeck.Update.log`
-      );
-    });
-
-  //Abort the update if it hangs
-  var abortPromise = new Promise(function (resolve, reject) {
-    setTimeout(resolve, 10000, 'abort');
-  });
-
-  Promise.race([result, abortPromise]).then(function (value) {
-    if (value == 'abort') {
-      exec(
-        `echo "[$(date)] UPDATE: ABORTED TIMEOUT" >> $HOME/emudeck/Emudeck.Update.log`
-      );
-      event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
-      //mainWindow.reload()
-    }
-  });
-});
-
-ipcMain.on('system-info-in', async (event, command) => {
-  const os = require('os');
-  event.reply('system-info-out', os.platform());
-});
-
-ipcMain.on('version', async (event, command) => {
-  event.reply('version-out', [
-    app.getVersion(),
-    app.commandLine.hasSwitch('no-sandbox'),
-  ]);
-});
-
-ipcMain.on('branch', async (event, command) => {
-  console.log(process.env);
-  event.reply('branch-out', process.env.BRANCH);
-});
+};
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -301,7 +57,6 @@ if (process.env.NODE_ENV === 'production') {
 
 const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
-
 if (isDebug) {
   require('electron-debug')();
 }
@@ -337,7 +92,7 @@ const createWindow = async () => {
   const { width, height } = primaryDisplay.workAreaSize;
   const screenHeight = height < 701 ? 600 : 720;
   const isFullscreen = height < 701 ? false : false;
-  const os = require('os');
+  //const os = require('os');
   let scaleFactorW;
   let scaleFactorH;
   let dpi;
@@ -349,10 +104,14 @@ const createWindow = async () => {
 
   scaleFactorW = 1 / ((1280 * dpi) / width);
   scaleFactorH = 1 / ((screenHeight * dpi) / height);
+  let customWidth = 1280;
+  if (os.platform().includes('win32')) {
+    customWidth = customWidth / 2;
+  }
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1280 * scaleFactorW,
+    width: customWidth * scaleFactorW,
     //width: 1280,
     height: screenHeight,
     icon: getAssetPath('icon.png'),
@@ -411,8 +170,289 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
-// app.commandLine.appendSwitch('high-dpi-support', 1)
-// app.commandLine.appendSwitch('force-device-scale-factor', 1)
+//
+//
+//External APIS ( Bash & CMD / Powershell )
+//
+//
+
+//
+//Backend function invokers
+//
+ipcMain.on('bash', async (event, command) => {
+  let backChannel;
+  let bashCommand;
+
+  if (command[0].includes('|||')) {
+    const tempCommand = command[0].split('|||');
+    backChannel = tempCommand[0];
+    bashCommand = tempCommand[1];
+  } else {
+    backChannel = 'none';
+    bashCommand = command;
+  }
+
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    //event.reply('console', { backChannel });
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, stdout);
+  });
+});
+
+ipcMain.on('bash-nolog', async (event, command) => {
+  let backChannel;
+  let bashCommand;
+
+  if (command[0].includes('|||')) {
+    const tempCommand = command[0].split('|||');
+    backChannel = tempCommand[0];
+    bashCommand = tempCommand[1];
+  } else {
+    backChannel = 'none';
+    bashCommand = command;
+  }
+
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    //event.reply('console', { backChannel });
+
+    event.reply(backChannel, stdout);
+  });
+});
+
+ipcMain.on('emudeck', async (event, command) => {
+  let backChannel;
+  let bashCommand;
+
+  if (command[0].includes('|||')) {
+    const tempCommand = command[0].split('|||');
+    backChannel = tempCommand[0];
+    bashCommand = tempCommand[1];
+  } else {
+    backChannel = 'none';
+    bashCommand = command;
+  }
+
+  return exec(
+    `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`,
+    (error, stdout, stderr) => {
+      //event.reply('console', { backChannel });
+      logCommand(bashCommand, error, stdout, stderr);
+      event.reply(backChannel, {
+        stdout: stdout,
+        stderr: stderr,
+        error: error,
+      });
+    }
+  );
+});
+
+ipcMain.on('emudeck-nolog', async (event, command) => {
+  let backChannel;
+  let bashCommand;
+
+  if (command[0].includes('|||')) {
+    const tempCommand = command[0].split('|||');
+    backChannel = tempCommand[0];
+    bashCommand = tempCommand[1];
+  } else {
+    backChannel = 'none';
+    bashCommand = command;
+  }
+
+  return exec(
+    `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`,
+    (error, stdout, stderr) => {
+      //event.reply('console', { backChannel });
+      event.reply(backChannel, {
+        stdout: stdout,
+        stderr: stderr,
+        error: error,
+      });
+    }
+  );
+});
+
+//UI commands
+ipcMain.on('close', async (event, command) => {
+  app.quit();
+});
+
+ipcMain.on('moreZoom', async (event, command) => {
+  const currentZoom = mainWindow.webContents.getZoomFactor();
+  mainWindow.webContents.zoomFactor = currentZoom + 0.2;
+});
+
+ipcMain.on('lessZoom', async (event, command) => {
+  const currentZoom = mainWindow.webContents.getZoomFactor();
+  mainWindow.webContents.zoomFactor = currentZoom - 0.2;
+});
+
+//
+//Updating the app
+//
+ipcMain.on('update-check', async (event, command) => {
+  // Force no autoupdate
+  // event.reply('update-check-out', 'up-to-date');
+  // return;
+
+  //Windows no update - temporary
+  //const os = require('os');
+  if (os.platform().includes('win32')) {
+    mainWindow.webContents.openDevTools();
+    event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
+    return;
+  }
+
+  if (process.env.NODE_ENV === 'development') {
+    event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
+    logCommand('UPDATE: DEV MODE');
+    return;
+  }
+
+  const result = autoUpdater.checkForUpdates();
+  logCommand('UPDATE: STARTING CHECK');
+  result
+    .then((checkResult: UpdateCheckResult) => {
+      const { updateInfo } = checkResult;
+      console.log({ updateInfo });
+      logCommand('UPDATE: CHECKING');
+      //  updateInfo:
+      // path: "EmuDeck-1.0.27.AppImage"
+      // releaseDate: "2022-09-16T22:48:39.803Z"
+      // releaseName: "1.0.27"
+      // releaseNotes: "<p>IMPROVED: New Bios Check Page.<br>\nFIXED: Bug running compression tool</p>"
+      // sha512: "/0ChuBwKvG7zBQQRXABssTnoCPnbG/FE4K3gqCGvfhLwfhRcIlOgIFXXu0Fqo3QF2wNz8/H3OrHfYVyplsVnJA=="
+      // tag: "v1.0.27"
+      // version: "1.0.27"
+
+      const version = app.getVersion();
+      const versionOnline = updateInfo.version;
+
+      const versionCheck = version.localeCompare(versionOnline, undefined, {
+        numeric: true,
+        sensitivity: 'base',
+      });
+      //console.log({ versionCheck });
+      //console.log('- 1 means update');
+      //console.log('1 and 0 means up to date');
+      logCommand('UPDATE: COMPARING VERSIONS');
+      if (versionCheck == 1 || versionCheck == 0) {
+        logCommand('UPDATE: UP TO DATE');
+        console.log('Up to date, mate');
+        event.reply('update-check-out', ['up-to-date', updateInfo]);
+        logCommand(`${JSON.stringify(updateInfo)}`);
+      } else {
+        exec(
+          `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/Emudeck.Update.log`
+        );
+        logCommand('UPDATE: UPDATING!');
+        console.log('Lets update!');
+        event.reply('update-check-out', ['updating', updateInfo]);
+        logCommand(`${JSON.stringify(updateInfo)}`);
+
+        const doUpdate = autoUpdater.downloadUpdate();
+
+        doUpdate.then(() => {
+          autoUpdater.quitAndInstall(
+            true, // isSilent
+            true // isForceRunAfter, restart app after update is installed
+          );
+        });
+      }
+    })
+    .catch((reason) => {
+      logCommand(`${JSON.stringify(reason)}`);
+    });
+
+  //Abort the update if it hangs
+  var abortPromise = new Promise(function (resolve, reject) {
+    setTimeout(resolve, 10000, 'abort');
+  });
+
+  Promise.race([result, abortPromise]).then(function (value) {
+    if (value == 'abort') {
+      logCommand(`UPDATE: ABORTED TIMEOUT`);
+      event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
+      //mainWindow.reload()
+    }
+  });
+});
+
+ipcMain.on('system-info-in', async (event, command) => {
+  //const os = require('os');
+  event.reply('system-info-out', os.platform());
+});
+
+ipcMain.on('version', async (event, command) => {
+  event.reply('version-out', [
+    app.getVersion(),
+    app.commandLine.hasSwitch('no-sandbox'),
+  ]);
+});
+
+//
+//Installing  Bash / PowerShell backend
+//
+ipcMain.on('check-git', async (event, branch) => {
+  let backChannel = 'check-git';
+  let bashCommand = `mkdir -p $HOME/emudeck/ && cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree`;
+
+  if (os.platform().includes('win32')) {
+    //bashCommand = `cd C:\EmuDeck\backend && git rev-parse --is-inside-work-tree`;
+    bashCommand = `cd %userprofile% && cd emudeck && cd backend && git rev-parse --is-inside-work-tree`;
+  }
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
+});
+
+ipcMain.on('clone', async (event, branch) => {
+  let backChannel = 'clone';
+  let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branch} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
+
+  if (os.platform().includes('win32')) {
+    bashCommand = `powershell -ExecutionPolicy Bypass . winget install --id Git.Git -e --source winget && cd %userprofile% && mkdir emudeck && cd emudeck && mkdir backend && cd backend && git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git . && git checkout ${branch} && cd .. && type nul > .cloned && echo true`;
+  }
+
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
+});
+
+ipcMain.on('pull', async (event, branch) => {
+  let backChannel = 'pull';
+  let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branch} && git pull`;
+
+  if (os.platform().includes('win32')) {
+    bashCommand = `cd %userprofile% && cd emudeck && cd backend && git reset --hard && git clean -fd && git checkout ${branch} && git pull`;
+  }
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, stdout);
+  });
+});
+
+ipcMain.on('branch', async (event, command) => {
+  console.log(process.env);
+  event.reply('branch-out', process.env.BRANCH);
+});
+
+//GameMode setter
+ipcMain.on('isGameMode', async (event, command) => {
+  const os = app.commandLine.hasSwitch('GameMode');
+  event.reply('isGameMode-out', os);
+});
+
+//Other
+ipcMain.on('clean-log', async (event, command) => {
+  exec(`echo "[$(date)] App Installed" > $HOME/emudeck/Emudeck.AppImage.log`);
+});
+
+ipcMain.on('debug', async (event, command) => {
+  mainWindow.webContents.openDevTools();
+});
 
 /**
  * Add event listeners...
@@ -430,32 +470,6 @@ app.on('session-created', (session) => {
   console.log(session);
 });
 
-// autoUpdater.on('checking-for-update', () => {
-//   sendStatusToWindow('Checking for update...');
-// })
-// autoUpdater.on('update-available', (info) => {
-//   sendStatusToWindow('Update available.');
-// })
-// autoUpdater.on('update-not-available', (info) => {
-//   sendStatusToWindow('Update not available.');
-// })
-// autoUpdater.on('error', (err) => {
-//   sendStatusToWindow('Error in auto-updater. ' + err);
-// })
-// autoUpdater.on('download-progress', (progressObj) => {
-//   let log_message = "Download speed: " + progressObj.bytesPerSecond;
-//   log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-//   log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-//   sendStatusToWindow(log_message);
-// })
-// autoUpdater.on('update-downloaded', (info) => {
-//   sendStatusToWindow('Update downloaded');
-// });
-
-ipcMain.on('isGameMode', async (event, command) => {
-  const os = app.commandLine.hasSwitch('GameMode');
-  event.reply('isGameMode-out', os);
-});
 let myWindow = null;
 //no second instances
 if (!gotTheLock) {
