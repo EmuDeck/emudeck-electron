@@ -16,6 +16,7 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 const os = require('os');
+var slash = require('slash');
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -241,18 +242,23 @@ ipcMain.on('emudeck', async (event, command) => {
     bashCommand = command;
   }
 
-  return exec(
-    `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`,
-    (error, stdout, stderr) => {
-      //event.reply('console', { backChannel });
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, {
-        stdout: stdout,
-        stderr: stderr,
-        error: error,
-      });
-    }
-  );
+  let preCommand;
+
+  if (os.platform().includes('win32')) {
+    preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
+  } else {
+    preCommand = `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
+  }
+
+  return exec(`${preCommand}`, (error, stdout, stderr) => {
+    //event.reply('console', { backChannel });
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, {
+      stdout: stdout,
+      stderr: stderr,
+      error: error,
+    });
+  });
 });
 
 ipcMain.on('emudeck-nolog', async (event, command) => {
@@ -268,9 +274,15 @@ ipcMain.on('emudeck-nolog', async (event, command) => {
     bashCommand = command;
   }
 
-  return exec(
-    `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`,
-    (error, stdout, stderr) => {
+  let preCommand;
+
+  if (os.platform().includes('win32')) {
+    preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
+  } else {
+    preCommand = `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
+  }
+
+  return exec(`${preCommand}`, (error, stdout, stderr) => {
       //event.reply('console', { backChannel });
       event.reply(backChannel, {
         stdout: stdout,

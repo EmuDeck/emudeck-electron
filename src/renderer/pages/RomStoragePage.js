@@ -43,13 +43,20 @@ const RomStoragePage = () => {
         });
         //is it valid?
 
-        ipcChannel.sendMessage('emudeck', [
-          `testLocation|||sleep 1 && testLocationValid "custom" "${stdout}"`,
-        ]);
+        if (system == 'win32'){
+          ipcChannel.sendMessage('emudeck', [
+            `testLocation|||testLocationValid 'custom' '${stdout}'`,
+          ]);
+        }else{
+          ipcChannel.sendMessage('emudeck', [
+            `testLocation|||testLocationValid 'custom" "${stdout}"`,
+          ]);
+        }
+
 
         ipcChannel.once('testLocation', (message) => {
           let stdout = message.stdout.replace('\n', '');
-          console.log({ stdout });
+          console.log({ message });
           let status;
           stdout.includes('Valid') ? (status = true) : (status = false);
           console.log({ status });
@@ -100,7 +107,9 @@ const RomStoragePage = () => {
 
   //Do we have a valid SD Card?
   useEffect(() => {
+  if(system != 'win32'){
     checkSDValid();
+}
   }, []);
 
   //We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation
@@ -158,6 +167,8 @@ const RomStoragePage = () => {
     <RomStorage
       status={status}
       sdCardValid={sdCardValid}
+      showSDCard={system == 'win32' ? false : true}
+      showInternal={system == 'win32' ? false : true}
       reloadSDcard={checkSDValid}
       sdCardName={sdCardName}
       customPath={storagePath}
