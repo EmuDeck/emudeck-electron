@@ -180,6 +180,12 @@ ipcMain.on('update-check', async (event, command) => {
     return;
   }
 
+  //Windows no update - temporary
+  const os = require('os');
+  if (os.platform().includes('win')) {
+    event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
+  }
+
   const result = autoUpdater.checkForUpdates();
   exec(
     `echo "[$(date)] UPDATE: STARTING CHECK" > $HOME/emudeck/Emudeck.Update.log`
@@ -346,6 +352,7 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 1280 * scaleFactorW,
+    //width: 1280,
     height: screenHeight,
     icon: getAssetPath('icon.png'),
     resizable: true,
