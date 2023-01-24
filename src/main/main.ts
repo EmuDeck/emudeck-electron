@@ -30,6 +30,15 @@ let mainWindow: BrowserWindow | null = null;
 //Prevent two instances
 const gotTheLock = app.requestSingleInstanceLock();
 
+const Promise = require('bluebird');
+
+const promiseFromChildProcess = (child) => {
+  return new Promise(function (resolve, reject) {
+    child.addListener('error', reject);
+    child.addListener('exit', resolve);
+  });
+};
+
 const logCommand = (bashCommand, stdout, stderr) => {
   let logFile = '$HOME/emudeck/Emudeck.AppImage.log';
 
@@ -398,8 +407,7 @@ ipcMain.on('check-git', async (event, branch) => {
   let bashCommand = `mkdir -p $HOME/emudeck/ && cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree`;
 
   if (os.platform().includes('win32')) {
-    //bashCommand = `cd C:\EmuDeck\backend && git rev-parse --is-inside-work-tree`;
-    bashCommand = `cd %userprofile% && cd emudeck && cd backend && git rev-parse --is-inside-work-tree`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git rev-parse --is-inside-work-tree`;
   }
   return exec(`${bashCommand}`, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
@@ -412,13 +420,36 @@ ipcMain.on('clone', async (event, branch) => {
   let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branch} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `powershell -ExecutionPolicy Bypass . winget install --id Git.Git -e --source winget && cd %userprofile% && mkdir emudeck && cd emudeck && mkdir backend && cd backend && git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git . && git checkout ${branch} && cd .. && type nul > .cloned && echo true`;
-  }
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && mkdir backend && cd backend && git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git . && git checkout ${branch} && cd %userprofile% && mkdir emudeck && cd emudeck && type nul > .cloned && echo true`;
 
-  return exec(`${bashCommand}`, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, error, stdout, stderr);
-  });
+    //First we install git
+    var child = exec(
+      `powershell -ExecutionPolicy Bypass . winget install --id Git.Git -e --source winget`,
+      (error, stdout, stderr) => {
+        logCommand('GIT winget', error, stdout, stderr);
+      }
+    );
+    //Then we clone the project
+    promiseFromChildProcess(child).then(
+      function (result) {
+        return exec(`${bashCommand}`, (error, stdout, stderr) => {
+          logCommand(bashCommand, error, stdout, stderr);
+          event.reply(backChannel, error, stdout, stderr);
+        });
+      },
+      function (err) {
+        return exec(`${bashCommand}`, (error, stdout, stderr) => {
+          logCommand(bashCommand, error, stdout, stderr);
+          event.reply(backChannel, error, stdout, stderr);
+        });
+      }
+    );
+  } else {
+    return exec(`${bashCommand}`, (error, stdout, stderr) => {
+      logCommand(bashCommand, error, stdout, stderr);
+      event.reply(backChannel, error, stdout, stderr);
+    });
+  }
 });
 
 ipcMain.on('pull', async (event, branch) => {
@@ -426,7 +457,7 @@ ipcMain.on('pull', async (event, branch) => {
   let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branch} && git pull`;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd emudeck && cd backend && git reset --hard && git clean -fd && git checkout ${branch} && git pull`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git reset --hard && git clean -fd && git checkout ${branch} && git pull`;
   }
   return exec(`${bashCommand}`, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
