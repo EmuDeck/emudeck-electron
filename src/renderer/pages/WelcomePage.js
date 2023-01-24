@@ -47,9 +47,10 @@ const WelcomePage = () => {
       data={data}
       alert={
         second
-          ? `Don't forget to check the changelog after every update!<br>If you like EmuDeck consider supporting us on <a href="https://www.patreon.com/bePatron?u=29065992" target="_blank">Patreon</a>`
+          ? `If you like EmuDeck please consider supporting us on <a href="https://www.patreon.com/bePatron?u=29065992" target="_blank">Patreon</a>. Thanks!`
           : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/rs9jDHIDKkU" target="_blank">Check out this guide</a>'
       }
+      alertCSS="alert--info"
       disabledNext={second ? false : disabledNext}
       disabledBack={second ? false : disabledBack}
       onClick={selectMode}
