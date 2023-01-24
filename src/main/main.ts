@@ -183,6 +183,7 @@ ipcMain.on('update-check', async (event, command) => {
   //Windows no update - temporary
   const os = require('os');
   if (os.platform().includes('win')) {
+    mainWindow.webContents.openDevTools();
     event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
   }
 
