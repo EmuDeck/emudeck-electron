@@ -51,20 +51,30 @@ const ChangeLogPage = () => {
     <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
       <div className="container--grid">
         <div data-col-sm="4">
-          <ul>
-            {changeLogData.map((item, i) => {
-              return (
-                <li tabindex="0" key={i}>
-                  <Card
-                    css={current == i && 'is-selected'}
-                    onClick={() => activeItem(i)}
-                  >
-                    <span className="h5">{item.title}</span>
-                  </Card>
-                </li>
-              );
-            })}
-          </ul>
+          <div
+            class="changelog-scroll"
+            style={{
+              height: '62vh',
+              overflow: 'auto',
+              overflowX: 'hidden',
+              paddingRight: '20px',
+            }}
+          >
+            <ul>
+              {changeLogData.map((item, i) => {
+                return (
+                  <li tabindex="0" key={i}>
+                    <Card
+                      css={current == i && 'is-selected'}
+                      onClick={() => activeItem(i)}
+                    >
+                      <span className="h5">{item.title}</span>
+                    </Card>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
         <div data-col-sm="8">
           {changeLogData.map((item, i) => {
