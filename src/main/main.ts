@@ -121,12 +121,12 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: customWidth * scaleFactorW,
+    width: 1280,
     //width: 1280,
     height: screenHeight,
     icon: getAssetPath('icon.png'),
     resizable: true,
-    fullscreen: isFullscreen,
+    fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
     autoHideMenuBar: true,
     webPreferences: {
       preload: app.isPackaged
