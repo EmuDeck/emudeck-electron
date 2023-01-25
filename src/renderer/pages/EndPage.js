@@ -43,7 +43,7 @@ const EndPage = () => {
   let settingsFile = '~/emudeck/settings.sh';
 
   if (system === 'win32') {
-    settingsFile = '%userprofile%/emudeck/settings.ps1';
+    settingsFile = '%userprofile%\\emudeck\\settings.ps1';
 
     storagePath = storagePath.replace(String.fromCharCode(92), '');
   }
@@ -53,12 +53,15 @@ const EndPage = () => {
       `konsole -e tail -f "$HOME/emudeck/emudeck.log"`,
     ]);
   };
-
+  let pollingTime = 500;
+  if (system === 'win32') {
+    pollingTime = 2000;
+  }
   useEffect(() => {
     const interval = setInterval(() => {
       if (system === 'win32') {
         let msg = readMSG(
-          'Get-Content %userprofile%/AppData/Roaming/EmuDeck/msg.log -Raw'
+          'more %userprofile%\\AppData\\Roaming\\EmuDeck\\msg.log'
         );
       } else {
         let msg = readMSG('cat ~/.config/EmuDeck/msg.log');
@@ -67,7 +70,7 @@ const EndPage = () => {
       if (message.includes('100')) {
         clearInterval(interval);
       }
-    }, 1000);
+    }, pollingTime);
 
     return () => clearInterval(interval);
   }, []);
@@ -426,7 +429,7 @@ const EndPage = () => {
       //Achievements
       if (system === 'win32') {
         ipcChannel.sendMessage('bash-nolog', [
-          `echo ${preVar}'${state.achievements.token}' > %userprofile%/AppData/Roaming/EmuDeck/.rat`,
+          `echo ${preVar}'${state.achievements.token}' > %userprofile%\\AppData\\Roaming\\EmuDeck\\.rat`,
         ]);
       } else {
         ipcChannel.sendMessage('bash-nolog', [
@@ -455,16 +458,18 @@ const EndPage = () => {
 
       //Installation
       if (system === 'win32') {
-        // ipcChannel.sendMessage('bash-nolog', [
-        //   `powershell -ExecutionPolicy Bypass . %userprofile%/AppData/Roaming/EmuDeck/backend/setup.ps1`,
-        // ]);
+        ipcChannel.sendMessage('bash-nolog', [
+          `powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/setup.ps1`,
+        ]);
       } else {
         ipcChannel.sendMessage('bash-nolog', [
           `bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
         ]);
       }
       if (system === 'win32') {
-        ipcChannel.sendMessage('emudeck', [`finish|||echo true`]);
+        ipcChannel.sendMessage('emudeck', [
+          `finish|||checkForFile .ui-finished`,
+        ]);
       } else {
         ipcChannel.sendMessage('emudeck', [
           `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > ~/.config/EmuDeck/msg.log && printf "\ec" && echo true`,
