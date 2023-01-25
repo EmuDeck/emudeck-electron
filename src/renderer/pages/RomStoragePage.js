@@ -178,7 +178,13 @@ const RomStoragePage = () => {
       onClick={storageSet}
       disabledNext={disabledNext}
       disabledBack={disabledBack}
-      next={mode === 'easy' ? 'homebrew-games' : 'device-selector'}
+      next={
+        mode === 'easy'
+          ? system == 'win32'
+            ? 'end'
+            : 'homebrew-games'
+          : 'device-selector'
+      }
     />
   );
 };

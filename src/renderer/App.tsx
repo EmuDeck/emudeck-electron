@@ -41,6 +41,7 @@ import EmuGuidePage from 'pages/EmuGuidePage';
 import AutoSavePage from 'pages/AutoSavePage';
 import HomebrewGamesPage from 'pages/HomebrewGamesPage';
 import ConfirmationPage from 'pages/ConfirmationPage';
+import EmulatorResolutionPage from 'pages/EmulatorResolutionPage';
 
 import EndPage from 'pages/EndPage';
 
@@ -196,6 +197,17 @@ export default function App() {
       vita3k: { id: 'vita3k', status: true, name: 'Vita 3K (Experimental)' },
       scummvm: { id: 'scummvm', status: true, name: 'Scumm VM' },
     },
+    resolutions: {
+      dolphin: '720P',
+      duckstation: '720P',
+      pcsx2: '720P',
+      yuzu: '720P',
+      ppsspp: '720P',
+      rpcs3: '720P',
+      ryujinx: '720P',
+      xemu: '720P',
+      xenia: '720P',
+    },
   });
 
   return (
@@ -223,6 +235,11 @@ export default function App() {
             exact
             path="/emulator-configuration"
             element={<EmulatorConfigurationPage />}
+          />
+          <Route
+            exact
+            path="/emulator-resolution"
+            element={<EmulatorResolutionPage />}
           />
           <Route exact path="/rom-storage" element={<RomStoragePage />} />
           <Route exact path="/rom-structure" element={<RomStructurePage />} />

@@ -49,9 +49,15 @@ const EndPage = () => {
   }
 
   const showLog = () => {
-    ipcChannel.sendMessage('bash-nolog', [
-      `konsole -e tail -f "$HOME/emudeck/emudeck.log"`,
-    ]);
+    if (system === 'win32') {
+      ipcChannel.sendMessage('bash-nolog', [
+        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE\emudeck\emudeck.log -Tail 10 -Wait }"`,
+      ]);
+    } else {
+      ipcChannel.sendMessage('bash-nolog', [
+        `konsole -e tail -f "$HOME/emudeck/emudeck.log"`,
+      ]);
+    }
   };
   let pollingTime = 500;
   if (system === 'win32') {
@@ -444,6 +450,35 @@ const EndPage = () => {
       //CloudSync
       ipcChannel.sendMessage('bash', [
         `echo ${preVar}doSetupSaveSync="${state.cloudSync}" >> ${settingsFile} && echo true`,
+      ]);
+
+      // Emulator resolutions
+      ipcChannel.sendMessage('bash', [
+        `echo ${preVar}dolphinResolution="${state.resolution.dolphin}" >> ${settingsFile}`,
+      ]);
+      ipcChannel.sendMessage('bash', [
+        `echo ${preVar}duckstationResolution="${state.resolution.duckstation}" >> ${settingsFile}`,
+      ]);
+      ipcChannel.sendMessage('bash', [
+        `echo ${preVar}pcsx2Resolution="${state.resolution.pcsx2}" >> ${settingsFile}`,
+      ]);
+      ipcChannel.sendMessage('bash', [
+        `echo ${preVar}yuzuResolution="${state.resolution.yuzu}" >> ${settingsFile}`,
+      ]);
+      ipcChannel.sendMessage('bash', [
+        `echo ${preVar}ppssppResolution="${state.resolution.ppsspp}" >> ${settingsFile}`,
+      ]);
+      ipcChannel.sendMessage('bash', [
+        `echo ${preVar}rpcs3Resolution="${state.resolution.rpcs3}" >> ${settingsFile}`,
+      ]);
+      ipcChannel.sendMessage('bash', [
+        `echo ${preVar}ryujinxResolution="${state.resolution.ryujinx}" >> ${settingsFile}`,
+      ]);
+      ipcChannel.sendMessage('bash', [
+        `echo ${preVar}xemuResolution="${state.resolution.xemu}" >> ${settingsFile}`,
+      ]);
+      ipcChannel.sendMessage('bash', [
+        `echo ${preVar}xeniaResolution="${state.resolution.xenia}" >> ${settingsFile}`,
       ]);
 
       //Closing
