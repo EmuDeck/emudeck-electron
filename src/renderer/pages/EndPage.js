@@ -11,7 +11,7 @@ const EndPage = () => {
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-  const { second, debug, branch, storagePath, gamemode } = state;
+  let { second, debug, branch, storagePath, gamemode, system } = state;
   const ipcChannel = window.electron.ipcRenderer;
 
   const readMSG = (command) => {
@@ -22,8 +22,10 @@ const EndPage = () => {
       let messageText = messageArray[1];
       let messagePercent = messageArray[0];
 
+      console.log({ messageArray });
       messagePercent = messagePercent.replaceAll(' ', '');
       messagePercent = messagePercent.replaceAll('\n', '');
+      messagePercent = messagePercent.replaceAll('\n\r', '');
 
       setMsg({ message: messageText, percentage: messagePercent });
     });
@@ -38,6 +40,14 @@ const EndPage = () => {
 
   const [counter, setCounter] = useState(0);
 
+  let settingsFile = '~/emudeck/settings.sh';
+
+  if (system === 'win32') {
+    settingsFile = '%userprofile%/emudeck/settings.ps1';
+
+    storagePath = storagePath.replace(String.fromCharCode(92), '');
+  }
+
   const showLog = () => {
     ipcChannel.sendMessage('bash-nolog', [
       `konsole -e tail -f "$HOME/emudeck/emudeck.log"`,
@@ -46,12 +56,18 @@ const EndPage = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      let msg = readMSG('cat ~/.config/EmuDeck/msg.log');
+      if (system === 'win32') {
+        let msg = readMSG(
+          'Get-Content %userprofile%/AppData/Roaming/EmuDeck/msg.log -Raw'
+        );
+      } else {
+        let msg = readMSG('cat ~/.config/EmuDeck/msg.log');
+      }
 
       if (message.includes('100')) {
         clearInterval(interval);
       }
-    }, 100);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);
@@ -64,360 +80,372 @@ const EndPage = () => {
   useEffect(() => {
     let json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
+    let preVar = '';
+    if (system === 'win32') {
+      preVar = '$';
+    }
 
     ipcChannel.sendMessage('bash', [
-      `startSettings|||mkdir -p ~/.config/EmuDeck/ && echo expert=${
+      `startSettings|||echo ${preVar}expert="${
         state.mode === 'expert' ? true : false
-      } > ~/emudeck/settings.sh`,
+      }" > ${settingsFile}`,
     ]);
 
     //Wait for settings.sh creation.
     ipcChannel.once('startSettings', (message) => {
       //Setup Emus
       ipcChannel.sendMessage('bash', [
-        `echo doSetupRA=${
+        `echo ${preVar}doSetupRA="${
           state.overwriteConfigEmus.ra.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupDolphin=${
+        `echo ${preVar}doSetupDolphin="${
           state.overwriteConfigEmus.dolphin.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
 
       ipcChannel.sendMessage('bash', [
-        `echo doSetupPCSX2QT=${
+        `echo ${preVar}doSetupPCSX2QT="${
           state.overwriteConfigEmus.pcsx2.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupRPCS3=${
+        `echo ${preVar}doSetupRPCS3="${
           state.overwriteConfigEmus.rpcs3.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupYuzu=${
+        `echo ${preVar}doSetupYuzu="${
           state.overwriteConfigEmus.yuzu.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupRyujinx=${
+        `echo ${preVar}doSetupRyujinx="${
           state.overwriteConfigEmus.ryujinx.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupCitra=${
+        `echo ${preVar}doSetupCitra="${
           state.overwriteConfigEmus.citra.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupDuck=${
+        `echo ${preVar}doSetupDuck="${
           state.overwriteConfigEmus.duckstation.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupmelonDS=${
+        `echo ${preVar}doSetupmelonDS="${
           state.overwriteConfigEmus.melonds.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupCemu=${
+        `echo ${preVar}doSetupCemu="${
           state.overwriteConfigEmus.cemu.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupXenia=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}doSetupXenia="false" >> ${settingsFile}`,
       ]);
 
       ipcChannel.sendMessage('bash', [
-        `echo doSetupPrimeHacks=${
+        `echo ${preVar}doSetupPrimeHacks="${
           state.overwriteConfigEmus.primehacks.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupXemu=${
+        `echo ${preVar}doSetupXemu="${
           state.overwriteConfigEmus.xemu.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupPPSSPP=${
+        `echo ${preVar}doSetupPPSSPP="${
           state.overwriteConfigEmus.ppsspp.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupMAME=${
+        `echo ${preVar}doSetupMAME="${
           state.overwriteConfigEmus.mame.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupVita3K=${
+        `echo ${preVar}doSetupVita3K="${
           state.overwriteConfigEmus.vita3k.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupScummVM=${
+        `echo ${preVar}doSetupScummVM="${
           state.overwriteConfigEmus.scummvm.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
 
       ipcChannel.sendMessage('bash', [
-        `echo doSetupESDE=${
+        `echo ${preVar}doSetupESDE="${
           state.overwriteConfigEmus.esde.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSetupSRM=${
+        `echo ${preVar}doSetupSRM="${
           state.overwriteConfigEmus.srm.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
 
       //Install Emus
       ipcChannel.sendMessage('bash', [
-        `echo doInstallRA=${
+        `echo ${preVar}doInstallRA="${
           state.installEmus.ra.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallDolphin=${
+        `echo ${preVar}doInstallDolphin="${
           state.installEmus.dolphin.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallPCSX2QT=${
+        `echo ${preVar}doInstallPCSX2QT="${
           state.installEmus.pcsx2.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallRPCS3=${
+        `echo ${preVar}doInstallRPCS3="${
           state.installEmus.rpcs3.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallYuzu=${
+        `echo ${preVar}doInstallYuzu="${
           state.installEmus.yuzu.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallRyujinx=${
+        `echo ${preVar}doInstallRyujinx="${
           state.installEmus.ryujinx.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallCitra=${
+        `echo ${preVar}doInstallCitra="${
           state.installEmus.citra.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallDuck=${
+        `echo ${preVar}doInstallDuck="${
           state.installEmus.duckstation.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallmelonDS=${
+        `echo ${preVar}doInstallmelonDS="${
           state.installEmus.melonds.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallCemu=${
+        `echo ${preVar}doInstallCemu="${
           state.installEmus.cemu.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallXenia=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}doInstallXenia="false" >> ${settingsFile}`,
       ]);
 
       ipcChannel.sendMessage('bash', [
-        `echo doInstallPrimeHacks=${
+        `echo ${preVar}doInstallPrimeHacks="${
           state.installEmus.primehacks.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallPPSSPP=${
+        `echo ${preVar}doInstallPPSSPP="${
           state.installEmus.ppsspp.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallXemu=${
+        `echo ${preVar}doInstallXemu="${
           state.installEmus.xemu.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallMAME=${
+        `echo ${preVar}doInstallMAME="${
           state.installEmus.mame.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallScummVM=${
+        `echo ${preVar}doInstallScummVM="${
           state.installEmus.scummvm.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallVita3K=${
+        `echo ${preVar}doInstallVita3K="${
           state.installEmus.vita3k.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
 
       ipcChannel.sendMessage('bash', [
-        `echo doInstallSRM=${
+        `echo ${preVar}doInstallSRM="${
           state.installEmus.srm.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallESDE=${
+        `echo ${preVar}doInstallESDE="${
           state.installEmus.esde.status ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallCHD=true >> ~/emudeck/settings.sh`,
+        `echo ${preVar}doInstallCHD="true" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallPowertools=${
+        `echo ${preVar}doInstallPowertools="${
           state.powerTools ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallGyro=${
+        `echo ${preVar}doInstallGyro="${
           state.GyroDSU ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doInstallHomeBrewGames=${
+        `echo ${preVar}doInstallHomeBrewGames="${
           state.homebrewGames ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
 
       //Aspect Ratios
       ipcChannel.sendMessage('bash', [
-        `echo arSega=${state.ar.sega} >> ~/emudeck/settings.sh`,
+        `echo ${preVar}arSega="${state.ar.sega}" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo arSnes=${state.ar.snes} >> ~/emudeck/settings.sh`,
+        `echo ${preVar}arSnes="${state.ar.snes}" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo arClassic3D=${state.ar.classic3d} >> ~/emudeck/settings.sh`,
+        `echo ${preVar}arClassic3D="${state.ar.classic3d}" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo arDolphin=${state.ar.dolphin} >> ~/emudeck/settings.sh`,
+        `echo ${preVar}arDolphin="${state.ar.dolphin}" >> ${settingsFile}`,
       ]);
 
       //Bezels
       ipcChannel.sendMessage('bash', [
-        `echo RABezels=${state.bezels ? true : false} >> ~/emudeck/settings.sh`,
+        `echo ${preVar}RABezels="${
+          state.bezels ? true : false
+        }" >> ${settingsFile}`,
       ]);
 
       //AutoSave
       ipcChannel.sendMessage('bash', [
-        `echo RAautoSave=${
+        `echo ${preVar}RAautoSave="${
           state.autosave ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
 
       //old ar
       ipcChannel.sendMessage('bash', [
-        `echo duckWide=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}duckWide="false" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo DolphinWide=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}DolphinWide="false" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo DreamcastWide=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}DreamcastWide="false" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo BeetleWide=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}BeetleWide="false" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo pcsx2QTWide=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}pcsx2QTWide="false ">> ${settingsFile}`,
       ]);
 
       //Paths
       ipcChannel.sendMessage('bash', [
-        `echo emulationPath=${storagePath}/Emulation >> ~/emudeck/settings.sh`,
+        `echo ${preVar}emulationPath="${storagePath}/Emulation" >> ${settingsFile}`,
       ]);
       //
       ipcChannel.sendMessage('bash', [
-        `echo romsPath=${storagePath}/Emulation/roms >> ~/emudeck/settings.sh`,
+        `echo ${preVar}romsPath="${storagePath}/Emulation/roms" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo toolsPath=${storagePath}/Emulation/tools >> ~/emudeck/settings.sh`,
+        `echo ${preVar}toolsPath="${storagePath}/Emulation/tools" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo biosPath=${storagePath}/Emulation/bios >> ~/emudeck/settings.sh`,
+        `echo ${preVar}biosPath="${storagePath}/Emulation/bios" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo savesPath=${storagePath}/Emulation/saves >> ~/emudeck/settings.sh`,
+        `echo ${preVar}savesPath="${storagePath}/Emulation/saves" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo storagePath=${storagePath}/Emulation/storage >> ~/emudeck/settings.sh`,
+        `echo ${preVar}storagePath="${storagePath}/Emulation/storage" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo ESDEscrapData=${storagePath}/Emulation/tools/downloaded_media >> ~/emudeck/settings.sh`,
+        `echo ${preVar}ESDEscrapData="${storagePath}/Emulation/tools/downloaded_media" >> ${settingsFile}`,
       ]);
 
       //Shaders
       ipcChannel.sendMessage('bash', [
-        `echo RAHandHeldShader=${
+        `echo ${preVar}RAHandHeldShader="${
           state.shaders.handhelds ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
 
       ipcChannel.sendMessage('bash', [
-        `echo RAHandClassic2D=${
+        `echo ${preVar}RAHandClassic2D="${
           state.shaders.classic ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
 
       ipcChannel.sendMessage('bash', [
-        `echo RAHandClassic3D=${
+        `echo ${preVar}RAHandClassic3D="${
           state.shaders.classic3d ? true : false
-        } >> ~/emudeck/settings.sh`,
+        }" >> ${settingsFile}`,
       ]);
 
       //theme
       ipcChannel.sendMessage('bash', [
-        `echo esdeTheme=\""${state.theme}\"" >> ~/emudeck/settings.sh`,
+        `echo ${preVar}esdeTheme="${state.theme}" >> ${settingsFile}`,
       ]);
 
       //AdvancedSettings
       ipcChannel.sendMessage('bash', [
-        `echo doSelectWideScreen=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}doSelectWideScreen="false" >> ${settingsFile}`,
       ]);
 
       ipcChannel.sendMessage('bash', [
-        `echo doRASignIn=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}doRASignIn="false" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doRAEnable=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}doRAEnable="false" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doESDEThemePicker=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}doESDEThemePicker="false" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doSelectEmulators=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}doSelectEmulators="false" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo doResetEmulators=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}doResetEmulators="false" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo XemuWide=false >> ~/emudeck/settings.sh`,
+        `echo ${preVar}XemuWide="false" >> ${settingsFile}`,
       ]);
 
       //Achievements
-      ipcChannel.sendMessage('bash-nolog', [
-        `echo '${state.achievements.token}' > $HOME/.config/EmuDeck/.rat`,
-      ]);
+      if (system === 'win32') {
+        ipcChannel.sendMessage('bash-nolog', [
+          `echo ${preVar}'${state.achievements.token}' > %userprofile%/AppData/Roaming/EmuDeck/.rat`,
+        ]);
+      } else {
+        ipcChannel.sendMessage('bash-nolog', [
+          `echo ${preVar}'${state.achievements.token}' > $HOME/.config/EmuDeck/.rat`,
+        ]);
+      }
 
       ipcChannel.sendMessage('bash', [
-        `echo achievementsHardcore=${state.achievements.hardcore} >> ~/emudeck/settings.sh`,
+        `echo ${preVar}achievementsHardcore="${state.achievements.hardcore}" >> ${settingsFile}`,
       ]);
 
       //CloudSync
       ipcChannel.sendMessage('bash', [
-        `echo doSetupSaveSync=${state.cloudSync} >> ~/emudeck/settings.sh && echo true`,
+        `echo ${preVar}doSetupSaveSync="${state.cloudSync}" >> ${settingsFile} && echo true`,
       ]);
 
       //Closing
       ipcChannel.sendMessage('bash-nolog', [
-        `finalSetting|||echo finishedUI=done >> ~/emudeck/settings.sh && echo true`,
+        `finalSetting|||echo ${preVar}finishedUI="done" >> ${settingsFile} && echo true`,
       ]);
     });
 
@@ -426,13 +454,22 @@ const EndPage = () => {
       let stdout = message.stdout;
 
       //Installation
-      // ipcChannel.sendMessage('bash-nolog', [
-      //   `bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
-      // ]);
-
-      ipcChannel.sendMessage('emudeck', [
-        `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > ~/.config/EmuDeck/msg.log && printf "\ec" && echo true`,
-      ]);
+      if (system === 'win32') {
+        // ipcChannel.sendMessage('bash-nolog', [
+        //   `powershell -ExecutionPolicy Bypass . %userprofile%/AppData/Roaming/EmuDeck/backend/setup.ps1`,
+        // ]);
+      } else {
+        ipcChannel.sendMessage('bash-nolog', [
+          `bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
+        ]);
+      }
+      if (system === 'win32') {
+        ipcChannel.sendMessage('emudeck', [`finish|||echo true`]);
+      } else {
+        ipcChannel.sendMessage('emudeck', [
+          `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > ~/.config/EmuDeck/msg.log && printf "\ec" && echo true`,
+        ]);
+      }
     });
 
     ipcChannel.once('finish', (message) => {
@@ -445,9 +482,15 @@ const EndPage = () => {
   }, [second]);
 
   const openSRM = () => {
-    ipcChannel.sendMessage('bash', [
-      `zenity --question --width 450 --title "Close Steam/Steam Input?" --text "$(printf "<b>Exit Steam to launch Steam Rom Manager? </b>\n\n To add your Emulators and EmulationStation-DE to steam hit Preview, then Generate App List, then wait for the images to download\n\nWhen you are happy with your image choices hit Save App List and wait for it to say it's completed.\n\nDesktop controls will temporarily revert to touch/trackpad/L2/R2")" && (kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
-    ]);
+    if (system === 'win32') {
+      ipcChannel.sendMessage('bash', [
+        `cd ${storagePath} && cd Emulation && cd tools && cd srm && start srm.exe`,
+      ]);
+    } else {
+      ipcChannel.sendMessage('bash', [
+        `zenity --question --width 450 --title "Close Steam/Steam Input?" --text "$(printf "<b>Exit Steam to launch Steam Rom Manager? </b>\n\n To add your Emulators and EmulationStation-DE to steam hit Preview, then Generate App List, then wait for the images to download\n\nWhen you are happy with your image choices hit Save App List and wait for it to say it's completed.\n\nDesktop controls will temporarily revert to touch/trackpad/L2/R2")" && (kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
+      ]);
+    }
 
     setTimeout(() => {
       window.close();

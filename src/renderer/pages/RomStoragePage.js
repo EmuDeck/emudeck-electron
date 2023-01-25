@@ -26,6 +26,10 @@ const RomStoragePage = () => {
     }
 
     if (storageName === 'Custom') {
+      if (system == 'win32') {
+        alert('This will take a few seconds. Please wait after clicking OK');
+      }
+
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
@@ -43,16 +47,15 @@ const RomStoragePage = () => {
         });
         //is it valid?
 
-        if (system == 'win32'){
+        if (system == 'win32') {
           ipcChannel.sendMessage('emudeck', [
             `testLocation|||testLocationValid 'custom' '${stdout}'`,
           ]);
-        }else{
+        } else {
           ipcChannel.sendMessage('emudeck', [
             `testLocation|||testLocationValid 'custom" "${stdout}"`,
           ]);
         }
-
 
         ipcChannel.once('testLocation', (message) => {
           let stdout = message.stdout.replace('\n', '');
@@ -107,9 +110,9 @@ const RomStoragePage = () => {
 
   //Do we have a valid SD Card?
   useEffect(() => {
-  if(system != 'win32'){
-    checkSDValid();
-}
+    if (system != 'win32') {
+      checkSDValid();
+    }
   }, []);
 
   //We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation

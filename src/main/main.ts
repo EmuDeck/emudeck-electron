@@ -42,15 +42,15 @@ const promiseFromChildProcess = (child) => {
 
 const logCommand = (bashCommand, stdout, stderr) => {
   let logFile = '$HOME/emudeck/Emudeck.AppImage.log';
-
+  if (os.platform().includes('win32')) {
+    logFile = '%userprofile%\\Emudeck.AppImage.log';
+  }
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
   const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   const yyyy = today.getFullYear();
   const date = mm + '/' + dd + '/' + yyyy;
-  if (os.platform().includes('win32')) {
-    logFile = '%userprofile%\\Emudeck.AppImage.log';
-  }
+
   exec(`echo "[${date}] ${bashCommand}" >> ${logFile}`);
   if (stdout) {
     exec(`echo "[${date}] stdout: ${stdout}" >> ${logFile}`);
@@ -498,6 +498,35 @@ ipcMain.on('clean-log', async (event, command) => {
 
 ipcMain.on('debug', async (event, command) => {
   mainWindow.webContents.openDevTools();
+});
+
+//RetroAchievements
+ipcMain.on('getToken', async (event, command) => {
+  let backChannel = 'getToken';
+  let bashCommand = `curl --location --request POST 'https://retroachievements.org/dorequest.php?r=login&u=${command.user}&p=${command.pass}'`;
+
+  if (os.platform().includes('win32')) {
+    bashCommand = `curl "https://retroachievements.org/dorequest.php?r=login&u=${command.user}&p=${command.pass}"`;
+  }
+
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
+});
+
+ipcMain.on('setToken', async (event, command) => {
+  let backChannel = 'getToken';
+  let bashCommand = `echo ${command} > "$HOME/.config/EmuDeck/.rat" && RetroArch_retroAchievementsSetLogin && DuckStation_retroAchievementsSetLogin && PCSX2_retroAchievementsSetLogin && echo true`;
+
+  if (os.platform().includes('win32')) {
+    bashCommand = `cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; echo ${command} > %userprofile%/AppData/Roaming/EmuDeck/.rat ; RetroArch_retroAchievementsSetLogin ; DuckStation_retroAchievementsSetLogin ; PCSX2_retroAchievementsSetLogin ; echo true`;
+  }
+
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
 });
 
 /**
