@@ -32,9 +32,6 @@ const CheckUpdatePage = () => {
   const { disabledNext, disabledBack, downloadComplete, data, cloned, update } =
     statePage;
   const navigate = useNavigate();
-  const selectMode = (value) => {
-    setState({ ...state, mode: value });
-  };
 
   const {
     device,
@@ -70,16 +67,16 @@ const CheckUpdatePage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    console.log({ statePage });
-  }, [statePage]);
+  // useEffect(() => {
+  //   console.log({ statePage });
+  // }, [statePage]);
 
   useEffect(() => {
     //Update timeout + Force clone check
     console.log('UPDATE - SETTING TIMER FOR TIMEOUT');
     setTimeout(() => {
       if (updateRef === null) {
-        console.log('UPDATE - TIMEOUT');
+        console.log('UPDATE - TIMEOUT REACHED!');
         setStatePage({
           ...statePage,
           update: 'up-to-date',
@@ -88,78 +85,114 @@ const CheckUpdatePage = () => {
       }
     }, 15000);
 
-    //Ask for branch
-    const branch = require('data/branch.json');
-
-    const settingsStorage = JSON.parse(
-      localStorage.getItem('settings_emudeck')
-    );
-    console.log({ settingsStorage });
-    if (!!settingsStorage) {
-      const shadersStored = settingsStorage.shaders;
-      const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
-      const achievementsStored = settingsStorage.achievements;
-
-      console.log({ overwriteConfigEmusStored });
-      console.log({ overwriteConfigEmus });
-      const installEmusStored = settingsStorage.installEmus;
-      //Theres probably a better way to do this...
-      ipcChannel.sendMessage('version');
-
-      ipcChannel.once('version-out', (version) => {
-        console.log({ version });
-        ipcChannel.sendMessage('system-info-in');
-        ipcChannel.once('system-info-out', (platform) => {
-          setState({
-            ...state,
-            ...settingsStorage,
-            installEmus: { ...installEmus, ...installEmusStored },
-            overwriteConfigEmus: {
-              ...overwriteConfigEmus,
-              ...overwriteConfigEmusStored,
-            },
-            achievements: {
-              ...achievements,
-              ...achievementsStored,
-            },
-            shaders: { ...shaders, ...shadersStored },
-            system: platform,
-            version: version[0],
-            gamemode: version[1],
-            branch: branch.branch,
-          });
-        });
-      });
-    } else {
-      ipcChannel.sendMessage('version');
-      ipcChannel.once('version-out', (version) => {
-        ipcChannel.sendMessage('system-info-in');
-        ipcChannel.once('system-info-out', (platform) => {
-          setState({
-            ...state,
-            system: platform,
-            version: version,
-            branch: branchNode,
-          });
-        });
-      });
-    }
-
-    //ipcChannel.sendMessage('clean-log');
-
-    //  setTimeout(() => {
     console.log('UPDATE - CHECKING');
     ipcChannel.sendMessage('update-check');
     console.log('UPDATE - WAITING');
     ipcChannel.once('update-check-out', (message) => {
       console.log('UPDATE - GETTING INFO:');
-      console.log({ message });
+      //console.log({ message });
       setStatePage({
         ...statePage,
         update: message[0],
         data: message[1],
       });
+      if (message[0] == 'up-to-date') {
+        updateFiles();
+      }
     });
+
+    const updateFiles = () => {
+      //Ask for branch
+      const branch = require('data/branch.json');
+
+      const settingsStorage = JSON.parse(
+        localStorage.getItem('settings_emudeck')
+      );
+      //console.log({ settingsStorage });
+      if (!!settingsStorage) {
+        const shadersStored = settingsStorage.shaders;
+        const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
+        const achievementsStored = settingsStorage.achievements;
+
+        console.log({ overwriteConfigEmusStored });
+        console.log({ overwriteConfigEmus });
+        const installEmusStored = settingsStorage.installEmus;
+        //Theres probably a better way to do this...
+        console.log('2 - VERSION - CHECKING');
+        ipcChannel.sendMessage('version');
+
+        ipcChannel.once('version-out', (version) => {
+          console.log('2 - VERSION - GETTING');
+          console.log({ version });
+          ipcChannel.sendMessage('system-info-in');
+          ipcChannel.once('system-info-out', (platform) => {
+            console.log('2 - VERSION - GETTING SYSTEM TOO');
+            console.log({
+              system: platform,
+              version: version[0],
+              gamemode: version[1],
+            });
+            setState({
+              ...state,
+              ...settingsStorage,
+              installEmus: { ...installEmus, ...installEmusStored },
+              overwriteConfigEmus: {
+                ...overwriteConfigEmus,
+                ...overwriteConfigEmusStored,
+              },
+              achievements: {
+                ...achievements,
+                ...achievementsStored,
+              },
+              shaders: { ...shaders, ...shadersStored },
+              system: platform,
+              version: version[0],
+              gamemode: version[1],
+              branch: branch.branch,
+            });
+          });
+        });
+      } else {
+        console.log('1 - VERSION - CHECKING');
+        ipcChannel.sendMessage('version');
+        ipcChannel.once('version-out', (version) => {
+          console.log('1 - VERSION - GETTING');
+          ipcChannel.sendMessage('system-info-in');
+          ipcChannel.once('system-info-out', (platform) => {
+            console.log('1 - VERSION - GETTING SYSTEM TOO');
+            console.log({
+              system: platform,
+              version: version[0],
+              gamemode: version[1],
+              branch: branch.branch,
+            });
+            setState({
+              ...state,
+              system: platform,
+              version: version[0],
+              gamemode: version[1],
+              branch: branch.branch,
+            });
+          });
+        });
+      }
+    };
+
+    //ipcChannel.sendMessage('clean-log');
+
+    //  setTimeout(() => {
+    // console.log('UPDATE - CHECKING');
+    // ipcChannel.sendMessage('update-check');
+    // console.log('UPDATE - WAITING');
+    // ipcChannel.once('update-check-out', (message) => {
+    //   console.log('UPDATE - GETTING INFO:');
+    //   console.log({ message });
+    //   setStatePage({
+    //     ...statePage,
+    //     update: message[0],
+    //     data: message[1],
+    //   });
+    // });
 
     //  }, 500);
   }, []);
@@ -178,9 +211,9 @@ const CheckUpdatePage = () => {
       //is the git repo cloned?
       ipcChannel.sendMessage('check-git');
       ipcChannel.once('check-git', (error, cloneStatusCheck, stderr) => {
-        console.log({ error });
-        console.log({ cloneStatusCheck });
-        console.log({ stderr });
+        //console.log({ error });
+        //console.log({ cloneStatusCheck });
+        //console.log({ stderr });
         cloneStatusCheck = cloneStatusCheck.replace('\n', '');
         cloneStatusCheck.includes('true')
           ? (cloneStatusCheck = true)
@@ -201,9 +234,9 @@ const CheckUpdatePage = () => {
         ipcChannel.sendMessage(`clone`, branch);
 
         ipcChannel.once('clone', (error, cloneStatusClone, stderr) => {
-          console.log({ error });
-          console.log({ cloneStatusClone });
-          console.log({ stderr });
+          //console.log({ error });
+          //console.log({ cloneStatusClone });
+          //console.log({ stderr });
           if (cloneStatusClone.includes('true')) {
             setStatePage({ ...statePage, downloadComplete: true });
           }
@@ -215,9 +248,9 @@ const CheckUpdatePage = () => {
       if (navigator.onLine) {
         ipcChannel.sendMessage('pull', branch);
         ipcChannel.once('pull', (error, pullStatus, stderr) => {
-          console.log({ error });
-          console.log({ pullStatus });
-          console.log({ stderr });
+          //console.log({ error });
+          //console.log({ pullStatus });
+          //console.log({ stderr });
           setStatePage({ ...statePage, downloadComplete: true });
           //Update timeout
         });

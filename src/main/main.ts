@@ -283,14 +283,13 @@ ipcMain.on('emudeck-nolog', async (event, command) => {
   }
 
   return exec(`${preCommand}`, (error, stdout, stderr) => {
-      //event.reply('console', { backChannel });
-      event.reply(backChannel, {
-        stdout: stdout,
-        stderr: stderr,
-        error: error,
-      });
-    }
-  );
+    //event.reply('console', { backChannel });
+    event.reply(backChannel, {
+      stdout: stdout,
+      stderr: stderr,
+      error: error,
+    });
+  });
 });
 
 //UI commands
@@ -320,14 +319,18 @@ ipcMain.on('update-check', async (event, command) => {
   //const os = require('os');
   if (os.platform().includes('win32')) {
     mainWindow.webContents.openDevTools();
-    event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
-    return;
+    setTimeout(function () {
+      event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
+      return;
+    }, 500);
   }
 
   if (process.env.NODE_ENV === 'development') {
-    event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
-    logCommand('UPDATE: DEV MODE');
-    return;
+    setTimeout(function () {
+      event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
+      logCommand('UPDATE: DEV MODE');
+      return;
+    }, 500);
   }
 
   const result = autoUpdater.checkForUpdates();
