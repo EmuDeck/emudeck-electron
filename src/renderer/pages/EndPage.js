@@ -22,7 +22,6 @@ const EndPage = () => {
       let messageText = messageArray[1];
       let messagePercent = messageArray[0];
 
-      console.log({ messageArray });
       messagePercent = messagePercent.replaceAll(' ', '');
       messagePercent = messagePercent.replaceAll('\n', '');
       messagePercent = messagePercent.replaceAll('\n\r', '');
@@ -51,7 +50,7 @@ const EndPage = () => {
   const showLog = () => {
     if (system === 'win32') {
       ipcChannel.sendMessage('bash-nolog', [
-        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE\emudeck\emudeck.log -Tail 10 -Wait }"`,
+        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/emudeck.log -Tail 10 -Wait }"`,
       ]);
     } else {
       ipcChannel.sendMessage('bash-nolog', [
@@ -102,6 +101,7 @@ const EndPage = () => {
 
     //Wait for settings.sh creation.
     ipcChannel.once('startSettings', (message) => {
+      console.log('startSettings');
       //Setup Emus
       ipcChannel.sendMessage('bash', [
         `echo ${preVar}doSetupRA="${
@@ -454,41 +454,42 @@ const EndPage = () => {
 
       // Emulator resolutions
       ipcChannel.sendMessage('bash', [
-        `echo ${preVar}dolphinResolution="${state.resolution.dolphin}" >> ${settingsFile}`,
+        `echo ${preVar}dolphinResolution="${state.resolutions.dolphin}" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo ${preVar}duckstationResolution="${state.resolution.duckstation}" >> ${settingsFile}`,
+        `echo ${preVar}duckstationResolution="${state.resolutions.duckstation}" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo ${preVar}pcsx2Resolution="${state.resolution.pcsx2}" >> ${settingsFile}`,
+        `echo ${preVar}pcsx2Resolution="${state.resolutions.pcsx2}" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo ${preVar}yuzuResolution="${state.resolution.yuzu}" >> ${settingsFile}`,
+        `echo ${preVar}yuzuResolution="${state.resolutions.yuzu}" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo ${preVar}ppssppResolution="${state.resolution.ppsspp}" >> ${settingsFile}`,
+        `echo ${preVar}ppssppResolution="${state.resolutions.ppsspp}" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo ${preVar}rpcs3Resolution="${state.resolution.rpcs3}" >> ${settingsFile}`,
+        `echo ${preVar}rpcs3Resolution="${state.resolutions.rpcs3}" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo ${preVar}ryujinxResolution="${state.resolution.ryujinx}" >> ${settingsFile}`,
+        `echo ${preVar}ryujinxResolution="${state.resolutions.ryujinx}" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo ${preVar}xemuResolution="${state.resolution.xemu}" >> ${settingsFile}`,
+        `echo ${preVar}xemuResolution="${state.resolutions.xemu}" >> ${settingsFile}`,
       ]);
       ipcChannel.sendMessage('bash', [
-        `echo ${preVar}xeniaResolution="${state.resolution.xenia}" >> ${settingsFile}`,
+        `echo ${preVar}xeniaResolution="${state.resolutions.xenia}" >> ${settingsFile}`,
       ]);
 
       //Closing
+      console.log('finalSetting');
       ipcChannel.sendMessage('bash-nolog', [
         `finalSetting|||echo ${preVar}finishedUI="done" >> ${settingsFile} && echo true`,
       ]);
     });
 
     ipcChannel.once('finalSetting', (message) => {
-      console.log({ message });
+      console.log('Running installer');
       let stdout = message.stdout;
 
       //Installation
@@ -513,7 +514,7 @@ const EndPage = () => {
     });
 
     ipcChannel.once('finish', (message) => {
-      console.log({ message });
+      console.log('finish');
       let stdout = message.stdout;
       if (stdout.includes('true')) {
         setStatePage({ ...statePage, disabledNext: false });
