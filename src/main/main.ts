@@ -245,6 +245,7 @@ ipcMain.on('emudeck', async (event, command) => {
   let preCommand;
 
   if (os.platform().includes('win32')) {
+    bashCommand = bashCommand.replaceAll('&&', ';');
     preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
   } else {
     preCommand = `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
