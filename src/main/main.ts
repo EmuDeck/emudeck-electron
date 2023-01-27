@@ -322,7 +322,6 @@ ipcMain.on('update-check', async (event, command) => {
   //Windows no update - temporary
   //const os = require('os');
   if (os.platform().includes('win32')) {
-    mainWindow.webContents.openDevTools();
     setTimeout(function () {
       event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
       return;
