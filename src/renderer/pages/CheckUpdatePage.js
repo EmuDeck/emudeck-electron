@@ -209,11 +209,12 @@ const CheckUpdatePage = () => {
 
     if (update == 'up-to-date') {
       //is the git repo cloned?
+      console.log('check-git');
       ipcChannel.sendMessage('check-git');
       ipcChannel.once('check-git', (error, cloneStatusCheck, stderr) => {
-        //console.log({ error });
-        //console.log({ cloneStatusCheck });
-        //console.log({ stderr });
+        console.log({ error });
+        console.log({ cloneStatusCheck });
+        console.log({ stderr });
         cloneStatusCheck = cloneStatusCheck.replace('\n', '');
         cloneStatusCheck.includes('true')
           ? (cloneStatusCheck = true)
@@ -232,11 +233,11 @@ const CheckUpdatePage = () => {
     if (cloned == false) {
       if (navigator.onLine) {
         ipcChannel.sendMessage(`clone`, branch);
-
+        console.log('clone');
         ipcChannel.once('clone', (error, cloneStatusClone, stderr) => {
-          //console.log({ error });
-          //console.log({ cloneStatusClone });
-          //console.log({ stderr });
+          console.log({ error });
+          console.log({ cloneStatusClone });
+          console.log({ stderr });
           if (cloneStatusClone.includes('true')) {
             setStatePage({ ...statePage, downloadComplete: true });
           }
@@ -247,10 +248,11 @@ const CheckUpdatePage = () => {
     } else if (cloned == true) {
       if (navigator.onLine) {
         ipcChannel.sendMessage('pull', branch);
+        console.log('pull');
         ipcChannel.once('pull', (error, pullStatus, stderr) => {
-          //console.log({ error });
-          //console.log({ pullStatus });
-          //console.log({ stderr });
+          console.log({ error });
+          console.log({ pullStatus });
+          console.log({ stderr });
           setStatePage({ ...statePage, downloadComplete: true });
           //Update timeout
         });

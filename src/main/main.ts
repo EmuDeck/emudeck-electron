@@ -26,6 +26,9 @@ export default class AppUpdater {
   }
 }
 
+// file system module to perform file operations
+const fs = require('fs');
+
 // Vars and consts
 let mainWindow: BrowserWindow | null = null;
 //Prevent two instances
@@ -436,7 +439,7 @@ ipcMain.on('clone', async (event, branch) => {
   let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branch} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && mkdir backend && cd backend && git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git . && git checkout ${branch} && cd %userprofile% && mkdir emudeck && cd emudeck && type nul > .cloned && echo true`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend && cd backend && git checkout ${branch} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
 
     //First we install git
     var child = exec(
@@ -449,12 +452,14 @@ ipcMain.on('clone', async (event, branch) => {
     promiseFromChildProcess(child).then(
       function (result) {
         return exec(`${bashCommand}`, (error, stdout, stderr) => {
+          console.log('OK Promise', error, stdout, stderr);
           logCommand(bashCommand, error, stdout, stderr);
           event.reply(backChannel, error, stdout, stderr);
         });
       },
       function (err) {
         return exec(`${bashCommand}`, (error, stdout, stderr) => {
+          console.log('KO Promise', error, stdout, stderr);
           logCommand(bashCommand, error, stdout, stderr);
           event.reply(backChannel, error, stdout, stderr);
         });
@@ -527,6 +532,31 @@ ipcMain.on('setToken', async (event, command) => {
   return exec(`${bashCommand}`, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
     event.reply(backChannel, error, stdout, stderr);
+  });
+});
+
+ipcMain.on('saveSettings', async (event, command) => {
+  let backChannel = 'saveSettings';
+
+  // json data
+  var jsonData = command;
+
+  // parse json
+  var jsonObj = JSON.parse(jsonData);
+
+  // stringify JSON Object
+  var jsonContent = JSON.stringify(jsonObj);
+
+  const homedir = require('os').homedir();
+  let settingsFile = `${homedir}/AppData/Roaming/EmuDeck/settings.json`;
+
+  fs.writeFile(settingsFile, jsonContent, 'utf8', function (err) {
+    if (err) {
+      console.log('An error occured while writing JSON Object to File.');
+      event.reply(backChannel, err);
+    }
+    event.reply(backChannel, 'true');
+    console.log('JSON file has been saved.');
   });
 });
 
