@@ -70,20 +70,19 @@ const CheckUpdatePage = () => {
   // useEffect(() => {
   //   console.log({ statePage });
   // }, [statePage]);
+  useEffect(() => {}, []);
 
   useEffect(() => {
     //Update timeout + Force clone check
     console.log('UPDATE - SETTING TIMER FOR TIMEOUT');
-    setTimeout(() => {
-      if (updateRef === null) {
-        console.log('UPDATE - TIMEOUT REACHED!');
-        setStatePage({
-          ...statePage,
-          update: 'up-to-date',
-          cloned: null,
-        });
-      }
-    }, 15000);
+    const myTimeout = setTimeout(() => {
+      console.log('UPDATE - TIMEOUT REACHED!');
+      setStatePage({
+        ...statePage,
+        update: 'up-to-date',
+        cloned: null,
+      });
+    }, 10000);
 
     console.log('UPDATE - CHECKING');
     ipcChannel.sendMessage('update-check');
@@ -98,6 +97,8 @@ const CheckUpdatePage = () => {
       });
       if (message[0] == 'up-to-date') {
         updateFiles();
+      } else {
+        clearTimeout(myTimeout);
       }
     });
 

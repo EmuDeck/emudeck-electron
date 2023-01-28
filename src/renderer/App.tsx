@@ -144,12 +144,6 @@ export default function App() {
         installed: undefined,
         name: 'Steam Rom Manager Parsers',
       },
-      rmg: {
-        id: 'rmg',
-        status: false,
-        installed: undefined,
-        name: "Rosalie's Mupen Gui",
-      },
       esde: {
         id: 'esde',
         status: true,
@@ -191,7 +185,6 @@ export default function App() {
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
-      rmg: { id: 'rmg', status: false, name: "Rosalie's Mupen Gui" },
       esde: { id: 'esde', status: true, name: 'EmulationStation' },
       mame: { id: 'mame', status: true, name: 'Mame Standalone' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita 3K (Experimental)' },
