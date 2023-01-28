@@ -66,9 +66,12 @@ const WelcomePage = () => {
   };
 
   const openCSM = () => {
-    ipcChannel.sendMessage('bash', [
-      'bash ~/.config/EmuDeck/backend/functions/cloudServicesManager.sh',
+    ipcChannel.sendMessage('emudeck', [
+      'csm|||~/.config/EmuDeck/backend/functions/cloudServicesManager.sh',
     ]);
+    ipcChannel.once('csm', (message) => {
+      console.log({ message });
+    });
   };
 
   const sprunge = () => {
