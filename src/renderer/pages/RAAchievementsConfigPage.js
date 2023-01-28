@@ -52,7 +52,7 @@ const RAAchievementsConfigPage = () => {
       data={data}
       disabledNext={disabledNext}
       disabledBack={true}
-      next="tools-and-stuff"
+      next="welcome"
       nextText={achievements.pass ? 'Continue' : 'Skip'}
       onChange={setAchievements}
       onToggle={setAchievementsHardCore}
