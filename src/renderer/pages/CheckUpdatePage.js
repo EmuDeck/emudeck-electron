@@ -201,8 +201,8 @@ const CheckUpdatePage = () => {
       localStorage.setItem('show_changelog', true);
       localStorage.setItem('pending_update', true);
     }
-    localStorage.setItem('pending_update', false);
     if (update == 'up-to-date') {
+      localStorage.setItem('pending_update', false);
       //is the git repo cloned?
       console.log('check-git');
       ipcChannel.sendMessage('check-git');
