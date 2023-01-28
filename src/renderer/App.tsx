@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { GlobalContext } from './context/globalContext';
+
+import CheckUpdatePage from 'pages/CheckUpdatePage';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
@@ -16,6 +17,7 @@ import ShadersHandheldsPage from 'pages/ShadersHandheldsPage';
 import Shaders2DPage from 'pages/Shaders2DPage';
 import Shaders3DPage from 'pages/Shaders3DPage';
 import RAAchievementsPage from 'pages/RAAchievementsPage';
+import RAAchievementsConfigPage from 'pages/RAAchievementsConfigPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
@@ -30,14 +32,20 @@ import ChangeLogPage from 'pages/ChangeLogPage';
 import SettingsPage from 'pages/SettingsPage';
 import UninstallPage from 'pages/UninstallPage';
 
-import CHDToolPage from 'pages/CHDToolPage';
 import RemotePlayWhateverPage from 'pages/RemotePlayWhateverPage';
 import VideoGuidePage from 'pages/VideoGuidePage';
+import MigrationPage from 'pages/MigrationPage';
+import CopyGamesPage from 'pages/CopyGamesPage';
+
 import EmuGuidePage from 'pages/EmuGuidePage';
 import AutoSavePage from 'pages/AutoSavePage';
-import HomebrewGames from 'pages/HomebrewGamesPage';
+import HomebrewGamesPage from 'pages/HomebrewGamesPage';
+import ConfirmationPage from 'pages/ConfirmationPage';
+import EmulatorResolutionPage from 'pages/EmulatorResolutionPage';
 
 import EndPage from 'pages/EndPage';
+
+import { GlobalContext } from './context/globalContext';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
 import 'getbasecore/src/utils/grid-layout/core_grid-layout.scss';
@@ -50,6 +58,7 @@ import './App.css';
 export default function App() {
   const [state, setState] = useState({
     version: '',
+    gamemode: false,
     branch: branch.branch,
     command: '',
     debug: false,
@@ -70,6 +79,7 @@ export default function App() {
     achievements: {
       user: '',
       pass: '',
+      token: '',
       hardcore: false,
     },
     autosave: false,
@@ -87,25 +97,80 @@ export default function App() {
     theme: 'EPICNOIR',
     homebrewGames: false,
     installEmus: {
-      ra: { id: 'ra', status: true, name: 'RetroArch' },
-      dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-      primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
-      ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
-      duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
-      citra: { id: 'citra', status: true, name: 'Citra' },
-      pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
-      rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-      yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-      ryujinx: { id: 'ryujinx', status: false, name: 'Ryujinx' },
-      xemu: { id: 'xemu', status: true, name: 'Xemu' },
-      cemu: { id: 'cemu', status: true, name: 'Cemu' },
-      srm: { id: 'srm', status: true, name: 'Steam Rom Manager Parsers' },
-      esde: { id: 'esde', status: true, name: 'EmulationStation' },
+      ra: { id: 'ra', status: true, installed: undefined, name: 'RetroArch' },
+      dolphin: {
+        id: 'dolphin',
+        status: true,
+        installed: undefined,
+        name: 'Dolphin',
+      },
+      primehacks: {
+        id: 'primehacks',
+        status: true,
+        installed: undefined,
+        name: 'Prime Hacks',
+      },
+      ppsspp: {
+        id: 'ppsspp',
+        status: true,
+        installed: undefined,
+        name: 'PPSSPP',
+      },
+      duckstation: {
+        id: 'duckstation',
+        status: true,
+        installed: undefined,
+        name: 'DuckStation',
+      },
+      melonds: {
+        id: 'melonds',
+        status: true,
+        installed: undefined,
+        name: 'melonDS',
+      },
+      citra: { id: 'citra', status: true, installed: undefined, name: 'Citra' },
+      pcsx2: { id: 'pcsx2', status: true, installed: undefined, name: 'PCSX2' },
+      rpcs3: { id: 'rpcs3', status: true, installed: undefined, name: 'RPCS3' },
+      yuzu: { id: 'yuzu', status: true, installed: undefined, name: 'Yuzu' },
+      ryujinx: {
+        id: 'ryujinx',
+        status: false,
+        installed: undefined,
+        name: 'Ryujinx',
+      },
+      xemu: { id: 'xemu', status: true, installed: undefined, name: 'Xemu' },
+      cemu: { id: 'cemu', status: true, installed: undefined, name: 'Cemu' },
+      srm: {
+        id: 'srm',
+        status: true,
+        installed: undefined,
+        name: 'Steam Rom Manager Parsers',
+      },
+      esde: {
+        id: 'esde',
+        status: true,
+        installed: undefined,
+        name: 'EmulationStation',
+      },
       mame: { id: 'mame', status: false, name: 'Mame Standalone' },
-      vita3k: { id: 'vita3k', status: true, name: 'Vita 3K (Experimental)' },
-      scummvm: { id: 'scummvm', status: true, name: 'Scumm VM' },
-      xenia: { id: 'xenia', status: false, name: 'Xenia' },
-      //supermodelista: { id: 'supermodelista', status: true, name: 'Supermodelista' },
+      vita3k: {
+        id: 'vita3k',
+        status: true,
+        installed: undefined,
+        name: 'Vita 3K (Experimental)',
+      },
+      scummvm: {
+        id: 'scummvm',
+        status: true,
+        installed: undefined,
+        name: 'Scumm VM',
+      },
+      xenia: {
+        id: 'xenia',
+        status: false,
+        installed: undefined,
+        name: 'Xenia',
+      },
     },
     overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
@@ -113,6 +178,7 @@ export default function App() {
       primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
       ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
       duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
+      melonds: { id: 'melonds', status: true, name: 'melonDS' },
       citra: { id: 'citra', status: true, name: 'Citra' },
       pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
@@ -125,7 +191,17 @@ export default function App() {
       mame: { id: 'mame', status: true, name: 'Mame Standalone' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita 3K (Experimental)' },
       scummvm: { id: 'scummvm', status: true, name: 'Scumm VM' },
-      // supermodelista: { id: 'supermodelista', status: true, name: 'Supermodelista' }
+    },
+    resolutions: {
+      dolphin: '720P',
+      duckstation: '720P',
+      pcsx2: '720P',
+      yuzu: '720P',
+      ppsspp: '720P',
+      rpcs3: '720P',
+      ryujinx: '720P',
+      xemu: '720P',
+      xenia: '720P',
     },
   });
 
@@ -138,7 +214,7 @@ export default function App() {
     >
       <Router>
         <Routes>
-          <Route exact path="/" element={<WelcomePage />} />
+          <Route exact path="/" element={<CheckUpdatePage />} />
           <Route exact path="/welcome" element={<WelcomePage />} />
           <Route
             exact
@@ -155,17 +231,29 @@ export default function App() {
             path="/emulator-configuration"
             element={<EmulatorConfigurationPage />}
           />
+          <Route
+            exact
+            path="/emulator-resolution"
+            element={<EmulatorResolutionPage />}
+          />
           <Route exact path="/rom-storage" element={<RomStoragePage />} />
           <Route exact path="/rom-structure" element={<RomStructurePage />} />
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
 
           <Route exact path="/auto-save" element={<AutoSavePage />} />
-          <Route exact path="/homebrew-games" element={<HomebrewGames />} />
+          <Route exact path="/homebrew-games" element={<HomebrewGamesPage />} />
+          <Route exact path="/confirmation" element={<ConfirmationPage />} />
 
           <Route
             exact
             path="/RA-achievements"
             element={<RAAchievementsPage />}
+          />
+
+          <Route
+            exact
+            path="/RA-achievements-config"
+            element={<RAAchievementsConfigPage />}
           />
 
           <Route
@@ -220,6 +308,8 @@ export default function App() {
           />
 
           <Route exact path="/video-guide" element={<VideoGuidePage />} />
+          <Route exact path="/migration" element={<MigrationPage />} />
+          <Route exact path="/copy-games" element={<CopyGamesPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
           <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />

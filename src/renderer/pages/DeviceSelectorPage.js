@@ -16,10 +16,11 @@ import Card from 'components/molecules/Card/Card.js';
 // import imgAndroid from 'assets/android.png';
 import imgDeck from 'assets/deck.png';
 import imgWin600 from 'assets/win600.png';
+import imgWin from 'assets/winlogo.png';
 
 const DeviceSelectorPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { device, installEmus } = state;
+  const { device, installEmus, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
@@ -65,6 +66,16 @@ const DeviceSelectorPage = () => {
         <img src={imgWin600} width="100" alt="Background" />
         <span className="h6">Anbernic WIN600</span>
       </Card>
+
+      {system === 'win32' && (
+        <Card
+          css={device == 'Windows' && 'is-selected'}
+          onClick={() => deviceSet('Windows')}
+        >
+          <img src={imgWin} width="100" alt="Background" />
+          <span className="h6">Windows Machine</span>
+        </Card>
+      )}
 
       {/*
 

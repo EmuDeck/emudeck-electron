@@ -2,10 +2,10 @@ import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Card from 'components/molecules/Card/Card.js';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog.js';
-import img0 from 'assets/homebrew-banner.png';
-import img1 from 'assets/ra_banner.jpg';
-import img2 from 'assets/DeckyControls.jpg';
-import img3 from 'assets/srm.jpg';
+import img0 from 'assets/emudeck_banner.png';
+import img1 from 'assets/ui_banner.png';
+import img2 from 'assets/melonds_banner.png';
+import img3 from 'assets/dolphin_banner.png';
 import img4 from 'assets/1x1.png';
 
 const ChangeLogPage = () => {
@@ -42,24 +42,39 @@ const ChangeLogPage = () => {
     setStatePage({ ...statePage, current: id, img: imgID });
   };
 
+  //Hide changelog after seen
+  useEffect(() => {
+    localStorage.setItem('show_changelog', false);
+  }, []);
+
   return (
     <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
       <div className="container--grid">
         <div data-col-sm="4">
-          <ul>
-            {changeLogData.map((item, i) => {
-              return (
-                <li tabindex="0" key={i}>
-                  <Card
-                    css={current == i && 'is-selected'}
-                    onClick={() => activeItem(i)}
-                  >
-                    <span className="h5">{item.title}</span>
-                  </Card>
-                </li>
-              );
-            })}
-          </ul>
+          <div
+            class="changelog-scroll"
+            style={{
+              height: '62vh',
+              overflow: 'auto',
+              overflowX: 'hidden',
+              paddingRight: '20px',
+            }}
+          >
+            <ul>
+              {changeLogData.map((item, i) => {
+                return (
+                  <li tabindex="0" key={i}>
+                    <Card
+                      css={current == i && 'is-selected'}
+                      onClick={() => activeItem(i)}
+                    >
+                      <span className="h5">{item.title}</span>
+                    </Card>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
         <div data-col-sm="8">
           {changeLogData.map((item, i) => {
@@ -73,9 +88,9 @@ const ChangeLogPage = () => {
                     {item.image == 'true' && (
                       <div
                         style={{
-                          height: 332,
+                          maxHeight: 280,
                           overflow: 'hidden',
-                          marginBottom: 20,
+                          marginBottom: 10,
                           borderRadius: 10,
                         }}
                       >

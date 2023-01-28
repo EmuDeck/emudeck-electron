@@ -5,7 +5,7 @@ import EmuGuide from 'components/organisms/Wrappers/EmuGuide.js';
 
 const EmuGuidePage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { installEmus } = state;
+  const { installEmus, mode } = state;
   const { ryujinx } = installEmus;
   const emuData = require('data/emuData.json');
   const [statePage, setStatePage] = useState({
@@ -72,16 +72,22 @@ const EmuGuidePage = () => {
     });
   };
 
-  const installEmu = (emulator, name) => {
+  const installEmu = (emulator, name, alternative = false) => {
     console.log(emulator);
 
     setStatePage({
       ...statePage,
       disableInstallButton: true,
     });
-    ipcChannel.sendMessage('emudeck', [
-      `${name}_install|||${name}_install && ${name}_init`,
-    ]);
+    if (alternative) {
+      ipcChannel.sendMessage('emudeck', [
+        `${name}_install|||${name}_install_alt && ${name}_init_alt`,
+      ]);
+    } else {
+      ipcChannel.sendMessage('emudeck', [
+        `${name}_install|||${name}_install && ${name}_init`,
+      ]);
+    }
     ipcChannel.once(`${name}_install`, (status) => {
       // console.log({ status });
       status = status.stdout;
@@ -106,17 +112,17 @@ const EmuGuidePage = () => {
             disableInstallButton: false,
           });
           //We set the emu as install = yes
-          setState({
-            ...state,
-            installEmus: {
-              ...installEmus,
-              [emulator]: {
-                id: emulator,
-                name: name,
-                status: true,
-              },
-            },
-          });
+          // setState({
+          //   ...state,
+          //   installEmus: {
+          //     ...installEmus,
+          //     [emulator]: {
+          //       id: emulator,
+          //       name: name,
+          //       status: true,
+          //     },
+          //   },
+          // });
         } else {
           setStatePage({
             ...statePage,
@@ -127,6 +133,80 @@ const EmuGuidePage = () => {
         }
       });
     });
+  };
+
+  const uninstallEmu = (emulator, name, alternative = false) => {
+    console.log(emulator);
+
+    if (
+      confirm(
+        'Are you sure you want to uninstall? Your saved games will be deleted'
+      )
+    ) {
+      // Uninstall it!
+
+      setStatePage({
+        ...statePage,
+        disableInstallButton: true,
+      });
+      if (alternative) {
+        ipcChannel.sendMessage('emudeck', [
+          `${name}_uninstall|||${name}_uninstall_alt`,
+        ]);
+      } else {
+        ipcChannel.sendMessage('emudeck', [
+          `${name}_uninstall|||${name}_uninstall`,
+        ]);
+      }
+
+      ipcChannel.once(`${name}_uninstall`, (status) => {
+        // console.log({ status });
+        status = status.stdout;
+        //console.log({ status });
+        status = status.replace('\n', '');
+        //Lets check if it did install
+        ipcChannel.sendMessage('emudeck', [
+          `${name}_IsInstalled|||${name}_IsInstalled`,
+        ]);
+
+        ipcChannel.once(`${name}_IsInstalled`, (status) => {
+          // console.log({ status });
+          status = status.stdout;
+          console.log({ status });
+          status = status.replace('\n', '');
+
+          if (status.includes('false')) {
+            setStatePage({
+              ...statePage,
+              textNotification: `${name} Uninstalled! 🎉`,
+              showNotification: true,
+              disableInstallButton: false,
+            });
+            //We set the emu as install = no
+            // setState({
+            //   ...state,
+            //   installEmus: {
+            //     ...installEmus,
+            //     [emulator]: {
+            //       id: emulator,
+            //       name: name,
+            //       status: false,
+            //     },
+            //   },
+            // });
+          } else {
+            setStatePage({
+              ...statePage,
+              textNotification: `There was an issue trying to uninstall ${name} 😥`,
+              showNotification: true,
+              disableInstallButton: false,
+            });
+          }
+        });
+      });
+    } else {
+      // Do nothing!
+    }
   };
 
   const resetEmu = (emulator, name) => {
@@ -172,21 +252,6 @@ const EmuGuidePage = () => {
     }
   }, [showNotification]);
 
-  const checkInstallation = (emulator, name) => {
-    console.log(`Checking ${name} status`);
-    //alert(emulator);
-    // setState(
-    //   ...state,
-    //   (installEmus: {
-    //     ...installEmus,
-    //     (emulator:{
-    //       ...emulator,
-    //       status: true,
-    //     })
-    //   })
-    // );
-  };
-
   useEffect(() => {
     checkBios('checkPS1BIOS');
     checkBios('checkPS2BIOS');
@@ -210,6 +275,7 @@ const EmuGuidePage = () => {
   return (
     <>
       <EmuGuide
+        mode={mode}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
         emuData={emuData[emulatorSelected]}
@@ -223,6 +289,7 @@ const EmuGuidePage = () => {
         onChange={selectEmu}
         onClick={resetEmu}
         onClickInstall={installEmu}
+        onClickUninstall={uninstallEmu}
         showNotification={showNotification}
         textNotification={textNotification}
         installEmus={installEmus[emulatorSelected]}

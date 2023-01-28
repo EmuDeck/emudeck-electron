@@ -104,13 +104,27 @@
     "name": "DuckStation",
     "code": "DuckStation",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Duckstation",
-    "description": "DuckStation is a Sony PlayStation 1 emulator, developed primarily by stenzek. Bask in the glory of the low-poly models.",
+    "description": "",
     "special_configuration": "BIOS: BIOS are required, ROMs do need region specific BIOS. EmuDeck's Steam Input profile is required for hotkeys.",
     "bios": ["ps1"],
     "systems": "Sony Playstation 1",
     "hotkeys": {
       "0": ["Action", "Keys"],
-      "1": ["Menu", "STEAM+DPAD"]
+      "1": ["Menu", "STEAM+DPAD Left"]
+    }
+  },
+  "melonds": {
+    "id": "melonds",
+    "name": "melonDS",
+    "code": "melonDS",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/melonDS",
+    "description": "melonDS is a Nintendo DS Emulator",
+    "special_configuration": "BIOS: BIOS bios files are optional.",
+    "bios": ["nds"],
+    "systems": "Nintendo DS",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Menu", "Update Me"]
     }
   },
   "citra": {
@@ -175,7 +189,7 @@
     "name": "Yuzu",
     "code": "Yuzu",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Yuzu",
-    "description": "Yuzu is a Nintendo Switch emulator, developed by the Yuzu team. Dock sold separately. ",
+    "description": "",
     "special_configuration": "Firmware: Place keys and firmware place in: Emulation/bios/yuzu. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
     "bios": ["nswitch"],
     "systems": "Nintendo Switch",
@@ -223,13 +237,30 @@
       "6": ["Pause", "SELECT+A"]
     }
   },
+  "rmg": {
+    "id": "rmg",
+    "name": "Rosalies Mupen Gui",
+    "code": "RMG",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/RMG",
+    "description": "Rosalies Mupen Gui is a fork of Mupen64Plus-Next with a better gui and is usable outside of RetroArch.",
+    "special_configuration": "DD games require a bios file. EmuDeck's Steam Input profile is required for hotkeys.",
+    "bios": [],
+    "systems": "Nintendo 64 and 64DD",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Save State", "Left Trackpad"],
+      "2": ["Load State", "Left Trackpad"],
+      "3": ["Fast Forward", "Left Trackpad"],
+      "4": ["Pause", "Left Trackpad"]
+    }
+  },
   "mame": {
     "id": "mame",
     "name": "MAME",
     "code": "MAME",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/MAME",
     "description": "MAME is a Multiple Arcade Machine Emulator, originally developed by Nicola Salmoria. Invite a friend over, and re-live the arcade days over a match of 1943 or Bubble Bobble.",
-    "special_configuration": "BIOS: BIOS are required for some MAME ROMs. Ideally use ROMS that are the same version as MAME's version. MAME often releases improved versions of ROMS to improve compatibility. EmuDeck currently supports the current versions:<br/>MAME (Standalone) <br/>MAME (Current), MAME 2010, MAME 2003, as RetroArch Cores.",
+    "special_configuration": "BIOS: BIOS are required for some MAME ROMs. Ideally use ROMS that are the same version as MAME's version. MAME often releases improved versions of ROMS to improve compatibility. EmuDeck currently supports the current versions:<br/>MAME (Standalone) and MAME (Current), MAME 2010, MAME 2003, as RetroArch Cores.",
     "bios": [],
     "systems": "Arcade",
     "hotkeys": {
@@ -291,5 +322,18 @@
     "special_configuration": "SRM is a powerfull but complex tool",
     "bios": [],
     "systems": ""
+  },
+  "esde": {
+    "id": "esde",
+    "name": "EmulationStation DE",
+    "code": "ESDE",
+    "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/EmulationStation-DE",
+    "description": "EmulationStation Desktop Edition (ES-DE) is a frontend application for browsing and launching games from your multi-platform game collection.",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "All",
+    "alt": false,
+    "altButton": "Install ESDE 2.0 Prerelease",
+    "altWarning": "This action will replace your installation with ESDE 2.0 Prerelease. To undone this action you'll need to click the ReInstall button"
   }
 }

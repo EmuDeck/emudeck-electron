@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 
-import ToolsAndStuff from 'components/organisms/Wrappers/ToolsAndStuff.js';
+import ToolsAndStuff from 'components/organisms/Wrappers/ToolsAndStuff';
 
 const ToolsAndStuffPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { sudoPass } = state;
+  const { gamemode } = state;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -20,7 +20,7 @@ const ToolsAndStuffPage = () => {
     <ToolsAndStuff
       disabledNext={disabledNext}
       disabledBack={disabledBack}
-      nextText={sudoPass ? 'Continue' : 'Skip'}
+      isGameMode={gamemode}
     />
   );
 };

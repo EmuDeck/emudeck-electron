@@ -46,7 +46,8 @@
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development  TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
-    "test": "jest"
+    "test": "jest",
+    "buildWindows": "npm run build && npm exec electron-builder -- --publish never --win"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -181,7 +182,7 @@
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0",
     "webpack-merge": "^5.8.0",
-    "getbasecore": "^2.0.12"
+    "getbasecore": "^2.0.21"
   },
   "build": {
     "productName": "EmuDeck",
@@ -224,8 +225,11 @@
     },
     "win": {
       "target": [
-        "nsis"
+        "portable"
       ]
+    },
+    "portable": {
+      "artifactName": "EmuDeck.exe"
     },
     "linux": {
       "target": [
