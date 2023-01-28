@@ -53,8 +53,6 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 
 const branch = require('data/branch.json');
 
-import './App.css';
-
 export default function App() {
   const [state, setState] = useState({
     version: '',
