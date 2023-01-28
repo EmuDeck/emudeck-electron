@@ -318,7 +318,7 @@ ipcMain.on('update-check', async (event, command) => {
   // Force no autoupdate
   // event.reply('update-check-out', 'up-to-date');
   // return;
-  mainWindow.webContents.openDevTools();
+
   //Windows no update - temporary
   //const os = require('os');
   if (os.platform().includes('win32')) {
