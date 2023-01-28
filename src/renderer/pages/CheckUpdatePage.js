@@ -199,8 +199,9 @@ const CheckUpdatePage = () => {
     //Force changelog after update
     if (update == 'updating') {
       localStorage.setItem('show_changelog', true);
+      localStorage.setItem('pending_update', true);
     }
-
+    localStorage.setItem('pending_update', false);
     if (update == 'up-to-date') {
       //is the git repo cloned?
       console.log('check-git');

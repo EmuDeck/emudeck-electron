@@ -52,7 +52,7 @@ const ChangeLogPage = () => {
       <div className="container--grid">
         <div data-col-sm="4">
           <div
-            class="changelog-scroll"
+            className="changelog-scroll"
             style={{
               height: '62vh',
               overflow: 'auto',

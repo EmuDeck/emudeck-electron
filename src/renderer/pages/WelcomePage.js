@@ -19,6 +19,9 @@ const WelcomePage = () => {
   const navigate = useNavigate();
   const selectMode = (value) => {
     setState({ ...state, mode: value });
+    if (second) {
+      navigate('/rom-storage');
+    }
   };
 
   const {
@@ -32,11 +35,13 @@ const WelcomePage = () => {
     overwriteConfigEmus,
     shaders,
     achievements,
+    storagePath,
   } = state;
 
   //show changelog after update
   useEffect(() => {
     const showChangelog = localStorage.getItem('show_changelog');
+    const pendingUpdate = localStorage.getItem('pending_update');
     if (showChangelog == 'true') {
       navigate('/change-log');
     }
@@ -48,13 +53,42 @@ const WelcomePage = () => {
       setStatePage({ ...statePage, disabledNext: false });
     }
   }, [mode]);
+  const openSRM = () => {
+    if (system === 'win32') {
+      ipcChannel.sendMessage('bash', [
+        `cd ${storagePath} && cd Emulation && cd tools && start srm.exe`,
+      ]);
+    } else {
+      ipcChannel.sendMessage('bash', [
+        `zenity --question --width 450 --title "Close Steam/Steam Input?" --text "$(printf "<b>Exit Steam to launch Steam Rom Manager? </b>\n\n To add your Emulators and EmulationStation-DE to steam hit Preview, then Generate App List, then wait for the images to download\n\nWhen you are happy with your image choices hit Save App List and wait for it to say it's completed.\n\nDesktop controls will temporarily revert to touch/trackpad/L2/R2")" && (kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
+      ]);
+    }
+  };
+
+  const openCSM = () => {
+    ipcChannel.sendMessage('bash', [
+      'bash ~/.config/EmuDeck/backend/functions/cloudServicesManager.sh',
+    ]);
+  };
+
+  const sprunge = () => {
+    const idMessage = Math.random();
+    ipcChannel.sendMessage('bash', [
+      `sprunge|||cat ~/emudeck/emudeck.log | curl -F 'sprunge=<-' http://sprunge.us`,
+    ]);
+    ipcChannel.once('sprunge', (message) => {
+      let messageText = message.stdout;
+      alert(`Copy this url: ${message}`);
+    });
+  };
+  const functions = { openSRM, openCSM, sprunge };
 
   return (
     <Welcome
-      data={data}
+      functions={functions}
       alert={
         second
-          ? `If you like EmuDeck please consider supporting us on <a href="https://www.patreon.com/bePatron?u=29065992" target="_blank">Patreon</a>. Thanks!`
+          ? ``
           : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/rs9jDHIDKkU" target="_blank">Check out this guide</a>'
       }
       alertCSS="alert--info"
