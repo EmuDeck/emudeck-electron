@@ -1,32 +1,32 @@
 [
   {
-    "title": "HomeBrew Games",
+    "title": "EmuDeck Gaming Mode",
     "type": "NEW",
-    "description": "Install our curated selection of non commercial free games directly from Emudeck inside <strong>Tools & Stuff -> Quicksettings</strong>. In order to prevent cluttering your Steam Library this games are only availabe on EmulationStation DE",
+    "description": "Now you can update or customize EmuDeck directly in Gaming Mode, no need to go into Desktop Mode. Just make sure to run SteamRomManager to add the new launcher for EmuDeck<br/> <strong>To add games through SteamRomManager you still need to use Desktop mode</strong>",
     "image": "true"
   },
   {
-    "title": "AutoSave & AutoLoad",
+    "title": "UI / UX tweaks",
     "type": "NEW",
-    "description": "You can activate this new option on <strong>Tools & Stuff - Quick Settings</strong> so your game is saved when you leave and it's automaticaly loaded when you came back. <strong>Only for RetroArch systems</strong>",
+    "description": "- New Confirmation page ( Custom Mode )<br/>- Scrollbars for overflowing content<br/>- RetroAchievements on Tools & Stuff<br/>- Improved Hotkeys on Emulator Guides",
     "image": "true"
   },
   {
-    "title": "DeckyControl",
+    "title": "New Emulators",
     "type": "NEW",
-    "description": "New Decky Plugin to check EmuDecks controls for each Emulator while on game mode.<br> <strong>Install it from Tools & Stuff</strong>",
+    "description": "- MelonDS Standalone ( Custom Mode )<br/>- Rosalie's Mupen GUI ( Custom Mode )<br/>- Cemu AppImage ( On Tools & Stuff )<br/>- Pico8 and tic80 RetroArch Cores",
     "image": "true"
   },
   {
-    "title": "New Parsers",
+    "title": "Dolphin Configuration update",
+    "type": "NEW",
+    "description": "- Keep window on top false<br/>-WSHack off by default<br/>-Vsync = ON <br/>-Gamecube controllers standardized using the profile.<br/>-Unlock FPS changed to Start + R2<br/>-Increase Emu Speed = Select + R2<br/>-Decrease Emu Speed = Select + L2",
+    "image": "true"
+  },
+  {
+    "title": "Bug fixes & Small Features",
     "type": "FIX",
-    "description": "Added support for the new parsers on Steam Rom Manager.  <strong>Sameboy</strong>, <strong>PS1 on RPCS3</strong>, <strong>Sharp X68000</strong>,<strong>Commodore Vic-20</strong>,<strong>Commodore C16</strong> ",
-    "image": "true"
-  },
-  {
-    "title": "Other Bug Fixes",
-    "type": "FIX",
-    "description": "- Solved an issue that prevented RetroAchievements to work when the username / password contained special characters.<br/>- Solved an issue with sudo passwords contaning special characters.<br/>- Solved some fixes when launching Proton emulators.<br/>- Added Progress Bar to Appimage & Binary updater.<br/>- Fixed an issue that overwrote RetroArch configurations even when asking not to.<br/>- Optimization of all images used on the AppImage so they take less space.<br/>- New SRM page on Emulators Guides.<br/>- SNES 8:7 Bezels fix<br/>- DOSBox-pure legacy .conf support<br/>- Option to prevent ESDE config overwrite<br/>- Option to prevent ESDE installation<br/>- Emulators overwrite/disable selection is now persistent between installations<br/>- Added Big Picture argument to Duckstation and PCSX2",
+    "description": "- Fixed PS3 Pkg parser so it doesn't grab discs in the hdd<br/>- GyroDSU working at last.<br/>- Steam Shortcut path bulk update<br/>- Fix DOSBox-pure config directory<br/>- Fix Vita3K Launcher<br/>- Fix EmuDeck Compressor tool with rvz files<br/>- EasyRPG SRM parser<br/>- Recursive SRM parsers are back<br/>- Added ESDE 2.0 beta<br/>- CSO Format support for PPSSPP",
     "image": "false"
   }
 ]

@@ -92,8 +92,6 @@ const CheckUpdatePage = () => {
       });
       if (message[0] == 'up-to-date') {
         updateFiles();
-      } else {
-        clearTimeout(myTimeout);
       }
     });
 

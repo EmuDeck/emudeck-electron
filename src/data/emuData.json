@@ -332,7 +332,7 @@
     "special_configuration": "",
     "bios": [],
     "systems": "All",
-    "alt": false,
+    "alt": true,
     "altButton": "Install ESDE 2.0 Prerelease",
     "altWarning": "This action will replace your installation with ESDE 2.0 Prerelease. To undone this action you'll need to click the ReInstall button"
   }
