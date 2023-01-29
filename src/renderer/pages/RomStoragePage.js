@@ -53,7 +53,7 @@ const RomStoragePage = () => {
           ]);
         } else {
           ipcChannel.sendMessage('emudeck', [
-            `testLocation|||testLocationValid 'custom" "${stdout}"`,
+            `testLocation|||testLocationValid "custom" "${stdout}"`,
           ]);
         }
 
