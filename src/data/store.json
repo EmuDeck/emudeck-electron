@@ -1,0 +1,377 @@
+{
+  "featured": [
+    {
+      "system": "genesis",
+      "logo": "logo_genesis",
+      "title": "Phantom Gear",
+      "description": "Phantom Gear mixes elements from a variety of classic action platformers for a unique and exciting package, and allows players to approach the game how they see fit. Lock ‘n’ load to power through levels, or use your skills and abilities to search for Gears and Orbs.",
+      "pictures": {
+        "screenshots": [
+          "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Phantom%20Gear.png?raw=true"
+        ],
+
+        "titlescreens": [
+          "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Phantom%20Gear.png?raw=true"
+        ]
+      },
+      "tags": ["action", "platform", "puzzle", "rpg"]
+    },
+    {
+      "system": "genesis",
+      "logo": "logo_genesis",
+      "title": "Xump 2",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+      "pictures": {
+        "screenshots": [
+          "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Xump%202.png?raw=true"
+        ],
+
+        "titlescreens": [
+          "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Xump%202.png?raw=true"
+        ]
+      },
+      "tags": ["action"]
+    },
+    {
+      "system": "genesis",
+      "logo": "logo_genesis",
+      "title": "Lethal Wedding",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+      "pictures": {
+        "screenshots": [
+          "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Lethal%20Wedding.png?raw=true"
+        ],
+        "titlescreens": [
+          "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Lethal%20Wedding.png?raw=true"
+        ]
+      },
+      "tags": ["action"]
+    }
+  ],
+  "store": [
+    {
+      "system": "gb",
+      "name": "GameBoy",
+      "games": [
+        {
+          "system": "gb",
+          "logo": "logo_gb",
+          "title": "LumberJack",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/screenshots/homebrew/Lumberjack.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/titlescreens/homebrew/Lumberjack.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gb",
+          "logo": "logo_gb",
+          "title": "Rocket Man",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/screenshots/homebrew/Rocket%20Man.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/titlescreens/homebrew/Rocket%20Man.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gb",
+          "logo": "logo_gb",
+          "title": "PokaSheep",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/titlescreens/homebrew/PolkaSheep.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/titlescreens/homebrew/PolkaSheep.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gb",
+          "logo": "logo_gb",
+          "title": "SuperPrincess",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/screenshots/homebrew/SuperPrincess.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/titlescreens/homebrew/SuperPrincess.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gb",
+          "logo": "logo_gb",
+          "title": "THEBOUNCINGBALL",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/screenshots/homebrew/THEBOUNCINGBALL.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/titlescreens/homebrew/THEBOUNCINGBALL.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        }
+      ]
+    },
+    {
+      "system": "gbc",
+      "name": "GameBoy Color",
+      "games": [
+        {
+          "system": "gbc",
+          "logo": "logo_gbc",
+          "title": "JetPakDX",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/screenshots/homebrew/JetPakDX.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/titlescreens/homebrew/JetPakDX.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gbc",
+          "logo": "logo_gbc",
+          "title": "Last Crown Warriors",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/screenshots/homebrew/Last Crown Warriors.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/titlescreens/homebrew/Last Crown Warriors.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gbc",
+          "logo": "logo_gbc",
+          "title": "Spelunky",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/screenshots/homebrew/Spelunky.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/titlescreens/homebrew/Spelunky.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        }
+      ]
+    },
+    {
+      "system": "gba",
+      "name": "GameBoy Advance",
+      "games": [
+        {
+          "system": "gba",
+          "logo": "logo_gba",
+          "title": "BlastArenaAdvance",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/screenshots/homebrew/BlastArenaAdvance.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/titlescreens/homebrew/BlastArenaAdvance.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "logo": "logo_gba",
+          "title": "flappybird",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/screenshots/homebrew/flappybird.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/titlescreens/homebrew/flappybird.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "logo": "logo_gba",
+          "title": "powerpig",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/screenshots/homebrew/powerpig.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/titlescreens/homebrew/powerpig.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        }
+      ]
+    },
+    {
+      "system": "genesis",
+      "name": "Genesis / Mega Drive",
+      "games": [
+        {
+          "system": "gba",
+          "logo": "logo_gba",
+          "title": "GraviBots",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/GraviBots.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/GraviBots.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "logo": "logo_gba",
+          "title": "Lethal Wedding",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Lethal Wedding.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Lethal Wedding.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "logo": "logo_gba",
+          "title": "Omega Blast",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Omega Blast.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Omega Blast.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "logo": "logo_gba",
+          "title": "Phantom Gear",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Phantom Gear.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Phantom Gear.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "logo": "logo_gba",
+          "title": "Robert Cop 2 Vs Dragon Ninja",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Robert Cop 2 Vs Dragon Ninja.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Robert Cop 2 Vs Dragon Ninja.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "logo": "logo_gba",
+          "title": "Tourmaline",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Tourmaline.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Tourmaline.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "logo": "logo_gba",
+          "title": "Vilq Adventure",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Vilq Adventure.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Vilq Adventure.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "logo": "logo_gba",
+          "title": "Xump 2",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Xump 2.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Xump 2.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        }
+      ]
+    },
+    {
+      "system": "mastersystem",
+      "name": "Master System",
+      "games": []
+    },
+    {
+      "system": "nes",
+      "name": "NES",
+      "games": []
+    },
+    {
+      "system": "snes",
+      "name": "Super Nintendo",
+      "games": []
+    }
+  ]
+}
