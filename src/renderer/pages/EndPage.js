@@ -465,6 +465,9 @@ const EndPage = () => {
         ipcChannel.sendMessage('bash-nolog', [
           `echo ${preVar}'${state.achievements.token}' > $HOME/.config/EmuDeck/.rat`,
         ]);
+        ipcChannel.sendMessage('bash-nolog', [
+          `echo '${state.achievements.user}' > $HOME/.config/EmuDeck/.rau`,
+        ]);
 
         ipcChannel.sendMessage('bash', [
           `echo ${preVar}achievementsHardcore="${state.achievements.hardcore}" >> ${settingsFile}`,
