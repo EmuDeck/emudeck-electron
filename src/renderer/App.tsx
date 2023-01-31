@@ -56,6 +56,8 @@ const branch = require('data/branch.json');
 
 export default function App() {
   const [state, setState] = useState({
+    patreon_token: null,
+    patreon_tier: null,
     version: '',
     gamemode: false,
     branch: branch.branch,
