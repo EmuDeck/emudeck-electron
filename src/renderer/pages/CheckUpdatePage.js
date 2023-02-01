@@ -259,7 +259,11 @@ const CheckUpdatePage = () => {
 
   useEffect(() => {
     if (downloadComplete == true) {
-      navigate('/welcome');
+      if (system == 'win32') {
+        navigate('/patreon-login');
+      } else {
+        navigate('/welcome');
+      }
     }
   }, [downloadComplete]);
 

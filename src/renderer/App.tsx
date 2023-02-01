@@ -3,6 +3,7 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 
 import CheckUpdatePage from 'pages/CheckUpdatePage';
+import PatreonLoginPage from 'pages/PatroenLoginPage';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
@@ -56,8 +57,8 @@ const branch = require('data/branch.json');
 
 export default function App() {
   const [state, setState] = useState({
-    patreon_token: null,
-    patreon_tier: null,
+    patreonToken: null,
+    patreonStatus: false,
     version: '',
     gamemode: false,
     branch: branch.branch,
@@ -223,6 +224,8 @@ export default function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<CheckUpdatePage />} />
+          <Route exact path="/patreon-login" element={<PatreonLoginPage />} />
+
           <Route exact path="/welcome" element={<WelcomePage />} />
           <Route
             exact

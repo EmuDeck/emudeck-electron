@@ -102,6 +102,7 @@ const EndPage = () => {
   //Running the installer
   useEffect(() => {
     let json = JSON.stringify(state);
+    json.patreonStatus = null;
     localStorage.setItem('settings_emudeck', json);
     let preVar = '';
     if (system === 'win32') {
