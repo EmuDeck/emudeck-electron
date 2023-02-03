@@ -313,6 +313,20 @@
       "1": ["Exit", "STEAM BUTTON"]
     }
   },
+  "mgba": {
+    "id": "mgba",
+    "name": "mGBA",
+    "code": "mGBA",
+    "wiki": "",
+    "description": "mGBA is a new generation of Game Boy Advance emulator. The project started in April 2013 with the goal of being fast enough to run on lower end hardware than other emulators support, without sacrificing accuracy or portability..",
+    "special_configuration": "BIOS: No additional BIOS are required. There's a special Steam Input available for mGBA",
+    "bios": [],
+    "systems": "GameBoy Advance",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "STEAM BUTTON"]
+    }
+  },
   "srm": {
     "id": "srm",
     "name": "Steam Rom Manager",

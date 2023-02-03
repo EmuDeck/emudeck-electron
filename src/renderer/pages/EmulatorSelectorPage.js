@@ -26,6 +26,7 @@ import {
   imgsupermodelista,
   imgesde,
   imgmelonds,
+  imgmgba,
 } from 'components/utils/images/images.js';
 
 const images = {
@@ -48,6 +49,7 @@ const images = {
   supermodelista: imgsupermodelista,
   esde: imgesde,
   rmg: imgrmg,
+  mgba: imgmgba,
 };
 
 const EmulatorSelectorPage = () => {

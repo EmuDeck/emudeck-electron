@@ -218,6 +218,11 @@ const EndPage = () => {
             state.overwriteConfigEmus.scummvm.status ? true : false
           }" >> ${settingsFile}`,
         ]);
+        ipcChannel.sendMessage('bash', [
+          `echo ${preVar}doSetupMGBA="${
+            state.overwriteConfigEmus.mgba.status ? true : false
+          }" >> ${settingsFile}`,
+        ]);
 
         ipcChannel.sendMessage('bash', [
           `echo ${preVar}doSetupESDE="${
@@ -313,6 +318,12 @@ const EndPage = () => {
         ipcChannel.sendMessage('bash', [
           `echo ${preVar}doInstallVita3K="${
             state.installEmus.vita3k.status ? true : false
+          }" >> ${settingsFile}`,
+        ]);
+
+        ipcChannel.sendMessage('bash', [
+          `echo ${preVar}doInstallMGBA="${
+            state.installEmus.mgba.status ? true : false
           }" >> ${settingsFile}`,
         ]);
 

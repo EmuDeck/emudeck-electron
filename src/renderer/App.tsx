@@ -179,6 +179,7 @@ export default function App() {
         installed: undefined,
         name: 'Xenia',
       },
+      mgba: { id: 'mgba', status: false, installed: undefined, name: 'mGBA' },
     },
     overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
@@ -200,6 +201,7 @@ export default function App() {
       mame: { id: 'mame', status: true, name: 'Mame Standalone' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita 3K (Experimental)' },
       scummvm: { id: 'scummvm', status: true, name: 'Scumm VM' },
+      mgba: { id: 'mgba', status: true, name: 'mGBA' },
     },
     resolutions: {
       dolphin: '720P',
