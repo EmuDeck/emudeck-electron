@@ -84,7 +84,7 @@ const WelcomePage = () => {
       alert(`Copy this url: ${message}`);
     });
   };
-  const functions = { openSRM, openCSM, sprunge };
+  const functions = { openSRM, openCSM, sprunge, navigate };
 
   return (
     <Welcome
