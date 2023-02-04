@@ -37,7 +37,13 @@
       "2": ["Toggle Screens", "R4"],
       "3": ["Swap Screens", "R5"],
       "4": ["Blow Mic", "R3"]
-    }
+    },
+    "alt": true,
+    "altId": "cemunative",
+    "altName": "CemuNative",
+    "altCode": "CemuNative",
+    "altButton": "Install Cemu AppImage",
+    "altWarning": "This action will replace your installation with ESDE 2.0 Prerelease. To undone this action you'll need to click the ReInstall button"
   },
   "dolphin": {
     "id": "dolphin",
@@ -347,6 +353,9 @@
     "bios": [],
     "systems": "All",
     "alt": true,
+    "altId": "esde20",
+    "altName": "ESDE20",
+    "altCode": "ESDE20",
     "altButton": "Install ESDE 2.0 Prerelease",
     "altWarning": "This action will replace your installation with ESDE 2.0 Prerelease. To undone this action you'll need to click the ReInstall button"
   }

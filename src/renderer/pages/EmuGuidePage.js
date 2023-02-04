@@ -72,22 +72,18 @@ const EmuGuidePage = () => {
     });
   };
 
-  const installEmu = (emulator, name, alternative = false) => {
+  const installEmu = (emulator, name) => {
     console.log(emulator);
 
     setStatePage({
       ...statePage,
       disableInstallButton: true,
     });
-    if (alternative) {
-      ipcChannel.sendMessage('emudeck', [
-        `${name}_install|||${name}_install_alt && ${name}_init_alt`,
-      ]);
-    } else {
-      ipcChannel.sendMessage('emudeck', [
-        `${name}_install|||${name}_install && ${name}_init`,
-      ]);
-    }
+
+    ipcChannel.sendMessage('emudeck', [
+      `${name}_install|||${name}_install && ${name}_init`,
+    ]);
+
     ipcChannel.once(`${name}_install`, (status) => {
       // console.log({ status });
       status = status.stdout;
