@@ -43,7 +43,13 @@
     "altName": "CemuNative",
     "altCode": "CemuNative",
     "altButton": "Install Cemu AppImage",
-    "altWarning": "This action will replace your installation with ESDE 2.0 Prerelease. To undone this action you'll need to click the ReInstall button"
+    "altWarning": "This action will install Cemu Appimage alongside your current Cemu.",
+    "alt2": true,
+    "alt2Id": "cemunative",
+    "alt2Name": "CemuNative",
+    "alt2Code": "CemuNative",
+    "alt2Button": "Reset Cemu AppImage",
+    "alt2Warning": "This action will install Cemu Appimage alongside your current Cemu."
   },
   "dolphin": {
     "id": "dolphin",
