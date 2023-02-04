@@ -59,14 +59,14 @@ const PatroenLoginPage = () => {
       return;
     } else {
       ipcChannel.sendMessage('patreon-check', patreonToken);
-      ipcChannel.once('patreon-check', (error, patreonStatus, stderr) => {
+      ipcChannel.once('patreon-check', (error, patreonStatusBack, stderr) => {
         console.log('PATREON LOGIN CHECK');
         console.log({ error });
-        console.log(JSON.parse(patreonStatus));
+        console.log(JSON.parse(patreonStatusBack));
         console.log({ stderr });
         //setStatePage({ ...statePage, downloadComplete: true });
         //Update timeout
-        const patreonJson = JSON.parse(patreonStatus);
+        const patreonJson = JSON.parse(patreonStatusBack);
 
         if (patreonJson.errors) {
           alert(patreonJson.errors[0]['detail']);
