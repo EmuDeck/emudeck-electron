@@ -26,7 +26,7 @@ import DeckyControlsPage from 'pages/DeckyControlsPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
 import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
-import ToolsAndStuffPage from 'pages/ToolsAndStuffPage';
+
 import UpdateEmusPage from 'pages/UpdateEmusPage';
 import CloudSyncPage from 'pages/CloudSyncPage';
 import ChangeLogPage from 'pages/ChangeLogPage';
@@ -303,12 +303,6 @@ export default function App() {
 
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
           <Route exact path="/change-log" element={<ChangeLogPage />} />
-
-          <Route
-            exact
-            path="/tools-and-stuff"
-            element={<ToolsAndStuffPage />}
-          />
           <Route exact path="/settings" element={<SettingsPage />} />
           <Route exact path="/check-bios" element={<CheckBiosPage />} />
           <Route exact path="/emulator-guide" element={<EmuGuidePage />}>
