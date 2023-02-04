@@ -2,7 +2,9 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import Welcome from 'components/organisms/Wrappers/Welcome.js';
-
+import Wrapper from 'components/molecules/Wrapper/Wrapper.js';
+import Footer from 'components/organisms/Footer/Footer.js';
+import Header from 'components/organisms/Header/Header.js';
 const WelcomePage = () => {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
@@ -36,6 +38,7 @@ const WelcomePage = () => {
     shaders,
     achievements,
     storagePath,
+    gamemode,
   } = state;
 
   //show changelog after update
@@ -87,24 +90,33 @@ const WelcomePage = () => {
   const functions = { openSRM, openCSM, sprunge, navigate };
 
   return (
-    <Welcome
-      functions={functions}
-      alert={
-        second
-          ? ``
-          : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/rs9jDHIDKkU" target="_blank">Check out this guide</a>'
-      }
-      alertCSS="alert--info"
-      disabledNext={second ? false : disabledNext}
-      disabledBack={second ? false : disabledBack}
-      onClick={selectMode}
-      back={second ? 'tools-and-stuff' : false}
-      backText={second ? 'Tools & stuff' : 'Install EmuDeck First'}
-      next="rom-storage"
-      third="change-log"
-      thirdText="See changelog"
-      fourthText="Exit EmuDeck"
-    />
+    <Wrapper>
+      {second === false && <Header title="Welcome to" bold={`EmuDeck`} />}
+      {second === true && <Header title="Welcome back to" bold={`EmuDeck`} />}
+      <Welcome
+        functions={functions}
+        alert={
+          second
+            ? ``
+            : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/rs9jDHIDKkU" target="_blank">Check out this guide</a>'
+        }
+        alertCSS="alert--info"
+        onClick={selectMode}
+      />
+      {second === false && (
+        <Footer
+          back={second ? 'tools-and-stuff' : false}
+          backText={second ? 'Tools & stuff' : 'Install EmuDeck First'}
+          third="change-log"
+          thirdText="See changelog"
+          fourthText="Exit EmuDeck"
+          next="rom-storage"
+          exit={gamemode}
+          disabledNext={second ? false : disabledNext}
+          disabledBack={second ? false : disabledBack}
+        />
+      )}
+    </Wrapper>
   );
 };
 
