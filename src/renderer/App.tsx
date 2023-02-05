@@ -57,6 +57,7 @@ const branch = require('data/branch.json');
 
 export default function App() {
   const [state, setState] = useState({
+    app: 'electron',
     patreonToken: null,
     patreonStatus: false,
     version: '',
