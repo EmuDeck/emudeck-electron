@@ -210,6 +210,11 @@ const EndPage = () => {
           }" >> ${settingsFile}`,
         ]);
         ipcChannel.sendMessage('bash', [
+          `echo ${preVar}doSetupRMG"${
+            state.overwriteConfigEmus.rmg.status ? true : false
+          }" >> ${settingsFile}`,
+        ]);
+        ipcChannel.sendMessage('bash', [
           `echo ${preVar}doSetupVita3K="${
             state.overwriteConfigEmus.vita3k.status ? true : false
           }" >> ${settingsFile}`,
@@ -285,6 +290,11 @@ const EndPage = () => {
         ipcChannel.sendMessage('bash', [
           `echo ${preVar}doInstallCemu="${
             state.installEmus.cemu.status ? true : false
+          }" >> ${settingsFile}`,
+        ]);
+        ipcChannel.sendMessage('bash', [
+          `echo ${preVar}doInstallRMG="${
+            state.installEmus.rmg.status ? true : false
           }" >> ${settingsFile}`,
         ]);
         ipcChannel.sendMessage('bash', [
