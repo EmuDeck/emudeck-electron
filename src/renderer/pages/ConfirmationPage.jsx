@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import Confirmation from 'components/organisms/Wrappers/Confirmation';
 
@@ -21,11 +22,13 @@ const ConfirmationPage = () => {
   }, [state]); // <-- here put the parameter to listen
 
   return (
-    <Confirmation
-      data={data}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <Wrapper>
+      <Confirmation
+        data={data}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import StoreFront from 'components/organisms/Wrappers/StoreFront';
 
@@ -21,11 +22,13 @@ const StoreFrontPage = () => {
   }, [state]); // <-- here put the parameter to listen
 
   return (
-    <StoreFront
-      data={data}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <Wrapper>
+      <StoreFront
+        data={data}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

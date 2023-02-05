@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import Uninstall from 'components/organisms/Wrappers/Uninstall';
 
@@ -25,11 +26,13 @@ const UninstallPage = () => {
   };
 
   return (
-    <Uninstall
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      onClick={uninstall}
-    />
+    <Wrapper>
+      <Uninstall
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClick={uninstall}
+      />
+    </Wrapper>
   );
 };
 

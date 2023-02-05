@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import AspectRatioDolphin from 'components/organisms/Wrappers/AspectRatioDolphin';
 
@@ -23,12 +24,14 @@ const AspectRatioDolphinPage = () => {
   };
 
   return (
-    <AspectRatioDolphin
-      data={data}
-      onClick={arSet}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <Wrapper>
+      <AspectRatioDolphin
+        data={data}
+        onClick={arSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

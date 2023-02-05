@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import RemotePlayWhatever from 'components/organisms/Wrappers/RemotePlayWhatever';
 
@@ -45,13 +46,15 @@ const RemotePlayWhateverPage = () => {
   };
 
   return (
-    <RemotePlayWhatever
-      showNotification={showNotification}
-      notificationText={notificationText}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      onClick={installRPW}
-    />
+    <Wrapper>
+      <RemotePlayWhatever
+        showNotification={showNotification}
+        notificationText={notificationText}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClick={installRPW}
+      />
+    </Wrapper>
   );
 };
 

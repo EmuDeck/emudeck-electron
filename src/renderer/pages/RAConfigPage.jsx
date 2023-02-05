@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import RAConfig from 'components/organisms/Wrappers/RAConfig';
 
@@ -27,12 +28,14 @@ const RAConfigPage = () => {
   }, [state]); // <-- here put the parameter to listen
 
   return (
-    <RAConfig
-      data={data}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      overlaysInstalled={overlaysInstalled}
-    />
+    <Wrapper>
+      <RAConfig
+        data={data}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        overlaysInstalled={overlaysInstalled}
+      />
+    </Wrapper>
   );
 };
 

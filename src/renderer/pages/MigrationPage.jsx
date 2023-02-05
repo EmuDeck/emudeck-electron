@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import Migration from 'components/organisms/Wrappers/Migration';
 
@@ -157,18 +158,20 @@ const MigrationPage = () => {
   };
 
   return (
-    <Migration
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      sdCardValid={sdCardValid}
-      reloadSDcard={checkSDValid}
-      sdCardName={sdCardName}
-      customPath={storagePath}
-      onClick={storageSet}
-      onClickStart={startMigration}
-      storage={storage}
-      storagePath={storagePath}
-    />
+    <Wrapper>
+      <Migration
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        sdCardValid={sdCardValid}
+        reloadSDcard={checkSDValid}
+        sdCardName={sdCardName}
+        customPath={storagePath}
+        onClick={storageSet}
+        onClickStart={startMigration}
+        storage={storage}
+        storagePath={storagePath}
+      />
+    </Wrapper>
   );
 };
 

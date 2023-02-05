@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import Settings from 'components/organisms/Wrappers/Settings';
 
@@ -304,22 +305,24 @@ const SettingsPage = () => {
   };
 
   return (
-    <Settings
-      showNotification={showNotification}
-      notificationText={notificationText}
-      onClickBezel={onClickBezel}
-      onClickSega={onClickSega}
-      onClickSNES={onClickSNES}
-      onClick3D={onClick3D}
-      onClickGC={onClickGC}
-      onClickCRT={onClickCRT}
-      onClickCRT3D={onClickCRT3D}
-      onClickLCD={onClickLCD}
-      onClickAutoSave={autoSaveSet}
-      onClickHomeBrew={HomeBrew}
-      disabledNext={true}
-      disabledBack={disabledBack}
-    />
+    <Wrapper>
+      <Settings
+        showNotification={showNotification}
+        notificationText={notificationText}
+        onClickBezel={onClickBezel}
+        onClickSega={onClickSega}
+        onClickSNES={onClickSNES}
+        onClick3D={onClick3D}
+        onClickGC={onClickGC}
+        onClickCRT={onClickCRT}
+        onClickCRT3D={onClickCRT3D}
+        onClickLCD={onClickLCD}
+        onClickAutoSave={autoSaveSet}
+        onClickHomeBrew={HomeBrew}
+        disabledNext={true}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

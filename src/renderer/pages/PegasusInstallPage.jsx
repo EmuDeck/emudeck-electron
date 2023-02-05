@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import PegasusInstall from 'components/organisms/Wrappers/PegasusInstall';
 
@@ -13,11 +14,13 @@ const PegasusInstallPage = () => {
   const { disabledNext, disabledBack, data } = statePage;
 
   return (
-    <PegasusInstall
-      data={data}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <Wrapper>
+      <PegasusInstall
+        data={data}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

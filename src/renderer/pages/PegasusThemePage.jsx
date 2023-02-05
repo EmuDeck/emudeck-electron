@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import PegasusTheme from 'components/organisms/Wrappers/PegasusTheme';
 
@@ -19,12 +20,14 @@ const PegasusThemePage = () => {
   };
 
   return (
-    <PegasusTheme
-      data={data}
-      onClick={themeSet}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <Wrapper>
+      <PegasusTheme
+        data={data}
+        onClick={themeSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

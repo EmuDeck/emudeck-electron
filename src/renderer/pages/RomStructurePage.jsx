@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import RomStructure from 'components/organisms/Wrappers/RomStructure';
 
@@ -18,12 +19,14 @@ const RomStoragePage = () => {
   useEffect(() => {}, [state]); // <-- here put the parameter to listen
 
   return (
-    <RomStructure
-      data={data}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      structureCreated={structureCreated}
-    />
+    <Wrapper>
+      <RomStructure
+        data={data}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        structureCreated={structureCreated}
+      />
+    </Wrapper>
   );
 };
 

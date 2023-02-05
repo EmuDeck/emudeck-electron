@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import RomStorage from 'components/organisms/Wrappers/RomStorage';
 
@@ -167,25 +168,27 @@ const RomStoragePage = () => {
   };
 
   return (
-    <RomStorage
-      status={status}
-      sdCardValid={sdCardValid}
-      showSDCard={system == 'win32' ? false : true}
-      showInternal={system == 'win32' ? false : true}
-      reloadSDcard={checkSDValid}
-      sdCardName={sdCardName}
-      customPath={storagePath}
-      onClick={storageSet}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      next={
-        mode === 'easy'
-          ? system == 'win32'
-            ? 'end'
-            : 'homebrew-games'
-          : 'device-selector'
-      }
-    />
+    <Wrapper>
+      <RomStorage
+        status={status}
+        sdCardValid={sdCardValid}
+        showSDCard={system == 'win32' ? false : true}
+        showInternal={system == 'win32' ? false : true}
+        reloadSDcard={checkSDValid}
+        sdCardName={sdCardName}
+        customPath={storagePath}
+        onClick={storageSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        next={
+          mode === 'easy'
+            ? system == 'win32'
+              ? 'end'
+              : 'homebrew-games'
+            : 'device-selector'
+        }
+      />
+    </Wrapper>
   );
 };
 

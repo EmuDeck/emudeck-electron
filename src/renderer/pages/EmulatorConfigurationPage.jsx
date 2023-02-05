@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import EmulatorConfiguration from 'components/organisms/Wrappers/EmulatorConfiguration';
 
@@ -93,14 +94,16 @@ const EmulatorConfigurationPage = () => {
   }
 
   return (
-    <EmulatorConfiguration
-      data={data}
-      onClick={toggleEmus}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      next={nextPage}
-      images={images}
-    />
+    <Wrapper>
+      <EmulatorConfiguration
+        data={data}
+        onClick={toggleEmus}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        next={nextPage}
+        images={images}
+      />
+    </Wrapper>
   );
 };
 

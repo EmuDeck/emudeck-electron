@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import End from 'components/organisms/Wrappers/End';
 
@@ -552,17 +553,19 @@ const EndPage = () => {
   }, [second]);
 
   return (
-    <End
-      isGameMode={gamemode}
-      onClick={openSRM}
-      onClickLog={showLog}
-      onClose={close}
-      data={data}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      message={message}
-      percentage={percentage}
-    />
+    <Wrapper>
+      <End
+        isGameMode={gamemode}
+        onClick={openSRM}
+        onClickLog={showLog}
+        onClose={close}
+        data={data}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        message={message}
+        percentage={percentage}
+      />
+    </Wrapper>
   );
 };
 

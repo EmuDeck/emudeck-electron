@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import Shaders2D from 'components/organisms/Wrappers/Shaders2D';
 
@@ -23,12 +24,14 @@ const Shaders2DPage = () => {
   };
 
   return (
-    <Shaders2D
-      data={data}
-      onClick={shaderSet}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <Wrapper>
+      <Shaders2D
+        data={data}
+        onClick={shaderSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import CopyGames from 'components/organisms/Wrappers/CopyGames';
 
@@ -21,12 +22,14 @@ const CopyGamesPage = () => {
   };
 
   return (
-    <CopyGames
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      onClick={changeMinute}
-      minute={minute}
-    />
+    <Wrapper>
+      <CopyGames
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClick={changeMinute}
+        minute={minute}
+      />
+    </Wrapper>
   );
 };
 

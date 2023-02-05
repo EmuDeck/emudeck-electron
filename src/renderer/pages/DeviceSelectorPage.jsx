@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import DeviceSelector from 'components/organisms/Wrappers/DeviceSelector';
 
@@ -45,39 +46,40 @@ const DeviceSelectorPage = () => {
   }, [state]); // <-- here put the parameter to listen
 
   return (
-    <DeviceSelector
-      data={data}
-      onClick={deviceSet}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      next="emulator-selector"
-    >
-      <Card
-        css={device == 'Steam Deck' && 'is-selected'}
-        onClick={() => deviceSet('Steam Deck')}
+    <Wrapper>
+      <DeviceSelector
+        data={data}
+        onClick={deviceSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        next="emulator-selector"
       >
-        <img src={imgDeck} width="100" alt="Background" />
-        <span className="h6">Steam Deck</span>
-      </Card>
-      <Card
-        css={device == 'Anbernic Win600' && 'is-selected'}
-        onClick={() => deviceSet('Anbernic Win600')}
-      >
-        <img src={imgWin600} width="100" alt="Background" />
-        <span className="h6">Anbernic WIN600</span>
-      </Card>
-
-      {system === 'win32' && (
         <Card
-          css={device == 'Windows' && 'is-selected'}
-          onClick={() => deviceSet('Windows')}
+          css={device == 'Steam Deck' && 'is-selected'}
+          onClick={() => deviceSet('Steam Deck')}
         >
-          <img src={imgWin} width="100" alt="Background" />
-          <span className="h6">Windows Machine</span>
+          <img src={imgDeck} width="100" alt="Background" />
+          <span className="h6">Steam Deck</span>
         </Card>
-      )}
+        <Card
+          css={device == 'Anbernic Win600' && 'is-selected'}
+          onClick={() => deviceSet('Anbernic Win600')}
+        >
+          <img src={imgWin600} width="100" alt="Background" />
+          <span className="h6">Anbernic WIN600</span>
+        </Card>
 
-      {/*
+        {system === 'win32' && (
+          <Card
+            css={device == 'Windows' && 'is-selected'}
+            onClick={() => deviceSet('Windows')}
+          >
+            <img src={imgWin} width="100" alt="Background" />
+            <span className="h6">Windows Machine</span>
+          </Card>
+        )}
+
+        {/*
 
 
 
@@ -120,7 +122,8 @@ const DeviceSelectorPage = () => {
       <span className="h6">Android Phone</span>
     </Card>
     */}
-    </DeviceSelector>
+      </DeviceSelector>
+    </Wrapper>
   );
 };
 

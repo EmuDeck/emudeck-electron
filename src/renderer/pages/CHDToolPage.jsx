@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import CHDTool from 'components/organisms/Wrappers/CHDTool';
 
@@ -23,11 +24,13 @@ const CHDToolPage = () => {
   };
 
   return (
-    <CHDTool
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      onClick={runCHD}
-    />
+    <Wrapper>
+      <CHDTool
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClick={runCHD}
+      />
+    </Wrapper>
   );
 };
 

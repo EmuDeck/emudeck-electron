@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import AspectRatioSNES from 'components/organisms/Wrappers/AspectRatioSNES';
 
@@ -23,12 +24,14 @@ const AspectRatioSNESPage = () => {
   };
 
   return (
-    <AspectRatioSNES
-      data={data}
-      onClick={arSet}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <Wrapper>
+      <AspectRatioSNES
+        data={data}
+        onClick={arSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import UpdateEmus from 'components/organisms/Wrappers/UpdateEmus';
 
@@ -8,12 +9,11 @@ const UpdateEmusPage = () => {
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
-    disabledBack: false
+    disabledBack: false,
   });
   const { disabledNext, disabledBack } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
-
 
   const updateFlatpak = (data) => {
     ipcChannel.sendMessage('bash', [
@@ -28,12 +28,14 @@ const UpdateEmusPage = () => {
   };
 
   return (
-    <UpdateEmus
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      onClickFlatpak={updateFlatpak}
-      onClickAppImage={updateAppImage}
-    />
+    <Wrapper>
+      <UpdateEmus
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClickFlatpak={updateFlatpak}
+        onClickAppImage={updateAppImage}
+      />
+    </Wrapper>
   );
 };
 

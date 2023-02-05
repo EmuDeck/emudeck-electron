@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import RABezels from 'components/organisms/Wrappers/RABezels';
 
@@ -26,12 +27,14 @@ const RABezelsPage = () => {
   }, [state]); // <-- here put the parameter to listen
 
   return (
-    <RABezels
-      data={data}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      onClick={bezelsSet}
-    />
+    <Wrapper>
+      <RABezels
+        data={data}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClick={bezelsSet}
+      />
+    </Wrapper>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import CloudSync from 'components/organisms/Wrappers/CloudSync';
 
@@ -45,13 +46,15 @@ const CloudSyncPage = () => {
   }, [cloudSync]);
 
   return (
-    <CloudSync
-      data={data}
-      onClick={cloudSyncSet}
-      onClickInstall={createDesktopIcon}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <Wrapper>
+      <CloudSync
+        data={data}
+        onClick={cloudSyncSet}
+        onClickInstall={createDesktopIcon}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

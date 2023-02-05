@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Card from 'components/molecules/Card/Card';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog';
 import img0 from 'assets/emudeck_banner.png';
@@ -48,66 +49,68 @@ const ChangeLogPage = () => {
   }, []);
 
   return (
-    <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
-      <div className="container--grid">
-        <div data-col-sm="4">
-          <div
-            className="changelog-scroll"
-            style={{
-              height: '62vh',
-              overflow: 'auto',
-              overflowX: 'hidden',
-              paddingRight: '20px',
-            }}
-          >
-            <ul>
-              {changeLogData.map((item, i) => {
-                return (
-                  <li tabindex="0" key={i}>
+    <Wrapper>
+      <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
+        <div className="container--grid">
+          <div data-col-sm="4">
+            <div
+              className="changelog-scroll"
+              style={{
+                height: '62vh',
+                overflow: 'auto',
+                overflowX: 'hidden',
+                paddingRight: '20px',
+              }}
+            >
+              <ul>
+                {changeLogData.map((item, i) => {
+                  return (
+                    <li tabindex="0" key={i}>
+                      <Card
+                        css={current == i && 'is-selected'}
+                        onClick={() => activeItem(i)}
+                      >
+                        <span className="h5">{item.title}</span>
+                      </Card>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+          <div data-col-sm="8">
+            {changeLogData.map((item, i) => {
+              return (
+                <div tabindex="0" key={i}>
+                  {current == i && (
                     <Card
-                      css={current == i && 'is-selected'}
                       onClick={() => activeItem(i)}
+                      css={current == i && 'is-selected'}
                     >
-                      <span className="h5">{item.title}</span>
+                      {item.image == 'true' && (
+                        <div
+                          style={{
+                            maxHeight: 280,
+                            overflow: 'hidden',
+                            marginBottom: 10,
+                            borderRadius: 10,
+                          }}
+                        >
+                          <img src={img} alt="Image" />
+                        </div>
+                      )}
+                      <p
+                        dangerouslySetInnerHTML={{ __html: item.description }}
+                      ></p>
                     </Card>
-                  </li>
-                );
-              })}
-            </ul>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
-        <div data-col-sm="8">
-          {changeLogData.map((item, i) => {
-            return (
-              <div tabindex="0" key={i}>
-                {current == i && (
-                  <Card
-                    onClick={() => activeItem(i)}
-                    css={current == i && 'is-selected'}
-                  >
-                    {item.image == 'true' && (
-                      <div
-                        style={{
-                          maxHeight: 280,
-                          overflow: 'hidden',
-                          marginBottom: 10,
-                          borderRadius: 10,
-                        }}
-                      >
-                        <img src={img} alt="Image" />
-                      </div>
-                    )}
-                    <p
-                      dangerouslySetInnerHTML={{ __html: item.description }}
-                    ></p>
-                  </Card>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </ChangeLog>
+      </ChangeLog>
+    </Wrapper>
   );
 };
 

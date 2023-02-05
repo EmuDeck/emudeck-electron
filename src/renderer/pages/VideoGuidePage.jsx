@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import VideoGuide from 'components/organisms/Wrappers/VideoGuide';
 
@@ -21,12 +22,14 @@ const VideoGuidePage = () => {
   };
 
   return (
-    <VideoGuide
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      onClick={changeMinute}
-      minute={minute}
-    />
+    <Wrapper>
+      <VideoGuide
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClick={changeMinute}
+        minute={minute}
+      />
+    </Wrapper>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import DeckyControls from 'components/organisms/Wrappers/DeckyControls';
 
@@ -140,22 +141,24 @@ const DeckyControlsPage = () => {
   }, []);
 
   return (
-    <DeckyControls
-      showNotification={showNotification}
-      installClick={installDeckyControls}
-      sudoPass={sudoPass}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      onChange={setSudoPass}
-      onChangeSetPass={setPassword}
-      onChangeCheckPass={checkPassword}
-      onClick={createSudo}
-      disableButton={disableButton}
-      hasSudo={hasSudo}
-      passValidates={pass1 === pass2 ? true : false}
-      nextText={sudoPass ? 'Continue' : 'Skip'}
-      textNotification={textNotification}
-    />
+    <Wrapper>
+      <DeckyControls
+        showNotification={showNotification}
+        installClick={installDeckyControls}
+        sudoPass={sudoPass}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onChange={setSudoPass}
+        onChangeSetPass={setPassword}
+        onChangeCheckPass={checkPassword}
+        onClick={createSudo}
+        disableButton={disableButton}
+        hasSudo={hasSudo}
+        passValidates={pass1 === pass2 ? true : false}
+        nextText={sudoPass ? 'Continue' : 'Skip'}
+        textNotification={textNotification}
+      />
+    </Wrapper>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import AutoSave from 'components/organisms/Wrappers/AutoSave';
 
@@ -20,12 +21,14 @@ const AutoSavePage = () => {
   };
 
   return (
-    <AutoSave
-      data={data}
-      onClick={autoSaveSet}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <Wrapper>
+      <AutoSave
+        data={data}
+        onClick={autoSaveSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

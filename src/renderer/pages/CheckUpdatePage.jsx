@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import { useNavigate } from 'react-router-dom';
 import Welcome from 'components/organisms/Wrappers/Welcome';
 import Footer from 'components/organisms/Footer/Footer';
@@ -268,75 +269,79 @@ const CheckUpdatePage = () => {
   }, [downloadComplete]);
 
   return (
-    <>
-      {update == null && (
-        <div className="app">
-          <Aside />
-          <div className="wrapper">
-            <Header title="Checking for updates..." />
-            <p className="h5">
-              Please stand by while we check if there is a new version
-              available.
-              <br />
-              If this message does not disappear in about 20 seconds, please
-              restart the application.
-            </p>
-            <ProgressBar css="progress--success" value={counter} max="100" />
+    <Wrapper>
+      <>
+        {update == null && (
+          <div className="app">
+            <Aside />
+            <div className="wrapper">
+              <Header title="Checking for updates..." />
+              <p className="h5">
+                Please stand by while we check if there is a new version
+                available.
+                <br />
+                If this message does not disappear in about 20 seconds, please
+                restart the application.
+              </p>
+              <ProgressBar css="progress--success" value={counter} max="100" />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {update == 'updating' && (
-        <div className="app">
-          <Aside />
-          <div className="wrapper">
-            <Header title="🎉 Update found! 🎉" />
-            <p className="h5">
-              We found an update! EmuDeck will restart as soon as it finishes
-              installing the latest update. Hold on tight.
-            </p>
-            <ProgressBar css="progress--success" value={counter} max="100" />
+        {update == 'updating' && (
+          <div className="app">
+            <Aside />
+            <div className="wrapper">
+              <Header title="🎉 Update found! 🎉" />
+              <p className="h5">
+                We found an update! EmuDeck will restart as soon as it finishes
+                installing the latest update. Hold on tight.
+              </p>
+              <ProgressBar css="progress--success" value={counter} max="100" />
+            </div>
           </div>
-        </div>
-      )}
-      {update == 'up-to-date' && (
-        <div className="app">
-          <Aside />
-          <div className="wrapper">
-            {second === true && <Header title="Checking for updates" />}
-            {second === false && <Header title="Welcome to" bold={`EmuDeck`} />}
-            <Main>
-              {downloadComplete === null && (
-                <>
-                  <p className="h5">
-                    Downloading Files. If this progress bar does not disappear
-                    shortly, please restart the application and check if you can
-                    reach GitHub Servers and check our{' '}
-                    <a
-                      className="link-simple link-simple--1"
-                      href="https://github.com/dragoonDorise/EmuDeck/wiki/Frequently-Asked-Questions#why-wont-emudeck-download"
-                    >
-                      Wiki FAQ
-                    </a>{' '}
-                    for possible solutions.
-                  </p>
-                  <ProgressBar
-                    css="progress--success"
-                    value={counter}
-                    max="100"
-                  />
-                </>
+        )}
+        {update == 'up-to-date' && (
+          <div className="app">
+            <Aside />
+            <div className="wrapper">
+              {second === true && <Header title="Checking for updates" />}
+              {second === false && (
+                <Header title="Welcome to" bold={`EmuDeck`} />
               )}
-            </Main>
-            <Footer
-              next="welcome"
-              disabledNext={disabledNext}
-              disabledBack={disabledBack}
-            />
+              <Main>
+                {downloadComplete === null && (
+                  <>
+                    <p className="h5">
+                      Downloading Files. If this progress bar does not disappear
+                      shortly, please restart the application and check if you
+                      can reach GitHub Servers and check our{' '}
+                      <a
+                        className="link-simple link-simple--1"
+                        href="https://github.com/dragoonDorise/EmuDeck/wiki/Frequently-Asked-Questions#why-wont-emudeck-download"
+                      >
+                        Wiki FAQ
+                      </a>{' '}
+                      for possible solutions.
+                    </p>
+                    <ProgressBar
+                      css="progress--success"
+                      value={counter}
+                      max="100"
+                    />
+                  </>
+                )}
+              </Main>
+              <Footer
+                next="welcome"
+                disabledNext={disabledNext}
+                disabledBack={disabledBack}
+              />
+            </div>
           </div>
-        </div>
-      )}
-    </>
+        )}
+      </>
+    </Wrapper>
   );
 };
 

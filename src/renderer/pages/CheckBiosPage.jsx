@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import { useNavigate } from 'react-router-dom';
 import CheckBios from 'components/organisms/Wrappers/CheckBios';
 
@@ -82,19 +83,21 @@ const CheckBiosPage = () => {
   }, []);
 
   return (
-    <CheckBios
-      checkBiosAgain={checkBiosAgain}
-      ps1Bios={ps1Bios}
-      ps2Bios={ps2Bios}
-      switchBios={switchBios}
-      segaCDBios={segaCDBios}
-      saturnBios={saturnBios}
-      dreamcastBios={dreamcastBios}
-      DSBios={DSBios}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      showNotification={showNotification}
-    />
+    <Wrapper>
+      <CheckBios
+        checkBiosAgain={checkBiosAgain}
+        ps1Bios={ps1Bios}
+        ps2Bios={ps2Bios}
+        switchBios={switchBios}
+        segaCDBios={segaCDBios}
+        saturnBios={saturnBios}
+        dreamcastBios={dreamcastBios}
+        DSBios={DSBios}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        showNotification={showNotification}
+      />
+    </Wrapper>
   );
 };
 

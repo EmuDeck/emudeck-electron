@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import RAAchievements from 'components/organisms/Wrappers/RAAchievements';
 
@@ -48,15 +49,17 @@ const RAAchievementsConfigPage = () => {
   };
 
   return (
-    <RAAchievements
-      data={data}
-      disabledNext={disabledNext}
-      disabledBack={true}
-      next="welcome"
-      nextText={achievements.pass ? 'Continue' : 'Skip'}
-      onChange={setAchievements}
-      onToggle={setAchievementsHardCore}
-    />
+    <Wrapper>
+      <RAAchievements
+        data={data}
+        disabledNext={disabledNext}
+        disabledBack={true}
+        next="welcome"
+        nextText={achievements.pass ? 'Continue' : 'Skip'}
+        onChange={setAchievements}
+        onToggle={setAchievementsHardCore}
+      />
+    </Wrapper>
   );
 };
 

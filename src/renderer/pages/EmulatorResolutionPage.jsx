@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import EmulatorResolution from 'components/organisms/Wrappers/EmulatorResolution';
 
@@ -29,12 +30,14 @@ const EmulatorResolutionPage = () => {
   }, [state]); // <-- here put the parameter to listen
 
   return (
-    <EmulatorResolution
-      data={data}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      onClick={setResolution}
-    />
+    <Wrapper>
+      <EmulatorResolution
+        data={data}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClick={setResolution}
+      />
+    </Wrapper>
   );
 };
 

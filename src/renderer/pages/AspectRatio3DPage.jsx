@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import AspectRatio3D from 'components/organisms/Wrappers/AspectRatio3D';
 
@@ -23,12 +24,14 @@ const AspectRatio3DPage = () => {
   };
 
   return (
-    <AspectRatio3D
-      data={data}
-      onClick={arSet}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-    />
+    <Wrapper>
+      <AspectRatio3D
+        data={data}
+        onClick={arSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import HomebrewGames from 'components/organisms/Wrappers/HomebrewGames';
 
@@ -26,12 +27,14 @@ const HomebrewGamesPage = () => {
   }, [state]); // <-- here put the parameter to listen
 
   return (
-    <HomebrewGames
-      data={data}
-      disabledNext={disabledNext}
-      disabledBack={disabledBack}
-      onClick={HomebrewGamesSet}
-    />
+    <Wrapper>
+      <HomebrewGames
+        data={data}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClick={HomebrewGamesSet}
+      />
+    </Wrapper>
   );
 };
 
