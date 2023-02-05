@@ -124,54 +124,49 @@ const PatroenLoginPage = () => {
 
   return (
     <Wrapper>
-      <div className="app">
-        <Aside />
-        <div className="wrapper">
-          <Header title="Login into Patreon" />
-          <Main>
-            <p className="lead">
-              Please login to patreon in order to access this beta.
-            </p>
-            {!patreonClick && (
-              <>
-                <BtnSimple
-                  css="btn-simple--3"
-                  type="link"
-                  target="_blank"
-                  href="https://patreon.emudeck.com/"
-                  aria="Next"
-                  onClick={() => patreonShowInput()}
-                >
-                  Login with patreon
-                </BtnSimple>
-              </>
+      <Header title="Login into Patreon" />
+      <Main>
+        <p className="lead">
+          Please login to patreon in order to access this beta.
+        </p>
+        {!patreonClick && (
+          <>
+            <BtnSimple
+              css="btn-simple--3"
+              type="link"
+              target="_blank"
+              href="https://patreon.emudeck.com/"
+              aria="Next"
+              onClick={() => patreonShowInput()}
+            >
+              Login with patreon
+            </BtnSimple>
+          </>
+        )}
+        {patreonClick && (
+          <Form>
+            <FormInputSimple
+              label="Token"
+              type="token"
+              name="token"
+              id="token"
+              value={patreonToken}
+              onChange={patreonSetToken}
+            />
+            {patreonToken && (
+              <BtnSimple
+                css="btn-simple--3"
+                type="button"
+                aria="Next"
+                onClick={patreonCheckToken}
+              >
+                {status == null && 'Check Token'}
+                {status == 'checking' && 'Checking token...'}
+              </BtnSimple>
             )}
-            {patreonClick && (
-              <Form>
-                <FormInputSimple
-                  label="Token"
-                  type="token"
-                  name="token"
-                  id="token"
-                  value={patreonToken}
-                  onChange={patreonSetToken}
-                />
-                {patreonToken && (
-                  <BtnSimple
-                    css="btn-simple--3"
-                    type="button"
-                    aria="Next"
-                    onClick={patreonCheckToken}
-                  >
-                    {status == null && 'Check Token'}
-                    {status == 'checking' && 'Checking token...'}
-                  </BtnSimple>
-                )}
-              </Form>
-            )}
-          </Main>
-        </div>
-      </div>
+          </Form>
+        )}
+      </Main>
     </Wrapper>
   );
 };
