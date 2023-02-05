@@ -117,8 +117,6 @@ const PatroenLoginPage = () => {
   useEffect(() => {
     if (patreonStatus == true) {
       navigate('/welcome');
-    } else {
-      patreonCheckToken();
     }
   }, [patreonStatus]);
 

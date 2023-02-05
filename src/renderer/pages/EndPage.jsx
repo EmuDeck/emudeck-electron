@@ -210,7 +210,7 @@ const EndPage = () => {
           }" >> ${settingsFile}`,
         ]);
         ipcChannel.sendMessage('bash', [
-          `echo ${preVar}doSetupRMG"${
+          `echo ${preVar}doSetupRMG="${
             state.overwriteConfigEmus.rmg.status ? true : false
           }" >> ${settingsFile}`,
         ]);
