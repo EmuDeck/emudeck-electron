@@ -190,8 +190,8 @@ const EndPage = () => {
         ]);
 
         ipcChannel.sendMessage('bash', [
-          `echo ${preVar}doSetupPrimeHacks="${
-            state.overwriteConfigEmus.primehacks.status ? true : false
+          `echo ${preVar}doSetupPrimehack="${
+            state.overwriteConfigEmus.primehack.status ? true : false
           }" >> ${settingsFile}`,
         ]);
         ipcChannel.sendMessage('bash', [
@@ -302,8 +302,8 @@ const EndPage = () => {
         ]);
 
         ipcChannel.sendMessage('bash', [
-          `echo ${preVar}doInstallPrimeHacks="${
-            state.installEmus.primehacks.status ? true : false
+          `echo ${preVar}doInstallPrimehack="${
+            state.installEmus.primehack.status ? true : false
           }" >> ${settingsFile}`,
         ]);
         ipcChannel.sendMessage('bash', [

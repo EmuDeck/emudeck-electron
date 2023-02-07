@@ -107,11 +107,11 @@ export default function App() {
         installed: undefined,
         name: 'Dolphin',
       },
-      primehacks: {
-        id: 'primehacks',
+      primehack: {
+        id: 'primehack',
         status: true,
         installed: undefined,
-        name: 'Prime Hacks',
+        name: 'Primehack',
       },
       ppsspp: {
         id: 'ppsspp',
@@ -185,7 +185,7 @@ export default function App() {
     overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
       dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
-      primehacks: { id: 'primehacks', status: true, name: 'Prime Hacks' },
+      primehack: { id: 'primehack', status: true, name: 'Prime Hacks' },
       ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
       duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
       melonds: { id: 'melonds', status: true, name: 'melonDS' },

@@ -72,8 +72,8 @@
       "8": ["Attach Wiimote", "SELECT + Left Stick ⬇️"]
     }
   },
-  "primehacks": {
-    "id": "primehacks",
+  "primehack": {
+    "id": "primehack",
     "name": "Primehack",
     "code": "Primehack",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/Primehack",

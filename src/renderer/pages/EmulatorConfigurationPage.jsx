@@ -8,7 +8,7 @@ import {
   imgdefault,
   imgra,
   imgdolphin,
-  imgprimehacks,
+  imgprimehack,
   imgppsspp,
   imgduckstation,
   imgcitra,
@@ -33,7 +33,7 @@ import {
 const images = {
   ra: imgra,
   dolphin: imgdolphin,
-  primehacks: imgprimehacks,
+  primehack: imgprimehack,
   ppsspp: imgppsspp,
   duckstation: imgduckstation,
   citra: imgcitra,
