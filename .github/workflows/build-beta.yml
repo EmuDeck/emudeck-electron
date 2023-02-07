@@ -20,7 +20,11 @@ jobs:
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v3
-
+        
+      - name: Set Beta Build gitmodules
+        run: |
+          echo "branch = beta" >> ".gitmodules"
+          
       - name: Git Submodule Update
         run: git submodule update --init --recursive
 
@@ -45,9 +49,9 @@ jobs:
         run: |
           sed -i "s|main|beta|g" "./src/data/branch.json"
           sed -i "s|emudeck-electron|emudeck-electron-beta|g" "./package.json"
-          echo "branch = beta" >> ".gitmodules"
           #sed -i "s|EmuDeck|EmuDeck-beta|g" "./release/app/package.json"
           #sed -i 's|"productName": "EmuDeck"|"productName": "EmuDeck-beta"|g' "./package.json"
+          
       - name: Publish releases
         env:
           # These values are used for auto updates signing
@@ -78,6 +82,10 @@ jobs:
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v3
+
+      - name: Set Beta Build gitmodules
+        run: |
+          echo "branch = beta" >> ".gitmodules"
 
       - name: Git Submodule Update
         run: git submodule update --init --recursive
