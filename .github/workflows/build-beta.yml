@@ -20,10 +20,6 @@ jobs:
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v3
-        
-      - name: Set Beta Build gitmodules
-        run: |
-          echo "branch = beta" >> ".gitmodules"
           
       - name: Git Submodule Update
         run: git submodule update --init --recursive
@@ -82,10 +78,6 @@ jobs:
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v3
-
-      - name: Set Beta Build gitmodules
-        run: |
-          echo "branch = beta" >> ".gitmodules"
 
       - name: Git Submodule Update
         run: git submodule update --init --recursive
