@@ -52,6 +52,7 @@ const images = {
   srm: imgsrm,
   esde: imgesde,
   mgba: imgmgba,
+  xenia: imgxenia,
 };
 
 const EmulatorConfigurationPage = () => {

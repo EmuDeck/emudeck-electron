@@ -251,10 +251,10 @@
   },
   "rmg": {
     "id": "rmg",
-    "name": "Rosalies Mupen Gui",
+    "name": "Rosalie's Mupen Gui",
     "code": "RMG",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/RMG",
-    "description": "Rosalies Mupen Gui is a fork of Mupen64Plus-Next with a better gui and is usable outside of RetroArch.",
+    "description": "Rosalie's Mupen Gui is a fork of Mupen64Plus-Next with a better gui and is usable outside of RetroArch.",
     "special_configuration": "DD games require a bios file. EmuDeck's Steam Input profile is required for hotkeys.",
     "bios": [],
     "systems": "Nintendo 64 and 64DD",
