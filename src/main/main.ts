@@ -555,8 +555,12 @@ ipcMain.on('debug', async (event, command) => {
 
 //RetroAchievements
 ipcMain.on('getToken', async (event, command) => {
+
   let backChannel = 'getToken';
-  let bashCommand = `curl --location --data-urlencode u='${command.user}' --data-urlencode p='${command.pass}' --request POST 'https://retroachievements.org/dorequest.php?r=login'`;
+  const escapedUserName = `${command.user.replace(/'/g, "'\\''")}`;
+  //str.replace(/[\\$'"]/g, "\\$&")
+  const escapedPass = `${command.pass.replace(/'/g, "'\\''")}`;
+  let bashCommand = `curl --location --data-urlencode u='${escapedUserName}' --data-urlencode p='${escapedPass}' --request POST 'https://retroachievements.org/dorequest.php?r=login'`;
   if (os.platform().includes('win32')) {
     bashCommand = `curl "https://retroachievements.org/dorequest.php?r=login&u=${command.user}&p=${command.pass}"`;
   }
