@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import ShadersHandhelds from 'components/organisms/Wrappers/ShadersHandhelds';
 
@@ -25,9 +27,15 @@ const ShadersHandheldsPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Configure LCD Shader for" bold="Handheld Systems" />
       <ShadersHandhelds
         data={data}
         onClick={shaderSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <Footer
+        next="shaders-classic"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import EmulatorConfiguration from 'components/organisms/Wrappers/EmulatorConfiguration';
 
@@ -96,13 +98,12 @@ const EmulatorConfigurationPage = () => {
 
   return (
     <Wrapper>
-      <EmulatorConfiguration
-        data={data}
-        onClick={toggleEmus}
+      <Header title="Update emulator's" bold="configuration" />
+      <EmulatorConfiguration data={data} onClick={toggleEmus} images={images} />
+      <Footer
+        next={nextPage}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
-        next={nextPage}
-        images={images}
       />
     </Wrapper>
   );

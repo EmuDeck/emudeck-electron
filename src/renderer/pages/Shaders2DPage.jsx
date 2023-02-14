@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import Shaders2D from 'components/organisms/Wrappers/Shaders2D';
 
@@ -25,9 +27,15 @@ const Shaders2DPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Configure CRT Shader for" bold="Classic 2D Games" />
       <Shaders2D
         data={data}
         onClick={shaderSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <Footer
+        next="shaders-3d-classic"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

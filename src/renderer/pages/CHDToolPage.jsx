@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import CHDTool from 'components/organisms/Wrappers/CHDTool';
 
@@ -25,10 +27,13 @@ const CHDToolPage = () => {
 
   return (
     <Wrapper>
-      <CHDTool
+      <Header title="EmuDeck" bold="Compression Tool" />
+      <CHDTool onClick={runCHD} />
+      <Footer
+        next={false}
+        nextText={nextText}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
-        onClick={runCHD}
       />
     </Wrapper>
   );

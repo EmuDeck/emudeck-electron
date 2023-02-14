@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import CopyGames from 'components/organisms/Wrappers/CopyGames';
 
@@ -15,19 +17,20 @@ const CopyGamesPage = () => {
   });
   const { disabledNext, disabledBack, minute } = statePage;
 
-  const changeMinute = (minute) => {
+  const changeMinute = (value) => {
     setStatePage({
-      minute: minute,
+      minute: value,
     });
   };
 
   return (
     <Wrapper>
-      <CopyGames
+      <Header title="Emulation Showcase" />
+      <CopyGames onClick={changeMinute} minute={minute} />
+      <Footer
+        next={false}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
-        onClick={changeMinute}
-        minute={minute}
       />
     </Wrapper>
   );

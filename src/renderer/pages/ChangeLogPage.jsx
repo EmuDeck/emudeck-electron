@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 import Card from 'components/molecules/Card/Card';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog';
 import img0 from 'assets/emudeck_banner.png';
@@ -50,6 +52,7 @@ const ChangeLogPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Latest" bold="changes" />
       <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
         <div className="container--grid">
           <div data-col-sm="4">
@@ -110,6 +113,12 @@ const ChangeLogPage = () => {
           </div>
         </div>
       </ChangeLog>
+      <Footer
+        next={false}
+        backText="Back to Home"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
     </Wrapper>
   );
 };

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import RABezels from 'components/organisms/Wrappers/RABezels';
 
@@ -10,7 +12,6 @@ const RABezelsPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
   const bezelsSet = (bezelStatus) => {
@@ -28,11 +29,12 @@ const RABezelsPage = () => {
 
   return (
     <Wrapper>
-      <RABezels
-        data={data}
+      <Header title="Configure" bold="game bezels" />
+      <RABezels onClick={bezelsSet} />
+      <Footer
+        next="aspect-ratio-sega"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
-        onClick={bezelsSet}
       />
     </Wrapper>
   );

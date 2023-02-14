@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import Settings from 'components/organisms/Wrappers/Settings';
 
@@ -306,6 +308,7 @@ const SettingsPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Configure your" bold="Settings" />
       <Settings
         showNotification={showNotification}
         notificationText={notificationText}
@@ -319,9 +322,8 @@ const SettingsPage = () => {
         onClickLCD={onClickLCD}
         onClickAutoSave={autoSaveSet}
         onClickHomeBrew={HomeBrew}
-        disabledNext={true}
-        disabledBack={disabledBack}
       />
+      <Footer disabledNext disabledBack={disabledBack} />
     </Wrapper>
   );
 };

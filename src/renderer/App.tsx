@@ -9,7 +9,6 @@ import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
 import EmulatorConfigurationPage from 'pages/EmulatorConfigurationPage';
 import RomStoragePage from 'pages/RomStoragePage';
-import RomStructurePage from 'pages/RomStructurePage';
 import AspectRatioSegaPage from 'pages/AspectRatioSegaPage';
 import AspectRatioSNESPage from 'pages/AspectRatioSNESPage';
 import AspectRatio3DPage from 'pages/AspectRatio3DPage';
@@ -251,7 +250,6 @@ export default function App() {
             element={<EmulatorResolutionPage />}
           />
           <Route exact path="/rom-storage" element={<RomStoragePage />} />
-          <Route exact path="/rom-structure" element={<RomStructurePage />} />
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
 
           <Route exact path="/auto-save" element={<AutoSavePage />} />

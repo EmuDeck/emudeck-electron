@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import AspectRatioDolphin from 'components/organisms/Wrappers/AspectRatioDolphin';
 
 const AspectRatioDolphinPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { ar } = state;
+  const { ar, overwriteConfigEmus } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -25,9 +27,14 @@ const AspectRatioDolphinPage = () => {
 
   return (
     <Wrapper>
-      <AspectRatioDolphin
-        data={data}
-        onClick={arSet}
+      <Header title="Configure Aspect Ratio for the" bold="GameCube" />
+      <AspectRatioDolphin data={data} onClick={arSet} />
+      <Footer
+        next={
+          overwriteConfigEmus.ra.status == true
+            ? 'shaders-handhelds'
+            : 'pegasus-theme'
+        }
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

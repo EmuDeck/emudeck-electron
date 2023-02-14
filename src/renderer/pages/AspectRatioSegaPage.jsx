@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import AspectRatioSega from 'components/organisms/Wrappers/AspectRatioSega';
 
@@ -25,9 +27,15 @@ const AspectRatioSegaPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Configure Aspect Ratio for" bold="Classic Sega Systems" />
       <AspectRatioSega
         data={data}
         onClick={arSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <Footer
+        next="aspect-ratio-snes"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

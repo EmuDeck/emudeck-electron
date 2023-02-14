@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import { useNavigate } from 'react-router-dom';
-import Footer from 'components/organisms/Footer/Footer';
 import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
+import { useNavigate } from 'react-router-dom';
+
 import Main from 'components/organisms/Main/Main';
 import { Alert } from 'getbasecore/Molecules';
 
@@ -200,7 +201,6 @@ const CheckUpdatePage = () => {
       localStorage.setItem('pending_update', true);
     }
     if (update == 'up-to-date') {
-      localStorage.setItem('pending_update', false);
       //is the git repo cloned?
       console.log('check-git');
       ipcChannel.sendMessage('check-git');

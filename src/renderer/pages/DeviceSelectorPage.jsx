@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import DeviceSelector from 'components/organisms/Wrappers/DeviceSelector';
 
@@ -47,13 +49,8 @@ const DeviceSelectorPage = () => {
 
   return (
     <Wrapper>
-      <DeviceSelector
-        data={data}
-        onClick={deviceSet}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-        next="emulator-selector"
-      >
+      <Header title="Select your" bold="device" />
+      <DeviceSelector data={data} onClick={deviceSet}>
         <Card
           css={device == 'Steam Deck' && 'is-selected'}
           onClick={() => deviceSet('Steam Deck')}
@@ -123,6 +120,11 @@ const DeviceSelectorPage = () => {
     </Card>
     */}
       </DeviceSelector>
+      <Footer
+        next="emulator-selector"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
     </Wrapper>
   );
 };

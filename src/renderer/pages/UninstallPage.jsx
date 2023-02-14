@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import Uninstall from 'components/organisms/Wrappers/Uninstall';
 
@@ -27,10 +29,16 @@ const UninstallPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Uninstall" bold="EmuDeck" />
       <Uninstall
         disabledNext={disabledNext}
         disabledBack={disabledBack}
         onClick={uninstall}
+      />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
       />
     </Wrapper>
   );

@@ -1,13 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import React, { useState } from 'react';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import UpdateEmus from 'components/organisms/Wrappers/UpdateEmus';
 
 const UpdateEmusPage = () => {
-  const { state, setState } = useContext(GlobalContext);
-
-  const [statePage, setStatePage] = useState({
+  const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
   });
@@ -15,13 +14,13 @@ const UpdateEmusPage = () => {
 
   const ipcChannel = window.electron.ipcRenderer;
 
-  const updateFlatpak = (data) => {
+  const updateFlatpak = () => {
     ipcChannel.sendMessage('bash', [
       'bash ~/.config/EmuDeck/backend/tools/flatpakupdate/flatpakupdate.sh',
     ]);
   };
 
-  const updateAppImage = (data) => {
+  const updateAppImage = () => {
     ipcChannel.sendMessage('bash', [
       'bash ~/.config/EmuDeck/backend/tools/binupdate/binupdate.sh',
     ]);
@@ -29,11 +28,17 @@ const UpdateEmusPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Update your" bold="Emulators & Tools" />
       <UpdateEmus
         disabledNext={disabledNext}
         disabledBack={disabledBack}
         onClickFlatpak={updateFlatpak}
         onClickAppImage={updateAppImage}
+      />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
       />
     </Wrapper>
   );

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import EmulatorSelector from 'components/organisms/Wrappers/EmulatorSelector';
 
@@ -80,12 +82,12 @@ const EmulatorSelectorPage = () => {
 
   return (
     <Wrapper>
-      <EmulatorSelector
-        data={data}
-        onClick={toggleEmus}
+      <Header title="Emulators for" bold={`${device}`} />
+      <EmulatorSelector data={data} onClick={toggleEmus} images={images} />
+      <Footer
+        next="emulator-configuration"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
-        images={images}
       />
     </Wrapper>
   );

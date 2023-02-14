@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import RemotePlayWhatever from 'components/organisms/Wrappers/RemotePlayWhatever';
 
@@ -17,16 +19,6 @@ const RemotePlayWhateverPage = () => {
     statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
-
-  const installRPW = (data) => {
-    ipcChannel.sendMessage('emudeck', [
-      'RemotePlayWhatever|||RemotePlayWhatever_install',
-    ]);
-
-    notificationShow(
-      '🎉 RemotePlayWhatEver installed! Steam Rom Manager will launch now'
-    );
-  };
 
   const notificationShow = (text) => {
     setStatePage({
@@ -45,14 +37,28 @@ const RemotePlayWhateverPage = () => {
     }
   };
 
+  const installRPW = (data) => {
+    ipcChannel.sendMessage('emudeck', [
+      'RemotePlayWhatever|||RemotePlayWhatever_install',
+    ]);
+
+    notificationShow(
+      '🎉 RemotePlayWhatEver installed! Steam Rom Manager will launch now'
+    );
+  };
+
   return (
     <Wrapper>
+      <Header title="Multiplayer with " bold="RemotePlayWhatever - Beta" />
       <RemotePlayWhatever
         showNotification={showNotification}
         notificationText={notificationText}
+        onClick={installRPW}
+      />
+      <Footer
+        next={false}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
-        onClick={installRPW}
       />
     </Wrapper>
   );

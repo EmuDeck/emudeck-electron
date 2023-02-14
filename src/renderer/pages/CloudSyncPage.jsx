@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import CloudSync from 'components/organisms/Wrappers/CloudSync';
 
@@ -47,10 +49,14 @@ const CloudSyncPage = () => {
 
   return (
     <Wrapper>
+      <Header title="SaveBackup - BETA" />
       <CloudSync
         data={data}
         onClick={cloudSyncSet}
         onClickInstall={createDesktopIcon}
+      />
+      <Footer
+        next={false}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

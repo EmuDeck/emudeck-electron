@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import Shaders3D from 'components/organisms/Wrappers/Shaders3D';
 
@@ -25,9 +27,15 @@ const Shaders3DPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Configure CRT Shader for" bold="Classic 3D Games" />
       <Shaders3D
         data={data}
         onClick={shaderSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <Footer
+        next="pegasus-theme"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

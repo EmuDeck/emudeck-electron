@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import EmuGuide from 'components/organisms/Wrappers/EmuGuide';
 
@@ -271,30 +273,32 @@ const EmuGuidePage = () => {
 
   return (
     <Wrapper>
-      <>
-        <EmuGuide
-          mode={mode}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-          emuData={emuData[emulatorSelected]}
-          ps1={ps1Bios}
-          ps2={ps2Bios}
-          nswitch={switchBios}
-          segacd={segaCDBios}
-          saturn={saturnBios}
-          dreamcast={dreamcastBios}
-          nds={DSBios}
-          onChange={selectEmu}
-          onClick={resetEmu}
-          onClickInstall={installEmu}
-          onClickUninstall={uninstallEmu}
-          showNotification={showNotification}
-          textNotification={textNotification}
-          installEmus={installEmus[emulatorSelected]}
-          disableInstallButton={disableInstallButton ? true : false}
-          disableResetButton={disableResetButton ? true : false}
-        />
-      </>
+      <Header title={emuData[emulatorSelected].name} />
+      <EmuGuide
+        mode={mode}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        emuData={emuData[emulatorSelected]}
+        ps1={ps1Bios}
+        ps2={ps2Bios}
+        nswitch={switchBios}
+        segacd={segaCDBios}
+        saturn={saturnBios}
+        dreamcast={dreamcastBios}
+        nds={DSBios}
+        onChange={selectEmu}
+        onClick={resetEmu}
+        onClickInstall={installEmu}
+        onClickUninstall={uninstallEmu}
+        showNotification={showNotification}
+        textNotification={textNotification}
+        installEmus={installEmus[emulatorSelected]}
+      />
+      <Footer
+        next={false}
+        disableInstallButton={disableInstallButton ? true : false}
+        disableResetButton={disableResetButton ? true : false}
+      />
     </Wrapper>
   );
 };

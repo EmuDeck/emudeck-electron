@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import DeckyControls from 'components/organisms/Wrappers/DeckyControls';
 
@@ -142,12 +144,11 @@ const DeckyControlsPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Configure" bold="DeckyControls" />
       <DeckyControls
         showNotification={showNotification}
         installClick={installDeckyControls}
         sudoPass={sudoPass}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
         onChange={setSudoPass}
         onChangeSetPass={setPassword}
         onChangeCheckPass={checkPassword}
@@ -155,8 +156,13 @@ const DeckyControlsPage = () => {
         disableButton={disableButton}
         hasSudo={hasSudo}
         passValidates={pass1 === pass2 ? true : false}
-        nextText={sudoPass ? 'Continue' : 'Skip'}
         textNotification={textNotification}
+      />
+      <Footer
+        next={false}
+        nextText={sudoPass ? 'Continue' : 'Skip'}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
       />
     </Wrapper>
   );

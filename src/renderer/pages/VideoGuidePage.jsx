@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import React, { useState } from 'react';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import VideoGuide from 'components/organisms/Wrappers/VideoGuide';
 
 const VideoGuidePage = () => {
-  const { state, setState } = useContext(GlobalContext);
-
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -15,19 +14,20 @@ const VideoGuidePage = () => {
   });
   const { disabledNext, disabledBack, minute } = statePage;
 
-  const changeMinute = (minute) => {
+  const changeMinute = (value) => {
     setStatePage({
-      minute: minute,
+      minute: value,
     });
   };
 
   return (
     <Wrapper>
-      <VideoGuide
+      <Header title="Emulation Showcase" />
+      <VideoGuide onClick={changeMinute} minute={minute} />
+      <Footer
+        next={false}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
-        onClick={changeMinute}
-        minute={minute}
       />
     </Wrapper>
   );

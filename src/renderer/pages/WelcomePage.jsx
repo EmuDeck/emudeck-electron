@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
-import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Wrapper from 'components/molecules/Wrapper/Wrapper'; import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import Welcome from 'components/organisms/Wrappers/Welcome';
-import Footer from 'components/organisms/Footer/Footer';
-import Header from 'components/organisms/Header/Header';
 
 const WelcomePage = () => {
   const ipcChannel = window.electron.ipcRenderer;
@@ -72,13 +71,11 @@ const WelcomePage = () => {
       alert(`Copy this url: ${message}`);
     });
   };
-  const functions = {openSRM, openCSM, sprunge, navigate}
+  const functions = { openSRM, openCSM, sprunge, navigate };
   return (
     <Wrapper>
       {second === false && <Header title="Welcome to EmuDeck" />}
       {second === true && <Header title="Welcome back to EmuDeck" />}
-
-
 
       <Welcome
         functions={functions}

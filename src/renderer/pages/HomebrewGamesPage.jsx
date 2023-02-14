@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import HomebrewGames from 'components/organisms/Wrappers/HomebrewGames';
 
 const HomebrewGamesPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { bezels } = state;
+  const { bezels, mode, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -28,11 +30,24 @@ const HomebrewGamesPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Install" bold="Homebrew Games" />
       <HomebrewGames
         data={data}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
         onClick={HomebrewGamesSet}
+      />
+      <Footer
+        next={
+          mode === 'easy'
+            ? 'end'
+            : system === 'win32'
+            ? 'emulator-resolution'
+            : 'confirmation'
+        }
+        nextText={mode === 'easy' ? 'Finish' : 'Next'}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
       />
     </Wrapper>
   );

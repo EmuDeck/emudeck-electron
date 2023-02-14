@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import Aside from 'components/organisms/Aside/Aside';
 import Header from 'components/organisms/Header/Header';

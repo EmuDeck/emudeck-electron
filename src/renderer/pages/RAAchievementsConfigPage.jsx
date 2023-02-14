@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import RAAchievements from 'components/organisms/Wrappers/RAAchievements';
 
@@ -50,14 +52,18 @@ const RAAchievementsConfigPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Configure" bold="RetroAchievements" />
       <RAAchievements
         data={data}
-        disabledNext={disabledNext}
         disabledBack={true}
-        next="welcome"
-        nextText={achievements.pass ? 'Continue' : 'Skip'}
         onChange={setAchievements}
         onToggle={setAchievementsHardCore}
+      />
+      <Footer
+        next="welcome"
+        nextText={achievements.token ? 'Continue' : 'Skip'}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
       />
     </Wrapper>
   );

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import Migration from 'components/organisms/Wrappers/Migration';
 
@@ -159,9 +161,8 @@ const MigrationPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Migrate your installation" />
       <Migration
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
         sdCardValid={sdCardValid}
         reloadSDcard={checkSDValid}
         sdCardName={sdCardName}
@@ -170,6 +171,11 @@ const MigrationPage = () => {
         onClickStart={startMigration}
         storage={storage}
         storagePath={storagePath}
+      />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
       />
     </Wrapper>
   );

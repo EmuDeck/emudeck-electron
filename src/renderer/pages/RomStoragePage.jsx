@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import RomStorage from 'components/organisms/Wrappers/RomStorage';
 
@@ -169,6 +171,7 @@ const RomStoragePage = () => {
 
   return (
     <Wrapper>
+      <Header title="Select your ROM Directory" bold="" />
       <RomStorage
         status={status}
         sdCardValid={sdCardValid}
@@ -178,8 +181,6 @@ const RomStoragePage = () => {
         sdCardName={sdCardName}
         customPath={storagePath}
         onClick={storageSet}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
         next={
           mode === 'easy'
             ? system == 'win32'
@@ -187,6 +188,11 @@ const RomStoragePage = () => {
               : 'homebrew-games'
             : 'device-selector'
         }
+      />
+      <Footer
+        next={next}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
       />
     </Wrapper>
   );

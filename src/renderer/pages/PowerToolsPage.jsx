@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import PowerTools from 'components/organisms/Wrappers/PowerTools';
 
@@ -142,12 +144,11 @@ const PowerToolsPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Configure" bold="Power Tools" />
       <PowerTools
         showNotification={showNotification}
         installClick={installPowerTools}
         sudoPass={sudoPass}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
         onChange={setSudoPass}
         onChangeSetPass={setPassword}
         onChangeCheckPass={checkPassword}
@@ -155,8 +156,13 @@ const PowerToolsPage = () => {
         disableButton={disableButton}
         hasSudo={hasSudo}
         passValidates={pass1 === pass2 ? true : false}
-        nextText={sudoPass ? 'Continue' : 'Skip'}
         textNotification={textNotification}
+      />
+      <Footer
+        next={false}
+        nextText={sudoPass ? 'Continue' : 'Skip'}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
       />
     </Wrapper>
   );

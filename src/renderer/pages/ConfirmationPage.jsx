@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import Confirmation from 'components/organisms/Wrappers/Confirmation';
 
@@ -23,8 +25,11 @@ const ConfirmationPage = () => {
 
   return (
     <Wrapper>
-      <Confirmation
-        data={data}
+      <Header title="Here's what we'll do" />
+      <Confirmation data={data} />
+      <Footer
+        next="end"
+        nextText="Finish"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

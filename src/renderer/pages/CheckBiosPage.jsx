@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import CheckBios from 'components/organisms/Wrappers/CheckBios';
 
@@ -84,6 +86,7 @@ const CheckBiosPage = () => {
 
   return (
     <Wrapper>
+      <Header title="Bios files" bold="checker" />
       <CheckBios
         checkBiosAgain={checkBiosAgain}
         ps1Bios={ps1Bios}
@@ -93,9 +96,12 @@ const CheckBiosPage = () => {
         saturnBios={saturnBios}
         dreamcastBios={dreamcastBios}
         DSBios={DSBios}
+        showNotification={showNotification}
+      />
+      <Footer
+        next={false}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
-        showNotification={showNotification}
       />
     </Wrapper>
   );

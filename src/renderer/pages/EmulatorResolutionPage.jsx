@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
+import Footer from 'components/organisms/Footer/Footer';
 
 import EmulatorResolution from 'components/organisms/Wrappers/EmulatorResolution';
 
@@ -31,12 +33,9 @@ const EmulatorResolutionPage = () => {
 
   return (
     <Wrapper>
-      <EmulatorResolution
-        data={data}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-        onClick={setResolution}
-      />
+      <Header title="Emulator Resolution" />
+      <EmulatorResolution data={data} onClick={setResolution} />
+      <Footer next="confirmation" nextText="Next" />
     </Wrapper>
   );
 };
