@@ -4,6 +4,8 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 
+import { BtnSimple } from 'getbasecore/Atoms';
+
 import End from 'components/organisms/Wrappers/End';
 
 const EndPage = () => {
@@ -574,13 +576,10 @@ const EndPage = () => {
       )}
       <End
         onClick={openSRM}
-        onClickLog={showLog}
-        onClose={close}
         data={data}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
         message={message}
         percentage={percentage}
+        disabledNext={disabledNext}
       />
       <footer className="footer">
         <BtnSimple
@@ -588,7 +587,7 @@ const EndPage = () => {
           type="button"
           aria="Go Back"
           disabled={false}
-          onClick={onClickLog}
+          onClick={showLog}
         >
           Watch Log
         </BtnSimple>
@@ -597,7 +596,7 @@ const EndPage = () => {
           type="button"
           aria="Go Back"
           disabled={disabledNext && 'true'}
-          onClick={onClose}
+          onClick={close}
         >
           Exit
           <svg
@@ -621,7 +620,7 @@ const EndPage = () => {
             type="button"
             aria="Go Next"
             disabled={disabledNext && 'true'}
-            onClick={onClick}
+            onClick={openSRM}
           >
             Launch Steam Rom Manager
             <svg

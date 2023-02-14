@@ -181,6 +181,8 @@ const RomStoragePage = () => {
         sdCardName={sdCardName}
         customPath={storagePath}
         onClick={storageSet}
+      />
+      <Footer
         next={
           mode === 'easy'
             ? system == 'win32'
@@ -188,9 +190,6 @@ const RomStoragePage = () => {
               : 'homebrew-games'
             : 'device-selector'
         }
-      />
-      <Footer
-        next={next}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
