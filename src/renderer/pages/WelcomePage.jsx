@@ -1,9 +1,27 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
-import Wrapper from 'components/molecules/Wrapper/Wrapper'; import Header from 'components/organisms/Header/Header';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import Welcome from 'components/organisms/Wrappers/Welcome';
+import {
+  iconSuccess,
+  iconCloud,
+  iconCompress,
+  iconGear,
+  iconList,
+  iconMigrate,
+  iconPlugin,
+  iconPrize,
+  iconUninstall,
+  iconQuick,
+  iconCustom,
+  iconDoc,
+  iconBooks,
+  iconJoystick,
+  iconPackage,
+} from 'components/utils/images/images';
 
 const WelcomePage = () => {
   const ipcChannel = window.electron.ipcRenderer;
@@ -25,10 +43,190 @@ const WelcomePage = () => {
       navigate('/rom-storage');
     }
   };
+  const pendingUpdate = localStorage.getItem('pending_update');
+  const settingsCards = [
+    {
+      icon: [iconQuick],
+      title: 'Quick Reset',
+      description: 'Reset settings with our defaults in one click',
+      button: 'Reinstall',
+      btnCSS: 'btn-simple--5',
+      status: pendingUpdate === 'true' ? false : true,
+      function: () => selectMode('easy'),
+    },
+    {
+      icon: [iconCustom],
+      title: 'Custom Reset',
+      description: 'Chose what emulators do you want to reset',
+      button: 'Reinstall',
+      btnCSS: 'btn-simple--5',
+      status: pendingUpdate === 'true' ? false : true,
+      function: () => selectMode('expert'),
+    },
+    {
+      icon: [iconJoystick],
+      title: 'Steam Rom Manager',
+      description: 'Launch SRM to add more games to your Steam Library',
+      button: 'Launch',
+      btnCSS: 'btn-simple--5',
+      status: pendingUpdate === 'true' ? true : false,
+      function: () => functions.openSRM(),
+    },
+    {
+      icon: [iconPlugin],
+      title: 'PowerTools',
+      description: 'Decky plugin to improve performance in some emulators',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/power-tools'),
+    },
+    {
+      icon: [iconPlugin],
+      title: 'DeckyControls',
+      description:
+        'EmuDeck decky plugin to access emulator hotkeys in Gaming Mode',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/decky-controls'),
+    },
+    {
+      icon: [iconPlugin],
+      title: 'Gyroscope',
+      description: 'Use your SteamDeck gyroscope with Wii and Switch games',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/gyrodsu'),
+    },
+    {
+      icon: [iconCompress],
+      title: 'EmuDeck Compressor',
+      description: 'Lossless compression of ISO and Nintendo games',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/chd-tool'),
+    },
+    {
+      icon: [iconPackage],
+      title: 'Update Emulators',
+      description: 'Update your emulators right from EmuDeck',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: pendingUpdate === 'true' ? true : false,
+      function: () => functions.navigate('/update-emulators'),
+    },
+    {
+      icon: [iconGear],
+      title: 'Quick Settings',
+      description: 'Customize bezels, shaders, aspect ratio and more',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: pendingUpdate === 'true' ? true : false,
+      function: () => functions.navigate('/settings'),
+    },
+    {
+      icon: [iconSuccess],
+      title: 'Bios Checker',
+      description: 'Check if you have your correct bios installed',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/check-bios'),
+    },
+    {
+      icon: [iconCloud],
+      title: 'Cloud Backup',
+      description: 'Backup your states and saved games to the cloud',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/cloud-sync'),
+    },
+    {
+      icon: [iconCloud],
+      title: 'Cloud Services Manager',
+      description: 'Manage your cloud services',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.openCSM(),
+    },
+    {
+      icon: [iconPrize],
+      title: 'RetroAchievements',
+      description:
+        'Configure RetroAchivments for RetroArch, PCSX2 and DuckStation',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/RA-achievements-config'),
+    },
+    {
+      icon: [iconMigrate],
+      title: 'Migrate installation',
+      description: 'Move your installation to your SD Card or viceversa',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/migration'),
+    },
+    {
+      icon: [iconBooks],
+      title: 'Emulator guides',
+      description: 'Check our hotkeys, reset each emulator in case of issues',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/emulator-guide'),
+    },
+    {
+      icon: [iconDoc],
+      title: 'Upload Log',
+      description: 'Having issues installing? Send us your log',
+      button: 'Upload',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.sprunge(),
+    },
+    {
+      icon: [iconList],
+      title: 'ChangeLog',
+      description:
+        'Read all about the improvements done in this current version',
+      button: 'Read',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/change-log'),
+    },
+    {
+      icon: [iconUninstall],
+      title: 'Uninstall',
+      description: 'Uninstall EmuDeck from your system from here',
+      button: 'Uninstall',
+      btnCSS: 'btn-simple--3',
+      status: true,
+      function: () => functions.navigate('/uninstall'),
+    },
+    {
+      icon: [iconPrize],
+      title: 'Become a Patreon',
+      description: 'Please consider supporting us on Patreon',
+      button: 'Donate',
+      btnCSS: 'btn-simple--3',
+      status: true,
+      type: 'link',
+      href: 'https://www.patreon.com/bePatron?u=29065992',
+      function: () => {},
+    },
+  ];
 
   // show changelog after update
   useEffect(() => {
     const showChangelog = localStorage.getItem('show_changelog');
+
     if (showChangelog === 'true') {
       navigate('/change-log');
     }
@@ -78,6 +276,7 @@ const WelcomePage = () => {
       {second === true && <Header title="Welcome back to EmuDeck" />}
 
       <Welcome
+        settingsCards={settingsCards}
         functions={functions}
         alert={
           second
