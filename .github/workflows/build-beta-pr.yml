@@ -1,0 +1,46 @@
+name: PR Auto-build
+
+on:
+  pull_request:
+    types: [labeled]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  publish-linux:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v3
+          
+      - name: Git Submodule Update
+        run: git submodule update --init --recursive
+
+      - name: Use cached node_modules
+        id: cache-node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Node and NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.cache-node_modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Set Beta Build
+        run: |
+          sed -i "s|main|beta|g" "./src/data/branch.json"
+          sed -i "s|emudeck-electron|emudeck-electron-beta|g" "./package.json"
+   
