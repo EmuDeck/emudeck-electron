@@ -119,7 +119,7 @@ const EndPage = () => {
       console.log('saving settings');
 
       ipcChannel.sendMessage('bash-nolog', [
-        `echo ${preVar}'${state.achievements.token}' > %userprofile%/AppData/Roaming/EmuDeck/.rat`,
+        `echo '${state.achievements.token}' > %userprofile%/AppData/Roaming/EmuDeck/.rat`,
       ]);
       ipcChannel.sendMessage('bash-nolog', [
         `echo '${state.achievements.user}' > %userprofile%/AppData/Roaming/EmuDeck/.rau`,
@@ -499,7 +499,7 @@ const EndPage = () => {
 
         //Achievements
         ipcChannel.sendMessage('bash-nolog', [
-          `echo ${preVar}'${state.achievements.token}' > $HOME/.config/EmuDeck/.rat`,
+          `echo '${state.achievements.token}' > $HOME/.config/EmuDeck/.rat`,
         ]);
         ipcChannel.sendMessage('bash-nolog', [
           `echo '${state.achievements.user}' > $HOME/.config/EmuDeck/.rau`,
