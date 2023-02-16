@@ -19,8 +19,15 @@ const ChangeLogPage = () => {
     current: 0,
     img: img0,
   });
-  const { disabledNext, disabledBack, current, img } = statePage;
-  const changeLogData = require('data/changelog.json');
+  const { disabledNext, disabledBack, current, img, system } = statePage;
+  let changeLogData;
+
+  if (system === 'win32') {
+    changeLogData = require('data/changelog-win.json');
+  } else {
+    changeLogData = require('data/changelog.json');
+  }
+
   const imgC0 = img0;
   const activeItem = (id) => {
     let imgID;
