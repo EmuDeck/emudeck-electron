@@ -39,6 +39,7 @@ const EndPage = () => {
       messagePercent = messagePercent.replaceAll(' ', '');
       messagePercent = messagePercent.replaceAll('\n', '');
       messagePercent = messagePercent.replaceAll('\n\r', '');
+      messagePercent = messagePercent.replaceAll('\r', '');
 
       setMsg({ message: messageText, percentage: messagePercent });
     });

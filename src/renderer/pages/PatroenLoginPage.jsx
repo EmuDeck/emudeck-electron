@@ -100,11 +100,13 @@ const PatroenLoginPage = () => {
     }
   };
 
+  // We force the status to false
   useEffect(() => {
-    setState({
-      ...state,
-      patreonStatus: false,
-    });
+    // setState({
+    //   ...state,
+    //   patreonStatus: false,
+    // });
+    console.log({ state });
   }, []);
 
   useEffect(() => {
