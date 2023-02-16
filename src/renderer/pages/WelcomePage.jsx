@@ -293,7 +293,7 @@ const WelcomePage = () => {
         <Footer
           back={second ? 'tools-and-stuff' : false}
           backText={second ? 'Tools & stuff' : 'Install EmuDeck First'}
-          third="change-log"
+          third={system !== 'win32' ? 'change-log' : ''}
           thirdText="See changelog"
           fourthText="Exit EmuDeck"
           next="rom-storage"
