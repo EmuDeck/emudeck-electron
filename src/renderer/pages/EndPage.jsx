@@ -117,6 +117,14 @@ const EndPage = () => {
 
     if (system === 'win32') {
       console.log('saving settings');
+
+      ipcChannel.sendMessage('bash-nolog', [
+        `echo ${preVar}'${state.achievements.token}' > %userprofile%/AppData/Roaming/EmuDeck/.rat`,
+      ]);
+      ipcChannel.sendMessage('bash-nolog', [
+        `echo '${state.achievements.user}' > %userprofile%/AppData/Roaming/EmuDeck/.rau`,
+      ]);
+
       ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
       ipcChannel.once('saveSettings', (saveSettings) => {
         console.log({ saveSettings });
