@@ -487,7 +487,6 @@ ipcMain.on('pull', async (event, branch) => {
 });
 
 ipcMain.on('branch', async (event, command) => {
-  console.log(process.env);
   event.reply('branch-out', process.env.BRANCH);
 });
 
