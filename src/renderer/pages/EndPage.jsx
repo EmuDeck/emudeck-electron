@@ -119,10 +119,10 @@ const EndPage = () => {
       console.log('saving settings');
 
       ipcChannel.sendMessage('bash-nolog', [
-        `echo '${state.achievements.token}' > %userprofile%/AppData/Roaming/EmuDeck/.rat`,
+        `echo ${state.achievements.token} > %userprofile%/AppData/Roaming/EmuDeck/.rat`,
       ]);
       ipcChannel.sendMessage('bash-nolog', [
-        `echo '${state.achievements.user}' > %userprofile%/AppData/Roaming/EmuDeck/.rau`,
+        `echo ${state.achievements.user} > %userprofile%/AppData/Roaming/EmuDeck/.rau`,
       ]);
 
       ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
