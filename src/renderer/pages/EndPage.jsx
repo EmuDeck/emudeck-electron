@@ -85,7 +85,7 @@ const EndPage = () => {
     const interval = setInterval(() => {
       if (system === 'win32') {
         let msg = readMSG(
-          'more %userprofile%\\AppData\\Roaming\\EmuDeck\\msg.log'
+          'more "%userprofile%\\AppData\\Roaming\\EmuDeck\\msg.log"'
         );
       } else {
         let msg = readMSG('cat ~/.config/EmuDeck/msg.log');
