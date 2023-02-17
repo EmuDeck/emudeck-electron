@@ -53,7 +53,7 @@ const PatroenLoginPage = () => {
       status: 'checking',
     });
 
-    if (patreonToken == 'pepe') {
+    if (patreonToken == 'sG6gE8yJ3sK3xX8c') {
       setStatePage({
         ...statePage,
         access_allowed: true,
