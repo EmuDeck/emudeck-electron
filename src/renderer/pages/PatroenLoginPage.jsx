@@ -81,7 +81,7 @@ const PatroenLoginPage = () => {
 
         console.log({ currently_entitled_amount_cents });
 
-        if (currently_entitled_amount_cents > 300) {
+        if (currently_entitled_amount_cents > 200) {
           setStatePage({
             ...statePage,
             access_allowed: true,
