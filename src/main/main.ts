@@ -47,7 +47,7 @@ const promiseFromChildProcess = (child) => {
 const logCommand = (bashCommand, stdout, stderr) => {
   let logFile = '$HOME/emudeck/Emudeck.AppImage.log';
   if (os.platform().includes('win32')) {
-    logFile = '%userprofile%\\Emudeck.AppImage.log';
+    logFile = '"%userprofile%\\Emudeck.AppImage.log"';
   }
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
@@ -572,10 +572,12 @@ ipcMain.on('getToken', async (event, command) => {
 
 ipcMain.on('setToken', async (event, command) => {
   let backChannel = 'getToken';
-  let bashCommand = `echo ${command} > "$HOME/.config/EmuDeck/.rat" && RetroArch_retroAchievementsSetLogin && DuckStation_retroAchievementsSetLogin && PCSX2_retroAchievementsSetLogin && echo true`;
+  let token = command[0];
+  let user = command[1];
+  let bashCommand = `echo ${token} > "$HOME/.config/EmuDeck/.rat" && echo ${user} > "$HOME/.config/EmuDeck/.rau" && RetroArch_retroAchievementsSetLogin && DuckStation_retroAchievementsSetLogin && PCSX2_retroAchievementsSetLogin && echo true`;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; echo ${command} > %userprofile%/AppData/Roaming/EmuDeck/.rat ; RetroArch_retroAchievementsSetLogin ; DuckStation_retroAchievementsSetLogin ; PCSX2_retroAchievementsSetLogin ; echo true`;
+    bashCommand = `cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; echo ${token} > "%userprofile%/AppData/Roaming/EmuDeck/.rat"; ; echo ${user} > "%userprofile%/AppData/Roaming/EmuDeck/.rau"; RetroArch_retroAchievementsSetLogin ; DuckStation_retroAchievementsSetLogin ; PCSX2_retroAchievementsSetLogin ; echo true`;
   }
 
   return exec(`${bashCommand}`, (error, stdout, stderr) => {
