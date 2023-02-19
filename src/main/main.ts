@@ -322,12 +322,12 @@ ipcMain.on('update-check', async (event, command) => {
 
   //Windows no update - temporary
   //const os = require('os');
-  if (os.platform().includes('win32')) {
-    setTimeout(function () {
-      event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
-      return;
-    }, 500);
-  }
+  // if (os.platform().includes('win32')) {
+  //   setTimeout(function () {
+  //     event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
+  //     return;
+  //   }, 500);
+  // }
 
   if (process.env.NODE_ENV === 'development') {
     setTimeout(function () {
