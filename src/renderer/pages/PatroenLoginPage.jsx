@@ -62,11 +62,9 @@ const PatroenLoginPage = () => {
       return;
     } else {
       ipcChannel.sendMessage('patreon-check', patreonToken);
-      ipcChannel.once('patreon-check', (error, patreonStatusBack, stderr) => {
+      ipcChannel.on('patreon-check', (error, patreonStatusBack, stderr) => {
         console.log('PATREON LOGIN CHECK');
-        console.log({ error });
-        console.log(JSON.parse(patreonStatusBack));
-        console.log({ stderr });
+        console.log(patreonStatusBack);
         //setStatePage({ ...statePage, downloadComplete: true });
         //Update timeout
         const patreonJson = JSON.parse(patreonStatusBack);
@@ -76,20 +74,14 @@ const PatroenLoginPage = () => {
           return;
         }
 
-        const currently_entitled_amount_cents =
-          patreonJson.data.attributes.currently_entitled_amount_cents;
+        console.log({ patreonJson });
 
-        console.log({ currently_entitled_amount_cents });
-
-        if (currently_entitled_amount_cents > 200) {
+        if (patreonJson.status === true) {
           setStatePage({
             ...statePage,
             access_allowed: true,
           });
         } else {
-          alert(
-            'It seems your Patreon Tier can not get access to this beta. Please upgrade'
-          );
           setStatePage({
             ...statePage,
             status: null,

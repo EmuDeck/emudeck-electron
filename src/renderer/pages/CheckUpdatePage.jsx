@@ -65,11 +65,11 @@ const CheckUpdatePage = () => {
 
     return () => clearInterval(interval);
   }, []);
-
+  let updateTimeOut;
   useEffect(() => {
     //Update timeout + Force clone check
     console.log('UPDATE - SETTING TIMER FOR TIMEOUT');
-    const myTimeout = setTimeout(() => {
+    updateTimeOut = setTimeout(() => {
       console.log('UPDATE - TIMEOUT REACHED!');
       setStatePage({
         ...statePage,
@@ -257,8 +257,11 @@ const CheckUpdatePage = () => {
 
   useEffect(() => {
     if (downloadComplete == true) {
+      //We clear the timeout
+      clearTimeout(updateTimeOut);
+
       if (system === 'win32') {
-        navigate('/welcome');
+        navigate('/patreon-login');
       } else {
         navigate('/welcome');
       }

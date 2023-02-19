@@ -493,12 +493,14 @@ ipcMain.on('branch', async (event, command) => {
 //Patroen login
 ipcMain.on('patreon-check', async (event, token) => {
   let backChannel = 'patreon-check';
+
+  //We get the list of memberships for that user
   let bashCommand = `curl --location --request GET 'https://www.patreon.com/api/oauth2/v2/identity?include=memberships' \
-    --header 'Authorization: Bearer ${token}' \
-    --header 'Cookie: __cf_bm=2bjlb3sF5x6e6umsiGrAaKkkeJ9miDa5GSpQqRV3YmY-1675162554-0-AT0d1IsJKCOwvHovs618hMKLw58PB1yUyoubg68jaGCEkIN9T9lOfQBxhmZmHdit2sYwodQIGM5lW9QdcRv2NEqAWSD0AejfwlZiFxWOxR7s; datadome=6v3zK2FFn0aZXwk5HsJCicEsB0Wmr_oWsfcCaCaedNqDL4Q8rjIg175dQItas8576PEnBFfns~O35iioJuPyjPM-nTNEVj1Xl2bdX~JmXJjmUNqJZ2~JLyUViBMzbSp6; patreon_device_id=91dbfd4b-607b-4755-bd7c-0783b042056a; patreon_locale_code=undefined; patreon_location_country_code=ES'`;
+    --header 'Authorization: Bearer ${token}'`;
   if (os.platform().includes('win32')) {
-    bashCommand = `curl https://www.patreon.com/api/oauth2/v2/identity?include=memberships -H "Authorization: Bearer ${token}" -H "Cookie: __cf_bm=2bjlb3sF5x6e6umsiGrAaKkkeJ9miDa5GSpQqRV3YmY-1675162554-0-AT0d1IsJKCOwvHovs618hMKLw58PB1yUyoubg68jaGCEkIN9T9lOfQBxhmZmHdit2sYwodQIGM5lW9QdcRv2NEqAWSD0AejfwlZiFxWOxR7s; datadome=6v3zK2FFn0aZXwk5HsJCicEsB0Wmr_oWsfcCaCaedNqDL4Q8rjIg175dQItas8576PEnBFfns~O35iioJuPyjPM-nTNEVj1Xl2bdX~JmXJjmUNqJZ2~JLyUViBMzbSp6; patreon_device_id=91dbfd4b-607b-4755-bd7c-0783b042056a; patreon_locale_code=undefined; patreon_location_country_code=ES"`;
+    bashCommand = `curl https://www.patreon.com/api/oauth2/v2/identity?include=memberships -H "Authorization: Bearer ${token}"`;
   }
+  //console.log({ bashCommand });
   exec(`${bashCommand}`, (error, stdout, stderr) => {
     //console.log(stdout);
     logCommand(bashCommand, error, stdout, stderr);
@@ -510,31 +512,43 @@ ipcMain.on('patreon-check', async (event, token) => {
       return;
     }
 
-    const userID = stdoutJSON.data.relationships.memberships.data[0].id;
-    let patreonDataCommand = `curl --location --request GET 'https://www.patreon.com/api/oauth2/v2/members/${userID}?fields%5Bmember%5D=will_pay_amount_cents,patron_status,currently_entitled_amount_cents' \
-    --header 'Authorization: Bearer ${token}' \
-    --header 'Cookie: __cf_bm=2bjlb3sF5x6e6umsiGrAaKkkeJ9miDa5GSpQqRV3YmY-1675162554-0-AT0d1IsJKCOwvHovs618hMKLw58PB1yUyoubg68jaGCEkIN9T9lOfQBxhmZmHdit2sYwodQIGM5lW9QdcRv2NEqAWSD0AejfwlZiFxWOxR7s; datadome=6v3zK2FFn0aZXwk5HsJCicEsB0Wmr_oWsfcCaCaedNqDL4Q8rjIg175dQItas8576PEnBFfns~O35iioJuPyjPM-nTNEVj1Xl2bdX~JmXJjmUNqJZ2~JLyUViBMzbSp6; patreon_device_id=91dbfd4b-607b-4755-bd7c-0783b042056a; patreon_locale_code=undefined; patreon_location_country_code=ES'`;
-    if (os.platform().includes('win32')) {
-      patreonDataCommand = `curl https://www.patreon.com/api/oauth2/v2/members/${userID}?fields%5Bmember%5D=will_pay_amount_cents,patron_status,currently_entitled_amount_cents -H "Authorization: Bearer ${token}" -H "Cookie: __cf_bm=2bjlb3sF5x6e6umsiGrAaKkkeJ9miDa5GSpQqRV3YmY-1675162554-0-AT0d1IsJKCOwvHovs618hMKLw58PB1yUyoubg68jaGCEkIN9T9lOfQBxhmZmHdit2sYwodQIGM5lW9QdcRv2NEqAWSD0AejfwlZiFxWOxR7s; datadome=6v3zK2FFn0aZXwk5HsJCicEsB0Wmr_oWsfcCaCaedNqDL4Q8rjIg175dQItas8576PEnBFfns~O35iioJuPyjPM-nTNEVj1Xl2bdX~JmXJjmUNqJZ2~JLyUViBMzbSp6; patreon_device_id=91dbfd4b-607b-4755-bd7c-0783b042056a; patreon_locale_code=undefined; patreon_location_country_code=ES"`;
-    }
-    return exec(`${patreonDataCommand}`, (error, stdout, stderr) => {
-      logCommand(patreonDataCommand, error, stdout, stderr);
-      event.reply(backChannel, error, stdout, stderr);
+    const membershipData = stdoutJSON.data.relationships.memberships.data;
+    let patreonDataCommand;
+    let thanks = false;
+    //Now we have to check if those memberships are being paid
+    Object.entries(membershipData).forEach((entry) => {
+      const [key, value] = entry;
+      let userID = value.id;
+      patreonDataCommand = `curl --location --request GET 'https://www.patreon.com/api/oauth2/v2/members/${userID}?fields%5Bmember%5D=will_pay_amount_cents,patron_status,currently_entitled_amount_cents' \
+                  --header 'Authorization: Bearer ${token}'`;
+
+      if (os.platform().includes('win32')) {
+        patreonDataCommand = `curl https://www.patreon.com/api/oauth2/v2/members/${userID}?fields%5Bmember%5D=will_pay_amount_cents,patron_status,currently_entitled_amount_cents -H "Authorization: Bearer ${token}"`;
+      }
+      //console.log({ patreonDataCommand });
+      exec(`${patreonDataCommand}`, (error, stdout, stderr) => {
+        //console.log(stdout);
+        logCommand(bashCommand, error, stdout, stderr);
+        const stdoutJSON = JSON.parse(stdout);
+
+        let pledge =
+          stdoutJSON['data']['attributes']['currently_entitled_amount_cents'];
+
+        //console.log({ pledge });
+        if (pledge > 299) {
+          event.reply(backChannel, {}, JSON.stringify({ status: true }), {});
+        } else {
+          event.reply(backChannel, {}, JSON.stringify({ status: false }), {});
+        }
+      });
     });
+
+    // if (thanks === true) {
+    //   event.reply(backChannel, 'No error', { status: true }, 'No error');
+    // } else {
+    //   event.reply(backChannel, 'No error', { status: false }, 'No error');
+    // }
   });
-
-  //patreonJson = JSON.parse(patreonStatus);
-
-  return;
-
-  return exec(`${bashCommand}`, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, error, stdout, stderr);
-  });
-  //
-  //   if (os.platform().includes('win32')) {
-  //     bashCommand = `curl https://www.patreon.com/api/oauth2/api/current_user -H "Authorization: Bearer ${token}" -H "Cookie: __cf_bm=2bjlb3sF5x6e6umsiGrAaKkkeJ9miDa5GSpQqRV3YmY-1675162554-0-AT0d1IsJKCOwvHovs618hMKLw58PB1yUyoubg68jaGCEkIN9T9lOfQBxhmZmHdit2sYwodQIGM5lW9QdcRv2NEqAWSD0AejfwlZiFxWOxR7s; datadome=6v3zK2FFn0aZXwk5HsJCicEsB0Wmr_oWsfcCaCaedNqDL4Q8rjIg175dQItas8576PEnBFfns~O35iioJuPyjPM-nTNEVj1Xl2bdX~JmXJjmUNqJZ2~JLyUViBMzbSp6; patreon_device_id=91dbfd4b-607b-4755-bd7c-0783b042056a; patreon_locale_code=undefined; patreon_location_country_code=ES"`;
-  //   }
 });
 
 //GameMode setter
