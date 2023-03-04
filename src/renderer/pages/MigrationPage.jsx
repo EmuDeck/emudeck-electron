@@ -156,7 +156,12 @@ const MigrationPage = () => {
   };
 
   const startMigration = () => {
-    alert("I don't do anything at the moment...");
+    ipcChannel.sendMessage('emudeck', ['Migration_init|||Migration_init']);
+
+    ipcChannel.once('Migration_init', (message) => {
+      let stdout = message.stdout.replace('\n', '');
+      alert(stdout);
+    });
   };
 
   return (
