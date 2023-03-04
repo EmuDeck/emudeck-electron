@@ -9,7 +9,7 @@ import Migration from 'components/organisms/Wrappers/Migration';
 const MigrationPage = () => {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
-  const { storage, SDID, mode, system } = state;
+  const { storage, SDID, mode, system, storagePath } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: storage == null ? true : false,
     disabledBack: false,
@@ -172,11 +172,12 @@ const MigrationPage = () => {
         sdCardValid={sdCardValid}
         reloadSDcard={checkSDValid}
         sdCardName={sdCardName}
-        customPath={storageDestinationPath}
         onClick={storageSet}
         onClickStart={startMigration}
         storage={storage}
-        storagePath={storageDestinationPath}
+        storageDestination={storageDestination}
+        storagePath={storagePath}
+        storageDestinationPath={storageDestinationPath}
       />
       <Footer
         next={false}
