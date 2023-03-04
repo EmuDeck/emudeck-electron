@@ -157,7 +157,9 @@ const MigrationPage = () => {
   };
 
   const startMigration = () => {
-    ipcChannel.sendMessage('emudeck', ['Migration_init|||Migration_init']);
+    ipcChannel.sendMessage('emudeck', [
+      `Migration_init|||Migration_init ${storagePathDestination}`,
+    ]);
 
     ipcChannel.once('Migration_init', (message) => {
       let stdout = message.stdout.replace('\n', '');
