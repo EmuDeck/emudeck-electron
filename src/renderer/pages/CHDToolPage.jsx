@@ -31,7 +31,6 @@ const CHDToolPage = () => {
       <CHDTool onClick={runCHD} />
       <Footer
         next={false}
-        nextText={nextText}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
