@@ -13,7 +13,7 @@ const MigrationPage = () => {
   const [statePage, setStatePage] = useState({
     disabledNext: storage == null ? true : false,
     disabledBack: false,
-    data: '',
+    statusMigration: null,
     sdCardValid: null,
     sdCardName: undefined,
     status: undefined,
@@ -23,7 +23,7 @@ const MigrationPage = () => {
   const {
     disabledNext,
     disabledBack,
-    data,
+    statusMigration,
     sdCardValid,
     sdCardName,
     status,
@@ -157,6 +157,11 @@ const MigrationPage = () => {
   };
 
   const startMigration = () => {
+    setStatePage({
+      ...statePage,
+      statusMigration: true,
+    });
+
     ipcChannel.sendMessage('emudeck', [
       `Migration_init|||Migration_init ${storagePathDestination}`,
     ]);
@@ -164,6 +169,10 @@ const MigrationPage = () => {
     ipcChannel.once('Migration_init', (message) => {
       let stdout = message.stdout.replace('\n', '');
       console.log(stdout);
+      setStatePage({
+        ...statePage,
+        statusMigration: null,
+      });
     });
   };
 
@@ -180,6 +189,7 @@ const MigrationPage = () => {
         storageDestination={storageDestination}
         storagePath={storagePath}
         storagePathDestination={storagePathDestination}
+        statusMigration={statusMigration}
       />
       <Footer
         next={false}
