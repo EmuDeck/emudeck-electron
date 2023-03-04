@@ -9,7 +9,7 @@ import Migration from 'components/organisms/Wrappers/Migration';
 const MigrationPage = () => {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
-  const { storage, SDID } = state;
+  const { storage, SDID, mode, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: storage == null ? true : false,
     disabledBack: false,
@@ -17,8 +17,8 @@ const MigrationPage = () => {
     sdCardValid: null,
     sdCardName: undefined,
     status: undefined,
-    storage: undefined,
-    storagePath: undefined,
+    storageDestination: undefined,
+    storagePathDestination: undefined,
   });
   const {
     disabledNext,
@@ -27,11 +27,12 @@ const MigrationPage = () => {
     sdCardValid,
     sdCardName,
     status,
-    storagePath,
+    storageDestinationPath,
+    storageDestination,
   } = statePage;
-  const { mode, system } = state;
 
   const storageSet = (storageName) => {
+    console.log({ storageName });
     //We prevent the function to continue if the custom location testing is still in progress
     if (status == 'testing') {
       return;
@@ -47,8 +48,8 @@ const MigrationPage = () => {
           ...statePage,
           disabledNext: true,
           status: 'testing',
-          storage: storageName,
-          storagePath: stdout,
+          storageDestination: storageName,
+          storagePathDestination: stdout,
         });
         //is it valid?
 
@@ -74,8 +75,8 @@ const MigrationPage = () => {
               ...statePage,
               disabledNext: true,
               status: undefined,
-              storage: null,
-              storagePath: null,
+              storageDestination: null,
+              storagePathDestination: null,
             });
           }
         });
@@ -86,15 +87,15 @@ const MigrationPage = () => {
       setStatePage({
         ...statePage,
         disabledNext: false,
-        storage: storageName,
+        storageDestination: storageName,
         storagePath: sdCardPath,
       });
     } else {
       setStatePage({
         ...statePage,
         disabledNext: false,
-        storage: storageName,
-        storagePath: '$HOME',
+        storageDestination: storageName,
+        storagePathDestination: '$HOME',
       });
     }
   };
@@ -171,11 +172,11 @@ const MigrationPage = () => {
         sdCardValid={sdCardValid}
         reloadSDcard={checkSDValid}
         sdCardName={sdCardName}
-        customPath={storagePath}
+        customPath={storageDestinationPath}
         onClick={storageSet}
         onClickStart={startMigration}
         storage={storage}
-        storagePath={storagePath}
+        storagePath={storageDestinationPath}
       />
       <Footer
         next={false}
