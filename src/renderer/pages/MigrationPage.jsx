@@ -27,7 +27,7 @@ const MigrationPage = () => {
     sdCardValid,
     sdCardName,
     status,
-    storageDestinationPath,
+    storagePathDestination,
     storageDestination,
   } = statePage;
 
@@ -163,7 +163,7 @@ const MigrationPage = () => {
 
     ipcChannel.once('Migration_init', (message) => {
       let stdout = message.stdout.replace('\n', '');
-      alert(stdout);
+      console.log(stdout);
     });
   };
 
@@ -179,7 +179,7 @@ const MigrationPage = () => {
         storage={storage}
         storageDestination={storageDestination}
         storagePath={storagePath}
-        storageDestinationPath={storageDestinationPath}
+        storagePathDestination={storagePathDestination}
       />
       <Footer
         next={false}
