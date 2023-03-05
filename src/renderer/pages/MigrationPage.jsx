@@ -173,8 +173,19 @@ const MigrationPage = () => {
         ...statePage,
         statusMigration: null,
       });
+      setState({
+        ...state,
+        storage: storageDestination,
+        storagePath: storagePathDestination,
+      });
     });
   };
+
+  //We store the changes on localhost in case people want to migrate over and over
+  useEffect(() => {
+    let json = JSON.stringify(state);
+    localStorage.setItem('settings_emudeck', json);
+  }, [state]);
 
   return (
     <Wrapper>
