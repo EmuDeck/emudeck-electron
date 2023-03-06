@@ -109,7 +109,11 @@ const CheckUpdatePage = () => {
 
         console.log({ overwriteConfigEmusStored });
         console.log({ overwriteConfigEmus });
+
+        delete settingsStorage.installEmus.primehacks;
+        delete settingsStorage.overwriteConfigEmus.primehacks;
         const installEmusStored = settingsStorage.installEmus;
+
         //Theres probably a better way to do this...
         console.log('2 - VERSION - CHECKING');
         ipcChannel.sendMessage('version');
