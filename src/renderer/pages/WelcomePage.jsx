@@ -46,6 +46,15 @@ const WelcomePage = () => {
   const pendingUpdate = localStorage.getItem('pending_update');
   const settingsCards = [
     {
+      icon: [iconCloud],
+      title: 'Steam 3.5 Fix',
+      description: 'Update your paths to the new SD Card paths',
+      button: 'Fix',
+      btnCSS: 'btn-simple--5',
+      status: false,
+      function: () => functions.fixSDPATHS(),
+    },
+    {
       icon: [iconQuick],
       title: 'Quick Reset',
       description: 'Reset settings with our defaults in one click',
@@ -272,7 +281,21 @@ const WelcomePage = () => {
       alert(`Copy this url: ${message}`);
     });
   };
-  const functions = { openSRM, openCSM, sprunge, navigate };
+
+  const Migration_fix_SDPaths = () => {
+    ipcChannel.sendMessage('emudeck', [`SDPaths|||Migration_fix_SDPaths`]);
+    ipcChannel.once('SDPaths', (message) => {
+      alert(`Paths Fixed!`);
+    });
+  };
+
+  const functions = {
+    openSRM,
+    openCSM,
+    sprunge,
+    navigate,
+    Migration_fix_SDPaths,
+  };
   return (
     <Wrapper>
       {second === false && <Header title="Welcome to EmuDeck" />}
