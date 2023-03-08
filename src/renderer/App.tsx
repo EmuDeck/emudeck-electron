@@ -27,6 +27,7 @@ import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
 
 import UpdateEmusPage from 'pages/UpdateEmusPage';
+import UpdateConfigsPage from 'pages/UpdateConfigsPage';
 import CloudSyncPage from 'pages/CloudSyncPage';
 import ChangeLogPage from 'pages/ChangeLogPage';
 import SettingsPage from 'pages/SettingsPage';
@@ -55,6 +56,30 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 const branch = require('data/branch.json');
 
 export default function App() {
+  const [stateUpdates, setStateUpdates] = useState({
+    ra: 0,
+    dolphin: 0,
+    primehack: 0,
+    ppsspp: 0,
+    duckstation: 0,
+    melonds: 0,
+    citra: 0,
+    pcsx2: 0,
+    rpcs3: 0,
+    yuzu: 0,
+    ryujinx: 0,
+    xemu: 0,
+    cemu: 0,
+    srm: 0,
+    rmg: 0,
+    esde: 0,
+    mame: 0,
+    vita3k: 0,
+    scummvm: 0,
+    xenia: 0,
+    mgba: 0,
+  });
+
   const [state, setState] = useState({
     app: 'electron',
     patreonToken: null,
@@ -221,6 +246,8 @@ export default function App() {
       value={{
         state,
         setState,
+        stateUpdates,
+        setStateUpdates,
       }}
     >
       <Router>
@@ -318,6 +345,12 @@ export default function App() {
           <Route exact path="/migration" element={<MigrationPage />} />
           <Route exact path="/copy-games" element={<CopyGamesPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
+          <Route
+            exact
+            path="/update-configurators"
+            element={<UpdateConfigsPage />}
+          />
+
           <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />

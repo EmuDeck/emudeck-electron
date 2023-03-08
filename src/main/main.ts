@@ -600,19 +600,19 @@ ipcMain.on('setToken', async (event, command) => {
 });
 
 ipcMain.on('saveSettings', async (event, command) => {
-  let backChannel = 'saveSettings';
+  const backChannel = 'saveSettings';
 
   // json data
-  var jsonData = command;
+  const jsonData = command;
 
   // parse json
-  var jsonObj = JSON.parse(jsonData);
+  const jsonObj = JSON.parse(jsonData);
 
   // stringify JSON Object
-  var jsonContent = JSON.stringify(jsonObj);
+  const jsonContent = JSON.stringify(jsonObj);
 
   const homedir = require('os').homedir();
-  let settingsFile = `${homedir}/AppData/Roaming/EmuDeck/settings.json`;
+  const settingsFile = `${homedir}/AppData/Roaming/EmuDeck/settings.json`;
 
   fs.writeFile(settingsFile, jsonContent, 'utf8', function (err) {
     if (err) {
@@ -622,6 +622,23 @@ ipcMain.on('saveSettings', async (event, command) => {
     event.reply(backChannel, 'true');
     console.log('JSON file has been saved.');
   });
+});
+
+ipcMain.on('check-versions', async (event) => {
+  const userHomeDir = os.homedir();
+  const backChannel = 'check-versions';
+  let jsonPath = `${userHomeDir}/.config/EmuDeck/backend/versions.json`;
+  if (os.platform().includes('win32')) {
+    jsonPath = `${userHomeDir}/AppData/Roaming/EmuDeck/backend/versions.json`;
+  }
+  try {
+    const data = fs.readFileSync(jsonPath);
+    const json = JSON.parse(data);
+    event.reply(backChannel, json);
+  } catch (err) {
+    console.error(err);
+  }
+  // });
 });
 
 /**

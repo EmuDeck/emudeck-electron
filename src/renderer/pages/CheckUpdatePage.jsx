@@ -19,7 +19,7 @@ import { Form } from 'getbasecore/Molecules';
 import Card from 'components/molecules/Card/Card';
 const CheckUpdatePage = () => {
   const ipcChannel = window.electron.ipcRenderer;
-  const { state, setState } = useContext(GlobalContext);
+  const { state, setState, setStateUpdates } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: true,
@@ -97,6 +97,13 @@ const CheckUpdatePage = () => {
     const updateFiles = () => {
       //Ask for branch
       const branch = require('data/branch.json');
+
+      const currentVersions = JSON.parse(
+        localStorage.getItem('current_versions')
+      );
+      if (!!currentVersions) {
+        setStateUpdates({ ...currentVersions });
+      }
 
       const settingsStorage = JSON.parse(
         localStorage.getItem('settings_emudeck')
