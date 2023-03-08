@@ -39,6 +39,9 @@ import MigrationPage from 'pages/MigrationPage';
 import CopyGamesPage from 'pages/CopyGamesPage';
 
 import EmuGuidePage from 'pages/EmuGuidePage';
+import EmulatorsPage from 'pages/EmulatorsPage';
+import EmulatorsDetailPage from 'pages/EmulatorsDetailPage';
+
 import AutoSavePage from 'pages/AutoSavePage';
 import HomebrewGamesPage from 'pages/HomebrewGamesPage';
 import ConfirmationPage from 'pages/ConfirmationPage';
@@ -334,6 +337,16 @@ export default function App() {
           <Route exact path="/emulator-guide" element={<EmuGuidePage />}>
             <Route path=":emulator" element={<EmuGuidePage />} />
           </Route>
+
+          <Route exact path="/emulators" element={<EmulatorsPage />}>
+            <Route path=":emulator" element={<EmulatorsPage />} />
+          </Route>
+
+          <Route path="/emulators-detail" element={<EmulatorsDetailPage />}>
+            <Route path=":emulator" element={<EmulatorsDetailPage />} />
+            <Route path="" element={<EmulatorsDetailPage />} />
+          </Route>
+
           <Route exact path="/uninstall" element={<UninstallPage />} />
           <Route
             exact
