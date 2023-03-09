@@ -41,8 +41,8 @@ const CloudSyncPage = () => {
   };
 
   const openKonsole = () => {
-    ipcChannel.sendMessage('bash-nolog', [
-      `konsole -e "source $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup"`,
+    ipcChannel.sendMessage('emudeck', [
+      `konsole -e echo $emulationPath && rclone_setup"`,
     ]);
   };
 
