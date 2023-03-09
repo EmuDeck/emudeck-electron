@@ -297,7 +297,7 @@ function EmulatorsPage() {
               const updateNotif = updates[item.id];
 
               return (
-                <div data-col-sm="2">
+                <div data-col-md="2">
                   <CardSettings
                     key={item.id}
                     icon={img}
@@ -307,7 +307,13 @@ function EmulatorsPage() {
                     title={`${item.name}`}
                     button={item.status === true ? 'Manage' : 'Install'}
                     onClick={() => navigate(`/emulators-detail/${item.id}`)}
-                    notification={updateNotif == undefined ? false : true}
+                    notification={
+                      item.status === true
+                        ? updateNotif == undefined
+                          ? false
+                          : true
+                        : ''
+                    }
                   />
                 </div>
               );
