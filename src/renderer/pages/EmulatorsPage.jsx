@@ -302,7 +302,9 @@ function EmulatorsPage() {
                     key={item.id}
                     icon={img}
                     css="is-highlighted"
-                    btnCSS="btn-simple--1"
+                    btnCSS={
+                      item.status === true ? 'btn-simple--5' : 'btn-simple--2'
+                    }
                     iconSize="sm"
                     title={`${item.name}`}
                     button={item.status === true ? 'Manage' : 'Install'}
