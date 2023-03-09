@@ -54,7 +54,7 @@ function WelcomePage() {
       button: 'Fix',
       btnCSS: 'btn-simple--5',
       status: true,
-      function: () => functions.fixSDPATHS(),
+      function: () => functions.migrationFixSDPaths(),
     },
     {
       icon: [iconQuick],
@@ -418,7 +418,11 @@ function WelcomePage() {
   const migrationFixSDPaths = () => {
     ipcChannel.sendMessage('emudeck', [`SDPaths|||Migration_fix_SDPaths`]);
     ipcChannel.once('SDPaths', (message) => {
-      alert(`Paths Fixed!`);
+      message.includes('true')
+        ? alert(`Paths Fixed!`)
+        : alert(
+            `There was an error tryting to fix your paths. If the problem persist rerun SteamRomManager to fix them`
+          );
     });
   };
 
