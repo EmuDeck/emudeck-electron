@@ -126,7 +126,7 @@ function WelcomePage() {
       description: 'Update your emulators right from EmuDeck',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: false,
       function: () => functions.navigate('/update-emulators'),
     },
     {
@@ -190,7 +190,7 @@ function WelcomePage() {
       description: 'Check our hotkeys, reset each emulator in case of issues',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: false,
       function: () => functions.navigate('/emulator-guide'),
     },
     {
