@@ -305,7 +305,7 @@ function EmulatorsPage() {
                     btnCSS="btn-simple--1"
                     iconSize="sm"
                     title={`${item.name}`}
-                    button="Manage"
+                    button={item.status === true ? 'Manage' : 'Install'}
                     onClick={() => navigate(`/emulators-detail/${item.id}`)}
                     notification={updateNotif == undefined ? false : true}
                   />
