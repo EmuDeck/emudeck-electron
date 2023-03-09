@@ -132,7 +132,6 @@ const EndPage = () => {
         ]);
         ipcChannel.once('finish', (message) => {
           setStatePage({ ...statePage, disabledNext: false });
-          localStorage.setItem('pending_update', false);
         });
       });
     } else {
@@ -568,7 +567,6 @@ const EndPage = () => {
         let stdout = message.stdout;
         if (stdout.includes('true')) {
           setStatePage({ ...statePage, disabledNext: false });
-          localStorage.setItem('pending_update', false);
         }
       });
     }
