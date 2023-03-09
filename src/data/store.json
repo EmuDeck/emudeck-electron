@@ -2,6 +2,7 @@
   "featured": [
     {
       "system": "genesis",
+      "status": "true",
       "logo": "logo_genesis",
       "title": "Phantom Gear",
       "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Phantom%20Gear.zip",
@@ -19,6 +20,7 @@
     },
     {
       "system": "genesis",
+      "status": "true",
       "logo": "logo_genesis",
       "title": "Xump 2",
       "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Xump%202.zip",
@@ -36,6 +38,7 @@
     },
     {
       "system": "genesis",
+      "status": "true",
       "logo": "logo_genesis",
       "title": "Lethal Wedding",
       "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Lethal%20Wedding.zip",
@@ -54,13 +57,15 @@
   "store": [
     {
       "system": "gb",
+      "status": "true",
       "name": "GameBoy",
       "games": [
         {
           "system": "gb",
+          "status": "true",
           "logo": "logo_gb",
           "title": "LumberJack",
-          "file": "LumberJack",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gb/Lumberjack.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -74,9 +79,95 @@
         },
         {
           "system": "gb",
+          "status": "true",
+          "logo": "logo_gb",
+          "title": "Into the Blue",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gb/Into%20the%20Blue.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/screenshots/homebrew/Into%20the%20Blue.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/titlescreens/homebrew/Into%20the%20Blue.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gb",
+          "status": "true",
+          "logo": "logo_gb",
+          "title": "Retroid",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gb/Retroid.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/screenshots/homebrew/Retroid.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/titlescreens/homebrew/Retroid.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gb",
+          "status": "true",
+          "logo": "logo_gb",
+          "title": "Dangan",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gb/dangan.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/screenshots/homebrew/dangan.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/titlescreens/homebrew/dangan.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gb",
+          "status": "true",
+          "logo": "logo_gb",
+          "title": "Tobu",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gb/tobu.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/screenshots/homebrew/tobu.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/titlescreens/homebrew/tobu.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gb",
+          "status": "true",
+          "logo": "logo_gb",
+          "title": "Tuff",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gb/tuff.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/screenshots/homebrew/tuff.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gb/titlescreens/homebrew/tuff.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gb",
+          "status": "true",
           "logo": "logo_gb",
           "title": "Rocket Man",
-          "file": "Rocket Man",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gb/Rocket%20Man.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -90,9 +181,10 @@
         },
         {
           "system": "gb",
+          "status": "true",
           "logo": "logo_gb",
-          "title": "PokaSheep",
-          "file": "PokaSheep",
+          "title": "PolkaSheep",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gb/PolkaSheep.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -106,9 +198,10 @@
         },
         {
           "system": "gb",
+          "status": "true",
           "logo": "logo_gb",
           "title": "SuperPrincess",
-          "file": "SuperPrincess",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gb/SuperPrincess.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -122,9 +215,10 @@
         },
         {
           "system": "gb",
+          "status": "true",
           "logo": "logo_gb",
           "title": "THEBOUNCINGBALL",
-          "file": "THEBOUNCINGBALL",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gb/THEBOUNCINGBALL.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -140,13 +234,15 @@
     },
     {
       "system": "gbc",
+      "status": "true",
       "name": "GameBoy Color",
       "games": [
         {
           "system": "gbc",
+          "status": "true",
           "logo": "logo_gbc",
           "title": "JetPakDX",
-          "file": "JetPakDX",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gbc/JetPakDX.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -160,9 +256,27 @@
         },
         {
           "system": "gbc",
+          "status": "true",
+          "logo": "logo_gbc",
+          "title": "Floracy",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gbc/Floracy.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/screenshots/homebrew/Floracy.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/titlescreens/homebrew/Floracy.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gbc",
+          "status": "true",
           "logo": "logo_gbc",
           "title": "Last Crown Warriors",
-          "file": "Last Crown Warriors",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gbc/Last%20Crown%20Warriors.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -176,9 +290,10 @@
         },
         {
           "system": "gbc",
+          "status": "true",
           "logo": "logo_gbc",
           "title": "Spelunky",
-          "file": "Spelunky",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gbc/Spelunky.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -189,18 +304,54 @@
             ]
           },
           "tags": ["action", "platform"]
+        },
+        {
+          "system": "gbc",
+          "status": "true",
+          "logo": "logo_gbc",
+          "title": "Infinity",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gbc/infinity.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/screenshots/homebrew/infinity.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/titlescreens/homebrew/infinity.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gbc",
+          "status": "true",
+          "logo": "logo_gbc",
+          "title": "Ucity",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gbc/ucity.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/screenshots/homebrew/ucity.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/titlescreens/homebrew/ucity.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
         }
       ]
     },
     {
       "system": "gba",
+      "status": "true",
       "name": "GameBoy Advance",
       "games": [
         {
           "system": "gba",
+          "status": "true",
           "logo": "logo_gba",
           "title": "BlastArenaAdvance",
-          "file": "BlastArenaAdvance",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gba/BlastArenaAdvance.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -214,9 +365,10 @@
         },
         {
           "system": "gba",
+          "status": "true",
           "logo": "logo_gba",
           "title": "flappybird",
-          "file": "flappybird",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gba/flappybird.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -230,9 +382,10 @@
         },
         {
           "system": "gba",
+          "status": "true",
           "logo": "logo_gba",
           "title": "powerpig",
-          "file": "powerpig",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gba/powerpig.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -243,18 +396,139 @@
             ]
           },
           "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "status": "true",
+          "logo": "logo_gba",
+          "title": "Another World",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gba/Another_world.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/screenshots/homebrew/Another_world.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/titlescreens/homebrew/Another_world.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "status": "true",
+          "logo": "logo_gba",
+          "title": "Anguna",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gba/anguna.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/screenshots/homebrew/anguna.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/titlescreens/homebrew/anguna.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "status": "true",
+          "logo": "logo_gba",
+          "title": "Simonchu",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gba/simonchu.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/screenshots/homebrew/simonchu.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/titlescreens/homebrew/simonchu.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "status": "true",
+          "logo": "logo_gba",
+          "title": "Sushi",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gba/sushi.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/screenshots/homebrew/sushi.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/titlescreens/homebrew/sushi.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "status": "true",
+          "logo": "logo_gba",
+          "title": "Broken Circle (Proto)",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gba/Broken%20Circle%20(Proto).zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/screenshots/homebrew/Broken%20Circle%20(Proto).png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/titlescreens/homebrew/Broken%20Circle%20(Proto).png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "status": "true",
+          "logo": "logo_gba",
+          "title": "MazezaM",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gba/MazezaM.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/screenshots/homebrew/MazezaM.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/titlescreens/homebrew/MazezaM.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "gba",
+          "status": "true",
+          "logo": "logo_gba",
+          "title": "Motocross Challenge (USA) (Proto)",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gba/Motocross%20Challenge%20(USA)%20(Proto).zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/screenshots/homebrew/Motocross%20Challenge%20(USA)%20(Proto).png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gba/titlescreens/homebrew/Motocross%20Challenge%20(USA)%20(Proto).png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
         }
       ]
     },
     {
       "system": "genesis",
+      "status": "true",
       "name": "Genesis / Mega Drive",
       "games": [
         {
-          "system": "gba",
-          "logo": "logo_gba",
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
           "title": "GraviBots",
-          "file": "GraviBots",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/GraviBots.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -267,10 +541,11 @@
           "tags": ["action", "platform"]
         },
         {
-          "system": "gba",
-          "logo": "logo_gba",
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
           "title": "Lethal Wedding",
-          "file": "Lethal Wedding",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Lethal%20Wedding.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -283,10 +558,11 @@
           "tags": ["action", "platform"]
         },
         {
-          "system": "gba",
-          "logo": "logo_gba",
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
           "title": "Omega Blast",
-          "file": "Omega Blast",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Omega%20Blast.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -299,10 +575,11 @@
           "tags": ["action", "platform"]
         },
         {
-          "system": "gba",
-          "logo": "logo_gba",
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
           "title": "Phantom Gear",
-          "file": "Phantom Gear",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Phantom%20Gear.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -315,10 +592,11 @@
           "tags": ["action", "platform"]
         },
         {
-          "system": "gba",
-          "logo": "logo_gba",
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
           "title": "Robert Cop 2 Vs Dragon Ninja",
-          "file": "Robert Cop 2 Vs Dragon Ninja",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Robert%20Cop%202%20Vs%20Dragon%20Ninja.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -331,10 +609,11 @@
           "tags": ["action", "platform"]
         },
         {
-          "system": "gba",
-          "logo": "logo_gba",
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
           "title": "Tourmaline",
-          "file": "Tourmaline",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Tourmaline.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -347,10 +626,11 @@
           "tags": ["action", "platform"]
         },
         {
-          "system": "gba",
-          "logo": "logo_gba",
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
           "title": "Vilq Adventure",
-          "file": "Vilq Adventure",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Vilq%20Adventure.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -363,10 +643,11 @@
           "tags": ["action", "platform"]
         },
         {
-          "system": "gba",
-          "logo": "logo_gba",
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
           "title": "Xump 2",
-          "file": "Xump 2",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Xump%202.zip",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
           "pictures": {
             "screenshots": [
@@ -377,15 +658,238 @@
             ]
           },
           "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "Arkagis Revolution",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Arkagis%20Revolution%20(World)%20(En%2CFr%2CEs)%20(Rev%201)%20(Aftermarket)%20(Unl).md.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Arkagis%20Revolution%20(World)%20(En%2CFr%2CEs)%20(Rev%201)%20(Aftermarket)%20(Unl).png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Arkagis%20Revolution%20(World)%20(En%2CFr%2CEs)%20(Rev%201)%20(Aftermarket)%20(Unl).png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "Demons of Asteborg (Demo 2)",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Demons%20of%20Asteborg%20(World)%20(Demo%202)%20(Unl).zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Demons%20of%20Asteborg%20(World)%20(Demo%202)%20(Unl).png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Demons%20of%20Asteborg%20(World)%20(Demo%202)%20(Unl).png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "Irena Genesis Metal Fury (Proto)",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Irena%20Genesis%20Metal%20Fury%20(Proto)%20(World).zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Irena%20Genesis%20Metal%20Fury%20(Proto)%20(World).png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Irena%20Genesis%20Metal%20Fury%20(Proto)%20(World).png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "Mega Qbert",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Mega%20Qbert.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Mega%20Qbert.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Mega%20Qbert.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "PRINGLES",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/PRINGLES.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/PRINGLES.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/PRINGLES.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "Project MD",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Project%20MD%20(World)%20(Unl).zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Project%20MD%20(World)%20(Unl).png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Project%20MD%20(World)%20(Unl).png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "TANGLEWD",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/TANGLEWD.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/TANGLEWD.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/TANGLEWD.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "Zero Tolerance",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Zero%20Tolerance%20(USA%2C%20Europe).zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Zero%20Tolerance%20(USA%2C%20Europe).png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Zero%20Tolerance%20(USA%2C%20Europe).png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "Cavestory",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/cavestory.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/cavestory.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/cavestory.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "Oldtowers",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/oldtowers.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/oldtowers.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/oldtowers.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "Papi Commando Remix",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/papicommandoremix.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/papicommandoremix.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/papicommandoremix.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "Rick Dangerous",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/rickdangerous.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/rickdangerous.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/rickdangerous.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
+        },
+        {
+          "system": "genesis",
+          "status": "true",
+          "logo": "logo_genesis",
+          "title": "Star Chaser",
+          "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/starchaser.zip",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+          "pictures": {
+            "screenshots": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/starchaser.png?raw=true"
+            ],
+            "titlescreens": [
+              "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/starchaser.png?raw=true"
+            ]
+          },
+          "tags": ["action", "platform"]
         }
       ]
     },
     {
       "system": "mastersystem",
+      "status": "true",
       "name": "Master System",
       "games": [
         {
           "system": "mastersystem",
+          "status": "true",
           "logo": "logo_gba",
           "title": "Omega Blast",
           "file": "Omega Blast",
@@ -404,11 +908,13 @@
     },
     {
       "system": "nes",
+      "status": "true",
       "name": "NES",
       "games": []
     },
     {
       "system": "snes",
+      "status": "true",
       "name": "Super Nintendo",
       "games": []
     }

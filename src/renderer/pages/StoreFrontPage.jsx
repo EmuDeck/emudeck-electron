@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
@@ -15,7 +16,7 @@ const StoreFrontPage = () => {
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-
+  const navigate = useNavigate();
   //Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
     if (bezels != '') {

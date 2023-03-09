@@ -27,7 +27,7 @@ function WelcomePage() {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState, stateUpdates, setStateUpdates } =
     useContext(GlobalContext);
-  const { system, mode, second, storagePath, gamemode } = state;
+  const { system, mode, second, storagePath, gamemode, storage } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: true,
@@ -53,7 +53,7 @@ function WelcomePage() {
         'Update your paths to the new SD Card paths introduced in Steam 3.5',
       button: 'Fix',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: storage !== 'Internal Storage' ? true : false,
       function: () => functions.migrationFixSDPaths(),
     },
     {
