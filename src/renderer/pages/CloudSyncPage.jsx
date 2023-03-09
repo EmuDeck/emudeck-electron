@@ -40,6 +40,12 @@ const CloudSyncPage = () => {
     ]);
   };
 
+  const openKonsole = () => {
+    ipcChannel.sendMessage('bash-nolog', [
+      `konsole -e "source $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup"`,
+    ]);
+  };
+
   useEffect(() => {
     ipcChannel.sendMessage('emudeck', [
       `save-setting|||setSetting rclone_provider ${cloudSync}`,
@@ -53,7 +59,7 @@ const CloudSyncPage = () => {
       <CloudSync
         data={data}
         onClick={cloudSyncSet}
-        onClickInstall={createDesktopIcon}
+        onClickInstall={openKonsole}
       />
       <Footer
         next={false}
