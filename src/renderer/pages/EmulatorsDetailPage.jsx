@@ -330,7 +330,7 @@ function EmulatorsDetailPage() {
   const resetEmu = (code, name, id) => {
     setStatePage({
       ...statePage,
-      disableInstallButton: true,
+      disableResetButton: true,
     });
     ipcChannel.sendMessage('emudeck', [
       `${name}_resetConfig|||${name}_resetConfig`,
@@ -452,14 +452,11 @@ function EmulatorsDetailPage() {
             showNotification={showNotification}
             textNotification={textNotification}
             installEmus={installEmus[emulatorSelected]}
+            disableResetButton={disableResetButton ? true : false}
           />
         </>
       )}
-      <Footer
-        next={false}
-        disableInstallButton={disableInstallButton ? true : false}
-        disableResetButton={disableResetButton ? true : false}
-      />
+      <Footer next={false} />
     </Wrapper>
   );
 }
