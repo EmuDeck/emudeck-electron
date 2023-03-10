@@ -42,7 +42,7 @@ const CloudSyncPage = () => {
 
   const openKonsole = () => {
     ipcChannel.sendMessage('emudeck', [
-      `openKonsole|||konsole -e echo $emulationPath && rclone_setup"`,
+      `openKonsole|||konsole -e echo $emulationPath && rclone_setup`,
     ]);
   };
 
