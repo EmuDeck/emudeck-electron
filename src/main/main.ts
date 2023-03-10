@@ -695,7 +695,7 @@ ipcMain.on('build-store', async (event) => {
 
   const buildJsonStore = () => {
     //GB HomebrewGames
-    const dir = `/Users/rsedano/emudeck/store/`;
+    const dir = `${os.homedir()}/emudeck/store/`;
     let jsonArray = [];
     fs.readdir(dir, (err, files) => {
       return new Promise((resolve, reject) => {
@@ -719,7 +719,7 @@ ipcMain.on('build-store', async (event) => {
       }).then((masterJson) => {
         console.log(masterJson);
         fs.writeFileSync(
-          `/Users/rsedano/emudeck/store/store.json`,
+          `${os.homedir()}/emudeck/store/store.json`,
           JSON.stringify(masterJson)
         );
       });
