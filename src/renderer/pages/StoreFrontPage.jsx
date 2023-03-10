@@ -7,7 +7,7 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import StoreFront from 'components/organisms/Wrappers/StoreFront';
 import { Img, BtnSimple } from 'getbasecore/Atoms';
-const StoreFrontPage = () => {
+function StoreFrontPage() {
   const { state, setState } = useContext(GlobalContext);
   const { bezels } = state;
   const [statePage, setStatePage] = useState({
@@ -45,6 +45,6 @@ const StoreFrontPage = () => {
       </footer>
     </Wrapper>
   );
-};
+}
 
 export default StoreFrontPage;

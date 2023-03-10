@@ -282,7 +282,7 @@ function EmulatorsPage() {
   return (
     <Wrapper>
       <Header title="Manage your Emulators" />
-      <p class="lead">
+      <p className="lead">
         In this page you can update your configuration or even install new
         emulators
       </p>

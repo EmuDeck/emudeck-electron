@@ -656,6 +656,32 @@ app.on('window-all-closed', () => {
 app.on('session-created', (session) => {
   console.log(session);
 });
+ipcMain.on('installGame', async (event, command) => {
+  const backChannel = 'installGame';
+
+  const game = command[0];
+  const storagePath = command[1];
+  const system = command[2];
+
+  const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
+
+  // Alternative syntax using RegExp constructor
+  // const regex = new RegExp('([^\\/]+?)(?=\\.\\w+$)|([^\\/]+?)(?=$)', '')
+
+  let gameName = game.match(regex);
+  gameName = gameName[0];
+
+  let bashCommand = `mkdir -p ${storagePath}/Emulation/roms/${system}/homebrew/ && mkdir -p ${storagePath}/Emulation/downloaded_media/${system}/screenshots/homebrew/ && mkdir -p ${storagePath}/Emulation/downloaded_media/${system}/titlescreens/homebrew/ && mkdir -p ${storagePath}/Emulation/tools/${system}/homebrew/ && curl '${game}' > ${storagePath}/Emulation/roms/${system}/homebrew/${gameName}.zip && curl 'https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/${system}/screenshots/homebrew/${gameName}.png?raw=true' > ${storagePath}/Emulation/downloaded_media/${system}/screenshots/homebrew/${gameName}.png && curl 'https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/${system}/titlescreens/homebrew/${gameName}.png?raw=true' > ${storagePath}/Emulation/downloaded_media/${system}/titlescreens/homebrew/${gameName}.png && echo 'true'`;
+
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
+
+  //Downloading Game
+
+  //([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)
+});
 
 let myWindow = null;
 //no second instances
