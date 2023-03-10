@@ -17,7 +17,7 @@ import {
 import { Form } from 'getbasecore/Molecules';
 
 import Card from 'components/molecules/Card/Card';
-const CheckUpdatePage = () => {
+function CheckUpdatePage() {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState, setStateUpdates } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
@@ -54,6 +54,12 @@ const CheckUpdatePage = () => {
   //Download files
   const [counter, setCounter] = useState(0);
   useEffect(() => {
+    //Build games for the store
+    ipcChannel.sendMessage('build-store');
+    ipcChannel.once('build-store', (response) => {
+      console.log({ response });
+    });
+
     const interval = setInterval(() => {
       setCounter((prevCounter) => {
         if (prevCounter === 110) {
@@ -363,6 +369,6 @@ const CheckUpdatePage = () => {
       )}
     </Wrapper>
   );
-};
+}
 
 export default CheckUpdatePage;

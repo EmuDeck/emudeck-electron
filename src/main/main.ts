@@ -29,7 +29,6 @@ export default class AppUpdater {
 
 // file system module to perform file operations
 const fs = require('fs');
-
 // Vars and consts
 let mainWindow: BrowserWindow | null = null;
 //Prevent two instances
@@ -638,6 +637,103 @@ ipcMain.on('check-versions', async (event) => {
   } catch (err) {
     console.error(err);
   }
+  // });
+});
+
+ipcMain.on('get-store', async (event) => {
+  const userHomeDir = os.homedir();
+  const backChannel = 'get-store';
+  let jsonPath = `${userHomeDir}/emudeck/store/store.json`;
+  try {
+    const data = fs.readFileSync(jsonPath);
+    const json = JSON.parse(data);
+    event.reply(backChannel, json);
+  } catch (err) {
+    console.error(err);
+  }
+  // });
+});
+
+ipcMain.on('build-store', async (event) => {
+  console.log('build');
+  const buildJson = (system, name) => {
+    //GB HomebrewGames
+    const dir = `${os.homedir()}/.config/EmuDeck/backend/store/${system}/`;
+    let jsonArray = [];
+    fs.readdir(dir, (err, files) => {
+      return new Promise((resolve, reject) => {
+        if (err) reject(err);
+        files.forEach((file) => {
+          if (file.includes('.json')) {
+            let jsonPath = `${dir}${file}`;
+            try {
+              const data = fs.readFileSync(jsonPath);
+              const json = JSON.parse(data);
+              jsonArray = jsonArray.concat(json);
+            } catch (err) {
+              console.error(err);
+            }
+          }
+        });
+        const masterJson = {
+          system: `${system}`,
+          status: 'true',
+          name: `${name}`,
+          games: jsonArray,
+        };
+        resolve(masterJson);
+      }).then((masterJson) => {
+        console.log(masterJson);
+        fs.writeFileSync(
+          `${os.homedir()}/emudeck/store/${system}.json`,
+          JSON.stringify(masterJson)
+        );
+      });
+    });
+    buildJsonStore();
+  };
+
+  const buildJsonStore = () => {
+    //GB HomebrewGames
+    const dir = `/Users/rsedano/emudeck/store/`;
+    let jsonArray = [];
+    fs.readdir(dir, (err, files) => {
+      return new Promise((resolve, reject) => {
+        if (err) reject(err);
+        files.forEach((file) => {
+          if (file.includes('.json') && !file.includes('store')) {
+            let jsonPath = `${dir}${file}`;
+            try {
+              const data = fs.readFileSync(jsonPath);
+              const json = JSON.parse(data);
+              jsonArray = jsonArray.concat(json);
+            } catch (err) {
+              console.error(err);
+            }
+          }
+        });
+        const masterJson = {
+          store: jsonArray,
+        };
+        resolve(masterJson);
+      }).then((masterJson) => {
+        console.log(masterJson);
+        fs.writeFileSync(
+          `/Users/rsedano/emudeck/store/store.json`,
+          JSON.stringify(masterJson)
+        );
+      });
+    });
+  };
+  buildJson('gb', 'GameBoy');
+  buildJson('gbc', 'GameBoy Color');
+  buildJson('gba', 'GameBoy Advanced');
+  buildJson('genesis', 'Genesis');
+  buildJson('mastersystem', 'Master System');
+  buildJson('nes', 'NES');
+  buildJson('snes', 'Super Nintendo');
+  buildJson('gg', 'GameGear');
+  event.reply('build-store', true);
   // });
 });
 
