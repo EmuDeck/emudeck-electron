@@ -5,13 +5,14 @@ import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Card from 'components/molecules/Card/Card';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog';
-import img0 from 'assets/emudeck_banner.png';
+import img0 from 'assets/store_banner.png';
 import img1 from 'assets/ui_banner.png';
 import img2 from 'assets/melonds_banner.png';
-import img3 from 'assets/dolphin_banner.png';
-import img4 from 'assets/1x1.png';
+import img3 from 'assets/emulators_manage_banner.png';
+import img4 from 'assets/migration_banner.png';
+import img5 from 'assets/dolphin_banner.png';
 
-const ChangeLogPage = () => {
+function ChangeLogPage() {
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -46,6 +47,9 @@ const ChangeLogPage = () => {
         break;
       case 4:
         imgID = img4;
+        break;
+      case 5:
+        imgID = img5;
         break;
     }
 
@@ -128,6 +132,6 @@ const ChangeLogPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default ChangeLogPage;

@@ -1,8 +1,8 @@
 [
   {
-    "title": "EmuDeck Gaming Mode",
+    "title": "EmuDeck Store",
     "type": "STEAMOS",
-    "description": "Now you can update or customize EmuDeck directly in Gaming Mode, no need to go into Desktop Mode. Just make sure to run SteamRomManager to add the new launcher for EmuDeck<br/> <strong>To add games through SteamRomManager you still need to use Desktop mode</strong>",
+    "description": "Now you can browse and download games from our homebrew collection one by one. <br/><strong>On this release they are only playable on EmulationStation DE</strong>",
     "image": "true"
   },
   {
@@ -14,7 +14,20 @@
   {
     "title": "New Emulators",
     "type": "STEAMOS",
-    "description": "- MelonDS Standalone ( Custom Mode )<br/>- Rosalie's Mupen GUI ( Custom Mode )<br/>- mGBA ( Custom Mode )<br/>- Cemu AppImage ( On Emulators Guide )<br/>- Pico8 and tic80 RetroArch Cores",
+    "description": "- MelonDS Standalone ( Custom Mode )<br/>- Rosalie's Mupen GUI ( Custom Mode )<br/>- mGBA ( Custom Mode )<br/>- Cemu AppImage ( On Manage Emulators )<br/>- Pico8 and tic80 RetroArch Cores",
+    "image": "true"
+  },
+  {
+    "title": "Manage Emulators",
+    "type": "STEAMOS",
+    "description": "Get notifications when an emulator has a new configuration update so you don't need to reinstall EmuDeck to apply that specific configuration.",
+    "image": "true"
+  },
+
+  {
+    "title": "Migrate Installation",
+    "type": "STEAMOS",
+    "description": "Move your EmuDeck Installation to another destination: SD Card, Internal Storage, etc.",
     "image": "true"
   },
   {
@@ -22,6 +35,13 @@
     "type": "STEAMOS",
     "description": "- Keep window on top false<br/>-WSHack off by default<br/>-Vsync = ON <br/>-Gamecube controllers standardized using the profile.<br/>-Unlock FPS changed to Start + R2<br/>-Increase Emu Speed = Select + R2<br/>-Decrease Emu Speed = Select + L2",
     "image": "true"
+  },
+
+  {
+    "title": "Cloud Services Manager",
+    "type": "STEAMOS",
+    "description": "Create shortcuts on Steam for cloud services like Apple TV, Disney +, Hulu, Plex but also streaming services like Moonlight or Chiaki",
+    "image": "false"
   },
   {
     "title": "Bug fixes & Small Features",
