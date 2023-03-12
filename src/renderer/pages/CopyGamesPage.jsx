@@ -42,8 +42,8 @@ function CopyGamesPage() {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
+        console.log({ message });
         let pathUSB = message.stdout.replace('\n', '');
-
         setStatePage({
           ...statePage,
           disabledNext: true,
@@ -54,10 +54,11 @@ function CopyGamesPage() {
         //is it valid?
 
         ipcChannel.sendMessage('emudeck', [
-          `testLocation|||sleep 1 && testLocationValidRelaxed "custom" "${stdout}"`,
+          `testLocation|||sleep 1 && testLocationValidRelaxed "custom" "${pathUSB}"`,
         ]);
 
         ipcChannel.once('testLocation', (message) => {
+          console.log({ message });
           let stdout = message.stdout.replace('\n', '');
           console.log({ stdout });
           let status;
@@ -88,21 +89,15 @@ function CopyGamesPage() {
   };
 
   const startCopyGames = () => {
-    setStatePage({
-      ...statePage,
-      statusCopyGames: true,
-    });
-
     ipcChannel.sendMessage('emudeck', [
       `CopyGames|||CopyGames ${storageUSBPath} ${storageUSBPath}`,
     ]);
 
     ipcChannel.once('CopyGames', (message) => {
       let stdout = message.stdout.replace('\n', '');
-      console.log(stdout);
       setStatePage({
         ...statePage,
-        statusCopyGames: null,
+        statusCopyGames: true,
       });
     });
   };
@@ -116,9 +111,9 @@ function CopyGamesPage() {
       `CreateStructureUSB|||CreateStructureUSB ${storageUSBPath}`,
     ]);
 
-    ipcChannel.once('CopyGames_init', (message) => {
+    ipcChannel.once('CreateStructureUSB', (message) => {
       let stdout = message.stdout.replace('\n', '');
-      console.log(stdout);
+      console.log({ message });
       setStatePage({
         ...statePage,
         statusCreateStructure: true,
@@ -210,7 +205,7 @@ function CopyGamesPage() {
               Skip
             </BtnSimple>
           )}
-        {second && (
+        {second && statusCopyGames === null && (
           <>
             <BtnSimple
               css="btn-simple--2"
