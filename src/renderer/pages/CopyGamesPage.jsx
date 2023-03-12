@@ -42,14 +42,14 @@ function CopyGamesPage() {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
-        let stdout = message.stdout.replace('\n', '');
+        let pathUSB = message.stdout.replace('\n', '');
 
         setStatePage({
           ...statePage,
           disabledNext: true,
           status: 'testing',
           storageUSB: storageName,
-          storageUSBPath: stdout,
+          storageUSBPath: pathUSB,
         });
         //is it valid?
 
@@ -68,6 +68,8 @@ function CopyGamesPage() {
               ...statePage,
               disabledNext: false,
               status: undefined,
+              storageUSB: storageName,
+              storageUSBPath: pathUSB,
             });
           } else {
             alert('Non writable directory selected, please choose another.');
