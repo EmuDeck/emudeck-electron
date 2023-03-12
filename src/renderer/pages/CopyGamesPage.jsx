@@ -54,7 +54,7 @@ function CopyGamesPage() {
         //is it valid?
 
         ipcChannel.sendMessage('emudeck', [
-          `testLocation|||sleep 1 && testLocationValid "custom" "${stdout}"`,
+          `testLocation|||sleep 1 && testLocationValidRelaxed "custom" "${stdout}"`,
         ]);
 
         ipcChannel.once('testLocation', (message) => {
