@@ -11,7 +11,7 @@ function CopyGamesPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
-  const { storagePath } = state;
+  const { storagePath, second } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
@@ -196,15 +196,37 @@ function CopyGamesPage() {
             </svg>
           </BtnSimple>
         )}
-        {statusCreateStructure === null && statusCopyGames !== true && (
-          <BtnSimple
-            css="btn-simple--3"
-            type="button"
-            aria="Go Next"
-            onClick={() => skipAddingGames()}
-          >
-            Skip adding games
-          </BtnSimple>
+        {statusCreateStructure === null &&
+          statusCopyGames !== true &&
+          !second && (
+            <BtnSimple
+              css="btn-simple--3"
+              type="button"
+              aria="Go Next"
+              onClick={() => skipAddingGames()}
+            >
+              Skip
+            </BtnSimple>
+          )}
+        {second && (
+          <>
+            <BtnSimple
+              css="btn-simple--2"
+              type="button"
+              aria="Go Back"
+              onClick={() => navigate(-1)}
+            >
+              Go Back
+            </BtnSimple>
+            <BtnSimple
+              css="btn-simple--3"
+              type="button"
+              aria="Go Next"
+              onClick={() => openSRM()}
+            >
+              Skip, just open Steam Rom Manager
+            </BtnSimple>
+          </>
         )}
       </footer>
     </Wrapper>
