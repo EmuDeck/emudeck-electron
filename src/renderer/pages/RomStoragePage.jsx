@@ -187,9 +187,10 @@ const RomStoragePage = () => {
           mode === 'easy'
             ? system == 'win32'
               ? 'end'
-              : 'homebrew-games'
+              : 'end'
             : 'device-selector'
         }
+        nextText="Finish"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

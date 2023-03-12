@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
@@ -8,7 +9,8 @@ import { BtnSimple } from 'getbasecore/Atoms';
 
 import End from 'components/organisms/Wrappers/End';
 
-const EndPage = () => {
+function EndPage() {
+  const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: true,
@@ -597,28 +599,6 @@ const EndPage = () => {
         >
           Watch Log
         </BtnSimple>
-        <BtnSimple
-          css="btn-simple--1"
-          type="button"
-          aria="Go Back"
-          disabled={disabledNext && 'true'}
-          onClick={close}
-        >
-          Exit
-          <svg
-            className="rightarrow"
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill="currentColor"
-              d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
-            ></path>
-          </svg>
-        </BtnSimple>
 
         {gamemode == false && (
           <BtnSimple
@@ -626,9 +606,9 @@ const EndPage = () => {
             type="button"
             aria="Go Next"
             disabled={disabledNext && 'true'}
-            onClick={openSRM}
+            onClick={() => navigate('/copy-games')}
           >
-            Launch Steam Rom Manager
+            Add games!
             <svg
               className="rightarrow"
               width="32"
@@ -647,6 +627,6 @@ const EndPage = () => {
       </footer>
     </Wrapper>
   );
-};
+}
 
 export default EndPage;
