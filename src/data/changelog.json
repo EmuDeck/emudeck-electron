@@ -18,6 +18,12 @@
     "image": "true"
   },
   {
+    "title": "EmulationStation 2.0",
+    "type": "STEAMOS",
+    "description": "New version of ESDE 2.0 with a new EpicNoir Theme. Go to Emulators to update it and then Reset the configuration afterwards to get the new theme upgraded",
+    "image": "true"
+  },
+  {
     "title": "Manage Emulators",
     "type": "STEAMOS",
     "description": "Get notifications when an emulator has a new configuration update so you don't need to reinstall EmuDeck to apply that specific configuration.",
@@ -31,9 +37,9 @@
     "image": "true"
   },
   {
-    "title": "Dolphin Configuration update",
+    "title": "SteamOS 3.5 SDCard Fix",
     "type": "STEAMOS",
-    "description": "- Keep window on top false<br/>-WSHack off by default<br/>-Vsync = ON <br/>-Gamecube controllers standardized using the profile.<br/>-Unlock FPS changed to Start + R2<br/>-Increase Emu Speed = Select + R2<br/>-Decrease Emu Speed = Select + L2",
+    "description": "The next 3.5 SteamOS Release will change your SD Card paths, we've added a tool to fix it when the moment comes",
     "image": "true"
   },
 
@@ -41,7 +47,7 @@
     "title": "Cloud Services Manager",
     "type": "STEAMOS",
     "description": "Create shortcuts on Steam for cloud services like Apple TV, Disney +, Hulu, Plex but also streaming services like Moonlight or Chiaki",
-    "image": "false"
+    "image": "true"
   },
   {
     "title": "Bug fixes & Small Features",

@@ -8,9 +8,11 @@ import ChangeLog from 'components/organisms/Wrappers/ChangeLog';
 import img0 from 'assets/store_banner.png';
 import img1 from 'assets/ui_banner.png';
 import img2 from 'assets/melonds_banner.png';
-import img3 from 'assets/emulators_manage_banner.png';
-import img4 from 'assets/migration_banner.png';
-import img5 from 'assets/dolphin_banner.png';
+import img3 from 'assets/ESDE.jpg';
+import img4 from 'assets/emulators_manage_banner.png';
+import img5 from 'assets/migration_banner.png';
+import img6 from 'assets/steamOS_banner.jpg';
+import img7 from 'assets/streaming_banner.jpg';
 
 function ChangeLogPage() {
   const { state, setState } = useContext(GlobalContext);
@@ -50,6 +52,12 @@ function ChangeLogPage() {
         break;
       case 5:
         imgID = img5;
+        break;
+      case 6:
+        imgID = img6;
+        break;
+      case 7:
+        imgID = img7;
         break;
     }
 
