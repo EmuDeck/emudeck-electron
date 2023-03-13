@@ -732,7 +732,7 @@ ipcMain.on('build-store', async (event) => {
   buildJson('mastersystem', 'Master System');
   buildJson('nes', 'NES');
   buildJson('snes', 'Super Nintendo');
-  buildJson('gg', 'GameGear');
+  buildJson('gamegear', 'GameGear');
   event.reply('build-store', true);
   // });
 });
