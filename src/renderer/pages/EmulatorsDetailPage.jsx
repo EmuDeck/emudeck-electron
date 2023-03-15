@@ -374,8 +374,6 @@ function EmulatorsDetailPage() {
   }, [showNotification]);
 
   useEffect(() => {
-    alert(emulator);
-
     switch (emulator) {
       case 'ra':
         checkBios('checkPS1BIOS');
@@ -387,6 +385,9 @@ function EmulatorsDetailPage() {
         break;
       case 'duckstation':
         checkBios('checkPS1BIOS');
+        break;
+      case 'melonds':
+        checkBios('checkDSBios');
         break;
       case 'pcsx2':
         checkBios('checkPS2BIOS');
