@@ -321,7 +321,7 @@ function EmulatorsPage() {
       <Main>
         {updates && (
           <>
-            {updates.length > 0 && (
+            {Object.keys(updates).length > 0 && (
               <>
                 <div className="container--grid">
                   <div data-col-md="3">
@@ -331,7 +331,7 @@ function EmulatorsPage() {
                       btnCSS="btn-simple--1"
                       iconSize="md"
                       title={'Update all Configurations'}
-                      description="Update all you Emulator's configuration at once"
+                      description="Update all you configurations at once"
                       button={disableResetButton ? '' : 'Update'}
                       onClick={() => resetEmus()}
                       notification={true}
