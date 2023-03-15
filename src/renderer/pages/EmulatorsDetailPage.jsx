@@ -194,7 +194,7 @@ function EmulatorsDetailPage() {
     });
   };
 
-  const installEmu = (emulator, name) => {
+  const installEmu = (emulator, code) => {
     console.log(emulator);
 
     setStatePage({
@@ -203,20 +203,20 @@ function EmulatorsDetailPage() {
     });
 
     ipcChannel.sendMessage('emudeck', [
-      `${name}_install|||${name}_install && ${name}_init`,
+      `${code}_install|||${code}_install && ${code}_init`,
     ]);
 
-    ipcChannel.once(`${name}_install`, (status) => {
+    ipcChannel.once(`${code}_install`, (status) => {
       // console.log({ status });
       status = status.stdout;
       //console.log({ status });
       status = status.replace('\n', '');
       //Lets check if it did install
       ipcChannel.sendMessage('emudeck', [
-        `${name}_IsInstalled|||${name}_IsInstalled`,
+        `${name}_IsInstalled|||${code}_IsInstalled`,
       ]);
 
-      ipcChannel.once(`${name}_IsInstalled`, (status) => {
+      ipcChannel.once(`${code}_IsInstalled`, (status) => {
         // console.log({ status });
         status = status.stdout;
         console.log({ status });
@@ -225,7 +225,7 @@ function EmulatorsDetailPage() {
         if (status.includes('true')) {
           setStatePage({
             ...statePage,
-            textNotification: `${name} installed! 🎉`,
+            textNotification: `${code} installed! 🎉`,
             showNotification: true,
             disableInstallButton: false,
           });
@@ -253,7 +253,7 @@ function EmulatorsDetailPage() {
     });
   };
 
-  const uninstallEmu = (emulator, name, alternative = false) => {
+  const uninstallEmu = (emulator, code, alternative = false) => {
     console.log(emulator);
 
     if (
@@ -269,34 +269,33 @@ function EmulatorsDetailPage() {
       });
       if (alternative) {
         ipcChannel.sendMessage('emudeck', [
-          `${name}_uninstall|||${name}_uninstall_alt`,
+          `${code}_uninstall|||${code}_uninstall_alt`,
         ]);
       } else {
         ipcChannel.sendMessage('emudeck', [
-          `${name}_uninstall|||${name}_uninstall`,
+          `${code}_uninstall|||${code}_uninstall`,
         ]);
       }
 
-      ipcChannel.once(`${name}_uninstall`, (status) => {
+      ipcChannel.once(`${code}_uninstall`, (status) => {
         // console.log({ status });
         status = status.stdout;
         //console.log({ status });
         status = status.replace('\n', '');
         //Lets check if it did install
         ipcChannel.sendMessage('emudeck', [
-          `${name}_IsInstalled|||${name}_IsInstalled`,
+          `${code}_IsInstalled|||${code}_IsInstalled`,
         ]);
 
-        ipcChannel.once(`${name}_IsInstalled`, (status) => {
-          // console.log({ status });
-          status = status.stdout;
+        ipcChannel.once(`${code}_IsInstalled`, (status) => {
           console.log({ status });
+          status = status.stdout;
           status = status.replace('\n', '');
 
           if (status.includes('false')) {
             setStatePage({
               ...statePage,
-              textNotification: `${name} Uninstalled! 🎉`,
+              textNotification: `${code} Uninstalled! 🎉`,
               showNotification: true,
               disableInstallButton: false,
             });
@@ -315,7 +314,7 @@ function EmulatorsDetailPage() {
           } else {
             setStatePage({
               ...statePage,
-              textNotification: `There was an issue trying to uninstall ${name} 😥`,
+              textNotification: `There was an issue trying to uninstall ${code} 😥`,
               showNotification: true,
               disableInstallButton: false,
             });
@@ -333,10 +332,10 @@ function EmulatorsDetailPage() {
       disableResetButton: true,
     });
     ipcChannel.sendMessage('emudeck', [
-      `${name}_resetConfig|||${name}_resetConfig`,
+      `${code}_resetConfig|||${code}_resetConfig`,
     ]);
-    ipcChannel.once(`${name}_resetConfig`, (status) => {
-      console.log(`${name}_resetConfig`);
+    ipcChannel.once(`${code}_resetConfig`, (status) => {
+      console.log(`${code}_resetConfig`);
       status = status.stdout;
       console.log({ status });
       status = status.replace('\n', '');
@@ -375,13 +374,29 @@ function EmulatorsDetailPage() {
   }, [showNotification]);
 
   useEffect(() => {
-    checkBios('checkPS1BIOS');
-    checkBios('checkPS2BIOS');
-    checkBios('checkYuzuBios');
-    checkBios('checkSegaCDBios');
-    checkBios('checkSaturnBios');
-    checkBios('checkDSBios');
-    checkBios('checkDreamcastBios');
+    alert(emulator);
+
+    switch (emulator) {
+      case 'ra':
+        checkBios('checkPS1BIOS');
+        checkBios('checkYuzuBios');
+        checkBios('checkSegaCDBios');
+        checkBios('checkSaturnBios');
+        checkBios('checkDSBios');
+        checkBios('checkDreamcastBios');
+        break;
+      case 'duckstation':
+        checkBios('checkPS1BIOS');
+        break;
+      case 'pcsx2':
+        checkBios('checkPS2BIOS');
+        break;
+      case 'yuzu':
+        checkBios('checkYuzuBios');
+        break;
+      default:
+        console.log('No bios');
+    }
   }, []);
 
   const selectEmu = (e) => {
