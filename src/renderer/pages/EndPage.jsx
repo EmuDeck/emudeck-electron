@@ -37,7 +37,7 @@ function EndPage() {
       let messageArray = message.stdout.split('#');
       let messageText = messageArray[1];
       let messagePercent = messageArray[0];
-      console.log({ message });
+      //console.log({ message });
       messagePercent = messagePercent.replaceAll(' ', '');
       messagePercent = messagePercent.replaceAll('\n', '');
       messagePercent = messagePercent.replaceAll('\n\r', '');
