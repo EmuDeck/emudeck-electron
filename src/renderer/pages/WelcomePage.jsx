@@ -242,6 +242,13 @@ function WelcomePage() {
       navigate('/change-log');
     }
 
+    ipcChannel.sendMessage('check-installed');
+    ipcChannel.once('check-installed', (statuso) => {
+      console.log({ statuso });
+      console.log(typeof status.stdout);
+      console.log(status.stdout);
+    });
+
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?

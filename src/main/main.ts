@@ -640,6 +640,39 @@ ipcMain.on('check-versions', async (event) => {
   // });
 });
 
+ipcMain.on('check-installed', async (event, command) => {
+  let backChannel = 'check-installed';
+  let bashCommand = 'getEmuInstallStatus';
+
+  let preCommand;
+
+  if (os.platform().includes('win32')) {
+    bashCommand = bashCommand.replaceAll('&&', ';');
+    preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
+  } else {
+    preCommand = `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
+  }
+
+  return exec(`${preCommand}`, (error, stdout, stderr) => {
+    //event.reply('console', { backChannel });
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, {
+      stdout: stdout,
+      stderr: stderr,
+      error: error,
+    });
+  });
+
+  try {
+    const data = fs.readFileSync(jsonPath);
+    const json = JSON.parse(data);
+    event.reply(backChannel, json);
+  } catch (err) {
+    console.error(err);
+  }
+  // });
+});
+
 ipcMain.on('get-store', async (event) => {
   const userHomeDir = os.homedir();
   const backChannel = 'get-store';
