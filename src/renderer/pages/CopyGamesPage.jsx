@@ -11,7 +11,7 @@ function CopyGamesPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
-  const { storagePath, second } = state;
+  const { storagePath, second, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,

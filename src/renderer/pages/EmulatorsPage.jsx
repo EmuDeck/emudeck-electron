@@ -32,6 +32,7 @@ import {
   imgesde,
   imgmelonds,
   imgmgba,
+  iconGear,
 } from 'components/utils/images/images';
 
 const images = {
@@ -79,6 +80,7 @@ function EmulatorsPage() {
     showNotification,
     textNotification,
     newDesiredVersions,
+    disableResetButton,
   } = statePage;
 
   const { overwriteConfigEmus, installEmus } = state;
@@ -198,39 +200,61 @@ function EmulatorsPage() {
     return diffs;
   };
 
-  const resetEmu = (code, name, id) => {
+  const resetEmus = (code, name, id) => {
     setStatePage({
       ...statePage,
-      disableInstallButton: true,
+      disableResetButton: true,
     });
-    ipcChannel.sendMessage('emudeck', [
-      `${name}_resetConfig|||${name}_resetConfig`,
-    ]);
-    ipcChannel.once(`${name}_resetConfig`, (status) => {
-      console.log(`${name}_resetConfig`);
-      status = status.stdout;
-      console.log({ status });
-      status = status.replace('\n', '');
+    let i = 1.5;
+    Object.keys(updates).forEach((name) => {
+      console.log({ name });
 
-      if (status.includes('true')) {
-        setStatePage({
-          ...statePage,
-          textNotification: `${name} configuration updated! 🎉`,
-          showNotification: true,
-          disableResetButton: false,
-        });
-        setStateUpdates({
-          ...stateUpdates,
-          [id]: newDesiredVersions[id],
-        });
-      } else {
-        setStatePage({
-          ...statePage,
-          textNotification: `There was an issue trying to reset ${name} configuration 😥`,
-          showNotification: true,
-          disableResetButton: false,
-        });
+      ipcChannel.sendMessage('emudeck', [
+        `${name}_resetConfig|||sleep ${i} && ${name}_resetConfig`,
+      ]);
+
+      ipcChannel.once(`${name}_resetConfig`, (status) => {
+        console.log(`${name}_resetConfig`);
+        status = status.stdout;
+        console.log({ status });
+        status = status.replace('\n', '');
+
+        if (status.includes('true')) {
+          setStatePage({
+            ...statePage,
+            textNotification: `${name} configuration updated! 🎉`,
+            showNotification: true,
+            disableResetButton: false,
+          });
+          setStateUpdates({
+            ...stateUpdates,
+            [id]: newDesiredVersions[id],
+          });
+        } else {
+          setStatePage({
+            ...statePage,
+            textNotification: `There was an issue trying to reset ${name} configuration 😥`,
+            showNotification: true,
+            disableResetButton: false,
+          });
+        }
+      });
+      i = i + 1.5;
+    });
+    ipcChannel.sendMessage('check-versions');
+    ipcChannel.once('check-versions', (repoVersions) => {
+      // No versioning found, what to do?
+      if (repoVersions === '') {
+        console.log('no versioning found');
       }
+
+      const updates = diff(repoVersions, stateUpdates);
+      console.log({ updates });
+      setStatePage({
+        ...statePage,
+        updates: updates,
+        newDesiredVersions: repoVersions,
+      });
     });
   };
 
@@ -281,7 +305,7 @@ function EmulatorsPage() {
 
   return (
     <Wrapper>
-      <Header title="Manage your Emulators" />
+      <Header title="Manage your Configurations" />
       <p className="lead">
         In this page you can update your configuration or even install new
         emulators
@@ -291,36 +315,54 @@ function EmulatorsPage() {
       </Notification>
       <Main>
         {updates && (
-          <div className="container--grid">
-            {installEmusArray.map((item) => {
-              const img = images[item.id];
-              const updateNotif = updates[item.id];
+          <>
+            <div className="container--grid">
+              <div data-col-md="3">
+                <CardSettings
+                  icon={iconGear}
+                  css="is-highlighted"
+                  btnCSS="btn-simple--1"
+                  iconSize="md"
+                  title={'Update all Configurations'}
+                  description="Update all you Emulator's configuration at once"
+                  button={disableResetButton ? '' : 'Update'}
+                  onClick={() => resetEmus()}
+                  notification={true}
+                />
+              </div>
+            </div>
+            <hr />
+            <div className="container--grid">
+              {installEmusArray.map((item) => {
+                const img = images[item.id];
+                const updateNotif = updates[item.id];
 
-              return (
-                <div data-col-md="2">
-                  <CardSettings
-                    key={item.id}
-                    icon={img}
-                    css="is-highlighted"
-                    btnCSS={
-                      item.status === true ? 'btn-simple--5' : 'btn-simple--2'
-                    }
-                    iconSize="sm"
-                    title={`${item.name}`}
-                    button={item.status === true ? 'Manage' : 'Install'}
-                    onClick={() => navigate(`/emulators-detail/${item.id}`)}
-                    notification={
-                      item.status === true
-                        ? updateNotif == undefined
-                          ? false
-                          : true
-                        : ''
-                    }
-                  />
-                </div>
-              );
-            })}
-          </div>
+                return (
+                  <div data-col-md="2">
+                    <CardSettings
+                      key={item.id}
+                      icon={img}
+                      css="is-highlighted"
+                      btnCSS={
+                        item.status === true ? 'btn-simple--5' : 'btn-simple--2'
+                      }
+                      iconSize="sm"
+                      title={`${item.name}`}
+                      button={item.status === true ? 'Manage' : 'Install'}
+                      onClick={() => navigate(`/emulators-detail/${item.id}`)}
+                      notification={
+                        item.status === true
+                          ? updateNotif == undefined
+                            ? false
+                            : true
+                          : ''
+                      }
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </>
         )}
       </Main>
       <Footer
