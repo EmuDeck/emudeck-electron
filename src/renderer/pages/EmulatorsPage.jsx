@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -199,24 +199,27 @@ function EmulatorsPage() {
     // Return the object of differences
     return diffs;
   };
+  const countRef = useRef(stateUpdates);
+  countRef.current = stateUpdates;
 
   const resetEmus = (code, name, id) => {
     setStatePage({
       ...statePage,
       disableResetButton: true,
     });
-    let i = 1.5;
+    let i = 5;
+    let object = {};
     Object.keys(updates).forEach((name) => {
-      console.log({ name });
+      //console.log({ name });
 
       ipcChannel.sendMessage('emudeck', [
         `${name}_resetConfig|||sleep ${i} && ${name}_resetConfig`,
       ]);
 
       ipcChannel.once(`${name}_resetConfig`, (status) => {
-        console.log(`${name}_resetConfig`);
+        //console.log(`${name}_resetConfig`);
         status = status.stdout;
-        console.log({ status });
+        //console.log({ status });
         status = status.replace('\n', '');
 
         if (status.includes('true')) {
@@ -226,11 +229,13 @@ function EmulatorsPage() {
             showNotification: true,
             disableResetButton: false,
           });
+
           setStateUpdates({
-            ...stateUpdates,
-            [id]: newDesiredVersions[id],
+            ...countRef.current,
+            [name]: newDesiredVersions[name],
           });
         } else {
+          console.log(countRef.current);
           setStatePage({
             ...statePage,
             textNotification: `There was an issue trying to reset ${name} configuration 😥`,
@@ -239,7 +244,7 @@ function EmulatorsPage() {
           });
         }
       });
-      i = i + 1.5;
+      i = i + 5;
     });
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
@@ -316,22 +321,26 @@ function EmulatorsPage() {
       <Main>
         {updates && (
           <>
-            <div className="container--grid">
-              <div data-col-md="3">
-                <CardSettings
-                  icon={iconGear}
-                  css="is-highlighted"
-                  btnCSS="btn-simple--1"
-                  iconSize="md"
-                  title={'Update all Configurations'}
-                  description="Update all you Emulator's configuration at once"
-                  button={disableResetButton ? '' : 'Update'}
-                  onClick={() => resetEmus()}
-                  notification={true}
-                />
-              </div>
-            </div>
-            <hr />
+            {updates.length > 0 && (
+              <>
+                <div className="container--grid">
+                  <div data-col-md="3">
+                    <CardSettings
+                      icon={iconGear}
+                      css="is-highlighted"
+                      btnCSS="btn-simple--1"
+                      iconSize="md"
+                      title={'Update all Configurations'}
+                      description="Update all you Emulator's configuration at once"
+                      button={disableResetButton ? '' : 'Update'}
+                      onClick={() => resetEmus()}
+                      notification={true}
+                    />
+                  </div>
+                </div>
+                <hr />
+              </>
+            )}
             <div className="container--grid">
               {installEmusArray.map((item) => {
                 const img = images[item.id];
