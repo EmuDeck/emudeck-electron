@@ -242,12 +242,19 @@ function WelcomePage() {
       navigate('/change-log');
     }
 
-    ipcChannel.sendMessage('check-installed');
-    ipcChannel.once('check-installed', (statuso) => {
-      console.log({ statuso });
-      console.log(typeof status.stdout);
-      console.log(status.stdout);
+    ipcChannel.sendMessage('emudeck', [
+      `getEmuInstallStatus|||getEmuInstallStatus`,
+    ]);
+    ipcChannel.once('getEmuInstallStatus', (message) => {
+      console.log(message);
     });
+
+    // ipcChannel.sendMessage('check-installed');
+    // ipcChannel.once('check-installed', (statuso) => {
+    //   console.log({ statuso });
+    //   console.log(typeof statuso.stdout);
+    //   console.log(statuso.stdout);
+    // });
 
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
