@@ -247,6 +247,7 @@ function WelcomePage() {
     ]);
     ipcChannel.once('getEmuInstallStatus', (message) => {
       console.log(message);
+      console.log(json.parse(message));
     });
 
     // ipcChannel.sendMessage('check-installed');
