@@ -211,7 +211,7 @@ function CopyGamesPage() {
               css="btn-simple--2"
               type="button"
               aria="Go Back"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate('/welcome')}
             >
               Go Back
             </BtnSimple>

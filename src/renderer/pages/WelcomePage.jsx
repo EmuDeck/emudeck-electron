@@ -57,6 +57,15 @@ function WelcomePage() {
       function: () => functions.migrationFixSDPaths(),
     },
     {
+      icon: [iconJoystick],
+      title: 'Steam Rom Manager',
+      description: 'Launch SRM to add more games to your Steam Library',
+      button: 'Launch',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.openSRM(),
+    },
+    {
       icon: [iconQuick],
       title: 'Quick Reset',
       description: 'Reset settings with our defaults in one click',
@@ -74,22 +83,14 @@ function WelcomePage() {
       status: true,
       function: () => selectMode('expert'),
     },
-    {
-      icon: [iconJoystick],
-      title: 'Steam Rom Manager',
-      description: 'Launch SRM to add more games to your Steam Library',
-      button: 'Launch',
-      btnCSS: 'btn-simple--5',
-      status: true,
-      function: () => functions.openSRM(),
-    },
+
     {
       icon: [iconPackage],
       title: 'Update Emulators',
       description: 'Update your emulators right from EmuDeck',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: false,
       function: () => functions.navigate('/update-emulators'),
     },
     {

@@ -33,6 +33,7 @@ import {
   imgmelonds,
   imgmgba,
   iconGear,
+  iconPackage,
 } from 'components/utils/images/images';
 
 const images = {
@@ -355,6 +356,19 @@ function EmulatorsPage() {
                       onClick={() => resetEmus()}
                       disabled={disableResetButton}
                       notification={true}
+                    />
+                  </div>
+                  <div data-col-md="3">
+                    <CardSettings
+                      icon={iconPackage}
+                      css="is-highlighted"
+                      btnCSS="btn-simple--1"
+                      iconSize="md"
+                      button="Update"
+                      title={'Update your Emulators'}
+                      description="Update your emulators right from EmuDeck"
+                      onClick={() => navigate(`/update-emulators`)}
+                      disabled={disableResetButton}
                     />
                   </div>
                 </div>
