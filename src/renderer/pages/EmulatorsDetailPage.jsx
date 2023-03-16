@@ -8,7 +8,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import EmuGuide from 'components/organisms/Wrappers/EmuGuide';
 
 function EmulatorsDetailPage() {
-  const { state, setState, stateUpdates, setStateUpdates } =
+  const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
   const { installEmus, mode } = state;
   const { ryujinx } = installEmus;
@@ -347,8 +347,8 @@ function EmulatorsDetailPage() {
           showNotification: true,
           disableResetButton: false,
         });
-        setStateUpdates({
-          ...stateUpdates,
+        setStateCurrentConfigs({
+          ...stateCurrentConfigs,
           [id]: newDesiredVersions[id],
         });
       } else {
@@ -417,7 +417,7 @@ function EmulatorsDetailPage() {
         console.log('no versioning found');
       }
 
-      const updates = diff(repoVersions, stateUpdates);
+      const updates = diff(repoVersions, stateCurrentConfigs);
       console.log({ updates });
       setStatePage({
         ...statePage,
@@ -431,14 +431,14 @@ function EmulatorsDetailPage() {
 
   useEffect(() => {
     if (showNotification === false) {
-      const updates = diff(newDesiredVersions, stateUpdates);
+      const updates = diff(newDesiredVersions, stateCurrentConfigs);
       console.log({ updates });
       setStatePage({
         ...statePage,
         updates: updates,
       });
 
-      let json = JSON.stringify(stateUpdates);
+      let json = JSON.stringify(stateCurrentConfigs);
       localStorage.setItem('current_versions', json);
     }
   }, [showNotification]);

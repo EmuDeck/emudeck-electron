@@ -59,28 +59,28 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 const branch = require('data/branch.json');
 
 export default function App() {
-  const [stateUpdates, setStateUpdates] = useState({
-    ra: 0,
-    dolphin: 0,
-    primehack: 0,
-    ppsspp: 0,
-    duckstation: 0,
-    melonds: 0,
-    citra: 0,
-    pcsx2: 0,
-    rpcs3: 0,
-    yuzu: 0,
-    ryujinx: 0,
-    xemu: 0,
-    cemu: 0,
-    srm: 0,
-    rmg: 0,
-    esde: 0,
-    mame: 0,
-    vita3k: 0,
-    scummvm: 0,
-    xenia: 0,
-    mgba: 0,
+  const [stateCurrentConfigs, setStateCurrentConfigs] = useState({
+    ra: { id: 'ra', code: 'RetroArch', version: 0 },
+    dolphin: { id: 'dolphin', code: 'Dolphin', version: 0 },
+    primehack: { id: 'primehack', code: 'Primehack', version: 0 },
+    ppsspp: { id: 'ppsspp', code: 'PPSSPP', version: 0 },
+    duckstation: { id: 'duckstation', code: 'Duckstation', version: 0 },
+    melonds: { id: 'melonds', code: 'melonDS', version: 0 },
+    citra: { id: 'citra', code: 'Citra', version: 0 },
+    pcsx2: { id: 'pcsx2', code: 'PCSX2QT', version: 0 },
+    rpcs3: { id: 'rpcs3', code: 'RPCS3', version: 0 },
+    yuzu: { id: 'yuzu', code: 'Yuzu', version: 0 },
+    ryujinx: { id: 'ryujinx', code: 'Ryujinx', version: 0 },
+    xemu: { id: 'xemu', code: 'Xemu', version: 0 },
+    cemu: { id: 'cemu', code: 'Cemu', version: 0 },
+    srm: { id: 'srm', code: 'SRM', version: 0 },
+    rmg: { id: 'rmg', code: 'RMG', version: 0 },
+    esde: { id: 'esde', code: 'ESDE', version: 0 },
+    mame: { id: 'mame', code: 'MAME', version: 0 },
+    vita3k: { id: 'vita3k', code: 'Vita3k', version: 0 },
+    scummvm: { id: 'scummvm', code: 'ScummVM', version: 0 },
+    xenia: { id: 'xenia', code: 'Xenia', version: 0 },
+    mgba: { id: 'mgba', code: 'mGBA', version: 0 },
   });
 
   const [state, setState] = useState({
@@ -249,8 +249,8 @@ export default function App() {
       value={{
         state,
         setState,
-        stateUpdates,
-        setStateUpdates,
+        stateCurrentConfigs,
+        setStateCurrentConfigs,
       }}
     >
       <Router>

@@ -62,7 +62,8 @@ const images = {
 
 function EmulatorsPage() {
   const navigate = useNavigate();
-  const { state, stateUpdates, setStateUpdates } = useContext(GlobalContext);
+  const { state, stateCurrentConfigs, setStateCurrentConfigs } =
+    useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -199,32 +200,36 @@ function EmulatorsPage() {
     // Return the object of differences
     return diffs;
   };
-  const countRef = useRef(stateUpdates);
-  countRef.current = stateUpdates;
+  const countRef = useRef(stateCurrentConfigs);
+  countRef.current = stateCurrentConfigs;
 
   const pageRef = useRef(statePage);
   pageRef.current = statePage;
 
-  const resetEmus = (code, name, id) => {
+  const resetEmus = () => {
     setStatePage({
-      ...statePage,
+      ...pageRef.current,
       disableResetButton: true,
     });
 
+    console.log({ updates });
+
     setTimeout(() => {
-      let i = 5;
+      let i = 2;
       let object = {};
-      Object.keys(updates).forEach((name) => {
-        console.log({ name });
+      Object.values(updates).forEach((item) => {
+        const name = item.code;
+        const code = item.code;
+        const id = item.id;
+        const version = item.version;
 
         ipcChannel.sendMessage('emudeck', [
-          `${name}_resetConfig|||sleep ${i} && ${name}_resetConfig`,
+          `${code}_resetConfig|||sleep ${i} && ${code}_resetConfig`,
         ]);
 
-        ipcChannel.once(`${name}_resetConfig`, (status) => {
-          //console.log(`${name}_resetConfig`);
-          status = status.stdout;
-          //console.log({ status });
+        ipcChannel.once(`${code}_resetConfig`, (message) => {
+          console.log(`${code}_resetConfig`);
+          let status = message.stdout;
           status = status.replace('\n', '');
 
           if (status.includes('true')) {
@@ -232,42 +237,38 @@ function EmulatorsPage() {
               ...pageRef.current,
               textNotification: `${name} configuration updated! 🎉`,
               showNotification: true,
-              disableResetButton: false,
             });
 
-            setStateUpdates({
+            setStateCurrentConfigs({
               ...countRef.current,
-              [name]: newDesiredVersions[name],
+              [id]: { ...countRef.current[id], version: version },
             });
           } else {
-            console.log(countRef.current);
             setStatePage({
               ...pageRef.current,
               textNotification: `There was an issue trying to reset ${name} configuration 😥`,
               showNotification: true,
-              disableResetButton: false,
             });
           }
         });
-        i = i + 5;
+        i = i + 1;
       });
-      ipcChannel.sendMessage('check-versions');
-      ipcChannel.once('check-versions', (repoVersions) => {
-        // No versioning found, what to do?
-        if (repoVersions === '') {
-          console.log('no versioning found');
-        }
-        console.log({ repoVersions });
-        console.log({ stateUpdates });
-        const updates = diff(repoVersions, stateUpdates);
-        console.log({ updates });
-        setStatePage({
-          ...statePage,
-          updates: updates,
-          newDesiredVersions: repoVersions,
-        });
-      });
-    }, 2000);
+      //       ipcChannel.sendMessage('check-versions');
+      //       ipcChannel.once('check-versions', (repoVersions) => {
+      //         // No versioning found, what to do?
+      //         if (repoVersions === '') {
+      //           console.log('no versioning found');
+      //         }
+      //
+      //         const updates = diff(repoVersions, stateCurrentConfigs);
+      //         console.log({ updates });
+      //         setStatePage({
+      //           ...pageRef.current,
+      //           updates: updates,
+      //           newDesiredVersions: repoVersions,
+      //         });
+      //       });
+    }, 1000);
   };
 
   useEffect(() => {
@@ -277,7 +278,7 @@ function EmulatorsPage() {
           ...statePage,
           showNotification: false,
         });
-      }, 3000);
+      }, 1000);
     }
   }, [showNotification]);
 
@@ -289,14 +290,23 @@ function EmulatorsPage() {
         console.log('no versioning found');
       }
 
-      const updates = diff(repoVersions, stateUpdates);
-      console.log({ repoVersions });
-      console.log({ stateUpdates });
-      console.log({ updates });
+      //Thanks chatGPT lol
+      const obj1 = repoVersions;
+      const obj2 = stateCurrentConfigs;
+
+      const differences = {};
+
+      for (const key in obj1) {
+        if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
+          differences[key] = obj1[key];
+        }
+      }
+
       setStatePage({
         ...statePage,
-        updates: updates,
+        updates: differences,
         newDesiredVersions: repoVersions,
+        disableResetButton: false,
       });
     });
 
@@ -305,14 +315,14 @@ function EmulatorsPage() {
 
   useEffect(() => {
     if (showNotification === false) {
-      const updates = diff(newDesiredVersions, stateUpdates);
+      const updates = diff(newDesiredVersions, stateCurrentConfigs);
       console.log({ updates });
       setStatePage({
         ...statePage,
         updates: updates,
       });
 
-      let json = JSON.stringify(stateUpdates);
+      let json = JSON.stringify(stateCurrentConfigs);
       localStorage.setItem('current_versions', json);
     }
   }, [showNotification]);
@@ -341,8 +351,9 @@ function EmulatorsPage() {
                       iconSize="md"
                       title={'Update all Configurations'}
                       description="Update all you configurations at once"
-                      button={disableResetButton ? '' : 'Update'}
+                      button={disableResetButton ? 'Please wait...' : 'Update'}
                       onClick={() => resetEmus()}
+                      disabled={disableResetButton}
                       notification={true}
                     />
                   </div>

@@ -8,7 +8,7 @@ import UpdateConfigs from 'components/organisms/Wrappers/UpdateConfigs';
 import Notification from 'components/molecules/Notification/Notification';
 
 function UpdateConfigsPage() {
-  const { stateUpdates, setStateUpdates } = useContext(GlobalContext);
+  const { stateCurrentConfigs, setStateCurrentConfigs } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -162,8 +162,8 @@ function UpdateConfigsPage() {
           showNotification: true,
           disableResetButton: false,
         });
-        setStateUpdates({
-          ...stateUpdates,
+        setStateCurrentConfigs({
+          ...stateCurrentConfigs,
           [id]: newDesiredVersions[id],
         });
       } else {
@@ -196,7 +196,7 @@ function UpdateConfigsPage() {
         console.log('no versioning found');
       }
 
-      const updates = diff(repoVersions, stateUpdates);
+      const updates = diff(repoVersions, stateCurrentConfigs);
       console.log({ updates });
       setStatePage({
         ...statePage,
@@ -210,14 +210,14 @@ function UpdateConfigsPage() {
 
   useEffect(() => {
     if (showNotification === false) {
-      const updates = diff(newDesiredVersions, stateUpdates);
+      const updates = diff(newDesiredVersions, stateCurrentConfigs);
       console.log({ updates });
       setStatePage({
         ...statePage,
         updates: updates,
       });
 
-      let json = JSON.stringify(stateUpdates);
+      let json = JSON.stringify(stateCurrentConfigs);
       localStorage.setItem('current_versions', json);
     }
   }, [showNotification]);

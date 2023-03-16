@@ -19,7 +19,7 @@ import { Form } from 'getbasecore/Molecules';
 import Card from 'components/molecules/Card/Card';
 function CheckUpdatePage() {
   const ipcChannel = window.electron.ipcRenderer;
-  const { state, setState, setStateUpdates } = useContext(GlobalContext);
+  const { state, setState, setStateCurrentConfigs } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: true,
@@ -108,7 +108,7 @@ function CheckUpdatePage() {
         localStorage.getItem('current_versions')
       );
       if (!!currentVersions) {
-        setStateUpdates({ ...currentVersions });
+        setStateCurrentConfigs({ ...currentVersions });
       }
 
       const settingsStorage = JSON.parse(
