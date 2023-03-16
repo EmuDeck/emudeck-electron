@@ -213,15 +213,7 @@ function CopyGamesPage() {
               aria="Go Back"
               onClick={() => navigate('/welcome')}
             >
-              Go Back
-            </BtnSimple>
-            <BtnSimple
-              css="btn-simple--3"
-              type="button"
-              aria="Go Next"
-              onClick={() => openSRM()}
-            >
-              Skip, just open Steam Rom Manager
+              Skip, go to Tools & Stuff
             </BtnSimple>
           </>
         )}

@@ -250,20 +250,26 @@ function WelcomePage() {
         console.log('no versioning found');
       }
 
-      //Thanks chatGPT lol
-      const obj1 = repoVersions;
-      const obj2 = stateCurrentConfigs;
+      if (second === true) {
+        //Thanks chatGPT lol
+        const obj1 = repoVersions;
+        const obj2 = stateCurrentConfigs;
 
-      const differences = {};
+        const differences = {};
 
-      for (const key in obj1) {
-        if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
-          differences[key] = obj1[key];
+        for (const key in obj1) {
+          if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
+            differences[key] = obj1[key];
+          }
         }
-      }
 
-      if (Object.keys(differences).length > 0) {
-        setStatePage({ ...statePage, updates: true });
+        if (Object.keys(differences).length > 0) {
+          setStatePage({ ...statePage, updates: true });
+        }
+      } else {
+        let json = JSON.stringify(repoVersions);
+        localStorage.setItem('current_versions', json);
+        setStateCurrentConfigs(repoVersions);
       }
     });
 
