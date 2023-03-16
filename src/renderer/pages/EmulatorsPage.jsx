@@ -330,10 +330,11 @@ function EmulatorsPage() {
 
   return (
     <Wrapper>
-      <Header title="Manage your Configurations" />
+      <Header title="Manage your Emulators" />
       <p className="lead">
         In this page you can update your configuration or even install new
-        emulators
+        emulators. An orange notification means you have an updated
+        configuration for that emulator.
       </p>
       <Notification css={showNotification ? 'is-animated' : 'nope'}>
         {textNotification}
@@ -341,40 +342,38 @@ function EmulatorsPage() {
       <Main>
         {updates && (
           <>
-            {Object.keys(updates).length > 0 && (
-              <>
-                <div className="container--grid">
-                  <div data-col-md="3">
-                    <CardSettings
-                      icon={iconGear}
-                      css="is-highlighted"
-                      btnCSS="btn-simple--1"
-                      iconSize="md"
-                      title={'Update all Configurations'}
-                      description="Update all you configurations at once"
-                      button={disableResetButton ? 'Please wait...' : 'Update'}
-                      onClick={() => resetEmus()}
-                      disabled={disableResetButton}
-                      notification={true}
-                    />
-                  </div>
-                  <div data-col-md="3">
-                    <CardSettings
-                      icon={iconPackage}
-                      css="is-highlighted"
-                      btnCSS="btn-simple--1"
-                      iconSize="md"
-                      button="Update"
-                      title={'Update your Emulators'}
-                      description="Update your emulators right from EmuDeck"
-                      onClick={() => navigate(`/update-emulators`)}
-                      disabled={disableResetButton}
-                    />
-                  </div>
+            <div className="container--grid">
+              {Object.keys(updates).length > 0 && (
+                <div data-col-md="3">
+                  <CardSettings
+                    icon={iconGear}
+                    css="is-highlighted"
+                    btnCSS="btn-simple--1"
+                    iconSize="md"
+                    title={'Update all Configurations'}
+                    description="Update all you configurations at once"
+                    button={disableResetButton ? 'Please wait...' : 'Update'}
+                    onClick={() => resetEmus()}
+                    disabled={disableResetButton}
+                    notification={true}
+                  />
                 </div>
-                <hr />
-              </>
-            )}
+              )}
+              <div data-col-md="3">
+                <CardSettings
+                  icon={iconPackage}
+                  css="is-highlighted"
+                  btnCSS="btn-simple--1"
+                  iconSize="md"
+                  button="Update"
+                  title={'Update your Emulators'}
+                  description="Update your emulators right from EmuDeck"
+                  onClick={() => navigate(`/update-emulators`)}
+                  disabled={disableResetButton}
+                />
+              </div>
+            </div>
+            <hr />
             <div className="container--grid">
               {installEmusArray.map((item) => {
                 const img = images[item.id];
