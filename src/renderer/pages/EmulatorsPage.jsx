@@ -369,7 +369,6 @@ function EmulatorsPage() {
                   title={'Update your Emulators'}
                   description="Update your emulators right from EmuDeck"
                   onClick={() => navigate(`/update-emulators`)}
-                  disabled={disableResetButton}
                 />
               </div>
             </div>
