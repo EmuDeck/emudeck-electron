@@ -202,65 +202,72 @@ function EmulatorsPage() {
   const countRef = useRef(stateUpdates);
   countRef.current = stateUpdates;
 
+  const pageRef = useRef(statePage);
+  pageRef.current = statePage;
+
   const resetEmus = (code, name, id) => {
     setStatePage({
       ...statePage,
       disableResetButton: true,
     });
-    let i = 5;
-    let object = {};
-    Object.keys(updates).forEach((name) => {
-      //console.log({ name });
 
-      ipcChannel.sendMessage('emudeck', [
-        `${name}_resetConfig|||sleep ${i} && ${name}_resetConfig`,
-      ]);
+    setTimeout(() => {
+      let i = 5;
+      let object = {};
+      Object.keys(updates).forEach((name) => {
+        console.log({ name });
 
-      ipcChannel.once(`${name}_resetConfig`, (status) => {
-        //console.log(`${name}_resetConfig`);
-        status = status.stdout;
-        //console.log({ status });
-        status = status.replace('\n', '');
+        ipcChannel.sendMessage('emudeck', [
+          `${name}_resetConfig|||sleep ${i} && ${name}_resetConfig`,
+        ]);
 
-        if (status.includes('true')) {
-          setStatePage({
-            ...statePage,
-            textNotification: `${name} configuration updated! 🎉`,
-            showNotification: true,
-            disableResetButton: false,
-          });
+        ipcChannel.once(`${name}_resetConfig`, (status) => {
+          //console.log(`${name}_resetConfig`);
+          status = status.stdout;
+          //console.log({ status });
+          status = status.replace('\n', '');
 
-          setStateUpdates({
-            ...countRef.current,
-            [name]: newDesiredVersions[name],
-          });
-        } else {
-          console.log(countRef.current);
-          setStatePage({
-            ...statePage,
-            textNotification: `There was an issue trying to reset ${name} configuration 😥`,
-            showNotification: true,
-            disableResetButton: false,
-          });
+          if (status.includes('true')) {
+            setStatePage({
+              ...pageRef.current,
+              textNotification: `${name} configuration updated! 🎉`,
+              showNotification: true,
+              disableResetButton: false,
+            });
+
+            setStateUpdates({
+              ...countRef.current,
+              [name]: newDesiredVersions[name],
+            });
+          } else {
+            console.log(countRef.current);
+            setStatePage({
+              ...pageRef.current,
+              textNotification: `There was an issue trying to reset ${name} configuration 😥`,
+              showNotification: true,
+              disableResetButton: false,
+            });
+          }
+        });
+        i = i + 5;
+      });
+      ipcChannel.sendMessage('check-versions');
+      ipcChannel.once('check-versions', (repoVersions) => {
+        // No versioning found, what to do?
+        if (repoVersions === '') {
+          console.log('no versioning found');
         }
+        console.log({ repoVersions });
+        console.log({ stateUpdates });
+        const updates = diff(repoVersions, stateUpdates);
+        console.log({ updates });
+        setStatePage({
+          ...statePage,
+          updates: updates,
+          newDesiredVersions: repoVersions,
+        });
       });
-      i = i + 5;
-    });
-    ipcChannel.sendMessage('check-versions');
-    ipcChannel.once('check-versions', (repoVersions) => {
-      // No versioning found, what to do?
-      if (repoVersions === '') {
-        console.log('no versioning found');
-      }
-
-      const updates = diff(repoVersions, stateUpdates);
-      console.log({ updates });
-      setStatePage({
-        ...statePage,
-        updates: updates,
-        newDesiredVersions: repoVersions,
-      });
-    });
+    }, 2000);
   };
 
   useEffect(() => {
@@ -283,6 +290,8 @@ function EmulatorsPage() {
       }
 
       const updates = diff(repoVersions, stateUpdates);
+      console.log({ repoVersions });
+      console.log({ stateUpdates });
       console.log({ updates });
       setStatePage({
         ...statePage,
