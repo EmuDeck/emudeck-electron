@@ -358,7 +358,7 @@
     "special_configuration": "",
     "bios": [],
     "systems": "All",
-    "alt": true,
+    "alt": false,
     "altId": "esde20",
     "altName": "ESDE20",
     "altCode": "ESDE20",
