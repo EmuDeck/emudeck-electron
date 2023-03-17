@@ -332,7 +332,7 @@ function EmulatorsPage() {
     <Wrapper>
       <Header title="Manage your Emulators" />
       <p className="lead">
-        In this page you can update your configuration or even install new
+        In this page you can update your configurations or even install new
         emulators. An orange notification means you have an updated
         configuration for that emulator.
       </p>
@@ -344,14 +344,14 @@ function EmulatorsPage() {
           <>
             <div className="container--grid">
               {Object.keys(updates).length > 0 && (
-                <div data-col-md="3">
+                <div data-col-md="4">
                   <CardSettings
                     icon={iconGear}
                     css="is-highlighted"
                     btnCSS="btn-simple--1"
                     iconSize="md"
                     title={'Update all Configurations'}
-                    description="Update all you configurations at once"
+                    description="Update all you configurations at once. New configurations might contain bug fixes or performance improvements"
                     button={disableResetButton ? 'Please wait...' : 'Update'}
                     onClick={() => resetEmus()}
                     disabled={disableResetButton}
@@ -359,7 +359,7 @@ function EmulatorsPage() {
                   />
                 </div>
               )}
-              <div data-col-md="3">
+              <div data-col-md="4">
                 <CardSettings
                   icon={iconPackage}
                   css="is-highlighted"

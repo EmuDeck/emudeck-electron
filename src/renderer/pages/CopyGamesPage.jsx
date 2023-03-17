@@ -167,7 +167,7 @@ function CopyGamesPage() {
             aria="Go Next"
             onClick={() => navigate('/welcome')}
           >
-            Skip and go back to the home screen
+            Skip and go back to Tools & Stuff
           </BtnSimple>
         )}
         {statusCopyGames === true && (
