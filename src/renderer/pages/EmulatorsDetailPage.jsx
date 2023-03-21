@@ -21,7 +21,7 @@ function EmulatorsDetailPage() {
     showNotification: undefined,
     emulatorSelected: emulator,
     textNotification: '',
-    disableInstallButton: false,
+    hideInstallButton: false,
     disableResetButton: false,
     updates: null,
     newDesiredVersions: null,
@@ -32,7 +32,7 @@ function EmulatorsDetailPage() {
     emulatorSelected,
     showNotification,
     textNotification,
-    disableInstallButton,
+    hideInstallButton,
     disableResetButton,
     updates,
     newDesiredVersions,
@@ -199,7 +199,7 @@ function EmulatorsDetailPage() {
 
     setStatePage({
       ...statePage,
-      disableInstallButton: true,
+      hideInstallButton: true,
     });
 
     ipcChannel.sendMessage('emudeck', [
@@ -227,7 +227,7 @@ function EmulatorsDetailPage() {
             ...statePage,
             textNotification: `${code} installed! 🎉`,
             showNotification: true,
-            disableInstallButton: false,
+            hideInstallButton: false,
           });
           //We set the emu as install = yes
           setState({
@@ -250,7 +250,7 @@ function EmulatorsDetailPage() {
             ...statePage,
             textNotification: `There was an issue trying to install ${name} 😥`,
             showNotification: true,
-            disableInstallButton: false,
+            hideInstallButton: false,
           });
         }
       });
@@ -269,7 +269,7 @@ function EmulatorsDetailPage() {
 
       setStatePage({
         ...statePage,
-        disableInstallButton: true,
+        hideInstallButton: true,
       });
       if (alternative) {
         ipcChannel.sendMessage('emudeck', [
@@ -301,7 +301,7 @@ function EmulatorsDetailPage() {
               ...statePage,
               textNotification: `${code} Uninstalled! 🎉`,
               showNotification: true,
-              disableInstallButton: false,
+              hideInstallButton: false,
             });
             //We set the emu as install = no
             setState({
@@ -320,7 +320,7 @@ function EmulatorsDetailPage() {
               ...statePage,
               textNotification: `There was an issue trying to uninstall ${code} 😥`,
               showNotification: true,
-              disableInstallButton: false,
+              hideInstallButton: false,
             });
           }
         });
@@ -473,6 +473,7 @@ function EmulatorsDetailPage() {
             textNotification={textNotification}
             installEmus={installEmus[emulatorSelected]}
             disableResetButton={disableResetButton ? true : false}
+            hideInstallButton={hideInstallButton ? true : false}
           />
         </>
       )}
