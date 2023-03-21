@@ -218,7 +218,7 @@ function UpdateConfigsPage() {
       });
 
       let json = JSON.stringify(stateCurrentConfigs);
-      localStorage.setItem('current_versions', json);
+      localStorage.setItem('current_versions_beta', json);
     }
   }, [showNotification]);
 

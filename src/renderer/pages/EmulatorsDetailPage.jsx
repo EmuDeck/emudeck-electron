@@ -230,17 +230,21 @@ function EmulatorsDetailPage() {
             disableInstallButton: false,
           });
           //We set the emu as install = yes
-          // setState({
-          //   ...state,
-          //   installEmus: {
-          //     ...installEmus,
-          //     [emulator]: {
-          //       id: emulator,
-          //       name: name,
-          //       status: true,
-          //     },
-          //   },
-          // });
+          setState({
+            ...state,
+            installEmus: {
+              ...installEmus,
+              [emulator]: {
+                id: emulator,
+                name: code,
+                status: true,
+              },
+            },
+          });
+
+          //We save it on localstorage
+          let json = JSON.stringify(state);
+          localStorage.setItem('settings_emudeck', json);
         } else {
           setStatePage({
             ...statePage,
@@ -300,17 +304,17 @@ function EmulatorsDetailPage() {
               disableInstallButton: false,
             });
             //We set the emu as install = no
-            // setState({
-            //   ...state,
-            //   installEmus: {
-            //     ...installEmus,
-            //     [emulator]: {
-            //       id: emulator,
-            //       name: name,
-            //       status: false,
-            //     },
-            //   },
-            // });
+            setState({
+              ...state,
+              installEmus: {
+                ...installEmus,
+                [emulator]: {
+                  id: emulator,
+                  name: name,
+                  status: false,
+                },
+              },
+            });
           } else {
             setStatePage({
               ...statePage,
@@ -439,7 +443,7 @@ function EmulatorsDetailPage() {
       });
 
       let json = JSON.stringify(stateCurrentConfigs);
-      localStorage.setItem('current_versions', json);
+      localStorage.setItem('current_versions_beta', json);
     }
   }, [showNotification]);
   return (

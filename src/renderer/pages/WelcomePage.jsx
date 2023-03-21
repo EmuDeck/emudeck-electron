@@ -267,8 +267,10 @@ function WelcomePage() {
           setStatePage({ ...statePage, updates: true });
         }
       } else {
-        let json = JSON.stringify(repoVersions);
-        localStorage.setItem('current_versions', json);
+        const json = JSON.stringify(repoVersions);
+        localStorage.removeItem('current_versions_beta');
+        localStorage.setItem('current_versions_beta', json);
+
         setStateCurrentConfigs(repoVersions);
       }
     });

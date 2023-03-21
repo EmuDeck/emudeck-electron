@@ -105,7 +105,7 @@ function CheckUpdatePage() {
       const branch = require('data/branch.json');
 
       const currentVersions = JSON.parse(
-        localStorage.getItem('current_versions')
+        localStorage.getItem('current_versions_beta')
       );
       if (!!currentVersions) {
         setStateCurrentConfigs({ ...currentVersions });

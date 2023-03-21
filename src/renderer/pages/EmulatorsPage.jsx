@@ -324,7 +324,7 @@ function EmulatorsPage() {
       });
 
       let json = JSON.stringify(stateCurrentConfigs);
-      localStorage.setItem('current_versions', json);
+      localStorage.setItem('current_versions_beta', json);
     }
   }, [showNotification]);
 
@@ -351,7 +351,7 @@ function EmulatorsPage() {
                     btnCSS="btn-simple--1"
                     iconSize="md"
                     title={'Update all Configurations'}
-                    description="Update all you configurations at once. New configurations might contain bug fixes or performance improvements"
+                    description="Update all you configurations at once. New configurations might contain bug fixes or performance improvements. This will overwrite any customization yout might have done."
                     button={disableResetButton ? 'Please wait...' : 'Update'}
                     onClick={() => resetEmus()}
                     disabled={disableResetButton}
