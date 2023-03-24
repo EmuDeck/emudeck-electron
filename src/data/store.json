@@ -16,7 +16,7 @@
           "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Phantom%20Gear.png?raw=true"
         ]
       },
-      "tags": ["action", "platform", "puzzle", "rpg"]
+      "tags": ["action", "platform"]
     },
     {
       "system": "genesis",
@@ -24,7 +24,7 @@
       "logo": "logo_genesis",
       "title": "Xump 2",
       "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Xump%202.zip",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
+      "description": "Xump 2 is a simple multi-platform puzzler by Retroguru. Help Misuki clean up deserted space fields. Obstacles like mines, teleport sectors and arrow walkways appear progressively throughout the game.",
       "pictures": {
         "screenshots": [
           "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Xump%202.png?raw=true"
@@ -37,21 +37,21 @@
       "tags": ["action"]
     },
     {
-      "system": "genesis",
+      "system": "gbc",
       "status": "true",
-      "logo": "logo_genesis",
-      "title": "Lethal Wedding",
-      "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/genesis/Lethal%20Wedding.zip",
+      "logo": "logo_gbc",
+      "title": "Himes Quest",
+      "file": "https://github.com/EmuDeck/emudeck-homebrew/blob/main/gbc/himes-quest.zip",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare ex vitae diam aliquet, ut fringilla lectus cursus. Duis ac quam vel urna congue ullamcorper.",
       "pictures": {
         "screenshots": [
-          "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/screenshots/homebrew/Lethal%20Wedding.png?raw=true"
+          "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/screenshots/homebrew/himes-quest.png?raw=true"
         ],
         "titlescreens": [
-          "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/genesis/titlescreens/homebrew/Lethal%20Wedding.png?raw=true"
+          "https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/gbc/titlescreens/homebrew/himes-quest.png?raw=true"
         ]
       },
-      "tags": ["action"]
+      "tags": ["rpg"]
     }
   ]
 }

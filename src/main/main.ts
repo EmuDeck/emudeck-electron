@@ -664,6 +664,20 @@ ipcMain.on('check-versions', async (event) => {
 //   });
 // });
 
+ipcMain.on('get-store-featured', async (event) => {
+  const userHomeDir = os.homedir();
+  const backChannel = 'get-store-featured';
+  let jsonPath = `${userHomeDir}/.config/EmuDeck/backend/store/featured.json`;
+  try {
+    const data = fs.readFileSync(jsonPath);
+    const json = JSON.parse(data);
+    event.reply(backChannel, json);
+  } catch (err) {
+    console.error(err);
+  }
+  // });
+});
+
 ipcMain.on('get-store', async (event) => {
   const userHomeDir = os.homedir();
   const backChannel = 'get-store';
