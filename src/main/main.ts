@@ -817,7 +817,7 @@ ipcMain.on('installGame', async (event, command) => {
   let gameName = game.match(regex);
   gameName = gameName[0];
 
-  let bashCommand = `emuDeckInstallHomebrewGame ${system} ${gameName} ${game}`;
+  let bashCommand = `emuDeckInstallHomebrewGame '${system}' '${gameName}' '${game}'`;
   let preCommand;
   if (os.platform().includes('win32')) {
     bashCommand = bashCommand.replaceAll('&&', ';');
