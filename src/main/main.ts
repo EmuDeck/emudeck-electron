@@ -681,21 +681,8 @@ ipcMain.on('get-store-featured', async (event) => {
 ipcMain.on('get-store', async (event) => {
   const userHomeDir = os.homedir();
   const backChannel = 'get-store';
-  let jsonPath = `${userHomeDir}/emudeck/store/store.json`;
-  try {
-    const data = fs.readFileSync(jsonPath);
-    const json = JSON.parse(data);
-    event.reply(backChannel, json);
-  } catch (err) {
-    console.error(err);
-  }
-  // });
-});
 
-ipcMain.on('build-store', async (event) => {
-  console.log('build');
-
-  const buildJsonStore = () => {
+  const buildJsonStore = async () => {
     //GB HomebrewGames
     const dir = `${os.homedir()}/emudeck/store/`;
     let jsonArray = [];
@@ -727,6 +714,23 @@ ipcMain.on('build-store', async (event) => {
       });
     });
   };
+
+  buildJsonStore().then(() => {
+    let jsonPath = `${userHomeDir}/emudeck/store/store.json`;
+    try {
+      const data = fs.readFileSync(jsonPath);
+      const json = JSON.parse(data);
+      event.reply(backChannel, json);
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
+  // });
+});
+
+ipcMain.on('build-store', async (event) => {
+  console.log('build');
 
   const buildJson = (system, name) => {
     //GB HomebrewGames
@@ -769,7 +773,7 @@ ipcMain.on('build-store', async (event) => {
         );
       });
     });
-    buildJsonStore();
+    //buildJsonStore();
   };
 
   buildJson('gb', 'GameBoy');
