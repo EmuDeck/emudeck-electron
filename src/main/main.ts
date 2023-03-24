@@ -807,7 +807,6 @@ ipcMain.on('installGame', async (event, command) => {
   const backChannel = 'installGame';
 
   const game = command[0];
-  const storagePath = command[1];
   const system = command[2];
 
   const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
@@ -818,9 +817,16 @@ ipcMain.on('installGame', async (event, command) => {
   let gameName = game.match(regex);
   gameName = gameName[0];
 
-  let bashCommand = `mkdir -p ${storagePath}/Emulation/roms/${system}/homebrew/ && mkdir -p ${storagePath}/Emulation/tools/downloaded_media/${system}/screenshots/homebrew/ && mkdir -p ${storagePath}/Emulation/tools/downloaded_media/${system}/titlescreens/homebrew/ && mkdir -p ${storagePath}/Emulation/tools/${system}/homebrew/ && curl '${game}' > ${storagePath}/Emulation/roms/${system}/homebrew/${gameName}.zip && curl 'https://raw.githubusercontent.com/EmuDeck/emudeck-homebrew/main/downloaded_media/${system}/screenshots/homebrew/${gameName}.png' > ${storagePath}/Emulation/tools/downloaded_media/${system}/screenshots/homebrew/${gameName}.png && curl 'https://raw.githubusercontent.com/EmuDeck/emudeck-homebrew/main/downloaded_media/${system}/titlescreens/homebrew/${gameName}.png' > ${storagePath}/Emulation/tools/downloaded_media/${system}/titlescreens/homebrew/${gameName}.png && echo 'true'`;
+  let bashCommand = `emuDeckInstallHomebrewGame ${system} ${gameName} ${game}`;
+  let preCommand;
+  if (os.platform().includes('win32')) {
+    bashCommand = bashCommand.replaceAll('&&', ';');
+    preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
+  } else {
+    preCommand = `source ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
+  }
 
-  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+  return exec(`${preCommand}`, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
     event.reply(backChannel, error, stdout, stderr);
   });
