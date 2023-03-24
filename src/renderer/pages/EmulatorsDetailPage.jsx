@@ -206,21 +206,19 @@ function EmulatorsDetailPage() {
       `${code}_install|||${code}_install && ${code}_init`,
     ]);
 
-    ipcChannel.once(`${code}_install`, (status) => {
+    ipcChannel.once(`${code}_install`, (message) => {
       // console.log({ status });
-      status = status.stdout;
-      //console.log({ status });
-      status = status.replace('\n', '');
-      //Lets check if it did install
+      let status = message.stdout;
+      status.replace('\n', '');
+      // Lets check if it did install
       ipcChannel.sendMessage('emudeck', [
-        `${name}_IsInstalled|||${code}_IsInstalled`,
+        `${code}_IsInstalled|||${code}_IsInstalled`,
       ]);
 
-      ipcChannel.once(`${code}_IsInstalled`, (status) => {
+      ipcChannel.once(`${code}_IsInstalled`, (message) => {
         // console.log({ status });
-        status = status.stdout;
-        console.log({ status });
-        status = status.replace('\n', '');
+        status = message.stdout;
+        status.replace('\n', '');
 
         if (status.includes('true')) {
           setStatePage({
@@ -229,7 +227,7 @@ function EmulatorsDetailPage() {
             showNotification: true,
             hideInstallButton: false,
           });
-          //We set the emu as install = yes
+          // We set the emu as install = yes
           setState({
             ...state,
             installEmus: {
@@ -242,13 +240,13 @@ function EmulatorsDetailPage() {
             },
           });
 
-          //We save it on localstorage
+          // We save it on localstorage
           let json = JSON.stringify(state);
           localStorage.setItem('settings_emudeck', json);
         } else {
           setStatePage({
             ...statePage,
-            textNotification: `There was an issue trying to install ${name} 😥`,
+            textNotification: `There was an issue trying to install ${code} 😥`,
             showNotification: true,
             hideInstallButton: false,
           });
