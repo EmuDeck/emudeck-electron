@@ -45,7 +45,7 @@
     "altButton": "Install Cemu AppImage",
     "altWarning": "This action will install Cemu Appimage alongside your current Cemu.",
     "alt2": true,
-    "alt2Id": "cemunative",
+    "alt2Id": "CemuNative",
     "alt2Name": "CemuNative",
     "alt2Code": "CemuNative",
     "alt2Button": "Reset Cemu AppImage",
