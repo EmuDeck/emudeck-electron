@@ -694,9 +694,50 @@ ipcMain.on('get-store', async (event) => {
 
 ipcMain.on('build-store', async (event) => {
   console.log('build');
+
+  const buildJsonStore = () => {
+    //GB HomebrewGames
+    const dir = `${os.homedir()}/emudeck/store/`;
+    let jsonArray = [];
+    fs.readdir(dir, (err, files) => {
+      return new Promise((resolve, reject) => {
+        if (err) reject(err);
+        files.forEach((file) => {
+          if (file.includes('.json') && !file.includes('store')) {
+            let jsonPath = `${dir}${file}`;
+            try {
+              const data = fs.readFileSync(jsonPath);
+              const json = JSON.parse(data);
+              jsonArray = jsonArray.concat(json);
+            } catch (err) {
+              console.error(err);
+            }
+          }
+        });
+        const masterJson = {
+          store: jsonArray,
+        };
+        resolve(masterJson);
+      }).then((masterJson) => {
+        console.log(masterJson);
+        fs.writeFileSync(
+          `${os.homedir()}/emudeck/store/store.json`,
+          JSON.stringify(masterJson)
+        );
+      });
+    });
+  };
+
   const buildJson = (system, name) => {
     //GB HomebrewGames
     const dir = `${os.homedir()}/.config/EmuDeck/backend/store/${system}/`;
+
+    const dirStore = `${os.homedir()}/emudeck/store`;
+
+    if (!fs.existsSync(dirStore)) {
+      fs.mkdirSync(dirStore);
+    }
+
     let jsonArray = [];
     fs.readdir(dir, (err, files) => {
       return new Promise((resolve, reject) => {
@@ -731,38 +772,6 @@ ipcMain.on('build-store', async (event) => {
     buildJsonStore();
   };
 
-  const buildJsonStore = () => {
-    //GB HomebrewGames
-    const dir = `${os.homedir()}/emudeck/store/`;
-    let jsonArray = [];
-    fs.readdir(dir, (err, files) => {
-      return new Promise((resolve, reject) => {
-        if (err) reject(err);
-        files.forEach((file) => {
-          if (file.includes('.json') && !file.includes('store')) {
-            let jsonPath = `${dir}${file}`;
-            try {
-              const data = fs.readFileSync(jsonPath);
-              const json = JSON.parse(data);
-              jsonArray = jsonArray.concat(json);
-            } catch (err) {
-              console.error(err);
-            }
-          }
-        });
-        const masterJson = {
-          store: jsonArray,
-        };
-        resolve(masterJson);
-      }).then((masterJson) => {
-        console.log(masterJson);
-        fs.writeFileSync(
-          `${os.homedir()}/emudeck/store/store.json`,
-          JSON.stringify(masterJson)
-        );
-      });
-    });
-  };
   buildJson('gb', 'GameBoy');
   buildJson('gbc', 'GameBoy Color');
   buildJson('gba', 'GameBoy Advanced');
@@ -805,7 +814,7 @@ ipcMain.on('installGame', async (event, command) => {
   let gameName = game.match(regex);
   gameName = gameName[0];
 
-  let bashCommand = `mkdir -p ${storagePath}/Emulation/roms/${system}/homebrew/ && mkdir -p ${storagePath}/Emulation/tools/downloaded_media/${system}/screenshots/homebrew/ && mkdir -p ${storagePath}/Emulation/tools/downloaded_media/${system}/titlescreens/homebrew/ && mkdir -p ${storagePath}/Emulation/tools/${system}/homebrew/ && curl '${game}' > ${storagePath}/Emulation/roms/${system}/homebrew/${gameName}.zip && curl 'https://github.com/EmuDeck/emudeck-homebrew/blob/main/tools/downloaded_media/${system}/screenshots/homebrew/${gameName}.png?raw=true' > ${storagePath}/Emulation/tools/downloaded_media/${system}/screenshots/homebrew/${gameName}.png && curl 'https://github.com/EmuDeck/emudeck-homebrew/blob/main/tools/downloaded_media/${system}/titlescreens/homebrew/${gameName}.png?raw=true' > ${storagePath}/Emulation/tools/downloaded_media/${system}/titlescreens/homebrew/${gameName}.png && echo 'true'`;
+  let bashCommand = `mkdir -p ${storagePath}/Emulation/roms/${system}/homebrew/ && mkdir -p ${storagePath}/Emulation/tools/downloaded_media/${system}/screenshots/homebrew/ && mkdir -p ${storagePath}/Emulation/tools/downloaded_media/${system}/titlescreens/homebrew/ && mkdir -p ${storagePath}/Emulation/tools/${system}/homebrew/ && curl '${game}' > ${storagePath}/Emulation/roms/${system}/homebrew/${gameName}.zip && curl 'https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/${system}/screenshots/homebrew/${gameName}.png?raw=true' > ${storagePath}/Emulation/tools/downloaded_media/${system}/screenshots/homebrew/${gameName}.png && curl 'https://github.com/EmuDeck/emudeck-homebrew/blob/main/downloaded_media/${system}/titlescreens/homebrew/${gameName}.png?raw=true' > ${storagePath}/Emulation/tools/downloaded_media/${system}/titlescreens/homebrew/${gameName}.png && echo 'true'`;
 
   return exec(`${bashCommand}`, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
