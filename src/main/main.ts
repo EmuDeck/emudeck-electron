@@ -18,17 +18,28 @@ import { resolveHtmlPath } from './util';
 const os = require('os');
 var slash = require('slash');
 const https = require('https');
+const fs = require('fs');
+
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
     autoUpdater.autoDownload = false;
-    //autoUpdater.checkForUpdatesAndNotify();
+
+    // autoUpdater.checkForUpdatesAndNotify();
   }
 }
 
+fs.exists(`${os.homedir()}/emudeck/emudeck.AppImage.log`, function (exists) {
+  if (exists) {
+    fs.unlinkSync(`${os.homedir()}/emudeck/emudeck.AppImage.log`);
+  } else {
+    console.log('File not found, so not deleting.');
+  }
+});
+
 // file system module to perform file operations
-const fs = require('fs');
+
 // Vars and consts
 let mainWindow: BrowserWindow | null = null;
 //Prevent two instances
@@ -44,15 +55,16 @@ const promiseFromChildProcess = (child) => {
 };
 
 const logCommand = (bashCommand, stdout, stderr) => {
-  let logFile = '$HOME/emudeck/Emudeck.AppImage.log';
-  if (os.platform().includes('win32')) {
-    logFile = '"%userprofile%\\Emudeck.AppImage.log"';
-  }
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
   const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   const yyyy = today.getFullYear();
   const date = mm + '/' + dd + '/' + yyyy;
+
+  let logFile = '$HOME/emudeck/Emudeck.AppImage.log';
+  if (os.platform().includes('win32')) {
+    logFile = '"%userprofile%\\Emudeck.AppImage.log"';
+  }
 
   exec(`echo "[${date}] ${bashCommand}" >> ${logFile}`);
   if (stdout) {
@@ -706,7 +718,7 @@ ipcMain.on('get-store', async (event) => {
         };
         resolve(masterJson);
       }).then((masterJson) => {
-        console.log(masterJson);
+        //console.log(masterJson);
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/store.json`,
           JSON.stringify(masterJson)
@@ -766,7 +778,7 @@ ipcMain.on('build-store', async (event) => {
         };
         resolve(masterJson);
       }).then((masterJson) => {
-        console.log(masterJson);
+        //console.log(masterJson);
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/${system}.json`,
           JSON.stringify(masterJson)
