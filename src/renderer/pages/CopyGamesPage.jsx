@@ -146,7 +146,7 @@ function CopyGamesPage() {
 
   return (
     <Wrapper>
-      {statusCopyGames !== true && (
+      {statusCopyGames !== true && system !== 'win32' && (
         <Header title="Let's use an USB Drive to copy your games" />
       )}
 
@@ -156,7 +156,7 @@ function CopyGamesPage() {
         onClickCopyGames={startCopyGames}
         storagUSB={storageUSB}
         storageUSBPath={storageUSBPath}
-        statusCopyGames={statusCopyGames}
+        statusCopyGames={system === 'win32' ? true : statusCopyGames}
         statusCreateStructure={statusCreateStructure}
       />
       <footer className="footer">
@@ -170,6 +170,31 @@ function CopyGamesPage() {
             Skip and go back to Tools & Stuff
           </BtnSimple>
         )}
+
+        {system === 'win32' && (
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria="Go Next"
+            onClick={() => openSRM()}
+          >
+            Open Steam Rom Manager
+            <svg
+              className="rightarrow"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill="currentColor"
+                d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
+              />
+            </svg>
+          </BtnSimple>
+        )}
+
         {statusCopyGames === true && (
           <BtnSimple
             css="btn-simple--1"
