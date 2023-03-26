@@ -120,12 +120,7 @@ function CheckDependenciesPage() {
 
   return (
     <Wrapper>
-      {statusGIT === false && status7Zip === true && (
-        <Header title="Please restart EmuDeck to continue..." />
-      )}
-      {statusGIT !== false && status7Zip !== true && (
-        <Header title="Installing dependencies..." />
-      )}
+      <Header title="Installing dependencies..." />
 
       <ul>
         <li>

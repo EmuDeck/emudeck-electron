@@ -354,6 +354,7 @@ ipcMain.on('update-check', async (event, command) => {
     .then((checkResult: UpdateCheckResult) => {
       const { updateInfo } = checkResult;
       console.log({ updateInfo });
+      logCommand(updateInfo);
       logCommand('UPDATE: CHECKING');
       //  updateInfo:
       // path: "EmuDeck-1.0.27.AppImage"
@@ -381,9 +382,13 @@ ipcMain.on('update-check', async (event, command) => {
         event.reply('update-check-out', ['up-to-date', updateInfo]);
         logCommand(`${JSON.stringify(updateInfo)}`);
       } else {
-        exec(
-          `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/Emudeck.Update.log`
-        );
+        if (os.platform().includes('win32')) {
+          exec(`echo "UPDATE: UPDATING!"`);
+        } else {
+          exec(
+            `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/Emudeck.Update.log`
+          );
+        }
         logCommand('UPDATE: UPDATING!');
         console.log('Lets update!');
         event.reply('update-check-out', ['updating', updateInfo]);
@@ -907,6 +912,10 @@ ipcMain.on('validate-Steam', async (event) => {
   event.reply(backChannel, {
     stdout: false,
   });
+});
+
+ipcMain.on('reload', async (event) => {
+  mainWindow.reload();
 });
 
 /**

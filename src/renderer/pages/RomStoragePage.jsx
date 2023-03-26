@@ -37,7 +37,7 @@ const RomStoragePage = () => {
 
       ipcChannel.once('customLocation', (message) => {
         let stdout = message.stdout.replace('\n', '');
-
+        console.log({ message });
         setStatePage({
           ...statePage,
           disabledNext: true,
