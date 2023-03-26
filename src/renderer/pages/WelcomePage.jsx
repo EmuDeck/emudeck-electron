@@ -89,7 +89,8 @@ function WelcomePage() {
     {
       icon: [iconPackage],
       title: 'Update Emulators',
-      description: 'Update all of your emulators and tools in one nifty package',
+      description:
+        'Update all of your emulators and tools in one nifty package',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: false,
@@ -98,7 +99,8 @@ function WelcomePage() {
     {
       icon: [iconPlugin],
       title: 'Power Tools',
-      description: 'A Decky Loader Plugin to manage performance settings in Game Mode',
+      description:
+        'A Decky Loader Plugin to manage performance settings in Game Mode',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -181,7 +183,8 @@ function WelcomePage() {
     {
       icon: [iconMigrate],
       title: 'Migrate Installation',
-      description: 'Migrate your EmuDeck installation to your SD Card or vice versa'',
+      description:
+        'Migrate your EmuDeck installation to your SD Card or vice versa',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -190,7 +193,8 @@ function WelcomePage() {
     {
       icon: [iconBooks],
       title: 'Emulator Guides',
-      description: 'Reset emulator configurations or view EmuDeck\'s emulator guides',
+      description:
+        "Reset emulator configurations or view EmuDeck's emulator guides",
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: false,
@@ -208,8 +212,7 @@ function WelcomePage() {
     {
       icon: [iconList],
       title: 'ChangeLog',
-      description:
-        'Read about the latest changes to EmuDeck',
+      description: 'Read about the latest changes to EmuDeck',
       button: 'Read',
       btnCSS: 'btn-simple--5',
       status: true,
