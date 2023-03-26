@@ -68,7 +68,8 @@ function WelcomePage() {
     {
       icon: [iconQuick],
       title: 'Quick Reset',
-      description: 'Reset settings with our defaults in one click',
+      description:
+        'Update or reset your installation to the latest EmuDeck version in one easy click',
       button: 'Reinstall',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -77,7 +78,8 @@ function WelcomePage() {
     {
       icon: [iconCustom],
       title: 'Custom Reset',
-      description: 'Chose what emulators do you want to reset',
+      description:
+        'Update or reset your installation to the latest EmuDeck version in custom mode',
       button: 'Reinstall',
       btnCSS: 'btn-simple--5',
       status: true,
