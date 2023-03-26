@@ -48,7 +48,7 @@ function WelcomePage() {
   const settingsCards = [
     {
       icon: [iconMigrate],
-      title: 'Steam 3.5 Fix',
+      title: 'SteamOS 3.5 Fix',
       description:
         'Update your paths to the new SD Card paths introduced in Steam 3.5',
       button: 'Fix',
@@ -58,8 +58,8 @@ function WelcomePage() {
     },
     {
       icon: [iconJoystick],
-      title: 'Steam Rom Manager',
-      description: 'Launch SRM to add more games to your Steam Library',
+      title: 'Steam ROM Manager',
+      description: 'Add emulators, tools, or ROMs to your Steam Library',
       button: 'Launch',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -89,7 +89,7 @@ function WelcomePage() {
     {
       icon: [iconPackage],
       title: 'Update Emulators',
-      description: 'Update your emulators right from EmuDeck',
+      description: 'Update all of your emulators and tools in one nifty package',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: false,
@@ -97,8 +97,8 @@ function WelcomePage() {
     },
     {
       icon: [iconPlugin],
-      title: 'PowerTools',
-      description: 'Decky plugin to improve performance in some emulators',
+      title: 'Power Tools',
+      description: 'A Decky Loader Plugin to manage performance settings in Game Mode',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -108,7 +108,7 @@ function WelcomePage() {
       icon: [iconPlugin],
       title: 'DeckyControls',
       description:
-        'EmuDeck decky plugin to access emulator hotkeys in Gaming Mode',
+        'An EmuDeck Decky Loader Plugin to easily view emulator hotkeys in Game Mode',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -117,7 +117,7 @@ function WelcomePage() {
     {
       icon: [iconPlugin],
       title: 'Gyroscope',
-      description: 'Use your SteamDeck gyroscope with Wii and Switch games',
+      description: 'Enable your Steam Deck gyroscope in emulation',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -126,7 +126,7 @@ function WelcomePage() {
     {
       icon: [iconCompress],
       title: 'EmuDeck Compressor',
-      description: 'Lossless compression of ISO and Nintendo games',
+      description: 'Compress your ROMs to optimize your storage',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -143,8 +143,8 @@ function WelcomePage() {
     },
     {
       icon: [iconSuccess],
-      title: 'Bios Checker',
-      description: 'Check if you have your correct bios installed',
+      title: 'BIOS Checker',
+      description: 'Use the EmuDeck BIOS Checker to validate your BIOS',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -153,7 +153,7 @@ function WelcomePage() {
     {
       icon: [iconCloud],
       title: 'Cloud Backup',
-      description: 'Backup your states and saved games to the cloud',
+      description: 'Backup your saves and save states to the cloud',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -162,7 +162,7 @@ function WelcomePage() {
     {
       icon: [iconCloud],
       title: 'Cloud Services Manager',
-      description: 'Manage your cloud services',
+      description: 'Manage your cloud services, Xbox Cloud Gaming and more!',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -172,7 +172,7 @@ function WelcomePage() {
       icon: [iconPrize],
       title: 'RetroAchievements',
       description:
-        'Configure RetroAchivments for RetroArch, PCSX2 and DuckStation',
+        'Configure RetroAchievements for RetroArch, Duckstation, and PCSX2',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -180,8 +180,8 @@ function WelcomePage() {
     },
     {
       icon: [iconMigrate],
-      title: 'Migrate installation',
-      description: 'Move your installation to your SD Card or viceversa',
+      title: 'Migrate Installation',
+      description: 'Migrate your EmuDeck installation to your SD Card or vice versa'',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -189,8 +189,8 @@ function WelcomePage() {
     },
     {
       icon: [iconBooks],
-      title: 'Emulator guides',
-      description: 'Check our hotkeys, reset each emulator in case of issues',
+      title: 'Emulator Guides',
+      description: 'Reset emulator configurations or view EmuDeck\'s emulator guides',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: false,
@@ -198,8 +198,8 @@ function WelcomePage() {
     },
     {
       icon: [iconDoc],
-      title: 'Upload Log',
-      description: 'Having issues installing? Send us your log',
+      title: 'Fetch Log File',
+      description: 'Troubleshoot your EmuDeck install',
       button: 'Upload',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -209,7 +209,7 @@ function WelcomePage() {
       icon: [iconList],
       title: 'ChangeLog',
       description:
-        'Read all about the improvements done in this current version',
+        'Read about the latest changes to EmuDeck',
       button: 'Read',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -218,7 +218,7 @@ function WelcomePage() {
     {
       icon: [iconUninstall],
       title: 'Uninstall',
-      description: 'Uninstall EmuDeck from your system from here',
+      description: 'Uninstall EmuDeck from your system',
       button: 'Uninstall',
       btnCSS: 'btn-simple--3',
       status: true,
@@ -227,7 +227,7 @@ function WelcomePage() {
     {
       icon: [iconPrize],
       title: 'Become a Patreon',
-      description: 'Please consider supporting us on Patreon',
+      description: 'Consider supporting EmuDeck on Patreon',
       button: 'Donate',
       btnCSS: 'btn-simple--3',
       status: true,
