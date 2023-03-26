@@ -45,6 +45,47 @@ function WelcomePage() {
     }
   };
 
+  const settingsCardsFeatured = [
+    {
+      icon: [iconJoystick],
+      title: 'USB Transfer Wizard',
+      description:
+        'Update your paths to the new SD Card paths introduced in Steam 3.5',
+      button: 'Add more games',
+      btnCSS: 'btn-simple--1',
+      status: system !== 'win32',
+      function: () => functions.navigate('/copy-games'),
+    },
+    {
+      icon: [iconGear],
+      title: 'Quick Settings',
+      description:
+        'Customize bezels, shaders, aspect ratio, auto save and more',
+      button: 'Configure',
+      btnCSS: 'btn-simple--1',
+      status: true,
+      function: () => functions.navigate('/settings'),
+    },
+    {
+      icon: [iconGear],
+      title: 'Manage Emulators',
+      description: 'Manage and update your Emulators and configurations',
+      button: 'Update',
+      btnCSS: 'btn-simple--1',
+      status: system !== 'win32',
+      function: () => functions.navigate('/emulators'),
+    },
+    {
+      icon: [iconPackage],
+      title: 'EmuDeck Store',
+      description: 'Download free non-commercial homebrew games',
+      button: 'Get free games',
+      btnCSS: 'btn-simple--1',
+      status: system !== 'win32',
+      function: () => functions.navigate('/store-front'),
+    },
+  ];
+
   const settingsCards = [
     {
       icon: [iconMigrate],
@@ -53,7 +94,7 @@ function WelcomePage() {
         'Update your paths to the new SD Card paths introduced in Steam 3.5',
       button: 'Fix',
       btnCSS: 'btn-simple--5',
-      status: storage !== 'Internal Storage' ? true : false,
+      status: storage !== 'Internal Storage' && system !== 'win32',
       function: () => functions.migrationFixSDPaths(),
     },
     {
@@ -85,17 +126,6 @@ function WelcomePage() {
       status: true,
       function: () => selectMode('expert'),
     },
-
-    {
-      icon: [iconPackage],
-      title: 'Update Emulators',
-      description:
-        'Update all of your emulators and tools in one nifty package',
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: false,
-      function: () => functions.navigate('/update-emulators'),
-    },
     {
       icon: [iconPlugin],
       title: 'Power Tools',
@@ -103,7 +133,7 @@ function WelcomePage() {
         'A Decky Loader Plugin to manage performance settings in Game Mode',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: system !== 'win32',
       function: () => functions.navigate('/power-tools'),
     },
     {
@@ -113,7 +143,7 @@ function WelcomePage() {
         'An EmuDeck Decky Loader Plugin to easily view emulator hotkeys in Game Mode',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: system !== 'win32',
       function: () => functions.navigate('/decky-controls'),
     },
     {
@@ -122,7 +152,7 @@ function WelcomePage() {
       description: 'Enable your Steam Deck gyroscope in emulation',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: system !== 'win32',
       function: () => functions.navigate('/gyrodsu'),
     },
     {
@@ -131,17 +161,8 @@ function WelcomePage() {
       description: 'Compress your ROMs to optimize your storage',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: system !== 'win32',
       function: () => functions.navigate('/chd-tool'),
-    },
-    {
-      icon: [iconGear],
-      title: 'Quick Settings',
-      description: 'Customize bezels, shaders, aspect ratio and more',
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: false,
-      function: () => functions.navigate('/settings'),
     },
     {
       icon: [iconSuccess],
@@ -149,7 +170,7 @@ function WelcomePage() {
       description: 'Use the EmuDeck BIOS Checker to validate your BIOS',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: system !== 'win32',
       function: () => functions.navigate('/check-bios'),
     },
     {
@@ -158,7 +179,7 @@ function WelcomePage() {
       description: 'Backup your saves and save states to the cloud',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: system !== 'win32',
       function: () => functions.navigate('/cloud-sync'),
     },
     {
@@ -167,7 +188,7 @@ function WelcomePage() {
       description: 'Manage your cloud services, Xbox Cloud Gaming and more!',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: system !== 'win32',
       function: () => functions.openCSM(),
     },
     {
@@ -187,18 +208,8 @@ function WelcomePage() {
         'Migrate your EmuDeck installation to your SD Card or vice versa',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: system !== 'win32',
       function: () => functions.navigate('/migration'),
-    },
-    {
-      icon: [iconBooks],
-      title: 'Emulator Guides',
-      description:
-        "Reset emulator configurations or view EmuDeck's emulator guides",
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: false,
-      function: () => functions.navigate('/emulator-guide'),
     },
     {
       icon: [iconDoc],
@@ -206,7 +217,7 @@ function WelcomePage() {
       description: 'Troubleshoot your EmuDeck install',
       button: 'Upload',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: system !== 'win32',
       function: () => functions.sprunge(),
     },
     {
@@ -224,7 +235,7 @@ function WelcomePage() {
       description: 'Uninstall EmuDeck from your system',
       button: 'Uninstall',
       btnCSS: 'btn-simple--3',
-      status: true,
+      status: system !== 'win32',
       function: () => functions.navigate('/uninstall'),
     },
     {
@@ -348,6 +359,7 @@ function WelcomePage() {
 
       <Welcome
         settingsCards={settingsCards}
+        settingsCardsFeatured={settingsCardsFeatured}
         functions={functions}
         updates={updates}
         alert={
