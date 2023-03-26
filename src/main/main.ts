@@ -835,7 +835,7 @@ ipcMain.on('installGame', async (event, command) => {
 // Dependencies checks
 
 ipcMain.on('validate-git', async (event) => {
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 
   const backChannel = 'validate-git';
   let bashCommand = 'git -v';
