@@ -66,12 +66,15 @@ const logCommand = (bashCommand, stdout, stderr) => {
     logFile = '"%userprofile%\\Emudeck.AppImage.log"';
   }
 
+  const stdoutString = JSON.stringify(stdout);
+  const stderrString = JSON.stringify(stderr);
+
   exec(`echo "[${date}] ${bashCommand}" >> ${logFile}`);
   if (stdout) {
-    exec(`echo "[${date}] stdout: ${stdout}" >> ${logFile}`);
+    exec(`echo "[${date}] stdout: ${stdoutString}" >> ${logFile}`);
   }
   if (stderr) {
-    exec(`echo "[${date}] stderr: ${stderr}" >> ${logFile}`);
+    exec(`echo "[${date}] stderr: ${stderrString}" >> ${logFile}`);
   }
 };
 
@@ -401,13 +404,9 @@ ipcMain.on('update-check', async (event, command) => {
         event.reply('update-check-out', ['up-to-date', updateInfo]);
         logCommand(`${JSON.stringify(updateInfo)}`);
       } else {
-        if (os.platform().includes('win32')) {
-          exec(`echo "UPDATE: UPDATING!"`);
-        } else {
-          exec(
-            `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/Emudeck.Update.log`
-          );
-        }
+        exec(
+          `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/Emudeck.Update.log`
+        );
         logCommand('UPDATE: UPDATING!');
         console.log('Lets update!');
         event.reply('update-check-out', ['updating', updateInfo]);
