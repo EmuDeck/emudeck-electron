@@ -678,7 +678,14 @@ ipcMain.on('check-versions', async (event) => {
 ipcMain.on('get-store-featured', async (event) => {
   const userHomeDir = os.homedir();
   const backChannel = 'get-store-featured';
-  let jsonPath = `${userHomeDir}/.config/EmuDeck/backend/store/featured.json`;
+  let jsonPath;
+
+  if (os.platform().includes('win32')) {
+    jsonPath = `${userHomeDir}/AppData/Roaming/EmuDeck/backend/store/featured.json`;
+  } else {
+    jsonPath = `${userHomeDir}/.config/EmuDeck/backend/store/featured.json`;
+  }
+
   try {
     const data = fs.readFileSync(jsonPath);
     const json = JSON.parse(data);
@@ -745,8 +752,12 @@ ipcMain.on('build-store', async (event) => {
 
   const buildJson = (system, name) => {
     //GB HomebrewGames
-    const dir = `${os.homedir()}/.config/EmuDeck/backend/store/${system}/`;
-
+    let dir;
+    if (os.platform().includes('win32')) {
+      dir = `${os.homedir()}/AppData/Roaming/EmuDeck/backend/store/${system}/`;
+    } else {
+      dir = `${os.homedir()}/.config/EmuDeck/backend/store/${system}/`;
+    }
     const dirStore = `${os.homedir()}/emudeck/store`;
 
     if (!fs.existsSync(dirStore)) {

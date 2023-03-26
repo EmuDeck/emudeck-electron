@@ -1,8 +1,20 @@
 [
   {
-    "title": "New UI",
-    "type": "WINDOWS",
-    "description": "This latest beta is finally using the same UI as we have on SteamOS.",
-    "image": "true"
+    "title": "EmuDeck Store",
+    "type": "STEAMOS",
+    "description": "Now you can browse and download games from our homebrew collection one by one. <br/>You can uninstall the previous HomeBrew pack from Quick Settings and just use the store to get the games you want.<br/><strong>On this release they are only playable on EmulationStation DE</strong>",
+    "image": "false"
+  },
+  {
+    "title": "UI / UX tweaks",
+    "type": "STEAMOS",
+    "description": "- New Confirmation ( Custom Mode ) & Post Install Status page <br/>- New home screen after first install<br/>- RetroAchievements for PS1 and PS2",
+    "image": "false"
+  },
+  {
+    "title": "Manage Emulators",
+    "type": "STEAMOS",
+    "description": "Get notifications when an emulator has a new configuration update so you don't need to reinstall EmuDeck to apply that specific configuration.",
+    "image": "false"
   }
 ]

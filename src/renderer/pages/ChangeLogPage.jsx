@@ -21,15 +21,10 @@ function ChangeLogPage() {
     disabledBack: false,
     current: 0,
     img: img0,
+    log: [],
   });
-  const { disabledNext, disabledBack, current, img, system } = statePage;
-  let changeLogData;
-
-  if (system === 'win32') {
-    changeLogData = require('data/changelog-win.json');
-  } else {
-    changeLogData = require('data/changelog.json');
-  }
+  const { disabledNext, disabledBack, current, img, log } = statePage;
+  const { system } = state;
 
   const imgC0 = img0;
   const activeItem = (id) => {
@@ -67,6 +62,13 @@ function ChangeLogPage() {
   //Hide changelog after seen
   useEffect(() => {
     localStorage.setItem('show_changelog', false);
+
+    const changeLogDataWin = require('data/changelog-win.json');
+    const changeLogData = require('data/changelog.json');
+    setStatePage({
+      ...statePage,
+      log: system === 'win32' ? changeLogDataWin : changeLogData,
+    });
   }, []);
 
   return (
@@ -85,7 +87,7 @@ function ChangeLogPage() {
               }}
             >
               <ul>
-                {changeLogData.map((item, i) => {
+                {log.map((item, i) => {
                   return (
                     <li tabindex="0" key={i}>
                       <Card
@@ -101,7 +103,7 @@ function ChangeLogPage() {
             </div>
           </div>
           <div data-col-sm="8">
-            {changeLogData.map((item, i) => {
+            {log.map((item, i) => {
               return (
                 <div tabindex="0" key={i}>
                   {current == i && (
