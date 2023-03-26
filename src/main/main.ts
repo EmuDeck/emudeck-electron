@@ -308,6 +308,25 @@ ipcMain.on('emudeck-nolog', async (event, command) => {
   });
 });
 
+ipcMain.on('getMSG', async (event, command) => {
+  const backChannel = 'getMSG';
+  let bashCommand;
+
+  if (os.platform().includes('win32')) {
+    bashCommand = `more %USERPROFILE%\\AppData\\Roaming\\EmuDeck\\msg.log`;
+  } else {
+    bashCommand = `cat ~/.config/EmuDeck/msg.log`;
+  }
+
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    event.reply(backChannel, {
+      stdout: stdout,
+      stderr: stderr,
+      error: error,
+    });
+  });
+});
+
 //UI commands
 ipcMain.on('close', async (event, command) => {
   app.quit();

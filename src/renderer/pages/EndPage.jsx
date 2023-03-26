@@ -31,13 +31,12 @@ function EndPage() {
   const [counter, setCounter] = useState(0);
   let settingsFile = '~/emudeck/settings.sh';
   const readMSG = (command) => {
-    const idMessage = Math.random();
-    ipcChannel.sendMessage('emudeck-nolog', [`${idMessage}|||${command}`]);
-    ipcChannel.once(idMessage, (message) => {
+    ipcChannel.sendMessage('getMSG', []);
+    ipcChannel.on('getMSG', (message) => {
+      console.log({ message });
       let messageArray = message.stdout.split('#');
       let messageText = messageArray[1];
       let messagePercent = messageArray[0];
-      //console.log({ message });
       messagePercent = messagePercent.replaceAll(' ', '');
       messagePercent = messagePercent.replaceAll('\n', '');
       messagePercent = messagePercent.replaceAll('\n\r', '');
@@ -86,11 +85,9 @@ function EndPage() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (system === 'win32') {
-        let msg = readMSG(
-          'more $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log'
-        );
+        readMSG();
       } else {
-        let msg = readMSG('cat ~/.config/EmuDeck/msg.log');
+        readMSG();
       }
 
       if (message.includes('100')) {
