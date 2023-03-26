@@ -54,12 +54,6 @@ function CheckUpdatePage() {
   //Download files
   const [counter, setCounter] = useState(0);
   useEffect(() => {
-    //Build games for the store
-    ipcChannel.sendMessage('build-store');
-    ipcChannel.once('build-store', (response) => {
-      console.log({ response });
-    });
-
     const interval = setInterval(() => {
       setCounter((prevCounter) => {
         if (prevCounter === 110) {

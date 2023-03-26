@@ -85,7 +85,7 @@ function EmulatorsPage() {
     disableResetButton,
   } = statePage;
 
-  const { overwriteConfigEmus, installEmus } = state;
+  const { system, installEmus } = state;
 
   const installEmusArray = Object.values(installEmus);
 
@@ -359,25 +359,44 @@ function EmulatorsPage() {
                   />
                 </div>
               )}
-              <div data-col-md="4">
-                <CardSettings
-                  icon={iconPackage}
-                  css="is-highlighted"
-                  btnCSS="btn-simple--1"
-                  iconSize="md"
-                  button="Update"
-                  title={'Update your Emulators'}
-                  description="Update your emulators right from EmuDeck"
-                  onClick={() => navigate(`/update-emulators`)}
-                />
-              </div>
+              {system !== 'win32' && (
+                <div data-col-md="4">
+                  <CardSettings
+                    icon={iconPackage}
+                    css="is-highlighted"
+                    btnCSS="btn-simple--1"
+                    iconSize="md"
+                    button="Update"
+                    title={'Update your Emulators'}
+                    description="Update your emulators right from EmuDeck"
+                    onClick={() => navigate(`/update-emulators`)}
+                  />
+                </div>
+              )}
             </div>
             <hr />
             <div className="container--grid">
               {installEmusArray.map((item) => {
                 const img = images[item.id];
                 const updateNotif = updates[item.id];
-
+                if (system == 'win32') {
+                  if (
+                    item.id == 'primehack' ||
+                    item.id == 'melonds' ||
+                    item.id == 'citra' ||
+                    item.id == 'rpcs3' ||
+                    item.id == 'ryujinx' ||
+                    item.id == 'rmg' ||
+                    item.id == 'mame' ||
+                    item.id == 'vita3k' ||
+                    item.id == 'scummvm' ||
+                    item.id == 'xemu' ||
+                    item.id == 'mgba' ||
+                    item.id == 'xenia'
+                  ) {
+                    return;
+                  }
+                }
                 return (
                   <div data-col-md="2">
                     <CardSettings

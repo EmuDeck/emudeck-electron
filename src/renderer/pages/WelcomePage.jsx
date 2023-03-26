@@ -72,7 +72,7 @@ function WelcomePage() {
       description: 'Manage and update your Emulators and configurations',
       button: 'Update',
       btnCSS: 'btn-simple--1',
-      status: system !== 'win32',
+      status: true,
       function: () => functions.navigate('/emulators'),
     },
     {
@@ -81,7 +81,7 @@ function WelcomePage() {
       description: 'Download free non-commercial homebrew games',
       button: 'Get free games',
       btnCSS: 'btn-simple--1',
-      status: system !== 'win32',
+      status: true,
       function: () => functions.navigate('/store-front'),
     },
   ];
@@ -258,6 +258,12 @@ function WelcomePage() {
     if (showChangelog === 'true') {
       navigate('/change-log');
     }
+
+    //Build games for the store
+    ipcChannel.sendMessage('build-store');
+    ipcChannel.once('build-store', (response) => {
+      console.log({ response });
+    });
 
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
