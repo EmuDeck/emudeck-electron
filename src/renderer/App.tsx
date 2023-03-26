@@ -23,6 +23,7 @@ import PegasusThemePage from 'pages/PegasusThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
 import DeckyControlsPage from 'pages/DeckyControlsPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
+import CheckDependenciesPage from 'pages/CheckDependenciesPage';
 import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
 
@@ -255,7 +256,8 @@ export default function App() {
     >
       <Router>
         <Routes>
-          <Route exact path="/" element={<CheckUpdatePage />} />
+          <Route exact path="/" element={<CheckDependenciesPage />} />
+          <Route exact path="/check-updates" element={<CheckUpdatePage />} />
           <Route exact path="/patreon-login" element={<PatreonLoginPage />} />
 
           <Route exact path="/welcome" element={<WelcomePage />} />

@@ -451,37 +451,11 @@ ipcMain.on('clone', async (event, branch) => {
 
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branch} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
-
-    //First we install git
-    var child = exec(
-      `powershell -ExecutionPolicy Bypass . winget install --id Git.Git -e --source winget`,
-      (error, stdout, stderr) => {
-        logCommand('GIT winget', error, stdout, stderr);
-      }
-    );
-    //Then we clone the project
-    promiseFromChildProcess(child).then(
-      function (result) {
-        return exec(`${bashCommand}`, (error, stdout, stderr) => {
-          console.log('OK Promise', error, stdout, stderr);
-          logCommand(bashCommand, error, stdout, stderr);
-          event.reply(backChannel, error, stdout, stderr);
-        });
-      },
-      function (err) {
-        return exec(`${bashCommand}`, (error, stdout, stderr) => {
-          console.log('KO Promise', error, stdout, stderr);
-          logCommand(bashCommand, error, stdout, stderr);
-          event.reply(backChannel, error, stdout, stderr);
-        });
-      }
-    );
-  } else {
-    return exec(`${bashCommand}`, (error, stdout, stderr) => {
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, error, stdout, stderr);
-    });
   }
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
 });
 
 ipcMain.on('pull', async (event, branch) => {
@@ -676,6 +650,8 @@ ipcMain.on('check-versions', async (event) => {
 //   });
 // });
 
+// Store functions
+
 ipcMain.on('get-store-featured', async (event) => {
   const userHomeDir = os.homedir();
   const backChannel = 'get-store-featured';
@@ -800,21 +776,6 @@ ipcMain.on('build-store', async (event) => {
   // });
 });
 
-/**
- * Add event listeners...
- */
-
-app.on('window-all-closed', () => {
-  // Respect the OSX convention of having the application in memory even
-  // after all windows have been closed
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
-app.on('session-created', (session) => {
-  console.log(session);
-});
 ipcMain.on('installGame', async (event, command) => {
   const backChannel = 'installGame';
 
@@ -846,6 +807,122 @@ ipcMain.on('installGame', async (event, command) => {
   //Downloading Game
 
   //([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)
+});
+
+// Dependencies checks
+
+ipcMain.on('validate-git', async (event) => {
+  mainWindow.webContents.openDevTools();
+
+  const backChannel = 'validate-git';
+  let bashCommand = 'git -v';
+
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+
+    let status;
+    stdout.includes('git version') ? (status = true) : (status = false);
+
+    if (status === true) {
+      event.reply(backChannel, {
+        stdout: status,
+        stderr: stderr,
+        error: error,
+      });
+    } else {
+      const bashCommand2 =
+        'start powershell -ExecutionPolicy Bypass -command "& { winget install --id Git.Git -e --source winget }';
+      return exec(`${bashCommand2}`, (error, stdout, stderr) => {
+        logCommand(bashCommand2, error, stdout, stderr);
+
+        event.reply(backChannel, {
+          stdout: false,
+          stderr: stderr,
+          error: error,
+        });
+      });
+    }
+  });
+});
+
+ipcMain.on('validate-7Zip', async (event) => {
+  const backChannel = 'validate-7Zip';
+  const path1 = 'C:/Program Files/7-zip';
+  const path2 = 'C:/Program Files (x86)/7-zip';
+  if (fs.existsSync(path1)) {
+    event.reply(backChannel, {
+      stdout: true,
+    });
+    return;
+  } else if (fs.existsSync(path2)) {
+    event.reply(backChannel, {
+      stdout: true,
+    });
+    return;
+  }
+
+  const bashCommand =
+    'start powershell -ExecutionPolicy Bypass -command "& { winget install -e --id 7zip.7zip --accept-package-agreements --accept-source-agreements }';
+  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+
+    if (fs.existsSync(path1)) {
+      event.reply(backChannel, {
+        stdout: true,
+      });
+      return;
+    } else if (fs.existsSync(path2)) {
+      event.reply(backChannel, {
+        stdout: true,
+      });
+      return;
+    }
+
+    event.reply(backChannel, {
+      stdout: false,
+      stderr: stderr,
+      error: error,
+    });
+  });
+});
+
+ipcMain.on('validate-Steam', async (event) => {
+  const backChannel = 'validate-Steam';
+  const path1 = 'C:/Program Files/Steam';
+  const path2 = 'C:/Program Files (x86)/Steam';
+  if (fs.existsSync(path1)) {
+    event.reply(backChannel, {
+      stdout: true,
+    });
+    return;
+  }
+
+  if (fs.existsSync(path2)) {
+    event.reply(backChannel, {
+      stdout: true,
+    });
+    return;
+  }
+
+  event.reply(backChannel, {
+    stdout: false,
+  });
+});
+
+/**
+ * Add event listeners...
+ */
+
+app.on('window-all-closed', () => {
+  // Respect the OSX convention of having the application in memory even
+  // after all windows have been closed
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+app.on('session-created', (session) => {
+  console.log(session);
 });
 
 let myWindow = null;

@@ -277,7 +277,8 @@ function CheckUpdatePage() {
       clearTimeout(updateTimeOut);
 
       if (system === 'win32') {
-        navigate('/patreon-login');
+        //navigate('/patreon-login');
+        navigate('/welcome');
       } else {
         navigate('/welcome');
       }
@@ -316,41 +317,18 @@ function CheckUpdatePage() {
           <Main>
             {downloadComplete === null && (
               <>
-                {system === 'win32' && second !== true && (
-                  <p className="h5">
-                    Installing GIT, please manually open and close EmuDeck after
-                    GIT is installed on your system...
-                  </p>
-                )}
-                {system === 'win32' && second === true && (
-                  <p className="h5">
-                    Downloading Files. If this progress bar does not disappear
-                    shortly, please restart the application and check if you can
-                    reach GitHub Servers and check our{' '}
-                    <a
-                      className="link-simple link-simple--1"
-                      href="https://github.com/dragoonDorise/EmuDeck/wiki/Frequently-Asked-Questions#why-wont-emudeck-download"
-                    >
-                      Wiki FAQ
-                    </a>{' '}
-                    for possible solutions.
-                  </p>
-                )}
-
-                {system !== 'win32' && (
-                  <p className="h5">
-                    Downloading Files. If this progress bar does not disappear
-                    shortly, please restart the application and check if you can
-                    reach GitHub Servers and check our{' '}
-                    <a
-                      className="link-simple link-simple--1"
-                      href="https://github.com/dragoonDorise/EmuDeck/wiki/Frequently-Asked-Questions#why-wont-emudeck-download"
-                    >
-                      Wiki FAQ
-                    </a>{' '}
-                    for possible solutions.
-                  </p>
-                )}
+                <p className="h5">
+                  Downloading Files. If this progress bar does not disappear
+                  shortly, please restart the application and check if you can
+                  reach GitHub Servers and check our{' '}
+                  <a
+                    className="link-simple link-simple--1"
+                    href="https://github.com/dragoonDorise/EmuDeck/wiki/Frequently-Asked-Questions#why-wont-emudeck-download"
+                  >
+                    Wiki FAQ
+                  </a>{' '}
+                  for possible solutions.
+                </p>
 
                 <ProgressBar
                   css="progress--success"
