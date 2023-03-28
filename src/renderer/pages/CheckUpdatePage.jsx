@@ -82,6 +82,8 @@ function CheckUpdatePage() {
     ipcChannel.sendMessage('update-check');
     console.log('UPDATE - WAITING');
     ipcChannel.once('update-check-out', (message) => {
+      //We clear the timeout
+      clearTimeout(updateTimeOut);
       console.log('UPDATE - GETTING INFO:');
       console.log({ message });
       setStatePage({
@@ -267,9 +269,6 @@ function CheckUpdatePage() {
 
   useEffect(() => {
     if (downloadComplete == true) {
-      //We clear the timeout
-      clearTimeout(updateTimeOut);
-
       if (system === 'win32') {
         //navigate('/patreon-login');
         navigate('/welcome');
