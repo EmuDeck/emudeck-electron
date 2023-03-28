@@ -270,8 +270,8 @@ function CheckUpdatePage() {
   useEffect(() => {
     if (downloadComplete == true) {
       if (system === 'win32') {
-        //navigate('/patreon-login');
-        navigate('/welcome');
+        navigate('/patreon-login');
+        //navigate('/welcome');
       } else {
         navigate('/welcome');
       }

@@ -224,6 +224,26 @@ function EmulatorsPage() {
         const id = item.id;
         const version = item.version;
 
+        if (system === 'win32') {
+          if (
+            item.id === 'primehack' ||
+            item.id === 'primehacks' ||
+            item.id === 'melonds' ||
+            item.id === 'citra' ||
+            item.id === 'rpcs3' ||
+            item.id === 'ryujinx' ||
+            item.id === 'rmg' ||
+            item.id === 'mame' ||
+            item.id === 'vita3k' ||
+            item.id === 'scummvm' ||
+            item.id === 'xemu' ||
+            item.id === 'mgba'
+          ) {
+            console.log('NOT SUPPORTED');
+            return;
+          }
+        }
+
         ipcChannel.sendMessage('emudeck', [
           `${code}_resetConfig|||sleep ${i} && ${code}_resetConfig`,
         ]);
@@ -284,6 +304,23 @@ function EmulatorsPage() {
   }, [showNotification]);
 
   useEffect(() => {
+    //Clean win32 systems
+
+    if (system == 'win32') {
+      delete stateCurrentConfigs['primehack'];
+      delete stateCurrentConfigs['melonds'];
+      delete stateCurrentConfigs['citra'];
+      delete stateCurrentConfigs['rpcs3'];
+      delete stateCurrentConfigs['ryujinx'];
+      delete stateCurrentConfigs['rmg'];
+      delete stateCurrentConfigs['mame'];
+      delete stateCurrentConfigs['vita3k'];
+      delete stateCurrentConfigs['scummvm'];
+      delete stateCurrentConfigs['xemu'];
+      delete stateCurrentConfigs['mgba'];
+      delete stateCurrentConfigs['xenia'];
+    }
+
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?

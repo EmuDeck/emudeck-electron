@@ -113,10 +113,10 @@ function CheckDependenciesPage() {
   }, []);
 
   useEffect(() => {
-    if (statusGIT === true && status7Zip === true && statusSteam === true) {
+    if (statusGIT === true && status7Zip === true) {
       navigate('/check-updates');
     }
-  }, [statusGIT, status7Zip, statusSteam]);
+  }, [statusGIT, status7Zip]);
 
   return (
     <Wrapper>

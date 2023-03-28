@@ -225,7 +225,7 @@
     },
     "win": {
       "target": [
-        "portable"
+        "nsis"
       ]
     },
     "portable": {
