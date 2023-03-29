@@ -43,4 +43,15 @@ jobs:
         run: |
           sed -i "s|main|beta|g" "./src/data/branch.json"
           sed -i "s|emudeck-electron|emudeck-electron-beta|g" "./package.json"
-   
+      
+      - name: build releases
+        run: |
+           npm run postinstall
+           npm run build
+           npm exec electron-builder --linux
+           
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: EmuDeck-Beta-AppImage
+          path: '**/*.AppImage'
