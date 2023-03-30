@@ -888,10 +888,39 @@ ipcMain.on('installGame', async (event, command) => {
       event.reply(backChannel, error, stdout, stderr);
     }
   );
+});
 
-  //Downloading Game
+ipcMain.on('unInstallGame', async (event, command) => {
+  const backChannel = 'unInstallGame';
 
-  //([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)
+  const game = command[0];
+  const system = command[2];
+
+  const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
+
+  // Alternative syntax using RegExp constructor
+  // const regex = new RegExp('([^\\/]+?)(?=\\.\\w+$)|([^\\/]+?)(?=$)', '')
+
+  let gameName = game.match(regex);
+  gameName = gameName[0];
+
+  let bashCommand = `emuDeckUnInstallHomebrewGame '${system}' '${gameName}' '${game}'`;
+  let preCommand;
+  if (os.platform().includes('win32')) {
+    bashCommand = bashCommand.replaceAll('&&', ';');
+    preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
+  } else {
+    preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
+  }
+
+  return exec(
+    `${preCommand}`,
+    { shell: '/bin/bash' },
+    (error, stdout, stderr) => {
+      logCommand(bashCommand, error, stdout, stderr);
+      event.reply(backChannel, error, stdout, stderr);
+    }
+  );
 });
 
 // Dependencies checks
