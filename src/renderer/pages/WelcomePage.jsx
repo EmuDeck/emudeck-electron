@@ -4,6 +4,7 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation, Trans } from 'react-i18next';
 import Welcome from 'components/organisms/Wrappers/Welcome';
 import {
   iconSuccess,
@@ -24,6 +25,7 @@ import {
 } from 'components/utils/images/images';
 
 function WelcomePage() {
+  const { t } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
@@ -362,7 +364,6 @@ function WelcomePage() {
     <Wrapper>
       {second === false && <Header title="Welcome to EmuDeck" />}
       {second === true && <Header title="Welcome back to EmuDeck" />}
-
       <Welcome
         settingsCards={settingsCards}
         settingsCardsFeatured={settingsCardsFeatured}
