@@ -46,6 +46,9 @@ function CloudSyncPage() {
           ...statePage,
           disableButton: false,
         });
+        alert(
+          `All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}`
+        );
       });
     } else {
       ipcChannel.sendMessage('emudeck', [
