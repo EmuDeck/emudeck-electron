@@ -19,7 +19,7 @@ const os = require('os');
 var slash = require('slash');
 const https = require('https');
 const fs = require('fs');
-
+let shellType;
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -103,6 +103,12 @@ const installExtensions = async () => {
 };
 
 const createWindow = async () => {
+  if (os.platform().includes('win32')) {
+    shellType = {};
+  } else {
+    shellType = { shell: '/bin/bash' };
+  }
+
   if (isDebug) {
     await installExtensions();
   }
@@ -220,15 +226,11 @@ ipcMain.on('bash', async (event, command) => {
     bashCommand = command;
   }
 
-  return exec(
-    `${bashCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      //event.reply('console', { backChannel });
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, stdout);
-    }
-  );
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    //event.reply('console', { backChannel });
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, stdout);
+  });
 });
 
 ipcMain.on('bash-nolog', async (event, command) => {
@@ -244,15 +246,11 @@ ipcMain.on('bash-nolog', async (event, command) => {
     bashCommand = command;
   }
 
-  return exec(
-    `${bashCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      //event.reply('console', { backChannel });
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    //event.reply('console', { backChannel });
 
-      event.reply(backChannel, stdout);
-    }
-  );
+    event.reply(backChannel, stdout);
+  });
 });
 
 ipcMain.on('emudeck', async (event, command) => {
@@ -277,19 +275,15 @@ ipcMain.on('emudeck', async (event, command) => {
     preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
   }
 
-  return exec(
-    `${preCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      //event.reply('console', { backChannel });
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, {
-        stdout: stdout,
-        stderr: stderr,
-        error: error,
-      });
-    }
-  );
+  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+    //event.reply('console', { backChannel });
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, {
+      stdout: stdout,
+      stderr: stderr,
+      error: error,
+    });
+  });
 });
 
 ipcMain.on('emudeck-nolog', async (event, command) => {
@@ -313,18 +307,14 @@ ipcMain.on('emudeck-nolog', async (event, command) => {
     preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
   }
 
-  return exec(
-    `${preCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      //event.reply('console', { backChannel });
-      event.reply(backChannel, {
-        stdout: stdout,
-        stderr: stderr,
-        error: error,
-      });
-    }
-  );
+  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+    //event.reply('console', { backChannel });
+    event.reply(backChannel, {
+      stdout: stdout,
+      stderr: stderr,
+      error: error,
+    });
+  });
 });
 
 ipcMain.on('getMSG', async (event, command) => {
@@ -337,17 +327,13 @@ ipcMain.on('getMSG', async (event, command) => {
     bashCommand = `cat ~/.config/EmuDeck/msg.log`;
   }
 
-  return exec(
-    `${bashCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      event.reply(backChannel, {
-        stdout: stdout,
-        stderr: stderr,
-        error: error,
-      });
-    }
-  );
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    event.reply(backChannel, {
+      stdout: stdout,
+      stderr: stderr,
+      error: error,
+    });
+  });
 });
 
 //UI commands
@@ -426,7 +412,7 @@ ipcMain.on('update-check', async (event, command) => {
       } else {
         exec(
           `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/Emudeck.Update.log`,
-          { shell: '/bin/bash' }
+          shellType
         );
         logCommand('UPDATE: UPDATING!');
         console.log('Lets update!');
@@ -483,14 +469,10 @@ ipcMain.on('check-git', async (event, branch) => {
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git rev-parse --is-inside-work-tree`;
   }
-  return exec(
-    `${bashCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, error, stdout, stderr);
-    }
-  );
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
 });
 
 ipcMain.on('clone', async (event, branch) => {
@@ -500,14 +482,10 @@ ipcMain.on('clone', async (event, branch) => {
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branch} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
   }
-  return exec(
-    `${bashCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, error, stdout, stderr);
-    }
-  );
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
 });
 
 ipcMain.on('pull', async (event, branch) => {
@@ -517,14 +495,10 @@ ipcMain.on('pull', async (event, branch) => {
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git reset --hard && git clean -fd && git checkout ${branch} && git pull`;
   }
-  return exec(
-    `${bashCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, stdout);
-    }
-  );
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, stdout);
+  });
 });
 
 ipcMain.on('branch', async (event, command) => {
@@ -542,7 +516,7 @@ ipcMain.on('patreon-check', async (event, token) => {
     bashCommand = `curl https://www.patreon.com/api/oauth2/v2/identity?include=memberships -H "Authorization: Bearer ${token}"`;
   }
   //console.log({ bashCommand });
-  exec(`${bashCommand}`, { shell: '/bin/bash' }, (error, stdout, stderr) => {
+  exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     //console.log(stdout);
     logCommand(bashCommand, error, stdout, stderr);
     const stdoutJSON = JSON.parse(stdout);
@@ -567,25 +541,21 @@ ipcMain.on('patreon-check', async (event, token) => {
         patreonDataCommand = `curl https://www.patreon.com/api/oauth2/v2/members/${userID}?fields%5Bmember%5D=will_pay_amount_cents,patron_status,currently_entitled_amount_cents -H "Authorization: Bearer ${token}"`;
       }
       //console.log({ patreonDataCommand });
-      exec(
-        `${patreonDataCommand}`,
-        { shell: '/bin/bash' },
-        (error, stdout, stderr) => {
-          //console.log(stdout);
-          logCommand(bashCommand, error, stdout, stderr);
-          const stdoutJSON = JSON.parse(stdout);
+      exec(`${patreonDataCommand}`, shellType, (error, stdout, stderr) => {
+        //console.log(stdout);
+        logCommand(bashCommand, error, stdout, stderr);
+        const stdoutJSON = JSON.parse(stdout);
 
-          let pledge =
-            stdoutJSON['data']['attributes']['currently_entitled_amount_cents'];
+        let pledge =
+          stdoutJSON['data']['attributes']['currently_entitled_amount_cents'];
 
-          //console.log({ pledge });
-          if (pledge > 299) {
-            event.reply(backChannel, {}, JSON.stringify({ status: true }), {});
-          } else {
-            event.reply(backChannel, {}, JSON.stringify({ status: false }), {});
-          }
+        //console.log({ pledge });
+        if (pledge > 299) {
+          event.reply(backChannel, {}, JSON.stringify({ status: true }), {});
+        } else {
+          event.reply(backChannel, {}, JSON.stringify({ status: false }), {});
         }
-      );
+      });
     });
 
     // if (thanks === true) {
@@ -624,14 +594,10 @@ ipcMain.on('getToken', async (event, command) => {
     bashCommand = `curl "https://retroachievements.org/dorequest.php?r=login&u=${command.user}&p=${command.pass}"`;
   }
 
-  return exec(
-    `${bashCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, error, stdout, stderr);
-    }
-  );
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
 });
 
 ipcMain.on('setToken', async (event, command) => {
@@ -644,14 +610,10 @@ ipcMain.on('setToken', async (event, command) => {
     bashCommand = `cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; echo ${token} > "%userprofile%/AppData/Roaming/EmuDeck/.rat"; ; echo ${user} > "%userprofile%/AppData/Roaming/EmuDeck/.rau"; RetroArch_retroAchievementsSetLogin ; DuckStation_retroAchievementsSetLogin ; PCSX2_retroAchievementsSetLogin ; echo true`;
   }
 
-  return exec(
-    `${bashCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, error, stdout, stderr);
-    }
-  );
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
 });
 
 ipcMain.on('saveSettings', async (event, command) => {
@@ -880,14 +842,10 @@ ipcMain.on('installGame', async (event, command) => {
     preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
   }
 
-  return exec(
-    `${preCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, error, stdout, stderr);
-    }
-  );
+  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
 });
 
 ipcMain.on('unInstallGame', async (event, command) => {
@@ -913,14 +871,10 @@ ipcMain.on('unInstallGame', async (event, command) => {
     preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
   }
 
-  return exec(
-    `${preCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, error, stdout, stderr);
-    }
-  );
+  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, error, stdout, stderr);
+  });
 });
 
 // Dependencies checks
@@ -946,19 +900,15 @@ ipcMain.on('validate-git', async (event) => {
     } else {
       const bashCommand2 =
         'start powershell -ExecutionPolicy Bypass -command "& { winget install --id Git.Git -e --. winget }';
-      return exec(
-        `${bashCommand2}`,
-        { shell: '/bin/bash' },
-        (error, stdout, stderr) => {
-          logCommand(bashCommand2, error, stdout, stderr);
+      return exec(`${bashCommand2}`, shellType, (error, stdout, stderr) => {
+        logCommand(bashCommand2, error, stdout, stderr);
 
-          event.reply(backChannel, {
-            stdout: false,
-            stderr: stderr,
-            error: error,
-          });
-        }
-      );
+        event.reply(backChannel, {
+          stdout: false,
+          stderr: stderr,
+          error: error,
+        });
+      });
     }
   });
 });
@@ -981,31 +931,27 @@ ipcMain.on('validate-7Zip', async (event) => {
 
   const bashCommand =
     'start powershell -ExecutionPolicy Bypass -command "& { winget install -e --id 7zip.7zip --accept-package-agreements --accept-source-agreements }';
-  return exec(
-    `${bashCommand}`,
-    { shell: '/bin/bash' },
-    (error, stdout, stderr) => {
-      logCommand(bashCommand, error, stdout, stderr);
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
 
-      if (fs.existsSync(path1)) {
-        event.reply(backChannel, {
-          stdout: true,
-        });
-        return;
-      } else if (fs.existsSync(path2)) {
-        event.reply(backChannel, {
-          stdout: true,
-        });
-        return;
-      }
-
+    if (fs.existsSync(path1)) {
       event.reply(backChannel, {
-        stdout: false,
-        stderr: stderr,
-        error: error,
+        stdout: true,
       });
+      return;
+    } else if (fs.existsSync(path2)) {
+      event.reply(backChannel, {
+        stdout: true,
+      });
+      return;
     }
-  );
+
+    event.reply(backChannel, {
+      stdout: false,
+      stderr: stderr,
+      error: error,
+    });
+  });
 });
 
 ipcMain.on('validate-Steam', async (event) => {

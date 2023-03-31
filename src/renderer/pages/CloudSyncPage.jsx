@@ -6,16 +6,16 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import CloudSync from 'components/organisms/Wrappers/CloudSync';
 
-const CloudSyncPage = () => {
+function CloudSyncPage() {
   const { state, setState } = useContext(GlobalContext);
   let json = JSON.stringify(state);
-  const { cloudSync } = state;
+  const { cloudSync, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    data: '',
+    disableButton: false,
   });
-  const { disabledNext, disabledBack, data } = statePage;
+  const { disabledNext, disabledBack, disableButton } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
@@ -31,13 +31,39 @@ const CloudSyncPage = () => {
   // };
 
   const createDesktopIcon = () => {
-    ipcChannel.sendMessage('emudeck', [
-      `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
-    ]);
+    setStatePage({
+      ...statePage,
+      disableButton: true,
+    });
 
-    ipcChannel.sendMessage('bash-nolog', [
-      `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
-    ]);
+    if (system === 'win32') {
+      ipcChannel.sendMessage('emudeck', [
+        `rclone_install|||rclone_install ${cloudSync}`,
+      ]);
+      ipcChannel.once('rclone_install', (message) => {
+        // No versioning found, what to do?
+        setStatePage({
+          ...statePage,
+          disableButton: false,
+        });
+      });
+    } else {
+      ipcChannel.sendMessage('emudeck', [
+        `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
+      ]);
+
+      ipcChannel.once('createDesktop', (message) => {
+        // No versioning found, what to do?
+        setStatePage({
+          ...statePage,
+          disableButton: false,
+        });
+      });
+
+      ipcChannel.sendMessage('bash-nolog', [
+        `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
+      ]);
+    }
   };
 
   const openKonsole = () => {
@@ -57,9 +83,9 @@ const CloudSyncPage = () => {
     <Wrapper>
       <Header title="SaveBackup - BETA" />
       <CloudSync
-        data={data}
         onClick={cloudSyncSet}
         onClickInstall={createDesktopIcon}
+        disableButton={disableButton}
       />
       <Footer
         next={false}
@@ -68,6 +94,6 @@ const CloudSyncPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default CloudSyncPage;

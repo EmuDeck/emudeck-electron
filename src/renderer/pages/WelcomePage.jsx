@@ -181,7 +181,7 @@ function WelcomePage() {
       description: 'Backup your saves and save states to the cloud',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32',
+      status: true,
       function: () => functions.navigate('/cloud-sync'),
     },
     {
