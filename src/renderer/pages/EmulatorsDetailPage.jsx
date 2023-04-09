@@ -239,10 +239,6 @@ function EmulatorsDetailPage() {
               },
             },
           });
-
-          // We save it on localstorage
-          let json = JSON.stringify(state);
-          localStorage.setItem('settings_emudeck', json);
         } else {
           setStatePage({
             ...statePage,
@@ -250,6 +246,9 @@ function EmulatorsDetailPage() {
             showNotification: true,
             hideInstallButton: false,
           });
+          // We save it on localstorage
+          let json = JSON.stringify(state);
+          localStorage.setItem('settings_emudeck', json);
         }
       });
     });
@@ -374,6 +373,13 @@ function EmulatorsDetailPage() {
       }, 3000);
     }
   }, [showNotification]);
+
+  useEffect(() => {
+    console.log('update saved state');
+    // We save it on localstorage
+    let json = JSON.stringify(state);
+    localStorage.setItem('settings_emudeck', json);
+  }, [state]);
 
   useEffect(() => {
     switch (emulator) {

@@ -6,7 +6,7 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import EmuGuide from 'components/organisms/Wrappers/EmuGuide';
 
-const EmuGuidePage = () => {
+function EmuGuidePage() {
   const { state, setState } = useContext(GlobalContext);
   const { installEmus, mode } = state;
   const { ryujinx } = installEmus;
@@ -110,18 +110,23 @@ const EmuGuidePage = () => {
             showNotification: true,
             disableInstallButton: false,
           });
-          //We set the emu as install = yes
-          // setState({
-          //   ...state,
-          //   installEmus: {
-          //     ...installEmus,
-          //     [emulator]: {
-          //       id: emulator,
-          //       name: name,
-          //       status: true,
-          //     },
-          //   },
-          // });
+          // We set the emu as install = yes
+          alert(name);
+          setState({
+            ...state,
+            installEmus: {
+              ...installEmus,
+              [emulator]: {
+                id: emulator,
+                name: code,
+                status: true,
+              },
+            },
+          });
+
+          // We save it on localstorage
+          let json = JSON.stringify(state);
+          localStorage.setItem('settings_emudeck', json);
         } else {
           setStatePage({
             ...statePage,
@@ -301,6 +306,6 @@ const EmuGuidePage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default EmuGuidePage;
