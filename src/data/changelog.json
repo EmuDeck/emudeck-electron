@@ -37,13 +37,6 @@
     "image": "true"
   },
   {
-    "title": "SteamOS 3.5 SDCard Fix",
-    "type": "STEAMOS",
-    "description": "The next 3.5 SteamOS Release will change your SD Card paths, we've added a tool to fix it when the moment comes",
-    "image": "true"
-  },
-
-  {
     "title": "Cloud Services Manager",
     "type": "STEAMOS",
     "description": "Create shortcuts on Steam for cloud services like Apple TV, Disney +, Hulu, Plex but also streaming services like Moonlight or Chiaki",

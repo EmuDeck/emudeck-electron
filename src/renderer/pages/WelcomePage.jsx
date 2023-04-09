@@ -96,7 +96,7 @@ function WelcomePage() {
         'Update your paths to the new SD Card paths introduced in Steam 3.5',
       button: 'Fix',
       btnCSS: 'btn-simple--5',
-      status: storage !== 'Internal Storage' && system !== 'win32',
+      status: false,
       function: () => functions.migrationFixSDPaths(),
     },
     {
