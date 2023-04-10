@@ -51,8 +51,7 @@ function WelcomePage() {
     {
       icon: [iconJoystick],
       title: 'USB Transfer Wizard',
-      description:
-        'Update your paths to the new SD Card paths introduced in Steam 3.5',
+      description: 'Import your games from an USB drive',
       button: 'Add more games',
       btnCSS: 'btn-simple--1',
       status: system !== 'win32',
