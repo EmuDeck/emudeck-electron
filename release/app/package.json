@@ -1,8 +1,11 @@
 {
   "name": "EmuDeck",
-  "version": "2.0.30",
+  "version": "2.0.31-beta",
   "description": "Play all your RetroGames",
   "license": "MIT",
+  "build": {
+    "generateUpdatesFilesForAllChannels": true
+  },
   "author": {
     "name": "EmuDeck",
     "email": "-",
