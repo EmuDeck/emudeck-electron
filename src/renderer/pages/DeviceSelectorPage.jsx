@@ -124,7 +124,11 @@ function DeviceSelectorPage() {
           </>
         )}
       </DeviceSelector>
-      <Footer disabledNext={disabledNext} disabledBack={disabledBack} />
+      <Footer
+        next="emulator-selector"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
     </Wrapper>
   );
 }
