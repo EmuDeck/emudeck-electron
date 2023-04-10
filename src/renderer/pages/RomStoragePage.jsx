@@ -183,14 +183,8 @@ const RomStoragePage = () => {
         onClick={storageSet}
       />
       <Footer
-        next={
-          mode === 'easy'
-            ? system == 'win32'
-              ? 'end'
-              : 'end'
-            : 'device-selector'
-        }
-        nextText="Finish"
+        next="device-selector"
+        nextText="Next"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

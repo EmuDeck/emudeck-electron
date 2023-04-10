@@ -3,14 +3,8 @@ import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
-
-import DeviceSelector from 'components/organisms/Wrappers/DeviceSelector';
-
-import img552 from 'assets/rg552.png';
-import imgOdin from 'assets/odin.png';
-import imgRP2 from 'assets/rp2.png';
-import imgAndroid from 'assets/android.png';
 import Card from 'components/molecules/Card/Card';
+import DeviceSelector from 'components/organisms/Wrappers/DeviceSelector';
 
 // import img552 from 'assets/rg552.png';
 // import imgOdin from 'assets/odin.png';
@@ -25,7 +19,7 @@ import imgWin600 from 'assets/devices/win600.png';
 import imgX360 from 'assets/devices/x360.png';
 import imgXOne from 'assets/devices/xone.png';
 
-function DeviceSelectorPage() {
+function DeviceConfiguratorPage() {
   const { state, setState } = useContext(GlobalContext);
   const { device, installEmus, system, mode } = state;
   const [statePage, setStatePage] = useState({
@@ -48,9 +42,17 @@ function DeviceSelectorPage() {
   useEffect(() => {
     if (device !== '') {
       setStatePage({ ...statePage, disabledNext: false });
+      const json = JSON.stringify(state);
+      localStorage.setItem('settings_emudeck', json);
+      if (system === 'win32') {
+        ipcChannel.sendMessage('emudeck', [
+          `YuzuControl|||Yuzu_setController('${device}')`,
+        ]);
+        ipcChannel.once('YuzuControl', (message) => {
+          console.log({ message });
+        });
+      }
     }
-    const json = JSON.stringify(state);
-    localStorage.setItem('settings_emudeck', json);
   }, [state]); // <-- here put the parameter to listen
 
   return (
@@ -129,4 +131,4 @@ function DeviceSelectorPage() {
   );
 }
 
-export default DeviceSelectorPage;
+export default DeviceConfiguratorPage;

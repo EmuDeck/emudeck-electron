@@ -6,7 +6,7 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import Settings from 'components/organisms/Wrappers/Settings';
 
-const SettingsPage = () => {
+function SettingsPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { ar, shaders, bezels } = state;
@@ -326,6 +326,6 @@ const SettingsPage = () => {
       <Footer disabledNext disabledBack={disabledBack} />
     </Wrapper>
   );
-};
+}
 
 export default SettingsPage;

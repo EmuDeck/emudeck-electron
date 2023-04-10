@@ -109,6 +109,15 @@ function WelcomePage() {
       function: () => functions.openSRM(),
     },
     {
+      icon: [iconMigrate],
+      title: 'Change Controller',
+      description: 'Change your controller to configure emulators like Yuzu',
+      button: 'Change',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/device-configurator'),
+    },
+    {
       icon: [iconQuick],
       title: 'Quick Reset',
       description:

@@ -6,6 +6,7 @@ import CheckUpdatePage from 'pages/CheckUpdatePage';
 import PatreonLoginPage from 'pages/PatroenLoginPage';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
+import DeviceConfiguratorPage from 'pages/DeviceConfiguratorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
 import EmulatorConfigurationPage from 'pages/EmulatorConfigurationPage';
 import RomStoragePage from 'pages/RomStoragePage';
@@ -265,6 +266,11 @@ export default function App() {
             exact
             path="/device-selector"
             element={<DeviceSelectorPage />}
+          />
+          <Route
+            exact
+            path="/device-configurator"
+            element={<DeviceConfiguratorPage />}
           />
           <Route
             exact
