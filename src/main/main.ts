@@ -826,7 +826,7 @@ ipcMain.on('installGame', async (event, command) => {
   const system = command[2];
 
   const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
-
+  console.log(command);
   // Alternative syntax using RegExp constructor
   // const regex = new RegExp('([^\\/]+?)(?=\\.\\w+$)|([^\\/]+?)(?=$)', '')
 
@@ -850,7 +850,7 @@ ipcMain.on('installGame', async (event, command) => {
 
 ipcMain.on('unInstallGame', async (event, command) => {
   const backChannel = 'unInstallGame';
-
+  console.log(command);
   const game = command[0];
   const system = command[2];
 
