@@ -44,17 +44,10 @@ const MigrationPage = () => {
       ipcChannel.once('customLocation', (message) => {
         let stdout = message.stdout.replace('\n', '');
 
-        setStatePage({
-          ...statePage,
-          disabledNext: true,
-          status: 'testing',
-          storageDestination: storageName,
-          storagePathDestination: stdout,
-        });
         //is it valid?
 
         ipcChannel.sendMessage('emudeck', [
-          `testLocation|||sleep 1 && testLocationValid "custom" "${stdout}"`,
+          `testLocation|||testLocationValid "custom" "${stdout}"`,
         ]);
 
         ipcChannel.once('testLocation', (message) => {
@@ -63,18 +56,18 @@ const MigrationPage = () => {
           let status;
           stdout.includes('Valid') ? (status = true) : (status = false);
           console.log({ status });
-          if (status == true) {
+          if (status != true) {
             setStatePage({
               ...statePage,
               disabledNext: false,
-              status: undefined,
+              storageDestination: storageName,
+              storagePathDestination: stdout,
             });
           } else {
             alert('Non writable directory selected, please choose another.');
             setStatePage({
               ...statePage,
               disabledNext: true,
-              status: undefined,
               storageDestination: null,
               storagePathDestination: null,
             });
