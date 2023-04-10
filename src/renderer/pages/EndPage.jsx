@@ -48,7 +48,10 @@ function EndPage() {
   const openSRM = () => {
     if (system === 'win32') {
       ipcChannel.sendMessage('bash', [
-        `cd ${storagePath} && cd Emulation && cd tools && start srm.exe`,
+        `${storagePath.substring(
+          0,
+          2
+        )} && cd \\ && cd Emulation && cd tools && start srm.exe`,
       ]);
     } else {
       ipcChannel.sendMessage('bash', [
