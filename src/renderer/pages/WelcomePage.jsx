@@ -22,6 +22,7 @@ import {
   iconBooks,
   iconJoystick,
   iconPackage,
+  iconDisk,
 } from 'components/utils/images/images';
 
 function WelcomePage() {
@@ -49,7 +50,7 @@ function WelcomePage() {
 
   const settingsCardsFeatured = [
     {
-      icon: [iconJoystick],
+      icon: [iconDisk],
       title: 'USB Transfer Wizard',
       description: 'Import your games from an USB drive',
       button: 'Add more games',
@@ -113,7 +114,7 @@ function WelcomePage() {
       description: 'Change your controller to configure emulators like Yuzu',
       button: 'Change',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: system === 'win32',
       function: () => functions.navigate('/device-configurator'),
     },
     {
