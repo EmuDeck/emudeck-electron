@@ -56,7 +56,7 @@ const MigrationPage = () => {
           let status;
           stdout.includes('Valid') ? (status = true) : (status = false);
           console.log({ status });
-          if (status != true) {
+          if (status == true) {
             setStatePage({
               ...statePage,
               disabledNext: false,
