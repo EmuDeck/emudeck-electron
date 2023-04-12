@@ -80,7 +80,7 @@ const DeckyControlsPage = () => {
       ...statePage,
       disableButton: true,
     });
-    const escapedPass = sudoPass.replace("'","'\\''")
+    const escapedPass = sudoPass.replaceAll("'","'\\''")
     ipcChannel.sendMessage('emudeck', [
       `DeckyControls|||echo "${escapedPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installDeckyControls && echo true`,
     ]);

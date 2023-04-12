@@ -80,7 +80,7 @@ const GyroDSUPage = () => {
       ...statePage,
       disableButton: true,
     });
-    const escapedPass = sudoPass.replace("'","'\\''")
+    const escapedPass = sudoPass.replaceAll("'","'\\''")
     ipcChannel.sendMessage('bash', [
       `Gyro|||konsole -e  sh -c '. ~/.config/EmuDeck/backend/functions/all.sh &&  echo "${escapedPass}" | sudo -v -S && Plugins_installSteamDeckGyroDSU && echo "" && read -n 1 -s -r -p "Press any key to exit" && exit 0'`,
     ]);
