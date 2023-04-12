@@ -81,8 +81,10 @@ const PowerToolsPage = () => {
       disableButton: true,
     });
 
+    const escapedPass = sudoPass.replace("'","'\\''")
+
     ipcChannel.sendMessage('emudeck', [
-      `powerTools|||echo '${sudoPass}' | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools && echo true`,
+      `powerTools|||echo '${escapedPass}' | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools && echo true`,
     ]);
 
     ipcChannel.once('powerTools', (status) => {
