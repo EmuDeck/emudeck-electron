@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
-import { useKonami } from 'react-konami-code';
-import Toasty from 'components/atoms/Toasty/Toasty';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
@@ -39,10 +37,9 @@ function WelcomePage() {
     downloadComplete: !navigator.onLine ? true : null,
     updates: null,
     cloned: null,
-    data: '',
-    toasty: false
+    data: ''
   });
-  const { disabledNext, disabledBack, updates, toasty } = statePage;
+  const { disabledNext, disabledBack, updates } = statePage;
   const navigate = useNavigate();
   const selectMode = (value) => {
     setState({ ...state, mode: value });
@@ -51,10 +48,7 @@ function WelcomePage() {
     }
   };
 
-  const easterEgg = () => {
-    setStatePage({ ...statePage, toasty: true });
-  }
-useKonami(easterEgg);
+
   const settingsCardsFeatured = [
     {
       icon: [iconDisk],
@@ -383,7 +377,6 @@ useKonami(easterEgg);
     <Wrapper>
       {second === false && <Header title="Welcome to EmuDeck" />}
       {second === true && <Header title="Welcome back to EmuDeck" />}
-      <Toasty show={toasty}/>
       <Welcome
         settingsCards={settingsCards}
         settingsCardsFeatured={settingsCardsFeatured}
