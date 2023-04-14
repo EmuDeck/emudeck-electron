@@ -388,7 +388,7 @@ function EmulatorsPage() {
                     btnCSS="btn-simple--1"
                     iconSize="md"
                     title={'Update all Configurations'}
-                    description="Update all you configurations at once. New configurations might contain bug fixes or performance improvements. This will overwrite any customization yout might have done."
+                    description="Update all of your configurations at once. New configurations might contain bug fixes or performance improvements. This will overwrite any global emulator settings you have changed. Per game settings will be retained."
                     button={disableResetButton ? 'Please wait...' : 'Update'}
                     onClick={() => resetEmus()}
                     disabled={disableResetButton}
