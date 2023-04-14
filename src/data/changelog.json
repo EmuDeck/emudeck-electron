@@ -18,6 +18,12 @@
     "image": "true"
   },
   {
+    "title": "USB Transfer Wizard",
+    "type": "STEAMOS",
+    "description": "Now you can easily import your roms and bios from an USB drive. You no longer need to fiddle using a keyboard and mouse, all can be easly done using the touchscreen",
+    "image": "true"
+  },
+  {
     "title": "EmulationStation 2.0",
     "type": "STEAMOS",
     "description": "New version of ESDE 2.0 with a new EpicNoir Theme. Go to Emulators to update it and then Reset the configuration afterwards to get the new theme upgraded",

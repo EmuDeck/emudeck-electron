@@ -61,6 +61,9 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 const branch = require('data/branch.json');
 
 export default function App() {
+
+
+
   const [stateCurrentConfigs, setStateCurrentConfigs] = useState({
     ra: { id: 'ra', code: 'RetroArch', version: 0 },
     dolphin: { id: 'dolphin', code: 'Dolphin', version: 0 },
@@ -245,6 +248,8 @@ export default function App() {
       xenia: '720P',
     },
   });
+
+
 
   return (
     <GlobalContext.Provider
