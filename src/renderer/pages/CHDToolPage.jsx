@@ -21,7 +21,7 @@ const CHDToolPage = () => {
 
   const runCHD = (data) => {
     ipcChannel.sendMessage('bash-nolog', [
-      `konsole -e "$HOME/.config/EmuDeck/backend/tools/chdconv/chddeck.sh"`,
+      `konsole -e "/bin/bash $HOME/.config/EmuDeck/backend/tools/chdconv/chddeck.sh"`,
     ]);
   };
 
