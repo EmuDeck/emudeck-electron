@@ -899,7 +899,7 @@ ipcMain.on('validate-git', async (event) => {
       });
     } else {
       const bashCommand2 =
-        'start powershell -ExecutionPolicy Bypass -command "& { winget install --id Git.Git -e --. winget }';
+        'start powershell -ExecutionPolicy Bypass -command "& { winget install -e --id Git.Git --accept-package-agreements --accept-source-agreements }';
       return exec(`${bashCommand2}`, shellType, (error, stdout, stderr) => {
         logCommand(bashCommand2, error, stdout, stderr);
 
