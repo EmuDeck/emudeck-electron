@@ -81,12 +81,21 @@ const logCommand = (bashCommand, stdout, stderr) => {
   const escapedStderrString = quoteWithNewlines([stderrString]);
   const escapedbashCommandString = quoteWithNewlines([bashCommandString]);
 
-  exec(`echo -e "[${date}] ${escapedbashCommandString}" >> ${logFile}`);
+  fs.appendFile(`${logFile}`, `[${date}] command: ${bashCommand} \r\n`, function (err) {
+    if (err) throw err;
+    console.log('Saved!');
+  });
   if (stdout) {
-    exec(`echo -e "[${date}] stdout: ${escapedStdoutString}" >> ${logFile}`);
+    fs.appendFile(`${logFile}`, `[${date}] stdout: ${stdoutString} \r\n`, function (err) {
+      if (err) throw err;
+      console.log('Saved!');
+    });
   }
   if (stderr) {
-    exec(`echo -e "[${date}] stderr: ${escapedStderrString}" >> ${logFile}`);
+    fs.appendFile(`${logFile}`, `[${date}] stderr: ${stderrString} \r\n`, function (err) {
+      if (err) throw err;
+      console.log('Saved!');
+    });
   }
 };
 
