@@ -70,8 +70,14 @@ const logCommand = (bashCommand, stdout, stderr) => {
   const stdoutString = JSON.stringify(stdout);
   const stderrString = JSON.stringify(stderr);
   const shellQuote = require('shell-quote');
-  const escapedStdoutString = shellQuote.quote([stdoutString]);
-  const escapedStderrString = shellQuote.quote([stderrString]);
+
+  const quoteWithNewlines = (arr: any) => {
+    const quoted = shellQuote.quote(arr);
+    return quoted.replace(/([^\\]|^)\n/g, '$1\\\n');
+  };
+
+  const escapedStdoutString = quoteWithNewlines([stdoutString]);
+  const escapedStderrString = quoteWithNewlines([stderrString]);
 
   exec(`echo "[${date}] ${bashCommand}" >> ${logFile}`);
   if (stdout) {
