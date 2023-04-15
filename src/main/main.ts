@@ -60,21 +60,25 @@ const logCommand = (bashCommand, stdout, stderr) => {
   const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   const yyyy = today.getFullYear();
   const date = mm + '/' + dd + '/' + yyyy;
+  const homedir = os.homedir();
 
-  let logFile = '$HOME/emudeck/Emudeck.AppImage.log';
+  let logFile = `${homedir}/emudeck/Emudeck.AppImage.log`;
   if (os.platform().includes('win32')) {
-    logFile = '"%userprofile%\\Emudeck.AppImage.log"';
+    logFile = `${homedir}\\Emudeck.AppImage.log`;
   }
 
   const stdoutString = JSON.stringify(stdout);
   const stderrString = JSON.stringify(stderr);
+  const shellQuote = require('shell-quote');
+  const escapedStdoutString = shellQuote.quote([stdoutString]);
+  const escapedStderrString = shellQuote.quote([stderrString]);
 
   exec(`echo "[${date}] ${bashCommand}" >> ${logFile}`);
   if (stdout) {
-    exec(`echo "[${date}] stdout: ${stdoutString}" >> ${logFile}`);
+    exec(`echo "[${date}] stdout: ${escapedStdoutString}" >> ${logFile}`);
   }
   if (stderr) {
-    exec(`echo "[${date}] stderr: ${stderrString}" >> ${logFile}`);
+    exec(`echo "[${date}] stderr: ${escapedStderrString}" >> ${logFile}`);
   }
 };
 
