@@ -125,7 +125,7 @@ function DeviceSelectorPage() {
         )}
       </DeviceSelector>
       <Footer
-        next="emulator-selector"
+        next={mode === 'easy' ? "emulator-resolution" : "emulator-selector"}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
