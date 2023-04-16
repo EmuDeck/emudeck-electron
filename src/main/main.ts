@@ -19,6 +19,8 @@ const os = require('os');
 var slash = require('slash');
 const https = require('https');
 const fs = require('fs');
+const shellQuote = require('shell-quote');
+
 let shellType;
 export default class AppUpdater {
   constructor() {
@@ -54,6 +56,7 @@ const promiseFromChildProcess = (child) => {
   });
 };
 
+
 const logCommand = (bashCommand, stdout, stderr) => {
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
@@ -67,34 +70,36 @@ const logCommand = (bashCommand, stdout, stderr) => {
     logFile = `${homedir}\\Emudeck.AppImage.log`;
   }
 
-  const stdoutString = JSON.stringify(stdout);
-  const stderrString = JSON.stringify(stderr);
-  const bashCommandString = JSON.stringify(bashCommand);
-  const shellQuote = require('shell-quote');
+  const bashCommandString = bashCommand ? bashCommand.toString() : '';
+  const stdoutString = stdout ? stdout.toString() : '';
+  const stderrString = stderr ? stderr.toString() : '';
 
-  const quoteWithNewlines = (arr: any) => {
-    const quoted = shellQuote.quote(arr);
-    return quoted.replace(/([^\\]|^)\n/g, '$1\\\n');
-  };
+  //const escapedBashCommandString = shellQuote.quote([bashCommandString], { noGlob: true });
+  //const escapedStdoutString = shellQuote.quote([stdoutString], { noGlob: true });
+  //const escapedStderrString = shellQuote.quote([stderrString], { noGlob: true });
 
-  const escapedStdoutString = quoteWithNewlines([stdoutString]);
-  const escapedStderrString = quoteWithNewlines([stderrString]);
-  const escapedbashCommandString = quoteWithNewlines([bashCommandString]);
-
-  fs.appendFile(`${logFile}`, `[${date}] command: ${bashCommand} \r\n`, function (err) {
-    if (err) throw err;
-    console.log('Saved!');
+  const logEntry = `[${date}] ${bashCommandString}\n`;
+  fs.appendFile(logFile, logEntry, (err) => {
+    if (err) {
+      console.error(`Error writing to log file: ${err}`);
+    }
   });
+
   if (stdout) {
-    fs.appendFile(`${logFile}`, `[${date}] stdout: ${stdoutString} \r\n`, function (err) {
-      if (err) throw err;
-      console.log('Saved!');
+    const stdoutEntry = `[${date}] stdout: ${stdoutString}\n`;
+    fs.appendFile(logFile, stdoutEntry, (err) => {
+      if (err) {
+        console.error(`Error writing to log file: ${err}`);
+      }
     });
   }
+
   if (stderr) {
-    fs.appendFile(`${logFile}`, `[${date}] stderr: ${stderrString} \r\n`, function (err) {
-      if (err) throw err;
-      console.log('Saved!');
+    const stderrEntry = `[${date}] stderr: ${stderrString}\n`;
+    fs.appendFile(logFile, stderrEntry, (err) => {
+      if (err) {
+        console.error(`Error writing to log file: ${err}`);
+      }
     });
   }
 };
