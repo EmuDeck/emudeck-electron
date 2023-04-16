@@ -98,7 +98,7 @@ const EmulatorConfigurationPage = () => {
 
   return (
     <Wrapper>
-      <Header title="Update emulator's" bold="configuration" />
+      <Header title="Update emulator" bold="configurations" />
       <EmulatorConfiguration data={data} onClick={toggleEmus} images={images} />
       <Footer
         next={nextPage}

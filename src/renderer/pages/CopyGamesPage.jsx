@@ -150,7 +150,7 @@ function CopyGamesPage() {
   return (
     <Wrapper>
       {statusCopyGames !== true && system !== 'win32' && (
-        <Header title="Let's use an USB Drive to copy your games" />
+        <Header title="Use a USB Drive to transfer your games" />
       )}
 
       <CopyGames

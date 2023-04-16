@@ -224,7 +224,7 @@ function UpdateConfigsPage() {
 
   return (
     <Wrapper>
-      <Header title="Update your" bold="Configurations" />
+      <Header title="Update your" bold="configurations" />
       <Notification css={showNotification ? 'is-animated' : 'nope'}>
         {textNotification}
       </Notification>
