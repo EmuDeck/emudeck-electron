@@ -53,7 +53,7 @@ function WelcomePage() {
     {
       icon: [iconDisk],
       title: 'USB Transfer Wizard',
-      description: 'Import your games from a USB drive',
+      description: 'Transfer your games using a USB Drive',
       button: 'Add more games',
       btnCSS: 'btn-simple--1',
       status: system !== 'win32',
