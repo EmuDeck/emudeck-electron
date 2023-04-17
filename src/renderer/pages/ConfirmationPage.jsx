@@ -25,7 +25,7 @@ const ConfirmationPage = () => {
 
   return (
     <Wrapper>
-      <Header title="Here's what we'll do" />
+      <Header title="Here is what EmuDeck will do" />
       <Confirmation data={data} />
       <Footer
         next="end"
