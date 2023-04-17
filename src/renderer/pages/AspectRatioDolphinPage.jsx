@@ -27,7 +27,7 @@ const AspectRatioDolphinPage = () => {
 
   return (
     <Wrapper>
-      <Header title="Configure Aspect Ratio for the" bold="GameCube" />
+      <Header title="Configure Aspect Ratio for" bold="GameCube games" />
       <AspectRatioDolphin data={data} onClick={arSet} />
       <Footer
         next={
