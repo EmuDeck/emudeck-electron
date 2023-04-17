@@ -170,7 +170,7 @@ function CopyGamesPage() {
             aria="Go Next"
             onClick={() => navigate('/welcome')}
           >
-            Skip and go back to Tools & Stuff
+           Go Back
           </BtnSimple>
         )}
 
@@ -181,7 +181,7 @@ function CopyGamesPage() {
             aria="Go Next"
             onClick={() => openSRM()}
           >
-            Open Steam Rom Manager
+            Open Steam ROM Manager
             <svg
               className="rightarrow"
               width="32"
@@ -205,7 +205,7 @@ function CopyGamesPage() {
             aria="Go Next"
             onClick={() => openSRM()}
           >
-            Open Steam Rom Manager
+            Open Steam ROM Manager
             <svg
               className="rightarrow"
               width="32"
@@ -241,7 +241,7 @@ function CopyGamesPage() {
               aria="Go Back"
               onClick={() => navigate('/welcome')}
             >
-              Skip, go to Tools & Stuff
+              Go Back
             </BtnSimple>
           </>
         )}
