@@ -207,7 +207,7 @@ function WelcomePage() {
       icon: [iconPrize],
       title: 'RetroAchievements',
       description:
-        'Configure RetroAchievements for RetroArch, Duckstation, and PCSX2',
+        'Configure RetroAchievements for Duckstation, PCSX2, and RetroArch',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
