@@ -63,7 +63,7 @@ function WelcomePage() {
       icon: [iconGear],
       title: 'Quick Settings',
       description:
-        'Customize bezels, shaders, aspect ratio, auto save and more',
+        'Customize bezels, shaders, aspect ratio, auto save, and more',
       button: 'Configure',
       btnCSS: 'btn-simple--1',
       status: true,
@@ -197,7 +197,7 @@ function WelcomePage() {
     {
       icon: [iconCloud],
       title: 'Cloud Services Manager',
-      description: 'Manage your cloud services, Xbox Cloud Gaming and more!',
+      description: 'Manage your cloud services, Xbox Cloud Gaming, and more!',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: system !== 'win32',
