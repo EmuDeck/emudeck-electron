@@ -252,7 +252,7 @@ function WelcomePage() {
     },
     {
       icon: [iconPrize],
-      title: 'Become a Patreon',
+      title: 'Become a Patron',
       description: 'Consider supporting EmuDeck on Patreon',
       button: 'Donate',
       btnCSS: 'btn-simple--3',
