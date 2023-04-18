@@ -53,7 +53,7 @@ function WelcomePage() {
     {
       icon: [iconDisk],
       title: 'USB Transfer Wizard',
-      description: 'Import your games from an USB drive',
+      description: 'Transfer your games using a USB Drive',
       button: 'Add more games',
       btnCSS: 'btn-simple--1',
       status: system !== 'win32',
@@ -63,7 +63,7 @@ function WelcomePage() {
       icon: [iconGear],
       title: 'Quick Settings',
       description:
-        'Customize bezels, shaders, aspect ratio, auto save and more',
+        'Customize bezels, shaders, aspect ratio, auto save, and more',
       button: 'Configure',
       btnCSS: 'btn-simple--1',
       status: true,
@@ -197,7 +197,7 @@ function WelcomePage() {
     {
       icon: [iconCloud],
       title: 'Cloud Services Manager',
-      description: 'Manage your cloud services, Xbox Cloud Gaming and more!',
+      description: 'Manage your cloud services, Xbox Cloud Gaming, and more!',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: system !== 'win32',
@@ -207,7 +207,7 @@ function WelcomePage() {
       icon: [iconPrize],
       title: 'RetroAchievements',
       description:
-        'Configure RetroAchievements for RetroArch, Duckstation, and PCSX2',
+        'Configure RetroAchievements for Duckstation, PCSX2, and RetroArch',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
@@ -252,7 +252,7 @@ function WelcomePage() {
     },
     {
       icon: [iconPrize],
-      title: 'Become a Patreon',
+      title: 'Become a Patron',
       description: 'Consider supporting EmuDeck on Patreon',
       button: 'Donate',
       btnCSS: 'btn-simple--3',

@@ -369,9 +369,9 @@ function EmulatorsPage() {
     <Wrapper>
       <Header title="Manage your Emulators" />
       <p className="lead">
-        In this page you can update your configurations or even install new
-        emulators. An orange notification means you have an updated
-        configuration for that emulator.
+        On this page, you can update your configurations or install new
+        emulators. An orange notification means you have a configuration update ready
+        for the respective emulator.
       </p>
       <Notification css={showNotification ? 'is-animated' : 'nope'}>
         {textNotification}
