@@ -277,6 +277,13 @@ ipcMain.on('bash-nolog', async (event, command) => {
 ipcMain.on('emudeck', async (event, command) => {
   let backChannel;
   let bashCommand;
+  let allPath;
+  const homeUser = os.homedir();
+  if (os.platform().includes('win32')) {
+    allPath = `${homeUser}/AppData/Roaming/EmuDeck/backend/functions/all.ps1`
+  }else{
+    allPath = `${homeUser}/.config/EmuDeck/backend/functions/all.sh`
+  }
 
   if (command[0].includes('|||')) {
     const tempCommand = command[0].split('|||');
@@ -286,6 +293,27 @@ ipcMain.on('emudeck', async (event, command) => {
     backChannel = 'none';
     bashCommand = command;
   }
+
+  // Lets detect if the repo was cloned properly
+  if (fs.existsSync(allPath)) {
+    //file exists
+    console.log('all.sh detected')
+  }else{
+    console.log('all not detected')
+    event.reply(backChannel, 'nogit');
+    let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout master && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
+
+    if (os.platform().includes('win32')) {
+      bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
+    }
+
+    return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+      //event.reply('console', { backChannel });
+      logCommand(bashCommand, error, stdout, stderr);
+      mainWindow.reload()
+    });
+  }
+
 
   let preCommand;
 

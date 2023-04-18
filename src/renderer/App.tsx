@@ -52,6 +52,8 @@ import EmulatorResolutionPage from 'pages/EmulatorResolutionPage';
 
 import EndPage from 'pages/EndPage';
 
+import ErrorPage from 'pages/ErrorPage';
+
 import { GlobalContext } from './context/globalContext';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
@@ -263,6 +265,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<CheckDependenciesPage />} />
+            <Route exact path="/error" element={<ErrorPage />} />
           <Route exact path="/check-updates" element={<CheckUpdatePage />} />
           <Route exact path="/patreon-login" element={<PatreonLoginPage />} />
 

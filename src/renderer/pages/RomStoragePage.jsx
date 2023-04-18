@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
@@ -8,6 +9,7 @@ import RomStorage from 'components/organisms/Wrappers/RomStorage';
 
 const RomStoragePage = () => {
   const ipcChannel = window.electron.ipcRenderer;
+  const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const { storage, SDID } = state;
   const [statePage, setStatePage] = useState({
@@ -113,6 +115,12 @@ const RomStoragePage = () => {
 
   //Do we have a valid SD Card?
   useEffect(() => {
+
+    if(navigator.onLine === false){
+      navigate('/error');
+      return
+    }
+
     if (system != 'win32') {
       checkSDValid();
     }
@@ -135,6 +143,11 @@ const RomStoragePage = () => {
 
     ipcChannel.once('SDCardValid', (message) => {
       console.log(message);
+
+      if (message === 'nogit'){
+        alert("Backend not found, EmuDeck will try to download the missing component and then it will restart itself")
+      }
+
       let stdout = message.stdout.replace('\n', '');
       let status;
       stdout.includes('Valid') ? (status = true) : (status = false);

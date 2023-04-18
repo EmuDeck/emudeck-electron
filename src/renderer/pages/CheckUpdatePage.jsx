@@ -67,6 +67,7 @@ function CheckUpdatePage() {
   }, []);
   let updateTimeOut;
   useEffect(() => {
+
     //Update timeout + Force clone check
     console.log('UPDATE - SETTING TIMER FOR TIMEOUT');
     updateTimeOut = setTimeout(() => {
@@ -78,23 +79,33 @@ function CheckUpdatePage() {
       updateFiles();
     }, 10000);
 
-    console.log('UPDATE - CHECKING');
-    ipcChannel.sendMessage('update-check');
-    console.log('UPDATE - WAITING');
-    ipcChannel.once('update-check-out', (message) => {
-      //We clear the timeout
+    if(navigator.onLine){
+      console.log('UPDATE - CHECKING');
+      ipcChannel.sendMessage('update-check');
+      console.log('UPDATE - WAITING');
+      ipcChannel.once('update-check-out', (message) => {
+        //We clear the timeout
+        clearTimeout(updateTimeOut);
+        console.log('UPDATE - GETTING INFO:');
+        console.log({ message });
+        setStatePage({
+          ...statePage,
+          update: message[0],
+          data: message[1],
+        });
+        if (message[0] == 'up-to-date') {
+          updateFiles();
+        }
+      });
+
+    }else{
       clearTimeout(updateTimeOut);
-      console.log('UPDATE - GETTING INFO:');
-      console.log({ message });
       setStatePage({
         ...statePage,
-        update: message[0],
-        data: message[1],
+        update: 'up-to-date',
       });
-      if (message[0] == 'up-to-date') {
-        updateFiles();
-      }
-    });
+      console.log('No internet connection');
+    }
 
     const updateFiles = () => {
       //Ask for branch
