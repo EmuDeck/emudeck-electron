@@ -170,7 +170,7 @@ function CopyGamesPage() {
             aria="Go Next"
             onClick={() => navigate('/welcome')}
           >
-           Go Back
+           Skip for now
           </BtnSimple>
         )}
 
@@ -241,7 +241,7 @@ function CopyGamesPage() {
               aria="Go Back"
               onClick={() => navigate('/welcome')}
             >
-              Go Back
+              Skip for now
             </BtnSimple>
           </>
         )}
