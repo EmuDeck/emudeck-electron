@@ -1,0 +1,3 @@
+[submodule "src/renderer/components"]
+	path = src/renderer/components
+	url = https://github.com/EmuDeck/emudeck-gui-components.git

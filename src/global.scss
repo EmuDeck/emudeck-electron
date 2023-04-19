@@ -1,0 +1,36 @@
+//
+//
+// Important!!! Only scss vars & mixins are allowed to be imported here.
+// Dont use CSS Variables or regular CSS as this file is loaded in every component
+//
+//
+@import './utils/grid-layout/grid-layout.scss';
+@import './utils/mixins/mixins.scss';
+@import './utils/vars/vars.scss';
+@import './utils/animate/animate.scss';
+
+@font-face {
+  font-family: 'MotivaSans';
+  src: url('assets/fonts/Raleway-Thin.ttf');
+  font-weight: 100;
+}
+@font-face {
+  font-family: 'MotivaSans';
+  src: url('assets/fonts/Raleway-Light.ttf');
+  font-weight: 200;
+}
+@font-face {
+  font-family: 'MotivaSans';
+  src: url('assets/fonts/Raleway-Regular.ttf');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'MotivaSans';
+  src: url('assets/fonts/Raleway-Medium.ttf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'MotivaSans';
+  src: url('assets/fonts/Raleway-Black.ttf');
+  font-weight: 600;
+}

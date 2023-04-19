@@ -1,0 +1,57 @@
+[
+  {
+    "title": "EmuDeck Store",
+    "type": "STEAMOS",
+    "description": "Now you can browse and download games from our homebrew collection one by one. <br/>You can uninstall the previous HomeBrew pack from Quick Settings and just use the store to get the games you want.<br/><strong>On this release they are only playable on EmulationStation DE</strong>",
+    "image": "true"
+  },
+  {
+    "title": "UI / UX tweaks",
+    "type": "STEAMOS",
+    "description": "- New Confirmation ( Custom Mode ) & Post Install Status page <br/>- New home screen after first install<br/>- RetroAchievements for PS1 and PS2",
+    "image": "true"
+  },
+  {
+    "title": "New Emulators",
+    "type": "STEAMOS",
+    "description": "- MelonDS Standalone ( Custom Mode )<br/>- Rosalie's Mupen GUI ( Custom Mode )<br/>- mGBA ( Custom Mode )<br/>- Cemu AppImage ( On Manage Emulators )<br/>- Pico8 and tic80 RetroArch Cores",
+    "image": "true"
+  },
+  {
+    "title": "USB Transfer Wizard",
+    "type": "STEAMOS",
+    "description": "Now you can easily import your roms and bios from an USB drive. You no longer need to fiddle using a keyboard and mouse, all can be easly done using the touchscreen",
+    "image": "true"
+  },
+  {
+    "title": "EmulationStation 2.0",
+    "type": "STEAMOS",
+    "description": "New version of ESDE 2.0 with a new EpicNoir Theme. Go to Emulators to update it and then Reset the configuration afterwards to get the new theme upgraded",
+    "image": "true"
+  },
+  {
+    "title": "Manage Emulators",
+    "type": "STEAMOS",
+    "description": "Get notifications when an emulator has a new configuration update so you don't need to reinstall EmuDeck to apply that specific configuration.",
+    "image": "true"
+  },
+
+  {
+    "title": "Migrate Installation",
+    "type": "STEAMOS",
+    "description": "Move your EmuDeck Installation to another destination: SD Card, Internal Storage, etc.",
+    "image": "true"
+  },
+  {
+    "title": "Cloud Services Manager",
+    "type": "STEAMOS",
+    "description": "Create shortcuts on Steam for cloud services like Apple TV, Disney +, Hulu, Plex but also streaming services like Moonlight or Chiaki",
+    "image": "true"
+  },
+  {
+    "title": "Bug fixes & Small Features",
+    "type": "STEAMOS",
+    "description": "- Fixed PS3 Pkg parser so it doesn't grab discs in the hdd<br/>- GyroDSU working at last.<br/>- Steam Shortcut path bulk update<br/>- Fix DOSBox-pure config directory<br/>- Fix Vita3K Launcher<br/>- Fix EmuDeck Compressor tool with rvz files<br/>- EasyRPG SRM parser<br/>- Recursive SRM parsers are back<br/>- Added ESDE 2.0 beta<br/>- CSO Format support for PPSSPP",
+    "image": "false"
+  }
+]
