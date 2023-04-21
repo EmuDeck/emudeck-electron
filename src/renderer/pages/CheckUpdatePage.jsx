@@ -163,7 +163,7 @@ function CheckUpdatePage() {
               system: platform,
               version: version[0],
               gamemode: version[1],
-              branch: branch.branch,
+              branch: branch,
             });
           });
         });
@@ -179,14 +179,14 @@ function CheckUpdatePage() {
               system: platform,
               version: version[0],
               gamemode: version[1],
-              branch: branch.branch,
+              branch: branch,
             });
             setState({
               ...state,
               system: platform,
               version: version[0],
               gamemode: version[1],
-              branch: branch.branch,
+              branch: branch,
             });
           });
         });
