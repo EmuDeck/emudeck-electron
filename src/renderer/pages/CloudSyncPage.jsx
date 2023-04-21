@@ -52,10 +52,10 @@ function CloudSyncPage() {
       });
     } else {
       ipcChannel.sendMessage('emudeck', [
-        `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
+        `rclone_install_and_config|||rclone_install_and_config ${cloudSync}`,
       ]);
 
-      ipcChannel.once('createDesktop', (message) => {
+      ipcChannel.once('rclone_install_and_config', (message) => {
         // No versioning found, what to do?
         setStatePage({
           ...statePage,
@@ -64,7 +64,7 @@ function CloudSyncPage() {
       });
 
       ipcChannel.sendMessage('bash-nolog', [
-        `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
+        `zenity --info --width=400 --text="All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}"`,
       ]);
     }
   };
