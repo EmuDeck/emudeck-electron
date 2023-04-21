@@ -27,7 +27,13 @@ const PegasusThemePage = () => {
       <Header title="EmulationStation DE " bold="Theme" />
       <PegasusTheme data={data} onClick={themeSet} />
       <Footer
-        next={system == 'win32' ? 'emulator-resolution' : 'confirmation'}
+        next={
+          system == 'win32'
+            ? 'emulator-resolution'
+            : mode == 'easy'
+            ? 'end'
+            : 'confirmation'
+        }
         nextText="Next"
         disabledNext={disabledNext}
         disabledBack={disabledBack}

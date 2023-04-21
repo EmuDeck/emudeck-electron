@@ -134,6 +134,7 @@ function DeviceSelectorPage() {
             ? 'end'
             : 'emulator-selector'
         }
+        nextText={mode === 'easy' ? 'Finish' : 'Next'}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
