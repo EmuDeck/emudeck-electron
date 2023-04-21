@@ -33,7 +33,7 @@ function EndPage() {
   const readMSG = (command) => {
     ipcChannel.sendMessage('getMSG', []);
     ipcChannel.on('getMSG', (message) => {
-      console.log({ message });
+      // console.log({ message });
       let messageArray = message.stdout.split('#');
       let messageText = messageArray[1];
       let messagePercent = messageArray[0];

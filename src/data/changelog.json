@@ -49,6 +49,18 @@
     "image": "true"
   },
   {
+    "title": "Steam Rom Manager",
+    "type": "STEAMOS",
+    "description": "This new version of Steam Rom Manager has two new themes. EmuDeck theme designed for regular users and Deck, designed for advanced users, go to Manage Emulators and update your SRM configuration to get it!",
+    "image": "true"
+  },
+  {
+    "title": "Automatic Steam Input Profiles",
+    "type": "STEAMOS",
+    "description": "Alongside with new themes, the new version of Steam Rom Manager allow us to automatically add Steam Input Profiles, so all your 3DS, Wii U, etc. games will use the Steam Deck back buttons with no configuration. This will only affect new added games, so for already added ones you need to add them again using Steam Rom Manager.<br/>There's also one Profile for EmulationStation! Just use the left trackpad to select the system to play.",
+    "image": "true"
+  },
+  {
     "title": "Bug fixes & Small Features",
     "type": "STEAMOS",
     "description": "- Fixed PS3 Pkg parser so it doesn't grab discs in the hdd<br/>- GyroDSU working at last.<br/>- Steam Shortcut path bulk update<br/>- Fix DOSBox-pure config directory<br/>- Fix Vita3K Launcher<br/>- Fix EmuDeck Compressor tool with rvz files<br/>- EasyRPG SRM parser<br/>- Recursive SRM parsers are back<br/>- Added ESDE 2.0 beta<br/>- CSO Format support for PPSSPP",

@@ -67,7 +67,6 @@ function CheckUpdatePage() {
   }, []);
   let updateTimeOut;
   useEffect(() => {
-
     //Update timeout + Force clone check
     console.log('UPDATE - SETTING TIMER FOR TIMEOUT');
     updateTimeOut = setTimeout(() => {
@@ -79,7 +78,7 @@ function CheckUpdatePage() {
       updateFiles();
     }, 10000);
 
-    if(navigator.onLine){
+    if (navigator.onLine) {
       console.log('UPDATE - CHECKING');
       ipcChannel.sendMessage('update-check');
       console.log('UPDATE - WAITING');
@@ -97,8 +96,7 @@ function CheckUpdatePage() {
           updateFiles();
         }
       });
-
-    }else{
+    } else {
       clearTimeout(updateTimeOut);
       setStatePage({
         ...statePage,
@@ -280,7 +278,7 @@ function CheckUpdatePage() {
 
   useEffect(() => {
     if (downloadComplete == true) {
-      if (system === 'win32') {
+      if (system === 'win32' || branch == 'early') {
         navigate('/patreon-login');
         //navigate('/welcome');
       } else {
