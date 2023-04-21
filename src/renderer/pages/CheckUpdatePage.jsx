@@ -126,6 +126,7 @@ function CheckUpdatePage() {
         console.log({ overwriteConfigEmus });
 
         delete settingsStorage.installEmus.primehacks;
+        delete settingsStorage.installEmus.cemunative;
         delete settingsStorage.overwriteConfigEmus.primehacks;
         const installEmusStored = settingsStorage.installEmus;
 
