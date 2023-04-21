@@ -14,7 +14,7 @@ import img5 from 'assets/banner_emulators_manage.png';
 import img6 from 'assets/banner_migration.png';
 import img7 from 'assets/banner_steamOS.jpg';
 import img8 from 'assets/banner_emudeck-theme.png';
-import img9 from 'assets/banner_emudeck-theme.png';
+import img9 from 'assets/banner_steaminput.jpg';
 
 function ChangeLogPage() {
   const { state, setState } = useContext(GlobalContext);
