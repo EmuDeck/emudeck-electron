@@ -4,10 +4,12 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
-//Ask for branch
-const branch = require('data/branch.json');
 import Main from 'components/organisms/Main/Main';
 import { Alert } from 'getbasecore/Molecules';
+
+//Ask for branch
+const branchFile = require('data/branch.json');
+const branch = branchFile.branch;
 
 import {
   BtnSimple,
