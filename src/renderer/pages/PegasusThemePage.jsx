@@ -8,7 +8,7 @@ import PegasusTheme from 'components/organisms/Wrappers/PegasusTheme';
 
 const PegasusThemePage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { theme, system } = state;
+  const { theme, system, mode } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
