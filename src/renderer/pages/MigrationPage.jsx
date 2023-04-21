@@ -161,16 +161,17 @@ const MigrationPage = () => {
 
     ipcChannel.once('Migration_init', (message) => {
       let stdout = message.stdout.replace('\n', '');
-      console.log(stdout);
-      setStatePage({
-        ...statePage,
-        statusMigration: null,
-      });
-      setState({
-        ...state,
-        storage: storageDestination,
-        storagePath: storagePathDestination,
-      });
+      if (stdout.includes('Valid')) {
+        setStatePage({
+          ...statePage,
+          statusMigration: null,
+        });
+        setState({
+          ...state,
+          storage: storageDestination,
+          storagePath: storagePathDestination,
+        });
+      }
     });
   };
 
