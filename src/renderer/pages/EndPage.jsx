@@ -316,7 +316,7 @@ function EndPage() {
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallPrimehack="${
+            `echo ${preVar}doInstallPrimeHack="${
               state.installEmus.primehack.status ? true : false
             }" >> ${settingsFile}`,
           ]);
