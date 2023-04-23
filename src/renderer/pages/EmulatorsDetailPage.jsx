@@ -307,7 +307,7 @@ function EmulatorsDetailPage() {
                 ...installEmus,
                 [emulator]: {
                   id: emulator,
-                  name: name,
+                  name: code,
                   status: false,
                 },
               },
