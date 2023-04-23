@@ -30,7 +30,7 @@ function CloudSyncPage() {
   //   ipcChannel.sendMessage('emudeck', [`save-setting|||rclone_setup`]);
   // };
 
-  const createDesktopIcon = () => {
+  const installRclone = () => {
     setStatePage({
       ...statePage,
       disableButton: true,
@@ -51,28 +51,53 @@ function CloudSyncPage() {
         );
       });
     } else {
+      alert(
+        `A web browser will be opened so you can log in to your Cloud provider, after that every time you load a Game your Game states and Saved games will be synced to the cloud`
+      );
+
       ipcChannel.sendMessage('emudeck', [
         `rclone_install_and_config|||rclone_install_and_config ${cloudSync}`,
       ]);
 
       ipcChannel.once('rclone_install_and_config', (message) => {
+        setStatePage({
+          ...statePage,
+          disableButton: false,
+        });
+      });
+    }
+  };
+
+  const uninstallRclone = () => {
+    setStatePage({
+      ...statePage,
+      disableButton: true,
+    });
+
+    if (system === 'win32') {
+      ipcChannel.sendMessage('emudeck', [
+        `rclone_uninstall|||rclone_uninstall ${cloudSync}`,
+      ]);
+      ipcChannel.once('rclone_uninstall', (message) => {
         // No versioning found, what to do?
         setStatePage({
           ...statePage,
           disableButton: false,
         });
       });
-
-      ipcChannel.sendMessage('bash-nolog', [
-        `zenity --info --width=400 --text="All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}"`,
+    } else {
+      ipcChannel.sendMessage('emudeck', [
+        `rclone_uninstall_and_config|||rclone_uninstall_and_config`,
       ]);
-    }
-  };
 
-  const openKonsole = () => {
-    ipcChannel.sendMessage('emudeck', [
-      `openKonsole|||konsole -e echo $emulationPath && rclone_setup`,
-    ]);
+      ipcChannel.once('rclone_uninstall_and_config', (message) => {
+        setStatePage({
+          ...statePage,
+          disableButton: false,
+        });
+      });
+    }
+    alert(`Cloud Sync uninstalled`);
   };
 
   useEffect(() => {
@@ -84,10 +109,11 @@ function CloudSyncPage() {
 
   return (
     <Wrapper>
-      <Header title="SaveBackup - BETA" />
+      <Header title="Cloud Sync - BETA" />
       <CloudSync
         onClick={cloudSyncSet}
-        onClickInstall={createDesktopIcon}
+        onClickInstall={installRclone}
+        onClickUnnstall={uninstallRclone}
         disableButton={disableButton}
       />
       <Footer
