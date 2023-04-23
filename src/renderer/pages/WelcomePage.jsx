@@ -37,7 +37,7 @@ function WelcomePage() {
     downloadComplete: !navigator.onLine ? true : null,
     updates: null,
     cloned: null,
-    data: ''
+    data: '',
   });
   const { disabledNext, disabledBack, updates } = statePage;
   const navigate = useNavigate();
@@ -47,7 +47,6 @@ function WelcomePage() {
       navigate('/rom-storage');
     }
   };
-
 
   const settingsCardsFeatured = [
     {
@@ -187,8 +186,8 @@ function WelcomePage() {
     },
     {
       icon: [iconCloud],
-      title: 'Cloud Backup',
-      description: 'Backup your saves and save states to the cloud',
+      title: 'Cloud Sync',
+      description: 'Sync your saves and save states to the cloud',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
