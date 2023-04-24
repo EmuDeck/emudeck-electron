@@ -31,27 +31,45 @@ function CloudSyncPage() {
   // };
 
   const installRclone = () => {
-    // setStatePage({
-    //   ...statePage,
-    //   disableButton: true,
-    // });
+    setStatePage({
+      ...statePage,
+      disableButton: true,
+    });
 
     if (
       confirm(
         'Press OK if you already have CloudSync installed on another EmuDeck installation and you want to sync that installation to this one, if not, press Cancel'
       ) === true
     ) {
-      ipcChannel.sendMessage('bash', [
-        `konsole -e sh -c '. ~/.config/EmuDeck/backend/functions/all.sh && rclone_install_and_config_with_code ${cloudSync}'`,
+      ipcChannel.sendMessage('emudeck', [
+        `rclone_install_and_config_with_code|||rclone_install_and_config_with_code ${cloudSync}`,
       ]);
+      ipcChannel.once('rclone_install_and_config_with_code', (message) => {
+        // No versioning found, what to do?
+        console.log('cloudSync', message);
+        setStatePage({
+          ...statePage,
+          disableButton: false,
+        });
+        alert(
+          `All Done, every time you load a game your Game states and Saved games will be synced to ${cloudSync}`
+        );
+      });
     } else {
       alert(
         `A web browser will open so you can log in to your Cloud provider, after that every time you load a Game your Game states and Saved games will be synced to the cloud`
       );
 
-      ipcChannel.sendMessage('bash', [
-        `konsole -e sh -c '. ~/.config/EmuDeck/backend/functions/all.sh && rclone_install_and_config ${cloudSync}'`,
+      ipcChannel.sendMessage('emudeck', [
+        `rclone_install_and_config|||rclone_install_and_config ${cloudSync}`,
       ]);
+
+      ipcChannel.once('rclone_install_and_config', (message) => {
+        setStatePage({
+          ...statePage,
+          disableButton: false,
+        });
+      });
     }
   };
 
