@@ -65,6 +65,7 @@ function CloudSyncPage() {
       ]);
 
       ipcChannel.once('rclone_install_and_config', (message) => {
+        console.log('cloudSync', message);
         setStatePage({
           ...statePage,
           disableButton: false,
