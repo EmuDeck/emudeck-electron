@@ -31,11 +31,6 @@ function CloudSyncPage() {
   // };
 
   const installRclone = () => {
-    setStatePage({
-      ...statePage,
-      disableButton: true,
-    });
-
     if (
       confirm(
         'Press OK if you already have CloudSync installed on another EmuDeck installation and you want to sync that installation to this one, if not, press Cancel'
@@ -47,10 +42,6 @@ function CloudSyncPage() {
       ipcChannel.once('rclone_install_and_config_with_code', (message) => {
         // No versioning found, what to do?
         console.log('cloudSync', message);
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
         alert(
           `All Done, every time you load a game your Game states and Saved games will be synced to ${cloudSync}`
         );
@@ -66,26 +57,17 @@ function CloudSyncPage() {
 
       ipcChannel.once('rclone_install_and_config', (message) => {
         console.log('cloudSync', message);
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
       });
     }
   };
 
   const uninstallRclone = () => {
-    setStatePage({
-      ...statePage,
-      disableButton: true,
-    });
-
     ipcChannel.sendMessage('emudeck', [`rclone_uninstall|||rclone_uninstall`]);
     ipcChannel.once('rclone_uninstall', (message) => {
       // No versioning found, what to do?
       setStatePage({
-        ...statePage,
-        disableButton: false,
+        ...state,
+        cloudSync: null,
       });
       alert(`Cloud Sync uninstalled`);
     });
