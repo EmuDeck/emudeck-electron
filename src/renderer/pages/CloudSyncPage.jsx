@@ -36,23 +36,28 @@ function CloudSyncPage() {
       disableButton: true,
     });
 
-    if (system === 'win32') {
+    if (
+      confirm(
+        'Press OK if you already have CloudSync installed on another EmuDeck installation and you want to sync that installation to this one, if not, press Cancel'
+      ) === true
+    ) {
       ipcChannel.sendMessage('emudeck', [
-        `rclone_install|||rclone_install ${cloudSync}`,
+        `rclone_install_and_config_with_code|||rclone_install_and_config_with_code ${cloudSync}`,
       ]);
-      ipcChannel.once('rclone_install', (message) => {
+      ipcChannel.once('rclone_install_and_config_with_code', (message) => {
         // No versioning found, what to do?
+        console.log('cloudSync', message);
         setStatePage({
           ...statePage,
           disableButton: false,
         });
         alert(
-          `All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}`
+          `All Done, every time you load a game your Game states and Saved games will be synced to ${cloudSync}`
         );
       });
     } else {
       alert(
-        `A web browser will be opened so you can log in to your Cloud provider, after that every time you load a Game your Game states and Saved games will be synced to the cloud`
+        `A web browser will open so you can log in to your Cloud provider, after that every time you load a Game your Game states and Saved games will be synced to the cloud`
       );
 
       ipcChannel.sendMessage('emudeck', [
@@ -74,30 +79,15 @@ function CloudSyncPage() {
       disableButton: true,
     });
 
-    if (system === 'win32') {
-      ipcChannel.sendMessage('emudeck', [
-        `rclone_uninstall|||rclone_uninstall ${cloudSync}`,
-      ]);
-      ipcChannel.once('rclone_uninstall', (message) => {
-        // No versioning found, what to do?
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
+    ipcChannel.sendMessage('emudeck', [`rclone_uninstall|||rclone_uninstall`]);
+    ipcChannel.once('rclone_uninstall', (message) => {
+      // No versioning found, what to do?
+      setStatePage({
+        ...statePage,
+        disableButton: false,
       });
-    } else {
-      ipcChannel.sendMessage('emudeck', [
-        `rclone_uninstall_and_config|||rclone_uninstall_and_config`,
-      ]);
-
-      ipcChannel.once('rclone_uninstall_and_config', (message) => {
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
-      });
-    }
-    alert(`Cloud Sync uninstalled`);
+      alert(`Cloud Sync uninstalled`);
+    });
   };
 
   useEffect(() => {
