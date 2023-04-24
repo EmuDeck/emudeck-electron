@@ -37,7 +37,7 @@ function WelcomePage() {
     downloadComplete: !navigator.onLine ? true : null,
     updates: null,
     cloned: null,
-    data: '',
+    data: ''
   });
   const { disabledNext, disabledBack, updates } = statePage;
   const navigate = useNavigate();
@@ -47,6 +47,7 @@ function WelcomePage() {
       navigate('/rom-storage');
     }
   };
+
 
   const settingsCardsFeatured = [
     {
