@@ -63,9 +63,6 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 const branch = require('data/branch.json');
 
 export default function App() {
-
-
-
   const [stateCurrentConfigs, setStateCurrentConfigs] = useState({
     ra: { id: 'ra', code: 'RetroArch', version: 0 },
     dolphin: { id: 'dolphin', code: 'Dolphin', version: 0 },
@@ -211,7 +208,7 @@ export default function App() {
       xenia: {
         id: 'xenia',
         status: false,
-        installed: undefined,
+        installed: false,
         name: 'Xenia',
       },
       mgba: { id: 'mgba', status: false, installed: undefined, name: 'mGBA' },
@@ -251,8 +248,6 @@ export default function App() {
     },
   });
 
-
-
   return (
     <GlobalContext.Provider
       value={{
@@ -265,7 +260,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<CheckDependenciesPage />} />
-            <Route exact path="/error" element={<ErrorPage />} />
+          <Route exact path="/error" element={<ErrorPage />} />
           <Route exact path="/check-updates" element={<CheckUpdatePage />} />
           <Route exact path="/patreon-login" element={<PatreonLoginPage />} />
 

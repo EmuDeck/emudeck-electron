@@ -350,7 +350,7 @@ function WelcomePage() {
       `sprunge|||cat ~/emudeck/emudeck.log | curl -F 'sprunge=<-' http://sprunge.us`,
     ]);
     ipcChannel.once('sprunge', (message) => {
-      alert(`Copy this url: ${message}`);
+      prompt('Copy this url:', `${message}`);
     });
   };
 
