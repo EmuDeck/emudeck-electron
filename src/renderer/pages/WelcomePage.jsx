@@ -384,7 +384,7 @@ function WelcomePage() {
         alert={
           second
             ? ``
-            : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/rs9jDHIDKkU" target="_blank">Check out this guide</a>'
+            : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/Y5r2WZAImuY" target="_blank">Check out this guide</a>'
         }
         alertCSS="alert--info"
         onClick={selectMode}
