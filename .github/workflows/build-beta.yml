@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v3
-
+          
       - name: Git Submodule Update
         run: git submodule update --init --recursive
 
@@ -47,6 +47,7 @@ jobs:
           sed -i "s|emudeck-electron|emudeck-electron-beta|g" "./package.json"
           #sed -i "s|EmuDeck|EmuDeck-beta|g" "./release/app/package.json"
           #sed -i 's|"productName": "EmuDeck"|"productName": "EmuDeck-beta"|g' "./package.json"
+          
       - name: Publish releases
         env:
           # These values are used for auto updates signing
@@ -62,6 +63,12 @@ jobs:
           npm run postinstall
           npm run build
           npm exec electron-builder -- --publish always --linux
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: EmuDeck-Beta-AppImage
+          path: '**/*.AppImage'
 
   publish-windows:
     # To enable auto publishing to github, update your electron publisher
