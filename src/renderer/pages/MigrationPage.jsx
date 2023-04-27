@@ -81,7 +81,7 @@ const MigrationPage = () => {
         ...statePage,
         disabledNext: false,
         storageDestination: storageName,
-        storagePath: sdCardPath,
+        storagePathDestination: sdCardPath,
       });
     } else {
       setStatePage({
