@@ -5,16 +5,17 @@ import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Card from 'components/molecules/Card/Card';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog';
-import img0 from 'assets/banner_store.png';
-import img1 from 'assets/banner_ui.png';
-import img2 from 'assets/banner_melonds.png';
-import img3 from 'assets/banner_usbtransfer.png';
-import img4 from 'assets/banner_ESDE.jpg';
-import img5 from 'assets/banner_emulators_manage.png';
-import img6 from 'assets/banner_migration.png';
-import img7 from 'assets/banner_steamOS.jpg';
-import img8 from 'assets/banner_emudeck-theme.png';
-import img9 from 'assets/banner_steaminput.jpg';
+import img0 from 'assets/banner_steamOS.jpg';
+import img1 from 'assets/banner_store.png';
+import img2 from 'assets/banner_ui.png';
+import img3 from 'assets/banner_melonds.png';
+import img4 from 'assets/banner_usbtransfer.png';
+import img5 from 'assets/banner_ESDE.jpg';
+import img6 from 'assets/banner_emulators_manage.png';
+import img7 from 'assets/banner_migration.png';
+import img8 from 'assets/banner_streaming.jpg';
+import img9 from 'assets/banner_emudeck-theme.png';
+import img10 from 'assets/banner_steaminput.jpg';
 
 function ChangeLogPage() {
   const { state, setState } = useContext(GlobalContext);
@@ -61,6 +62,8 @@ function ChangeLogPage() {
         break;
       case 9:
         imgID = img9;
+        case 10:
+        imgID = img10;
         break;
     }
 
