@@ -227,8 +227,21 @@ function EmulatorsPage() {
 
   useEffect(() => {
     if (showNotification === false) {
-      const updates = diff(newDesiredVersions, stateCurrentConfigs);
+      //const updates = diff(newDesiredVersions, stateCurrentConfigs);
+      
+      
+      const obj1 = newDesiredVersions;
+      const obj2 = stateCurrentConfigs;
+      
+      const updates = {};
+      
+      for (const key in obj1) {
+        if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
+          updates[key] = obj1[key];
+        }
+      }
       console.log({ updates });
+      
       setStatePage({
         ...statePage,
         updates: updates,

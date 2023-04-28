@@ -194,8 +194,7 @@ function EmulatorsDetailPage() {
     });
   };
 
-  const installEmu = (emulator, code) => {
-    console.log(emulator);
+  const reInstallEmu = (emulator, code) => {
 
     setStatePage({
       ...statePage,
@@ -203,7 +202,7 @@ function EmulatorsDetailPage() {
     });
 
     ipcChannel.sendMessage('emudeck', [
-      `${code}_install|||${code}_install && ${code}_init`,
+      `${code}_install|||${code}_install`,
     ]);
 
     ipcChannel.once(`${code}_install`, (message) => {
@@ -220,6 +219,66 @@ function EmulatorsDetailPage() {
         status = message.stdout;
         status.replace('\n', '');
 
+        if (status.includes('true')) {
+          setStatePage({
+            ...statePage,
+            textNotification: `${code} installed! 🎉`,
+            showNotification: true,
+            hideInstallButton: false,
+          });
+          // We set the emu as install = yes
+          setState({
+            ...state,
+            installEmus: {
+              ...installEmus,
+              [emulator]: {
+                id: emulator,
+                name: code,
+                status: true,
+              },
+            },
+          });
+        } else {
+          setStatePage({
+            ...statePage,
+            textNotification: `There was an issue trying to install ${code} 😥`,
+            showNotification: true,
+            hideInstallButton: false,
+          });
+          // We save it on localstorage
+          let json = JSON.stringify(state);
+          localStorage.setItem('settings_emudeck', json);
+        }
+      });
+    });
+  };
+  
+  const installEmu = (emulator, code) => {
+    console.log(emulator);
+  
+    setStatePage({
+      ...statePage,
+      hideInstallButton: true,
+    });
+  
+    ipcChannel.sendMessage('emudeck', [
+      `${code}_install|||${code}_install && ${code}_init`,
+    ]);
+  
+    ipcChannel.once(`${code}_install`, (message) => {
+      // console.log({ status });
+      let status = message.stdout;
+      status.replace('\n', '');
+      // Lets check if it did install
+      ipcChannel.sendMessage('emudeck', [
+        `${code}_IsInstalled|||${code}_IsInstalled`,
+      ]);
+  
+      ipcChannel.once(`${code}_IsInstalled`, (message) => {
+        // console.log({ status });
+        status = message.stdout;
+        status.replace('\n', '');
+  
         if (status.includes('true')) {
           setStatePage({
             ...statePage,
@@ -472,6 +531,7 @@ function EmulatorsDetailPage() {
             onChange={selectEmu}
             onClick={resetEmu}
             onClickInstall={installEmu}
+            onClickReInstall={reInstallEmu}
             onClickUninstall={uninstallEmu}
             showNotification={showNotification}
             textNotification={textNotification}
