@@ -1,8 +1,8 @@
 [
   {
-    "title": "2.1.3",
+    "title": "2.1.4",
     "type": "STEAMOS",
-    "description": "<strong>Fixes:</strong><br/>- Resolved an issue when using Migration Installation from Internal to SD Card<br/> -  EmuDeck Store adjusted for bigger screens on big screens.<br/> - Install all Config updates no longer crashes",
+    "description": "<strong>Fixes:</strong><br/>- Resolved an issue when using Migration Installation from Internal to SD Card<br/> -  EmuDeck Store adjusted for bigger screens on big screens.<br/> - Install all Config updates no longer crashes<br/>- Resolved an issue when using USB Transfer Wizard on USB Drives with spaces on their names",
     "image": "false"
   },
   {
