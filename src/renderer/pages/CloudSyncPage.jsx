@@ -8,7 +8,7 @@ import CloudSync from 'components/organisms/Wrappers/CloudSync';
 
 function CloudSyncPage() {
   const { state, setState } = useContext(GlobalContext);
-  let json = JSON.stringify(state);
+  const json = JSON.stringify(state);
   const { cloudSync, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -37,9 +37,9 @@ function CloudSyncPage() {
       ) === true
     ) {
       ipcChannel.sendMessage('emudeck', [
-        `rclone_install_and_config_with_code|||rclone_install_and_config_with_code ${cloudSync}`,
+        `cloud_sync_install_and_config_with_code|||cloud_sync_install_and_config_with_code ${cloudSync}`,
       ]);
-      ipcChannel.once('rclone_install_and_config_with_code', (message) => {
+      ipcChannel.once('cloud_sync_install_and_config_with_code', (message) => {
         // No versioning found, what to do?
         console.log('cloudSync', message);
         alert(
@@ -52,18 +52,20 @@ function CloudSyncPage() {
       );
 
       ipcChannel.sendMessage('emudeck', [
-        `rclone_install_and_config|||rclone_install_and_config ${cloudSync}`,
+        `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
       ]);
 
-      ipcChannel.once('rclone_install_and_config', (message) => {
+      ipcChannel.once('cloud_sync_install_and_config', (message) => {
         console.log('cloudSync', message);
       });
     }
   };
 
   const uninstallRclone = () => {
-    ipcChannel.sendMessage('emudeck', [`rclone_uninstall|||rclone_uninstall`]);
-    ipcChannel.once('rclone_uninstall', (message) => {
+    ipcChannel.sendMessage('emudeck', [
+      `cloud_sync_uninstall|||cloud_sync_uninstall`,
+    ]);
+    ipcChannel.once('cloud_sync_uninstall', (message) => {
       // No versioning found, what to do?
       setStatePage({
         ...state,
