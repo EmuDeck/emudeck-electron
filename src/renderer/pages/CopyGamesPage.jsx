@@ -90,7 +90,7 @@ function CopyGamesPage() {
 
   const startCopyGames = () => {
     ipcChannel.sendMessage('emudeck', [
-      `CopyGames|||CopyGames ${storageUSBPath} ${storageUSBPath}`,
+      `CopyGames|||CopyGames '${storageUSBPath}'`,
     ]);
 
     ipcChannel.once('CopyGames', (message) => {
@@ -108,7 +108,7 @@ function CopyGamesPage() {
       statusCreateStructure: 'waiting',
     });
     ipcChannel.sendMessage('emudeck', [
-      `CreateStructureUSB|||CreateStructureUSB ${storageUSBPath}`,
+      `CreateStructureUSB|||CreateStructureUSB '${storageUSBPath}'`,
     ]);
 
     ipcChannel.once('CreateStructureUSB', (message) => {
