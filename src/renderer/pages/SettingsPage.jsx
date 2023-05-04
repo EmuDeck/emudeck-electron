@@ -10,29 +10,36 @@ function SettingsPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { ar, shaders, bezels } = state;
-  let json = JSON.stringify(state);
+  const json = JSON.stringify(state);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
     notificationText: '',
     showNotification: false,
   });
-  const {
-    disabledNext,
-    disabledBack,
-    data,
-    notificationText,
-    showNotification,
-  } = statePage;
+  const { disabledBack, notificationText, showNotification } = statePage;
 
-  useEffect(() => {
-    localStorage.setItem('settings_emudeck', json);
-  }, [state]);
+  const notificationShow = (text) => {
+    setStatePage({
+      ...statePage,
+      notificationText: text,
+      showNotification: true,
+    });
+
+    if (showNotification === true) {
+      setTimeout(() => {
+        setStatePage({
+          ...statePage,
+          showNotification: false,
+        });
+      }, 2000);
+    }
+  };
 
   const onClickBezel = (arStatus) => {
     setState({
       ...state,
-      bezels: arStatus,
+      bezels: aratus,
     });
 
     let functionBezel;
@@ -42,8 +49,8 @@ function SettingsPage() {
       : (functionBezel = 'RetroArch_bezelOffAll');
 
     ipcChannel.sendMessage('emudeck', [`bezels|||${functionBezel}`]);
-    ipcChannel.once('bezels', (message) => {
-      console.log(message);
+    ipcChannel.once('bezels', () => {
+      // console.log(message);
       notificationShow('🎉 Bezels updated!');
     });
   };
@@ -61,20 +68,20 @@ function SettingsPage() {
         ipcChannel.sendMessage('emudeck', [
           'sega32|||RetroArch_mastersystem_ar32 && RetroArch_genesis_ar32  && RetroArch_segacd_ar32 && RetroArch_sega32x_ar32',
         ]);
-        ipcChannel.once('sega32', (message) => {
-          console.log(message);
+        ipcChannel.once('sega32', () => {
+          // console.log(message);
           notificationShow('🎉 Sega Aspect Ratio updated!');
         });
         break;
-      case '43':
+      default: // 43
         ipcChannel.sendMessage('emudeck', [
           'sega43|||RetroArch_mastersystem_ar43 && RetroArch_genesis_ar43  && RetroArch_segacd_ar43 && RetroArch_sega32x_ar43',
         ]);
-        ipcChannel.once('sega43', (message) => {
-          console.log(message);
+        ipcChannel.once('sega43', () => {
+          // console.log(message);
           notificationShow('🎉 Sega Aspect Ratio updated!');
         });
-        if (bezels == true) {
+        if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
             'sega43Bezels|||RetroArch_mastersystem_bezelOn && RetroArch_genesis_bezelOn && RetroArch_segacd_bezelOn && RetroArch_sega32x_bezelOn',
           ]);
@@ -95,11 +102,11 @@ function SettingsPage() {
         ipcChannel.sendMessage('emudeck', [
           'snes87|||RetroArch_snes_ar87 && RetroArch_nes_ar87',
         ]);
-        ipcChannel.once('snes87', (message) => {
-          console.log(message);
+        ipcChannel.once('snes87', () => {
+          // console.log(message);
           notificationShow('🎉 SNES Aspect Ratio updated!');
         });
-        if (bezels == true) {
+        if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
             'snes87Bezels|||RetroArch_snes_bezelOn && RetroArch_snes_ar87 && RetroArch_nes_ar87',
           ]);
@@ -109,20 +116,20 @@ function SettingsPage() {
         ipcChannel.sendMessage('emudeck', [
           'snes32|||RetroArch_snes_ar32 && RetroArch_nes_ar32',
         ]);
-        ipcChannel.once('snes32', (message) => {
-          console.log(message);
+        ipcChannel.once('snes32', () => {
+          // console.log(message);
           notificationShow('🎉 SNES Aspect Ratio updated!');
         });
         break;
-      case '43':
+      default: // 43
         ipcChannel.sendMessage('emudeck', [
           'snes43|||RetroArch_snes_ar43 && RetroArch_nes_ar43',
         ]);
-        ipcChannel.once('snes43', (message) => {
-          console.log(message);
+        ipcChannel.once('snes43', () => {
+          // console.log(message);
           notificationShow('🎉 SNES Aspect Ratio updated!');
         });
-        if (bezels == true) {
+        if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
             'snes43Bezels|||RetroArch_snes_bezelOn',
           ]);
@@ -143,25 +150,25 @@ function SettingsPage() {
         ipcChannel.sendMessage('emudeck', [
           '3d169|||RetroArch_Beetle_PSX_HW_wideScreenOn && DuckStation_wideScreenOn && RetroArch_Flycast_wideScreenOn && Xemu_wideScreenOn && RetroArch_dreamcast_bezelOff && RetroArch_psx_bezelOff',
         ]);
-        ipcChannel.once('3d169', (message) => {
-          console.log(message);
+        ipcChannel.once('3d169', () => {
+          // console.log(message);
           notificationShow('🎉 3D Aspect Ratio updated!');
         });
         break;
-      case '43':
+      default: // 43
         ipcChannel.sendMessage('emudeck', [
           '3d43|||RetroArch_Flycast_wideScreenOff && RetroArch_Beetle_PSX_HW_wideScreenOff && DuckStation_wideScreenOff && Xemu_wideScreenOff',
         ]);
-        ipcChannel.once('3d43', (message) => {
-          console.log(message);
+        ipcChannel.once('3d43', () => {
+          // console.log(message);
           notificationShow('🎉 3D Aspect Ratio updated!');
         });
-        if (bezels == true) {
+        if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
             '3d43Bezels|||RetroArch_dreamcast_bezelOn && RetroArch_psx_bezelOn',
           ]);
-          ipcChannel.once('3d43Bezels', (message) => {
-            console.log(message);
+          ipcChannel.once('3d43Bezels', () => {
+            // console.log(message);
             notificationShow('🎉 3D Aspect Ratio updated!');
           });
         }
@@ -176,16 +183,16 @@ function SettingsPage() {
         dolphin: arStatus,
       },
     });
-    if (arStatus == '169') {
+    if (arStatus === '169') {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOn']);
-      ipcChannel.once('dolphin', (message) => {
-        console.log(message);
+      ipcChannel.once('dolphin', () => {
+        // console.log(message);
         notificationShow('🎉 Dolphin Aspect Ratio updated!');
       });
     } else {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOff']);
-      ipcChannel.once('dolphin', (message) => {
-        console.log(message);
+      ipcChannel.once('dolphin', () => {
+        // console.log(message);
         notificationShow('🎉 Dolphin Aspect Ratio updated!');
       });
     }
@@ -206,8 +213,8 @@ function SettingsPage() {
       : (functionCRT = 'RetroArch_CRTshaderOffAll');
 
     ipcChannel.sendMessage('emudeck', [`CRT|||${functionCRT}`]);
-    ipcChannel.once('CRT', (message) => {
-      console.log(message);
+    ipcChannel.once('CRT', () => {
+      // console.log(message);
       notificationShow('🎉 CRT Shader updated!');
     });
   };
@@ -227,8 +234,8 @@ function SettingsPage() {
       : (functionCRT3D = 'RetroArch_3DCRTshaderOffAll');
 
     ipcChannel.sendMessage('emudeck', [`CRT3D|||${functionCRT3D}`]);
-    ipcChannel.once('CRT3D', (message) => {
-      console.log(message);
+    ipcChannel.once('CRT3D', () => {
+      // console.log(message);
       notificationShow('🎉 3D CRT Shader updated!');
     });
   };
@@ -247,27 +254,10 @@ function SettingsPage() {
       : (functionLCD = 'RetroArch_MATshadersOffAll');
 
     ipcChannel.sendMessage('emudeck', [`LCD|||${functionLCD}`]);
-    ipcChannel.once('LCD', (message) => {
-      console.log(message);
+    ipcChannel.once('LCD', () => {
+      // console.log(message);
       notificationShow('🎉 LCD Shader updated!');
     });
-  };
-
-  const notificationShow = (text) => {
-    setStatePage({
-      ...statePage,
-      notificationText: text,
-      showNotification: true,
-    });
-
-    if (showNotification === true) {
-      setTimeout(() => {
-        setStatePage({
-          ...statePage,
-          showNotification: false,
-        });
-      }, 2000);
-    }
   };
 
   const autoSaveSet = (status) => {
@@ -282,11 +272,15 @@ function SettingsPage() {
       : (functionAutoSave = 'RetroArch_autoSaveOff');
 
     ipcChannel.sendMessage('emudeck', [`autoSave|||${functionAutoSave}`]);
-    ipcChannel.once('autoSave', (message) => {
-      console.log(message);
+    ipcChannel.once('autoSave', () => {
+      // console.log(message);
       notificationShow('🎉 AutoSave updated!');
     });
   };
+
+  useEffect(() => {
+    localStorage.setItem('settings_emudeck', json);
+  }, [state]);
 
   const HomeBrew = (status) => {
     setState({
@@ -300,8 +294,8 @@ function SettingsPage() {
       : (functionHomebrewGames = 'emuDeckUninstallHomebrewGames');
 
     ipcChannel.sendMessage('emudeck', [`autoSave|||${functionHomebrewGames}`]);
-    ipcChannel.once('autoSave', (message) => {
-      console.log(message);
+    ipcChannel.once('autoSave', () => {
+      // console.log(message);
       notificationShow('🎉 HomeBrew Games updated!');
     });
   };

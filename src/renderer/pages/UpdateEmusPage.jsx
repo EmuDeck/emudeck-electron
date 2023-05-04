@@ -5,7 +5,7 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import UpdateEmus from 'components/organisms/Wrappers/UpdateEmus';
 
-const UpdateEmusPage = () => {
+function UpdateEmusPage() {
   const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -42,6 +42,6 @@ const UpdateEmusPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default UpdateEmusPage;

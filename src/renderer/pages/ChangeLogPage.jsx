@@ -18,7 +18,7 @@ import img9 from 'assets/banner_emudeck-theme.png';
 import img10 from 'assets/banner_steaminput.jpg';
 
 function ChangeLogPage() {
-  const { state, setState } = useContext(GlobalContext);
+  const { state } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -62,7 +62,7 @@ function ChangeLogPage() {
         break;
       case 9:
         imgID = img9;
-        case 10:
+      case 10:
         imgID = img10;
         break;
     }
@@ -70,7 +70,7 @@ function ChangeLogPage() {
     setStatePage({ ...statePage, current: id, img: imgID });
   };
 
-  //Hide changelog after seen
+  // Hide changelog after seen
   useEffect(() => {
     localStorage.setItem('show_changelog', false);
 
@@ -100,7 +100,7 @@ function ChangeLogPage() {
               <ul>
                 {log.map((item, i) => {
                   return (
-                    <li tabindex="0" key={i}>
+                    <li tabIndex="0" key={i}>
                       <Card
                         css={current == i && 'is-selected'}
                         onClick={() => activeItem(i)}
@@ -116,7 +116,7 @@ function ChangeLogPage() {
           <div data-col-sm="8">
             {log.map((item, i) => {
               return (
-                <div tabindex="0" key={i}>
+                <div tabIndex="0" key={i}>
                   {current == i && (
                     <Card
                       onClick={() => activeItem(i)}
@@ -136,7 +136,7 @@ function ChangeLogPage() {
                       )}
                       <p
                         dangerouslySetInnerHTML={{ __html: item.description }}
-                      ></p>
+                      />
                     </Card>
                   )}
                 </div>

@@ -8,7 +8,8 @@ import UpdateConfigs from 'components/organisms/Wrappers/UpdateConfigs';
 import Notification from 'components/molecules/Notification/Notification';
 
 function UpdateConfigsPage() {
-  const { stateCurrentConfigs, setStateCurrentConfigs } = useContext(GlobalContext);
+  const { stateCurrentConfigs, setStateCurrentConfigs } =
+    useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -149,11 +150,11 @@ function UpdateConfigsPage() {
     ipcChannel.sendMessage('emudeck', [
       `${name}_resetConfig|||${name}_resetConfig`,
     ]);
-    ipcChannel.once(`${name}_resetConfig`, (status) => {
-      console.log(`${name}_resetConfig`);
-      status = status.stdout;
-      console.log({ status });
-      status = status.replace('\n', '');
+    ipcChannel.once(`${name}_resetConfig`, (message) => {
+      // console.log(`${name}_resetConfig`);
+      const { stdout } = message;
+      // console.log({ status });
+      const status = stdout.replace('\n', '');
 
       if (status.includes('true')) {
         setStatePage({
@@ -193,14 +194,14 @@ function UpdateConfigsPage() {
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?
       if (repoVersions === '') {
-        console.log('no versioning found');
+        // console.log('no versioning found');
       }
 
-      const updates = diff(repoVersions, stateCurrentConfigs);
-      console.log({ updates });
+      const updatesDiffStart = diff(repoVersions, stateCurrentConfigs);
+      // console.log({ updates });
       setStatePage({
         ...statePage,
-        updates: updates,
+        updatesDiffStart,
         newDesiredVersions: repoVersions,
       });
     });
@@ -210,14 +211,14 @@ function UpdateConfigsPage() {
 
   useEffect(() => {
     if (showNotification === false) {
-      const updates = diff(newDesiredVersions, stateCurrentConfigs);
-      console.log({ updates });
+      const updatesDiffFinish = diff(newDesiredVersions, stateCurrentConfigs);
+      // console.log({ updates });
       setStatePage({
         ...statePage,
-        updates: updates,
+        updatesDiffFinish,
       });
 
-      let json = JSON.stringify(stateCurrentConfigs);
+      const json = JSON.stringify(stateCurrentConfigs);
       localStorage.setItem('current_versions_beta', json);
     }
   }, [showNotification]);

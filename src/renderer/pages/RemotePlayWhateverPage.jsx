@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
@@ -6,9 +6,7 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import RemotePlayWhatever from 'components/organisms/Wrappers/RemotePlayWhatever';
 
-const RemotePlayWhateverPage = () => {
-  const { state, setState } = useContext(GlobalContext);
-
+function RemotePlayWhateverPage() {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -37,7 +35,7 @@ const RemotePlayWhateverPage = () => {
     }
   };
 
-  const installRPW = (data) => {
+  const installRPW = () => {
     ipcChannel.sendMessage('emudeck', [
       'RemotePlayWhatever|||RemotePlayWhatever_install',
     ]);
@@ -62,6 +60,6 @@ const RemotePlayWhateverPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default RemotePlayWhateverPage;

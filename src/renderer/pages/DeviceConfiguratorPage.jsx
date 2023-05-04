@@ -14,14 +14,13 @@ import DeviceSelector from 'components/organisms/Wrappers/DeviceSelector';
 import imgDeck from 'assets/devices/deck.png';
 import imgPS4 from 'assets/devices/PS4.png';
 import imgPS5 from 'assets/devices/PS5.png';
-import imgSteam from 'assets/devices/steam.png';
 import imgWin600 from 'assets/devices/win600.png';
 import imgX360 from 'assets/devices/x360.png';
 import imgXOne from 'assets/devices/xone.png';
 
 function DeviceConfiguratorPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, installEmus, system, mode } = state;
+  const { device, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
@@ -29,7 +28,7 @@ function DeviceConfiguratorPage() {
   });
   const { disabledNext, disabledBack, data } = statePage;
   const ipcChannel = window.electron.ipcRenderer;
-  //Setting the device
+  // Setting the device
   const deviceSet = (deviceName) => {
     setStatePage({ ...statePage, disabledNext: false });
     setState({
@@ -38,7 +37,7 @@ function DeviceConfiguratorPage() {
     });
   };
 
-  //Enabling button when changing the global state only if we have a device selected
+  // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
     if (device !== '') {
       setStatePage({ ...statePage, disabledNext: false });
@@ -53,7 +52,7 @@ function DeviceConfiguratorPage() {
         });
       }
     }
-  }, [state]); // <-- here put the parameter to listen
+  }, [state]);
 
   return (
     <Wrapper>

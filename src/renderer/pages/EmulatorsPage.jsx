@@ -5,11 +5,9 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Main from 'components/organisms/Main/Main';
-import UpdateConfigs from 'components/organisms/Wrappers/UpdateConfigs';
 import CardSettings from 'components/molecules/CardSettings/CardSettings';
 import Notification from 'components/molecules/Notification/Notification';
 import {
-  imgdefault,
   imgra,
   imgdolphin,
   imgprimehack,

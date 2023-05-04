@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/globalContext';
+import React, { useEffect, useState } from 'react';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 
 import PowerTools from 'components/organisms/Wrappers/PowerTools';
 
-const PowerToolsPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+function PowerToolsPage() {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -35,7 +33,7 @@ const PowerToolsPage = () => {
   const ipcChannel = window.electron.ipcRenderer;
 
   const setSudoPass = (data) => {
-    if (data.target.value != '') {
+    if (data.target.value !== '') {
       setStatePage({
         ...statePage,
         sudoPass: data.target.value,
@@ -48,7 +46,7 @@ const PowerToolsPage = () => {
     }
   };
 
-  const createSudo = (data) => {
+  const createSudo = () => {
     ipcChannel.sendMessage('bash', [
       `echo '${pass1}' > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
@@ -75,23 +73,21 @@ const PowerToolsPage = () => {
     });
   };
 
-  const installPowerTools = (data) => {
+  const installPowerTools = () => {
     setStatePage({
       ...statePage,
       disableButton: true,
     });
 
-    const escapedPass = sudoPass.replaceAll("'","'\\''")
+    const escapedPass = sudoPass.replaceAll("'", "'\\''");
 
     ipcChannel.sendMessage('emudeck', [
       `powerTools|||echo '${escapedPass}' | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools && echo true`,
     ]);
 
     ipcChannel.once('powerTools', (status) => {
-      console.log({ status });
-      const stdout = status.stdout;
-      const sterr = status.stdout;
-      const error = status.error;
+      // console.log({ status });
+      const { stdout } = status;
 
       if (stdout.includes('true')) {
         setStatePage({
@@ -133,13 +129,14 @@ const PowerToolsPage = () => {
       'checkPWD|||passwd -S $(whoami) | awk -F " " "{print $2}" & exit',
     ]);
 
-    ipcChannel.once('checkPWD', (stdout) => {
-      console.log({ stdout });
-      stdout = stdout.replace('\n', '');
-      stdout.includes('NP') ? (stdout = false) : (stdout = true);
+    ipcChannel.once('checkPWD', (messagePWD) => {
+      // console.log({ stdout });
+      const stdout = messagePWD.replace('\n', '');
+      let stdoutPWD;
+      stdout.includes('NP') ? (stdoutPWD = false) : (stdoutPWD = true);
       setStatePage({
         ...statePage,
-        hasSudo: stdout,
+        hasSudo: stdoutPWD,
       });
     });
   }, []);
@@ -157,7 +154,7 @@ const PowerToolsPage = () => {
         onClick={createSudo}
         disableButton={disableButton}
         hasSudo={hasSudo}
-        passValidates={pass1 === pass2 ? true : false}
+        passValidates={pass1 === pass2}
         textNotification={textNotification}
       />
       <Footer
@@ -168,6 +165,6 @@ const PowerToolsPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default PowerToolsPage;

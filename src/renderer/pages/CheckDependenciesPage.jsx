@@ -1,14 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
-import Footer from 'components/organisms/Footer/Footer';
-import { Img, BtnSimple, ProgressBar } from 'getbasecore/Atoms';
+import { Img, ProgressBar } from 'getbasecore/Atoms';
 import { iconSuccess, iconDanger } from 'components/utils/images/images';
-function CheckDependenciesPage() {
-  const { state, setState } = useContext(GlobalContext);
 
+function CheckDependenciesPage() {
   const [stateGIT, setStateGIT] = useState({
     statusGIT: null,
   });
@@ -45,7 +42,7 @@ function CheckDependenciesPage() {
     });
     ipcChannel.sendMessage('validate-git');
     ipcChannel.once('validate-git', (messageGIT) => {
-      console.log({ messageGIT });
+      // console.log({ messageGIT });
       if (messageGIT.stdout === true) {
         setStateGIT({
           statusGIT: true,
@@ -64,7 +61,7 @@ function CheckDependenciesPage() {
     });
     ipcChannel.sendMessage('validate-7Zip');
     ipcChannel.once('validate-7Zip', (message7Zip) => {
-      console.log({ message7Zip });
+      // console.log({ message7Zip });
       if (message7Zip.stdout === true) {
         setState7Zip({
           status7Zip: true,
@@ -83,7 +80,7 @@ function CheckDependenciesPage() {
     });
     ipcChannel.sendMessage('validate-Steam');
     ipcChannel.once('validate-Steam', (messageSteam) => {
-      console.log({ messageSteam });
+      // console.log({ messageSteam });
       if (messageSteam.stdout === true) {
         setStateSteam({
           statusSteam: true,
@@ -100,9 +97,9 @@ function CheckDependenciesPage() {
     ipcChannel.sendMessage('system-info-in');
     ipcChannel.once('system-info-out', (system) => {
       if (system === 'win32') {
-        //GIT?
+        // GIT?
         checkGit();
-        //7ZIP?
+        // 7ZIP?
         check7Zip();
         // //Steam?
         checkSteam();
