@@ -57,7 +57,7 @@ const images = {
   xenia: imgxenia,
 };
 
-const EmulatorConfigurationPage = () => {
+function EmulatorConfigurationPage() {
   const { state, setState } = useContext(GlobalContext);
   const { device, overwriteConfigEmus } = state;
 
@@ -69,7 +69,7 @@ const EmulatorConfigurationPage = () => {
   const { disabledNext, disabledBack, data } = statePage;
 
   const toggleEmus = (emulatorProp) => {
-    let { id, name, status } = overwriteConfigEmus[emulatorProp];
+    const { id, name, status } = overwriteConfigEmus[emulatorProp];
 
     setState({
       ...state,
@@ -107,6 +107,6 @@ const EmulatorConfigurationPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default EmulatorConfigurationPage;

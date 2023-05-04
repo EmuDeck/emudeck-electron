@@ -24,6 +24,7 @@ import imgSteam from 'assets/devices/steam.png';
 import imgWin600 from 'assets/devices/win600.png';
 import imgX360 from 'assets/devices/x360.png';
 import imgXOne from 'assets/devices/xone.png';
+import imgWiiPro from 'assets/devices/wiipro.png';
 
 function DeviceSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
@@ -35,7 +36,7 @@ function DeviceSelectorPage() {
   });
   const { disabledNext, disabledBack, data } = statePage;
   const ipcChannel = window.electron.ipcRenderer;
-  //Setting the device
+  // Setting the device
   const deviceSet = (deviceName) => {
     setStatePage({ ...statePage, disabledNext: false });
     setState({
@@ -44,7 +45,7 @@ function DeviceSelectorPage() {
     });
   };
 
-  //Enabling button when changing the global state only if we have a device selected
+  // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
     if (device !== '') {
       setStatePage({ ...statePage, disabledNext: false });
@@ -120,6 +121,13 @@ function DeviceSelectorPage() {
             >
               <img src={imgXOne} width="100" alt="Background" />
               <span className="h6">Xbox One Controller</span>
+            </Card>
+            <Card
+              css={device === 'WIIUPRO' && 'is-selected'}
+              onClick={() => deviceSet('WIIUPRO')}
+            >
+              <img src={imgWiiPro} width="100" alt="Background" />
+              <span className="h6">Pro Controller</span>
             </Card>
           </>
         )}
