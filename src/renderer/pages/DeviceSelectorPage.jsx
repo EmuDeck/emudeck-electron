@@ -137,7 +137,7 @@ function DeviceSelectorPage() {
           system === 'win32'
             ? mode === 'easy'
               ? 'end'
-              : 'emulator-resolution'
+              : 'emulator-selector'
             : mode === 'easy'
             ? 'end'
             : 'emulator-selector'
