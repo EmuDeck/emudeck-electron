@@ -48,22 +48,22 @@ function CloudSyncPage() {
     //     );
     //   });
     // } else {
-      alert(
-        `A web browser will open so you can log in to your Cloud provider`
-      );
+    alert(`A web browser will open so you can log in to your Cloud provider`);
 
-      ipcChannel.sendMessage('emudeck', [
-        `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
-      ]);
+    ipcChannel.sendMessage('emudeck', [
+      `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
+    ]);
 
-      ipcChannel.once('cloud_sync_install_and_config', (message) => {
-        console.log(message)
-        let stdout = message.stdout;
-        if (stdout.includes('true')) {
-          alert('CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud')
-        }
-      });
-    }
+    ipcChannel.once('cloud_sync_install_and_config', (message) => {
+      console.log(message);
+      const { stdout } = message;
+      if (stdout.includes('true')) {
+        alert(
+          'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
+        );
+      }
+    });
+    // }
   };
 
   const uninstallRclone = () => {

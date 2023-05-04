@@ -107,20 +107,18 @@ function EmulatorsPage() {
 
     setTimeout(() => {
       let i = 2;
-      let object = {};
+      const object = {};
       Object.values(updates).forEach((item) => {
         const name = item.code;
-        const code = item.code;
-        const id = item.id;
-        const version = item.version;
+        const { code } = item;
+        const { id } = item;
+        const { version } = item;
 
         if (system === 'win32') {
           if (
             item.id === 'primehack' ||
             item.id === 'primehacks' ||
             item.id === 'melonds' ||
-            item.id === 'citra' ||
-            item.id === 'ryujinx' ||
             item.id === 'rmg' ||
             item.id === 'mame' ||
             item.id === 'vita3k' ||
@@ -151,7 +149,7 @@ function EmulatorsPage() {
 
             setStateCurrentConfigs({
               ...countRef.current,
-              [id]: { ...countRef.current[id], version: version },
+              [id]: { ...countRef.current[id], version },
             });
           } else {
             setStatePage({
@@ -161,7 +159,7 @@ function EmulatorsPage() {
             });
           }
         });
-        i = i + 1;
+        i += 1;
       });
     }, 1000);
   };
@@ -178,7 +176,7 @@ function EmulatorsPage() {
   }, [showNotification]);
 
   useEffect(() => {
-    //Clean win32 systems
+    // Clean win32 systems
 
     if (system === 'win32') {
       delete stateCurrentConfigs.primehack;
@@ -227,27 +225,26 @@ function EmulatorsPage() {
 
   useEffect(() => {
     if (showNotification === false) {
-      //const updates = diff(newDesiredVersions, stateCurrentConfigs);
-      
-      
+      // const updates = diff(newDesiredVersions, stateCurrentConfigs);
+
       const obj1 = newDesiredVersions;
       const obj2 = stateCurrentConfigs;
-      
+
       const updates = {};
-      
+
       for (const key in obj1) {
         if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
           updates[key] = obj1[key];
         }
       }
       console.log({ updates });
-      
+
       setStatePage({
         ...statePage,
-        updates: updates,
+        updates,
       });
 
-      let json = JSON.stringify(stateCurrentConfigs);
+      const json = JSON.stringify(stateCurrentConfigs);
       localStorage.setItem('current_versions_beta', json);
     }
   }, [showNotification]);
@@ -274,12 +271,12 @@ function EmulatorsPage() {
                     css="is-highlighted"
                     btnCSS="btn-simple--1"
                     iconSize="md"
-                    title={'Update all Configurations'}
+                    title="Update all Configurations"
                     description="Update all of your configurations at once. New configurations might contain bug fixes or performance improvements. This will overwrite any global emulator settings you have changed. Per game settings will be retained."
                     button={disableResetButton ? 'Please wait...' : 'Update'}
                     onClick={() => resetEmus()}
                     disabled={disableResetButton}
-                    notification={true}
+                    notification
                   />
                 </div>
               )}
@@ -291,7 +288,7 @@ function EmulatorsPage() {
                     btnCSS="btn-simple--1"
                     iconSize="md"
                     button="Update"
-                    title={'Update your Emulators'}
+                    title="Update your Emulators"
                     description="Update your emulators right from EmuDeck"
                     onClick={() => navigate(`/update-emulators`)}
                   />
@@ -307,8 +304,6 @@ function EmulatorsPage() {
                   if (
                     item.id == 'primehack' ||
                     item.id == 'melonds' ||
-                    item.id == 'citra' ||
-                    item.id == 'ryujinx' ||
                     item.id == 'rmg' ||
                     item.id == 'mame' ||
                     item.id == 'vita3k' ||
@@ -334,11 +329,7 @@ function EmulatorsPage() {
                       button={item.status === true ? 'Manage' : 'Install'}
                       onClick={() => navigate(`/emulators-detail/${item.id}`)}
                       notification={
-                        item.status === true
-                          ? updateNotif == undefined
-                            ? false
-                            : true
-                          : ''
+                        item.status === true ? updateNotif != undefined : ''
                       }
                     />
                   </div>
