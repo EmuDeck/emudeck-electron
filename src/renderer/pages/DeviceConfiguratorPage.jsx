@@ -18,6 +18,7 @@ import imgSteam from 'assets/devices/steam.png';
 import imgWin600 from 'assets/devices/win600.png';
 import imgX360 from 'assets/devices/x360.png';
 import imgXOne from 'assets/devices/xone.png';
+import imgWiiPro from 'assets/devices/wiipro.png';
 
 function DeviceConfiguratorPage() {
   const { state, setState } = useContext(GlobalContext);
@@ -29,7 +30,7 @@ function DeviceConfiguratorPage() {
   });
   const { disabledNext, disabledBack, data } = statePage;
   const ipcChannel = window.electron.ipcRenderer;
-  //Setting the device
+  // Setting the device
   const deviceSet = (deviceName) => {
     setStatePage({ ...statePage, disabledNext: false });
     setState({
@@ -38,17 +39,18 @@ function DeviceConfiguratorPage() {
     });
   };
 
-  //Enabling button when changing the global state only if we have a device selected
+  // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
     if (device !== '') {
       setStatePage({ ...statePage, disabledNext: false });
       const json = JSON.stringify(state);
       localStorage.setItem('settings_emudeck', json);
       if (system === 'win32') {
+        console.log({ device });
         ipcChannel.sendMessage('emudeck', [
-          `YuzuControl|||Yuzu_setController('${device}')`,
+          `changeController|||changeController('${device}')`,
         ]);
-        ipcChannel.once('YuzuControl', (message) => {
+        ipcChannel.once('changeController', (message) => {
           console.log({ message });
         });
       }
@@ -122,6 +124,13 @@ function DeviceConfiguratorPage() {
             >
               <img src={imgXOne} width="100" alt="Background" />
               <span className="h6">Xbox One Controller</span>
+            </Card>
+            <Card
+              css={device === 'WIIUPRO' && 'is-selected'}
+              onClick={() => deviceSet('WIIUPRO')}
+            >
+              <img src={imgWiiPro} width="100" alt="Background" />
+              <span className="h6">Pro Controller</span>
             </Card>
           </>
         )}
