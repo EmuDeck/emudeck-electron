@@ -14,7 +14,6 @@ import DeviceSelector from 'components/organisms/Wrappers/DeviceSelector';
 import imgDeck from 'assets/devices/deck.png';
 import imgPS4 from 'assets/devices/PS4.png';
 import imgPS5 from 'assets/devices/PS5.png';
-import imgSteam from 'assets/devices/steam.png';
 import imgWin600 from 'assets/devices/win600.png';
 import imgX360 from 'assets/devices/x360.png';
 import imgXOne from 'assets/devices/xone.png';
@@ -22,7 +21,7 @@ import imgWiiPro from 'assets/devices/wiipro.png';
 
 function DeviceConfiguratorPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, installEmus, system, mode } = state;
+  const { device, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
@@ -55,7 +54,7 @@ function DeviceConfiguratorPage() {
         });
       }
     }
-  }, [state]); // <-- here put the parameter to listen
+  }, [state]);
 
   return (
     <Wrapper>

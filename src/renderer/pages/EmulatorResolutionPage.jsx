@@ -29,7 +29,7 @@ function EmulatorResolutionPage() {
     if (bezels != '') {
       setStatePage({ ...statePage, disabledNext: false });
     }
-  }, [state]); // <-- here put the parameter to listen
+  }, [state]); 
 
   return (
     <Wrapper>

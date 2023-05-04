@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
@@ -6,10 +6,10 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import AspectRatioSNES from 'components/organisms/Wrappers/AspectRatioSNES';
 
-const AspectRatioSNESPage = () => {
+function AspectRatioSNESPage() {
   const { state, setState } = useContext(GlobalContext);
   const { ar } = state;
-  const [statePage, setStatePage] = useState({
+  const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
@@ -36,6 +36,6 @@ const AspectRatioSNESPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default AspectRatioSNESPage;

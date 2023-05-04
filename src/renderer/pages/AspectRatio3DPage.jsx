@@ -6,7 +6,7 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import AspectRatio3D from 'components/organisms/Wrappers/AspectRatio3D';
 
-const AspectRatio3DPage = () => {
+function AspectRatio3DPage() {
   const { state, setState } = useContext(GlobalContext);
   const { ar } = state;
   const [statePage] = useState({
@@ -36,6 +36,6 @@ const AspectRatio3DPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default AspectRatio3DPage;

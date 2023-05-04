@@ -1,32 +1,24 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import Header from 'components/organisms/Header/Header';
-import Footer from 'components/organisms/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
-import Aside from 'components/organisms/Aside/Aside';
 import Header from 'components/organisms/Header/Header';
 import Main from 'components/organisms/Main/Main';
-import {
-  BtnSimple,
-  ProgressBar,
-  FormInputSimple,
-  LinkSimple,
-} from 'getbasecore/Atoms';
+import { BtnSimple, FormInputSimple } from 'getbasecore/Atoms';
 import { Form } from 'getbasecore/Molecules';
 
-const PatroenLoginPage = () => {
+function PatroenLoginPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     patreonClick: false,
     status: null,
-    access_allowed: false,
+    accessAllowed: false,
   });
-  const { patreonClick, status, access_allowed } = statePage;
+  const { patreonClick, status, accessAllowed } = statePage;
   const navigate = useNavigate();
 
-  const { system, patreonToken, patreonStatus } = state;
+  const { patreonToken, patreonStatus } = state;
 
   const patreonShowInput = () => {
     setStatePage({
@@ -43,7 +35,7 @@ const PatroenLoginPage = () => {
   };
 
   const patreonCheckToken = () => {
-    //We don't check the token if we dont have it stored
+    // We don't check the token if we dont have it stored
     if (!patreonToken || patreonToken == null) {
       return;
     }
@@ -53,33 +45,32 @@ const PatroenLoginPage = () => {
       status: 'checking',
     });
 
-    if (patreonToken == 'sG6gE8yJ3sK3xX8c') {
+    if (patreonToken === 'sG6gE8yJ3sK3xX8c') {
       setStatePage({
         ...statePage,
-        access_allowed: true,
+        accessAllowed: true,
         status: 'Success!',
       });
-      return;
     } else {
       ipcChannel.sendMessage('patreon-check', patreonToken);
       ipcChannel.on('patreon-check', (error, patreonStatusBack, stderr) => {
-        console.log('PATREON LOGIN CHECK');
-        console.log(patreonStatusBack);
-        //setStatePage({ ...statePage, downloadComplete: true });
-        //Update timeout
+        // console.log('PATREON LOGIN CHECK');
+        // console.log(patreonStatusBack);
+        // setStatePage({ ...statePage, downloadComplete: true });
+        // Update timeout
         const patreonJson = JSON.parse(patreonStatusBack);
 
         if (patreonJson.errors) {
-          alert(patreonJson.errors[0]['detail']);
+          alert(patreonJson.errors[0].detail);
           return;
         }
 
-        console.log({ patreonJson });
+        // console.log({ patreonJson });
 
         if (patreonJson.status === true) {
           setStatePage({
             ...statePage,
-            access_allowed: true,
+            accessAllowed: true,
           });
         } else {
           setStatePage({
@@ -98,20 +89,20 @@ const PatroenLoginPage = () => {
     //   ...state,
     //   patreonStatus: false,
     // });
-    console.log({ state });
+    // console.log({ state });
   }, []);
 
   useEffect(() => {
-    if (access_allowed == true) {
+    if (accessAllowed === true) {
       setState({
         ...state,
         patreonStatus: true,
       });
     }
-  }, [access_allowed]);
+  }, [accessAllowed]);
 
   useEffect(() => {
-    if (patreonStatus == true) {
+    if (patreonStatus === true) {
       navigate('/welcome');
     }
   }, [patreonStatus]);
@@ -124,18 +115,16 @@ const PatroenLoginPage = () => {
           Please login to patreon in order to access this beta.
         </p>
         {!patreonClick && (
-          <>
-            <BtnSimple
-              css="btn-simple--3"
-              type="link"
-              target="_blank"
-              href="https://patreon.emudeck.com/"
-              aria="Next"
-              onClick={() => patreonShowInput()}
-            >
-              Login with patreon
-            </BtnSimple>
-          </>
+          <BtnSimple
+            css="btn-simple--3"
+            type="link"
+            target="_blank"
+            href="https://patreon.emudeck.com/"
+            aria="Next"
+            onClick={() => patreonShowInput()}
+          >
+            Login with patreon
+          </BtnSimple>
         )}
         {patreonClick && (
           <Form>
@@ -163,6 +152,6 @@ const PatroenLoginPage = () => {
       </Main>
     </Wrapper>
   );
-};
+}
 
 export default PatroenLoginPage;

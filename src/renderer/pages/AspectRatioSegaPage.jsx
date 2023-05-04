@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
@@ -6,10 +6,10 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import AspectRatioSega from 'components/organisms/Wrappers/AspectRatioSega';
 
-const AspectRatioSegaPage = () => {
+function AspectRatioSegaPage() {
   const { state, setState } = useContext(GlobalContext);
   const { ar } = state;
-  const [statePage, setStatePage] = useState({
+  const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
@@ -41,6 +41,6 @@ const AspectRatioSegaPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default AspectRatioSegaPage;

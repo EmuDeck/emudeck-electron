@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
@@ -6,15 +6,12 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import CHDTool from 'components/organisms/Wrappers/CHDTool';
 
-const CHDToolPage = () => {
-  const { state, setState } = useContext(GlobalContext);
-
-  const [statePage, setStatePage] = useState({
+function CHDToolPage() {
+  const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
   });
 
-  const { storagePath } = state;
   const { disabledNext, disabledBack } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
@@ -36,6 +33,6 @@ const CHDToolPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default CHDToolPage;

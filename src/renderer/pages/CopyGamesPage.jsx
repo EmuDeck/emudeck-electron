@@ -1,16 +1,15 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
-import Footer from 'components/organisms/Footer/Footer';
 import { BtnSimple } from 'getbasecore/Atoms';
 import CopyGames from 'components/organisms/Wrappers/CopyGames';
 
 function CopyGamesPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const navigate = useNavigate();
-  const { state, setState } = useContext(GlobalContext);
+  const { state } = useContext(GlobalContext);
   const { storagePath, second, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
@@ -22,8 +21,6 @@ function CopyGamesPage() {
     storageUSBPath: undefined,
   });
   const {
-    disabledNext,
-    disabledBack,
     statusCopyGames,
     statusCreateStructure,
     status,
@@ -32,8 +29,8 @@ function CopyGamesPage() {
   } = statePage;
 
   const storageSet = (storageName) => {
-    console.log({ storageName });
-    //We prevent the function to continue if the custom location testing is still in progress
+    // console.log({ storageName });
+    // We prevent the function to continue if the custom location testing is still in progress
     if (status == 'testing') {
       return;
     }
@@ -42,8 +39,8 @@ function CopyGamesPage() {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
-        console.log({ message });
-        let pathUSB = message.stdout.replace('\n', '');
+        // console.log({ message });
+        const pathUSB = message.stdout.replace('\n', '');
         setStatePage({
           ...statePage,
           disabledNext: true,
@@ -51,19 +48,19 @@ function CopyGamesPage() {
           storageUSB: storageName,
           storageUSBPath: pathUSB,
         });
-        //is it valid?
+        // is it valid?
 
         ipcChannel.sendMessage('emudeck', [
           `testLocation|||sleep 1 && testLocationValidRelaxed "custom" "${pathUSB}"`,
         ]);
 
         ipcChannel.once('testLocation', (message) => {
-          console.log({ message });
-          let stdout = message.stdout.replace('\n', '');
-          console.log({ stdout });
+          // console.log({ message });
+          const stdout = message.stdout.replace('\n', '');
+          // console.log({ stdout });
           let status;
           stdout.includes('Valid') ? (status = true) : (status = false);
-          console.log({ status });
+          // console.log({ status });
           if (status == true) {
             setStatePage({
               ...statePage,
@@ -94,7 +91,7 @@ function CopyGamesPage() {
     ]);
 
     ipcChannel.once('CopyGames', (message) => {
-      let stdout = message.stdout.replace('\n', '');
+      const stdout = message.stdout.replace('\n', '');
       setStatePage({
         ...statePage,
         statusCopyGames: true,
@@ -112,8 +109,8 @@ function CopyGamesPage() {
     ]);
 
     ipcChannel.once('CreateStructureUSB', (message) => {
-      let stdout = message.stdout.replace('\n', '');
-      console.log({ message });
+      const stdout = message.stdout.replace('\n', '');
+      // console.log({ message });
       setStatePage({
         ...statePage,
         statusCreateStructure: true,
@@ -170,7 +167,7 @@ function CopyGamesPage() {
             aria="Go Next"
             onClick={() => navigate('/welcome')}
           >
-           Skip for now
+            Skip for now
           </BtnSimple>
         )}
 
@@ -234,16 +231,14 @@ function CopyGamesPage() {
             </BtnSimple>
           )}
         {second && statusCopyGames === null && (
-          <>
-            <BtnSimple
-              css="btn-simple--2"
-              type="button"
-              aria="Go Back"
-              onClick={() => navigate('/welcome')}
-            >
-              Skip for now
-            </BtnSimple>
-          </>
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            aria="Go Back"
+            onClick={() => navigate('/welcome')}
+          >
+            Skip for now
+          </BtnSimple>
         )}
       </footer>
     </Wrapper>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
@@ -6,10 +6,9 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import AutoSave from 'components/organisms/Wrappers/AutoSave';
 
-const AutoSavePage = () => {
+function AutoSavePage() {
   const { state, setState } = useContext(GlobalContext);
-  const { shaders } = state;
-  const [statePage, setStatePage] = useState({
+  const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
@@ -33,6 +32,6 @@ const AutoSavePage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default AutoSavePage;

@@ -5,7 +5,7 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import VideoGuide from 'components/organisms/Wrappers/VideoGuide';
 
-const VideoGuidePage = () => {
+function VideoGuidePage() {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -31,6 +31,6 @@ const VideoGuidePage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default VideoGuidePage;

@@ -6,7 +6,7 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import HomebrewGames from 'components/organisms/Wrappers/HomebrewGames';
 
-const HomebrewGamesPage = () => {
+function HomebrewGamesPage() {
   const { state, setState } = useContext(GlobalContext);
   const { bezels, mode, system } = state;
   const [statePage, setStatePage] = useState({
@@ -21,12 +21,12 @@ const HomebrewGamesPage = () => {
       homebrewGames: status,
     });
   };
-  //Enabling button when changing the global state only if we have a device selected
+  // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
-    if (bezels != '') {
+    if (bezels !== '') {
       setStatePage({ ...statePage, disabledNext: false });
     }
-  }, [state]); // <-- here put the parameter to listen
+  }, [state]);
 
   return (
     <Wrapper>
@@ -51,6 +51,6 @@ const HomebrewGamesPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default HomebrewGamesPage;

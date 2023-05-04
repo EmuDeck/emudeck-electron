@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
@@ -6,10 +6,10 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import AspectRatioDolphin from 'components/organisms/Wrappers/AspectRatioDolphin';
 
-const AspectRatioDolphinPage = () => {
+function AspectRatioDolphinPage() {
   const { state, setState } = useContext(GlobalContext);
   const { ar, overwriteConfigEmus } = state;
-  const [statePage, setStatePage] = useState({
+  const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
@@ -31,7 +31,7 @@ const AspectRatioDolphinPage = () => {
       <AspectRatioDolphin data={data} onClick={arSet} />
       <Footer
         next={
-          overwriteConfigEmus.ra.status == true
+          overwriteConfigEmus.ra.status === true
             ? 'shaders-handhelds'
             : 'pegasus-theme'
         }
@@ -40,6 +40,6 @@ const AspectRatioDolphinPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default AspectRatioDolphinPage;

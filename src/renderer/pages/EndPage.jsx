@@ -3,7 +3,6 @@ import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
-import Footer from 'components/organisms/Footer/Footer';
 
 import { BtnSimple } from 'getbasecore/Atoms';
 
@@ -17,8 +16,9 @@ function EndPage() {
     disabledBack: true,
     data: '',
   });
-  const { disabledNext, disabledBack, data } = statePage;
-  const { second, debug, branch, storagePath, gamemode, system } = state;
+
+  const { disabledNext, data } = statePage;
+  const { second, branch, storagePath, gamemode, system } = state;
   const ipcChannel = window.electron.ipcRenderer;
 
   const [msg, setMsg] = useState({
@@ -28,13 +28,12 @@ function EndPage() {
 
   const { message, percentage } = msg;
 
-  const [counter, setCounter] = useState(0);
   const settingsFile = '~/emudeck/settings.sh';
-  const readMSG = (command) => {
+  const readMSG = () => {
     ipcChannel.sendMessage('getMSG', []);
-    ipcChannel.on('getMSG', (message) => {
-      // console.log({ message });
-      const messageArray = message.stdout.split('#');
+    ipcChannel.on('getMSG', (messageInput) => {
+      // // console.log({ message });
+      const messageArray = messageInput.stdout.split('#');
       const messageText = messageArray[1];
       let messagePercent = messageArray[0];
       messagePercent = messagePercent.replaceAll(' ', '');
@@ -108,7 +107,7 @@ function EndPage() {
 
   // Running the installer
   useEffect(() => {
-    if (second == true) {
+    if (second === true) {
       const json = JSON.stringify(state);
 
       localStorage.setItem('settings_emudeck', json);
@@ -118,7 +117,7 @@ function EndPage() {
       }
 
       if (system === 'win32') {
-        console.log('saving settings');
+        // console.log('saving settings');
 
         ipcChannel.sendMessage('bash-nolog', [
           `echo ${state.achievements.token} > "%userprofile%/AppData/Roaming/EmuDeck/.rat"`,
@@ -126,14 +125,14 @@ function EndPage() {
         ipcChannel.sendMessage('bash-nolog', [
           `echo ${state.achievements.user} > "%userprofile%/AppData/Roaming/EmuDeck/.rau"`,
         ]);
-        console.log({ state });
+        // console.log({ state });
         ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
-        ipcChannel.once('saveSettings', (saveSettings) => {
-          console.log({ saveSettings });
+        ipcChannel.once('saveSettings', () => {
+          // console.log({ saveSettings });
           ipcChannel.sendMessage('bash-nolog', [
             `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/setup.ps1`,
           ]);
-          ipcChannel.once('finish', (message) => {
+          ipcChannel.once('finish', () => {
             setStatePage({ ...statePage, disabledNext: false });
           });
         });
@@ -145,8 +144,9 @@ function EndPage() {
         ]);
 
         // Wait for settings.sh creation.
-        ipcChannel.once('startSettings', (message) => {
-          console.log('startSettings');
+        ipcChannel.once('startSettings', () => {
+          // console.log('startSettings');
+
           // Setup Emus
           ipcChannel.sendMessage('bash', [
             `echo ${preVar}doSetupRA="${!!state.overwriteConfigEmus.ra
@@ -495,16 +495,15 @@ function EndPage() {
           ]);
 
           // Closing
-          console.log('finalSetting');
+          // console.log('finalSetting');
           ipcChannel.sendMessage('bash-nolog', [
             `finalSetting|||echo ${preVar}finishedUI="done" >> ${settingsFile} && echo true`,
           ]);
         });
 
-        ipcChannel.once('finalSetting', (message) => {
-          console.log('Running installer');
-          const { stdout } = message;
-
+        ipcChannel.once('finalSetting', (messageFinalSetting) => {
+          // console.log('Running installer');
+          const { stdout } = messageFinalSetting;
           // Installation
 
           ipcChannel.sendMessage('bash-nolog', [
@@ -515,9 +514,9 @@ function EndPage() {
             `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > ~/.config/EmuDeck/msg.log && printf "\ec" && echo true`,
           ]);
         });
-        ipcChannel.once('finish', (message) => {
-          console.log('finish');
-          const { stdout } = message;
+        ipcChannel.once('finish', (messageFinish) => {
+          // console.log('finish');
+          const { stdout } = messageFinish;
           if (stdout.includes('true')) {
             setStatePage({ ...statePage, disabledNext: false });
           }
@@ -528,10 +527,10 @@ function EndPage() {
 
   return (
     <Wrapper>
-      {disabledNext == true && (
+      {disabledNext === true && (
         <Header title="We are completing your" bold="installation..." />
       )}
-      {disabledNext == false && (
+      {disabledNext === false && (
         <Header title="Installation" bold="complete!" />
       )}
       <End
@@ -552,7 +551,7 @@ function EndPage() {
           Watch Log
         </BtnSimple>
 
-        {gamemode == false && (
+        {gamemode === false && (
           <BtnSimple
             css="btn-simple--1"
             type="button"

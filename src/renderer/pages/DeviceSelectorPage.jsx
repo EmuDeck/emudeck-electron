@@ -3,13 +3,7 @@ import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
-
 import DeviceSelector from 'components/organisms/Wrappers/DeviceSelector';
-
-import img552 from 'assets/rg552.png';
-import imgOdin from 'assets/odin.png';
-import imgRP2 from 'assets/rp2.png';
-import imgAndroid from 'assets/android.png';
 import Card from 'components/molecules/Card/Card';
 
 // import img552 from 'assets/rg552.png';
@@ -20,7 +14,6 @@ import Card from 'components/molecules/Card/Card';
 import imgDeck from 'assets/devices/deck.png';
 import imgPS4 from 'assets/devices/PS4.png';
 import imgPS5 from 'assets/devices/PS5.png';
-import imgSteam from 'assets/devices/steam.png';
 import imgWin600 from 'assets/devices/win600.png';
 import imgX360 from 'assets/devices/x360.png';
 import imgXOne from 'assets/devices/xone.png';
@@ -28,14 +21,14 @@ import imgWiiPro from 'assets/devices/wiipro.png';
 
 function DeviceSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, installEmus, system, mode } = state;
+  const { device, system, mode } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
-  const ipcChannel = window.electron.ipcRenderer;
+
   // Setting the device
   const deviceSet = (deviceName) => {
     setStatePage({ ...statePage, disabledNext: false });
@@ -44,6 +37,7 @@ function DeviceSelectorPage() {
       device: deviceName,
     });
   };
+
   // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
     if (device !== '') {
@@ -51,7 +45,7 @@ function DeviceSelectorPage() {
     }
     const json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
-  }, [state]); // <-- here put the parameter to listen
+  }, [state]);
 
   return (
     <Wrapper>

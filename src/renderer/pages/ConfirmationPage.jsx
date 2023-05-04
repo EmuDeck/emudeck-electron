@@ -6,8 +6,8 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import Confirmation from 'components/organisms/Wrappers/Confirmation';
 
-const ConfirmationPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+function ConfirmationPage() {
+  const { state } = useContext(GlobalContext);
   const { bezels } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -16,12 +16,12 @@ const ConfirmationPage = () => {
   });
   const { disabledNext, disabledBack, data } = statePage;
 
-  //Enabling button when changing the global state only if we have a device selected
+  // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
-    if (bezels != '') {
+    if (bezels !== '') {
       setStatePage({ ...statePage, disabledNext: false });
     }
-  }, [state]); // <-- here put the parameter to listen
+  }, [state]); 
 
   return (
     <Wrapper>
@@ -35,6 +35,6 @@ const ConfirmationPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default ConfirmationPage;
