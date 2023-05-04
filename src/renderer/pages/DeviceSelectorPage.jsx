@@ -45,6 +45,8 @@ function DeviceSelectorPage() {
     });
   };
 
+  ipcChannel.sendMessage('emudeck', [`changeController ${device}`]);
+
   // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
     if (device !== '') {
