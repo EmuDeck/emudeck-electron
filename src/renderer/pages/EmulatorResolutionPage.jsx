@@ -6,7 +6,7 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import EmulatorResolution from 'components/organisms/Wrappers/EmulatorResolution';
 
-const EmulatorResolutionPage = () => {
+function EmulatorResolutionPage() {
   const { state, setState } = useContext(GlobalContext);
   const { bezels, resolutions } = state;
   const [statePage, setStatePage] = useState({
@@ -24,7 +24,7 @@ const EmulatorResolutionPage = () => {
       },
     });
   };
-  //Enabling button when changing the global state only if we have a device selected
+  // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {
     if (bezels != '') {
       setStatePage({ ...statePage, disabledNext: false });
@@ -38,6 +38,6 @@ const EmulatorResolutionPage = () => {
       <Footer next="confirmation" nextText="Next" />
     </Wrapper>
   );
-};
+}
 
 export default EmulatorResolutionPage;

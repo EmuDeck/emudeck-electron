@@ -5,11 +5,9 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Main from 'components/organisms/Main/Main';
-import UpdateConfigs from 'components/organisms/Wrappers/UpdateConfigs';
 import CardSettings from 'components/molecules/CardSettings/CardSettings';
 import Notification from 'components/molecules/Notification/Notification';
 import {
-  imgdefault,
   imgra,
   imgdolphin,
   imgprimehack,
@@ -181,9 +179,6 @@ function EmulatorsPage() {
     if (system === 'win32') {
       delete stateCurrentConfigs.primehack;
       delete stateCurrentConfigs.melonds;
-      delete stateCurrentConfigs.citra;
-      delete stateCurrentConfigs.rpcs3;
-      delete stateCurrentConfigs.ryujinx;
       delete stateCurrentConfigs.rmg;
       delete stateCurrentConfigs.mame;
       delete stateCurrentConfigs.vita3k;
