@@ -15,10 +15,19 @@ function EndPage() {
     disabledNext: true,
     disabledBack: true,
     data: '',
+    step: undefined,
   });
 
-  const { disabledNext, data } = statePage;
-  const { second, branch, storagePath, gamemode, system } = state;
+  const { disabledNext, data, step } = statePage;
+  const {
+    second,
+    branch,
+    storagePath,
+    gamemode,
+    system,
+    installEmus,
+    overwriteConfigEmus,
+  } = state;
   const ipcChannel = window.electron.ipcRenderer;
 
   const [msg, setMsg] = useState({
@@ -44,14 +53,30 @@ function EndPage() {
     });
   };
 
+  const configureControllers = () => {
+    if (installEmus.yuzu) {
+      setStatePage({ ...statePage, step: 'yuzu' });
+      return;
+    }
+    if (installEmus.citra) {
+      setStatePage({ ...statePage, step: 'citra' });
+      return;
+    }
+    if (installEmus.ryujinx) {
+      setStatePage({ ...statePage, step: 'ryujinx' });
+    }
+    if (!installEmus.yuzu && !installEmus.citra && !installEmus.ryujinx) {
+      setStatePage({ ...statePage, step: 'steam' });
+    }
+  };
+
   const openSRM = () => {
     if (system === 'win32') {
-      ipcChannel.sendMessage('bash', [
-        `${storagePath.substring(
-          0,
-          2
-        )} && cd \\ && cd Emulation && cd tools && start srm.exe`,
-      ]);
+      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
+      ipcChannel.sendMessage(
+        'run-app',
+        `${storagePath}\Emulation\\tools\\srm.exe`
+      );
     } else {
       ipcChannel.sendMessage('bash', [
         `zenity --question --width 450 --title "Close Steam/Steam Input?" --text "$(printf "<b>Exit Steam to launch Steam Rom Manager? </b>\n\n To add your Emulators and EmulationStation-DE to steam hit Preview, then Generate App List, then wait for the images to download\n\nWhen you are happy with your image choices hit Save App List and wait for it to say it's completed.\n\nDesktop controls will temporarily revert to touch/trackpad/L2/R2")" && (kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
@@ -82,6 +107,47 @@ function EndPage() {
   if (system === 'win32') {
     pollingTime = 2000;
   }
+
+  // Launching emus on win32
+  useEffect(() => {
+    if (step === 'yuzu') {
+      ipcChannel.sendMessage(
+        'run-app',
+        `${storagePath}\Emulation\\tools\\EmulationStation-DE\\Emulators\\yuzu\\yuzu-windows-msvc\\yuzu.exe`
+      );
+      ipcChannel.once('run-app', (message) => {
+        if (installEmus.citra) {
+          setStatePage({ ...statePage, step: 'citra' });
+        } else if (installEmus.ryujinx) {
+          setStatePage({ ...statePage, step: 'ryujinx' });
+        } else {
+          setStatePage({ ...statePage, step: 'steam' });
+        }
+      });
+    }
+    if (step === 'citra') {
+      ipcChannel.sendMessage(
+        'run-app',
+        `${storagePath}\Emulation\\tools\\EmulationStation-DE\\Emulators\\citra\\citra-qt.exe`
+      );
+      ipcChannel.once('run-app', (message) => {
+        if (installEmus.ryujinx) {
+          setStatePage({ ...statePage, step: 'ryujinx' });
+        } else {
+          setStatePage({ ...statePage, step: 'steam' });
+        }
+      });
+    }
+    if (step === 'ryujinx') {
+      ipcChannel.sendMessage(
+        'run-app',
+        `${storagePath}\Emulation\\tools\\EmulationStation-DE\\Emulators\\Ryujinx\\Ryujinx.exe`
+      );
+      ipcChannel.once('run-app', (message) => {
+        setStatePage({ ...statePage, step: 'steam' });
+      });
+    }
+  }, [step]);
 
   // Reading messages from backend
   useEffect(() => {
@@ -149,44 +215,44 @@ function EndPage() {
 
           // Setup Emus
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupRA="${!!state.overwriteConfigEmus.ra
+            `echo ${preVar}doSetupRA="${!!overwriteConfigEmus.ra
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupDolphin="${!!state.overwriteConfigEmus.dolphin
+            `echo ${preVar}doSetupDolphin="${!!overwriteConfigEmus.dolphin
               .status}" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupPCSX2QT="${!!state.overwriteConfigEmus.pcsx2
+            `echo ${preVar}doSetupPCSX2QT="${!!overwriteConfigEmus.pcsx2
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupRPCS3="${!!state.overwriteConfigEmus.rpcs3
+            `echo ${preVar}doSetupRPCS3="${!!overwriteConfigEmus.rpcs3
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupYuzu="${!!state.overwriteConfigEmus.yuzu
+            `echo ${preVar}doSetupYuzu="${!!overwriteConfigEmus.yuzu
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupRyujinx="${!!state.overwriteConfigEmus.ryujinx
+            `echo ${preVar}doSetupRyujinx="${!!overwriteConfigEmus.ryujinx
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupCitra="${!!state.overwriteConfigEmus.citra
+            `echo ${preVar}doSetupCitra="${!!overwriteConfigEmus.citra
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupDuck="${!!state.overwriteConfigEmus
-              .duckstation.status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupmelonDS="${!!state.overwriteConfigEmus.melonds
+            `echo ${preVar}doSetupDuck="${!!overwriteConfigEmus.duckstation
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupCemu="${!!state.overwriteConfigEmus.cemu
+            `echo ${preVar}doSetupmelonDS="${!!overwriteConfigEmus.melonds
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo ${preVar}doSetupCemu="${!!overwriteConfigEmus.cemu
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
@@ -194,90 +260,90 @@ function EndPage() {
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupPrimehack="${!!state.overwriteConfigEmus
-              .primehack.status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupXemu="${!!state.overwriteConfigEmus.xemu
+            `echo ${preVar}doSetupPrimehack="${!!overwriteConfigEmus.primehack
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupPPSSPP="${!!state.overwriteConfigEmus.ppsspp
+            `echo ${preVar}doSetupXemu="${!!overwriteConfigEmus.xemu
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupMAME="${!!state.overwriteConfigEmus.mame
+            `echo ${preVar}doSetupPPSSPP="${!!overwriteConfigEmus.ppsspp
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupRMG="${!!state.overwriteConfigEmus.rmg
+            `echo ${preVar}doSetupMAME="${!!overwriteConfigEmus.mame
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupVita3K="${!!state.overwriteConfigEmus.vita3k
+            `echo ${preVar}doSetupRMG="${!!overwriteConfigEmus.rmg
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupScummVM="${!!state.overwriteConfigEmus.scummvm
+            `echo ${preVar}doSetupVita3K="${!!overwriteConfigEmus.vita3k
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupMGBA="${!!state.overwriteConfigEmus.mgba
+            `echo ${preVar}doSetupScummVM="${!!overwriteConfigEmus.scummvm
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo ${preVar}doSetupMGBA="${!!overwriteConfigEmus.mgba
               .status}" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupESDE="${!!state.overwriteConfigEmus.esde
+            `echo ${preVar}doSetupESDE="${!!overwriteConfigEmus.esde
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupSRM="${!!state.overwriteConfigEmus.srm
+            `echo ${preVar}doSetupSRM="${!!overwriteConfigEmus.srm
               .status}" >> ${settingsFile}`,
           ]);
 
           // Install Emus
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallRA="${!!state.installEmus.ra
+            `echo ${preVar}doInstallRA="${!!installEmus.ra
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallDolphin="${!!state.installEmus.dolphin
+            `echo ${preVar}doInstallDolphin="${!!installEmus.dolphin
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallPCSX2QT="${!!state.installEmus.pcsx2
+            `echo ${preVar}doInstallPCSX2QT="${!!installEmus.pcsx2
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallRPCS3="${!!state.installEmus.rpcs3
+            `echo ${preVar}doInstallRPCS3="${!!installEmus.rpcs3
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallYuzu="${!!state.installEmus.yuzu
+            `echo ${preVar}doInstallYuzu="${!!installEmus.yuzu
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallRyujinx="${!!state.installEmus.ryujinx
+            `echo ${preVar}doInstallRyujinx="${!!installEmus.ryujinx
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallCitra="${!!state.installEmus.citra
+            `echo ${preVar}doInstallCitra="${!!installEmus.citra
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallDuck="${!!state.installEmus.duckstation
+            `echo ${preVar}doInstallDuck="${!!installEmus.duckstation
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallmelonDS="${!!state.installEmus.melonds
+            `echo ${preVar}doInstallmelonDS="${!!installEmus.melonds
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallCemu="${!!state.installEmus.cemu
+            `echo ${preVar}doInstallCemu="${!!installEmus.cemu
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallRMG="${!!state.installEmus.rmg
+            `echo ${preVar}doInstallRMG="${!!installEmus.rmg
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
@@ -285,41 +351,41 @@ function EndPage() {
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallPrimeHack="${!!state.installEmus.primehack
+            `echo ${preVar}doInstallPrimeHack="${!!installEmus.primehack
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallPPSSPP="${!!state.installEmus.ppsspp
+            `echo ${preVar}doInstallPPSSPP="${!!installEmus.ppsspp
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallXemu="${!!state.installEmus.xemu
+            `echo ${preVar}doInstallXemu="${!!installEmus.xemu
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallMAME="${!!state.installEmus.mame
+            `echo ${preVar}doInstallMAME="${!!installEmus.mame
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallScummVM="${!!state.installEmus.scummvm
+            `echo ${preVar}doInstallScummVM="${!!installEmus.scummvm
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallVita3K="${!!state.installEmus.vita3k
-              .status}" >> ${settingsFile}`,
-          ]);
-
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallMGBA="${!!state.installEmus.mgba
+            `echo ${preVar}doInstallVita3K="${!!installEmus.vita3k
               .status}" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallSRM="${!!state.installEmus.srm
+            `echo ${preVar}doInstallMGBA="${!!installEmus.mgba
+              .status}" >> ${settingsFile}`,
+          ]);
+
+          ipcChannel.sendMessage('bash', [
+            `echo ${preVar}doInstallSRM="${!!installEmus.srm
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallESDE="${!!state.installEmus.esde
+            `echo ${preVar}doInstallESDE="${!!installEmus.esde
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
@@ -530,12 +596,14 @@ function EndPage() {
       {disabledNext === true && (
         <Header title="We are completing your" bold="installation..." />
       )}
-      {disabledNext === false && (
+      {disabledNext === false && step === undefined && (
         <Header title="Installation" bold="complete!" />
       )}
       <End
         onClick={openSRM}
+        onClickWin32Config={configureControllers}
         data={data}
+        step={step}
         message={message}
         percentage={percentage}
         disabledNext={disabledNext}

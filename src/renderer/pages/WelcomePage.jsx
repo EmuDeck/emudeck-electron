@@ -105,13 +105,12 @@ function WelcomePage() {
 
   const openSRM = () => {
     if (system === 'win32') {
-      ipcChannel.sendMessage('bash', [
-        `srm|||${storagePath.substring(
-          0,
-          2
-        )} && cd \\ && cd Emulation && cd tools && start srm.exe`,
-      ]);
-      ipcChannel.once('srm', (message) => {
+      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
+      ipcChannel.sendMessage(
+        'run-app',
+        `${storagePath}\Emulation\\tools\\srm.exe`
+      );
+      ipcChannel.once('run-app', (message) => {
         console.log({ message });
       });
     } else {

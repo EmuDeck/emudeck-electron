@@ -1052,13 +1052,16 @@ app.on('session-created', (session) => {
 });
 
 ipcMain.on('run-app', async (event, appPath) => {
-  const externalApp = spawn('open', [appPath]);
-
-  externalApp.on('error', (err) => {
-    event.reply('run-app', err);
-  });
-
-  // Manejar salida
+  const appPathFixed = appPath.replace(/[\r\n]+/g, '');
+  console.log(appPathFixed);
+  let externalApp;
+  if (os.platform().includes('win32')) {
+    externalApp = spawn(appPathFixed);
+  } else if (os.platform().includes('darwin')) {
+    externalApp = spawn('open', [appPathFixed]);
+  } else {
+    externalApp = spawn('xdg-open', [appPathFixed]);
+  }
   externalApp.on('exit', (code) => {
     event.reply('run-app', code);
   });
