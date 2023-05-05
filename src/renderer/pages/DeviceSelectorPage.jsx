@@ -17,7 +17,7 @@ import imgPS5 from 'assets/devices/PS5.png';
 import imgWin600 from 'assets/devices/win600.png';
 import imgX360 from 'assets/devices/x360.png';
 import imgXOne from 'assets/devices/xone.png';
-import imgWiiPro from 'assets/devices/wiipro.png';
+import imgSwitchPro from 'assets/devices/switchpro.png';
 
 function DeviceSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
@@ -116,10 +116,10 @@ function DeviceSelectorPage() {
               <span className="h6">Xbox One Controller</span>
             </Card>
             <Card
-              css={device === 'WIIUPRO' && 'is-selected'}
-              onClick={() => deviceSet('WIIUPRO')}
+              css={device === 'SWITCHPRO' && 'is-selected'}
+              onClick={() => deviceSet('SWITCHPRO')}
             >
-              <img src={imgWiiPro} width="100" alt="Background" />
+              <img src={imgSwitchPro} width="100" alt="Background" />
               <span className="h6">Pro Controller</span>
             </Card>
           </>
