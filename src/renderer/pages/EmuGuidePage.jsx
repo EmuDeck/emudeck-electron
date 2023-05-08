@@ -3,14 +3,15 @@ import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
-
 import EmuGuide from 'components/organisms/Wrappers/EmuGuide';
+
+const emuData = require('data/emuData.json');
 
 function EmuGuidePage() {
   const { state, setState } = useContext(GlobalContext);
   const { installEmus, mode } = state;
   const { ryujinx } = installEmus;
-  const emuData = require('data/emuData.json');
+
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -30,7 +31,7 @@ function EmuGuidePage() {
     disableResetButton,
   } = statePage;
 
-  //TODO: Use only one state for bioses, doing it this way is quick but madness
+  // TODO: Use only one state for bioses, doing it this way is quick but madness
   const [ps1Bios, setps1Bios] = useState(null);
   const [ps2Bios, setps2Bios] = useState(null);
   const [switchBios, setSwitchBios] = useState(null);
@@ -44,7 +45,7 @@ function EmuGuidePage() {
     ipcChannel.once(`${biosCommand}`, (status) => {
       // console.log({ biosCommand });
       status = status.stdout;
-      //console.log({ status });
+      // console.log({ status });
       status = status.replace('\n', '');
       let biosStatus;
       status.includes('true') ? (biosStatus = true) : (biosStatus = false);
@@ -90,9 +91,9 @@ function EmuGuidePage() {
     ipcChannel.once(`${name}_install`, (status) => {
       // console.log({ status });
       status = status.stdout;
-      //console.log({ status });
+      // console.log({ status });
       status = status.replace('\n', '');
-      //Lets check if it did install
+      // Lets check if it did install
       ipcChannel.sendMessage('emudeck', [
         `${name}_IsInstalled|||${name}_IsInstalled`,
       ]);
@@ -125,7 +126,7 @@ function EmuGuidePage() {
           });
 
           // We save it on localstorage
-          let json = JSON.stringify(state);
+          const json = JSON.stringify(state);
           localStorage.setItem('settings_emudeck', json);
         } else {
           setStatePage({
@@ -166,9 +167,9 @@ function EmuGuidePage() {
       ipcChannel.once(`${name}_uninstall`, (status) => {
         // console.log({ status });
         status = status.stdout;
-        //console.log({ status });
+        // console.log({ status });
         status = status.replace('\n', '');
-        //Lets check if it did install
+        // Lets check if it did install
         ipcChannel.sendMessage('emudeck', [
           `${name}_IsInstalled|||${name}_IsInstalled`,
         ]);
@@ -186,7 +187,7 @@ function EmuGuidePage() {
               showNotification: true,
               disableInstallButton: false,
             });
-            //We set the emu as install = no
+            // We set the emu as install = no
             // setState({
             //   ...state,
             //   installEmus: {
@@ -301,8 +302,8 @@ function EmuGuidePage() {
       />
       <Footer
         next={false}
-        disableInstallButton={disableInstallButton ? true : false}
-        disableResetButton={disableResetButton ? true : false}
+        disableInstallButton={!!disableInstallButton}
+        disableResetButton={!!disableResetButton}
       />
     </Wrapper>
   );

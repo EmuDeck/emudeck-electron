@@ -6,7 +6,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import CheckBios from 'components/organisms/Wrappers/CheckBios';
 
-const CheckBiosPage = () => {
+function CheckBiosPage() {
   const { state, setState } = useContext(GlobalContext);
 
   const [statePage, setStatePage] = useState({
@@ -15,7 +15,7 @@ const CheckBiosPage = () => {
     showNotification: false,
   });
 
-  //TODO: Use only one state for bioses, doing it this way is quick but madness
+  // TODO: Use only one state for bioses, doing it this way is quick but madness
   const [ps1Bios, setps1Bios] = useState(null);
   const [ps2Bios, setps2Bios] = useState(null);
   const [switchBios, setSwitchBios] = useState(null);
@@ -105,6 +105,6 @@ const CheckBiosPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default CheckBiosPage;

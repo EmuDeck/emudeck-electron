@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
@@ -7,7 +7,6 @@ import Footer from 'components/organisms/Footer/Footer';
 import EmulatorConfiguration from 'components/organisms/Wrappers/EmulatorConfiguration';
 
 import {
-  imgdefault,
   imgra,
   imgdolphin,
   imgprimehack,
@@ -57,11 +56,11 @@ const images = {
   xenia: imgxenia,
 };
 
-const EmulatorConfigurationPage = () => {
+function EmulatorConfigurationPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, overwriteConfigEmus } = state;
+  const { overwriteConfigEmus } = state;
 
-  const [statePage, setStatePage] = useState({
+  const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
@@ -69,7 +68,7 @@ const EmulatorConfigurationPage = () => {
   const { disabledNext, disabledBack, data } = statePage;
 
   const toggleEmus = (emulatorProp) => {
-    let { id, name, status } = overwriteConfigEmus[emulatorProp];
+    const { status } = overwriteConfigEmus[emulatorProp];
 
     setState({
       ...state,
@@ -85,11 +84,11 @@ const EmulatorConfigurationPage = () => {
 
   let nextPage;
 
-  if (overwriteConfigEmus.ra.status == true) {
+  if (overwriteConfigEmus.ra.status === true) {
     nextPage = 'auto-save';
   } else if (
-    overwriteConfigEmus.ra.status == false &&
-    overwriteConfigEmus.dolphin.status == false
+    overwriteConfigEmus.ra.status === false &&
+    overwriteConfigEmus.dolphin.status === false
   ) {
     nextPage = 'pegasus-theme';
   } else {
@@ -107,6 +106,6 @@ const EmulatorConfigurationPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default EmulatorConfigurationPage;

@@ -7,39 +7,39 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import RomStorage from 'components/organisms/Wrappers/RomStorage';
 
-const RomStoragePage = () => {
+function RomStoragePage() {
   const ipcChannel = window.electron.ipcRenderer;
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
-  const { storage, SDID } = state;
+  const { storage } = state;
   const [statePage, setStatePage] = useState({
-    disabledNext: storage == null ? true : false,
+    disabledNext: storage == null,
     disabledBack: false,
     data: '',
     sdCardValid: null,
     sdCardName: undefined,
     status: undefined,
   });
-  const { disabledNext, disabledBack, data, sdCardValid, sdCardName, status } =
+  const { disabledNext, disabledBack, sdCardValid, sdCardName, status } =
     statePage;
-  const { mode, system, storagePath } = state;
+  const { system, storagePath } = state;
 
   const storageSet = (storageName) => {
-    //We prevent the function to continue if the custom location testing is still in progress
-    if (status == 'testing') {
+    // We prevent the function to continue if the custom location testing is still in progress
+    if (status === 'testing') {
       return;
     }
 
     if (storageName === 'Custom') {
-      if (system == 'win32') {
+      if (system === 'win32') {
         alert('This will take a few seconds. Please wait after clicking OK');
       }
 
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
-        let stdout = message.stdout.replace('\n', '');
-        console.log({ message });
+        const stdout = message.stdout.replace('\n', '');
+        // console.log({ message });
         setStatePage({
           ...statePage,
           disabledNext: true,
@@ -50,9 +50,9 @@ const RomStoragePage = () => {
           storage: storageName,
           storagePath: stdout,
         });
-        //is it valid?
+        // is it valid?
 
-        if (system == 'win32') {
+        if (system === 'win32') {
           ipcChannel.sendMessage('emudeck', [
             `testLocation|||testLocationValid 'custom' '${stdout}'`,
           ]);
@@ -62,13 +62,15 @@ const RomStoragePage = () => {
           ]);
         }
 
-        ipcChannel.once('testLocation', (message) => {
-          let stdout = message.stdout.replace('\n', '');
-          console.log({ message });
-          let status;
-          stdout.includes('Valid') ? (status = true) : (status = false);
-          console.log({ status });
-          if (status == true) {
+        ipcChannel.once('testLocation', (messageLocation) => {
+          const stdoutLocation = messageLocation.stdout.replace('\n', '');
+          // console.log({ message });
+          let statusLocation;
+          stdoutLocation.includes('Valid')
+            ? (statusLocation = true)
+            : (statusLocation = false);
+          // console.log({ status });
+          if (statusLocation === true) {
             setStatePage({
               ...statePage,
               disabledNext: false,
@@ -90,7 +92,7 @@ const RomStoragePage = () => {
         });
       });
     } else if (storageName === 'SD-Card') {
-      let sdCardPath = sdCardName;
+      const sdCardPath = sdCardName;
       setState({
         ...state,
         storage: storageName,
@@ -113,45 +115,42 @@ const RomStoragePage = () => {
     }
   };
 
-  //Do we have a valid SD Card?
-  useEffect(() => {
-
-    if(navigator.onLine === false){
-      navigate('/error');
-      return
-    }
-
-    if (system != 'win32') {
-      checkSDValid();
-    }
-  }, []);
-
-  //We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation
-  useEffect(() => {
-    if (storage == 'SD-Card') {
+  const getSDName = () => {
+    ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
+    ipcChannel.once('SDCardName', (message) => {
+      // console.log(message);
+      let stdout = message.stdout.replace('\n', '');
+      if (stdout === '') {
+        stdout = null;
+      }
+      setStatePage({
+        ...statePage,
+        sdCardName: stdout,
+        sdCardValid: stdout != null,
+      });
       setState({
         ...state,
-        storagePath: sdCardName,
       });
-    }
-  }, [sdCardName]);
-
+    });
+  };
   const checkSDValid = () => {
     ipcChannel.sendMessage('emudeck', [
       'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
     ]);
 
     ipcChannel.once('SDCardValid', (message) => {
-      console.log(message);
+      // console.log(message);
 
-      if (message === 'nogit'){
-        alert("Backend not found, EmuDeck will try to download the missing component and then it will restart itself")
+      if (message === 'nogit') {
+        alert(
+          'Backend not found, EmuDeck will try to download the missing component and then it will restart itself'
+        );
       }
 
-      let stdout = message.stdout.replace('\n', '');
-      let status;
-      stdout.includes('Valid') ? (status = true) : (status = false);
-      if (status === true) {
+      const stdout = message.stdout.replace('\n', '');
+      let statusSD;
+      stdout.includes('Valid') ? (statusSD = true) : (statusSD = false);
+      if (statusSD === true) {
         getSDName();
       } else {
         setStatePage({
@@ -163,24 +162,27 @@ const RomStoragePage = () => {
     });
   };
 
-  const getSDName = () => {
-    ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
-    ipcChannel.once('SDCardName', (message) => {
-      console.log(message);
-      let stdout = message.stdout.replace('\n', '');
-      if (stdout == '') {
-        stdout = null;
-      }
-      setStatePage({
-        ...statePage,
-        sdCardName: stdout,
-        sdCardValid: stdout == null ? false : true,
-      });
+  // Do we have a valid SD Card?
+  useEffect(() => {
+    if (navigator.onLine === false) {
+      navigate('/error');
+      return;
+    }
+
+    if (system !== 'win32') {
+      checkSDValid();
+    }
+  }, []);
+
+  // We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation
+  useEffect(() => {
+    if (storage === 'SD-Card') {
       setState({
         ...state,
+        storagePath: sdCardName,
       });
-    });
-  };
+    }
+  }, [sdCardName]);
 
   return (
     <Wrapper>
@@ -188,8 +190,8 @@ const RomStoragePage = () => {
       <RomStorage
         status={status}
         sdCardValid={sdCardValid}
-        showSDCard={system == 'win32' ? false : true}
-        showInternal={system == 'win32' ? false : true}
+        showSDCard={system !== 'win32'}
+        showInternal={system !== 'win32'}
         reloadSDcard={checkSDValid}
         sdCardName={sdCardName}
         customPath={storagePath}
@@ -203,6 +205,6 @@ const RomStoragePage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default RomStoragePage;

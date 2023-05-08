@@ -6,12 +6,12 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import Migration from 'components/organisms/Wrappers/Migration';
 
-const MigrationPage = () => {
+function MigrationPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
-  const { storage, SDID, mode, system, storagePath } = state;
+  const { storage, storagePath } = state;
   const [statePage, setStatePage] = useState({
-    disabledNext: storage == null ? true : false,
+    disabledNext: storage == null,
     disabledBack: false,
     statusMigration: null,
     sdCardValid: null,
@@ -32,9 +32,9 @@ const MigrationPage = () => {
   } = statePage;
 
   const storageSet = (storageName) => {
-    console.log({ storageName });
-    //We prevent the function to continue if the custom location testing is still in progress
-    if (status == 'testing') {
+    // console.log(({ storageName });
+    // We prevent the function to continue if the custom location testing is still in progress
+    if (status === 'testing') {
       return;
     }
 
@@ -42,26 +42,28 @@ const MigrationPage = () => {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
-        let stdout = message.stdout.replace('\n', '');
+        const stdout = message.stdout.replace('\n', '');
 
-        //is it valid?
+        // is it valid?
 
         ipcChannel.sendMessage('emudeck', [
           `testLocation|||testLocationValid "custom" "${stdout}"`,
         ]);
 
-        ipcChannel.once('testLocation', (message) => {
-          let stdout = message.stdout.replace('\n', '');
-          console.log({ stdout });
-          let status;
-          stdout.includes('Valid') ? (status = true) : (status = false);
-          console.log({ status });
-          if (status == true) {
+        ipcChannel.once('testLocation', (messageLocation) => {
+          const stdoutLocation = messageLocation.stdout.replace('\n', '');
+          // console.log(({ stdout });
+          let statusLocation;
+          stdoutLocation.includes('Valid')
+            ? (statusLocation = true)
+            : (statusLocation = false);
+          // console.log(({ status });
+          if (statusLocation === true) {
             setStatePage({
               ...statePage,
               disabledNext: false,
               storageDestination: storageName,
-              storagePathDestination: stdout,
+              storagePathDestination: stdoutLocation,
             });
           } else {
             alert('Non writable directory selected, please choose another.');
@@ -75,7 +77,7 @@ const MigrationPage = () => {
         });
       });
     } else if (storageName === 'SD-Card') {
-      let sdCardPath = sdCardName;
+      const sdCardPath = sdCardName;
 
       setStatePage({
         ...statePage,
@@ -93,29 +95,14 @@ const MigrationPage = () => {
     }
   };
 
-  //Do we have a valid SD Card?
-  useEffect(() => {
-    checkSDValid();
-  }, []);
-
-  //We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation
-  useEffect(() => {
-    if (storage == 'SD-Card') {
-      setState({
-        ...state,
-        storagePath: sdCardName,
-      });
-    }
-  }, [sdCardName]);
-
   const checkSDValid = () => {
     ipcChannel.sendMessage('emudeck', [
       'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
     ]);
 
     ipcChannel.once('SDCardValid', (message) => {
-      console.log(message);
-      let stdout = message.stdout.replace('\n', '');
+      // console.log((message);
+      const stdout = message.stdout.replace('\n', '');
       let status;
       stdout.includes('Valid') ? (status = true) : (status = false);
       if (status === true) {
@@ -130,18 +117,33 @@ const MigrationPage = () => {
     });
   };
 
+  // Do we have a valid SD Card?
+  useEffect(() => {
+    checkSDValid();
+  }, []);
+
+  // We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation
+  useEffect(() => {
+    if (storage === 'SD-Card') {
+      setState({
+        ...state,
+        storagePath: sdCardName,
+      });
+    }
+  }, [sdCardName]);
+
   const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
-      console.log(message);
+      // console.log((message);
       let stdout = message.stdout.replace('\n', '');
-      if (stdout == '') {
+      if (stdout === '') {
         stdout = null;
       }
       setStatePage({
         ...statePage,
         sdCardName: stdout,
-        sdCardValid: stdout == null ? false : true,
+        sdCardValid: stdout != null,
       });
       setState({
         ...state,
@@ -160,7 +162,7 @@ const MigrationPage = () => {
     ]);
 
     ipcChannel.once('Migration_init', (message) => {
-      let stdout = message.stdout.replace('\n', '');
+      const stdout = message.stdout.replace('\n', '');
       if (stdout.includes('Valid')) {
         setStatePage({
           ...statePage,
@@ -175,9 +177,9 @@ const MigrationPage = () => {
     });
   };
 
-  //We store the changes on localhost in case people want to migrate over and over
+  // We store the changes on localhost in case people want to migrate over and over
   useEffect(() => {
-    let json = JSON.stringify(state);
+    const json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
   }, [state]);
 
@@ -203,6 +205,6 @@ const MigrationPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default MigrationPage;

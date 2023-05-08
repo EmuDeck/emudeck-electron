@@ -31,34 +31,39 @@ function CloudSyncPage() {
   // };
 
   const installRclone = () => {
-    if (
-      confirm(
-        'Press OK if you already have CloudSync installed on another EmuDeck installation and you want to sync that installation to this one, if not, press Cancel'
-      ) === true
-    ) {
-      ipcChannel.sendMessage('emudeck', [
-        `cloud_sync_install_and_config_with_code|||cloud_sync_install_and_config_with_code ${cloudSync}`,
-      ]);
-      ipcChannel.once('cloud_sync_install_and_config_with_code', (message) => {
-        // No versioning found, what to do?
-        console.log('cloudSync', message);
+    // OLD TOKEN upload, not needed for now
+    // if (
+    //   confirm(
+    //     'Press OK if you already have CloudSync installed on another EmuDeck installation and you want to sync that installation to this one, if not, press Cancel'
+    //   ) === true
+    // ) {
+    //   ipcChannel.sendMessage('emudeck', [
+    //     `cloud_sync_install_and_config_with_code|||cloud_sync_install_and_config_with_code ${cloudSync}`,
+    //   ]);
+    //   ipcChannel.once('cloud_sync_install_and_config_with_code', (message) => {
+    //     // No versioning found, what to do?
+    //     console.log('cloudSync', message);
+    //     alert(
+    //       `All Done, every time you load a game your Game states and Saved games will be synced to ${cloudSync}`
+    //     );
+    //   });
+    // } else {
+    alert(`A web browser will open so you can log in to your Cloud provider`);
+
+    ipcChannel.sendMessage('emudeck', [
+      `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
+    ]);
+
+    ipcChannel.once('cloud_sync_install_and_config', (message) => {
+      console.log(message);
+      const { stdout } = message;
+      if (stdout.includes('true')) {
         alert(
-          `All Done, every time you load a game your Game states and Saved games will be synced to ${cloudSync}`
+          'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
         );
-      });
-    } else {
-      alert(
-        `A web browser will open so you can log in to your Cloud provider, after that every time you load a Game your Game states and Saved games will be synced to the cloud`
-      );
-
-      ipcChannel.sendMessage('emudeck', [
-        `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
-      ]);
-
-      ipcChannel.once('cloud_sync_install_and_config', (message) => {
-        console.log('cloudSync', message);
-      });
-    }
+      }
+    });
+    // }
   };
 
   const uninstallRclone = () => {

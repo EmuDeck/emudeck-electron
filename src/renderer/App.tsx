@@ -244,7 +244,11 @@ export default function App() {
       rpcs3: '720P',
       ryujinx: '720P',
       xemu: '720P',
+      cemu: '720P',
       xenia: '720P',
+      citra: '720P',
+      vita3k: '720P',
+      melonds: '720P',
     },
   });
 

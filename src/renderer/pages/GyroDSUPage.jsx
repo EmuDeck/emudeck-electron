@@ -6,7 +6,7 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import GyroDSU from 'components/organisms/Wrappers/GyroDSU';
 
-const GyroDSUPage = () => {
+function GyroDSUPage() {
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -80,16 +80,16 @@ const GyroDSUPage = () => {
       ...statePage,
       disableButton: true,
     });
-    const escapedPass = sudoPass.replaceAll("'","'\\''")
+    const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('bash', [
       `Gyro|||konsole -e  sh -c '. ~/.config/EmuDeck/backend/functions/all.sh &&  echo "${escapedPass}" | sudo -v -S && Plugins_installSteamDeckGyroDSU && echo "" && read -n 1 -s -r -p "Press any key to exit" && exit 0'`,
     ]);
 
     ipcChannel.once('Gyro', (status) => {
       console.log({ status });
-      const stdout = status.stdout;
+      const { stdout } = status;
       const sterr = status.stdout;
-      const error = status.error;
+      const { error } = status;
 
       if (stdout.includes('true')) {
         setStatePage({
@@ -153,7 +153,7 @@ const GyroDSUPage = () => {
         onClick={createSudo}
         disableButton={disableButton}
         hasSudo={hasSudo}
-        passValidates={pass1 === pass2 ? true : false}
+        passValidates={pass1 === pass2}
         textNotification={textNotification}
       />
       <Footer
@@ -164,6 +164,6 @@ const GyroDSUPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default GyroDSUPage;

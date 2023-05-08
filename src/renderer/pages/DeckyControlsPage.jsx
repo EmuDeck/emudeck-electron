@@ -6,8 +6,7 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import DeckyControls from 'components/organisms/Wrappers/DeckyControls';
 
-const DeckyControlsPage = () => {
-  const { state, setState } = useContext(GlobalContext);
+function DeckyControlsPage() {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -35,7 +34,7 @@ const DeckyControlsPage = () => {
   const ipcChannel = window.electron.ipcRenderer;
 
   const setSudoPass = (data) => {
-    if (data.target.value != '') {
+    if (data.target.value !== '') {
       setStatePage({
         ...statePage,
         sudoPass: data.target.value,
@@ -48,7 +47,7 @@ const DeckyControlsPage = () => {
     }
   };
 
-  const createSudo = (data) => {
+  const createSudo = () => {
     ipcChannel.sendMessage('bash', [
       `echo '${pass1}' > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
@@ -75,21 +74,19 @@ const DeckyControlsPage = () => {
     });
   };
 
-  const installDeckyControls = (data) => {
+  const installDeckyControls = () => {
     setStatePage({
       ...statePage,
       disableButton: true,
     });
-    const escapedPass = sudoPass.replaceAll("'","'\\''")
+    const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('emudeck', [
       `DeckyControls|||echo "${escapedPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installDeckyControls && echo true`,
     ]);
 
     ipcChannel.once('DeckyControls', (status) => {
-      console.log({ status });
-      const stdout = status.stdout;
-      const sterr = status.stdout;
-      const error = status.error;
+      // console.log({ status });
+      const { stdout } = status;
 
       if (stdout.includes('true')) {
         setStatePage({
@@ -131,13 +128,14 @@ const DeckyControlsPage = () => {
       'checkPWD|||passwd -S $(whoami) | awk -F " " "{print $2}" & exit',
     ]);
 
-    ipcChannel.once('checkPWD', (stdout) => {
-      console.log({ stdout });
-      stdout = stdout.replace('\n', '');
-      stdout.includes('NP') ? (stdout = false) : (stdout = true);
+    ipcChannel.once('checkPWD', (message) => {
+      // console.log({ stdout });
+      let sudo;
+      stdout = message.replace('\n', '');
+      stdout.includes('NP') ? (sudo = false) : (sudo = true);
       setStatePage({
         ...statePage,
-        hasSudo: stdout,
+        hasSudo: sudo,
       });
     });
   }, []);
@@ -155,7 +153,7 @@ const DeckyControlsPage = () => {
         onClick={createSudo}
         disableButton={disableButton}
         hasSudo={hasSudo}
-        passValidates={pass1 === pass2 ? true : false}
+        passValidates={pass1 === pass2}
         textNotification={textNotification}
       />
       <Footer
@@ -166,6 +164,6 @@ const DeckyControlsPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default DeckyControlsPage;

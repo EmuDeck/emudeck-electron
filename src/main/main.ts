@@ -15,8 +15,9 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+
 const os = require('os');
-var slash = require('slash');
+const slash = require('slash');
 const https = require('https');
 const fs = require('fs');
 const shellQuote = require('shell-quote');
@@ -44,7 +45,7 @@ fs.exists(`${os.homedir()}/emudeck/emudeck.AppImage.log`, function (exists) {
 
 // Vars and consts
 let mainWindow: BrowserWindow | null = null;
-//Prevent two instances
+// Prevent two instances
 const gotTheLock = app.requestSingleInstanceLock();
 
 const Promise = require('bluebird');
@@ -56,13 +57,12 @@ const promiseFromChildProcess = (child) => {
   });
 };
 
-
 const logCommand = (bashCommand, stdout, stderr) => {
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
   const yyyy = today.getFullYear();
-  const date = mm + '/' + dd + '/' + yyyy;
+  const date = `${mm}/${dd}/${yyyy}`;
   const homedir = os.homedir();
 
   let logFile = `${homedir}/emudeck/Emudeck.AppImage.log`;
@@ -74,9 +74,9 @@ const logCommand = (bashCommand, stdout, stderr) => {
   const stdoutString = stdout ? stdout.toString() : '';
   const stderrString = stderr ? stderr.toString() : '';
 
-  //const escapedBashCommandString = shellQuote.quote([bashCommandString], { noGlob: true });
-  //const escapedStdoutString = shellQuote.quote([stdoutString], { noGlob: true });
-  //const escapedStderrString = shellQuote.quote([stderrString], { noGlob: true });
+  // const escapedBashCommandString = shellQuote.quote([bashCommandString], { noGlob: true });
+  // const escapedStdoutString = shellQuote.quote([stdoutString], { noGlob: true });
+  // const escapedStderrString = shellQuote.quote([stderrString], { noGlob: true });
 
   const logEntry = `[${date}] ${bashCommandString}\n`;
   fs.appendFile(logFile, logEntry, (err) => {
@@ -152,7 +152,7 @@ const createWindow = async () => {
   const { width, height } = primaryDisplay.workAreaSize;
   const screenHeight = height < 701 ? 600 : 720;
   const isFullscreen = height < 701 ? false : false;
-  //const os = require('os');
+  // const os = require('os');
   let scaleFactorW;
   let scaleFactorH;
   let dpi;
@@ -166,13 +166,13 @@ const createWindow = async () => {
   scaleFactorH = 1 / ((screenHeight * dpi) / height);
   let customWidth = 1280;
   if (os.platform().includes('win32')) {
-    customWidth = customWidth / 2;
+    customWidth /= 2;
   }
 
   mainWindow = new BrowserWindow({
     show: false,
     width: 1280,
-    //width: 1280,
+    // width: 1280,
     height: screenHeight,
     icon: getAssetPath('icon.png'),
     resizable: true,
@@ -200,7 +200,7 @@ const createWindow = async () => {
       mainWindow.show();
     }
 
-    //Adjust zoom factor according to DPI or scale factor that we determined before
+    // Adjust zoom factor according to DPI or scale factor that we determined before
     console.log('Display with current scale factor: %o', scaleFactorW);
     // mainWindow.webContents.setZoomFactor(scaleFactorW);
     mainWindow.show();
@@ -221,7 +221,7 @@ const createWindow = async () => {
     const contents = win.webContents;
     console.log(contents);
 
-    //shell.openExternal(edata.url);
+    // shell.openExternal(edata.url);
     return { action: 'deny' };
   });
 
@@ -232,12 +232,12 @@ const createWindow = async () => {
 
 //
 //
-//External APIS ( Bash & CMD / Powershell )
+// External APIS ( Bash & CMD / Powershell )
 //
 //
 
 //
-//Backend function invokers
+// Backend function invokers
 //
 ipcMain.on('bash', async (event, command) => {
   let backChannel;
@@ -253,7 +253,7 @@ ipcMain.on('bash', async (event, command) => {
   }
 
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-    //event.reply('console', { backChannel });
+    // event.reply('console', { backChannel });
     logCommand(bashCommand, error, stdout, stderr);
     event.reply(backChannel, stdout);
   });
@@ -273,7 +273,7 @@ ipcMain.on('bash-nolog', async (event, command) => {
   }
 
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-    //event.reply('console', { backChannel });
+    // event.reply('console', { backChannel });
 
     event.reply(backChannel, stdout);
   });
@@ -285,9 +285,9 @@ ipcMain.on('emudeck', async (event, command) => {
   let allPath;
   const homeUser = os.homedir();
   if (os.platform().includes('win32')) {
-    allPath = `${homeUser}/AppData/Roaming/EmuDeck/backend/functions/all.ps1`
-  }else{
-    allPath = `${homeUser}/.config/EmuDeck/backend/functions/all.sh`
+    allPath = `${homeUser}/AppData/Roaming/EmuDeck/backend/functions/all.ps1`;
+  } else {
+    allPath = `${homeUser}/.config/EmuDeck/backend/functions/all.sh`;
   }
 
   if (command[0].includes('|||')) {
@@ -301,10 +301,10 @@ ipcMain.on('emudeck', async (event, command) => {
 
   // Lets detect if the repo was cloned properly
   if (fs.existsSync(allPath)) {
-    //file exists
-    console.log('all.sh detected')
-  }else{
-    console.log('all not detected')
+    // file exists
+    console.log('all.sh detected');
+  } else {
+    console.log('all not detected');
     event.reply(backChannel, 'nogit');
     let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout master && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
 
@@ -313,12 +313,11 @@ ipcMain.on('emudeck', async (event, command) => {
     }
 
     return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-      //event.reply('console', { backChannel });
+      // event.reply('console', { backChannel });
       logCommand(bashCommand, error, stdout, stderr);
-      mainWindow.reload()
+      mainWindow.reload();
     });
   }
-
 
   let preCommand;
 
@@ -330,12 +329,12 @@ ipcMain.on('emudeck', async (event, command) => {
   }
 
   return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
-    //event.reply('console', { backChannel });
+    // event.reply('console', { backChannel });
     logCommand(bashCommand, error, stdout, stderr);
     event.reply(backChannel, {
-      stdout: stdout,
-      stderr: stderr,
-      error: error,
+      stdout,
+      stderr,
+      error,
     });
   });
 });
@@ -362,11 +361,11 @@ ipcMain.on('emudeck-nolog', async (event, command) => {
   }
 
   return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
-    //event.reply('console', { backChannel });
+    // event.reply('console', { backChannel });
     event.reply(backChannel, {
-      stdout: stdout,
-      stderr: stderr,
-      error: error,
+      stdout,
+      stderr,
+      error,
     });
   });
 });
@@ -383,14 +382,14 @@ ipcMain.on('getMSG', async (event, command) => {
 
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     event.reply(backChannel, {
-      stdout: stdout,
-      stderr: stderr,
-      error: error,
+      stdout,
+      stderr,
+      error,
     });
   });
 });
 
-//UI commands
+// UI commands
 ipcMain.on('close', async (event, command) => {
   app.quit();
 });
@@ -406,15 +405,15 @@ ipcMain.on('lessZoom', async (event, command) => {
 });
 
 //
-//Updating the app
+// Updating the app
 //
 ipcMain.on('update-check', async (event, command) => {
   // Force no autoupdate
   // event.reply('update-check-out', 'up-to-date');
   // return;
 
-  //Windows no update - temporary
-  //const os = require('os');
+  // Windows no update - temporary
+  // const os = require('os');
   // if (os.platform().includes('win32')) {
   //   setTimeout(function () {
   //     event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
@@ -426,7 +425,6 @@ ipcMain.on('update-check', async (event, command) => {
     setTimeout(function () {
       event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
       logCommand('UPDATE: DEV MODE');
-      return;
     }, 500);
   }
 
@@ -454,9 +452,9 @@ ipcMain.on('update-check', async (event, command) => {
         numeric: true,
         sensitivity: 'base',
       });
-      //console.log({ versionCheck });
-      //console.log('- 1 means update');
-      //console.log('1 and 0 means up to date');
+      // console.log({ versionCheck });
+      // console.log('- 1 means update');
+      // console.log('1 and 0 means up to date');
       logCommand('UPDATE: COMPARING VERSIONS');
       if (versionCheck == 1 || versionCheck == 0) {
         logCommand('UPDATE: UP TO DATE');
@@ -487,8 +485,8 @@ ipcMain.on('update-check', async (event, command) => {
       logCommand(`${JSON.stringify(reason)}`);
     });
 
-  //Abort the update if it hangs
-  var abortPromise = new Promise(function (resolve, reject) {
+  // Abort the update if it hangs
+  const abortPromise = new Promise(function (resolve, reject) {
     setTimeout(resolve, 10000, 'abort');
   });
 
@@ -496,13 +494,13 @@ ipcMain.on('update-check', async (event, command) => {
     if (value == 'abort') {
       logCommand(`UPDATE: ABORTED TIMEOUT`);
       event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
-      //mainWindow.reload()
+      // mainWindow.reload()
     }
   });
 });
 
 ipcMain.on('system-info-in', async (event, command) => {
-  //const os = require('os');
+  // const os = require('os');
   event.reply('system-info-out', os.platform());
 });
 
@@ -514,10 +512,10 @@ ipcMain.on('version', async (event, command) => {
 });
 
 //
-//Installing  Bash / PowerShell backend
+// Installing  Bash / PowerShell backend
 //
 ipcMain.on('check-git', async (event, branch) => {
-  let backChannel = 'check-git';
+  const backChannel = 'check-git';
   let bashCommand = `mkdir -p $HOME/emudeck/ && cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree`;
 
   if (os.platform().includes('win32')) {
@@ -530,7 +528,7 @@ ipcMain.on('check-git', async (event, branch) => {
 });
 
 ipcMain.on('clone', async (event, branch) => {
-  let backChannel = 'clone';
+  const backChannel = 'clone';
   let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branch} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
 
   if (os.platform().includes('win32')) {
@@ -543,7 +541,7 @@ ipcMain.on('clone', async (event, branch) => {
 });
 
 ipcMain.on('pull', async (event, branch) => {
-  let backChannel = 'pull';
+  const backChannel = 'pull';
   let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branch} && git pull`;
 
   if (os.platform().includes('win32')) {
@@ -559,23 +557,23 @@ ipcMain.on('branch', async (event, command) => {
   event.reply('branch-out', process.env.BRANCH);
 });
 
-//Patroen login
+// Patroen login
 ipcMain.on('patreon-check', async (event, token) => {
-  let backChannel = 'patreon-check';
+  const backChannel = 'patreon-check';
 
-  //We get the list of memberships for that user
+  // We get the list of memberships for that user
   let bashCommand = `curl --location --request GET 'https://www.patreon.com/api/oauth2/v2/identity?include=memberships' \
     --header 'Authorization: Bearer ${token}'`;
   if (os.platform().includes('win32')) {
     bashCommand = `curl https://www.patreon.com/api/oauth2/v2/identity?include=memberships -H "Authorization: Bearer ${token}"`;
   }
-  //console.log({ bashCommand });
+  // console.log({ bashCommand });
   exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-    //console.log(stdout);
+    // console.log(stdout);
     logCommand(bashCommand, error, stdout, stderr);
     const stdoutJSON = JSON.parse(stdout);
 
-    //If error user
+    // If error user
     if (stdoutJSON.errors) {
       event.reply(backChannel, error, stdout, stderr);
       return;
@@ -583,27 +581,27 @@ ipcMain.on('patreon-check', async (event, token) => {
 
     const membershipData = stdoutJSON.data.relationships.memberships.data;
     let patreonDataCommand;
-    let thanks = false;
-    //Now we have to check if those memberships are being paid
+    const thanks = false;
+    // Now we have to check if those memberships are being paid
     Object.entries(membershipData).forEach((entry) => {
       const [key, value] = entry;
-      let userID = value.id;
+      const userID = value.id;
       patreonDataCommand = `curl --location --request GET 'https://www.patreon.com/api/oauth2/v2/members/${userID}?fields%5Bmember%5D=will_pay_amount_cents,patron_status,currently_entitled_amount_cents' \
                   --header 'Authorization: Bearer ${token}'`;
 
       if (os.platform().includes('win32')) {
         patreonDataCommand = `curl https://www.patreon.com/api/oauth2/v2/members/${userID}?fields%5Bmember%5D=will_pay_amount_cents,patron_status,currently_entitled_amount_cents -H "Authorization: Bearer ${token}"`;
       }
-      //console.log({ patreonDataCommand });
+      // console.log({ patreonDataCommand });
       exec(`${patreonDataCommand}`, shellType, (error, stdout, stderr) => {
-        //console.log(stdout);
+        // console.log(stdout);
         logCommand(bashCommand, error, stdout, stderr);
         const stdoutJSON = JSON.parse(stdout);
 
-        let pledge =
-          stdoutJSON['data']['attributes']['currently_entitled_amount_cents'];
+        const pledge =
+          stdoutJSON.data.attributes.currently_entitled_amount_cents;
 
-        //console.log({ pledge });
+        // console.log({ pledge });
         if (pledge > 299) {
           event.reply(backChannel, {}, JSON.stringify({ status: true }), {});
         } else {
@@ -620,13 +618,13 @@ ipcMain.on('patreon-check', async (event, token) => {
   });
 });
 
-//GameMode setter
+// GameMode setter
 ipcMain.on('isGameMode', async (event, command) => {
   const os = app.commandLine.hasSwitch('GameMode');
   event.reply('isGameMode-out', os);
 });
 
-//Other
+// Other
 ipcMain.on('clean-log', async (event, command) => {
   exec(`echo "[$(date)] App Installed" > $HOME/emudeck/Emudeck.AppImage.log`, {
     shell: '/bin/bash',
@@ -637,11 +635,11 @@ ipcMain.on('debug', async (event, command) => {
   mainWindow.webContents.openDevTools();
 });
 
-//RetroAchievements
+// RetroAchievements
 ipcMain.on('getToken', async (event, command) => {
-  let backChannel = 'getToken';
+  const backChannel = 'getToken';
   const escapedUserName = `${command.user.replace(/'/g, "'\\''")}`;
-  //str.replace(/[\\$'"]/g, "\\$&")
+  // str.replace(/[\\$'"]/g, "\\$&")
   const escapedPass = `${command.pass.replace(/'/g, "'\\''")}`;
   let bashCommand = `curl --location --data-urlencode u='${escapedUserName}' --data-urlencode p='${escapedPass}' --request POST 'https://retroachievements.org/dorequest.php?r=login'`;
   if (os.platform().includes('win32')) {
@@ -655,9 +653,9 @@ ipcMain.on('getToken', async (event, command) => {
 });
 
 ipcMain.on('setToken', async (event, command) => {
-  let backChannel = 'getToken';
-  let token = command[0];
-  let user = command[1];
+  const backChannel = 'getToken';
+  const token = command[0];
+  const user = command[1];
   let bashCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && echo ${token} > "$HOME/.config/EmuDeck/.rat" && echo ${user} > "$HOME/.config/EmuDeck/.rau" && RetroArch_retroAchievementsSetLogin && DuckStation_retroAchievementsSetLogin && PCSX2QT_retroAchievementsSetLogin && echo true`;
 
   if (os.platform().includes('win32')) {
@@ -764,7 +762,7 @@ ipcMain.on('get-store', async (event) => {
   const backChannel = 'get-store';
 
   const buildJsonStore = async () => {
-    //GB HomebrewGames
+    // GB HomebrewGames
     const dir = `${os.homedir()}/emudeck/store/`;
     let jsonArray = [];
     fs.readdir(dir, (err, files) => {
@@ -772,7 +770,7 @@ ipcMain.on('get-store', async (event) => {
         if (err) reject(err);
         files.forEach((file) => {
           if (file.includes('.json') && !file.includes('store')) {
-            let jsonPath = `${dir}${file}`;
+            const jsonPath = `${dir}${file}`;
             try {
               const data = fs.readFileSync(jsonPath);
               const json = JSON.parse(data);
@@ -787,7 +785,7 @@ ipcMain.on('get-store', async (event) => {
         };
         resolve(masterJson);
       }).then((masterJson) => {
-        //console.log(masterJson);
+        // console.log(masterJson);
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/store.json`,
           JSON.stringify(masterJson)
@@ -797,7 +795,7 @@ ipcMain.on('get-store', async (event) => {
   };
 
   buildJsonStore().then(() => {
-    let jsonPath = `${userHomeDir}/emudeck/store/store.json`;
+    const jsonPath = `${userHomeDir}/emudeck/store/store.json`;
     try {
       const data = fs.readFileSync(jsonPath);
       const json = JSON.parse(data);
@@ -814,7 +812,7 @@ ipcMain.on('build-store', async (event) => {
   console.log('build');
 
   const buildJson = (system, name) => {
-    //GB HomebrewGames
+    // GB HomebrewGames
     let dir;
     if (os.platform().includes('win32')) {
       dir = `${os.homedir()}/AppData/Roaming/EmuDeck/backend/store/${system}/`;
@@ -833,7 +831,7 @@ ipcMain.on('build-store', async (event) => {
         if (err) reject(err);
         files.forEach((file) => {
           if (file.includes('.json')) {
-            let jsonPath = `${dir}${file}`;
+            const jsonPath = `${dir}${file}`;
             try {
               const data = fs.readFileSync(jsonPath);
               const json = JSON.parse(data);
@@ -851,14 +849,14 @@ ipcMain.on('build-store', async (event) => {
         };
         resolve(masterJson);
       }).then((masterJson) => {
-        //console.log(masterJson);
+        // console.log(masterJson);
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/${system}.json`,
           JSON.stringify(masterJson)
         );
       });
     });
-    //buildJsonStore();
+    // buildJsonStore();
   };
 
   buildJson('gb', 'GameBoy');
@@ -934,10 +932,10 @@ ipcMain.on('unInstallGame', async (event, command) => {
 // Dependencies checks
 
 ipcMain.on('validate-git', async (event) => {
-  //mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   const backChannel = 'validate-git';
-  let bashCommand = 'git -v';
+  const bashCommand = 'git -v';
 
   return exec(`${bashCommand}`, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
@@ -948,8 +946,8 @@ ipcMain.on('validate-git', async (event) => {
     if (status === true) {
       event.reply(backChannel, {
         stdout: status,
-        stderr: stderr,
-        error: error,
+        stderr,
+        error,
       });
     } else {
       const bashCommand2 =
@@ -959,8 +957,8 @@ ipcMain.on('validate-git', async (event) => {
 
         event.reply(backChannel, {
           stdout: false,
-          stderr: stderr,
-          error: error,
+          stderr,
+          error,
         });
       });
     }
@@ -976,7 +974,8 @@ ipcMain.on('validate-7Zip', async (event) => {
       stdout: true,
     });
     return;
-  } else if (fs.existsSync(path2)) {
+  }
+  if (fs.existsSync(path2)) {
     event.reply(backChannel, {
       stdout: true,
     });
@@ -993,7 +992,8 @@ ipcMain.on('validate-7Zip', async (event) => {
         stdout: true,
       });
       return;
-    } else if (fs.existsSync(path2)) {
+    }
+    if (fs.existsSync(path2)) {
       event.reply(backChannel, {
         stdout: true,
       });
@@ -1002,8 +1002,8 @@ ipcMain.on('validate-7Zip', async (event) => {
 
     event.reply(backChannel, {
       stdout: false,
-      stderr: stderr,
-      error: error,
+      stderr,
+      error,
     });
   });
 });
@@ -1051,8 +1051,24 @@ app.on('session-created', (session) => {
   console.log(session);
 });
 
-let myWindow = null;
-//no second instances
+ipcMain.on('run-app', async (event, appPath) => {
+  const appPathFixed = appPath.replace(/[\r\n]+/g, '');
+  console.log(appPathFixed);
+  let externalApp;
+  if (os.platform().includes('win32')) {
+    externalApp = spawn(appPathFixed);
+  } else if (os.platform().includes('darwin')) {
+    externalApp = spawn('open', [appPathFixed]);
+  } else {
+    externalApp = spawn('xdg-open', [appPathFixed]);
+  }
+  externalApp.on('exit', (code) => {
+    event.reply('run-app', code);
+  });
+});
+
+const myWindow = null;
+// no second instances
 if (!gotTheLock) {
   app.quit();
 } else {

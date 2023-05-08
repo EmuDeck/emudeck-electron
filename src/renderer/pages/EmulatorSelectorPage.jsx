@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
@@ -7,7 +7,6 @@ import Footer from 'components/organisms/Footer/Footer';
 import EmulatorSelector from 'components/organisms/Wrappers/EmulatorSelector';
 
 import {
-  imgdefault,
   imgra,
   imgdolphin,
   imgprimehack,
@@ -57,11 +56,11 @@ const images = {
   srm: imgsrm,
 };
 
-const EmulatorSelectorPage = () => {
+function EmulatorSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
   const { device, installEmus } = state;
 
-  const [statePage, setStatePage] = useState({
+  const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
@@ -69,7 +68,7 @@ const EmulatorSelectorPage = () => {
   const { disabledNext, disabledBack, data } = statePage;
 
   const toggleEmus = (emulatorProp) => {
-    let { id, name, status } = installEmus[emulatorProp];
+    const { status } = installEmus[emulatorProp];
 
     setState({
       ...state,
@@ -91,6 +90,6 @@ const EmulatorSelectorPage = () => {
       />
     </Wrapper>
   );
-};
+}
 
 export default EmulatorSelectorPage;

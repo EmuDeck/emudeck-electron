@@ -1,8 +1,32 @@
 [
   {
-    "title": "Playstation 3",
+    "title": "New Emulators",
     "type": "STEAMOS",
-    "description": "We've added RPCS3 as a new emulator",
+    "description": "Citra for Nintendo 3DS and Ryujinx for Nintendo Switch.",
+    "image": "false"
+  },
+  {
+    "title": "CloudSync",
+    "type": "STEAMOS",
+    "description": "Sync your saved games between other EmuDecks installation, on your Steam Deck, another Windows PC, etc..<br/> This is a beta release, so make sure you have a backup of your saves before enable this feature. <br/> You can find it in Tools & Stuff.<br/><strong>Make sure you never close the emulator using the Steam Menu as this will prevent CloudSync to upload your files. Use the START + SELECT combo or Alt + F4</strong>",
+    "image": "false"
+  },
+  {
+    "title": "Controller improvements",
+    "type": "STEAMOS",
+    "description": "Added Steam Input profiles for Playstation and Xbox Controllers.<br/>This enables the SELECT + START combo to exit any emulator.<br/>You need to follow this <strong><a target='_blank' href='https://youtu.be/ra_B1axeFqU'>instructions</a></strong> to activate the new Steam Input.<br/>This is mandatory in order for Cloud Sync to work properly with Yuzu, Citra and Ryujinx.",
+    "image": "false"
+  },
+  {
+    "title": "Controller instructions",
+    "type": "STEAMOS",
+    "description": "Yuzu, Citra and Ryujinx can't have their controller automatically configured so we've added a new tutorial page right after you install EmuDeck.",
+    "image": "false"
+  },
+  {
+    "title": "Bug fixes",
+    "type": "STEAMOS",
+    "description": "Custom reset/install shows same level of customization than EmuDeck for SteamOS<br/>Improved Emulator installation and configuration from Manage Emulators<br/>New PCSX2 path installation - You might need to manually copy your saved games and states from the old PCSX2 folder to the new PCSX2-Qt<br/>Added missing Hotkeys for Dolphin, PCSX2 and Duckstation",
     "image": "false"
   }
 ]
