@@ -95,7 +95,7 @@ function GyroDSUPage() {
         setStatePage({
           ...statePage,
           showNotification: true,
-          textNotification: '🎉 GyroDSU Installed!',
+          textNotification: '🎉 GyroDSU Installed! Please reboot your Deck now',
           sudoPass: '',
         });
         if (showNotification === true) {
