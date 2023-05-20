@@ -76,10 +76,11 @@ function CloudSyncPageConfig() {
       });
     });
 
-    // ipcChannel.sendMessage('emudeck', [
-    //   `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
-    // ]);
-
+    //
+    //     ipcChannel.sendMessage('emudeck', [
+    //       `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
+    //     ]);
+    //
     //     ipcChannel.once('cloud_sync_install_and_config', (message) => {
     //       const { stdout, error } = message;
     //
@@ -120,7 +121,7 @@ function CloudSyncPageConfig() {
     //         );
     //       }
     //     });
-    // }
+    //
   };
 
   const uninstallRclone = () => {
@@ -183,20 +184,17 @@ function CloudSyncPageConfig() {
         `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
       ]);
 
-      //alert('Go to your Desktop and open the new EmuDeck SaveBackup icon.');
       ipcChannel.once('createDesktop', (message) => {
         // No versioning found, what to do?
-        ipcChannel.once('createDesktop', (message) => {
-          ipcChannel.sendMessage(
-            'bash',
-            `kioclient exec $HOME/Desktop/SaveBackup.desktop`
-          );
-          setStatePage({
-            ...statePage,
-            disableButton: false,
-          });
+        setStatePage({
+          ...statePage,
+          disableButton: false,
         });
       });
+
+      ipcChannel.sendMessage('bash-nolog', [
+        `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
+      ]);
     }
   };
 
