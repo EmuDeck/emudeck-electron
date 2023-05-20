@@ -25,7 +25,7 @@ function CloudSyncPageConfig() {
   const cloudSyncSet = (item) => {
     setState({
       ...state,
-      cloudSync: item,      
+      cloudSync: item,
     });
     setStatePage({
       ...statePage,
@@ -94,28 +94,16 @@ function CloudSyncPageConfig() {
       });
       setState({
         ...state,
-        cloudSyncStatus: false      
+        cloudSyncStatus: false,
       });
       alert(`Cloud Sync uninstalled`);
     });
   };
-  
-  
+
   const createDesktopIcon = () => {
-  setStatePage({
-    ...statePage,
-    disableButton: true,
-  });
-  
-  if (system === 'win32') {
-    ipcChannel.sendMessage('emudeck', [
-    `rclone_install|||rclone_install ${cloudSync}`,
-    ]);
-    ipcChannel.once('rclone_install', (message) => {
-    // No versioning found, what to do?
     setStatePage({
       ...statePage,
-      disableButton: false,
+      disableButton: true,
     });
 
     if (system === 'win32') {
@@ -153,27 +141,8 @@ function CloudSyncPageConfig() {
 
   const openKonsole = () => {
     ipcChannel.sendMessage('emudeck', [
-    `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
+      `openKonsole|||konsole -e echo $emulationPath && rclone_setup`,
     ]);
-  
-    ipcChannel.once('createDesktop', (message) => {
-    // No versioning found, what to do?
-    setStatePage({
-      ...statePage,
-      disableButton: false,
-    });
-    });
-  
-    ipcChannel.sendMessage('bash-nolog', [
-    `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
-    ]);
-  }
-  };
-  
-  const openKonsole = () => {
-  ipcChannel.sendMessage('emudeck', [
-    `openKonsole|||konsole -e echo $emulationPath && rclone_setup`,
-  ]);
   };
 
   useEffect(() => {
@@ -195,12 +164,14 @@ function CloudSyncPageConfig() {
       <Header title="Cloud Saves - Select your provider" />
       <CloudSyncConfig
         onClick={cloudSyncSet}
-        onClickInstall={cloudSyncType === 'Sync' ? installRclone : createDesktopIcon}
+        onClickInstall={
+          cloudSyncType === 'Sync' ? installRclone : createDesktopIcon
+        }
         onClickUninstall={uninstallRclone}
         disableButton={disableButton}
         showLoginButton={showLoginButton}
       />
-      
+
       <Footer
         next={nextButtonStatus()}
         nextText={mode === 'easy' ? 'Finish' : 'Next'}
