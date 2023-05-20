@@ -15,8 +15,10 @@ function CloudSyncPageConfig() {
     disabledNext: false,
     disabledBack: false,
     disableButton: false,
+    showTrybutton: false,
   });
-  const { disabledNext, disabledBack, disableButton } = statePage;
+  const { disabledNext, disabledBack, disableButton, showTrybutton } =
+    statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
@@ -24,6 +26,10 @@ function CloudSyncPageConfig() {
     setState({
       ...state,
       cloudSync: item,
+    });
+    setStatePage({
+      ...statePage,
+      showTrybutton: false,
     });
   };
 
@@ -49,15 +55,35 @@ function CloudSyncPageConfig() {
     //     );
     //   });
     // } else {
-    alert(`A web browser will open so you can log in to your Cloud provider`);
+
+    // ipcChannel.sendMessage('emudeck', [
+    //   `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
+    // ]);
 
     ipcChannel.sendMessage('emudeck', [
-      `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
+      `cloud_sync_install_and_config|||cd /Users/rsedano/Downloads/rclone-v1.62.2-osx-arm64 && rclone config update ${cloudSync}`,
     ]);
 
     ipcChannel.once('cloud_sync_install_and_config', (message) => {
-      console.log(message);
-      const { stdout } = message;
+      console.log({ message });
+      const { stdout, stderr } = message;
+
+      console.log(stderr);
+
+      // We get the url if it fails
+      const regex = /(https?:\/\/[^\s]+)/g;
+
+      const url = stderr.match(regex);
+
+      if (url && url.length > 0) {
+        const url = url[0];
+
+        setStatePage({
+          ...statePage,
+          showTrybutton: url,
+        });
+      }
+
       if (stdout.includes('true')) {
         setState({
           ...state,
@@ -158,6 +184,7 @@ function CloudSyncPageConfig() {
         }
         onClickUninstall={uninstallRclone}
         disableButton={disableButton}
+        showTrybutton={showTrybutton}
       />
 
       <Footer
