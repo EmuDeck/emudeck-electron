@@ -62,49 +62,64 @@ function CloudSyncPageConfig() {
     });
 
     ipcChannel.sendMessage('emudeck', [
-      `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
+      `createDesktop|||createDesktopShortcut "$HOME/.local/share/applications/CloudSync.desktop" "EmuDeck SaveBackup" "/bin/bash -c \". $HOME/.config/EmuDeck/backend/functions/all.sh && cloud_sync_install_and_config ${cloudSync}\"" true`,
     ]);
- 
-    ipcChannel.once('cloud_sync_install_and_config', (message) => {
-      const { stdout, error } = message;
 
-      console.log({ error });
-      const errorMessage = error.message;
-
-      console.log({ errorMessage });
-
-      // We get the url if it fails
-      const regex = /(https?:\/\/[^\s]+)/g;
-
-      let url = errorMessage.match(regex);
-
-      if (url) {
-        url = url[0];
-        alert(
-          'Error: Automatic login failed. Please click on the Login button'
-        );
-
-        setStatePage({
-          ...statePage,
-          showLoginButton: url,
-          disableButton: false,
-        });
-      }
-      
-      if (stdout.includes('true')) {
-        setState({
-          ...state,
-          cloudSyncStatus: true      
-        });
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
-        alert(
-          'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
-        );
-      }
+    ipcChannel.once('createDesktop', (message) => {
+      ipcChannel.sendMessage(
+        'bash',
+        `gtk-launch $HOME/.local/share/applications/CloudSync.desktop`
+      );
+      setStatePage({
+        ...statePage,
+        disableButton: false,
+      });
     });
+
+    // ipcChannel.sendMessage('emudeck', [
+    //   `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
+    // ]);
+
+    //     ipcChannel.once('cloud_sync_install_and_config', (message) => {
+    //       const { stdout, error } = message;
+    //
+    //       console.log({ error });
+    //       const errorMessage = error.message;
+    //
+    //       console.log({ errorMessage });
+    //
+    //       // We get the url if it fails
+    //       const regex = /(https?:\/\/[^\s]+)/g;
+    //
+    //       let url = errorMessage.match(regex);
+    //
+    //       if (url) {
+    //         url = url[0];
+    //         alert(
+    //           'Error: Automatic login failed. Please click on the Login button'
+    //         );
+    //
+    //         setStatePage({
+    //           ...statePage,
+    //           showLoginButton: url,
+    //           disableButton: false,
+    //         });
+    //       }
+    //
+    //       if (stdout.includes('true')) {
+    //         setState({
+    //           ...state,
+    //           cloudSyncStatus: true,
+    //         });
+    //         setStatePage({
+    //           ...statePage,
+    //           disableButton: false,
+    //         });
+    //         alert(
+    //           'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
+    //         );
+    //       }
+    //     });
     // }
   };
 
@@ -168,7 +183,7 @@ function CloudSyncPageConfig() {
         `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
       ]);
 
-      // alert('Go to your Desktop and open the new EmuDeck SaveBackup icon.');
+      //alert('Go to your Desktop and open the new EmuDeck SaveBackup icon.');
       ipcChannel.once('createDesktop', (message) => {
         // No versioning found, what to do?
         ipcChannel.once('createDesktop', (message) => {
