@@ -9,7 +9,7 @@ import CloudSync from 'components/organisms/Wrappers/CloudSync';
 function CloudSyncPage() {
   const { state, setState } = useContext(GlobalContext);
   const json = JSON.stringify(state);
-  const { cloudSync, system } = state;
+  const { cloudSync, cloudSyncType, system, mode } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -22,82 +22,29 @@ function CloudSyncPage() {
   const cloudSyncSet = (item) => {
     setState({
       ...state,
-      cloudSync: item,
+      cloudSyncType: item,
     });
   };
-
-  // const createDesktopIcon = () => {
-  //   ipcChannel.sendMessage('emudeck', [`save-setting|||rclone_setup`]);
-  // };
-
-  const installRclone = () => {
-    // OLD TOKEN upload, not needed for now
-    // if (
-    //   confirm(
-    //     'Press OK if you already have CloudSync installed on another EmuDeck installation and you want to sync that installation to this one, if not, press Cancel'
-    //   ) === true
-    // ) {
-    //   ipcChannel.sendMessage('emudeck', [
-    //     `cloud_sync_install_and_config_with_code|||cloud_sync_install_and_config_with_code ${cloudSync}`,
-    //   ]);
-    //   ipcChannel.once('cloud_sync_install_and_config_with_code', (message) => {
-    //     // No versioning found, what to do?
-    //     console.log('cloudSync', message);
-    //     alert(
-    //       `All Done, every time you load a game your Game states and Saved games will be synced to ${cloudSync}`
-    //     );
-    //   });
-    // } else {
-    alert(`A web browser will open so you can log in to your Cloud provider`);
-
-    ipcChannel.sendMessage('emudeck', [
-      `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
-    ]);
-
-    ipcChannel.once('cloud_sync_install_and_config', (message) => {
-      console.log(message);
-      const { stdout } = message;
-      if (stdout.includes('true')) {
-        alert(
-          'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
-        );
-      }
-    });
-    // }
-  };
-
-  const uninstallRclone = () => {
-    ipcChannel.sendMessage('emudeck', [
-      `cloud_sync_uninstall|||cloud_sync_uninstall`,
-    ]);
-    ipcChannel.once('cloud_sync_uninstall', (message) => {
-      // No versioning found, what to do?
-      setStatePage({
-        ...state,
-        cloudSync: null,
-      });
-      alert(`Cloud Sync uninstalled`);
-    });
-  };
-
-  useEffect(() => {
-    ipcChannel.sendMessage('emudeck', [
-      `save-setting|||setSetting rclone_provider ${cloudSync}`,
-    ]);
-    localStorage.setItem('settings_emudeck', json);
-  }, [cloudSync]);
 
   return (
     <Wrapper>
-      <Header title="Cloud Sync - BETA" />
-      <CloudSync
-        onClick={cloudSyncSet}
-        onClickInstall={installRclone}
-        onClickUnnstall={uninstallRclone}
-        disableButton={disableButton}
-      />
+      <Header title="Cloud Saves" />
+      <CloudSync onClick={cloudSyncSet} disableButton={disableButton} />
       <Footer
-        next={false}
+        next={
+          cloudSyncType === 'none'
+            ? mode === 'easy'
+              ? 'end'
+              : 'emulator-selector'
+            : 'cloud-sync-config'
+        }
+        nextText={
+          cloudSyncType === 'none'
+            ? mode === 'easy'
+              ? 'Finish'
+              : 'Next'
+            : 'Next'
+        }
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
