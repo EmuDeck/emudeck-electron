@@ -9,9 +9,8 @@ import CloudSyncConfig from 'components/organisms/Wrappers/CloudSyncConfig';
 function CloudSyncPageConfig() {
   const { state, setState } = useContext(GlobalContext);
   const json = JSON.stringify(state);
-  const { cloudSync, system, mode } = state;
+  const { cloudSync, cloudSyncType, system, mode } = state;
   const { type } = useParams();
-  console.log({ type });
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -82,6 +81,51 @@ function CloudSyncPageConfig() {
     });
   };
 
+  const createDesktopIcon = () => {
+    setStatePage({
+      ...statePage,
+      disableButton: true,
+    });
+
+    if (system === 'win32') {
+      ipcChannel.sendMessage('emudeck', [
+        `rclone_install|||rclone_install ${cloudSync}`,
+      ]);
+      ipcChannel.once('rclone_install', (message) => {
+        // No versioning found, what to do?
+        setStatePage({
+          ...statePage,
+          disableButton: false,
+        });
+        alert(
+          `All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}`
+        );
+      });
+    } else {
+      ipcChannel.sendMessage('emudeck', [
+        `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
+      ]);
+
+      ipcChannel.once('createDesktop', (message) => {
+        // No versioning found, what to do?
+        setStatePage({
+          ...statePage,
+          disableButton: false,
+        });
+      });
+
+      ipcChannel.sendMessage('bash-nolog', [
+        `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
+      ]);
+    }
+  };
+
+  const openKonsole = () => {
+    ipcChannel.sendMessage('emudeck', [
+      `openKonsole|||konsole -e echo $emulationPath && rclone_setup`,
+    ]);
+  };
+
   useEffect(() => {
     ipcChannel.sendMessage('emudeck', [
       `save-setting|||setSetting rclone_provider ${cloudSync}`,
@@ -101,10 +145,13 @@ function CloudSyncPageConfig() {
       <Header title="Cloud Saves - Select your provider" />
       <CloudSyncConfig
         onClick={cloudSyncSet}
-        onClickInstall={installRclone}
-        onClickUnnstall={uninstallRclone}
+        onClickInstall={
+          cloudSyncType === 'Sync' ? installRclone : createDesktopIcon
+        }
+        onClickUninstall={uninstallRclone}
         disableButton={disableButton}
       />
+
       <Footer
         next={nextButtonStatus()}
         nextText={mode === 'easy' ? 'Finish' : 'Next'}
