@@ -68,7 +68,7 @@ function CloudSyncPageConfig() {
     ipcChannel.once('createDesktop', (message) => {
       ipcChannel.sendMessage(
         'bash',
-        `gtk-launch $HOME/.local/share/applications/CloudSync.desktop`
+        `cd $HOME/.local/share/applications && gtk-launch CloudSync.desktop`
       );
       setStatePage({
         ...statePage,
