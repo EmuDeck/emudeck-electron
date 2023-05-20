@@ -15,21 +15,20 @@ function CloudSyncPageConfig() {
     disabledNext: false,
     disabledBack: false,
     disableButton: false,
-    showTrybutton: false,
+    showTrybutton: false
   });
-  const { disabledNext, disabledBack, disableButton, showTrybutton } =
-    statePage;
+  const { disabledNext, disabledBack, disableButton, showTrybutton } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
   const cloudSyncSet = (item) => {
     setState({
       ...state,
-      cloudSync: item,
+      cloudSync: item,      
     });
     setStatePage({
       ...statePage,
-      showTrybutton: false,
+      showTrybutton: false      
     });
   };
 
@@ -55,39 +54,36 @@ function CloudSyncPageConfig() {
     //     );
     //   });
     // } else {
-
-    // ipcChannel.sendMessage('emudeck', [
-    //   `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
-    // ]);
-
+    
     ipcChannel.sendMessage('emudeck', [
-      `cloud_sync_install_and_config|||cd /Users/rsedano/Downloads/rclone-v1.62.2-osx-arm64 && rclone config update ${cloudSync}`,
+      `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
     ]);
-
+ 
     ipcChannel.once('cloud_sync_install_and_config', (message) => {
-      console.log({ message });
+      console.log(message);
       const { stdout, stderr } = message;
-
+      
       console.log(stderr);
-
-      // We get the url if it fails
+      
+      //We get the url if it fails
       const regex = /(https?:\/\/[^\s]+)/g;
-
+      
       const url = stderr.match(regex);
-
+            
       if (url && url.length > 0) {
         const url = url[0];
-
+        
         setStatePage({
           ...statePage,
-          showTrybutton: url,
-        });
+          showTrybutton: url      
+        });        
+        
       }
-
+      
       if (stdout.includes('true')) {
         setState({
           ...state,
-          cloudSyncStatus: true,
+          cloudSyncStatus: true      
         });
         alert(
           'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
@@ -109,55 +105,56 @@ function CloudSyncPageConfig() {
       });
       setState({
         ...state,
-        cloudSyncStatus: false,
+        cloudSyncStatus: false      
       });
       alert(`Cloud Sync uninstalled`);
     });
   };
-
+  
+  
   const createDesktopIcon = () => {
+  setStatePage({
+    ...statePage,
+    disableButton: true,
+  });
+  
+  if (system === 'win32') {
+    ipcChannel.sendMessage('emudeck', [
+    `rclone_install|||rclone_install ${cloudSync}`,
+    ]);
+    ipcChannel.once('rclone_install', (message) => {
+    // No versioning found, what to do?
     setStatePage({
       ...statePage,
-      disableButton: true,
+      disableButton: false,
     });
-
-    if (system === 'win32') {
-      ipcChannel.sendMessage('emudeck', [
-        `rclone_install|||rclone_install ${cloudSync}`,
-      ]);
-      ipcChannel.once('rclone_install', (message) => {
-        // No versioning found, what to do?
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
-        alert(
-          `All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}`
-        );
-      });
-    } else {
-      ipcChannel.sendMessage('emudeck', [
-        `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
-      ]);
-
-      ipcChannel.once('createDesktop', (message) => {
-        // No versioning found, what to do?
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
-      });
-
-      ipcChannel.sendMessage('bash-nolog', [
-        `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
-      ]);
-    }
-  };
-
-  const openKonsole = () => {
+    alert(
+      `All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}`
+    );
+    });
+  } else {
     ipcChannel.sendMessage('emudeck', [
-      `openKonsole|||konsole -e echo $emulationPath && rclone_setup`,
+    `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
     ]);
+  
+    ipcChannel.once('createDesktop', (message) => {
+    // No versioning found, what to do?
+    setStatePage({
+      ...statePage,
+      disableButton: false,
+    });
+    });
+  
+    ipcChannel.sendMessage('bash-nolog', [
+    `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
+    ]);
+  }
+  };
+  
+  const openKonsole = () => {
+  ipcChannel.sendMessage('emudeck', [
+    `openKonsole|||konsole -e echo $emulationPath && rclone_setup`,
+  ]);
   };
 
   useEffect(() => {
@@ -179,14 +176,12 @@ function CloudSyncPageConfig() {
       <Header title="Cloud Saves - Select your provider" />
       <CloudSyncConfig
         onClick={cloudSyncSet}
-        onClickInstall={
-          cloudSyncType === 'Sync' ? installRclone : createDesktopIcon
-        }
+        onClickInstall={cloudSyncType === 'Sync' ? installRclone : createDesktopIcon}
         onClickUninstall={uninstallRclone}
         disableButton={disableButton}
         showTrybutton={showTrybutton}
       />
-
+      
       <Footer
         next={nextButtonStatus()}
         nextText={mode === 'easy' ? 'Finish' : 'Next'}
