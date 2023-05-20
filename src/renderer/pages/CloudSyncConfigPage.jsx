@@ -148,11 +148,44 @@ function CloudSyncPageConfig() {
       ...statePage,
       disableButton: false,
     });
-    alert(
-      `All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}`
-    );
-    });
-  } else {
+
+    if (system === 'win32') {
+      ipcChannel.sendMessage('emudeck', [
+        `rclone_install|||rclone_install ${cloudSync}`,
+      ]);
+      ipcChannel.once('rclone_install', (message) => {
+        // No versioning found, what to do?
+        setStatePage({
+          ...statePage,
+          disableButton: false,
+        });
+        alert(
+          `All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}`
+        );
+      });
+    } else {
+      ipcChannel.sendMessage('emudeck', [
+        `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
+      ]);
+
+      // alert('Go to your Desktop and open the new EmuDeck SaveBackup icon.');
+      ipcChannel.once('createDesktop', (message) => {
+        // No versioning found, what to do?
+        ipcChannel.once('createDesktop', (message) => {
+          ipcChannel.sendMessage(
+            'bash',
+            `kioclient exec $HOME/Desktop/SaveBackup.desktop`
+          );
+          setStatePage({
+            ...statePage,
+            disableButton: false,
+          });
+        });
+      });
+    }
+  };
+
+  const openKonsole = () => {
     ipcChannel.sendMessage('emudeck', [
     `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
     ]);
