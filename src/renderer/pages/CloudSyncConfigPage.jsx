@@ -59,6 +59,10 @@ function CloudSyncPageConfig() {
       console.log(message);
       const { stdout } = message;
       if (stdout.includes('true')) {
+        setState({
+          ...state,
+          cloudSyncStatus: true,
+        });
         alert(
           'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
         );
@@ -76,6 +80,10 @@ function CloudSyncPageConfig() {
       setStatePage({
         ...state,
         cloudSync: null,
+      });
+      setState({
+        ...state,
+        cloudSyncStatus: false,
       });
       alert(`Cloud Sync uninstalled`);
     });

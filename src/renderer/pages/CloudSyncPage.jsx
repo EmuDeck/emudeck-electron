@@ -23,19 +23,27 @@ function CloudSyncPage() {
       cloudSyncType: item,
     });
   };
+  const nextButtonStatus = () => {
+    if (type === 'welcome') {
+      return cloudSyncType === 'none' ? false : `cloud-sync-config/${type}`;
+    }
+    return cloudSyncType === 'none'
+      ? mode === 'easy'
+        ? 'end'
+        : 'emulator-selector'
+      : `cloud-sync-config/${type}`;
+  };
 
   return (
     <Wrapper>
       <Header title="Cloud Saves" />
-      <CloudSync onClick={cloudSyncSet} disableButton={disableButton} />
+      <CloudSync
+        onClick={cloudSyncSet}
+        disableButton={disableButton}
+        showNo={type !== 'welcome'}
+      />
       <Footer
-        next={
-          cloudSyncType === 'none'
-            ? mode === 'easy'
-              ? 'end'
-              : 'emulator-selector'
-            : `cloud-sync-config/${type}`
-        }
+        next={nextButtonStatus()}
         nextText={
           cloudSyncType === 'none'
             ? mode === 'easy'

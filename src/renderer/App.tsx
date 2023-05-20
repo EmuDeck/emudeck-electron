@@ -110,6 +110,7 @@ export default function App() {
     GyroDSU: false,
     cloudSync: '',
     cloudSyncType: 'Sync',
+    cloudSyncStatus: false,
     sudoPass: '',
     language: 'en',
     achievements: {
