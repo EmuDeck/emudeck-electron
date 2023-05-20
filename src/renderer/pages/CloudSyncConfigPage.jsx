@@ -56,10 +56,6 @@ function CloudSyncPageConfig() {
     //   });
     // } else {
 
-    // ipcChannel.sendMessage('emudeck', [
-    //   `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
-    // ]);
-
     ipcChannel.sendMessage('emudeck', [
       `cloud_sync_install_and_config|||cd /Users/rsedano/Downloads/rclone-v1.62.2-osx-arm64 && rclone config update ${cloudSync}`,
     ]);
