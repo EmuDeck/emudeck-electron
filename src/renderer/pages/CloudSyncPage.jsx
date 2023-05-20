@@ -1,23 +1,21 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
-
+import { useParams } from 'react-router-dom';
 import CloudSync from 'components/organisms/Wrappers/CloudSync';
 
 function CloudSyncPage() {
   const { state, setState } = useContext(GlobalContext);
-  const json = JSON.stringify(state);
-  const { cloudSync, cloudSyncType, system, mode } = state;
-  const [statePage, setStatePage] = useState({
+  const { type } = useParams();
+  const { cloudSyncType, mode } = state;
+  const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
     disableButton: false,
   });
   const { disabledNext, disabledBack, disableButton } = statePage;
-
-  const ipcChannel = window.electron.ipcRenderer;
 
   const cloudSyncSet = (item) => {
     setState({
@@ -36,7 +34,7 @@ function CloudSyncPage() {
             ? mode === 'easy'
               ? 'end'
               : 'emulator-selector'
-            : 'cloud-sync-config'
+            : `cloud-sync-config/${type}`
         }
         nextText={
           cloudSyncType === 'none'

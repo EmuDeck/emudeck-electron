@@ -381,7 +381,9 @@ export default function App() {
             element={<UpdateConfigsPage />}
           />
 
-          <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
+          <Route exact path="/cloud-sync" element={<CloudSyncPage />}>
+            <Route path=":type" element={<CloudSyncPage />} />
+          </Route>
           <Route
             exact
             path="/cloud-sync-config"

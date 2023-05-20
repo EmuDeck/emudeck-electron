@@ -300,7 +300,7 @@ function WelcomePage() {
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
-      function: () => functions.navigate('/cloud-sync-config/welcome'),
+      function: () => functions.navigate('/cloud-sync/welcome'),
     },
     {
       icon: [iconCloud],
