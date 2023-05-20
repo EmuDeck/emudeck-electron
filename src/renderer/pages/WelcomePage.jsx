@@ -295,12 +295,12 @@ function WelcomePage() {
     },
     {
       icon: [iconCloud],
-      title: 'Cloud Sync',
-      description: 'Sync your saves and save states to the cloud',
+      title: 'Cloud Saves',
+      description: 'Sync or backup your saves and save states to the cloud',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
-      function: () => functions.navigate('/cloud-sync'),
+      function: () => functions.navigate('/cloud-sync/welcome'),
     },
     {
       icon: [iconCloud],

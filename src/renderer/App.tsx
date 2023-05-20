@@ -31,6 +31,7 @@ import GyroDSUPage from 'pages/GyroDSUPage';
 import UpdateEmusPage from 'pages/UpdateEmusPage';
 import UpdateConfigsPage from 'pages/UpdateConfigsPage';
 import CloudSyncPage from 'pages/CloudSyncPage';
+import CloudSyncConfigPage from 'pages/CloudSyncConfigPage';
 import ChangeLogPage from 'pages/ChangeLogPage';
 import SettingsPage from 'pages/SettingsPage';
 import UninstallPage from 'pages/UninstallPage';
@@ -108,6 +109,8 @@ export default function App() {
     powerTools: false,
     GyroDSU: false,
     cloudSync: '',
+    cloudSyncType: 'Sync',
+    cloudSyncStatus: false,
     sudoPass: '',
     language: 'en',
     achievements: {
@@ -379,7 +382,17 @@ export default function App() {
             element={<UpdateConfigsPage />}
           />
 
-          <Route exact path="/cloud-sync" element={<CloudSyncPage />} />
+          <Route exact path="/cloud-sync" element={<CloudSyncPage />}>
+            <Route path=":type" element={<CloudSyncPage />} />
+          </Route>
+          <Route
+            exact
+            path="/cloud-sync-config"
+            element={<CloudSyncConfigPage />}
+          >
+            <Route path=":type" element={<CloudSyncConfigPage />} />
+          </Route>
+
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
