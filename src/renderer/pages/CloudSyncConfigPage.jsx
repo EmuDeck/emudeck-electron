@@ -15,9 +15,9 @@ function CloudSyncPageConfig() {
     disabledNext: false,
     disabledBack: false,
     disableButton: false,
-    showTrybutton: false,
+    showLoginButton: false,
   });
-  const { disabledNext, disabledBack, disableButton, showTrybutton } =
+  const { disabledNext, disabledBack, disableButton, showLoginButton } =
     statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
@@ -29,7 +29,7 @@ function CloudSyncPageConfig() {
     });
     setStatePage({
       ...statePage,
-      showTrybutton: false,
+      showLoginButton: false,
     });
   };
 
@@ -56,27 +56,38 @@ function CloudSyncPageConfig() {
     //   });
     // } else {
 
+    setStatePage({
+      ...statePage,
+      disableButton: true,
+    });
+
     ipcChannel.sendMessage('emudeck', [
-      `cloud_sync_install_and_config|||cd /Users/rsedano/Downloads/rclone-v1.62.2-osx-arm64 && rclone config update ${cloudSync}`,
+      `cloud_sync_install_and_config|||cloud_sync_install_and_config ${cloudSync}`,
     ]);
 
     ipcChannel.once('cloud_sync_install_and_config', (message) => {
-      console.log({ message });
-      const { stdout, stderr } = message;
+      const { stdout, error } = message;
 
-      console.log(stderr);
+      console.log({ error });
+      const errorMessage = error.message;
+
+      console.log({ errorMessage });
 
       // We get the url if it fails
       const regex = /(https?:\/\/[^\s]+)/g;
 
-      const url = stderr.match(regex);
+      let url = errorMessage.match(regex);
 
-      if (url && url.length > 0) {
-        const url = url[0];
+      if (url) {
+        url = url[0];
+        alert(
+          'Error: Automatic login failed. Please click on the Login button'
+        );
 
         setStatePage({
           ...statePage,
-          showTrybutton: url,
+          showLoginButton: url,
+          disableButton: false,
         });
       }
 
@@ -84,6 +95,10 @@ function CloudSyncPageConfig() {
         setState({
           ...state,
           cloudSyncStatus: true,
+        });
+        setStatePage({
+          ...statePage,
+          disableButton: false,
         });
         alert(
           'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
@@ -94,6 +109,10 @@ function CloudSyncPageConfig() {
   };
 
   const uninstallRclone = () => {
+    setStatePage({
+      ...statePage,
+      disableButton: true,
+    });
     ipcChannel.sendMessage('emudeck', [
       `cloud_sync_uninstall|||cloud_sync_uninstall`,
     ]);
@@ -102,6 +121,7 @@ function CloudSyncPageConfig() {
       setStatePage({
         ...state,
         cloudSync: null,
+        disableButton: false,
       });
       setState({
         ...state,
@@ -180,7 +200,7 @@ function CloudSyncPageConfig() {
         }
         onClickUninstall={uninstallRclone}
         disableButton={disableButton}
-        showTrybutton={showTrybutton}
+        showLoginButton={showLoginButton}
       />
 
       <Footer
