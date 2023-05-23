@@ -47,7 +47,8 @@
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development  TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
     "test": "jest",
-    "buildWindows": "npm run build && npm exec electron-builder -- --publish never --win"
+    "build-windows": "npm run build && npm exec electron-builder -- --publish never --win",
+    "build-mac": "npm run build && npm exec electron-builder -- --publish never --mac"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

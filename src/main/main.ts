@@ -528,11 +528,34 @@ ipcMain.on('check-git', async (event, branch) => {
 });
 
 ipcMain.on('clone', async (event, branch) => {
+  const args = process.argv.slice(2);
+  let branchGIT;
+  let repo;
+
+  if (args) {
+    const options = {};
+    args.forEach((arg) => {
+      if (arg.startsWith('--')) {
+        // Separar el nombre de la opción y el valor
+        const [name, value] = arg.slice(2).split('=');
+        // Almacenar la opción en el objeto de opciones
+        options[name] = value;
+      }
+    });
+    branchGIT = options.branch;
+    repo = options.repo;
+  } else {
+    branchGIT = branch;
+    repo = 'https://github.com/dragoonDorise/EmuDeck.git';
+    if (os.platform().includes('win32')) {
+      repo = 'https://github.com/EmuDeck/emudeck-we.git';
+    }
+  }
   const backChannel = 'clone';
-  let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branch} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
+  let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 ${repo} ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branchGIT} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branch} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && git clone --no-single-branch --depth=1  ${repo} ./backend && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
   }
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
@@ -541,11 +564,34 @@ ipcMain.on('clone', async (event, branch) => {
 });
 
 ipcMain.on('pull', async (event, branch) => {
+  const args = process.argv.slice(2);
+  let branchGIT;
+  let repo;
+
+  if (args) {
+    const options = {};
+    args.forEach((arg) => {
+      if (arg.startsWith('--')) {
+        // Separar el nombre de la opción y el valor
+        const [name, value] = arg.slice(2).split('=');
+        // Almacenar la opción en el objeto de opciones
+        options[name] = value;
+      }
+    });
+    branchGIT = options.branch;
+    repo = options.repo;
+  } else {
+    branchGIT = branch;
+    repo = 'https://github.com/dragoonDorise/EmuDeck.git';
+    if (os.platform().includes('win32')) {
+      repo = 'https://github.com/EmuDeck/emudeck-we.git';
+    }
+  }
   const backChannel = 'pull';
-  let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branch} && git pull`;
+  let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git reset --hard && git clean -fd && git checkout ${branch} && git pull`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
   }
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
