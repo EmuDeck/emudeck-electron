@@ -127,7 +127,7 @@ function PatroenLoginPage() {
           </BtnSimple>
         )}
         {patreonClick && (
-          <Form>
+          <div className="form">
             <FormInputSimple
               label="Token"
               type="token"
@@ -147,7 +147,7 @@ function PatroenLoginPage() {
                 {status == 'checking' && 'Checking token...'}
               </BtnSimple>
             )}
-          </Form>
+          </div>
         )}
       </Main>
     </Wrapper>

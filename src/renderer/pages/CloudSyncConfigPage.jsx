@@ -33,10 +33,6 @@ function CloudSyncPageConfig() {
     });
   };
 
-  // const createDesktopIcon = () => {
-  //   ipcChannel.sendMessage('emudeck', [`save-setting|||rclone_setup`]);
-  // };
-
   const installRclone = () => {
     // OLD TOKEN upload, not needed for now
     // if (
@@ -60,21 +56,35 @@ function CloudSyncPageConfig() {
       ...statePage,
       disableButton: true,
     });
+    let cloudFunction;
+    if (cloudSyncType === 'Sync') {
+      cloudFunction = 'cloud_sync_install_and_config';
+    } else {
+      cloudFunction = 'cloud_backup_install_and_config';
+    }
 
     ipcChannel.sendMessage('emudeck', [
-      `createDesktop|||createDesktopShortcut "$HOME/.local/share/applications/CloudSync.desktop" "EmuDeck SaveBackup" "/bin/bash -c \". $HOME/.config/EmuDeck/backend/functions/all.sh && cloud_sync_install_and_config ${cloudSync}\"" true`,
+      `cloud_saves|||${cloudFunction} ${cloudSync}`,
     ]);
 
-    ipcChannel.once('createDesktop', (message) => {
-      ipcChannel.sendMessage(
-        'bash',
-        `cd $HOME/.local/share/applications && gtk-launch CloudSync.desktop`
-      );
-      setStatePage({
-        ...statePage,
-        disableButton: false,
-      });
+    ipcChannel.once('cloud_saves', (message) => {
+      const { stdout } = message;
+
+      if (stdout.includes('true')) {
+        setState({
+          ...state,
+          cloudSyncStatus: true,
+        });
+        setStatePage({
+          ...statePage,
+          disableButton: false,
+        });
+        alert(
+          'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
+        );
+      }
     });
+    // }
   };
 
   const uninstallRclone = () => {
@@ -139,12 +149,6 @@ function CloudSyncPageConfig() {
     }
   };
 
-  const openKonsole = () => {
-    ipcChannel.sendMessage('emudeck', [
-      `openKonsole|||konsole -e echo $emulationPath && rclone_setup`,
-    ]);
-  };
-
   useEffect(() => {
     ipcChannel.sendMessage('emudeck', [
       `save-setting|||setSetting rclone_provider ${cloudSync}`,
@@ -164,9 +168,7 @@ function CloudSyncPageConfig() {
       <Header title="Cloud Saves - Select your provider" />
       <CloudSyncConfig
         onClick={cloudSyncSet}
-        onClickInstall={
-          cloudSyncType === 'Sync' ? installRclone : createDesktopIcon
-        }
+        onClickInstall={installRclone}
         onClickUninstall={uninstallRclone}
         disableButton={disableButton}
         showLoginButton={showLoginButton}
