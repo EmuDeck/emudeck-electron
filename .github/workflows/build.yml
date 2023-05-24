@@ -56,3 +56,8 @@ jobs:
           npm run postinstall
           npm run build
           npm exec electron-builder -- --publish always --linux
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: EmuDeck-Dev-Exe
+          path: '**/*.exe'
