@@ -46,7 +46,9 @@
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development  TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
-    "test": "jest"
+    "test": "jest",
+    "build-windows": "npm run build && npm exec electron-builder -- --publish never --win",
+    "build-mac": "npm run build && npm exec electron-builder -- --publish never --mac"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -111,8 +113,12 @@
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.7",
     "electron-updater": "^5.0.1",
+    "i18next": "^22.4.13",
+    "i18next-browser-languagedetector": "^7.0.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-i18next": "^12.2.0",
+    "react-konami-code": "^2.3.0",
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
@@ -156,6 +162,7 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
     "file-loader": "^6.2.0",
+    "getbasecore": "^2.0.22",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.1",
     "identity-obj-proxy": "^3.0.0",
@@ -176,12 +183,11 @@
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4",
     "url-loader": "^4.1.1",
-    "webpack": "^5.72.1",
+    "webpack": "^5.76.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0",
-    "webpack-merge": "^5.8.0",
-    "getbasecore": "^2.0.12"
+    "webpack-merge": "^5.8.0"
   },
   "build": {
     "productName": "EmuDeck",
@@ -226,6 +232,9 @@
       "target": [
         "nsis"
       ]
+    },
+    "portable": {
+      "artifactName": "EmuDeck.exe"
     },
     "linux": {
       "target": [
