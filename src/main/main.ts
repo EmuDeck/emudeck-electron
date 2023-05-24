@@ -531,6 +531,11 @@ ipcMain.on('clone', async (event, branch) => {
   const args = process.argv.slice(2);
   let branchGIT;
   let repo;
+  branchGIT = branch;
+  repo = 'https://github.com/dragoonDorise/EmuDeck.git';
+  if (os.platform().includes('win32')) {
+    repo = 'https://github.com/EmuDeck/emudeck-we.git';
+  }
 
   if (args) {
     const options = {};
@@ -542,13 +547,11 @@ ipcMain.on('clone', async (event, branch) => {
         options[name] = value;
       }
     });
-    branchGIT = options.branch;
-    repo = options.repo;
-  } else {
-    branchGIT = branch;
-    repo = 'https://github.com/dragoonDorise/EmuDeck.git';
-    if (os.platform().includes('win32')) {
-      repo = 'https://github.com/EmuDeck/emudeck-we.git';
+    if (options.branch) {
+      branchGIT = options.branch;
+    }
+    if (options.repo) {
+      repo = options.repo;
     }
   }
   const backChannel = 'clone';
@@ -567,6 +570,11 @@ ipcMain.on('pull', async (event, branch) => {
   const args = process.argv.slice(2);
   let branchGIT;
   let repo;
+  branchGIT = branch;
+  repo = 'https://github.com/dragoonDorise/EmuDeck.git';
+  if (os.platform().includes('win32')) {
+    repo = 'https://github.com/EmuDeck/emudeck-we.git';
+  }
 
   if (args) {
     const options = {};
@@ -578,13 +586,11 @@ ipcMain.on('pull', async (event, branch) => {
         options[name] = value;
       }
     });
-    branchGIT = options.branch;
-    repo = options.repo;
-  } else {
-    branchGIT = branch;
-    repo = 'https://github.com/dragoonDorise/EmuDeck.git';
-    if (os.platform().includes('win32')) {
-      repo = 'https://github.com/EmuDeck/emudeck-we.git';
+    if (options.branch) {
+      branchGIT = options.branch;
+    }
+    if (options.repo) {
+      repo = options.repo;
     }
   }
   const backChannel = 'pull';
