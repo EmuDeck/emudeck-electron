@@ -31,6 +31,10 @@ function RomStoragePage() {
     }
 
     if (storageName === 'Custom') {
+      if (system === 'win32') {
+        alert('This will take a few seconds. Please wait after clicking OK');
+      }
+
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
