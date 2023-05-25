@@ -569,12 +569,7 @@ ipcMain.on('clone', async (event, branch) => {
 ipcMain.on('pull', async (event, branch) => {
   const args = process.argv.slice(2);
   let branchGIT;
-  let repo;
   branchGIT = branch;
-  repo = 'https://github.com/dragoonDorise/EmuDeck.git';
-  if (os.platform().includes('win32')) {
-    repo = 'https://github.com/EmuDeck/emudeck-we.git';
-  }
 
   if (args) {
     const options = {};
@@ -589,15 +584,12 @@ ipcMain.on('pull', async (event, branch) => {
     if (options.branch) {
       branchGIT = options.branch;
     }
-    if (options.repo) {
-      repo = options.repo;
-    }
   }
   const backChannel = 'pull';
-  let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
+  let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit "}`;
   }
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
@@ -605,7 +597,7 @@ ipcMain.on('pull', async (event, branch) => {
   });
 });
 
-ipcMain.on('branch', async (event, command) => {
+ipcMain.on('branch', async (event) => {
   event.reply('branch-out', process.env.BRANCH);
 });
 
