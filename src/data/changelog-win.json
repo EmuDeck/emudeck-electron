@@ -1,32 +1,50 @@
 [
   {
-    "title": "New Emulators",
+    "title": "Improved performance and speed for SD Card users",
     "type": "STEAMOS",
-    "description": "Citra for Nintendo 3DS and Ryujinx for Nintendo Switch.",
+    "description": "EmuDeck will now install EmulationStation and all the Emulators on your userfolder\\EmuDeck\\EmulationStation-DE\\Emulators.",
+    "image": "false"
+  },
+  {
+    "title": "Under the hood changes",
+    "type": "STEAMOS",
+    "description": "To make the first point possible we had to change several stuff, so there might be some regressions. If you already have EmuDeck installed you need to do these steps to keep everything working:<ul><li>Open EmuDeck, wait for it to download and apply the update until you have version 2.1.7.</li><li>Reset EmulationStation DE config from Manage Emulators ( this will take several minutes, just wait for the confirmation that it has actually finished )</li><li>Reset Steam Rom Manager config from Manage Emulators</li><li>Parse your games and ESDE on SteamRomManager again.</li><li>Play like there's no tomorrow.</li></ul>",
+    "image": "false"
+  },
+  {
+    "title": "MelonDS Standalone",
+    "type": "STEAMOS",
+    "description": "New MelonDS emulator for those that don't like the RetroArch core, there's an issue thought, melon DS has a bug that prevents it to launch games in zip or 7z, so you have to unzip them before using it on Steam or EmulationStation.",
+    "image": "false"
+  },
+  {
+    "title": "DualSense Fixes",
+    "type": "STEAMOS",
+    "description": "Fixed controls for GameCube and Wii. To apply them just go to Manage Emulators and reset Dolphin configuration.",
+    "image": "false"
+  },
+  {
+    "title": "New CloudSync providers",
+    "type": "STEAMOS",
+    "description": "We've added more providers: next cloud, pCloud, SFTP and SMB. With these last two you can do your own private cloud using a web server or a NAS.",
+    "image": "false"
+  },
+  {
+    "title": "CloudSaves Install page",
+    "type": "STEAMOS",
+    "description": "Now you'll be asked to chose if you want to sync your games, just back them up ( only SteamOS for now ) or nothing at all when installing EmuDeck.",
+    "image": "false"
+  },
+  {
+    "title": "CloudSync toggle",
+    "type": "STEAMOS",
+    "description": "We've added a toggle on Quick settings so you can disable or enable Cloud Sync with just a button.",
     "image": "false"
   },
   {
     "title": "CloudSync",
     "type": "STEAMOS",
-    "description": "Sync your saved games between other EmuDecks installation, on your Steam Deck, another Windows PC, etc..<br/> This is a beta release, so make sure you have a backup of your saves before enable this feature. <br/> You can find it in Tools & Stuff.<br/><strong>Make sure you never close the emulator using the Steam Menu as this will prevent CloudSync to upload your files. Use the START + SELECT combo or Alt + F4</strong>",
-    "image": "false"
-  },
-  {
-    "title": "Controller improvements",
-    "type": "STEAMOS",
-    "description": "Added Steam Input profiles for Playstation and Xbox Controllers.<br/>This enables the SELECT + START combo to exit any emulator.<br/>You need to follow this <strong><a target='_blank' href='https://youtu.be/ra_B1axeFqU'>instructions</a></strong> to activate the new Steam Input.<br/>This is mandatory in order for Cloud Sync to work properly with Yuzu, Citra and Ryujinx.",
-    "image": "false"
-  },
-  {
-    "title": "Controller instructions",
-    "type": "STEAMOS",
-    "description": "Yuzu, Citra and Ryujinx can't have their controller automatically configured so we've added a new tutorial page right after you install EmuDeck.",
-    "image": "false"
-  },
-  {
-    "title": "Bug fixes",
-    "type": "STEAMOS",
-    "description": "Custom reset/install shows same level of customization than EmuDeck for SteamOS<br/>Improved Emulator installation and configuration from Manage Emulators<br/>New PCSX2 path installation - You might need to manually copy your saved games and states from the old PCSX2 folder to the new PCSX2-Qt<br/>Added missing Hotkeys for Dolphin, PCSX2 and Duckstation",
+    "description": "Sync your saved games between other EmuDecks installation, on your Steam Deck, another Windows PC, etc..<br/> This is a beta release, so make sure you have a backup of your saves before enable this feature. <br/> You can find it in Tools & Stuff.",
     "image": "false"
   }
 ]
