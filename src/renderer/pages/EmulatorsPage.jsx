@@ -116,7 +116,6 @@ function EmulatorsPage() {
           if (
             item.id === 'primehack' ||
             item.id === 'primehacks' ||
-            item.id === 'melonds' ||
             item.id === 'rmg' ||
             item.id === 'mame' ||
             item.id === 'vita3k' ||
