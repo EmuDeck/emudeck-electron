@@ -1097,9 +1097,8 @@ app.on('session-created', (session) => {
 
 ipcMain.on('run-app', async (event, appPath) => {
   let appPathFixed = appPath.replace(/[\r\n]+/g, '');
-
-  appPathFixed = `${os.homedir()}\\emudeck\\EmulationStation-DE\\${appPathFixed}\\`;
-  console.log(appPathFixed);
+  const userFolder = os.homedir();
+  appPathFixed = appPathFixed.replace('USERPATH', userFolder);
   let externalApp;
   if (os.platform().includes('win32')) {
     externalApp = spawn(appPathFixed);

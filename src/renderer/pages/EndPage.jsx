@@ -113,7 +113,7 @@ function EndPage() {
     if (step === 'yuzu') {
       ipcChannel.sendMessage(
         'run-app',
-        `Emulators\\yuzu\\yuzu-windows-msvc\\yuzu.exe`
+        `USERPATH\\emudeck\\EmulationStation-DE\\Emulators\\yuzu\\yuzu-windows-msvc\\yuzu.exe`
       );
       ipcChannel.once('run-app', (message) => {
         if (installEmus.citra) {
@@ -126,7 +126,10 @@ function EndPage() {
       });
     }
     if (step === 'citra') {
-      ipcChannel.sendMessage('run-app', `Emulators\\citra\\citra-qt.exe`);
+      ipcChannel.sendMessage(
+        'run-app',
+        `USERPATH\\emudeck\\EmulationStation-DE\\Emulators\\citra\\citra-qt.exe`
+      );
       ipcChannel.once('run-app', (message) => {
         if (installEmus.ryujinx) {
           setStatePage({ ...statePage, step: 'ryujinx' });
@@ -136,7 +139,10 @@ function EndPage() {
       });
     }
     if (step === 'ryujinx') {
-      ipcChannel.sendMessage('run-app', `Emulators\\Ryujinx\\Ryujinx.exe`);
+      ipcChannel.sendMessage(
+        'run-app',
+        `USERPATH\\emudeck\\EmulationStation-DE\\Emulators\\Ryujinx\\Ryujinx.exe`
+      );
       ipcChannel.once('run-app', (message) => {
         setStatePage({ ...statePage, step: 'steam' });
       });
