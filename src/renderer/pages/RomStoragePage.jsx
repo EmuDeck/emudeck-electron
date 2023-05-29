@@ -13,7 +13,7 @@ function RomStoragePage() {
   const { state, setState } = useContext(GlobalContext);
   const { storage } = state;
   const [statePage, setStatePage] = useState({
-    disabledNext: storage == null,
+    disabledNext: storage === null,
     disabledBack: false,
     data: '',
     sdCardValid: null,

@@ -17,7 +17,7 @@ function RAAchievementsConfigPage() {
   });
   const { disabledNext, disabledBack, data } = statePage;
   const setAchievements = (data) => {
-    if (data.target.name == 'user') {
+    if (data.target.name === 'user') {
       setState({
         ...state,
         achievements: { ...achievements, user: data.target.value },
