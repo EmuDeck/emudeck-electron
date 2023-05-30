@@ -177,7 +177,6 @@ function EmulatorsPage() {
 
     if (system === 'win32') {
       delete stateCurrentConfigs.primehack;
-      delete stateCurrentConfigs.melonds;
       delete stateCurrentConfigs.rmg;
       delete stateCurrentConfigs.mame;
       delete stateCurrentConfigs.vita3k;
