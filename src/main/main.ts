@@ -1096,8 +1096,13 @@ app.on('session-created', (session) => {
 });
 
 ipcMain.on('run-app', async (event, appPath) => {
-  const appPathFixed = appPath.replace(/[\r\n]+/g, '');
-  console.log(appPathFixed);
+  let appPathFixed = appPath.replace(/[\r\n]+/g, '');
+  const userFolder = os.homedir();
+
+  if (appPathFixed.includes('USERPATH')) {
+    appPathFixed = appPathFixed.replace('USERPATH', userFolder);
+  }
+
   let externalApp;
   if (os.platform().includes('win32')) {
     externalApp = spawn(appPathFixed);
