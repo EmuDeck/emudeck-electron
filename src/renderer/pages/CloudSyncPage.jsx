@@ -28,9 +28,7 @@ function CloudSyncPage() {
       return cloudSyncType === 'none' ? false : `cloud-sync-config/${type}`;
     }
     return cloudSyncType === 'none'
-      ? mode === 'easy'
-        ? 'end'
-        : 'emulator-selector'
+      ? 'copy-games'
       : `cloud-sync-config/${type}`;
   };
 
@@ -42,17 +40,12 @@ function CloudSyncPage() {
         disableButton={disableButton}
         showNone={type !== 'welcome'}
       />
+
       <Footer
         next={nextButtonStatus()}
-        nextText={
-          cloudSyncType === 'none'
-            ? mode === 'easy'
-              ? 'Finish'
-              : 'Next'
-            : 'Next'
-        }
+        nextText={cloudSyncType === 'none' ? 'Copy Games' : 'Next'}
         disabledNext={disabledNext}
-        disabledBack={disabledBack}
+        disabledBack={type !== 'welcome'}
       />
     </Wrapper>
   );
