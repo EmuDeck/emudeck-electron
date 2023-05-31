@@ -160,7 +160,7 @@ function CloudSyncPageConfig() {
     if (type === 'welcome') {
       return false;
     }
-    return mode === 'easy' ? 'end' : 'emulator-selector';
+    return 'copy-games';
   };
 
   return (
@@ -176,7 +176,7 @@ function CloudSyncPageConfig() {
 
       <Footer
         next={nextButtonStatus()}
-        nextText={mode === 'easy' ? 'Finish' : 'Next'}
+        nextText="Copy games"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
