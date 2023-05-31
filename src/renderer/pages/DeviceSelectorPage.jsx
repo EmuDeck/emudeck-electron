@@ -126,8 +126,8 @@ function DeviceSelectorPage() {
         )}
       </DeviceSelector>
       <Footer
-        next="cloud-sync"
-        nextText="Next"
+        next={mode === 'easy' ? 'end' : 'emulator-selector'}
+        nextText={mode === 'easy' ? 'Finish' : 'Next'}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
