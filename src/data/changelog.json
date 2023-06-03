@@ -1,26 +1,8 @@
 [
   {
-    "title": "New CloudSync providers",
+    "title": "Bugfixes",
     "type": "STEAMOS",
-    "description": "We've added more providers: next cloud, pCloud, SFTP and SMB. With these last two you can do your own private cloud using a web server or a NAS.",
-    "image": "false"
-  },
-  {
-    "title": "CloudSaves Install page",
-    "type": "STEAMOS",
-    "description": "Now you'll be asked to chose if you want to sync your games, just back them up ( only SteamOS for now ) or nothing at all when installing EmuDeck.",
-    "image": "false"
-  },
-  {
-    "title": "CloudSync toggle",
-    "type": "STEAMOS",
-    "description": "We've added a toggle on Quick settings so you can disable or enable Cloud Sync with just a button.",
-    "image": "false"
-  },
-  {
-    "title": "CloudSync",
-    "type": "STEAMOS",
-    "description": "Sync your saved games between other EmuDecks installation, on your Steam Deck, another Windows PC, etc..<br/> This is a beta release, so make sure you have a backup of your saves before enable this feature. <br/> You can find it in Tools & Stuff.",
+    "description": "We've refactored some of the app code to make it easier to maintain",
     "image": "false"
   }
 ]

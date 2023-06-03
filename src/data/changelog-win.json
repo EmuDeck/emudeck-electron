@@ -1,50 +1,14 @@
 [
   {
-    "title": "Improved performance and speed for SD Card users",
+    "title": "Controllers revamped",
     "type": "STEAMOS",
-    "description": "EmuDeck will now install EmulationStation and all the Emulators on your userfolder\\EmuDeck\\EmulationStation-DE\\Emulators.",
+    "description": "We've overhauled our controllers profiles. This will enable START + SELECT to close any emu, improve compatibility with 3rd party controllers, and allow us to setup up controllers automatically.<br><br><strong>Instructions - Please READ carefully.</strong><br>1 - Update EmuDeck, then go to Manage Emulators -> Reset Yuzu, Ryujinx, Citra, Dolphin, DuckStation and SRM<br>2 - Open Steam Rom Manager and disable all parsers except EmulationStationDE, Emulators, Yuzu, Ryujinx, Citra, Dolphin, and DuckStation <br>3 - Click on Parse -> Remove from Steam<br>4 - Click on Parse -> Save to Steam<br><br> <strong>If you have issues with other systems and their controls, reset and reparse them aswell.</strong>",
     "image": "false"
   },
   {
-    "title": "Under the hood changes",
+    "title": "Bugfixes",
     "type": "STEAMOS",
-    "description": "To make the first point possible we had to change several stuff, so there might be some regressions. If you already have EmuDeck installed you need to do these steps to keep everything working:<ul><li>Open EmuDeck, wait for it to download and apply the update until you have version 2.1.7.</li><li>Reset EmulationStation DE config from Manage Emulators ( this will take several minutes, just wait for the confirmation that it has actually finished )</li><li>Reset Steam Rom Manager config from Manage Emulators</li><li>Parse your games and ESDE on SteamRomManager again.</li><li>Play like there's no tomorrow.</li></ul>",
-    "image": "false"
-  },
-  {
-    "title": "MelonDS Standalone",
-    "type": "STEAMOS",
-    "description": "New MelonDS emulator for those that don't like the RetroArch core, there's an issue thought, melon DS has a bug that prevents it to launch games in zip or 7z, so you have to unzip them before using it on Steam or EmulationStation.",
-    "image": "false"
-  },
-  {
-    "title": "DualSense Fixes",
-    "type": "STEAMOS",
-    "description": "Fixed controls for GameCube and Wii. To apply them just go to Manage Emulators and reset Dolphin configuration.",
-    "image": "false"
-  },
-  {
-    "title": "New CloudSync providers",
-    "type": "STEAMOS",
-    "description": "We've added more providers: next cloud, pCloud, SFTP and SMB. With these last two you can do your own private cloud using a web server or a NAS.",
-    "image": "false"
-  },
-  {
-    "title": "CloudSaves Install page",
-    "type": "STEAMOS",
-    "description": "Now you'll be asked to chose if you want to sync your games, just back them up ( only SteamOS for now ) or nothing at all when installing EmuDeck.",
-    "image": "false"
-  },
-  {
-    "title": "CloudSync toggle",
-    "type": "STEAMOS",
-    "description": "We've added a toggle on Quick settings so you can disable or enable Cloud Sync with just a button.",
-    "image": "false"
-  },
-  {
-    "title": "CloudSync",
-    "type": "STEAMOS",
-    "description": "Sync your saved games between other EmuDecks installation, on your Steam Deck, another Windows PC, etc..<br/> This is a beta release, so make sure you have a backup of your saves before enable this feature. <br/> You can find it in Tools & Stuff.",
+    "description": "We've refactored some of the app code to make it easier to maintain",
     "image": "false"
   }
 ]
