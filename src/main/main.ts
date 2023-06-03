@@ -21,6 +21,7 @@ const slash = require('slash');
 const https = require('https');
 const fs = require('fs');
 const shellQuote = require('shell-quote');
+const lsbRelease = require('lsb-release');
 
 let shellType;
 export default class AppUpdater {
@@ -501,7 +502,15 @@ ipcMain.on('update-check', async (event, command) => {
 
 ipcMain.on('system-info-in', async (event, command) => {
   // const os = require('os');
-  event.reply('system-info-out', os.platform());
+
+  if (os.platform() === 'linux') {
+    lsbRelease(function (_, data) {
+      console.dir(data);
+      event.reply('system-info-out', os.platform());
+    });
+  } else {
+    event.reply('system-info-out', os.platform());
+  }
 });
 
 ipcMain.on('version', async (event, command) => {
