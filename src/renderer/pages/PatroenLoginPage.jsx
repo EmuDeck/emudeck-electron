@@ -36,7 +36,7 @@ function PatroenLoginPage() {
 
   const patreonCheckToken = () => {
     // We don't check the token if we dont have it stored
-    if (!patreonToken || patreonToken == null) {
+    if (!patreonToken || patreonToken === null) {
       return;
     }
 
@@ -143,8 +143,8 @@ function PatroenLoginPage() {
                 aria="Next"
                 onClick={patreonCheckToken}
               >
-                {status == null && 'Check Token'}
-                {status == 'checking' && 'Checking token...'}
+                {status === null && 'Check Token'}
+                {status === 'checking' && 'Checking token...'}
               </BtnSimple>
             )}
           </div>

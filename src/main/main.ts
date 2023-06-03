@@ -156,7 +156,7 @@ const createWindow = async () => {
   let scaleFactorW;
   let scaleFactorH;
   let dpi;
-  if (os.platform() == 'darwin') {
+  if (os.platform() === 'darwin') {
     dpi = 2;
   } else {
     dpi = 1;
@@ -456,7 +456,7 @@ ipcMain.on('update-check', async (event, command) => {
       // console.log('- 1 means update');
       // console.log('1 and 0 means up to date');
       logCommand('UPDATE: COMPARING VERSIONS');
-      if (versionCheck == 1 || versionCheck == 0) {
+      if (versionCheck === 1 || versionCheck === 0) {
         logCommand('UPDATE: UP TO DATE');
         console.log('Up to date, mate');
         event.reply('update-check-out', ['up-to-date', updateInfo]);
@@ -491,7 +491,7 @@ ipcMain.on('update-check', async (event, command) => {
   });
 
   Promise.race([result, abortPromise]).then(function (value) {
-    if (value == 'abort') {
+    if (value === 'abort') {
       logCommand(`UPDATE: ABORTED TIMEOUT`);
       event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
       // mainWindow.reload()

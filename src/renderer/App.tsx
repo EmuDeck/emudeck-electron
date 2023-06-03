@@ -29,7 +29,7 @@ import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
 
 import UpdateEmusPage from 'pages/UpdateEmusPage';
-import UpdateConfigsPage from 'pages/UpdateConfigsPage';
+
 import CloudSyncPage from 'pages/CloudSyncPage';
 import CloudSyncConfigPage from 'pages/CloudSyncConfigPage';
 import ChangeLogPage from 'pages/ChangeLogPage';
@@ -41,12 +41,10 @@ import VideoGuidePage from 'pages/VideoGuidePage';
 import MigrationPage from 'pages/MigrationPage';
 import CopyGamesPage from 'pages/CopyGamesPage';
 
-import EmuGuidePage from 'pages/EmuGuidePage';
 import EmulatorsPage from 'pages/EmulatorsPage';
 import EmulatorsDetailPage from 'pages/EmulatorsDetailPage';
 
 import AutoSavePage from 'pages/AutoSavePage';
-import HomebrewGamesPage from 'pages/HomebrewGamesPage';
 import ConfirmationPage from 'pages/ConfirmationPage';
 import StoreFrontPage from 'pages/StoreFrontPage';
 import EmulatorResolutionPage from 'pages/EmulatorResolutionPage';
@@ -121,10 +119,10 @@ export default function App() {
     },
     autosave: false,
     ar: {
-      sega: '43',
-      snes: '43',
-      classic3d: '43',
-      dolphin: '43',
+      sega: 43,
+      snes: 43,
+      classic3d: 43,
+      dolphin: 43,
     },
     shaders: {
       handhelds: false,
@@ -301,7 +299,6 @@ export default function App() {
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
 
           <Route exact path="/auto-save" element={<AutoSavePage />} />
-          <Route exact path="/homebrew-games" element={<HomebrewGamesPage />} />
           <Route exact path="/confirmation" element={<ConfirmationPage />} />
           <Route exact path="/store-front" element={<StoreFrontPage />} />
 
@@ -352,9 +349,6 @@ export default function App() {
           <Route exact path="/change-log" element={<ChangeLogPage />} />
           <Route exact path="/settings" element={<SettingsPage />} />
           <Route exact path="/check-bios" element={<CheckBiosPage />} />
-          <Route exact path="/emulator-guide" element={<EmuGuidePage />}>
-            <Route path=":emulator" element={<EmuGuidePage />} />
-          </Route>
 
           <Route exact path="/emulators" element={<EmulatorsPage />}>
             <Route path=":emulator" element={<EmulatorsPage />} />
@@ -376,11 +370,6 @@ export default function App() {
           <Route exact path="/migration" element={<MigrationPage />} />
           <Route exact path="/copy-games" element={<CopyGamesPage />} />
           <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
-          <Route
-            exact
-            path="/update-configurators"
-            element={<UpdateConfigsPage />}
-          />
 
           <Route exact path="/cloud-sync" element={<CloudSyncPage />}>
             <Route path=":type" element={<CloudSyncPage />} />

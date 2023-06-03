@@ -28,9 +28,9 @@ function PegasusThemePage() {
       <PegasusTheme data={data} onClick={themeSet} />
       <Footer
         next={
-          system == 'win32'
+          system === 'win32'
             ? 'emulator-resolution'
-            : mode == 'easy'
+            : mode === 'easy'
             ? 'end'
             : 'confirmation'
         }

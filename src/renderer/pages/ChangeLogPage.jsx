@@ -102,7 +102,7 @@ function ChangeLogPage() {
                   return (
                     <li tabIndex="0" key={i}>
                       <Card
-                        css={current == i && 'is-selected'}
+                        css={current === i && 'is-selected'}
                         onClick={() => activeItem(i)}
                       >
                         <span className="h5">{item.title}</span>
@@ -117,12 +117,12 @@ function ChangeLogPage() {
             {log.map((item, i) => {
               return (
                 <div tabIndex="0" key={i}>
-                  {current == i && (
+                  {current === i && (
                     <Card
                       onClick={() => activeItem(i)}
-                      css={current == i && 'is-selected'}
+                      css={current === i && 'is-selected'}
                     >
-                      {item.image == 'true' && (
+                      {item.image === 'true' && (
                         <div
                           style={{
                             maxHeight: 280,

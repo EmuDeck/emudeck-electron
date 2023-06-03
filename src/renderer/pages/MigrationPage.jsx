@@ -11,7 +11,7 @@ function MigrationPage() {
   const { state, setState } = useContext(GlobalContext);
   const { storage, storagePath } = state;
   const [statePage, setStatePage] = useState({
-    disabledNext: storage == null,
+    disabledNext: storage === null,
     disabledBack: false,
     statusMigration: null,
     sdCardValid: null,

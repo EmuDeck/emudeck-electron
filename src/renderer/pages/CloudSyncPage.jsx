@@ -38,7 +38,7 @@ function CloudSyncPage() {
       <CloudSync
         onClick={cloudSyncSet}
         disableButton={disableButton}
-        showNo={type !== 'welcome'}
+        showNone={type !== 'welcome'}
       />
 
       <Footer

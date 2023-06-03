@@ -31,7 +31,7 @@ function CopyGamesPage() {
   const storageSet = (storageName) => {
     // console.log({ storageName });
     // We prevent the function to continue if the custom location testing is still in progress
-    if (status == 'testing') {
+    if (status === 'testing') {
       return;
     }
 
@@ -61,7 +61,7 @@ function CopyGamesPage() {
           let status;
           stdout.includes('Valid') ? (status = true) : (status = false);
           // console.log({ status });
-          if (status == true) {
+          if (status === true) {
             setStatePage({
               ...statePage,
               disabledNext: false,
