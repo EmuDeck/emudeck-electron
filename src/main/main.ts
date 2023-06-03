@@ -505,8 +505,7 @@ ipcMain.on('system-info-in', async (event, command) => {
 
   if (os.platform() === 'linux') {
     lsbRelease(function (_, data) {
-      console.dir(data);
-      event.reply('system-info-out', os.platform());
+      event.reply('system-info-out', data.distributorID);
     });
   } else {
     event.reply('system-info-out', os.platform());
