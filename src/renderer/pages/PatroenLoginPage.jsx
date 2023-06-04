@@ -1,43 +1,77 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
-import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import { useNavigate } from 'react-router-dom';
-import Header from 'components/organisms/Header/Header';
-import Main from 'components/organisms/Main/Main';
+
+//
+// components
+//
 import { BtnSimple, FormInputSimple } from 'getbasecore/Atoms';
-import { Form } from 'getbasecore/Molecules';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Main from 'components/organisms/Main/Main';
+import Header from 'components/organisms/Header/Header';
+
+//
+// hooks
+//
+import useFetch from '../hooks/useFetch';
+
+//
+// imports & requires
+//
+const branchFile = require('data/branch.json');
+
+const { branch } = branchFile;
 
 function PatroenLoginPage() {
-  const ipcChannel = window.electron.ipcRenderer;
-  const { state, setState } = useContext(GlobalContext);
+  //
+  // i18
+  //
+
+  //
+  // States
+  //
+
   const [statePage, setStatePage] = useState({
-    patreonClick: false,
+    patreonClicked: false,
     status: null,
     accessAllowed: false,
+    patreonToken: null,
+    errorMessage: undefined,
   });
-  const { patreonClick, status, accessAllowed } = statePage;
+  const { patreonClicked, status, accessAllowed, patreonToken, errorMessage } =
+    statePage;
+
+  //
+  // Web services
+  //
+  const patreonWS = useFetch('check.php');
+  //
+  // Const & Vars
+  //
   const navigate = useNavigate();
-
-  const { patreonToken, patreonStatus } = state;
-
+  //
+  // Functions
+  //
   const patreonShowInput = () => {
     setStatePage({
       ...statePage,
-      patreonClick: true,
+      patreonClicked: true,
     });
   };
 
   const patreonSetToken = (data) => {
-    setState({
-      ...state,
+    setStatePage({
+      ...statePage,
       patreonToken: data.target.value,
     });
   };
 
-  const patreonCheckToken = () => {
-    // We don't check the token if we dont have it stored
-    if (!patreonToken || patreonToken === null) {
-      return;
+  const patreonCheckToken = (tokenArg) => {
+    let token;
+    if (!tokenArg) {
+      token = patreonToken;
+    } else {
+      token = tokenArg;
     }
 
     setStatePage({
@@ -45,76 +79,74 @@ function PatroenLoginPage() {
       status: 'checking',
     });
 
-    if (patreonToken === 'sG6gE8yJ3sK3xX8c') {
-      setStatePage({
-        ...statePage,
-        accessAllowed: true,
-        status: 'Success!',
-      });
-    } else {
-      ipcChannel.sendMessage('patreon-check', patreonToken);
-      ipcChannel.on('patreon-check', (error, patreonStatusBack, stderr) => {
-        // console.log('PATREON LOGIN CHECK');
-        // console.log(patreonStatusBack);
-        // setStatePage({ ...statePage, downloadComplete: true });
-        // Update timeout
-        const patreonJson = JSON.parse(patreonStatusBack);
+    patreonWS
+      .post({ token })
+      .then((data) => {
+        const patreonJson = data;
 
-        if (patreonJson.errors) {
-          alert(patreonJson.errors[0].detail);
-          return;
-        }
-
-        // console.log({ patreonJson });
-
-        if (patreonJson.status === true) {
-          setStatePage({
-            ...statePage,
-            accessAllowed: true,
-          });
-        } else {
+        if (patreonJson.error) {
           setStatePage({
             ...statePage,
             status: null,
-            patreonClick: false,
+            patreonClicked: false,
+            errorMessage: patreonJson.error,
+          });
+          return;
+        }
+
+        // eslint-disable-next-line promise/always-return
+        if (patreonJson.status === true) {
+          setStatePage({
+            ...statePage,
+            patreonToken: patreonJson.new_token,
+            accessAllowed: true,
           });
         }
+      })
+      .catch((error) => {
+        console.log({ error });
+        setStatePage({
+          ...statePage,
+          status: null,
+          patreonClicked: false,
+        });
       });
-    }
   };
 
-  // We force the status to false
+  //
+  // UseEffects
+  //
   useEffect(() => {
-    // setState({
-    //   ...state,
-    //   patreonStatus: false,
-    // });
-    // console.log({ state });
+    const patreonTokenLS = localStorage.getItem('patreon_token');
+    if (patreonTokenLS) {
+      patreonCheckToken(patreonTokenLS);
+    } else if (branch !== 'early') {
+      navigate('/check-updates');
+    }
   }, []);
 
   useEffect(() => {
     if (accessAllowed === true) {
-      setState({
-        ...state,
-        patreonStatus: true,
-      });
+      localStorage.setItem('patreon_token', patreonToken);
+      navigate('/check-updates');
     }
   }, [accessAllowed]);
 
-  useEffect(() => {
-    if (patreonStatus === true) {
-      navigate('/welcome');
-    }
-  }, [patreonStatus]);
-
+  //
+  // Render
+  //
   return (
     <Wrapper>
       <Header title="Login into Patreon" />
       <Main>
-        <p className="lead">
-          Please login to patreon in order to access this beta.
-        </p>
-        {!patreonClick && (
+        {errorMessage === undefined && (
+          <p className="lead">
+            Please login to patreon in order to access this beta.
+          </p>
+        )}
+        {!!errorMessage && <p className="lead">{errorMessage}</p>}
+
+        {!patreonClicked && (
           <BtnSimple
             css="btn-simple--3"
             type="link"
@@ -126,7 +158,7 @@ function PatroenLoginPage() {
             Login with patreon
           </BtnSimple>
         )}
-        {patreonClick && (
+        {patreonClicked && (
           <div className="form">
             <FormInputSimple
               label="Token"
@@ -136,7 +168,7 @@ function PatroenLoginPage() {
               value={patreonToken}
               onChange={patreonSetToken}
             />
-            {patreonToken && (
+            {patreonToken != null && (
               <BtnSimple
                 css="btn-simple--3"
                 type="button"

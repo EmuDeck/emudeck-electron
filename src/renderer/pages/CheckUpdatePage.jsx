@@ -277,12 +277,7 @@ function CheckUpdatePage() {
 
   useEffect(() => {
     if (downloadComplete === true) {
-      if (system === 'win32' || branch === 'early') {
-        navigate('/patreon-login');
-        // navigate('/welcome');
-      } else {
-        navigate('/welcome');
-      }
+      navigate('/welcome');
     }
   }, [downloadComplete]);
 
