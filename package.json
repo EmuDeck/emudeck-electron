@@ -48,6 +48,7 @@
     "start:renderer": "cross-env NODE_ENV=development  TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
     "test": "jest",
     "build-windows": "npm run build && npm exec electron-builder -- --publish never --win",
+    "build-linux": "npm run build && npm exec electron-builder -- --publish never --linux",
     "build-mac": "npm run build && npm exec electron-builder -- --publish never --mac"
   },
   "lint-staged": {
@@ -115,6 +116,7 @@
     "electron-updater": "^5.0.1",
     "i18next": "^22.4.13",
     "i18next-browser-languagedetector": "^7.0.1",
+    "lsb-release": "^0.1.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-i18next": "^12.2.0",

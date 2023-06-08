@@ -21,6 +21,7 @@ const slash = require('slash');
 const https = require('https');
 const fs = require('fs');
 const shellQuote = require('shell-quote');
+const lsbRelease = require('lsb-release');
 
 let shellType;
 export default class AppUpdater {
@@ -501,7 +502,14 @@ ipcMain.on('update-check', async (event, command) => {
 
 ipcMain.on('system-info-in', async (event, command) => {
   // const os = require('os');
-  event.reply('system-info-out', os.platform());
+
+  if (os.platform() === 'linux') {
+    lsbRelease(function (_, data) {
+      event.reply('system-info-out', data.distributorID);
+    });
+  } else {
+    event.reply('system-info-out', os.platform());
+  }
 });
 
 ipcMain.on('version', async (event, command) => {
@@ -599,67 +607,6 @@ ipcMain.on('pull', async (event, branch) => {
 
 ipcMain.on('branch', async (event) => {
   event.reply('branch-out', process.env.BRANCH);
-});
-
-// Patroen login
-ipcMain.on('patreon-check', async (event, token) => {
-  const backChannel = 'patreon-check';
-
-  // We get the list of memberships for that user
-  let bashCommand = `curl --location --request GET 'https://www.patreon.com/api/oauth2/v2/identity?include=memberships' \
-    --header 'Authorization: Bearer ${token}'`;
-  if (os.platform().includes('win32')) {
-    bashCommand = `curl https://www.patreon.com/api/oauth2/v2/identity?include=memberships -H "Authorization: Bearer ${token}"`;
-  }
-  // console.log({ bashCommand });
-  exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-    // console.log(stdout);
-    logCommand(bashCommand, error, stdout, stderr);
-    const stdoutJSON = JSON.parse(stdout);
-
-    // If error user
-    if (stdoutJSON.errors) {
-      event.reply(backChannel, error, stdout, stderr);
-      return;
-    }
-
-    const membershipData = stdoutJSON.data.relationships.memberships.data;
-    let patreonDataCommand;
-    const thanks = false;
-    // Now we have to check if those memberships are being paid
-    Object.entries(membershipData).forEach((entry) => {
-      const [key, value] = entry;
-      const userID = value.id;
-      patreonDataCommand = `curl --location --request GET 'https://www.patreon.com/api/oauth2/v2/members/${userID}?fields%5Bmember%5D=will_pay_amount_cents,patron_status,currently_entitled_amount_cents' \
-                  --header 'Authorization: Bearer ${token}'`;
-
-      if (os.platform().includes('win32')) {
-        patreonDataCommand = `curl https://www.patreon.com/api/oauth2/v2/members/${userID}?fields%5Bmember%5D=will_pay_amount_cents,patron_status,currently_entitled_amount_cents -H "Authorization: Bearer ${token}"`;
-      }
-      // console.log({ patreonDataCommand });
-      exec(`${patreonDataCommand}`, shellType, (error, stdout, stderr) => {
-        // console.log(stdout);
-        logCommand(bashCommand, error, stdout, stderr);
-        const stdoutJSON = JSON.parse(stdout);
-
-        const pledge =
-          stdoutJSON.data.attributes.currently_entitled_amount_cents;
-
-        // console.log({ pledge });
-        if (pledge > 299) {
-          event.reply(backChannel, {}, JSON.stringify({ status: true }), {});
-        } else {
-          event.reply(backChannel, {}, JSON.stringify({ status: false }), {});
-        }
-      });
-    });
-
-    // if (thanks === true) {
-    //   event.reply(backChannel, 'No error', { status: true }, 'No error');
-    // } else {
-    //   event.reply(backChannel, 'No error', { status: false }, 'No error');
-    // }
-  });
 });
 
 // GameMode setter

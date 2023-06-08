@@ -104,14 +104,14 @@ function CheckDependenciesPage() {
         // //Steam?
         checkSteam();
       } else {
-        navigate('/check-updates');
+        navigate('/patreon-login');
       }
     });
   }, []);
 
   useEffect(() => {
     if (statusGIT === true && status7Zip === true) {
-      navigate('/check-updates');
+      navigate('/patreon-login');
     }
   }, [statusGIT, status7Zip]);
 

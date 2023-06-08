@@ -6,7 +6,6 @@ import CheckUpdatePage from 'pages/CheckUpdatePage';
 import PatreonLoginPage from 'pages/PatroenLoginPage';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
-import DeviceConfiguratorPage from 'pages/DeviceConfiguratorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
 import EmulatorConfigurationPage from 'pages/EmulatorConfigurationPage';
 import RomStoragePage from 'pages/RomStoragePage';
@@ -32,6 +31,8 @@ import UpdateEmusPage from 'pages/UpdateEmusPage';
 
 import CloudSyncPage from 'pages/CloudSyncPage';
 import CloudSyncConfigPage from 'pages/CloudSyncConfigPage';
+import GameModePage from 'pages/GameModePage';
+
 import ChangeLogPage from 'pages/ChangeLogPage';
 import SettingsPage from 'pages/SettingsPage';
 import UninstallPage from 'pages/UninstallPage';
@@ -277,11 +278,6 @@ export default function App() {
           />
           <Route
             exact
-            path="/device-configurator"
-            element={<DeviceConfiguratorPage />}
-          />
-          <Route
-            exact
             path="/emulator-selector"
             element={<EmulatorSelectorPage />}
           />
@@ -373,6 +369,9 @@ export default function App() {
 
           <Route exact path="/cloud-sync" element={<CloudSyncPage />}>
             <Route path=":type" element={<CloudSyncPage />} />
+          </Route>
+          <Route exact path="/game-mode" element={<GameModePage />}>
+            <Route path=":type" element={<GameModePage />} />
           </Route>
           <Route
             exact
