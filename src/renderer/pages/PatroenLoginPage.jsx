@@ -155,7 +155,18 @@ function PatroenLoginPage() {
             aria="Next"
             onClick={() => patreonShowInput()}
           >
-            Login with patreon
+            Login with Patreon
+          </BtnSimple>
+        )}
+        {!patreonClicked && (
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            target="_blank"
+            aria="Next"
+            onClick={() => patreonShowInput()}
+          >
+            Login with Token
           </BtnSimple>
         )}
         {patreonClicked && (
@@ -173,7 +184,7 @@ function PatroenLoginPage() {
                 css="btn-simple--3"
                 type="button"
                 aria="Next"
-                onClick={patreonCheckToken}
+                onClick={() => patreonCheckToken()}
               >
                 {status === null && 'Check Token'}
                 {status === 'checking' && 'Checking token...'}
