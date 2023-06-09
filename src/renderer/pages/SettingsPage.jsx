@@ -303,7 +303,7 @@ function SettingsPage() {
     });
 
     let functionHomebrewGames;
-    status
+    status === true
       ? (functionHomebrewGames = 'emuDeckInstallHomebrewGames')
       : (functionHomebrewGames = 'emuDeckUninstallHomebrewGames');
 
@@ -311,6 +311,24 @@ function SettingsPage() {
     ipcChannel.once('autoSave', () => {
       // console.log(message);
       notificationShow('🎉 HomeBrew Games updated!');
+    });
+  };
+
+  const onClickBoot = (status) => {
+    setState({
+      ...state,
+      gamemode: status,
+    });
+
+    let functionBootMode;
+    status === true
+      ? (functionBootMode = 'game_mode_enable')
+      : (functionBootMode = 'game_mode_disable');
+
+    ipcChannel.sendMessage('emudeck', [`bootMode|||${functionBootMode}`]);
+    ipcChannel.once('bootMode', () => {
+      // console.log(message);
+      notificationShow('🎉 BootMode updated, please restart your device!');
     });
   };
 
@@ -331,6 +349,7 @@ function SettingsPage() {
         onClickLCD={onClickLCD}
         onClickAutoSave={autoSaveSet}
         onClickHomeBrew={HomeBrew}
+        onClickBoot={onClickBoot}
       />
       <Footer disabledNext disabledBack={disabledBack} />
     </Wrapper>

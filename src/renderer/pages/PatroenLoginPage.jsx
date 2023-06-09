@@ -118,10 +118,10 @@ function PatroenLoginPage() {
   //
   useEffect(() => {
     const patreonTokenLS = localStorage.getItem('patreon_token');
-    if (patreonTokenLS) {
-      patreonCheckToken(patreonTokenLS);
-    } else if (branch !== 'early') {
+    if (branch !== 'early') {
       navigate('/check-updates');
+    } else if (patreonTokenLS) {
+      patreonCheckToken(patreonTokenLS);
     }
   }, []);
 
@@ -147,16 +147,27 @@ function PatroenLoginPage() {
         {!!errorMessage && <p className="lead">{errorMessage}</p>}
 
         {!patreonClicked && (
-          <BtnSimple
-            css="btn-simple--3"
-            type="link"
-            target="_blank"
-            href="https://patreon.emudeck.com/"
-            aria="Next"
-            onClick={() => patreonShowInput()}
-          >
-            Login with Patreon
-          </BtnSimple>
+          <>
+            <BtnSimple
+              css="btn-simple--3"
+              type="link"
+              target="_blank"
+              href="https://token.emudeck.com/"
+              aria="Next"
+              onClick={() => patreonShowInput()}
+            >
+              Login with Patreon
+            </BtnSimple>
+            <BtnSimple
+              css="btn-simple--3"
+              type="link"
+              target="_blank"
+              href="https://patreon.com/"
+              aria="Next"
+            >
+              Change Patreon Account
+            </BtnSimple>
+          </>
         )}
         {!patreonClicked && (
           <BtnSimple
