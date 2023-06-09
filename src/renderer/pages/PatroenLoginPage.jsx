@@ -118,10 +118,10 @@ function PatroenLoginPage() {
   //
   useEffect(() => {
     const patreonTokenLS = localStorage.getItem('patreon_token');
-    if (patreonTokenLS) {
-      patreonCheckToken(patreonTokenLS);
-    } else if (branch !== 'early') {
+    if (branch !== 'early') {
       navigate('/check-updates');
+    } else if (patreonTokenLS) {
+      patreonCheckToken(patreonTokenLS);
     }
   }, []);
 
