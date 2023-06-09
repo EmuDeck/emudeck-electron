@@ -228,15 +228,6 @@ function WelcomePage() {
       function: () => selectMode('expert'),
     },
     {
-      icon: [iconQuick],
-      title: 'Game Mode',
-      description: 'Enable the SteamOS experience on Windows',
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: system === 'win32',
-      function: () => functions.navigate('/game-mode/welcome'),
-    },
-    {
       icon: [iconPlugin],
       title: 'Power Tools',
       description:
