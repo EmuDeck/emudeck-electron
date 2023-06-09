@@ -105,13 +105,12 @@ function WelcomePage() {
 
   const openSRM = () => {
     if (system === 'win32') {
-      ipcChannel.sendMessage('bash', [
-        `srm|||${storagePath.substring(
-          0,
-          2
-        )} && cd \\ && cd Emulation && cd tools && start srm.exe`,
-      ]);
-      ipcChannel.once('srm', (message) => {
+      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
+      ipcChannel.sendMessage(
+        'run-app',
+        `${storagePath}\Emulation\\tools\\srm.exe`
+      );
+      ipcChannel.once('run-app', (message) => {
         console.log({ message });
       });
     } else {
@@ -165,7 +164,7 @@ function WelcomePage() {
       description: 'Transfer your games using a USB Drive',
       button: 'Add more games',
       btnCSS: 'btn-simple--1',
-      status: system !== 'win32',
+      status: system === 'SteamOS',
       function: () => functions.navigate('/copy-games'),
     },
     {
@@ -200,16 +199,6 @@ function WelcomePage() {
 
   const settingsCards = [
     {
-      icon: [iconMigrate],
-      title: 'SteamOS 3.5 Fix',
-      description:
-        'Update your paths to the new SD Card paths introduced in Steam 3.5',
-      button: 'Fix',
-      btnCSS: 'btn-simple--5',
-      status: false,
-      function: () => functions.migrationFixSDPaths(),
-    },
-    {
       icon: [iconJoystick],
       title: 'Steam ROM Manager',
       description: 'Add emulators, tools, or ROMs to your Steam Library',
@@ -217,15 +206,6 @@ function WelcomePage() {
       btnCSS: 'btn-simple--5',
       status: true,
       function: () => functions.openSRM(),
-    },
-    {
-      icon: [iconMigrate],
-      title: 'Change Controller',
-      description: 'Change your controller to configure emulators like Yuzu',
-      button: 'Change',
-      btnCSS: 'btn-simple--5',
-      status: system === 'win32',
-      function: () => functions.navigate('/device-configurator'),
     },
     {
       icon: [iconQuick],
@@ -254,7 +234,7 @@ function WelcomePage() {
         'A Decky Loader Plugin to manage performance settings in Game Mode',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32',
+      status: system === 'SteamOS',
       function: () => functions.navigate('/power-tools'),
     },
     {
@@ -264,7 +244,7 @@ function WelcomePage() {
         'An EmuDeck Decky Loader Plugin to easily view emulator hotkeys in Game Mode',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32',
+      status: system === 'SteamOS',
       function: () => functions.navigate('/decky-controls'),
     },
     {
@@ -273,7 +253,7 @@ function WelcomePage() {
       description: 'Enable your Steam Deck gyroscope in emulation',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32',
+      status: system === 'SteamOS',
       function: () => functions.navigate('/gyrodsu'),
     },
     {
@@ -291,17 +271,17 @@ function WelcomePage() {
       description: 'Use the EmuDeck BIOS Checker to validate your BIOS',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32',
+      status: true,
       function: () => functions.navigate('/check-bios'),
     },
     {
       icon: [iconCloud],
-      title: 'Cloud Backup',
-      description: 'Backup your saves and save states to the cloud',
+      title: 'Cloud Saves',
+      description: 'Sync or backup your saves and save states to the cloud',
       button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
-      function: () => functions.navigate('/cloud-sync'),
+      function: () => functions.navigate('/cloud-sync/welcome'),
     },
     {
       icon: [iconCloud],

@@ -6,34 +6,115 @@ import Footer from 'components/organisms/Footer/Footer';
 import DeviceSelector from 'components/organisms/Wrappers/DeviceSelector';
 import Card from 'components/molecules/Card/Card';
 
-// import img552 from 'assets/rg552.png';
-// import imgOdin from 'assets/odin.png';
-// import imgRP2 from 'assets/rp2.png';
-// import imgAndroid from 'assets/android.png';
-
-import imgDeck from 'assets/devices/deck.png';
-import imgPS4 from 'assets/devices/PS4.png';
-import imgPS5 from 'assets/devices/PS5.png';
-import imgWin600 from 'assets/devices/win600.png';
-import imgX360 from 'assets/devices/x360.png';
-import imgXOne from 'assets/devices/xone.png';
-import imgWiiPro from 'assets/devices/wiipro.png';
+import {
+  imgDeck,
+  imgWin600,
+  imgally,
+  imgaokzoepro,
+  imgayaneo2,
+  imgayaneogeek,
+  imglinux,
+  imgwindows,
+} from 'components/utils/images/images';
 
 function DeviceSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, system, mode } = state;
+  const { device, system, mode, resolutions } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
     data: '',
   });
   const { disabledNext, disabledBack, data } = statePage;
+
   // Setting the device
   const deviceSet = (deviceName) => {
     setStatePage({ ...statePage, disabledNext: false });
+
+    const amd6800U = {
+      dolphin: '1080P',
+      duckstation: '1080P',
+      pcsx2: '1080P',
+      yuzu: '720P',
+      ppsspp: '1080P',
+      rpcs3: '720P',
+      ryujinx: '720P',
+      xemu: '720P',
+      cemu: '720P',
+      xenia: '720P',
+      citra: '1080P',
+      vita3k: '1080P',
+      melonds: '1080P',
+    };
+
+    const deck = {
+      dolphin: '720P',
+      duckstation: '720P',
+      pcsx2: '720P',
+      yuzu: '720P',
+      ppsspp: '720P',
+      rpcs3: '720P',
+      ryujinx: '720P',
+      xemu: '720P',
+      cemu: '720P',
+      xenia: '720P',
+      citra: '720P',
+      vita3k: '720P',
+      melonds: '720P',
+    };
+
+    const r1080p = {
+      dolphin: '1080P',
+      duckstation: '1080P',
+      pcsx2: '1080P',
+      yuzu: '1080P',
+      ppsspp: '1080P',
+      rpcs3: '1080P',
+      ryujinx: '1080P',
+      xemu: '1080P',
+      cemu: '1080P',
+      xenia: '1080P',
+      citra: '1080P',
+      vita3k: '1080P',
+      melonds: '1080P',
+    };
+
+    let resolutionsObj = {};
+    switch (deviceName) {
+      case 'Steam Deck':
+        resolutionsObj = deck;
+        break;
+      case 'Anbernic Win600':
+        resolutionsObj = deck;
+        break;
+      case 'Asus Rog Ally':
+        resolutionsObj = amd6800U;
+        break;
+      case 'AOKZOE PRO1':
+        resolutionsObj = amd6800U;
+        break;
+      case 'AYA Neo Geek':
+        resolutionsObj = amd6800U;
+        break;
+      case 'AYA Neo 2':
+        resolutionsObj = amd6800U;
+        break;
+      case 'Windows PC':
+        resolutionsObj = r1080p;
+        break;
+      case 'Linux PC':
+        resolutionsObj = r1080p;
+        break;
+      default:
+        resolutionsObj = deck;
+    }
+
+    console.log({ resolutionsObj });
+
     setState({
       ...state,
       device: deviceName,
+      resolutions: resolutionsObj,
     });
   };
 
@@ -48,9 +129,7 @@ function DeviceSelectorPage() {
 
   return (
     <Wrapper>
-      <Header
-        title={`Select your ${system === 'win32' ? 'controller' : 'device'} `}
-      />
+      <Header title={`Select your device `} />
       <DeviceSelector data={data} onClick={deviceSet}>
         {system !== 'win32' && (
           <>
@@ -68,6 +147,15 @@ function DeviceSelectorPage() {
               <img src={imgWin600} width="100" alt="Background" />
               <span className="h6">Anbernic WIN600</span>
             </Card>
+            {/*
+            <Card
+              css={device === 'Linux PC' && 'is-selected'}
+              onClick={() => deviceSet('Linux PC')}
+            >
+              <img src={imglinux} width="100" alt="Background" />
+              <span className="h6">Linux PC</span>
+            </Card>
+            */}
           </>
         )}
         {system === 'win32' && (
@@ -87,53 +175,52 @@ function DeviceSelectorPage() {
               <span className="h6">Anbernic WIN600</span>
             </Card>
             <Card
-              css={device === 'PS4' && 'is-selected'}
-              onClick={() => deviceSet('PS4')}
+              css={device === 'Asus Rog Ally' && 'is-selected'}
+              onClick={() => deviceSet('Asus Rog Ally')}
             >
-              <img src={imgPS4} width="100" alt="Background" />
-              <span className="h6">PS4 Controller</span>
+              <img src={imgally} width="100" alt="Background" />
+              <span className="h6">Asus Rog Ally</span>
             </Card>
             <Card
-              css={device === 'PS5' && 'is-selected'}
-              onClick={() => deviceSet('PS5')}
+              css={device === 'AOKZOE PRO1' && 'is-selected'}
+              onClick={() => deviceSet('AOKZOE PRO1')}
             >
-              <img src={imgPS5} width="100" alt="Background" />
-              <span className="h6">PS5 Controller</span>
+              <img src={imgaokzoepro} width="100" alt="Background" />
+              <span className="h6">AOKZOE PRO1</span>
             </Card>
             <Card
-              css={device === 'X360' && 'is-selected'}
-              onClick={() => deviceSet('X360')}
+              css={device === 'AYA Neo Geek' && 'is-selected'}
+              onClick={() => deviceSet('AYA Neo Geek')}
             >
-              <img src={imgX360} width="100" alt="Background" />
-              <span className="h6">Xbox 360 Controller</span>
+              <img src={imgayaneogeek} width="100" alt="Background" />
+              <span className="h6">AYA Neo Geek</span>
             </Card>
             <Card
-              css={device === 'XONE' && 'is-selected'}
-              onClick={() => deviceSet('XONE')}
+              css={device === 'AYA Neo 2' && 'is-selected'}
+              onClick={() => deviceSet('AYA Neo 2')}
             >
-              <img src={imgXOne} width="100" alt="Background" />
-              <span className="h6">Xbox One Controller</span>
+              <img src={imgayaneo2} width="100" alt="Background" />
+              <span className="h6">AYA Neo 2</span>
             </Card>
             <Card
-              css={device === 'WIIUPRO' && 'is-selected'}
-              onClick={() => deviceSet('WIIUPRO')}
+              css={device === 'Windows PC' && 'is-selected'}
+              onClick={() => deviceSet('Windows PC')}
             >
-              <img src={imgWiiPro} width="100" alt="Background" />
-              <span className="h6">Pro Controller</span>
+              <img src={imgwindows} width="100" alt="Background" />
+              <span className="h6">Windows PC</span>
+            </Card>
+            <Card
+              css={device === 'Windows Handlheld' && 'is-selected'}
+              onClick={() => deviceSet('Windows Handlheld')}
+            >
+              <img src={imgwindows} width="100" alt="Background" />
+              <span className="h6">Windows Handlheld</span>
             </Card>
           </>
         )}
       </DeviceSelector>
       <Footer
-        next={
-          system === 'win32'
-            ? mode === 'easy'
-              ? 'end'
-              : 'emulator-resolution'
-            : mode === 'easy'
-            ? 'end'
-            : 'emulator-selector'
-        }
+        next={mode === 'easy' ? 'end' : 'emulator-selector'}
         nextText={mode === 'easy' ? 'Finish' : 'Next'}
         disabledNext={disabledNext}
         disabledBack={disabledBack}

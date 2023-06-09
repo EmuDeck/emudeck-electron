@@ -39,7 +39,7 @@ function SettingsPage() {
   const onClickBezel = (arStatus) => {
     setState({
       ...state,
-      bezels: aratus,
+      bezels: arStatus,
     });
 
     let functionBezel;
@@ -52,6 +52,20 @@ function SettingsPage() {
     ipcChannel.once('bezels', () => {
       // console.log(message);
       notificationShow('🎉 Bezels updated!');
+    });
+  };
+  const onClickCloudSync = (cloudStatus) => {
+    setState({
+      ...state,
+      cloudSyncStatus: cloudStatus,
+    });
+
+    ipcChannel.sendMessage('emudeck', [
+      `cloudSync|||cloud_sync_toggle ${cloudStatus}`,
+    ]);
+    ipcChannel.once('cloudSync', () => {
+      // console.log(message);
+      notificationShow('🎉 CloudSync Status updated!');
     });
   };
   const onClickSega = (arStatus) => {
@@ -289,7 +303,7 @@ function SettingsPage() {
     });
 
     let functionHomebrewGames;
-    status
+    status === true
       ? (functionHomebrewGames = 'emuDeckInstallHomebrewGames')
       : (functionHomebrewGames = 'emuDeckUninstallHomebrewGames');
 
@@ -300,12 +314,31 @@ function SettingsPage() {
     });
   };
 
+  const onClickBoot = (status) => {
+    setState({
+      ...state,
+      gamemode: status,
+    });
+
+    let functionBootMode;
+    status === true
+      ? (functionBootMode = 'game_mode_enable')
+      : (functionBootMode = 'game_mode_disable');
+
+    ipcChannel.sendMessage('emudeck', [`bootMode|||${functionBootMode}`]);
+    ipcChannel.once('bootMode', () => {
+      // console.log(message);
+      notificationShow('🎉 BootMode updated, please restart your device!');
+    });
+  };
+
   return (
     <Wrapper>
       <Header title="Configure your" bold="Settings" />
       <Settings
         showNotification={showNotification}
         notificationText={notificationText}
+        onClickCloudSync={onClickCloudSync}
         onClickBezel={onClickBezel}
         onClickSega={onClickSega}
         onClickSNES={onClickSNES}
@@ -316,6 +349,7 @@ function SettingsPage() {
         onClickLCD={onClickLCD}
         onClickAutoSave={autoSaveSet}
         onClickHomeBrew={HomeBrew}
+        onClickBoot={onClickBoot}
       />
       <Footer disabledNext disabledBack={disabledBack} />
     </Wrapper>

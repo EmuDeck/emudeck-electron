@@ -116,7 +116,6 @@ function EmulatorsPage() {
           if (
             item.id === 'primehack' ||
             item.id === 'primehacks' ||
-            item.id === 'melonds' ||
             item.id === 'rmg' ||
             item.id === 'mame' ||
             item.id === 'vita3k' ||
@@ -178,10 +177,6 @@ function EmulatorsPage() {
 
     if (system === 'win32') {
       delete stateCurrentConfigs.primehack;
-      delete stateCurrentConfigs.melonds;
-      delete stateCurrentConfigs.citra;
-      delete stateCurrentConfigs.rpcs3;
-      delete stateCurrentConfigs.ryujinx;
       delete stateCurrentConfigs.rmg;
       delete stateCurrentConfigs.mame;
       delete stateCurrentConfigs.vita3k;
@@ -298,17 +293,16 @@ function EmulatorsPage() {
               {installEmusArray.map((item) => {
                 const img = images[item.id];
                 const updateNotif = updates[item.id];
-                if (system == 'win32') {
+                if (system === 'win32') {
                   if (
-                    item.id == 'primehack' ||
-                    item.id == 'melonds' ||
-                    item.id == 'rmg' ||
-                    item.id == 'mame' ||
-                    item.id == 'vita3k' ||
-                    item.id == 'scummvm' ||
-                    item.id == 'xemu' ||
-                    item.id == 'mgba' ||
-                    item.id == 'xenia'
+                    item.id === 'primehack' ||
+                    item.id === 'rmg' ||
+                    item.id === 'mame' ||
+                    item.id === 'vita3k' ||
+                    item.id === 'scummvm' ||
+                    item.id === 'xemu' ||
+                    item.id === 'mgba' ||
+                    item.id === 'xenia'
                   ) {
                     return;
                   }

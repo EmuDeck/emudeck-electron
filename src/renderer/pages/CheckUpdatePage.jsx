@@ -93,7 +93,7 @@ function CheckUpdatePage() {
           update: message[0],
           data: message[1],
         });
-        if (message[0] == 'up-to-date') {
+        if (message[0] === 'up-to-date') {
           updateFiles();
         }
       });
@@ -217,10 +217,10 @@ function CheckUpdatePage() {
     //
 
     // Force changelog after update
-    if (update == 'updating') {
+    if (update === 'updating') {
       localStorage.setItem('show_changelog', true);
     }
-    if (update == 'up-to-date') {
+    if (update === 'up-to-date') {
       // is the git repo cloned?
       console.log('check-git');
       ipcChannel.sendMessage('check-git');
@@ -243,7 +243,7 @@ function CheckUpdatePage() {
   useEffect(() => {
     // settings here
 
-    if (cloned == false) {
+    if (cloned === false) {
       if (navigator.onLine) {
         ipcChannel.sendMessage(`clone`, branch);
         console.log('clone');
@@ -258,7 +258,7 @@ function CheckUpdatePage() {
       } else {
         alert('You need to be connected to the internet');
       }
-    } else if (cloned == true) {
+    } else if (cloned === true) {
       if (navigator.onLine) {
         ipcChannel.sendMessage('pull', branch);
         console.log('pull');
@@ -276,19 +276,14 @@ function CheckUpdatePage() {
   }, [cloned]);
 
   useEffect(() => {
-    if (downloadComplete == true) {
-      if (system === 'win32' || branch == 'early') {
-        navigate('/patreon-login');
-        // navigate('/welcome');
-      } else {
-        navigate('/welcome');
-      }
+    if (downloadComplete === true) {
+      navigate('/welcome');
     }
   }, [downloadComplete]);
 
   return (
     <Wrapper>
-      {update == null && (
+      {update === null && (
         <>
           <Header title="Checking for updates..." />
           <p className="h5">

@@ -4,7 +4,7 @@ import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
-import EmuGuide from 'components/organisms/Wrappers/EmuGuide';
+import EmuDetail from 'components/organisms/Wrappers/EmuDetail';
 
 const emuData = require('data/emuData.json');
 
@@ -37,6 +37,13 @@ function EmulatorsDetailPage() {
     updates,
     newDesiredVersions,
   } = statePage;
+
+  const yuzuEAaddToken = () => {
+    ipcChannel.sendMessage('emudeck', [`YuzuEA_addToken|||YuzuEA_addToken`]);
+    ipcChannel.once('YuzuEA_addToken', (message) => {
+      console.log({ message });
+    });
+  };
 
   const diff = (obj1, obj2) => {
     // Make sure an object to compare is provided
@@ -511,7 +518,7 @@ function EmulatorsDetailPage() {
       <Header title={emuData[emulatorSelected].name} />
 
       {updates && (
-        <EmuGuide
+        <EmuDetail
           mode={mode}
           disabledNext={disabledNext}
           disabledBack={disabledBack}
@@ -534,6 +541,7 @@ function EmulatorsDetailPage() {
           installEmus={installEmus[emulatorSelected]}
           disableResetButton={!!disableResetButton}
           hideInstallButton={!!hideInstallButton}
+          YuzuEAaddToken={yuzuEAaddToken}
         />
       )}
       <Footer next={false} />

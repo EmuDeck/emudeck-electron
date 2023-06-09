@@ -9,7 +9,7 @@ jobs:
   publish-linux:
     # To enable auto publishing to github, update your electron publisher
     # config in package.json > "build" and remove the conditional below
-    #if: ${{ github.repository_owner == 'electron-react-boilerplate' }}
+    #if: ${{ github.repository_owner === 'electron-react-boilerplate' }}
 
     runs-on: ${{ matrix.os }}
 
@@ -69,11 +69,10 @@ jobs:
         with:
           name: EmuDeck-Early-AppImage
           path: '**/*.AppImage'
-
   publish-windows:
     # To enable auto publishing to github, update your electron publisher
     # config in package.json > "build" and remove the conditional below
-    #if: ${{ github.repository_owner == 'electron-react-boilerplate' }}
+    #if: ${{ github.repository_owner === 'electron-react-boilerplate' }}
 
     runs-on: ${{ matrix.os }}
 
@@ -126,3 +125,8 @@ jobs:
           npm run postinstall
           npm run build
           npm exec electron-builder -- --publish always --win
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: EmuDeck-early-windows
+          path: '**/*.exe'
