@@ -154,7 +154,7 @@ function PatroenLoginPage() {
             errorMessage: 'Please log back in to Patron.',
           });
           const updateOrLogin = confirm(
-            'Please log again to Patreon enable EmuDeck updates'
+            'Please log back in to Patreon to enable EmuDeck updates'
           );
           if (!updateOrLogin) {
             const shadersStored = settingsStorage.shaders;
