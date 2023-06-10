@@ -63,7 +63,7 @@ function MigrationPage() {
               ...statePage,
               disabledNext: false,
               storageDestination: storageName,
-              storagePathDestination: stdoutLocation,
+              storagePathDestination: stdout,
             });
           } else {
             alert('Non writable directory selected, please choose another.');
