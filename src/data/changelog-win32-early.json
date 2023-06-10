@@ -2,7 +2,13 @@
   {
     "title": "2.1.13 New Patreon Login",
     "type": "STEAMOS",
-    "description": "New login method to fix antivirus getting onthe way. Added option to switch Patron Accounts on login",
+    "description": "New login method to fix antivirus getting on the way. Added option to switch Patron Accounts on login",
+    "image": "false"
+  },
+  {
+    "title": "2.1.13 New Gaming Mode",
+    "type": "STEAMOS",
+    "description": "Now you can select how you want your device to boot, directly into Steam UI ( aka Big Picture Mode ) and go straight to gaming!",
     "image": "false"
   },
   {
