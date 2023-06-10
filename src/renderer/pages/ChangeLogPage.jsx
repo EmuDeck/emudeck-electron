@@ -27,7 +27,7 @@ function ChangeLogPage() {
     log: [],
   });
   const { disabledNext, disabledBack, current, img, log } = statePage;
-  const { system } = state;
+  const { system, branch } = state;
 
   const imgC0 = img0;
   const activeItem = (id) => {
@@ -74,11 +74,10 @@ function ChangeLogPage() {
   useEffect(() => {
     localStorage.setItem('show_changelog', false);
 
-    const changeLogDataWin = require('data/changelog-win.json');
-    const changeLogData = require('data/changelog.json');
+    const changeLogData = require(`data/changelog-${system}-${branch}.json`);
     setStatePage({
       ...statePage,
-      log: system === 'win32' ? changeLogDataWin : changeLogData,
+      log: changeLogData,
     });
   }, []);
 
