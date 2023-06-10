@@ -41,6 +41,8 @@ function PatroenLoginPage() {
   const { patreonClicked, status, accessAllowed, patreonToken, errorMessage } =
     statePage;
 
+  const { state, setState, setStateCurrentConfigs } = useContext(GlobalContext);
+
   //
   // Web services
   //
@@ -49,6 +51,7 @@ function PatroenLoginPage() {
   // Const & Vars
   //
   const navigate = useNavigate();
+  const ipcChannel = window.electron.ipcRenderer;
   //
   // Functions
   //
@@ -60,27 +63,43 @@ function PatroenLoginPage() {
   };
 
   const patreonSetToken = (data) => {
+    let patronTokenValue;
+
+    console.log(data.target.value);
+    data.target.value === ''
+      ? (patronTokenValue = null)
+      : (patronTokenValue = data.target.value);
+
     setStatePage({
       ...statePage,
-      patreonToken: data.target.value,
+      patreonToken: patronTokenValue,
     });
   };
 
   const patreonCheckToken = (tokenArg) => {
+    const settingsStorage = JSON.parse(
+      localStorage.getItem('settings_emudeck')
+    );
+
     let token;
+    let system = 'NA';
+    let device = 'NA';
+    let installEmus = 'NA';
+
+    if (settingsStorage) {
+      system = settingsStorage.system;
+      device = settingsStorage.device;
+      installEmus = settingsStorage.installEmus;
+    }
+
     if (!tokenArg) {
       token = patreonToken;
     } else {
       token = tokenArg;
     }
 
-    setStatePage({
-      ...statePage,
-      status: 'checking',
-    });
-
     patreonWS
-      .post({ token })
+      .post({ token, system, device, installEmus })
       .then((data) => {
         const patreonJson = data;
 
@@ -122,6 +141,74 @@ function PatroenLoginPage() {
       navigate('/check-updates');
     } else if (patreonTokenLS) {
       patreonCheckToken(patreonTokenLS);
+    } else {
+      const settingsStorage = JSON.parse(
+        localStorage.getItem('settings_emudeck')
+      );
+      if (settingsStorage) {
+        const { patreonToken, system, device, installEmus } = settingsStorage;
+
+        if (patreonToken !== null) {
+          setStatePage({
+            ...statePage,
+            errorMessage: 'Please log back in to Patron.',
+          });
+          const updateOrLogin = confirm(
+            'Please log again to Patreon enable EmuDeck updates'
+          );
+          if (!updateOrLogin) {
+            const shadersStored = settingsStorage.shaders;
+            const overwriteConfigEmusStored =
+              settingsStorage.overwriteConfigEmus;
+            const achievementsStored = settingsStorage.achievements;
+
+            console.log({ overwriteConfigEmusStored });
+            console.log({ overwriteConfigEmus });
+
+            delete settingsStorage.installEmus.primehacks;
+            delete settingsStorage.installEmus.cemunative;
+            delete settingsStorage.overwriteConfigEmus.primehacks;
+            const installEmusStored = settingsStorage.installEmus;
+
+            // Theres probably a better way to do this...
+            console.log('2 - VERSION - CHECKING');
+            ipcChannel.sendMessage('version');
+
+            ipcChannel.once('version-out', (version) => {
+              console.log('2 - VERSION - GETTING');
+              console.log({ version });
+              ipcChannel.sendMessage('system-info-in');
+              ipcChannel.once('system-info-out', (platform) => {
+                console.log('2 - VERSION - GETTING SYSTEM TOO');
+                console.log({
+                  system: platform,
+                  version: version[0],
+                  gamemode: version[1],
+                });
+                setState({
+                  ...state,
+                  ...settingsStorage,
+                  installEmus: { ...installEmus, ...installEmusStored },
+                  overwriteConfigEmus: {
+                    ...overwriteConfigEmus,
+                    ...overwriteConfigEmusStored,
+                  },
+                  achievements: {
+                    ...achievements,
+                    ...achievementsStored,
+                  },
+                  shaders: { ...shaders, ...shadersStored },
+                  system: platform,
+                  version: version[0],
+                  gamemode: version[1],
+                  branch,
+                });
+              });
+            });
+            navigate('/welcome');
+          }
+        }
+      }
     }
   }, []);
 
@@ -190,7 +277,7 @@ function PatroenLoginPage() {
               value={patreonToken}
               onChange={patreonSetToken}
             />
-            {patreonToken != null && (
+            {patreonToken !== null && (
               <BtnSimple
                 css="btn-simple--3"
                 type="button"
