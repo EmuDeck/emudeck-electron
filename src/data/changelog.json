@@ -1,8 +1,8 @@
 [
   {
-    "title": "Bugfixes",
+    "title": "2.1.13 New Patreon Login",
     "type": "STEAMOS",
-    "description": "We've refactored some of the app code to make it easier to maintain",
+    "description": "New login method to fix antivirus getting onthe way. Added option to switch Patron Accounts on login",
     "image": "false"
   }
 ]
