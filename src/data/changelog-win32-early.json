@@ -1,5 +1,29 @@
 [
   {
+    "title": "Drive Selector Fix",
+    "type": "STEAMOS",
+    "description": "Fixed an issue where the drive selector might not pick the proper drive letter. Added a warning message in case this bug reappears",
+    "image": "false"
+  },
+  {
+    "title": "Ally config screen",
+    "type": "STEAMOS",
+    "description": "After installation we now show the user how to properly configure the Asus Ally controls with EmuDeck.",
+    "image": "false"
+  },
+  {
+    "title": "SRM Fix",
+    "type": "STEAMOS",
+    "description": "Steam Rom manager should always launch now from EmuDeck.",
+    "image": "false"
+  },
+  {
+    "title": "2.1.14 Removed Gaming Mode",
+    "type": "STEAMOS",
+    "description": "Removed until we can do further testing",
+    "image": "false"
+  },
+  {
     "title": "2.1.13 New Patreon Login",
     "type": "STEAMOS",
     "description": "New login method to fix antivirus getting on the way. Added option to switch Patron Accounts on login",
