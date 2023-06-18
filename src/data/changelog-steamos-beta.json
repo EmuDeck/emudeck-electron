@@ -1,0 +1,8 @@
+[
+  {
+    "title": "2.1.13 CloudSync",
+    "type": "STEAMOS",
+    "description": "Sync your games between EmuDeck installations. <br> In order for this to work, you need to parse all your Retroarch Games, Emulators and EmulationStation in Steam Rom Manager. <br><strong>Use it with caution, always make a backup of your saves before enabling CloudSync</strong>",
+    "image": "false"
+  }
+]

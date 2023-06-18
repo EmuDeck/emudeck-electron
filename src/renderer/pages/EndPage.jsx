@@ -24,6 +24,7 @@ function EndPage() {
     branch,
     storagePath,
     gamemode,
+    device,
     system,
     installEmus,
     overwriteConfigEmus,
@@ -596,9 +597,21 @@ function EndPage() {
       {disabledNext === true && (
         <Header title="We are completing your" bold="installation..." />
       )}
-      {disabledNext === false && step === undefined && (
+      {disabledNext === false && step === undefined && system !== 'win32' && (
         <Header title="Installation" bold="complete!" />
       )}
+
+      {disabledNext === false &&
+        step === undefined &&
+        device === 'Asus Rog Ally' && (
+          <Header title="Asus Rog Ally Controller configuration" />
+        )}
+
+      {disabledNext === false &&
+        step === undefined &&
+        device !== 'Asus Rog Ally' &&
+        system === 'win32' && <Header title="Controller configuration" />}
+
       <End
         onClick={openSRM}
         onClickWin32Config={configureControllers}

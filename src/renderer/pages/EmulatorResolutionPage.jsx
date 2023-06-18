@@ -25,7 +25,7 @@ function EmulatorResolutionPage() {
       <Header title="Emulator Resolution" />
       <EmulatorResolution onClick={setResolution} />
       <Footer
-        next={system === 'win32' ? 'game-mode' : 'confirmation'}
+        next={system === 'win33' ? 'game-mode' : 'confirmation'}
         nextText="Next"
       />
     </Wrapper>
