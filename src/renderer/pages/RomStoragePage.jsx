@@ -39,18 +39,8 @@ function RomStoragePage() {
 
       ipcChannel.once('customLocation', (message) => {
         const stdout = message.stdout.replace('\n', '');
-        // console.log({ message });
-        let storagePath = stdout;
-
-        // win32 fix
-        if (system === 'win32') {
-          if (stdout.includes('Directory')) {
-            alert(
-              'There was an issue detecting your drive. We are going to try to fix it. If the drive does not appear properly, for instance: "C:", please select it again'
-            );
-            storagePath = stdout.slice(-3);
-          }
-        }
+        console.log({ message });
+        const storagePath = stdout;
 
         setStatePage({
           ...statePage,
