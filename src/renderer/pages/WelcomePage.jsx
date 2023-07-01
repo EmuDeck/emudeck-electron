@@ -242,7 +242,7 @@ function WelcomePage() {
       description: 'Play your emulators over internet with your friends',
       button: 'Install',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32',
+      status: false,
       function: () => functions.navigate('/remote-play-whatever'),
     },
     {
