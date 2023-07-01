@@ -62,6 +62,7 @@ function CloudSyncPageConfig() {
     } else {
       cloudFunction = 'cloud_backup_install_and_config';
     }
+    console.log(`${cloudFunction} ${cloudSync}`);
 
     ipcChannel.sendMessage('emudeck', [
       `cloud_saves|||${cloudFunction} ${cloudSync}`,

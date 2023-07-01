@@ -37,7 +37,7 @@ function RAAchievementsPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure" bold="RetroAchievements" />
+      <Header title="Configure RetroAchievements" />
       <RAAchievements
         onChange={setAchievements}
         onToggle={setAchievementsHardCore}

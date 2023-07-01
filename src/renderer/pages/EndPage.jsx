@@ -55,20 +55,20 @@ function EndPage() {
   };
 
   const configureControllers = () => {
-    if (installEmus.yuzu) {
-      setStatePage({ ...statePage, step: 'yuzu' });
-      return;
-    }
-    if (installEmus.citra) {
-      setStatePage({ ...statePage, step: 'citra' });
-      return;
-    }
-    if (installEmus.ryujinx) {
-      setStatePage({ ...statePage, step: 'ryujinx' });
-    }
-    if (!installEmus.yuzu && !installEmus.citra && !installEmus.ryujinx) {
-      setStatePage({ ...statePage, step: 'steam' });
-    }
+    // if (installEmus.yuzu) {
+    //   setStatePage({ ...statePage, step: 'yuzu' });
+    //   return;
+    // }
+    // if (installEmus.citra) {
+    //   setStatePage({ ...statePage, step: 'citra' });
+    //   return;
+    // }
+    // if (installEmus.ryujinx) {
+    //   setStatePage({ ...statePage, step: 'ryujinx' });
+    // }
+    // if (!installEmus.yuzu && !installEmus.citra && !installEmus.ryujinx) {
+    setStatePage({ ...statePage, step: 'steam' });
+    // }
   };
 
   const openSRM = () => {
@@ -595,10 +595,10 @@ function EndPage() {
   return (
     <Wrapper>
       {disabledNext === true && (
-        <Header title="We are completing your" bold="installation..." />
+        <Header title="We are completing your installation..." />
       )}
       {disabledNext === false && step === undefined && system !== 'win32' && (
-        <Header title="Installation" bold="complete!" />
+        <Header title="Installation complete!" />
       )}
 
       {disabledNext === false &&

@@ -29,7 +29,7 @@ function WelcomePage() {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
-  const { system, mode, second, storagePath, gamemode } = state;
+  const { system, mode, second, storagePath, gamemode, branch } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: true,
@@ -234,6 +234,15 @@ function WelcomePage() {
       function: () => selectMode('expert'),
     },
     {
+      icon: [iconCustom],
+      title: 'Online Multiplayer',
+      description: 'Play your emulators over internet with your friends',
+      button: 'Install',
+      btnCSS: 'btn-simple--5',
+      status: system !== 'win32',
+      function: () => functions.navigate('/remote-play-whatever'),
+    },
+    {
       icon: [iconPlugin],
       title: 'Power Tools',
       description:
@@ -351,7 +360,7 @@ function WelcomePage() {
       description: 'Consider supporting EmuDeck on Patreon',
       button: 'Donate',
       btnCSS: 'btn-simple--3',
-      status: true,
+      status: branch !== 'early',
       type: 'link',
       href: 'https://www.patreon.com/bePatron?u=29065992',
       function: () => {},

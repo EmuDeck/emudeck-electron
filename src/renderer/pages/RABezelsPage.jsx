@@ -29,7 +29,7 @@ const RABezelsPage = () => {
 
   return (
     <Wrapper>
-      <Header title="Configure" bold="game bezels" />
+      <Header title="Configure game bezels" />
       <RABezels onClick={bezelsSet} />
       <Footer
         next="aspect-ratio-sega"

@@ -47,7 +47,7 @@ function RemotePlayWhateverPage() {
 
   return (
     <Wrapper>
-      <Header title="Multiplayer with " bold="RemotePlayWhatever - Beta" />
+      <Header title="Multiplayer with  RemotePlayWhatever - Beta" />
       <RemotePlayWhatever
         showNotification={showNotification}
         notificationText={notificationText}

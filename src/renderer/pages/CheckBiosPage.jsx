@@ -86,7 +86,7 @@ function CheckBiosPage() {
 
   return (
     <Wrapper>
-      <Header title="Bios files" bold="checker" />
+      <Header title="Bios files checker" />
       <CheckBios
         checkBiosAgain={checkBiosAgain}
         ps1Bios={ps1Bios}

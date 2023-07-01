@@ -52,7 +52,7 @@ function RAAchievementsConfigPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure" bold="RetroAchievements" />
+      <Header title="Configure RetroAchievements" />
       <RAAchievements
         data={data}
         disabledBack
