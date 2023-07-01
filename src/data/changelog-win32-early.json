@@ -2,7 +2,7 @@
   {
     "title": "Some new stuff",
     "type": "STEAMOS",
-    "description": "<ul> <li>When setting up Cloud Sync you'll get the option to download or upload all your saves at once.</li> <li>EmuDeck folder with launchers on the Start Menu ( Use these if you plan to use the emulators with any other frontend besides Steam. For Controls to work you must add that frontend to Steam and launch it from there. )</li> <li>New Citra shortcuts, Select + L1 to load state, Select + L2 to load state, Select + R1/R2 to switch layouts.</li><li>Instructions on how to use EmuDeck outside of Steam</li></ul>",
+    "description": "<ul> <li>When setting up Cloud Sync you'll get the option to download or upload all your saves at once.</li> <li>EmuDeck folder with launchers on the Start Menu ( Use these if you plan to use the emulators with any other frontend besides Steam. For Controls to work you must add that frontend to Steam and launch it from there. )</li> <li>New Citra shortcuts, Select + L1 to load state, Select + L2 to load state, Select + R1/R2 to switch layouts.</li><li>Instructions on how to use EmuDeck when using other launchers</li><li>Steam proccess detection</li></ul>",
     "image": "false"
   },
   {
