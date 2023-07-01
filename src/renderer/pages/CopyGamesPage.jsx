@@ -120,6 +120,9 @@ function CopyGamesPage() {
 
   const openSRM = () => {
     if (system === 'win32') {
+      alert(
+        'We will close Steam if its running and load Steam Rom Manager, this will take a few seconds, please wait'
+      );
       ipcChannel.sendMessage('bash', [
         `${storagePath.substring(
           0,
