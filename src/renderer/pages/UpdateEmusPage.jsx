@@ -28,7 +28,7 @@ function UpdateEmusPage() {
 
   return (
     <Wrapper>
-      <Header title="Update your" bold="Emulators & Tools" />
+      <Header title="Update your Emulators & Tools" />
       <UpdateEmus
         disabledNext={disabledNext}
         disabledBack={disabledBack}

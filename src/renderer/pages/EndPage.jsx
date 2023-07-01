@@ -595,10 +595,10 @@ function EndPage() {
   return (
     <Wrapper>
       {disabledNext === true && (
-        <Header title="We are completing your" bold="installation..." />
+        <Header title="We are completing your installation..." />
       )}
       {disabledNext === false && step === undefined && system !== 'win32' && (
-        <Header title="Installation" bold="complete!" />
+        <Header title="Installation complete!" />
       )}
 
       {disabledNext === false &&

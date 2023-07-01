@@ -27,7 +27,7 @@ function Shaders2DPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure CRT Shader for" bold="Classic 2D Games" />
+      <Header title="Configure CRT Shader for Classic 2D Games" />
       <Shaders2D
         data={data}
         onClick={shaderSet}

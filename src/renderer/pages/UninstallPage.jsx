@@ -22,7 +22,7 @@ function UninstallPage() {
 
   return (
     <Wrapper>
-      <Header title="Uninstall" bold="EmuDeck" />
+      <Header title="Uninstall EmuDeck" />
       <Uninstall
         disabledNext={disabledNext}
         disabledBack={disabledBack}

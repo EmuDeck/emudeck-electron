@@ -188,7 +188,7 @@ function RomStoragePage() {
 
   return (
     <Wrapper>
-      <Header title="Select your ROM Directory" bold="" />
+      <Header title="Select your ROM Directory " />
       <RomStorage
         status={status}
         sdCardValid={sdCardValid}

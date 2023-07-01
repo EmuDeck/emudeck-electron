@@ -334,7 +334,7 @@ function SettingsPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure your" bold="Settings" />
+      <Header title="Configure your Settings" />
       <Settings
         showNotification={showNotification}
         notificationText={notificationText}

@@ -27,7 +27,7 @@ function AspectRatioDolphinPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure Aspect Ratio for" bold="GameCube games" />
+      <Header title="Configure Aspect Ratio for GameCube games" />
       <AspectRatioDolphin data={data} onClick={arSet} />
       <Footer
         next={

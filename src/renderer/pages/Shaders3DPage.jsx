@@ -27,7 +27,7 @@ function Shaders3DPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure CRT Shader for" bold="Classic 3D Games" />
+      <Header title="Configure CRT Shader for Classic 3D Games" />
       <Shaders3D
         data={data}
         onClick={shaderSet}

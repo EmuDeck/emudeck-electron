@@ -27,7 +27,7 @@ function AspectRatioSegaPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure Aspect Ratio for" bold="Classic Sega Systems" />
+      <Header title="Configure Aspect Ratio for Classic Sega Systems" />
       <AspectRatioSega
         data={data}
         onClick={arSet}

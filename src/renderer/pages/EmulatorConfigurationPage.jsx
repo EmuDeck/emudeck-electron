@@ -97,7 +97,7 @@ function EmulatorConfigurationPage() {
 
   return (
     <Wrapper>
-      <Header title="Emulator" bold="Configurations" />
+      <Header title="Emulator Configurations" />
       <EmulatorConfiguration data={data} onClick={toggleEmus} images={images} />
       <Footer
         next={nextPage}

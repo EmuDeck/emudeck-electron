@@ -27,7 +27,7 @@ function AspectRatio3DPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure Aspect Ratio for" bold="Classic 3D Games" />
+      <Header title="Configure Aspect Ratio for Classic 3D Games" />
       <AspectRatio3D data={data} onClick={arSet} />
       <Footer
         next="aspect-ratio-dolphin"

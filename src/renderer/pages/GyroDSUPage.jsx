@@ -142,7 +142,7 @@ function GyroDSUPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure" bold="SteamDeckGyroDSU" />
+      <Header title="Configure SteamDeckGyroDSU" />
       <GyroDSU
         showNotification={showNotification}
         installClick={installGyro}

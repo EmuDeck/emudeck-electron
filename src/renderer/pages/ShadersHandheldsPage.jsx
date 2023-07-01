@@ -27,7 +27,7 @@ function ShadersHandheldsPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure LCD Shader for" bold="Handheld Systems" />
+      <Header title="Configure LCD Shader for Handheld Systems" />
       <ShadersHandhelds
         data={data}
         onClick={shaderSet}

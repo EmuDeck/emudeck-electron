@@ -143,7 +143,7 @@ function PowerToolsPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure" bold="Power Tools" />
+      <Header title="Configure Power Tools" />
       <PowerTools
         showNotification={showNotification}
         installClick={installPowerTools}

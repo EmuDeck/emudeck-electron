@@ -142,7 +142,7 @@ function DeckyControlsPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure" bold="DeckyControls" />
+      <Header title="Configure DeckyControls" />
       <DeckyControls
         showNotification={showNotification}
         installClick={installDeckyControls}

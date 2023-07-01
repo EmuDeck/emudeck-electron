@@ -38,7 +38,7 @@ function PegasusThemePage() {
 
   return (
     <Wrapper>
-      <Header title="EmulationStation DE " bold="Theme" />
+      <Header title="EmulationStation DE  Theme" />
       <PegasusTheme data={data} onClick={themeSet} />
       <Footer
         next={nextPage()}

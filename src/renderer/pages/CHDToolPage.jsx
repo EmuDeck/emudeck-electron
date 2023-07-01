@@ -24,7 +24,7 @@ function CHDToolPage() {
 
   return (
     <Wrapper>
-      <Header title="EmuDeck" bold="Compression Tool" />
+      <Header title="EmuDeck Compression Tool" />
       <CHDTool onClick={runCHD} />
       <Footer
         next={false}

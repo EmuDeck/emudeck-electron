@@ -83,7 +83,7 @@ function ChangeLogPage() {
 
   return (
     <Wrapper>
-      <Header title="Latest" bold="changes" />
+      <Header title="Latest changes" />
       <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
         <div className="container--grid">
           <div data-col-sm="4">
