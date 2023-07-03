@@ -597,7 +597,7 @@ ipcMain.on('pull', async (event, branch) => {
   let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit "}`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull --allow-unrelated-histories -X theirs && powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit "}`;
   }
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
