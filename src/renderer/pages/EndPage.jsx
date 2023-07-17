@@ -77,6 +77,7 @@ function EndPage() {
         'We will close Steam if its running and load Steam Rom Manager, this will take a few seconds, please wait'
       );
       ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
+      ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
       ipcChannel.sendMessage(
         'run-app',
         `${storagePath}\Emulation\\tools\\srm.exe`

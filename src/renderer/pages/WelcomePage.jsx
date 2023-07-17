@@ -22,6 +22,7 @@ import {
   iconJoystick,
   iconPackage,
   iconDisk,
+  iconHelp,
 } from 'components/utils/images/images';
 
 function WelcomePage() {
@@ -108,6 +109,7 @@ function WelcomePage() {
       alert(
         'We will close Steam if its running and load Steam Rom Manager, this will take a few seconds, please wait'
       );
+      ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
       ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
       let srmPath;
 
@@ -203,6 +205,15 @@ function WelcomePage() {
       btnCSS: 'btn-simple--1',
       status: true,
       function: () => functions.navigate('/store-front'),
+    },
+    {
+      icon: [iconHelp],
+      title: 'Help',
+      description: 'Having problems running EmuDeck?',
+      button: 'Fix mi issues',
+      btnCSS: 'btn-simple--1',
+      status: false,
+      function: () => functions.navigate('/help'),
     },
   ];
 
