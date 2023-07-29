@@ -65,19 +65,23 @@ function RomStoragePage() {
         }
 
         ipcChannel.once('testLocation', (messageLocation) => {
-          const stdoutLocation = messageLocation.stdout.replace('\n', '');
-          // console.log({ message });
-          let statusLocation;
-          stdoutLocation.includes('Valid')
-            ? (statusLocation = true)
-            : (statusLocation = false);
-          // console.log({ status });
-          if (statusLocation === true) {
-            setStatePage({
-              ...statePage,
-              disabledNext: false,
-              status: undefined,
-            });
+          if (messageLocation) {
+            const stdoutLocation = messageLocation.stdout.replace('\n', '');
+            // console.log({ message });
+            let statusLocation;
+            stdoutLocation.includes('Valid')
+              ? (statusLocation = true)
+              : (statusLocation = false);
+            // console.log({ status });
+            if (statusLocation === true) {
+              setStatePage({
+                ...statePage,
+                disabledNext: false,
+                status: undefined,
+              });
+            } else {
+              alert('There was an error detecting your storage');
+            }
           } else {
             alert('Non writable directory selected, please choose another.');
             setStatePage({
