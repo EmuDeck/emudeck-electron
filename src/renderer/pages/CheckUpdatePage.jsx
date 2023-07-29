@@ -281,16 +281,52 @@ function CheckUpdatePage() {
     }
   }, [downloadComplete]);
 
+  let pollingTime = 500;
+  if (system === 'win32') {
+    pollingTime = 2000;
+  }
+
+  const [msg, setMsg] = useState({
+    messageLog: '',
+    percentage: 0,
+  });
+
+  const { messageLog } = msg;
+  const messageLogRef = useRef(messageLog);
+  messageLogRef.current = messageLog;
+
+  const readMSG = () => {
+    ipcChannel.sendMessage('getMSG', []);
+    ipcChannel.on('getMSG', (messageInput) => {
+      const messageText = messageInput.stdout;
+      setMsg({ messageLog: messageText });
+      //scrollToBottom();
+    });
+  };
+
+  // Reading messages from backend
+  useEffect(() => {
+    const interval = setInterval(() => {
+      readMSG();
+      const messageLogCurrent = messageLogRef.current;
+      if (messageLogCurrent.includes('done')) {
+        clearInterval(interval);
+      } else {
+        console.log('interval open');
+      }
+    }, pollingTime);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Wrapper>
       {update === null && (
         <>
           <Header title="Checking for updates..." />
           <p className="h5">
-            Please stand by while we check if there is a new version available.
-            <br />
-            If this message does not disappear in about 20 seconds, please
-            restart the application.
+            Please stand by while we check if there is a new version
+            available...
           </p>
           <ProgressBar css="progress--success" value={counter} max="100" />
         </>
@@ -308,22 +344,28 @@ function CheckUpdatePage() {
       )}
       {update === 'up-to-date' && (
         <>
-          {second === true && <Header title="Checking for updates" />}
+          {second === true && (
+            <Header title="Updating EmuDeck backend files..." />
+          )}
           {second === false && <Header title="Welcome to EmuDeck" />}
           <Main>
             {downloadComplete === null && (
               <>
-                <p className="h5">
-                  Downloading Files. If this progress bar does not disappear
-                  shortly, please restart the application and check if you can
-                  reach GitHub Servers and check our{' '}
-                  <a
-                    className="link-simple link-simple--1"
-                    href="https://github.com/dragoonDorise/EmuDeck/wiki/Frequently-Asked-Questions#why-wont-emudeck-download"
-                  >
-                    Wiki FAQ
-                  </a>{' '}
-                  for possible solutions.
+                <p>
+                  Are you stuck? Check this link to see how to fix it:{' '}
+                  {system === 'win32' && (
+                    <a className="https://emudeck.github.io/common-issues/windows/#emudeck-is-stuck-on-the-checking-for-updates-message">
+                      Wiki FAQ
+                    </a>
+                  )}
+                  {system !== 'win32' && (
+                    <a
+                      className="link-simple link-simple--1"
+                      href="https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading"
+                    >
+                      Wiki FAQ
+                    </a>
+                  )}
                 </p>
 
                 <ProgressBar
@@ -333,6 +375,16 @@ function CheckUpdatePage() {
                 />
               </>
             )}
+            <code
+              style={{
+                fontSize: '14px',
+                maxHeight: '50vh',
+                overflow: 'auto',
+                whiteSpace: 'pre-line',
+              }}
+            >
+              {messageLog}
+            </code>
           </Main>
           <Footer
             next="welcome"
