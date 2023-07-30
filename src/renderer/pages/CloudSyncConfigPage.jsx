@@ -25,6 +25,22 @@ function CloudSyncPageConfig() {
   const ipcChannel = window.electron.ipcRenderer;
 
   const cloudSyncSet = (item) => {
+    let modalData = undefined;
+    if (item === 'Emudeck-GDrive') {
+      modalData = {
+        active: true,
+        header: <span className="h4">Warning</span>,
+        body: (
+          <p>
+            If you are using a free Google Drive account we don't recomended to
+            use it with CloudSync since Google will throttle your connection,
+            making CloudSync really really slow.
+          </p>
+        ),
+        css: 'emumodal--sm',
+      };
+    }
+
     setState({
       ...state,
       cloudSync: item,
@@ -32,6 +48,7 @@ function CloudSyncPageConfig() {
     setStatePage({
       ...statePage,
       showLoginButton: false,
+      modal: modalData,
     });
   };
 
