@@ -306,7 +306,7 @@ function CheckUpdatePage() {
 
   useEffect(() => {
     if (downloadComplete === true) {
-      //navigate('/welcome');
+      navigate('/welcome');
     }
   }, [downloadComplete]);
 
