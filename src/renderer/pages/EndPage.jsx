@@ -228,7 +228,7 @@ function EndPage() {
         ipcChannel.once('saveSettings', () => {
           // console.log({ saveSettings });
           ipcChannel.sendMessage('bash-nolog', [
-            `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/setup.ps1`,
+            `finish|||PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& { Start-Process powershell $env:USERPROFILE\AppData\Roaming\EmuDeck\backend\setup.ps1 -Verb RunAs }"`,
           ]);
           ipcChannel.once('finish', () => {
             setStatePage({ ...statePage, disabledNext: false });
