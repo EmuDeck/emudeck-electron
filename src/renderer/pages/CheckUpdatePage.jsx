@@ -4,17 +4,14 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+
 import { useNavigate } from 'react-router-dom';
 import { Alert, Form } from 'getbasecore/Molecules';
 import Main from 'components/organisms/Main/Main';
 import Card from 'components/molecules/Card/Card';
 
-import {
-  BtnSimple,
-  ProgressBar,
-  FormInputSimple,
-  LinkSimple,
-} from 'getbasecore/Atoms';
+import { BtnSimple, FormInputSimple, LinkSimple } from 'getbasecore/Atoms';
 // Ask for branch
 const branchFile = require('data/branch.json');
 
@@ -101,6 +98,20 @@ function CheckUpdatePage() {
           ...statePage,
           update: message[0],
           data: message[1],
+          modal: {
+            active: true,
+            header: <span className="h4">🎉 Update found! 🎉</span>,
+            body: (
+              <p className="h5">
+                EmuDeck will restart as soon as it finishes the update. Hold on
+                tight.
+              </p>
+            ),
+            footer: (
+              <ProgressBar css="progress--success" infinite={true} max="100" />
+            ),
+            css: 'emumodal--xs',
+          },
         });
         if (message[0] === 'up-to-date') {
           updateFiles();
@@ -295,7 +306,7 @@ function CheckUpdatePage() {
 
   useEffect(() => {
     if (downloadComplete === true) {
-      navigate('/welcome');
+      //navigate('/welcome');
     }
   }, [downloadComplete]);
 
@@ -346,18 +357,7 @@ function CheckUpdatePage() {
             Please stand by while we check if there is a new version
             available...
           </p>
-          <ProgressBar css="progress--success" value={counter} max="100" />
-        </>
-      )}
-
-      {update === 'updating' && (
-        <>
-          <Header title="🎉 Update found! 🎉" />
-          <p className="h5">
-            We found an update! EmuDeck will restart as soon as it finishes
-            installing the latest update. Hold on tight.
-          </p>
-          <ProgressBar css="progress--success" value={counter} max="100" />
+          <ProgressBar css="progress--success" infinite={true} max="100" />
         </>
       )}
       {update === 'up-to-date' && (
@@ -388,7 +388,7 @@ function CheckUpdatePage() {
 
                 <ProgressBar
                   css="progress--success"
-                  value={counter}
+                  infinite={true}
                   max="100"
                 />
               </>

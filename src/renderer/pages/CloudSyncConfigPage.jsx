@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import { BtnSimple } from 'getbasecore/Atoms';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
@@ -52,6 +53,56 @@ function CloudSyncPageConfig() {
     });
   };
 
+  const closeModal = () => {
+    const modalData = { active: false };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+  };
+
+  const uploadAll = () => {
+    ipcChannel.sendMessage('emudeck', [`uploadAll|||cloud_sync_uploadEmuAll`]);
+
+    ipcChannel.once('uploadAll', (message) => {
+      console.log({ message });
+      const modalData = {
+        active: true,
+        header: <span className="h4">Upload Complete</span>,
+        body: (
+          <p>
+            All your saved games and states have been uploaded to your cloud
+            provider.
+          </p>
+        ),
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
+    });
+  };
+
+  const downloadAll = () => {
+    ipcChannel.sendMessage('emudeck', [
+      `downloadAll|||cloud_sync_downloadEmuAll`,
+    ]);
+
+    ipcChannel.once('downloadAll', (message) => {
+      console.log({ message });
+      const modalData = {
+        active: true,
+        header: <span className="h4">Download Complete</span>,
+        body: (
+          <p>
+            All your saved games and states have been downloaded from your cloud
+            provider.
+          </p>
+        ),
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
+    });
+  };
+
   const installRclone = () => {
     // OLD TOKEN upload, not needed for now
     // if (
@@ -95,13 +146,44 @@ function CloudSyncPageConfig() {
           active: true,
           header: <span className="h4">CloudSync Configured</span>,
           body: (
-            <p>
-              Now every time you load a game your game states and saved games
-              will be synced to the cloud. Keep in mind that every time you play
-              on a device that last save will be the one on the cloud
-            </p>
+            <>
+              <p>
+                Now every time you load a game your game states and saved games
+                will be synced to the cloud. Keep in mind that every time you
+                play on a device that last save will be the one on the cloud
+              </p>
+              <p>Do you want to upload or download all your saved games now?</p>
+            </>
           ),
           css: 'emumodal--sm',
+          footer: (
+            <>
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                aria="Download all saves from your Cloud Provider"
+                onClick={() => downloadAll()}
+              >
+                Download all saves
+              </BtnSimple>
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                aria="Upload all your saves to your Cloud Provider"
+                onClick={() => uploadAll()}
+              >
+                Upload all saves
+              </BtnSimple>
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                aria="Close"
+                onClick={() => closeModal()}
+              >
+                Close
+              </BtnSimple>
+            </>
+          ),
         };
         setState({
           ...state,
