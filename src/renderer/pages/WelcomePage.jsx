@@ -3,6 +3,7 @@ import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import { useNavigate } from 'react-router-dom';
 // import { useTranslation } from 'react-i18next';
 import Welcome from 'components/organisms/Wrappers/Welcome';
@@ -38,8 +39,9 @@ function WelcomePage() {
     updates: null,
     cloned: null,
     data: '',
+    modal: undefined,
   });
-  const { disabledNext, disabledBack, updates } = statePage;
+  const { disabledNext, disabledBack, updates, modal } = statePage;
   const navigate = useNavigate();
   const selectMode = (value) => {
     setState({ ...state, mode: value });
@@ -106,9 +108,18 @@ function WelcomePage() {
 
   const openSRM = () => {
     if (system === 'win32') {
-      alert(
-        'We will close Steam if its running and load Steam Rom Manager, this will take a few seconds, please wait'
-      );
+      const modalData = {
+        active: true,
+        header: <span className="h4">Launching Steam Rom Manager</span>,
+        body: (
+          <p>
+            We will close Steam if its running and then Steam Rom Manager will
+            open, this could take a few seconds, please wait.
+          </p>
+        ),
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
       ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
       let srmPath;
@@ -125,8 +136,30 @@ function WelcomePage() {
         console.log({ message });
       });
     } else {
+      const modalData = {
+        active: true,
+        header: <span className="h4">Launching Steam Rom Manager</span>,
+        body: (
+          <>
+            <p>
+              To add your Emulators and EmulationStation-DE to steam hit
+              Preview, then Generate App List, then wait for the images to
+              download
+            </p>
+            <p>
+              When you are happy with your image choices hit Save App List and
+              wait for it to say it's completed.
+            </p>
+            <strong>
+              Desktop controls will temporarily revert to touch/trackpad/L2/R2.
+            </strong>
+          </>
+        ),
+        css: 'emumodal--sm',
+      };
+      setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage('bash', [
-        `zenity --question --width 450 --title "Close Steam/Steam Input?" --text "$(printf "<b>Exit Steam to launch Steam Rom Manager? </b>\n\n To add your Emulators and EmulationStation-DE to steam hit Preview, then Generate App List, then wait for the images to download\n\nWhen you are happy with your image choices hit Save App List and wait for it to say it's completed.\n\nDesktop controls will temporarily revert to touch/trackpad/L2/R2")" && (kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
+        `(kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
       ]);
     }
   };
@@ -152,11 +185,27 @@ function WelcomePage() {
   const migrationFixSDPaths = () => {
     ipcChannel.sendMessage('emudeck', [`SDPaths|||Migration_fix_SDPaths`]);
     ipcChannel.once('SDPaths', (message) => {
+      let modalData;
       message.includes('true')
-        ? alert(`Paths Fixed!`)
-        : alert(
-            `There was an error tryting to fix your paths. If the problem persist rerun SteamRomManager to fix them`
-          );
+        ? (modalData = {
+            active: true,
+            header: <span className="h4">Success!</span>,
+            body: <p>Paths fixed</p>,
+            css: 'emumodal--xs',
+          })
+        : (modalData = {
+            active: true,
+            header: <span className="h4">Ooops 😞</span>,
+            body: (
+              <p>
+                There was an error trying to fix your paths. If the problem
+                persist rerun SteamRomManager to fix them
+              </p>
+            ),
+            css: 'emumodal--xs',
+          });
+
+      setStatePage({ ...statePage, modal: modalData });
     });
   };
 
@@ -383,8 +432,19 @@ function WelcomePage() {
 
   return (
     <Wrapper>
-      {second === false && <Header title="Welcome to EmuDeck" />}
-      {second === true && <Header title="Welcome back to EmuDeck" />}
+      {second === false && (
+        <Header
+          title={`Welcome to EmuDeck ${system === 'darwin' ? '\uF8FF' : ''}`}
+        />
+      )}
+
+      {second === true && (
+        <Header
+          title={`Welcome back to EmuDeck ${
+            system === 'darwin' ? '\uF8FF' : ''
+          }`}
+        />
+      )}
       <Welcome
         settingsCards={settingsCards}
         settingsCardsFeatured={settingsCardsFeatured}
@@ -411,6 +471,7 @@ function WelcomePage() {
           disabledBack={second ? false : disabledBack}
         />
       )}
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }

@@ -70,31 +70,62 @@ function EndPage() {
     setStatePage({ ...statePage, step: 'steam' });
     // }
   };
-
   const openSRM = () => {
     if (system === 'win32') {
-      alert(
-        'We will close Steam if its running and load Steam Rom Manager, this will take a few seconds, please wait'
-      );
-      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
+      const modalData = {
+        active: true,
+        header: <span className="h4">Launching Steam Rom Manager</span>,
+        body: (
+          <p>
+            We will close Steam if its running and then Steam Rom Manager will
+            open, this could take a few seconds, please wait.
+          </p>
+        ),
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
-      ipcChannel.sendMessage(
-        'run-app',
-        `${storagePath}\Emulation\\tools\\srm.exe`
-      );
+      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
+      let srmPath;
+
+      if (storagePath === '' || !storagePath || storagePath === null) {
+        srmPath = 'C:\\';
+      } else {
+        srmPath = storagePath;
+      }
+      ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
+
+      console.log(`${srmPath}Emulation\\tools\\srm.exe`);
+      ipcChannel.once('run-app', (message) => {
+        console.log({ message });
+      });
     } else {
+      const modalData = {
+        active: true,
+        header: <span className="h4">Launching Steam Rom Manager</span>,
+        body: (
+          <>
+            <p>
+              To add your Emulators and EmulationStation-DE to steam hit
+              Preview, then Generate App List, then wait for the images to
+              download
+            </p>
+            <p>
+              When you are happy with your image choices hit Save App List and
+              wait for it to say it's completed.
+            </p>
+            <strong>
+              Desktop controls will temporarily revert to touch/trackpad/L2/R2.
+            </strong>
+          </>
+        ),
+        css: 'emumodal--sm',
+      };
+      setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage('bash', [
-        `zenity --question --width 450 --title "Close Steam/Steam Input?" --text "$(printf "<b>Exit Steam to launch Steam Rom Manager? </b>\n\n To add your Emulators and EmulationStation-DE to steam hit Preview, then Generate App List, then wait for the images to download\n\nWhen you are happy with your image choices hit Save App List and wait for it to say it's completed.\n\nDesktop controls will temporarily revert to touch/trackpad/L2/R2")" && (kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
+        `(kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
       ]);
     }
-
-    setTimeout(() => {
-      window.close();
-    }, 5000);
-  };
-
-  const close = () => {
-    window.close();
   };
 
   const showLog = () => {

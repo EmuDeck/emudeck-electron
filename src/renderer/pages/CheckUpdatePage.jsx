@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
@@ -29,9 +30,17 @@ function CheckUpdatePage() {
     update: null,
     cloned: null,
     data: '',
+    modal: undefined,
   });
-  const { disabledNext, disabledBack, downloadComplete, data, cloned, update } =
-    statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    downloadComplete,
+    data,
+    cloned,
+    update,
+    modal,
+  } = statePage;
   const navigate = useNavigate();
 
   const {
@@ -256,7 +265,16 @@ function CheckUpdatePage() {
           }
         });
       } else {
-        alert('You need to be connected to the internet');
+        const modalData = {
+          active: true,
+          header: <span className="h4">Ooops 😞</span>,
+          body: <p>You need to be connected to the internet.</p>,
+          css: 'emumodal--xs',
+        };
+        setStatePage({
+          ...statePage,
+          modal: modalData,
+        });
       }
     } else if (cloned === true) {
       if (navigator.onLine) {
@@ -393,6 +411,7 @@ function CheckUpdatePage() {
           />
         </>
       )}
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }

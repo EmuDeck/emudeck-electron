@@ -19,8 +19,9 @@ function RomStoragePage() {
     sdCardValid: null,
     sdCardName: undefined,
     status: undefined,
+    modal: undefined,
   });
-  const { disabledNext, disabledBack, sdCardValid, sdCardName, status } =
+  const { disabledNext, disabledBack, sdCardValid, sdCardName, status, modal } =
     statePage;
   const { system, storagePath } = state;
 
@@ -32,7 +33,13 @@ function RomStoragePage() {
 
     if (storageName === 'Custom') {
       if (system === 'win32') {
-        alert('This will take a few seconds. Please wait after clicking OK');
+        const modalData = {
+          active: true,
+          header: <span className="h4">Collecting Drives Names</span>,
+          body: <p>This will take a few seconds. Please wait...</p>,
+          css: 'emumodal--xs',
+        };
+        setStatePage({ ...statePage, modal: modalData });
       }
 
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
@@ -80,14 +87,28 @@ function RomStoragePage() {
                 status: undefined,
               });
             } else {
-              alert('There was an error detecting your storage');
+              const modalData = {
+                active: true,
+                header: <span className="h4">Ooops 😞</span>,
+                body: <p>There was an error detecting your storage...</p>,
+                css: 'emumodal--xs',
+              };
+              setStatePage({ ...statePage, modal: modalData });
             }
           } else {
-            alert('Non writable directory selected, please choose another.');
+            const modalData = {
+              active: true,
+              header: <span className="h4">Ooops 😞</span>,
+              body: (
+                <p>Non writable directory selected, please choose another.</p>
+              ),
+              css: 'emumodal--xs',
+            };
             setStatePage({
               ...statePage,
               disabledNext: true,
               status: undefined,
+              modal: modalData,
             });
             setState({
               ...state,
@@ -148,9 +169,16 @@ function RomStoragePage() {
       // console.log(message);
 
       if (message === 'nogit') {
-        alert(
-          'Backend not found, EmuDeck will try to download the missing component and then it will restart itself'
-        );
+        const modalData = {
+          active: true,
+          header: <span className="h4">Ooops 😞</span>,
+          body: <p>There was an error, please restart EmuDeck...</p>,
+          css: 'emumodal--xs',
+        };
+        setStatePage({
+          ...statePage,
+          modal: modalData,
+        });
       }
 
       const stdout = message.stdout.replace('\n', '');
@@ -209,6 +237,7 @@ function RomStoragePage() {
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }

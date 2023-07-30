@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import { useParams } from 'react-router-dom';
@@ -16,8 +17,9 @@ function CloudSyncPageConfig() {
     disabledBack: false,
     disableButton: false,
     showLoginButton: false,
+    modal: undefined,
   });
-  const { disabledNext, disabledBack, disableButton, showLoginButton } =
+  const { disabledNext, disabledBack, disableButton, showLoginButton, modal } =
     statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
@@ -72,17 +74,23 @@ function CloudSyncPageConfig() {
       const { stdout } = message;
 
       if (stdout.includes('true')) {
+        const modalData = {
+          active: true,
+          header: <span className="h4">CloudSync Configured</span>,
+          body: (
+            <p>
+              Now every time you load a game your game states and saved games
+              will be synced to the cloud. Keep in mind that every time you play
+              on a device that last save will be the one on the cloud
+            </p>
+          ),
+          css: 'emumodal--sm',
+        };
         setState({
           ...state,
           cloudSyncStatus: true,
         });
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
-        alert(
-          'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
-        );
+        setStatePage({ ...statePage, disableButton: false, modal: modalData });
       }
     });
     // }
@@ -98,16 +106,22 @@ function CloudSyncPageConfig() {
     ]);
     ipcChannel.once('cloud_sync_uninstall', (message) => {
       // No versioning found, what to do?
+
+      const modalData = {
+        active: true,
+        header: <span className="h4">Cloud Sync uninstalled</span>,
+        css: 'emumodal--xs',
+      };
       setStatePage({
         ...state,
         cloudSync: null,
         disableButton: false,
+        modal: modalData,
       });
       setState({
         ...state,
         cloudSyncStatus: false,
       });
-      alert(`Cloud Sync uninstalled`);
     });
   };
 
@@ -123,13 +137,23 @@ function CloudSyncPageConfig() {
       ]);
       ipcChannel.once('rclone_install', (message) => {
         // No versioning found, what to do?
+        const modalData = {
+          active: true,
+          header: <span className="h4">CloudSave Configured</span>,
+          body: (
+            <p>
+              All Done, every time you load a Game your Game states and Saved
+              games will be synced to ${cloudSync} in the background every 5
+              minutes
+            </p>
+          ),
+          css: 'emumodal--sm',
+        };
         setStatePage({
           ...statePage,
           disableButton: false,
+          modal: modalData,
         });
-        alert(
-          `All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}`
-        );
       });
     } else {
       ipcChannel.sendMessage('emudeck', [
@@ -181,6 +205,7 @@ function CloudSyncPageConfig() {
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }
