@@ -340,6 +340,56 @@ ipcMain.on('emudeck', async (event, command) => {
   });
 });
 
+ipcMain.on('emudeckAdmin', async (event, command) => {
+  let backChannel;
+  let bashCommand;
+  let allPath;
+  const homeUser = os.homedir();
+
+  allPath = `${homeUser}/AppData/Roaming/EmuDeck/backend/functions/all.ps1`;
+
+  if (command[0].includes('|||')) {
+    const tempCommand = command[0].split('|||');
+    backChannel = tempCommand[0];
+    bashCommand = tempCommand[1];
+  } else {
+    backChannel = 'none';
+    bashCommand = command;
+  }
+
+  // Lets detect if the repo was cloned properly
+  if (fs.existsSync(allPath)) {
+    // file exists
+    console.log('all.ps1 detected');
+  } else {
+    console.log('all.ps1 not detected');
+    event.reply(backChannel, 'nogit');
+    let bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
+
+    return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+      // event.reply('console', { backChannel });
+      logCommand(bashCommand, error, stdout, stderr);
+      mainWindow.reload();
+    });
+  }
+
+  let preCommand;
+
+  bashCommand = bashCommand.replaceAll('&&', ';');
+
+  preCommand = `PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& { Start-Process powershell -Command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} }" -Verb RunAs }"`;
+
+  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+    // event.reply('console', { backChannel });
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, {
+      stdout,
+      stderr,
+      error,
+    });
+  });
+});
+
 ipcMain.on('emudeck-nolog', async (event, command) => {
   let backChannel;
   let bashCommand;
