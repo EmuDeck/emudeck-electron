@@ -83,10 +83,6 @@ function CopyGamesPage() {
             };
             setStatePage({
               ...statePage,
-              modal: modalData,
-            });
-            setStatePage({
-              ...statePage,
               disabledNext: true,
               status: undefined,
               storageUSB: undefined,
