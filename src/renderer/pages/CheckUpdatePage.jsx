@@ -58,20 +58,6 @@ function CheckUpdatePage() {
   const downloadCompleteRef = useRef(downloadComplete);
   downloadCompleteRef.current = downloadComplete;
 
-  // Download files
-  const [counter, setCounter] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCounter((prevCounter) => {
-        if (prevCounter === 110) {
-          prevCounter = -10;
-        }
-        return prevCounter + 1;
-      });
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, []);
   let updateTimeOut;
   useEffect(() => {
     // Update timeout + Force clone check
@@ -94,11 +80,9 @@ function CheckUpdatePage() {
         clearTimeout(updateTimeOut);
         console.log('UPDATE - GETTING INFO:');
         console.log({ message });
-        setStatePage({
-          ...statePage,
-          update: message[0],
-          data: message[1],
-          modal: {
+        let modalData;
+        if (message[0] == 'updating') {
+          modalData = {
             active: true,
             header: <span className="h4">🎉 Update found! 🎉</span>,
             body: (
@@ -111,10 +95,22 @@ function CheckUpdatePage() {
               <ProgressBar css="progress--success" infinite={true} max="100" />
             ),
             css: 'emumodal--xs',
-          },
+          };
+        } else {
+          modalData = {
+            active: false,
+          };
+        }
+
+        setStatePage({
+          ...statePage,
+          update: message[0],
+          data: message[1],
+          modal: modalData,
         });
         if (message[0] === 'up-to-date') {
           updateFiles();
+        } else {
         }
       });
     } else {
