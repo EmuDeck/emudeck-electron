@@ -70,30 +70,62 @@ function EndPage() {
     setStatePage({ ...statePage, step: 'steam' });
     // }
   };
-
   const openSRM = () => {
     if (system === 'win32') {
-      alert(
-        'We will close Steam if its running and load Steam Rom Manager, this will take a few seconds, please wait'
-      );
+      const modalData = {
+        active: true,
+        header: <span className="h4">Launching Steam Rom Manager</span>,
+        body: (
+          <p>
+            We will close Steam if its running and then Steam Rom Manager will
+            open, this could take a few seconds, please wait.
+          </p>
+        ),
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
+      ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
       ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
-      ipcChannel.sendMessage(
-        'run-app',
-        `${storagePath}\Emulation\\tools\\srm.exe`
-      );
+      let srmPath;
+
+      if (storagePath === '' || !storagePath || storagePath === null) {
+        srmPath = 'C:\\';
+      } else {
+        srmPath = storagePath;
+      }
+      ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
+
+      console.log(`${srmPath}Emulation\\tools\\srm.exe`);
+      ipcChannel.once('run-app', (message) => {
+        console.log({ message });
+      });
     } else {
+      const modalData = {
+        active: true,
+        header: <span className="h4">Launching Steam Rom Manager</span>,
+        body: (
+          <>
+            <p>
+              To add your Emulators and EmulationStation-DE to steam hit
+              Preview, then Generate App List, then wait for the images to
+              download
+            </p>
+            <p>
+              When you are happy with your image choices hit Save App List and
+              wait for it to say it's completed.
+            </p>
+            <strong>
+              Desktop controls will temporarily revert to touch/trackpad/L2/R2.
+            </strong>
+          </>
+        ),
+        css: 'emumodal--sm',
+      };
+      setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage('bash', [
-        `zenity --question --width 450 --title "Close Steam/Steam Input?" --text "$(printf "<b>Exit Steam to launch Steam Rom Manager? </b>\n\n To add your Emulators and EmulationStation-DE to steam hit Preview, then Generate App List, then wait for the images to download\n\nWhen you are happy with your image choices hit Save App List and wait for it to say it's completed.\n\nDesktop controls will temporarily revert to touch/trackpad/L2/R2")" && (kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
+        `(kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
       ]);
     }
-
-    setTimeout(() => {
-      window.close();
-    }, 5000);
-  };
-
-  const close = () => {
-    window.close();
   };
 
   const showLog = () => {
@@ -181,10 +213,6 @@ function EndPage() {
       const json = JSON.stringify(state);
 
       localStorage.setItem('settings_emudeck', json);
-      let preVar = '';
-      if (system === 'win32') {
-        preVar = '$';
-      }
 
       if (system === 'win32') {
         // console.log('saving settings');
@@ -208,7 +236,7 @@ function EndPage() {
         });
       } else {
         ipcChannel.sendMessage('bash', [
-          `startSettings|||echo ${preVar}expert="${
+          `startSettings|||echo expert="${
             state.mode === 'expert'
           }" > ${settingsFile}`,
         ]);
@@ -217,302 +245,305 @@ function EndPage() {
         ipcChannel.once('startSettings', () => {
           // console.log('startSettings');
 
+          // System
+          ipcChannel.sendMessage('bash', [
+            `echo system="${system}" >> ${settingsFile}`,
+          ]);
           // Setup Emus
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupRA="${!!overwriteConfigEmus.ra
+            `echo doSetupRA="${!!overwriteConfigEmus.ra
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupDolphin="${!!overwriteConfigEmus.dolphin
-              .status}" >> ${settingsFile}`,
-          ]);
-
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupPCSX2QT="${!!overwriteConfigEmus.pcsx2
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupRPCS3="${!!overwriteConfigEmus.rpcs3
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupYuzu="${!!overwriteConfigEmus.yuzu
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupRyujinx="${!!overwriteConfigEmus.ryujinx
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupCitra="${!!overwriteConfigEmus.citra
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupDuck="${!!overwriteConfigEmus.duckstation
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupmelonDS="${!!overwriteConfigEmus.melonds
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupCemu="${!!overwriteConfigEmus.cemu
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupXenia="false" >> ${settingsFile}`,
-          ]);
-
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupPrimehack="${!!overwriteConfigEmus.primehack
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupXemu="${!!overwriteConfigEmus.xemu
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupPPSSPP="${!!overwriteConfigEmus.ppsspp
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupMAME="${!!overwriteConfigEmus.mame
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupRMG="${!!overwriteConfigEmus.rmg
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupVita3K="${!!overwriteConfigEmus.vita3k
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupScummVM="${!!overwriteConfigEmus.scummvm
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupMGBA="${!!overwriteConfigEmus.mgba
+            `echo doSetupDolphin="${!!overwriteConfigEmus.dolphin
               .status}" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupESDE="${!!overwriteConfigEmus.esde
+            `echo doSetupPCSX2QT="${!!overwriteConfigEmus.pcsx2
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSetupSRM="${!!overwriteConfigEmus.srm
+            `echo doSetupRPCS3="${!!overwriteConfigEmus.rpcs3
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupYuzu="${!!overwriteConfigEmus.yuzu
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupRyujinx="${!!overwriteConfigEmus.ryujinx
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupCitra="${!!overwriteConfigEmus.citra
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupDuck="${!!overwriteConfigEmus.duckstation
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupmelonDS="${!!overwriteConfigEmus.melonds
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupCemu="${!!overwriteConfigEmus.cemu
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupXenia="false" >> ${settingsFile}`,
+          ]);
+
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupPrimehack="${!!overwriteConfigEmus.primehack
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupXemu="${!!overwriteConfigEmus.xemu
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupPPSSPP="${!!overwriteConfigEmus.ppsspp
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupMAME="${!!overwriteConfigEmus.mame
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupRMG="${!!overwriteConfigEmus.rmg
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupVita3K="${!!overwriteConfigEmus.vita3k
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupScummVM="${!!overwriteConfigEmus.scummvm
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupMGBA="${!!overwriteConfigEmus.mgba
+              .status}" >> ${settingsFile}`,
+          ]);
+
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupESDE="${!!overwriteConfigEmus.esde
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doSetupSRM="${!!overwriteConfigEmus.srm
               .status}" >> ${settingsFile}`,
           ]);
 
           // Install Emus
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallRA="${!!installEmus.ra
+            `echo doInstallRA="${!!installEmus.ra.status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doInstallDolphin="${!!installEmus.dolphin
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallDolphin="${!!installEmus.dolphin
+            `echo doInstallPCSX2QT="${!!installEmus.pcsx2
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallPCSX2QT="${!!installEmus.pcsx2
+            `echo doInstallRPCS3="${!!installEmus.rpcs3
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallRPCS3="${!!installEmus.rpcs3
+            `echo doInstallYuzu="${!!installEmus.yuzu
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallYuzu="${!!installEmus.yuzu
+            `echo doInstallRyujinx="${!!installEmus.ryujinx
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallRyujinx="${!!installEmus.ryujinx
+            `echo doInstallCitra="${!!installEmus.citra
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallCitra="${!!installEmus.citra
+            `echo doInstallDuck="${!!installEmus.duckstation
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallDuck="${!!installEmus.duckstation
+            `echo doInstallmelonDS="${!!installEmus.melonds
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallmelonDS="${!!installEmus.melonds
+            `echo doInstallCemu="${!!installEmus.cemu
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallCemu="${!!installEmus.cemu
+            `echo doInstallRMG="${!!installEmus.rmg
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallRMG="${!!installEmus.rmg
-              .status}" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallXenia="false" >> ${settingsFile}`,
+            `echo doInstallXenia="false" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallPrimeHack="${!!installEmus.primehack
+            `echo doInstallPrimeHack="${!!installEmus.primehack
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallPPSSPP="${!!installEmus.ppsspp
+            `echo doInstallPPSSPP="${!!installEmus.ppsspp
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallXemu="${!!installEmus.xemu
+            `echo doInstallXemu="${!!installEmus.xemu
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallMAME="${!!installEmus.mame
+            `echo doInstallMAME="${!!installEmus.mame
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallScummVM="${!!installEmus.scummvm
+            `echo doInstallScummVM="${!!installEmus.scummvm
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallVita3K="${!!installEmus.vita3k
-              .status}" >> ${settingsFile}`,
-          ]);
-
-          ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallMGBA="${!!installEmus.mgba
+            `echo doInstallVita3K="${!!installEmus.vita3k
               .status}" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallSRM="${!!installEmus.srm
+            `echo doInstallMGBA="${!!installEmus.mgba
+              .status}" >> ${settingsFile}`,
+          ]);
+
+          ipcChannel.sendMessage('bash', [
+            `echo doInstallSRM="${!!installEmus.srm
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallESDE="${!!installEmus.esde
+            `echo doInstallESDE="${!!installEmus.esde
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallCHD="true" >> ${settingsFile}`,
+            `echo doInstallCHD="true" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallPowertools="${!!state.powerTools}" >> ${settingsFile}`,
+            `echo doInstallPowertools="${!!state.powerTools}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallGyro="${!!state.GyroDSU}" >> ${settingsFile}`,
+            `echo doInstallGyro="${!!state.GyroDSU}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doInstallHomeBrewGames="${!!state.homebrewGames}" >> ${settingsFile}`,
+            `echo doInstallHomeBrewGames="${!!state.homebrewGames}" >> ${settingsFile}`,
           ]);
 
           // Aspect Ratios
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}arSega="${state.ar.sega}" >> ${settingsFile}`,
+            `echo arSega="${state.ar.sega}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}arSnes="${state.ar.snes}" >> ${settingsFile}`,
+            `echo arSnes="${state.ar.snes}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}arClassic3D="${state.ar.classic3d}" >> ${settingsFile}`,
+            `echo arClassic3D="${state.ar.classic3d}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}arDolphin="${state.ar.dolphin}" >> ${settingsFile}`,
+            `echo arDolphin="${state.ar.dolphin}" >> ${settingsFile}`,
           ]);
 
           // Bezels
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}RABezels="${!!state.bezels}" >> ${settingsFile}`,
+            `echo RABezels="${!!state.bezels}" >> ${settingsFile}`,
           ]);
 
           // AutoSave
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}RAautoSave="${!!state.autosave}" >> ${settingsFile}`,
+            `echo RAautoSave="${!!state.autosave}" >> ${settingsFile}`,
           ]);
 
           // old ar
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}duckWide="false" >> ${settingsFile}`,
+            `echo duckWide="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}DolphinWide="false" >> ${settingsFile}`,
+            `echo DolphinWide="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}DreamcastWide="false" >> ${settingsFile}`,
+            `echo DreamcastWide="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}BeetleWide="false" >> ${settingsFile}`,
+            `echo BeetleWide="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}pcsx2QTWide="false ">> ${settingsFile}`,
+            `echo pcsx2QTWide="false ">> ${settingsFile}`,
           ]);
 
           // Paths
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}emulationPath="${storagePath}/Emulation" >> ${settingsFile}`,
+            `echo emulationPath="${storagePath}/Emulation" >> ${settingsFile}`,
           ]);
           //
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}romsPath="${storagePath}/Emulation/roms" >> ${settingsFile}`,
+            `echo romsPath="${storagePath}/Emulation/roms" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}toolsPath="${storagePath}/Emulation/tools" >> ${settingsFile}`,
+            `echo toolsPath="${storagePath}/Emulation/tools" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}biosPath="${storagePath}/Emulation/bios" >> ${settingsFile}`,
+            `echo biosPath="${storagePath}/Emulation/bios" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}savesPath="${storagePath}/Emulation/saves" >> ${settingsFile}`,
+            `echo savesPath="${storagePath}/Emulation/saves" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}storagePath="${storagePath}/Emulation/storage" >> ${settingsFile}`,
+            `echo storagePath="${storagePath}/Emulation/storage" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}ESDEscrapData="${storagePath}/Emulation/tools/downloaded_media" >> ${settingsFile}`,
+            `echo ESDEscrapData="${storagePath}/Emulation/tools/downloaded_media" >> ${settingsFile}`,
           ]);
 
           // Shaders
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}RAHandHeldShader="${!!state.shaders
+            `echo RAHandHeldShader="${!!state.shaders
               .handhelds}" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}RAHandClassic2D="${!!state.shaders
+            `echo RAHandClassic2D="${!!state.shaders
               .classic}" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}RAHandClassic3D="${!!state.shaders
+            `echo RAHandClassic3D="${!!state.shaders
               .classic3d}" >> ${settingsFile}`,
           ]);
 
           // theme
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}esdeTheme="${state.theme}" >> ${settingsFile}`,
+            `echo esdeTheme="${state.theme}" >> ${settingsFile}`,
           ]);
 
           // AdvancedSettings
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSelectWideScreen="false" >> ${settingsFile}`,
+            `echo doSelectWideScreen="false" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doRASignIn="false" >> ${settingsFile}`,
+            `echo doRASignIn="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doRAEnable="false" >> ${settingsFile}`,
+            `echo doRAEnable="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doESDEThemePicker="false" >> ${settingsFile}`,
+            `echo doESDEThemePicker="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doSelectEmulators="false" >> ${settingsFile}`,
+            `echo doSelectEmulators="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}doResetEmulators="false" >> ${settingsFile}`,
+            `echo doResetEmulators="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}XemuWide="false" >> ${settingsFile}`,
+            `echo XemuWide="false" >> ${settingsFile}`,
           ]);
 
           // Achievements
@@ -524,50 +555,50 @@ function EndPage() {
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}achievementsHardcore="${state.achievements.hardcore}" >> ${settingsFile}`,
+            `echo achievementsHardcore="${state.achievements.hardcore}" >> ${settingsFile}`,
           ]);
 
           // CloudSync
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}cloud_sync_provider="${state.cloudSync}" >> ${settingsFile} && echo true`,
+            `echo cloud_sync_provider="${state.cloudSync}" >> ${settingsFile} && echo true`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}rclone_provider="${state.cloudSync}" >> ${settingsFile} && echo true`,
+            `echo rclone_provider="${state.cloudSync}" >> ${settingsFile} && echo true`,
           ]);
 
           // Emulator resolutions
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}dolphinResolution="${state.resolutions.dolphin}" >> ${settingsFile}`,
+            `echo dolphinResolution="${state.resolutions.dolphin}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}duckstationResolution="${state.resolutions.duckstation}" >> ${settingsFile}`,
+            `echo duckstationResolution="${state.resolutions.duckstation}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}pcsx2Resolution="${state.resolutions.pcsx2}" >> ${settingsFile}`,
+            `echo pcsx2Resolution="${state.resolutions.pcsx2}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}yuzuResolution="${state.resolutions.yuzu}" >> ${settingsFile}`,
+            `echo yuzuResolution="${state.resolutions.yuzu}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}ppssppResolution="${state.resolutions.ppsspp}" >> ${settingsFile}`,
+            `echo ppssppResolution="${state.resolutions.ppsspp}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}rpcs3Resolution="${state.resolutions.rpcs3}" >> ${settingsFile}`,
+            `echo rpcs3Resolution="${state.resolutions.rpcs3}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}ryujinxResolution="${state.resolutions.ryujinx}" >> ${settingsFile}`,
+            `echo ryujinxResolution="${state.resolutions.ryujinx}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}xemuResolution="${state.resolutions.xemu}" >> ${settingsFile}`,
+            `echo xemuResolution="${state.resolutions.xemu}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo ${preVar}xeniaResolution="${state.resolutions.xenia}" >> ${settingsFile}`,
+            `echo xeniaResolution="${state.resolutions.xenia}" >> ${settingsFile}`,
           ]);
 
           // Closing
           // console.log('finalSetting');
           ipcChannel.sendMessage('bash-nolog', [
-            `finalSetting|||echo ${preVar}finishedUI="done" >> ${settingsFile} && echo true`,
+            `finalSetting|||echo finishedUI="done" >> ${settingsFile} && echo true`,
           ]);
         });
 

@@ -310,7 +310,7 @@ ipcMain.on('emudeck', async (event, command) => {
     let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout master && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
 
     if (os.platform().includes('win32')) {
-      bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
+      bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
     }
 
     return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
@@ -328,6 +328,56 @@ ipcMain.on('emudeck', async (event, command) => {
   } else {
     preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
   }
+
+  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+    // event.reply('console', { backChannel });
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, {
+      stdout,
+      stderr,
+      error,
+    });
+  });
+});
+
+ipcMain.on('emudeckAdmin', async (event, command) => {
+  let backChannel;
+  let bashCommand;
+  let allPath;
+  const homeUser = os.homedir();
+
+  allPath = `${homeUser}/AppData/Roaming/EmuDeck/backend/functions/all.ps1`;
+
+  if (command[0].includes('|||')) {
+    const tempCommand = command[0].split('|||');
+    backChannel = tempCommand[0];
+    bashCommand = tempCommand[1];
+  } else {
+    backChannel = 'none';
+    bashCommand = command;
+  }
+
+  // Lets detect if the repo was cloned properly
+  if (fs.existsSync(allPath)) {
+    // file exists
+    console.log('all.ps1 detected');
+  } else {
+    console.log('all.ps1 not detected');
+    event.reply(backChannel, 'nogit');
+    let bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
+
+    return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+      // event.reply('console', { backChannel });
+      logCommand(bashCommand, error, stdout, stderr);
+      mainWindow.reload();
+    });
+  }
+
+  let preCommand;
+
+  bashCommand = bashCommand.replaceAll('&&', ';');
+
+  preCommand = `PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& { Start-Process powershell -Command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} }" -Verb RunAs }"`;
 
   return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
     // event.reply('console', { backChannel });
@@ -563,10 +613,10 @@ ipcMain.on('clone', async (event, branch) => {
     }
   }
   const backChannel = 'clone';
-  let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 ${repo} ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branchGIT} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
+  let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && script ~/.config/EmuDeck/msg.log git clone --no-single-branch --depth=1 ${repo} ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branchGIT} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && git clone --no-single-branch --depth=1  ${repo} ./backend && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
   }
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
@@ -594,10 +644,10 @@ ipcMain.on('pull', async (event, branch) => {
     }
   }
   const backChannel = 'pull';
-  let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
+  let bashCommand = `cd ~/.config/EmuDeck/backend &&  script ~/.config/EmuDeck/msg.log  git reset --hard &&  script ~/.config/EmuDeck/msg.log git clean -fd && git checkout ${branchGIT} && script ~/.config/EmuDeck/msg.log git pull && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit "}`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git reset --hard ; git clean -fd ; git checkout ${branchGIT} ; git pull --allow-unrelated-histories -X theirs; Stop-Transcript; cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit "}`;
   }
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);

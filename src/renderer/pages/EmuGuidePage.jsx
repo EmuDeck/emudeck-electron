@@ -112,7 +112,6 @@ function EmuGuidePage() {
             disableInstallButton: false,
           });
           // We set the emu as install = yes
-          alert(name);
           setState({
             ...state,
             installEmus: {

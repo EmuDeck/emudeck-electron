@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import { BtnSimple } from 'getbasecore/Atoms';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import { useParams } from 'react-router-dom';
@@ -16,13 +18,30 @@ function CloudSyncPageConfig() {
     disabledBack: false,
     disableButton: false,
     showLoginButton: false,
+    modal: undefined,
   });
-  const { disabledNext, disabledBack, disableButton, showLoginButton } =
+  const { disabledNext, disabledBack, disableButton, showLoginButton, modal } =
     statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
   const cloudSyncSet = (item) => {
+    let modalData = undefined;
+    if (item === 'Emudeck-GDrive') {
+      modalData = {
+        active: true,
+        header: <span className="h4">Warning</span>,
+        body: (
+          <p>
+            If you are using a free Google Drive account we don't recomended to
+            use it with CloudSync since Google will throttle your connection,
+            making CloudSync really really slow.
+          </p>
+        ),
+        css: 'emumodal--sm',
+      };
+    }
+
     setState({
       ...state,
       cloudSync: item,
@@ -30,6 +49,57 @@ function CloudSyncPageConfig() {
     setStatePage({
       ...statePage,
       showLoginButton: false,
+      modal: modalData,
+    });
+  };
+
+  const closeModal = () => {
+    const modalData = { active: false };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+  };
+
+  const uploadAll = () => {
+    ipcChannel.sendMessage('emudeck', [`uploadAll|||cloud_sync_uploadEmuAll`]);
+
+    ipcChannel.once('uploadAll', (message) => {
+      console.log({ message });
+      const modalData = {
+        active: true,
+        header: <span className="h4">Upload Complete</span>,
+        body: (
+          <p>
+            All your saved games and states have been uploaded to your cloud
+            provider.
+          </p>
+        ),
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
+    });
+  };
+
+  const downloadAll = () => {
+    ipcChannel.sendMessage('emudeck', [
+      `downloadAll|||cloud_sync_downloadEmuAll`,
+    ]);
+
+    ipcChannel.once('downloadAll', (message) => {
+      console.log({ message });
+      const modalData = {
+        active: true,
+        header: <span className="h4">Download Complete</span>,
+        body: (
+          <p>
+            All your saved games and states have been downloaded from your cloud
+            provider.
+          </p>
+        ),
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
     });
   };
 
@@ -72,17 +142,54 @@ function CloudSyncPageConfig() {
       const { stdout } = message;
 
       if (stdout.includes('true')) {
+        const modalData = {
+          active: true,
+          header: <span className="h4">CloudSync Configured</span>,
+          body: (
+            <>
+              <p>
+                Now every time you load a game your game states and saved games
+                will be synced to the cloud. Keep in mind that every time you
+                play on a device that last save will be the one on the cloud
+              </p>
+              <p>Do you want to upload or download all your saved games now?</p>
+            </>
+          ),
+          css: 'emumodal--sm',
+          footer: (
+            <>
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                aria="Download all saves from your Cloud Provider"
+                onClick={() => downloadAll()}
+              >
+                Download all saves
+              </BtnSimple>
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                aria="Upload all your saves to your Cloud Provider"
+                onClick={() => uploadAll()}
+              >
+                Upload all saves
+              </BtnSimple>
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                aria="Close"
+                onClick={() => closeModal()}
+              >
+                Close
+              </BtnSimple>
+            </>
+          ),
+        };
         setState({
           ...state,
           cloudSyncStatus: true,
         });
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
-        alert(
-          'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
-        );
+        setStatePage({ ...statePage, disableButton: false, modal: modalData });
       }
     });
     // }
@@ -98,16 +205,22 @@ function CloudSyncPageConfig() {
     ]);
     ipcChannel.once('cloud_sync_uninstall', (message) => {
       // No versioning found, what to do?
+
+      const modalData = {
+        active: true,
+        header: <span className="h4">Cloud Sync uninstalled</span>,
+        css: 'emumodal--xs',
+      };
       setStatePage({
         ...state,
         cloudSync: null,
         disableButton: false,
+        modal: modalData,
       });
       setState({
         ...state,
         cloudSyncStatus: false,
       });
-      alert(`Cloud Sync uninstalled`);
     });
   };
 
@@ -123,13 +236,23 @@ function CloudSyncPageConfig() {
       ]);
       ipcChannel.once('rclone_install', (message) => {
         // No versioning found, what to do?
+        const modalData = {
+          active: true,
+          header: <span className="h4">CloudSave Configured</span>,
+          body: (
+            <p>
+              All Done, every time you load a Game your Game states and Saved
+              games will be synced to ${cloudSync} in the background every 5
+              minutes
+            </p>
+          ),
+          css: 'emumodal--sm',
+        };
         setStatePage({
           ...statePage,
           disableButton: false,
+          modal: modalData,
         });
-        alert(
-          `All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}`
-        );
       });
     } else {
       ipcChannel.sendMessage('emudeck', [
@@ -181,6 +304,7 @@ function CloudSyncPageConfig() {
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }

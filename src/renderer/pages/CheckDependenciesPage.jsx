@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
-import { Img, ProgressBar } from 'getbasecore/Atoms';
+import { Img } from 'getbasecore/Atoms';
 import { iconSuccess, iconDanger } from 'components/utils/images/images';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 
 function CheckDependenciesPage() {
   const [stateGIT, setStateGIT] = useState({
@@ -132,7 +133,7 @@ function CheckDependenciesPage() {
           {statusGIT === undefined && (
             <>
               <span className="h6">Installing...</span>
-              <ProgressBar css="progress--success" value={counter} max="100" />
+              <ProgressBar css="progress--success" infinite={true} max="100" />
             </>
           )}
 
@@ -153,7 +154,7 @@ function CheckDependenciesPage() {
           {status7Zip === undefined && (
             <>
               <span className="h6">Installing...</span>
-              <ProgressBar css="progress--success" value={counter} max="100" />
+              <ProgressBar css="progress--success" infinite={true} max="100" />
             </>
           )}
           <hr />
@@ -170,7 +171,7 @@ function CheckDependenciesPage() {
           {statusSteam === undefined && (
             <>
               <span className="h6">Checking...</span>
-              <ProgressBar css="progress--success" value={counter} max="100" />
+              <ProgressBar css="progress--success" infinite={true} max="100" />
             </>
           )}
           {statusSteam !== true && (

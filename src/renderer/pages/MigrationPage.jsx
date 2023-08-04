@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 
@@ -19,6 +20,7 @@ function MigrationPage() {
     status: undefined,
     storageDestination: undefined,
     storagePathDestination: undefined,
+    modal: undefined,
   });
   const {
     disabledNext,
@@ -29,6 +31,7 @@ function MigrationPage() {
     status,
     storagePathDestination,
     storageDestination,
+    modal,
   } = statePage;
 
   const storageSet = (storageName) => {
@@ -66,12 +69,20 @@ function MigrationPage() {
               storagePathDestination: stdout,
             });
           } else {
-            alert('Non writable directory selected, please choose another.');
+            const modalData = {
+              active: true,
+              header: <span className="h4">Ooops 😞</span>,
+              body: (
+                <p>Non writable directory selected, please choose another.</p>
+              ),
+              css: 'emumodal--xs',
+            };
             setStatePage({
               ...statePage,
               disabledNext: true,
               storageDestination: null,
               storagePathDestination: null,
+              modal: modalData,
             });
           }
         });
@@ -203,6 +214,7 @@ function MigrationPage() {
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }

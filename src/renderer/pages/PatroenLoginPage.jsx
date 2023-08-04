@@ -43,6 +43,8 @@ function PatroenLoginPage() {
 
   const { state, setState, setStateCurrentConfigs } = useContext(GlobalContext);
 
+  const { installEmus, overwriteConfigEmus, achievements, shaders } = state;
+
   //
   // Web services
   //
@@ -113,6 +115,14 @@ function PatroenLoginPage() {
           return;
         }
 
+        if (patreonJson.cancel) {
+          setStatePage({
+            ...statePage,
+            accessAllowed: 'cancel',
+          });
+          return;
+        }
+
         // eslint-disable-next-line promise/always-return
         if (patreonJson.status === true) {
           setStatePage({
@@ -141,74 +151,6 @@ function PatroenLoginPage() {
       navigate('/check-updates');
     } else if (patreonTokenLS) {
       patreonCheckToken(patreonTokenLS);
-    } else {
-      const settingsStorage = JSON.parse(
-        localStorage.getItem('settings_emudeck')
-      );
-      if (settingsStorage) {
-        const { patreonToken, system, device, installEmus } = settingsStorage;
-
-        if (patreonToken !== null) {
-          setStatePage({
-            ...statePage,
-            errorMessage: 'Please log back in to Patron.',
-          });
-          const updateOrLogin = confirm(
-            'Please log back in to Patreon to enable EmuDeck updates'
-          );
-          if (!updateOrLogin) {
-            const shadersStored = settingsStorage.shaders;
-            const overwriteConfigEmusStored =
-              settingsStorage.overwriteConfigEmus;
-            const achievementsStored = settingsStorage.achievements;
-
-            console.log({ overwriteConfigEmusStored });
-            console.log({ overwriteConfigEmus });
-
-            delete settingsStorage.installEmus.primehacks;
-            delete settingsStorage.installEmus.cemunative;
-            delete settingsStorage.overwriteConfigEmus.primehacks;
-            const installEmusStored = settingsStorage.installEmus;
-
-            // Theres probably a better way to do this...
-            console.log('2 - VERSION - CHECKING');
-            ipcChannel.sendMessage('version');
-
-            ipcChannel.once('version-out', (version) => {
-              console.log('2 - VERSION - GETTING');
-              console.log({ version });
-              ipcChannel.sendMessage('system-info-in');
-              ipcChannel.once('system-info-out', (platform) => {
-                console.log('2 - VERSION - GETTING SYSTEM TOO');
-                console.log({
-                  system: platform,
-                  version: version[0],
-                  gamemode: version[1],
-                });
-                setState({
-                  ...state,
-                  ...settingsStorage,
-                  installEmus: { ...installEmus, ...installEmusStored },
-                  overwriteConfigEmus: {
-                    ...overwriteConfigEmus,
-                    ...overwriteConfigEmusStored,
-                  },
-                  achievements: {
-                    ...achievements,
-                    ...achievementsStored,
-                  },
-                  shaders: { ...shaders, ...shadersStored },
-                  system: platform,
-                  version: version[0],
-                  gamemode: version[1],
-                  branch,
-                });
-              });
-            });
-            navigate('/welcome');
-          }
-        }
-      }
     }
   }, []);
 
@@ -216,8 +158,71 @@ function PatroenLoginPage() {
     if (accessAllowed === true) {
       localStorage.setItem('patreon_token', patreonToken);
       navigate('/check-updates');
+    } else if (accessAllowed === 'cancel') {
+      const updateOrLogin = confirm(
+        'Please log back in to Patreon to keep EmuDeck updated. Press OK to log in again or Cancel to continue with no updates'
+      );
+      if (!updateOrLogin) {
+        const settingsStorage = JSON.parse(
+          localStorage.getItem('settings_emudeck')
+        );
+        const shadersStored = settingsStorage.shaders;
+        const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
+        const achievementsStored = settingsStorage.achievements;
+
+        delete settingsStorage.installEmus.primehacks;
+        delete settingsStorage.installEmus.cemunative;
+        delete settingsStorage.overwriteConfigEmus.primehacks;
+        const installEmusStored = settingsStorage.installEmus;
+
+        // Theres probably a better way to do this...
+        console.log('2 - VERSION - CHECKING');
+        ipcChannel.sendMessage('version');
+
+        ipcChannel.once('version-out', (version) => {
+          console.log('2 - VERSION - GETTING');
+          console.log({ version });
+          ipcChannel.sendMessage('system-info-in');
+          ipcChannel.once('system-info-out', (platform) => {
+            console.log('2 - VERSION - GETTING SYSTEM TOO');
+            console.log({
+              system: platform,
+              version: version[0],
+              gamemode: version[1],
+            });
+            setState({
+              ...state,
+              ...settingsStorage,
+              installEmus: { ...installEmus, ...installEmusStored },
+              overwriteConfigEmus: {
+                ...overwriteConfigEmus,
+                ...overwriteConfigEmusStored,
+              },
+              achievements: {
+                ...achievements,
+                ...achievementsStored,
+              },
+              shaders: { ...shaders, ...shadersStored },
+              system: platform,
+              version: version[0],
+              gamemode: version[1],
+              branch,
+            });
+          });
+        });
+      }
     }
   }, [accessAllowed]);
+
+  useEffect(() => {
+    window.reload;
+  }, [patreonToken]);
+
+  useEffect(() => {
+    if (state.version != '') {
+      navigate('/welcome');
+    }
+  }, [state]);
 
   //
   // Render
