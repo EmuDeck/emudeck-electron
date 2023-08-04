@@ -22,6 +22,20 @@ function CheckDependenciesPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const navigate = useNavigate();
 
+  const [counter, setCounter] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter((prevCounter) => {
+        if (prevCounter === 110) {
+          prevCounter = -10;
+        }
+        return prevCounter + 1;
+      });
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const checkGit = () => {
     setStateGIT({
       statusGIT: undefined,
