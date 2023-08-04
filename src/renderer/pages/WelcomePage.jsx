@@ -182,6 +182,17 @@ function WelcomePage() {
     });
   };
 
+  const openWiki = () => {
+    let url;
+    {
+      system === 'win32'
+        ? (url = 'https://emudeck.github.io/common-issues/windows/')
+        : (url = 'https://emudeck.github.io/common-issues/steamos/');
+    }
+
+    window.open(url, '_blank');
+  };
+
   const migrationFixSDPaths = () => {
     ipcChannel.sendMessage('emudeck', [`SDPaths|||Migration_fix_SDPaths`]);
     ipcChannel.once('SDPaths', (message) => {
@@ -215,6 +226,7 @@ function WelcomePage() {
     sprunge,
     navigate,
     migrationFixSDPaths,
+    openWiki,
   };
 
   const settingsCardsFeatured = [
@@ -259,10 +271,10 @@ function WelcomePage() {
       icon: [iconHelp],
       title: 'Help',
       description: 'Having problems running EmuDeck?',
-      button: 'Fix mi issues',
+      button: 'Read the wiki',
       btnCSS: 'btn-simple--1',
-      status: false,
-      function: () => functions.navigate('/help'),
+      status: true,
+      function: () => functions.openWiki(),
     },
   ];
 

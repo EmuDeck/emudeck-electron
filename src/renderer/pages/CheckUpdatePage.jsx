@@ -1,19 +1,17 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+
 import { useNavigate } from 'react-router-dom';
 import { Alert, Form } from 'getbasecore/Molecules';
 import Main from 'components/organisms/Main/Main';
 import Card from 'components/molecules/Card/Card';
 
-import {
-  BtnSimple,
-  ProgressBar,
-  FormInputSimple,
-  LinkSimple,
-} from 'getbasecore/Atoms';
+import { BtnSimple, FormInputSimple, LinkSimple } from 'getbasecore/Atoms';
 // Ask for branch
 const branchFile = require('data/branch.json');
 
@@ -29,9 +27,27 @@ function CheckUpdatePage() {
     update: null,
     cloned: null,
     data: '',
+    modal: {
+      active: true,
+      header: <span className="h4">Checking for updates...</span>,
+      body: (
+        <p>
+          Please stand by while we check if there is a new version available...
+        </p>
+      ),
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    },
   });
-  const { disabledNext, disabledBack, downloadComplete, data, cloned, update } =
-    statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    downloadComplete,
+    data,
+    cloned,
+    update,
+    modal,
+  } = statePage;
   const navigate = useNavigate();
 
   const {
@@ -52,20 +68,13 @@ function CheckUpdatePage() {
   const downloadCompleteRef = useRef(downloadComplete);
   downloadCompleteRef.current = downloadComplete;
 
-  // Download files
-  const [counter, setCounter] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCounter((prevCounter) => {
-        if (prevCounter === 110) {
-          prevCounter = -10;
-        }
-        return prevCounter + 1;
-      });
-    }, 100);
+  const closeModal = () => {
+    setStatePage({
+      ...statePage,
+      modal: false,
+    });
+  };
 
-    return () => clearInterval(interval);
-  }, []);
   let updateTimeOut;
   useEffect(() => {
     // Update timeout + Force clone check
@@ -88,13 +97,33 @@ function CheckUpdatePage() {
         clearTimeout(updateTimeOut);
         console.log('UPDATE - GETTING INFO:');
         console.log({ message });
+        let modalData;
+        if (message[0] == 'updating') {
+          modalData = {
+            active: true,
+            header: <span className="h4">🎉 Update found! 🎉</span>,
+            body: (
+              <p className="h5">
+                EmuDeck will restart as soon as it finishes the update. Hold on
+                tight.
+              </p>
+            ),
+            footer: (
+              <ProgressBar css="progress--success" infinite={true} max="100" />
+            ),
+            css: 'emumodal--xs',
+          };
+        }
+
         setStatePage({
           ...statePage,
           update: message[0],
           data: message[1],
+          modal: modalData,
         });
         if (message[0] === 'up-to-date') {
           updateFiles();
+        } else {
         }
       });
     } else {
@@ -222,6 +251,44 @@ function CheckUpdatePage() {
     }
     if (update === 'up-to-date') {
       // is the git repo cloned?
+
+      const modalData = {
+        active: true,
+        header: <span className="h4">Building EmuDeck backend...</span>,
+        body: (
+          <>
+            <p>
+              Please wait a few seconds
+              <br />
+              <br />
+            </p>
+            <BtnSimple
+              css="btn-simple--3"
+              type="link"
+              target="_blank"
+              aria="Next"
+              href={
+                system === 'win32'
+                  ? 'https://emudeck.github.io/common-issues/windows/#emudeck-is-stuck-on-the-checking-for-updates-message'
+                  : 'https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading'
+              }
+              onClick={() => closeModal()}
+            >
+              Help!, I'm stuck
+            </BtnSimple>
+          </>
+        ),
+        footer: (
+          <ProgressBar css="progress--success" infinite={true} max="100" />
+        ),
+        css: 'emumodal--xs',
+      };
+
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
+
       console.log('check-git');
       ipcChannel.sendMessage('check-git');
       ipcChannel.once('check-git', (error, cloneStatusCheck, stderr) => {
@@ -256,7 +323,16 @@ function CheckUpdatePage() {
           }
         });
       } else {
-        alert('You need to be connected to the internet');
+        const modalData = {
+          active: true,
+          header: <span className="h4">Ooops 😞</span>,
+          body: <p>You need to be connected to the internet.</p>,
+          css: 'emumodal--xs',
+        };
+        setStatePage({
+          ...statePage,
+          modal: modalData,
+        });
       }
     } else if (cloned === true) {
       if (navigator.onLine) {
@@ -281,66 +357,89 @@ function CheckUpdatePage() {
     }
   }, [downloadComplete]);
 
+  let pollingTime = 500;
+  if (system === 'win32') {
+    pollingTime = 2000;
+  }
+
+  const [msg, setMsg] = useState({
+    messageLog: '',
+    percentage: 0,
+  });
+
+  const { messageLog } = msg;
+  const messageLogRef = useRef(messageLog);
+  messageLogRef.current = messageLog;
+
+  const readMSG = () => {
+    ipcChannel.sendMessage('getMSG', []);
+    ipcChannel.on('getMSG', (messageInput) => {
+      const messageText = messageInput.stdout;
+      setMsg({ messageLog: messageText });
+      //scrollToBottom();
+    });
+  };
+
+  // Reading messages from backend
+  useEffect(() => {
+    const interval = setInterval(() => {
+      readMSG();
+      const messageLogCurrent = messageLogRef.current;
+      if (messageLogCurrent.includes('done')) {
+        clearInterval(interval);
+      } else {
+        console.log('interval open');
+      }
+    }, pollingTime);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Wrapper>
-      {update === null && (
-        <>
-          <Header title="Checking for updates..." />
-          <p className="h5">
-            Please stand by while we check if there is a new version available.
-            <br />
-            If this message does not disappear in about 20 seconds, please
-            restart the application.
-          </p>
-          <ProgressBar css="progress--success" value={counter} max="100" />
-        </>
-      )}
-
-      {update === 'updating' && (
-        <>
-          <Header title="🎉 Update found! 🎉" />
-          <p className="h5">
-            We found an update! EmuDeck will restart as soon as it finishes
-            installing the latest update. Hold on tight.
-          </p>
-          <ProgressBar css="progress--success" value={counter} max="100" />
-        </>
-      )}
       {update === 'up-to-date' && (
         <>
-          {second === true && <Header title="Checking for updates" />}
-          {second === false && <Header title="Welcome to EmuDeck" />}
+          <Header title="EmuDeck Git cloning log" />
           <Main>
-            {downloadComplete === null && (
-              <>
-                <p className="h5">
-                  Downloading Files. If this progress bar does not disappear
-                  shortly, please restart the application and check if you can
-                  reach GitHub Servers and check our{' '}
+            <>
+              <p className="lead">
+                If you can't get past this screen send us the log down bellow{' '}
+                {system === 'win32' && (
                   <a
-                    className="link-simple link-simple--1"
-                    href="https://github.com/dragoonDorise/EmuDeck/wiki/Frequently-Asked-Questions#why-wont-emudeck-download"
+                    target="_blank"
+                    className="https://emudeck.github.io/common-issues/windows/#emudeck-is-stuck-on-the-checking-for-updates-message"
                   >
                     Wiki FAQ
-                  </a>{' '}
-                  for possible solutions.
-                </p>
+                  </a>
+                )}
+                {system !== 'win32' && (
+                  <a
+                    target="_blank"
+                    className="link-simple link-simple--1"
+                    href="https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading"
+                  >
+                    Wiki FAQ
+                  </a>
+                )}
+              </p>
 
-                <ProgressBar
-                  css="progress--success"
-                  value={counter}
-                  max="100"
-                />
-              </>
-            )}
+              <ProgressBar css="progress--success" infinite={true} max="100" />
+            </>
+
+            <code
+              style={{
+                fontSize: '14px',
+                Height: '100%',
+                overflow: 'auto',
+                whiteSpace: 'pre-line',
+              }}
+            >
+              {messageLog}
+            </code>
           </Main>
-          <Footer
-            next="welcome"
-            disabledNext={disabledNext}
-            disabledBack={disabledBack}
-          />
         </>
       )}
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }
