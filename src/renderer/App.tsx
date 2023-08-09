@@ -85,6 +85,7 @@ export default function App() {
     scummvm: { id: 'scummvm', code: 'ScummVM', version: 0 },
     xenia: { id: 'xenia', code: 'Xenia', version: 0 },
     mgba: { id: 'mgba', code: 'mGBA', version: 0 },
+    ares: { id: 'ares', code: 'ares', version: 0 },
   });
 
   const [state, setState] = useState({
@@ -214,6 +215,7 @@ export default function App() {
         name: 'Xenia',
       },
       mgba: { id: 'mgba', status: false, installed: undefined, name: 'mGBA' },
+      ares: { id: 'ares', status: false, installed: undefined, name: 'ares' },
     },
     overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
@@ -236,6 +238,14 @@ export default function App() {
       vita3k: { id: 'vita3k', status: true, name: 'Vita3K' },
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
       mgba: { id: 'mgba', status: true, name: 'mGBA' },
+      ares: { id: 'ares', status: false, name: 'ares' },
+    },
+    emulatorAlternatives:{
+      gba: 'RetroArch',
+      scummvm: 'RetroArch',
+      n64: 'RetroArch',
+      mame: 'RetroArch',
+      nds: 'melonDS',
     },
     resolutions: {
       dolphin: '720P',

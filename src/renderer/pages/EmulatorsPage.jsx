@@ -9,6 +9,7 @@ import CardSettings from 'components/molecules/CardSettings/CardSettings';
 import Notification from 'components/molecules/Notification/Notification';
 import {
   imgra,
+  imgares,
   imgdolphin,
   imgprimehack,
   imgppsspp,
@@ -36,6 +37,7 @@ import {
 
 const images = {
   ra: imgra,
+  ares: imgares,
   dolphin: imgdolphin,
   primehack: imgprimehack,
   ppsspp: imgppsspp,
