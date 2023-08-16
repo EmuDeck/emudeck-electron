@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
-
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import PowerTools from 'components/organisms/Wrappers/PowerTools';
 
 function PowerToolsPage() {
@@ -12,23 +13,13 @@ function PowerToolsPage() {
     data: '',
     hasSudo: false,
     sudoPass: '',
-    showNotification: false,
     disableButton: false,
     pass1: 'a',
     pass2: 'b',
-    textNotification: '',
+    modal: false,
   });
-  const {
-    disabledNext,
-    disabledBack,
-    hasSudo,
-    sudoPass,
-    showNotification,
-    pass1,
-    pass2,
-    textNotification,
-    disableButton,
-  } = statePage;
+  const { disabledNext, disabledBack, hasSudo, sudoPass, modal, pass1, pass2 } =
+    statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
@@ -50,12 +41,19 @@ function PowerToolsPage() {
     ipcChannel.sendMessage('bash', [
       `echo '${pass1}' > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
+    const modalData = {
+      active: true,
+      header: <span className="h4">Success!</span>,
+      body: <p>Password created</p>,
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
+
     setStatePage({
       ...statePage,
       hasSudo: true,
       sudoPass: pass1,
-      showNotification: true,
-      textNotification: '🎉 Password created!',
+      modal: modalData,
     });
   };
 
@@ -74,9 +72,17 @@ function PowerToolsPage() {
   };
 
   const installPowerTools = () => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Installing PowerTools</span>,
+      body: <p>Please wait while we install the plugin</p>,
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
+
     setStatePage({
       ...statePage,
-      disableButton: true,
+      modal: modalData,
     });
 
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
@@ -89,35 +95,31 @@ function PowerToolsPage() {
       // console.log({ status });
       const { stdout } = status;
 
+      let modalData;
       if (stdout.includes('true')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">Success!</span>,
+          body: <p>PowerTools Installed</p>,
+          css: 'emumodal--xs',
+        };
+
         setStatePage({
           ...statePage,
-          showNotification: true,
-          textNotification: '🎉 PowerTools Installed!',
-          sudoPass: '',
+          modal: modalData,
         });
-        if (showNotification === true) {
-          setTimeout(() => {
-            setStatePage({
-              ...statePage,
-              showNotification: false,
-            });
-          }, 2000);
-        }
       } else {
+        modalData = {
+          active: true,
+          header: <span className="h4">Error installing plugin</span>,
+          body: <p>{JSON.stringify(status.stderr)}</p>,
+          css: 'emumodal--xs',
+        };
+
         setStatePage({
           ...statePage,
-          showNotification: true,
-          textNotification: JSON.stringify(status.stderr),
+          modal: modalData,
         });
-        if (showNotification === true) {
-          setTimeout(() => {
-            setStatePage({
-              ...statePage,
-              showNotification: false,
-            });
-          }, 2000);
-        }
       }
     });
   };
@@ -145,17 +147,14 @@ function PowerToolsPage() {
     <Wrapper>
       <Header title="Configure Power Tools" />
       <PowerTools
-        showNotification={showNotification}
         installClick={installPowerTools}
         sudoPass={sudoPass}
         onChange={setSudoPass}
         onChangeSetPass={setPassword}
         onChangeCheckPass={checkPassword}
         onClick={createSudo}
-        disableButton={disableButton}
         hasSudo={hasSudo}
         passValidates={pass1 === pass2}
-        textNotification={textNotification}
       />
       <Footer
         next={false}
@@ -163,6 +162,7 @@ function PowerToolsPage() {
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }

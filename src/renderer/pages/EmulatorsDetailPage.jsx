@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuDetail from 'components/organisms/Wrappers/EmuDetail';
-
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 const emuData = require('data/emuData.json');
 
 function EmulatorsDetailPage() {
@@ -18,22 +19,16 @@ function EmulatorsDetailPage() {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    showNotification: undefined,
     emulatorSelected: emulator,
-    textNotification: '',
-    hideInstallButton: false,
-    disableResetButton: false,
     updates: null,
     newDesiredVersions: null,
+    modal: null,
   });
   const {
     disabledNext,
     disabledBack,
     emulatorSelected,
-    showNotification,
-    textNotification,
-    hideInstallButton,
-    disableResetButton,
+    modal,
     updates,
     newDesiredVersions,
   } = statePage;
@@ -202,9 +197,17 @@ function EmulatorsDetailPage() {
   };
 
   const reInstallEmu = (emulator, code) => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Installing {code}</span>,
+      body: <p>Please wait while we install {code}</p>,
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
+
     setStatePage({
       ...statePage,
-      hideInstallButton: true,
+      modal: modalData,
     });
 
     ipcChannel.sendMessage('emudeck', [`${code}_install|||${code}_install`]);
@@ -224,11 +227,22 @@ function EmulatorsDetailPage() {
         status.replace('\n', '');
 
         if (status.includes('true')) {
+          const modalData = {
+            active: true,
+            header: <span className="h4">{code} success!</span>,
+            body: (
+              <p>
+                {code} has been installed, now you can play games from {code}{' '}
+                using EmulationStation-DE or adding them to your Steam Library
+                using Steam Rom Manager
+              </p>
+            ),
+            css: 'emumodal--xs',
+          };
+
           setStatePage({
             ...statePage,
-            textNotification: `${code} installed! 🎉`,
-            showNotification: true,
-            hideInstallButton: false,
+            modal: modalData,
           });
           // We set the emu as install = yes
           setState({
@@ -243,11 +257,20 @@ function EmulatorsDetailPage() {
             },
           });
         } else {
+          const modalData = {
+            active: true,
+            header: `<span className="h4">${code} failed</span>`,
+            body: (
+              <>
+                <p>There was an issue trying to install ${code}</p>
+              </>
+            ),
+            css: 'emumodal--xs',
+          };
+
           setStatePage({
             ...statePage,
-            textNotification: `There was an issue trying to install ${code} 😥`,
-            showNotification: true,
-            hideInstallButton: false,
+            modal: modalData,
           });
           // We save it on localstorage
           const json = JSON.stringify(state);
@@ -260,9 +283,16 @@ function EmulatorsDetailPage() {
   const installEmu = (emulator, code) => {
     console.log(emulator);
 
+    const modalData = {
+      active: true,
+      header: <span className="h4">Installing {code}</span>,
+      body: <p>Please wait while we install {code}</p>,
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
     setStatePage({
       ...statePage,
-      hideInstallButton: true,
+      modal: modalData,
     });
 
     ipcChannel.sendMessage('emudeck', [
@@ -284,11 +314,22 @@ function EmulatorsDetailPage() {
         status.replace('\n', '');
 
         if (status.includes('true')) {
+          const modalData = {
+            active: true,
+            header: <span className="h4">{code} installed!</span>,
+            body: (
+              <p>
+                {code} has been installed, now you can play games from {code}{' '}
+                using EmulationStation-DE or adding them to your Steam Library
+                using Steam Rom Manager
+              </p>
+            ),
+            css: 'emumodal--xs',
+          };
+
           setStatePage({
             ...statePage,
-            textNotification: `${code} installed! 🎉`,
-            showNotification: true,
-            hideInstallButton: false,
+            modal: modalData,
           });
           // We set the emu as install = yes
           setState({
@@ -303,11 +344,20 @@ function EmulatorsDetailPage() {
             },
           });
         } else {
+          const modalData = {
+            active: true,
+            header: <span className="h4">{code} installation failed</span>,
+            body: (
+              <>
+                <p>There was an issue trying to install {code}</p>
+              </>
+            ),
+            css: 'emumodal--xs',
+          };
+
           setStatePage({
             ...statePage,
-            textNotification: `There was an issue trying to install ${code} 😥`,
-            showNotification: true,
-            hideInstallButton: false,
+            modal: modalData,
           });
           // We save it on localstorage
           const json = JSON.stringify(state);
@@ -318,82 +368,109 @@ function EmulatorsDetailPage() {
   };
 
   const uninstallEmu = (emulator, code, alternative = false) => {
-    console.log(emulator);
+    // Uninstall it!
 
-    if (
-      confirm(
-        'Are you sure you want to uninstall? Your saved games will be deleted'
-      )
-    ) {
-      // Uninstall it!
+    const modalData = {
+      active: true,
+      header: <span className="h4">Uninstalling {code}</span>,
+      body: <p>Please wait while we uninstall {code}</p>,
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
 
-      setStatePage({
-        ...statePage,
-        hideInstallButton: true,
-      });
-      if (alternative) {
-        ipcChannel.sendMessage('emudeck', [
-          `${code}_uninstall|||${code}_uninstall_alt`,
-        ]);
-      } else {
-        ipcChannel.sendMessage('emudeck', [
-          `${code}_uninstall|||${code}_uninstall`,
-        ]);
-      }
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
 
-      ipcChannel.once(`${code}_uninstall`, (status) => {
-        // console.log({ status });
-        status = status.stdout;
-        // console.log({ status });
-        status = status.replace('\n', '');
-        // Lets check if it did install
-        ipcChannel.sendMessage('emudeck', [
-          `${code}_IsInstalled|||${code}_IsInstalled`,
-        ]);
-
-        ipcChannel.once(`${code}_IsInstalled`, (status) => {
-          console.log({ status });
-          status = status.stdout;
-          status = status.replace('\n', '');
-
-          if (status.includes('false')) {
-            setStatePage({
-              ...statePage,
-              textNotification: `${code} Uninstalled! 🎉`,
-              showNotification: true,
-              hideInstallButton: false,
-            });
-            // We set the emu as install = no
-            setState({
-              ...state,
-              installEmus: {
-                ...installEmus,
-                [emulator]: {
-                  id: emulator,
-                  name: code,
-                  status: false,
-                },
-              },
-            });
-          } else {
-            setStatePage({
-              ...statePage,
-              textNotification: `There was an issue trying to uninstall ${code} 😥`,
-              showNotification: true,
-              hideInstallButton: false,
-            });
-          }
-        });
-      });
+    if (alternative) {
+      ipcChannel.sendMessage('emudeck', [
+        `${code}_uninstall|||${code}_uninstall_alt`,
+      ]);
     } else {
-      // Do nothing!
+      ipcChannel.sendMessage('emudeck', [
+        `${code}_uninstall|||${code}_uninstall`,
+      ]);
     }
+
+    ipcChannel.once(`${code}_uninstall`, (status) => {
+      // console.log({ status });
+      status = status.stdout;
+      // console.log({ status });
+      status = status.replace('\n', '');
+      // Lets check if it did install
+      ipcChannel.sendMessage('emudeck', [
+        `${code}_IsInstalled|||${code}_IsInstalled`,
+      ]);
+
+      ipcChannel.once(`${code}_IsInstalled`, (status) => {
+        console.log({ status });
+        status = status.stdout;
+        status = status.replace('\n', '');
+
+        if (status.includes('false')) {
+          const modalData = {
+            active: true,
+            header: <span className="h4">{code} uninstalled!</span>,
+            body: (
+              <p>
+                {code} has been uninstalled, you will need to delete your
+                entries from Steam using Steam Rom Manager and manually delete
+                your saved games in Emulation/saves/{code}
+              </p>
+            ),
+            css: 'emumodal--xs',
+          };
+
+          setStatePage({
+            ...statePage,
+            modal: modalData,
+          });
+          // We set the emu as install = no
+          setState({
+            ...state,
+            installEmus: {
+              ...installEmus,
+              [emulator]: {
+                id: emulator,
+                name: code,
+                status: false,
+              },
+            },
+          });
+        } else {
+          const modalData = {
+            active: true,
+            header: <span className="h4">{code} uninstall failed</span>,
+            body: (
+              <>
+                <p>There was an issue trying to uninstall {code}</p>
+              </>
+            ),
+            css: 'emumodal--xs',
+          };
+
+          setStatePage({
+            ...statePage,
+            modal: modalData,
+          });
+        }
+      });
+    });
   };
 
   const resetEmu = (code, name, id) => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Resetting {code}'s configuration</span>,
+      body: <p>Please wait while we reset {code}'s configuration</p>,
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
+
     setStatePage({
       ...statePage,
-      disableResetButton: true,
+      modal: modalData,
     });
     ipcChannel.sendMessage('emudeck', [
       `${code}_resetConfig|||${code}_resetConfig`,
@@ -405,37 +482,47 @@ function EmulatorsDetailPage() {
       status = status.replace('\n', '');
 
       if (status.includes('true')) {
+        const modalData = {
+          active: true,
+          header: <span className="h4">{name}'s configuration updated!</span>,
+          body: (
+            <>
+              <p>
+                {name}'s configuration was updated with our latest improvements,
+                optimizations and bug fixes!
+              </p>
+            </>
+          ),
+          css: 'emumodal--xs',
+        };
+
         setStatePage({
           ...statePage,
-          textNotification: `${name} configuration updated! 🎉`,
-          showNotification: true,
-          disableResetButton: false,
+          modal: modalData,
         });
         setStateCurrentConfigs({
           ...stateCurrentConfigs,
           [id]: newDesiredVersions[id],
         });
       } else {
+        const modalData = {
+          active: true,
+          header: <span className="h4">{name} configuration reset failed</span>,
+          body: (
+            <>
+              <p>There was an issue trying to reset {name} configuration</p>
+            </>
+          ),
+          css: 'emumodal--xs',
+        };
+
         setStatePage({
           ...statePage,
-          textNotification: `There was an issue trying to reset ${name} configuration 😥`,
-          showNotification: true,
-          disableResetButton: false,
+          modal: modalData,
         });
       }
     });
   };
-
-  useEffect(() => {
-    if (showNotification === true) {
-      setTimeout(() => {
-        setStatePage({
-          ...statePage,
-          showNotification: false,
-        });
-      }, 3000);
-    }
-  }, [showNotification]);
 
   useEffect(() => {
     console.log('update saved state');
@@ -501,7 +588,7 @@ function EmulatorsDetailPage() {
   }, []);
 
   useEffect(() => {
-    if (showNotification === false) {
+    if (modal === false) {
       const updates = diff(newDesiredVersions, stateCurrentConfigs);
       console.log({ updates });
       setStatePage({
@@ -512,7 +599,7 @@ function EmulatorsDetailPage() {
       const json = JSON.stringify(stateCurrentConfigs);
       localStorage.setItem('current_versions_beta', json);
     }
-  }, [showNotification]);
+  }, [modal]);
   return (
     <Wrapper>
       <Header title={emuData[emulatorSelected].name} />
@@ -536,15 +623,12 @@ function EmulatorsDetailPage() {
           onClickInstall={installEmu}
           onClickReInstall={reInstallEmu}
           onClickUninstall={uninstallEmu}
-          showNotification={showNotification}
-          textNotification={textNotification}
           installEmus={installEmus[emulatorSelected]}
-          disableResetButton={!!disableResetButton}
-          hideInstallButton={!!hideInstallButton}
           YuzuEAaddToken={yuzuEAaddToken}
         />
       )}
       <Footer next={false} />
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }

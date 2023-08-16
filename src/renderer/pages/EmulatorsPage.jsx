@@ -6,7 +6,9 @@ import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Main from 'components/organisms/Main/Main';
 import CardSettings from 'components/molecules/CardSettings/CardSettings';
-import Notification from 'components/molecules/Notification/Notification';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
+
 import {
   imgra,
   imgares,
@@ -69,21 +71,10 @@ function EmulatorsPage() {
     disabledNext: false,
     disabledBack: false,
     updates: null,
-    showNotification: undefined,
-    textNotification: '',
-    disableInstallButton: false,
-    disableResetButton: false,
     newDesiredVersions: null,
   });
-  const {
-    disabledNext,
-    disabledBack,
-    updates,
-    showNotification,
-    textNotification,
-    newDesiredVersions,
-    disableResetButton,
-  } = statePage;
+  const { disabledNext, disabledBack, updates, newDesiredVersions, modal } =
+    statePage;
 
   const { system, installEmus } = state;
 
@@ -98,9 +89,17 @@ function EmulatorsPage() {
   pageRef.current = statePage;
 
   const resetEmus = () => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Resetting Emulators configuration</span>,
+      body: <p>Please wait while we reset all the Emulators configuration</p>,
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
+
     setStatePage({
       ...pageRef.current,
-      disableResetButton: true,
+      modal: modalData,
     });
 
     console.log({ updates });
@@ -130,6 +129,21 @@ function EmulatorsPage() {
           }
         }
 
+        const modalData = {
+          active: true,
+          header: <span className="h4">Resetting {code}'s configuration</span>,
+          body: <p>Please wait while we reset {code}'s configuration</p>,
+          footer: (
+            <ProgressBar css="progress--success" infinite={true} max="100" />
+          ),
+          css: 'emumodal--xs',
+        };
+
+        setStatePage({
+          ...pageRef.current,
+          modal: modalData,
+        });
+
         ipcChannel.sendMessage('emudeck', [
           `${code}_resetConfig|||sleep ${i} && ${code}_resetConfig`,
         ]);
@@ -140,10 +154,26 @@ function EmulatorsPage() {
           status = status.replace('\n', '');
 
           if (status.includes('true')) {
+            const modalData = {
+              active: true,
+              header: (
+                <span className="h4">{name}'s configuration updated!</span>
+              ),
+              body: (
+                <>
+                  <p>
+                    {name}'s configuration was updated with our latest
+                    improvements, optimizations and bug fixes!
+                  </p>
+                </>
+              ),
+              footer: '',
+              css: 'emumodal--xs',
+            };
+
             setStatePage({
               ...pageRef.current,
-              textNotification: `${name} configuration updated! 🎉`,
-              showNotification: true,
+              modal: modalData,
             });
 
             setStateCurrentConfigs({
@@ -151,10 +181,22 @@ function EmulatorsPage() {
               [id]: { ...countRef.current[id], version },
             });
           } else {
+            const modalData = {
+              active: true,
+              header: (
+                <span className="h4">{name} configuration reset failed</span>
+              ),
+              body: (
+                <>
+                  <p>There was an issue trying to reset {name} configuration</p>
+                </>
+              ),
+              css: 'emumodal--xs',
+            };
+
             setStatePage({
               ...pageRef.current,
-              textNotification: `There was an issue trying to reset ${name} configuration 😥`,
-              showNotification: true,
+              modal: modalData,
             });
           }
         });
@@ -162,17 +204,6 @@ function EmulatorsPage() {
       });
     }, 1000);
   };
-
-  useEffect(() => {
-    if (showNotification === true) {
-      setTimeout(() => {
-        setStatePage({
-          ...statePage,
-          showNotification: false,
-        });
-      }, 1000);
-    }
-  }, [showNotification]);
 
   useEffect(() => {
     // Clean win32 systems
@@ -211,7 +242,6 @@ function EmulatorsPage() {
         ...statePage,
         updates: differences,
         newDesiredVersions: repoVersions,
-        disableResetButton: false,
       });
     });
 
@@ -219,9 +249,9 @@ function EmulatorsPage() {
   }, []);
 
   useEffect(() => {
-    if (showNotification === false) {
+    if (modal === false) {
       // const updates = diff(newDesiredVersions, stateCurrentConfigs);
-
+      alert('false');
       const obj1 = newDesiredVersions;
       const obj2 = stateCurrentConfigs;
 
@@ -242,7 +272,7 @@ function EmulatorsPage() {
       const json = JSON.stringify(stateCurrentConfigs);
       localStorage.setItem('current_versions_beta', json);
     }
-  }, [showNotification]);
+  }, [modal]);
 
   return (
     <Wrapper>
@@ -252,9 +282,6 @@ function EmulatorsPage() {
         emulators. An orange notification means you have a configuration update
         ready for the respective emulator.
       </p>
-      <Notification css={showNotification ? 'is-animated' : 'nope'}>
-        {textNotification}
-      </Notification>
       <Main>
         {updates && (
           <>
@@ -268,9 +295,8 @@ function EmulatorsPage() {
                     iconSize="md"
                     title="Update all Configurations"
                     description="Update all of your configurations at once. New configurations might contain bug fixes or performance improvements. This will overwrite any global emulator settings you have changed. Per game settings will be retained."
-                    button={disableResetButton ? 'Please wait...' : 'Update'}
+                    button="Update"
                     onClick={() => resetEmus()}
-                    disabled={disableResetButton}
                     notification
                   />
                 </div>
@@ -338,6 +364,7 @@ function EmulatorsPage() {
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }

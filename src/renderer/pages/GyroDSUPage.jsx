@@ -3,7 +3,8 @@ import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
-
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import GyroDSU from 'components/organisms/Wrappers/GyroDSU';
 
 function GyroDSUPage() {
@@ -14,23 +15,12 @@ function GyroDSUPage() {
     data: '',
     hasSudo: false,
     sudoPass: '',
-    showNotification: false,
-    disableButton: false,
     pass1: 'a',
     pass2: 'b',
-    textNotification: '',
+    modal: false,
   });
-  const {
-    disabledNext,
-    disabledBack,
-    hasSudo,
-    sudoPass,
-    showNotification,
-    pass1,
-    pass2,
-    textNotification,
-    disableButton,
-  } = statePage;
+  const { disabledNext, disabledBack, hasSudo, sudoPass, pass1, pass2, modal } =
+    statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
@@ -52,12 +42,19 @@ function GyroDSUPage() {
     ipcChannel.sendMessage('bash', [
       `echo '${pass1}' > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
+    const modalData = {
+      active: true,
+      header: <span className="h4">Success!</span>,
+      body: <p>Password created</p>,
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
+
     setStatePage({
       ...statePage,
       hasSudo: true,
       sudoPass: pass1,
-      showNotification: true,
-      textNotification: '🎉 Password created!',
+      modal: modalData,
     });
   };
 
@@ -76,9 +73,17 @@ function GyroDSUPage() {
   };
 
   const installGyro = (data) => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Installing GyroDSU</span>,
+      body: <p>Please wait while we install the plugin</p>,
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
+
     setStatePage({
       ...statePage,
-      disableButton: true,
+      modal: modalData,
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('bash', [
@@ -91,35 +96,31 @@ function GyroDSUPage() {
       const sterr = status.stdout;
       const { error } = status;
 
+      let modalData;
       if (stdout.includes('true')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">Success!</span>,
+          body: <p>GyroDSU Installed</p>,
+          css: 'emumodal--xs',
+        };
+
         setStatePage({
           ...statePage,
-          showNotification: true,
-          textNotification: '🎉 GyroDSU Installed! Please reboot your Deck now',
-          sudoPass: '',
+          modal: modalData,
         });
-        if (showNotification === true) {
-          setTimeout(() => {
-            setStatePage({
-              ...statePage,
-              showNotification: false,
-            });
-          }, 2000);
-        }
       } else {
+        modalData = {
+          active: true,
+          header: <span className="h4">Error installing plugin</span>,
+          body: <p>{JSON.stringify(status.stderr)}</p>,
+          css: 'emumodal--xs',
+        };
+
         setStatePage({
           ...statePage,
-          showNotification: true,
-          textNotification: JSON.stringify(status.stderr),
+          modal: modalData,
         });
-        if (showNotification === true) {
-          setTimeout(() => {
-            setStatePage({
-              ...statePage,
-              showNotification: false,
-            });
-          }, 2000);
-        }
       }
     });
   };
@@ -144,17 +145,14 @@ function GyroDSUPage() {
     <Wrapper>
       <Header title="Configure SteamDeckGyroDSU" />
       <GyroDSU
-        showNotification={showNotification}
         installClick={installGyro}
         sudoPass={sudoPass}
         onChange={setSudoPass}
         onChangeSetPass={setPassword}
         onChangeCheckPass={checkPassword}
         onClick={createSudo}
-        disableButton={disableButton}
         hasSudo={hasSudo}
         passValidates={pass1 === pass2}
-        textNotification={textNotification}
       />
       <Footer
         next={false}
@@ -162,6 +160,7 @@ function GyroDSUPage() {
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }

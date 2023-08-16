@@ -595,6 +595,33 @@ function EndPage() {
             `echo xeniaResolution="${state.resolutions.xenia}" >> ${settingsFile}`,
           ]);
 
+          //ParserExclusion
+
+          ipcChannel.sendMessage('bash', [
+            `echo emuGBA="${state.emulatorAlternative.gba}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuMAME="${state.emulatorAlternative.mame}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuMULTI="${state.emulatorAlternative.multiemulator}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuN64="${state.emulatorAlternative.n64}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuNDS="${state.emulatorAlternative.nds}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuPSP="${state.emulatorAlternative.psp}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuPSX="${state.emulatorAlternative.psx}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuSCUMMVM="${state.emulatorAlternative.scummvm}" >> ${settingsFile}`,
+          ]);
+
           // Closing
           // console.log('finalSetting');
           ipcChannel.sendMessage('bash-nolog', [

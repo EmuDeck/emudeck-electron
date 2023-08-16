@@ -3,46 +3,51 @@ import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
-
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import RemotePlayWhatever from 'components/organisms/Wrappers/RemotePlayWhatever';
 
 function RemotePlayWhateverPage() {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    showNotification: false,
-    notificationText: '',
+    modal: false,
   });
-  const { disabledNext, disabledBack, showNotification, notificationText } =
-    statePage;
+  const { disabledNext, disabledBack, modal } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
-  const notificationShow = (text) => {
+  const installRPW = () => {
+    let modalData = {
+      active: true,
+      header: <span className="h4">Installing RemotePlayWhatEver</span>,
+      body: <p>Please wait while we install the plugin</p>,
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
+
     setStatePage({
       ...statePage,
-      notificationText: text,
-      showNotification: true,
+      modal: modalData,
     });
 
-    if (showNotification === true) {
-      setTimeout(() => {
-        setStatePage({
-          ...statePage,
-          showNotification: false,
-        });
-      }, 2000);
-    }
-  };
-
-  const installRPW = () => {
     ipcChannel.sendMessage('emudeck', [
       'RemotePlayWhatever|||RemotePlayWhatever_install',
     ]);
 
-    notificationShow(
-      '🎉 RemotePlayWhatEver installed! Steam Rom Manager will launch now'
-    );
+    ipcChannel.once('DeckyControls', (status) => {
+      modalData = {
+        active: true,
+        header: <span className="h4">Success!</span>,
+        body: <p>RemotePlayWhatEver installed</p>,
+        css: 'emumodal--xs',
+      };
+
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
+    });
   };
 
   return (
@@ -58,6 +63,7 @@ function RemotePlayWhateverPage() {
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
+      <EmuModal modal={modal} />
     </Wrapper>
   );
 }

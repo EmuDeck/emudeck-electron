@@ -240,12 +240,15 @@ export default function App() {
       mgba: { id: 'mgba', status: true, name: 'mGBA' },
       ares: { id: 'ares', status: false, name: 'ares' },
     },
-    emulatorAlternatives:{
-      gba: 'RetroArch',
-      scummvm: 'RetroArch',
-      n64: 'RetroArch',
-      mame: 'RetroArch',
+    emulatorAlternative: {
+      gba: 'multiemulator',
+      mame: 'multiemulator',
+      n64: 'multiemulator',
       nds: 'melonDS',
+      psp: 'ppsspp',
+      psx: 'duckstation',
+      scummvm: 'scummvm',
+      multiemulator: 'ra',
     },
     resolutions: {
       dolphin: '720P',

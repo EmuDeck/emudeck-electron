@@ -4,6 +4,7 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import { useNavigate } from 'react-router-dom';
 // import { useTranslation } from 'react-i18next';
 import Welcome from 'components/organisms/Wrappers/Welcome';
@@ -112,10 +113,13 @@ function WelcomePage() {
         active: true,
         header: <span className="h4">Launching Steam Rom Manager</span>,
         body: (
-          <p>
-            We will close Steam if its running and then Steam Rom Manager will
-            open, this could take a few seconds, please wait.
-          </p>
+          <>
+            <p>
+              We will close Steam if its running and then Steam Rom Manager will
+              open, this could take a few seconds, please wait.
+            </p>
+            <ProgressBar css="progress--success" infinite={true} max="100" />
+          </>
         ),
         css: 'emumodal--xs',
       };
@@ -187,7 +191,7 @@ function WelcomePage() {
     {
       system === 'win32'
         ? (url = 'https://emudeck.github.io/common-issues/windows/')
-        : (url = 'https://emudeck.github.io/common-issues/steamos/');
+        : (url = 'https://emudeck.github.io/?search=true');
     }
 
     window.open(url, '_blank');
@@ -230,15 +234,6 @@ function WelcomePage() {
   };
 
   const settingsCardsFeatured = [
-    {
-      icon: [iconDisk],
-      title: 'USB Transfer Wizard',
-      description: 'Transfer your games using a USB Drive',
-      button: 'Add more games',
-      btnCSS: 'btn-simple--1',
-      status: system === 'SteamOS',
-      function: () => functions.navigate('/copy-games'),
-    },
     {
       icon: [iconGear],
       title: 'Quick Settings',
@@ -287,6 +282,15 @@ function WelcomePage() {
       btnCSS: 'btn-simple--5',
       status: true,
       function: () => functions.openSRM(),
+    },
+    {
+      icon: [iconDisk],
+      title: 'USB Transfer Wizard',
+      description: 'Transfer your games using a USB Drive',
+      button: 'Add more games',
+      btnCSS: 'btn-simple--1',
+      status: system === 'SteamOS',
+      function: () => functions.navigate('/copy-games'),
     },
     {
       icon: [iconQuick],

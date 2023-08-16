@@ -16,6 +16,10 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
+const fakeOSFile = require('../data/local-fake-os.json');
+
+const { fakeOS } = fakeOSFile;
+
 const os = require('os');
 const slash = require('slash');
 const https = require('https');
@@ -552,6 +556,11 @@ ipcMain.on('update-check', async (event, command) => {
 
 ipcMain.on('system-info-in', async (event, command) => {
   // const os = require('os');
+  const isDebug =
+    process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+  if (isDebug) {
+    event.reply('system-info-out', fakeOS);
+  }
 
   if (os.platform() === 'linux') {
     lsbRelease(function (_, data) {
