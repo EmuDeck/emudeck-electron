@@ -162,7 +162,7 @@ function EmulatorSelectorPage() {
     let modalData = {};
     //Enabling
     if (enable) {
-      if (1 === 1) {
+      if (emulatorProp === 'xenia') {
         modalData = {
           active: true,
           header: <span className="h4">Xenia Emulator - Disclaimer</span>,
