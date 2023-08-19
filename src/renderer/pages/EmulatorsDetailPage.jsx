@@ -12,7 +12,7 @@ const emuData = require('data/emuData.json');
 function EmulatorsDetailPage() {
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
-  const { installEmus, mode } = state;
+  const { installEmus, mode, system } = state;
 
   const { emulator } = useParams();
 
@@ -209,8 +209,12 @@ function EmulatorsDetailPage() {
       ...statePage,
       modal: modalData,
     });
-
-    ipcChannel.sendMessage('emudeck', [`${code}_install|||${code}_install`]);
+    if (system === 'win32') {
+      ipcChannel.sendMessage('emudeck', [`${code}_install|||${code}_install;${code}_resetConfig;${code}_setupSaves`]);
+    }else{
+      ipcChannel.sendMessage('emudeck', [`${code}_install|||${code}_install`]);
+    }
+    
 
     ipcChannel.once(`${code}_install`, (message) => {
       // console.log({ status });
@@ -472,9 +476,13 @@ function EmulatorsDetailPage() {
       ...statePage,
       modal: modalData,
     });
-    ipcChannel.sendMessage('emudeck', [
-      `${code}_resetConfig|||${code}_resetConfig`,
-    ]);
+    
+    if (system === 'win32') {
+      ipcChannel.sendMessage('emudeck', [`${code}_resetConfig|||${code}_resetConfig;${code}_setupSaves`]);
+    }else{
+      ipcChannel.sendMessage('emudeck', [`${code}_resetConfig|||${code}_resetConfig`]);
+    }
+    
     ipcChannel.once(`${code}_resetConfig`, (status) => {
       console.log(`${code}_resetConfig`);
       status = status.stdout;

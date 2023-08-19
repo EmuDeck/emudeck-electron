@@ -152,14 +152,14 @@ function EmulatorSelectorPage() {
   //       emuToEnable: emuToEnable,
   //     };
   //   };
-
+  let modalData = {};
   const toggleEmus = (emulatorProp) => {
     const { status } = installEmus[emulatorProp];
     let enable = status ? false : true;
     let multiemulatorValue;
     let systemsValue = {};
     let systemsOption = {};
-    let modalData = {};
+
     //Enabling
     if (enable) {
       if (emulatorProp === 'xenia') {
@@ -294,8 +294,6 @@ function EmulatorSelectorPage() {
       }
 
       //Setting standalone vs multiemulator
-
-      console.log(emulatorAlternative.gba);
 
       if (emulatorProp === 'ares' || emulatorProp === 'ra') {
         systemsOption = {
@@ -601,9 +599,6 @@ function EmulatorSelectorPage() {
         };
       }
     }
-
-    console.log(previousState.gba);
-    console.log(emulatorAlternative.gba);
 
     // //RA || ARES + mGBA
     if (
