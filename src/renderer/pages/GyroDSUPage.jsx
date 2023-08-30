@@ -14,7 +14,7 @@ function GyroDSUPage() {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: '',
+    sudoPass: 'Decky!',
     pass1: 'a',
     pass2: 'b',
     modal: false,
@@ -33,7 +33,7 @@ function GyroDSUPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: '',
+        sudoPass: 'Decky!',
       });
     }
   };
@@ -87,7 +87,7 @@ function GyroDSUPage() {
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('bash', [
-      `Gyro|||konsole -e  sh -c '. ~/.config/EmuDeck/backend/functions/all.sh &&  echo "${escapedPass}" | sudo -v -S && Plugins_installSteamDeckGyroDSU && echo "" && read -n 1 -s -r -p "Press any key to exit" && exit 0'`,
+      `Gyro|||konsole -e  sh -c '. ~/.config/EmuDeck/backend/functions/all.sh && Plugins_installSteamDeckGyroDSU "${escapedPass}" && echo "" && read -n 1 -s -r -p "Press any key to exit" && exit 0'`,
     ]);
 
     ipcChannel.once('Gyro', (status) => {

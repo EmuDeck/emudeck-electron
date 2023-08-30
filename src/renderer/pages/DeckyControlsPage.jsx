@@ -13,7 +13,7 @@ function DeckyControlsPage() {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: '',
+    sudoPass: 'Decky!',
     modal: false,
     pass1: 'a',
     pass2: 'b',
@@ -32,7 +32,7 @@ function DeckyControlsPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: '',
+        sudoPass: 'Decky!',
       });
     }
   };
@@ -87,7 +87,7 @@ function DeckyControlsPage() {
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('emudeck', [
-      `DeckyControls|||echo "${escapedPass}" | sudo -v -S && Plugins_installPluginLoader && Plugins_installDeckyControls && echo true`,
+      `DeckyControls|||Plugins_installPluginLoader "${escapedPass}" && Plugins_installDeckyControls "${escapedPass}" && echo true`,
     ]);
 
     ipcChannel.once('DeckyControls', (status) => {

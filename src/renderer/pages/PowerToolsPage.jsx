@@ -12,7 +12,7 @@ function PowerToolsPage() {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: '',
+    sudoPass: 'Decky!',
     disableButton: false,
     pass1: 'a',
     pass2: 'b',
@@ -32,7 +32,7 @@ function PowerToolsPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: '',
+        sudoPass: 'Decky!',
       });
     }
   };
@@ -88,7 +88,7 @@ function PowerToolsPage() {
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
 
     ipcChannel.sendMessage('emudeck', [
-      `powerTools|||echo '${escapedPass}' | sudo -v -S && Plugins_installPluginLoader && Plugins_installPowerTools && echo true`,
+      `powerTools|||Plugins_installPluginLoader ${escapedPass} && Plugins_installPowerTools ${escapedPass} && echo true`,
     ]);
 
     ipcChannel.once('powerTools', (status) => {
