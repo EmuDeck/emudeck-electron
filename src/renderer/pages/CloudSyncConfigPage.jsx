@@ -62,6 +62,19 @@ function CloudSyncPageConfig() {
   };
 
   const uploadAll = () => {
+    
+    const modalData = {
+      active: true,
+      header: <span className="h4">Uploading</span>,
+      body: (
+        <p>
+          Please stand by...
+        </p>
+      ),
+      css: 'emumodal--xs',
+    };
+    setStatePage({ ...statePage, modal: modalData });
+    
     ipcChannel.sendMessage('emudeck', [`uploadAll|||cloud_sync_uploadEmuAll`]);
 
     ipcChannel.once('uploadAll', (message) => {
@@ -82,6 +95,19 @@ function CloudSyncPageConfig() {
   };
 
   const downloadAll = () => {
+    
+    const modalData = {
+      active: true,
+      header: <span className="h4">Downloading</span>,
+      body: (
+        <p>
+          Please stand by...
+        </p>
+      ),
+      css: 'emumodal--xs',
+    };
+    setStatePage({ ...statePage, modal: modalData });
+    
     ipcChannel.sendMessage('emudeck', [
       `downloadAll|||cloud_sync_downloadEmuAll`,
     ]);
