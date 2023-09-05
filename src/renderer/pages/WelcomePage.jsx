@@ -450,13 +450,13 @@ function WelcomePage() {
     <Wrapper>
       {second === false && (
         <Header
-          title={`Welcome to EmuDeck ${system === 'darwin' ? '\uF8FF' : ''}`}
+          title={`Welcome to EmuDeck for ${system} ${system === 'darwin' ? '\uF8FF' : ''}`}
         />
       )}
 
       {second === true && (
         <Header
-          title={`Welcome back to EmuDeck ${
+          title={`Welcome back to EmuDeck for ${system}  ${
             system === 'darwin' ? '\uF8FF' : ''
           }`}
         />
