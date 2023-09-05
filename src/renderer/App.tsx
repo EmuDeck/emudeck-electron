@@ -111,7 +111,7 @@ export default function App() {
     cloudSync: '',
     cloudSyncType: 'Sync',
     cloudSyncStatus: false,
-    sudoPass: '',
+    sudoPass: 'Decky!',
     language: 'en',
     achievements: {
       user: '',
