@@ -210,11 +210,12 @@ function EmulatorsDetailPage() {
       modal: modalData,
     });
     if (system === 'win32') {
-      ipcChannel.sendMessage('emudeck', [`${code}_install|||${code}_install;${code}_resetConfig;${code}_setupSaves`]);
-    }else{
+      ipcChannel.sendMessage('emudeck', [
+        `${code}_install|||${code}_install;${code}_resetConfig;${code}_setupSaves`,
+      ]);
+    } else {
       ipcChannel.sendMessage('emudeck', [`${code}_install|||${code}_install`]);
     }
-    
 
     ipcChannel.once(`${code}_install`, (message) => {
       // console.log({ status });
@@ -476,13 +477,17 @@ function EmulatorsDetailPage() {
       ...statePage,
       modal: modalData,
     });
-    
+
     if (system === 'win32') {
-      ipcChannel.sendMessage('emudeck', [`${code}_resetConfig|||${code}_resetConfig;${code}_setupSaves`]);
-    }else{
-      ipcChannel.sendMessage('emudeck', [`${code}_resetConfig|||${code}_resetConfig`]);
+      ipcChannel.sendMessage('emudeck', [
+        `${code}_resetConfig|||${code}_resetConfig;${code}_setupSaves`,
+      ]);
+    } else {
+      ipcChannel.sendMessage('emudeck', [
+        `${code}_resetConfig|||${code}_resetConfig`,
+      ]);
     }
-    
+
     ipcChannel.once(`${code}_resetConfig`, (status) => {
       console.log(`${code}_resetConfig`);
       status = status.stdout;
@@ -632,7 +637,7 @@ function EmulatorsDetailPage() {
           onClickReInstall={reInstallEmu}
           onClickUninstall={uninstallEmu}
           installEmus={installEmus[emulatorSelected]}
-          YuzuEAaddToken={yuzuEAaddToken}
+          yuzuEAaddToken={yuzuEAaddToken}
         />
       )}
       <Footer next={false} />
