@@ -6,9 +6,9 @@ import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
-import DeckyControls from 'components/organisms/Wrappers/DeckyControls';
+import EmuDecky from 'components/organisms/Wrappers/EmuDecky';
 
-function DeckyControlsPage() {
+function EmuDeckyPage() {
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -82,10 +82,10 @@ function DeckyControlsPage() {
     });
   };
 
-  const installDeckyControls = () => {
+  const installEmuDecky = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing DeckyControls</span>,
+      header: <span className="h4">Installing EmuDecky</span>,
       body: <p>Please wait while we install the plugin</p>,
       footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
       css: 'emumodal--xs',
@@ -97,17 +97,17 @@ function DeckyControlsPage() {
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('emudeck', [
-      `DeckyControls|||Plugins_installPluginLoader "${escapedPass}" && Plugins_installDeckyControls "${escapedPass}" && echo true`,
+      `EmuDecky|||Plugins_installPluginLoader "${escapedPass}" && Plugins_installEmuDecky "${escapedPass}" && echo true`,
     ]);
 
-    ipcChannel.once('DeckyControls', (status) => {
+    ipcChannel.once('EmuDecky', (status) => {
       const { stdout } = status;
       let modalData;
       if (stdout.includes('true')) {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,
-          body: <p>DeckyControls Installed</p>,
+          body: <p>EmuDecky Installed</p>,
           css: 'emumodal--xs',
         };
 
@@ -164,9 +164,9 @@ function DeckyControlsPage() {
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
-        <Header title="Configure DeckyControls" />
-        <DeckyControls
-          installClick={installDeckyControls}
+        <Header title="Configure EmuDecky" />
+        <EmuDecky
+          installClick={installEmuDecky}
           sudoPass={sudoPass}
           onChange={setSudoPass}
           onChangeSetPass={setPassword}
@@ -187,4 +187,4 @@ function DeckyControlsPage() {
   );
 }
 
-export default DeckyControlsPage;
+export default EmuDeckyPage;

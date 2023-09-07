@@ -36,7 +36,7 @@ function RemotePlayWhateverPage() {
       'RemotePlayWhatever|||RemotePlayWhatever_install',
     ]);
 
-    ipcChannel.once('DeckyControls', (status) => {
+    ipcChannel.once('EmuDecky', (status) => {
       modalData = {
         active: true,
         header: <span className="h4">Success!</span>,

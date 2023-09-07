@@ -335,12 +335,12 @@ function WelcomePage() {
     },
     {
       icon: [iconPlugin],
-      title: 'DeckyControls',
+      title: 'EmuDecky',
       description:
-        'An EmuDeck Decky Loader Plugin to easily view emulator hotkeys in Game Mode',
+        'A Decky Loader Plugin to easily view emulator hotkeys and configure EmuDeck while in Game Mode',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system === 'SteamOS',
+      status: system !== 'Win32',
       function: () => functions.navigate('/decky-controls'),
     },
     {

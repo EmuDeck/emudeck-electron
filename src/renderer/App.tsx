@@ -21,7 +21,7 @@ import RAAchievementsConfigPage from 'pages/RAAchievementsConfigPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
-import DeckyControlsPage from 'pages/DeckyControlsPage';
+import EmuDeckyPage from 'pages/EmuDeckyPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
 import CheckDependenciesPage from 'pages/CheckDependenciesPage';
 import CHDToolPage from 'pages/CHDToolPage';
@@ -352,7 +352,7 @@ export default function App() {
           <Route exact path="/shaders-3d-classic" element={<Shaders3DPage />} />
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
-          <Route exact path="/decky-controls" element={<DeckyControlsPage />} />
+          <Route exact path="/decky-controls" element={<EmuDeckyPage />} />
 
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
           <Route exact path="/change-log" element={<ChangeLogPage />} />
