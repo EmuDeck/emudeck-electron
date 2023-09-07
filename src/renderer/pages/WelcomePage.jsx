@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useContext, useRef, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
-import GamePad from 'components/organisms/GamePad/GamePad';
 import { useNavigate } from 'react-router-dom';
 // import { useTranslation } from 'react-i18next';
 import Welcome from 'components/organisms/Wrappers/Welcome';
@@ -52,15 +52,6 @@ function WelcomePage() {
       navigate('/rom-storage');
     }
   };
-  const domElementsRef = useRef(null);
-  const domElementsCur = domElementsRef.current;
-  let domElements;
-  useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
-      setStatePage({ ...statePage, dom: domElements });
-    }
-  }, [statePage]);
 
   // show changelog after update
   useEffect(() => {
@@ -456,9 +447,17 @@ function WelcomePage() {
       function: () => {},
     },
   ];
-
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
   return (
-    <div ref={domElementsRef}>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
         {second === false && (
