@@ -8,6 +8,7 @@ import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuDetail from 'components/organisms/Wrappers/EmuDetail';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
+import { BtnSimple, BtnGroup, FormInputSimple } from 'getbasecore/Atoms';
 import {
   citraControls,
   citraHotkeys,
@@ -40,7 +41,7 @@ const emuData = require('data/emuData.json');
 function EmulatorsDetailPage() {
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
-  const { installEmus, mode, system } = state;
+  const { installEmus, mode, system, yuzuEAtoken } = state;
 
   const { emulator } = useParams();
 
@@ -63,10 +64,148 @@ function EmulatorsDetailPage() {
     dom,
   } = statePage;
 
-  const yuzuEAaddToken = () => {
-    ipcChannel.sendMessage('emudeck', [`YuzuEA_addToken|||YuzuEA_addToken`]);
-    ipcChannel.once('YuzuEA_addToken', (message) => {});
+  const yuzuEAsetToken = (data) => {
+    console.log({ data });
+    data.target.value === ''
+      ? (yuzuEAtokenValue = null)
+      : (yuzuEAtokenValue = data.target.value);
+
+    setState({
+      ...state,
+      yuzuEAtoken: yuzuEAtokenValue,
+    });
   };
+
+  const yuzuEAaskToken = () => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Yuzu Early Access</span>,
+      body: (
+        <>
+          <p>
+            Enter your Yuzu Early Access Token to automatically download and
+            update Yuzu Early Access.
+          </p>
+          <p>You can get this from your Yuzu Patreon.</p>
+          <p>https://yuzu-emu.org/help/early-access/</p>
+          <p>
+            Once you have entered your token in this window it will be saved to
+            ~/emudeck/yuzu-ea-token.txt
+          </p>
+          <div className="form">
+            <FormInputSimple
+              css="form__control--dark"
+              label="Yuzu EA Token"
+              type="yuzuEAtoken"
+              name="yuzuEAtoken"
+              id="yuzuEAtoken"
+              value={yuzuEAtoken}
+              onChange={yuzuEAsetToken}
+            />
+          </div>
+        </>
+      ),
+      footer: (
+        <BtnGroup>
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            aria="Close Modal"
+            onClick={() => closeModal()}
+          >
+            Close
+          </BtnSimple>
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria="Add Token"
+            onClick={() => yuzuEAaddToken()}
+          >
+            Next
+          </BtnSimple>
+        </BtnGroup>
+      ),
+      css: 'emumodal--xs',
+    };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+  };
+
+  const yuzuEAaddToken = () => {
+    const modalData = {
+      active: true,
+      body: (
+        <>
+          <p>Please wait, checking Yuzu Early Access Token</p>
+        </>
+      ),
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+    };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+
+    ipcChannel.sendMessage('emudeck', [
+      `YuzuEA_addToken|||YuzuEA_addToken ${yuzuEAtoken}`,
+    ]);
+    let modalHeader;
+    let modalBody;
+    let modalFooter;
+    ipcChannel.once('YuzuEA_addToken', (message) => {
+      console.log({ message });
+      const stdout = message.stdout;
+      const response = stdout.replace('\n', '');
+      //We store the token for next installs
+
+      switch (response) {
+        case 'invalid':
+          modalHeader = <span className="h4">Wrong Token</span>;
+          modalBody = 'Please check your Token and try again';
+          break;
+        case 'fail':
+          modalHeader = <span className="h4">Yuzu Early Access Failed</span>;
+          modalBody =
+            'There was an issue installing Yuzu Early Access, please try again.';
+          break;
+        case 'true':
+          modalHeader = <span className="h4">Yuzu Early Access Success!</span>;
+          modalBody = (
+            <>
+              <p>
+                Yuzu Early Access {code} has been installed, now you can play
+                games using the same Yuzu launcher using EmulationStation-DE or
+                adding them to your Steam Library using Steam Rom Manager. You
+                don't need to do setup anything else.
+              </p>
+            </>
+          );
+          break;
+      }
+
+      const modalData = {
+        active: true,
+        header: modalHeader,
+        body: modalBody,
+        footer: modalFooter,
+      };
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
+
+      if (response === 'true') {
+        const json = JSON.stringify(state);
+        localStorage.setItem('settings_emudeck', json);
+      }
+    });
+  };
+
+  // const yuzuEAInstall = () => {
+  //
+  // };
 
   const diff = (obj1, obj2) => {
     // Make sure an object to compare is provided
@@ -850,7 +989,7 @@ function EmulatorsDetailPage() {
             onClickControls={showControls}
             onClickUninstall={uninstallEmu}
             installEmus={installEmus[emulatorSelected]}
-            yuzuEAaddToken={yuzuEAaddToken}
+            yuzuEAaskToken={yuzuEAaskToken}
           />
         )}
         <Footer next={false} />

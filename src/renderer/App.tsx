@@ -90,6 +90,7 @@ export default function App() {
 
   const [state, setState] = useState({
     app: 'electron',
+    yuzuEAtoken: null,
     patreonToken: null,
     patreonStatus: false,
     version: '',
