@@ -91,7 +91,7 @@ function DeckyControlsPage() {
     ]);
 
     ipcChannel.once('DeckyControls', (status) => {
-      // console.log({ status });
+      
       const { stdout } = status;
       let modalData;
       if (stdout.includes('true')) {
@@ -130,7 +130,7 @@ function DeckyControlsPage() {
     ]);
 
     ipcChannel.once('checkPWD', (message) => {
-      // console.log({ stdout });
+      
       let sudo;
       stdout = message.replace('\n', '');
       stdout.includes('NP') ? (sudo = false) : (sudo = true);

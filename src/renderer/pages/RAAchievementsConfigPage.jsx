@@ -46,7 +46,7 @@ function RAAchievementsConfigPage() {
     }
 
     ipcChannel.once('setHardcore', (message) => {
-      console.log(message);
+      
     });
   };
 

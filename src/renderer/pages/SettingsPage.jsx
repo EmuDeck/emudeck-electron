@@ -50,7 +50,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`bezels|||${functionBezel}`]);
     ipcChannel.once('bezels', () => {
-      // console.log(message);
+      
       notificationShow('🎉 Bezels updated!');
     });
   };
@@ -64,7 +64,7 @@ function SettingsPage() {
       `cloudSync|||cloud_sync_toggle ${cloudStatus}`,
     ]);
     ipcChannel.once('cloudSync', () => {
-      // console.log(message);
+      
       notificationShow('🎉 CloudSync Status updated!');
     });
   };
@@ -83,7 +83,7 @@ function SettingsPage() {
           'sega32|||RetroArch_mastersystem_ar32 && RetroArch_genesis_ar32  && RetroArch_segacd_ar32 && RetroArch_sega32x_ar32',
         ]);
         ipcChannel.once('sega32', () => {
-          // console.log(message);
+          
           notificationShow('🎉 Sega Aspect Ratio updated!');
         });
         break;
@@ -92,7 +92,7 @@ function SettingsPage() {
           'sega43|||RetroArch_mastersystem_ar43 && RetroArch_genesis_ar43  && RetroArch_segacd_ar43 && RetroArch_sega32x_ar43',
         ]);
         ipcChannel.once('sega43', () => {
-          // console.log(message);
+          
           notificationShow('🎉 Sega Aspect Ratio updated!');
         });
         if (bezels === true) {
@@ -117,7 +117,7 @@ function SettingsPage() {
           'snes87|||RetroArch_snes_ar87 && RetroArch_nes_ar87',
         ]);
         ipcChannel.once('snes87', () => {
-          // console.log(message);
+          
           notificationShow('🎉 SNES Aspect Ratio updated!');
         });
         if (bezels === true) {
@@ -131,7 +131,7 @@ function SettingsPage() {
           'snes32|||RetroArch_snes_ar32 && RetroArch_nes_ar32',
         ]);
         ipcChannel.once('snes32', () => {
-          // console.log(message);
+          
           notificationShow('🎉 SNES Aspect Ratio updated!');
         });
         break;
@@ -140,7 +140,7 @@ function SettingsPage() {
           'snes43|||RetroArch_snes_ar43 && RetroArch_nes_ar43',
         ]);
         ipcChannel.once('snes43', () => {
-          // console.log(message);
+          
           notificationShow('🎉 SNES Aspect Ratio updated!');
         });
         if (bezels === true) {
@@ -165,7 +165,7 @@ function SettingsPage() {
           '3d169|||RetroArch_Beetle_PSX_HW_wideScreenOn && DuckStation_wideScreenOn && RetroArch_Flycast_wideScreenOn && Xemu_wideScreenOn && RetroArch_dreamcast_bezelOff && RetroArch_psx_bezelOff',
         ]);
         ipcChannel.once('3d169', () => {
-          // console.log(message);
+          
           notificationShow('🎉 3D Aspect Ratio updated!');
         });
         break;
@@ -174,7 +174,7 @@ function SettingsPage() {
           '3d43|||RetroArch_Flycast_wideScreenOff && RetroArch_Beetle_PSX_HW_wideScreenOff && DuckStation_wideScreenOff && Xemu_wideScreenOff',
         ]);
         ipcChannel.once('3d43', () => {
-          // console.log(message);
+          
           notificationShow('🎉 3D Aspect Ratio updated!');
         });
         if (bezels === true) {
@@ -182,7 +182,7 @@ function SettingsPage() {
             '3d43Bezels|||RetroArch_dreamcast_bezelOn && RetroArch_psx_bezelOn',
           ]);
           ipcChannel.once('3d43Bezels', () => {
-            // console.log(message);
+            
             notificationShow('🎉 3D Aspect Ratio updated!');
           });
         }
@@ -200,13 +200,13 @@ function SettingsPage() {
     if (arStatus === '169') {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOn']);
       ipcChannel.once('dolphin', () => {
-        // console.log(message);
+        
         notificationShow('🎉 Dolphin Aspect Ratio updated!');
       });
     } else {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOff']);
       ipcChannel.once('dolphin', () => {
-        // console.log(message);
+        
         notificationShow('🎉 Dolphin Aspect Ratio updated!');
       });
     }
@@ -228,7 +228,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`CRT|||${functionCRT}`]);
     ipcChannel.once('CRT', () => {
-      // console.log(message);
+      
       notificationShow('🎉 CRT Shader updated!');
     });
   };
@@ -249,7 +249,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`CRT3D|||${functionCRT3D}`]);
     ipcChannel.once('CRT3D', () => {
-      // console.log(message);
+      
       notificationShow('🎉 3D CRT Shader updated!');
     });
   };
@@ -269,7 +269,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`LCD|||${functionLCD}`]);
     ipcChannel.once('LCD', () => {
-      // console.log(message);
+      
       notificationShow('🎉 LCD Shader updated!');
     });
   };
@@ -287,7 +287,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`autoSave|||${functionAutoSave}`]);
     ipcChannel.once('autoSave', () => {
-      // console.log(message);
+      
       notificationShow('🎉 AutoSave updated!');
     });
   };
@@ -309,7 +309,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`autoSave|||${functionHomebrewGames}`]);
     ipcChannel.once('autoSave', () => {
-      // console.log(message);
+      
       notificationShow('🎉 HomeBrew Games updated!');
     });
   };
@@ -327,7 +327,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`bootMode|||${functionBootMode}`]);
     ipcChannel.once('bootMode', () => {
-      // console.log(message);
+      
       notificationShow('🎉 BootMode updated, please restart your device!');
     });
   };

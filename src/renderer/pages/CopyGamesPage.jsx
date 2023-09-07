@@ -32,7 +32,7 @@ function CopyGamesPage() {
   } = statePage;
 
   const storageSet = (storageName) => {
-    // console.log({ storageName });
+    
     // We prevent the function to continue if the custom location testing is still in progress
     if (status === 'testing') {
       return;
@@ -42,7 +42,7 @@ function CopyGamesPage() {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
-        // console.log({ message });
+        
         const pathUSB = message.stdout.replace('\n', '');
         setStatePage({
           ...statePage,
@@ -58,12 +58,12 @@ function CopyGamesPage() {
         ]);
 
         ipcChannel.once('testLocation', (message) => {
-          // console.log({ message });
+          
           const stdout = message.stdout.replace('\n', '');
-          // console.log({ stdout });
+          
           let status;
           stdout.includes('Valid') ? (status = true) : (status = false);
-          // console.log({ status });
+          
           if (status === true) {
             setStatePage({
               ...statePage,
@@ -121,7 +121,7 @@ function CopyGamesPage() {
 
     ipcChannel.once('CreateStructureUSB', (message) => {
       const stdout = message.stdout.replace('\n', '');
-      // console.log({ message });
+      
       setStatePage({
         ...statePage,
         statusCreateStructure: true,
@@ -154,9 +154,9 @@ function CopyGamesPage() {
       }
       ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
 
-      console.log(`${srmPath}Emulation\\tools\\srm.exe`);
+      
       ipcChannel.once('run-app', (message) => {
-        console.log({ message });
+        
       });
     } else {
       const modalData = {

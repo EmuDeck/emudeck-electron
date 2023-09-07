@@ -43,7 +43,7 @@ function CheckDependenciesPage() {
     });
     ipcChannel.sendMessage('validate-git');
     ipcChannel.once('validate-git', (messageGIT) => {
-      // console.log({ messageGIT });
+      
       if (messageGIT.stdout === true) {
         setStateGIT({
           statusGIT: true,
@@ -62,7 +62,7 @@ function CheckDependenciesPage() {
     });
     ipcChannel.sendMessage('validate-7Zip');
     ipcChannel.once('validate-7Zip', (message7Zip) => {
-      // console.log({ message7Zip });
+      
       if (message7Zip.stdout === true) {
         setState7Zip({
           status7Zip: true,
@@ -81,7 +81,7 @@ function CheckDependenciesPage() {
     });
     ipcChannel.sendMessage('validate-Steam');
     ipcChannel.once('validate-Steam', (messageSteam) => {
-      // console.log({ messageSteam });
+      
       if (messageSteam.stdout === true) {
         setStateSteam({
           statusSteam: true,

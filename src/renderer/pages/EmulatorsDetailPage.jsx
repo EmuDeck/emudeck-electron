@@ -36,7 +36,7 @@ function EmulatorsDetailPage() {
   const yuzuEAaddToken = () => {
     ipcChannel.sendMessage('emudeck', [`YuzuEA_addToken|||YuzuEA_addToken`]);
     ipcChannel.once('YuzuEA_addToken', (message) => {
-      console.log({ message });
+      
     });
   };
 
@@ -163,9 +163,9 @@ function EmulatorsDetailPage() {
   const checkBios = (biosCommand) => {
     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
-      // console.log({ biosCommand });
+      
       status = status.stdout;
-      // console.log({ status });
+      
       status = status.replace('\n', '');
       let biosStatus;
       status.includes('true') ? (biosStatus = true) : (biosStatus = false);
@@ -218,7 +218,7 @@ function EmulatorsDetailPage() {
     }
 
     ipcChannel.once(`${code}_install`, (message) => {
-      // console.log({ status });
+      
       let status = message.stdout;
       status.replace('\n', '');
       // Lets check if it did install
@@ -227,7 +227,7 @@ function EmulatorsDetailPage() {
       ]);
 
       ipcChannel.once(`${code}_IsInstalled`, (message) => {
-        // console.log({ status });
+        
         status = message.stdout;
         status.replace('\n', '');
 
@@ -286,7 +286,7 @@ function EmulatorsDetailPage() {
   };
 
   const installEmu = (emulator, code) => {
-    console.log(emulator);
+    
 
     const modalData = {
       active: true,
@@ -305,7 +305,7 @@ function EmulatorsDetailPage() {
     ]);
 
     ipcChannel.once(`${code}_install`, (message) => {
-      // console.log({ status });
+      
       let status = message.stdout;
       status.replace('\n', '');
       // Lets check if it did install
@@ -314,7 +314,7 @@ function EmulatorsDetailPage() {
       ]);
 
       ipcChannel.once(`${code}_IsInstalled`, (message) => {
-        // console.log({ status });
+        
         status = message.stdout;
         status.replace('\n', '');
 
@@ -399,9 +399,9 @@ function EmulatorsDetailPage() {
     }
 
     ipcChannel.once(`${code}_uninstall`, (status) => {
-      // console.log({ status });
+      
       status = status.stdout;
-      // console.log({ status });
+      
       status = status.replace('\n', '');
       // Lets check if it did install
       ipcChannel.sendMessage('emudeck', [
@@ -409,7 +409,7 @@ function EmulatorsDetailPage() {
       ]);
 
       ipcChannel.once(`${code}_IsInstalled`, (status) => {
-        console.log({ status });
+        
         status = status.stdout;
         status = status.replace('\n', '');
 
@@ -489,9 +489,9 @@ function EmulatorsDetailPage() {
     }
 
     ipcChannel.once(`${code}_resetConfig`, (status) => {
-      console.log(`${code}_resetConfig`);
+      
       status = status.stdout;
-      console.log({ status });
+      
       status = status.replace('\n', '');
 
       if (status.includes('true')) {
@@ -538,7 +538,7 @@ function EmulatorsDetailPage() {
   };
 
   useEffect(() => {
-    console.log('update saved state');
+    
     // We save it on localstorage
     const json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
@@ -567,7 +567,7 @@ function EmulatorsDetailPage() {
         checkBios('checkYuzuBios');
         break;
       default:
-        console.log('No bios');
+        
     }
   }, []);
 
@@ -585,11 +585,11 @@ function EmulatorsDetailPage() {
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?
       if (repoVersions === '') {
-        console.log('no versioning found');
+        
       }
 
       const updates = diff(repoVersions, stateCurrentConfigs);
-      console.log({ updates });
+      
       setStatePage({
         ...statePage,
         updates,
@@ -603,7 +603,7 @@ function EmulatorsDetailPage() {
   useEffect(() => {
     if (modal === false) {
       const updates = diff(newDesiredVersions, stateCurrentConfigs);
-      console.log({ updates });
+      
       setStatePage({
         ...statePage,
         updates,

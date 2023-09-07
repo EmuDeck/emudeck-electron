@@ -109,7 +109,7 @@ function DeviceSelectorPage() {
         resolutionsObj = deck;
     }
 
-    console.log({ resolutionsObj });
+    
 
     setState({
       ...state,

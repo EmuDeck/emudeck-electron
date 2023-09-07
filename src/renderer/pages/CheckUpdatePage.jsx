@@ -78,9 +78,9 @@ function CheckUpdatePage() {
   let updateTimeOut;
   useEffect(() => {
     // Update timeout + Force clone check
-    console.log('UPDATE - SETTING TIMER FOR TIMEOUT');
+    
     updateTimeOut = setTimeout(() => {
-      console.log('UPDATE - TIMEOUT REACHED!');
+      
       setStatePage({
         ...statePage,
         update: 'up-to-date',
@@ -89,14 +89,14 @@ function CheckUpdatePage() {
     }, 10000);
 
     if (navigator.onLine) {
-      console.log('UPDATE - CHECKING');
+      
       ipcChannel.sendMessage('update-check');
-      console.log('UPDATE - WAITING');
+      
       ipcChannel.once('update-check-out', (message) => {
         // We clear the timeout
         clearTimeout(updateTimeOut);
-        console.log('UPDATE - GETTING INFO:');
-        console.log({ message });
+        
+        
         let modalData;
         if (message[0] == 'updating') {
           modalData = {
@@ -132,7 +132,7 @@ function CheckUpdatePage() {
         ...statePage,
         update: 'up-to-date',
       });
-      console.log('No internet connection');
+      
     }
 
     const updateFiles = () => {
@@ -146,14 +146,14 @@ function CheckUpdatePage() {
       const settingsStorage = JSON.parse(
         localStorage.getItem('settings_emudeck')
       );
-      // console.log({ settingsStorage });
+      
       if (settingsStorage) {
         const shadersStored = settingsStorage.shaders;
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
         const achievementsStored = settingsStorage.achievements;
 
-        console.log({ overwriteConfigEmusStored });
-        console.log({ overwriteConfigEmus });
+        
+        
 
         delete settingsStorage.installEmus.primehacks;
         delete settingsStorage.installEmus.cemunative;
@@ -161,15 +161,15 @@ function CheckUpdatePage() {
         const installEmusStored = settingsStorage.installEmus;
 
         // Theres probably a better way to do this...
-        console.log('2 - VERSION - CHECKING');
+        
         ipcChannel.sendMessage('version');
 
         ipcChannel.once('version-out', (version) => {
-          console.log('2 - VERSION - GETTING');
-          console.log({ version });
+          
+          
           ipcChannel.sendMessage('system-info-in');
           ipcChannel.once('system-info-out', (platform) => {
-            console.log('2 - VERSION - GETTING SYSTEM TOO');
+            
             console.log({
               system: platform,
               version: version[0],
@@ -196,13 +196,13 @@ function CheckUpdatePage() {
           });
         });
       } else {
-        console.log('1 - VERSION - CHECKING');
+        
         ipcChannel.sendMessage('version');
         ipcChannel.once('version-out', (version) => {
-          console.log('1 - VERSION - GETTING');
+          
           ipcChannel.sendMessage('system-info-in');
           ipcChannel.once('system-info-out', (platform) => {
-            console.log('1 - VERSION - GETTING SYSTEM TOO');
+            
             console.log({
               system: platform,
               version: version[0],
@@ -224,12 +224,12 @@ function CheckUpdatePage() {
     // ipcChannel.sendMessage('clean-log');
 
     //  setTimeout(() => {
-    // console.log('UPDATE - CHECKING');
+    
     // ipcChannel.sendMessage('update-check');
-    // console.log('UPDATE - WAITING');
+    
     // ipcChannel.once('update-check-out', (message) => {
-    //   console.log('UPDATE - GETTING INFO:');
-    //   console.log({ message });
+    //   
+    //   
     //   setStatePage({
     //     ...statePage,
     //     update: message[0],
@@ -289,12 +289,12 @@ function CheckUpdatePage() {
         modal: modalData,
       });
 
-      console.log('check-git');
+      
       ipcChannel.sendMessage('check-git');
       ipcChannel.once('check-git', (error, cloneStatusCheck, stderr) => {
-        console.log({ error });
-        console.log({ cloneStatusCheck });
-        console.log({ stderr });
+        
+        
+        
         cloneStatusCheck = cloneStatusCheck.replace('\n', '');
         cloneStatusCheck.includes('true')
           ? (cloneStatusCheck = true)
@@ -313,11 +313,11 @@ function CheckUpdatePage() {
     if (cloned === false) {
       if (navigator.onLine) {
         ipcChannel.sendMessage(`clone`, branch);
-        console.log('clone');
+        
         ipcChannel.once('clone', (error, cloneStatusClone, stderr) => {
-          console.log({ error });
-          console.log({ cloneStatusClone });
-          console.log({ stderr });
+          
+          
+          
           if (cloneStatusClone.includes('true')) {
             setStatePage({ ...statePage, downloadComplete: true });
           }
@@ -337,11 +337,11 @@ function CheckUpdatePage() {
     } else if (cloned === true) {
       if (navigator.onLine) {
         ipcChannel.sendMessage('pull', branch);
-        console.log('pull');
+        
         ipcChannel.once('pull', (error, pullStatus, stderr) => {
-          console.log({ error });
-          console.log({ pullStatus });
-          console.log({ stderr });
+          
+          
+          
           setStatePage({ ...statePage, downloadComplete: true });
           // Update timeout
         });
@@ -388,7 +388,7 @@ function CheckUpdatePage() {
       if (messageLogCurrent.includes('done')) {
         clearInterval(interval);
       } else {
-        console.log('interval open');
+        
       }
     }, pollingTime);
 

@@ -35,7 +35,7 @@ function MigrationPage() {
   } = statePage;
 
   const storageSet = (storageName) => {
-    // console.log(({ storageName });
+    
     // We prevent the function to continue if the custom location testing is still in progress
     if (status === 'testing') {
       return;
@@ -55,12 +55,12 @@ function MigrationPage() {
 
         ipcChannel.once('testLocation', (messageLocation) => {
           const stdoutLocation = messageLocation.stdout.replace('\n', '');
-          // console.log(({ stdout });
+          
           let statusLocation;
           stdoutLocation.includes('Valid')
             ? (statusLocation = true)
             : (statusLocation = false);
-          // console.log(({ status });
+          
           if (statusLocation === true) {
             setStatePage({
               ...statePage,
@@ -112,7 +112,7 @@ function MigrationPage() {
     ]);
 
     ipcChannel.once('SDCardValid', (message) => {
-      // console.log((message);
+      
       const stdout = message.stdout.replace('\n', '');
       let status;
       stdout.includes('Valid') ? (status = true) : (status = false);
@@ -146,7 +146,7 @@ function MigrationPage() {
   const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
-      // console.log((message);
+      
       let stdout = message.stdout.replace('\n', '');
       if (stdout === '') {
         stdout = null;

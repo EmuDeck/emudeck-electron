@@ -67,7 +67,7 @@ function PatroenLoginPage() {
   const patreonSetToken = (data) => {
     let patronTokenValue;
 
-    console.log(data.target.value);
+    
     data.target.value === ''
       ? (patronTokenValue = null)
       : (patronTokenValue = data.target.value);
@@ -133,7 +133,7 @@ function PatroenLoginPage() {
         }
       })
       .catch((error) => {
-        console.log({ error });
+        
         setStatePage({
           ...statePage,
           status: null,
@@ -176,15 +176,15 @@ function PatroenLoginPage() {
         const installEmusStored = settingsStorage.installEmus;
 
         // Theres probably a better way to do this...
-        console.log('2 - VERSION - CHECKING');
+        
         ipcChannel.sendMessage('version');
 
         ipcChannel.once('version-out', (version) => {
-          console.log('2 - VERSION - GETTING');
-          console.log({ version });
+          
+          
           ipcChannel.sendMessage('system-info-in');
           ipcChannel.once('system-info-out', (platform) => {
-            console.log('2 - VERSION - GETTING SYSTEM TOO');
+            
             console.log({
               system: platform,
               version: version[0],

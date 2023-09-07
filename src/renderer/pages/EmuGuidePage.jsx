@@ -43,9 +43,9 @@ function EmuGuidePage() {
   const checkBios = (biosCommand) => {
     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
-      // console.log({ biosCommand });
+      
       status = status.stdout;
-      // console.log({ status });
+      
       status = status.replace('\n', '');
       let biosStatus;
       status.includes('true') ? (biosStatus = true) : (biosStatus = false);
@@ -77,7 +77,7 @@ function EmuGuidePage() {
   };
 
   const installEmu = (emulator, name) => {
-    console.log(emulator);
+    
 
     setStatePage({
       ...statePage,
@@ -89,9 +89,9 @@ function EmuGuidePage() {
     ]);
 
     ipcChannel.once(`${name}_install`, (status) => {
-      // console.log({ status });
+      
       status = status.stdout;
-      // console.log({ status });
+      
       status = status.replace('\n', '');
       // Lets check if it did install
       ipcChannel.sendMessage('emudeck', [
@@ -99,9 +99,9 @@ function EmuGuidePage() {
       ]);
 
       ipcChannel.once(`${name}_IsInstalled`, (status) => {
-        // console.log({ status });
+        
         status = status.stdout;
-        console.log({ status });
+        
         status = status.replace('\n', '');
 
         if (status.includes('true')) {
@@ -140,7 +140,7 @@ function EmuGuidePage() {
   };
 
   const uninstallEmu = (emulator, name, alternative = false) => {
-    console.log(emulator);
+    
 
     if (
       confirm(
@@ -164,9 +164,9 @@ function EmuGuidePage() {
       }
 
       ipcChannel.once(`${name}_uninstall`, (status) => {
-        // console.log({ status });
+        
         status = status.stdout;
-        // console.log({ status });
+        
         status = status.replace('\n', '');
         // Lets check if it did install
         ipcChannel.sendMessage('emudeck', [
@@ -174,9 +174,9 @@ function EmuGuidePage() {
         ]);
 
         ipcChannel.once(`${name}_IsInstalled`, (status) => {
-          // console.log({ status });
+          
           status = status.stdout;
-          console.log({ status });
+          
           status = status.replace('\n', '');
 
           if (status.includes('false')) {
@@ -222,9 +222,9 @@ function EmuGuidePage() {
       `${name}_resetConfig|||${name}_resetConfig`,
     ]);
     ipcChannel.once(`${name}_resetConfig`, (status) => {
-      console.log(`${name}_resetConfig`);
+      
       status = status.stdout;
-      console.log({ status });
+      
       status = status.replace('\n', '');
 
       if (status.includes('true')) {

@@ -91,7 +91,7 @@ function GyroDSUPage() {
     ]);
 
     ipcChannel.once('Gyro', (status) => {
-      console.log({ status });
+      
       const { stdout } = status;
       const sterr = status.stdout;
       const { error } = status;
@@ -131,7 +131,7 @@ function GyroDSUPage() {
     ]);
 
     ipcChannel.once('checkPWD', (stdout) => {
-      console.log({ stdout });
+      
       stdout = stdout.replace('\n', '');
       stdout.includes('NP') ? (stdout = false) : (stdout = true);
       setStatePage({

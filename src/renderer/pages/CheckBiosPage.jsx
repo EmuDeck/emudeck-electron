@@ -31,9 +31,9 @@ function CheckBiosPage() {
   const checkBios = (biosCommand) => {
     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
-      console.log({ biosCommand });
+      
       status = status.stdout;
-      console.log({ status });
+      
       status = status.replace('\n', '');
       let biosStatus;
       status.includes('true') ? (biosStatus = true) : (biosStatus = false);

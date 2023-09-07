@@ -78,7 +78,7 @@ function CloudSyncPageConfig() {
     ipcChannel.sendMessage('emudeck', [`uploadAll|||cloud_sync_uploadEmuAll`]);
 
     ipcChannel.once('uploadAll', (message) => {
-      console.log({ message });
+      
       const modalData = {
         active: true,
         header: <span className="h4">Upload Complete</span>,
@@ -113,7 +113,7 @@ function CloudSyncPageConfig() {
     ]);
 
     ipcChannel.once('downloadAll', (message) => {
-      console.log({ message });
+      
       const modalData = {
         active: true,
         header: <span className="h4">Download Complete</span>,
@@ -141,7 +141,7 @@ function CloudSyncPageConfig() {
     //   ]);
     //   ipcChannel.once('cloud_sync_install_and_config_with_code', (message) => {
     //     // No versioning found, what to do?
-    //     console.log('cloudSync', message);
+    //     
     //     alert(
     //       `All Done, every time you load a game your Game states and Saved games will be synced to ${cloudSync}`
     //     );
@@ -158,7 +158,7 @@ function CloudSyncPageConfig() {
     } else {
       cloudFunction = 'cloud_backup_install_and_config';
     }
-    console.log(`${cloudFunction} ${cloudSync}`);
+    
 
     ipcChannel.sendMessage('emudeck', [
       `cloud_saves|||${cloudFunction} ${cloudSync}`,

@@ -47,7 +47,7 @@ function RomStoragePage() {
 
       ipcChannel.once('customLocation', (message) => {
         const stdout = message.stdout.replace('\n', '');
-        console.log({ message });
+        
         const storagePath = stdout;
 
         setStatePage({
@@ -75,12 +75,12 @@ function RomStoragePage() {
         ipcChannel.once('testLocation', (messageLocation) => {
           if (messageLocation) {
             const stdoutLocation = messageLocation.stdout.replace('\n', '');
-            // console.log({ message });
+            
             let statusLocation;
             stdoutLocation.includes('Valid')
               ? (statusLocation = true)
               : (statusLocation = false);
-            // console.log({ status });
+            
             if (statusLocation === true) {
               setStatePage({
                 ...statePage,
@@ -146,7 +146,7 @@ function RomStoragePage() {
   const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
-      // console.log(message);
+      
       let stdout = message.stdout.replace('\n', '');
       if (stdout === '') {
         stdout = null;
@@ -167,7 +167,7 @@ function RomStoragePage() {
     ]);
 
     ipcChannel.once('SDCardValid', (message) => {
-      // console.log(message);
+      
 
       if (message === 'nogit') {
         const modalData = {

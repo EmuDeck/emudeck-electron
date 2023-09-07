@@ -92,7 +92,7 @@ function PowerToolsPage() {
     ]);
 
     ipcChannel.once('powerTools', (status) => {
-      // console.log({ status });
+      
       const { stdout } = status;
 
       let modalData;
@@ -132,7 +132,7 @@ function PowerToolsPage() {
     ]);
 
     ipcChannel.once('checkPWD', (messagePWD) => {
-      // console.log({ stdout });
+      
       const stdout = messagePWD.replace('\n', '');
       let stdoutPWD;
       stdout.includes('NP') ? (stdoutPWD = false) : (stdoutPWD = true);

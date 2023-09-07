@@ -72,10 +72,10 @@ function EmulatorSelectorPage() {
   const { disabledNext, disabledBack, data, modal, lastSelected } = statePage;
 
   const setAlternativeEmulator = (system, emuName, emuName2, disable) => {
-    //console.log({ system, emuName, emuName2, disable });
+    
 
     if (emuName == 'ra' || emuName == 'ares') {
-      console.log(installEmus[emuName2]);
+      
 
       setState({
         ...state,
@@ -428,7 +428,7 @@ function EmulatorSelectorPage() {
         // };
       }
 
-      //console.log({ systemsOption });
+      
 
       systemsValue = {
         gba: systemsOption.gba ? systemsOption.gba : emulatorAlternative.gba,
@@ -509,16 +509,16 @@ function EmulatorSelectorPage() {
 
     setPreviousState(installEmus);
 
-    //     installEmus.forEach((element) => console.log(element));
+    //     installEmus.forEach((element) => 
     //
     //
-    //     console.log('emuModified', emuModified);
+    //     
     //     Object.keys(changedKeys).map((key) => (emuModified = key));
     //     if (
     //       installEmus[emuModified] !== undefined &&
     //       installEmus[emuModified].status
     //     ) {
-    //       console.log('emuModified', emuModified);
+    //       
     //
     //     }
 

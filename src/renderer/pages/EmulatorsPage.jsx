@@ -102,7 +102,7 @@ function EmulatorsPage() {
       modal: modalData,
     });
 
-    console.log({ updates });
+    
 
     setTimeout(() => {
       let i = 2;
@@ -124,7 +124,7 @@ function EmulatorsPage() {
             item.id === 'xemu' ||
             item.id === 'mgba'
           ) {
-            console.log('NOT SUPPORTED');
+            
             return;
           }
         }
@@ -149,7 +149,7 @@ function EmulatorsPage() {
         ]);
 
         ipcChannel.once(`${code}_resetConfig`, (message) => {
-          console.log(`${code}_resetConfig`);
+          
           let status = message.stdout;
           status = status.replace('\n', '');
 
@@ -223,7 +223,7 @@ function EmulatorsPage() {
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?
       if (repoVersions === '') {
-        console.log('no versioning found');
+        
       }
 
       // Thanks chatGPT lol
@@ -262,7 +262,7 @@ function EmulatorsPage() {
           updates[key] = obj1[key];
         }
       }
-      console.log({ updates });
+      
 
       setStatePage({
         ...statePage,

@@ -42,7 +42,7 @@ fs.exists(`${os.homedir()}/emudeck/emudeck.AppImage.log`, function (exists) {
   if (exists) {
     fs.unlinkSync(`${os.homedir()}/emudeck/emudeck.AppImage.log`);
   } else {
-    console.log('File not found, so not deleting.');
+    
   }
 });
 
@@ -206,7 +206,7 @@ const createWindow = async () => {
     }
 
     // Adjust zoom factor according to DPI or scale factor that we determined before
-    console.log('Display with current scale factor: %o', scaleFactorW);
+    
     // mainWindow.webContents.setZoomFactor(scaleFactorW);
     mainWindow.show();
   });
@@ -224,7 +224,7 @@ const createWindow = async () => {
     win.loadURL(edata.url);
 
     const contents = win.webContents;
-    console.log(contents);
+    
 
     // shell.openExternal(edata.url);
     return { action: 'deny' };
@@ -307,9 +307,9 @@ ipcMain.on('emudeck', async (event, command) => {
   // Lets detect if the repo was cloned properly
   if (fs.existsSync(allPath)) {
     // file exists
-    console.log('all.sh detected');
+    
   } else {
-    console.log('all not detected');
+    
     event.reply(backChannel, 'nogit');
     let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout master && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
 
@@ -364,9 +364,9 @@ ipcMain.on('emudeckAdmin', async (event, command) => {
   // Lets detect if the repo was cloned properly
   if (fs.existsSync(allPath)) {
     // file exists
-    console.log('all.ps1 detected');
+    
   } else {
-    console.log('all.ps1 not detected');
+    
     event.reply(backChannel, 'nogit');
     let bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
 
@@ -488,7 +488,7 @@ ipcMain.on('update-check', async (event, command) => {
   result
     .then((checkResult: UpdateCheckResult) => {
       const { updateInfo } = checkResult;
-      console.log({ updateInfo });
+      
       logCommand(updateInfo);
       logCommand('UPDATE: CHECKING');
       //  updateInfo:
@@ -507,13 +507,13 @@ ipcMain.on('update-check', async (event, command) => {
         numeric: true,
         sensitivity: 'base',
       });
-      // console.log({ versionCheck });
-      // console.log('- 1 means update');
-      // console.log('1 and 0 means up to date');
+      
+      
+      
       logCommand('UPDATE: COMPARING VERSIONS');
       if (versionCheck === 1 || versionCheck === 0) {
         logCommand('UPDATE: UP TO DATE');
-        console.log('Up to date, mate');
+        
         event.reply('update-check-out', ['up-to-date', updateInfo]);
         logCommand(`${JSON.stringify(updateInfo)}`);
       } else {
@@ -522,7 +522,7 @@ ipcMain.on('update-check', async (event, command) => {
           shellType
         );
         logCommand('UPDATE: UPDATING!');
-        console.log('Lets update!');
+        
         event.reply('update-check-out', ['updating', updateInfo]);
         logCommand(`${JSON.stringify(updateInfo)}`);
 
@@ -735,11 +735,11 @@ ipcMain.on('saveSettings', async (event, command) => {
 
   fs.writeFile(settingsFile, jsonContent, 'utf8', function (err) {
     if (err) {
-      console.log('An error occured while writing JSON Object to File.');
+      
       event.reply(backChannel, err);
     }
     event.reply(backChannel, 'true');
-    console.log('JSON file has been saved.');
+    
   });
 });
 
@@ -835,7 +835,7 @@ ipcMain.on('get-store', async (event) => {
         };
         resolve(masterJson);
       }).then((masterJson) => {
-        // console.log(masterJson);
+        
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/store.json`,
           JSON.stringify(masterJson)
@@ -859,7 +859,7 @@ ipcMain.on('get-store', async (event) => {
 });
 
 ipcMain.on('build-store', async (event) => {
-  console.log('build');
+  
 
   const buildJson = (system, name) => {
     // GB HomebrewGames
@@ -899,7 +899,7 @@ ipcMain.on('build-store', async (event) => {
         };
         resolve(masterJson);
       }).then((masterJson) => {
-        // console.log(masterJson);
+        
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/${system}.json`,
           JSON.stringify(masterJson)
@@ -928,7 +928,7 @@ ipcMain.on('installGame', async (event, command) => {
   const system = command[2];
 
   const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
-  console.log(command);
+  
   // Alternative syntax using RegExp constructor
   // const regex = new RegExp('([^\\/]+?)(?=\\.\\w+$)|([^\\/]+?)(?=$)', '')
 
@@ -952,7 +952,7 @@ ipcMain.on('installGame', async (event, command) => {
 
 ipcMain.on('unInstallGame', async (event, command) => {
   const backChannel = 'unInstallGame';
-  console.log(command);
+  
   const game = command[0];
   const system = command[2];
 
@@ -1098,7 +1098,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('session-created', (session) => {
-  console.log(session);
+  
 });
 
 ipcMain.on('run-app', async (event, appPath) => {
@@ -1131,7 +1131,7 @@ if (!gotTheLock) {
     'second-instance',
     (event, commandLine, workingDirectory, additionalData) => {
       // Print out data received from the second instance.
-      console.log(additionalData);
+      
 
       // Someone tried to run a second instance, we should focus our window.
       if (myWindow) {

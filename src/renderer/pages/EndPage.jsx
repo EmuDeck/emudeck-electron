@@ -42,7 +42,7 @@ function EndPage() {
   const readMSG = () => {
     ipcChannel.sendMessage('getMSG', []);
     ipcChannel.on('getMSG', (messageInput) => {
-      // // console.log({ message });
+      // 
       const messageArray = messageInput.stdout.split('#');
       const messageText = messageArray[1];
       let messagePercent = messageArray[0];
@@ -95,9 +95,9 @@ function EndPage() {
       }
       ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
 
-      console.log(`${srmPath}Emulation\\tools\\srm.exe`);
+      
       ipcChannel.once('run-app', (message) => {
-        console.log({ message });
+        
       });
     } else {
       const modalData = {
@@ -215,7 +215,7 @@ function EndPage() {
       localStorage.setItem('settings_emudeck', json);
 
       if (system === 'win32') {
-        // console.log('saving settings');
+        
 
         ipcChannel.sendMessage('bash-nolog', [
           `echo ${state.achievements.token} > "%userprofile%/AppData/Roaming/EmuDeck/.rat"`,
@@ -223,10 +223,10 @@ function EndPage() {
         ipcChannel.sendMessage('bash-nolog', [
           `echo ${state.achievements.user} > "%userprofile%/AppData/Roaming/EmuDeck/.rau"`,
         ]);
-        // console.log({ state });
+        
         ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
         ipcChannel.once('saveSettings', () => {
-          // console.log({ saveSettings });
+          
           ipcChannel.sendMessage('bash-nolog', [
             `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/setup.ps1`,
           ]);
@@ -243,7 +243,7 @@ function EndPage() {
 
         // Wait for settings.sh creation.
         ipcChannel.once('startSettings', () => {
-          // console.log('startSettings');
+          
 
           // System
           ipcChannel.sendMessage('bash', [
@@ -623,14 +623,14 @@ function EndPage() {
           ]);
 
           // Closing
-          // console.log('finalSetting');
+          
           ipcChannel.sendMessage('bash-nolog', [
             `finalSetting|||echo finishedUI="done" >> ${settingsFile} && echo true`,
           ]);
         });
 
         ipcChannel.once('finalSetting', (messageFinalSetting) => {
-          // console.log('Running installer');
+          
           const { stdout } = messageFinalSetting;
           // Installation
 
@@ -643,7 +643,7 @@ function EndPage() {
           ]);
         });
         ipcChannel.once('finish', (messageFinish) => {
-          // console.log('finish');
+          
           const { stdout } = messageFinish;
           if (stdout.includes('true')) {
             setStatePage({ ...statePage, disabledNext: false });
