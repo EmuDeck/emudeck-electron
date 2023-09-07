@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import { useNavigate } from 'react-router-dom';
 // import { useTranslation } from 'react-i18next';
 import Welcome from 'components/organisms/Wrappers/Welcome';
@@ -41,8 +42,9 @@ function WelcomePage() {
     cloned: null,
     data: '',
     modal: undefined,
+    dom: undefined,
   });
-  const { disabledNext, disabledBack, updates, modal } = statePage;
+  const { disabledNext, disabledBack, updates, modal, dom } = statePage;
   const navigate = useNavigate();
   const selectMode = (value) => {
     setState({ ...state, mode: value });
@@ -50,6 +52,15 @@ function WelcomePage() {
       navigate('/rom-storage');
     }
   };
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
 
   // show changelog after update
   useEffect(() => {
@@ -447,48 +458,53 @@ function WelcomePage() {
   ];
 
   return (
-    <Wrapper>
-      {second === false && (
-        <Header
-          title={`Welcome to EmuDeck for ${system} ${system === 'darwin' ? '\uF8FF' : ''}`}
-        />
-      )}
+    <div ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        {second === false && (
+          <Header
+            title={`Welcome to EmuDeck for ${system} ${
+              system === 'darwin' ? '\uF8FF' : ''
+            }`}
+          />
+        )}
 
-      {second === true && (
-        <Header
-          title={`Welcome back to EmuDeck for ${system}  ${
-            system === 'darwin' ? '\uF8FF' : ''
-          }`}
+        {second === true && (
+          <Header
+            title={`Welcome back to EmuDeck for ${system}  ${
+              system === 'darwin' ? '\uF8FF' : ''
+            }`}
+          />
+        )}
+        <Welcome
+          settingsCards={settingsCards}
+          settingsCardsFeatured={settingsCardsFeatured}
+          functions={functions}
+          updates={updates}
+          alert={
+            second
+              ? ``
+              : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/Y5r2WZAImuY" target="_blank">Check out this guide</a>'
+          }
+          alertCSS="alert--info"
+          onClick={selectMode}
         />
-      )}
-      <Welcome
-        settingsCards={settingsCards}
-        settingsCardsFeatured={settingsCardsFeatured}
-        functions={functions}
-        updates={updates}
-        alert={
-          second
-            ? ``
-            : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/Y5r2WZAImuY" target="_blank">Check out this guide</a>'
-        }
-        alertCSS="alert--info"
-        onClick={selectMode}
-      />
-      {second === false && (
-        <Footer
-          back={second ? 'tools-and-stuff' : false}
-          backText={second ? 'Tools & stuff' : 'Install EmuDeck First'}
-          third={system !== 'win32' ? 'change-log' : ''}
-          thirdText="See changelog"
-          fourthText="Exit EmuDeck"
-          next="rom-storage"
-          exit={gamemode}
-          disabledNext={second ? false : disabledNext}
-          disabledBack={second ? false : disabledBack}
-        />
-      )}
-      <EmuModal modal={modal} />
-    </Wrapper>
+        {second === false && (
+          <Footer
+            back={second ? 'tools-and-stuff' : false}
+            backText={second ? 'Tools & stuff' : 'Install EmuDeck First'}
+            third={system !== 'win32' ? 'change-log' : ''}
+            thirdText="See changelog"
+            fourthText="Exit EmuDeck"
+            next="rom-storage"
+            exit={gamemode}
+            disabledNext={second ? false : disabledNext}
+            disabledBack={second ? false : disabledBack}
+          />
+        )}
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 
