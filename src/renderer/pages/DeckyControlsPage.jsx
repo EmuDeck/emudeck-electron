@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
@@ -17,9 +18,18 @@ function DeckyControlsPage() {
     modal: false,
     pass1: 'a',
     pass2: 'b',
+    dom: undefined,
   });
-  const { disabledNext, disabledBack, hasSudo, sudoPass, modal, pass1, pass2 } =
-    statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    hasSudo,
+    sudoPass,
+    modal,
+    pass1,
+    pass2,
+    dom,
+  } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
@@ -91,7 +101,6 @@ function DeckyControlsPage() {
     ]);
 
     ipcChannel.once('DeckyControls', (status) => {
-      
       const { stdout } = status;
       let modalData;
       if (stdout.includes('true')) {
@@ -130,7 +139,6 @@ function DeckyControlsPage() {
     ]);
 
     ipcChannel.once('checkPWD', (message) => {
-      
       let sudo;
       stdout = message.replace('\n', '');
       stdout.includes('NP') ? (sudo = false) : (sudo = true);
@@ -141,27 +149,41 @@ function DeckyControlsPage() {
     });
   }, []);
 
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
   return (
-    <Wrapper>
-      <Header title="Configure DeckyControls" />
-      <DeckyControls
-        installClick={installDeckyControls}
-        sudoPass={sudoPass}
-        onChange={setSudoPass}
-        onChangeSetPass={setPassword}
-        onChangeCheckPass={checkPassword}
-        onClick={createSudo}
-        hasSudo={hasSudo}
-        passValidates={pass1 === pass2}
-      />
-      <Footer
-        next={false}
-        nextText={sudoPass ? 'Continue' : 'Skip'}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
-      <EmuModal modal={modal} />
-    </Wrapper>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Configure DeckyControls" />
+        <DeckyControls
+          installClick={installDeckyControls}
+          sudoPass={sudoPass}
+          onChange={setSudoPass}
+          onChangeSetPass={setPassword}
+          onChangeCheckPass={checkPassword}
+          onClick={createSudo}
+          hasSudo={hasSudo}
+          passValidates={pass1 === pass2}
+        />
+        <Footer
+          next={false}
+          nextText={sudoPass ? 'Continue' : 'Skip'}
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 

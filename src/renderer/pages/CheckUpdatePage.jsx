@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useContext, useRef, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
@@ -27,6 +28,7 @@ function CheckUpdatePage() {
     update: null,
     cloned: null,
     data: '',
+    dom: undefined,
     modal: {
       active: true,
       header: <span className="h4">Checking for updates...</span>,
@@ -47,6 +49,7 @@ function CheckUpdatePage() {
     cloned,
     update,
     modal,
+    dom,
   } = statePage;
   const navigate = useNavigate();
 
@@ -78,9 +81,8 @@ function CheckUpdatePage() {
   let updateTimeOut;
   useEffect(() => {
     // Update timeout + Force clone check
-    
+
     updateTimeOut = setTimeout(() => {
-      
       setStatePage({
         ...statePage,
         update: 'up-to-date',
@@ -89,14 +91,12 @@ function CheckUpdatePage() {
     }, 10000);
 
     if (navigator.onLine) {
-      
       ipcChannel.sendMessage('update-check');
-      
+
       ipcChannel.once('update-check-out', (message) => {
         // We clear the timeout
         clearTimeout(updateTimeOut);
-        
-        
+
         let modalData;
         if (message[0] == 'updating') {
           modalData = {
@@ -132,7 +132,6 @@ function CheckUpdatePage() {
         ...statePage,
         update: 'up-to-date',
       });
-      
     }
 
     const updateFiles = () => {
@@ -146,14 +145,11 @@ function CheckUpdatePage() {
       const settingsStorage = JSON.parse(
         localStorage.getItem('settings_emudeck')
       );
-      
+
       if (settingsStorage) {
         const shadersStored = settingsStorage.shaders;
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
         const achievementsStored = settingsStorage.achievements;
-
-        
-        
 
         delete settingsStorage.installEmus.primehacks;
         delete settingsStorage.installEmus.cemunative;
@@ -161,15 +157,12 @@ function CheckUpdatePage() {
         const installEmusStored = settingsStorage.installEmus;
 
         // Theres probably a better way to do this...
-        
+
         ipcChannel.sendMessage('version');
 
         ipcChannel.once('version-out', (version) => {
-          
-          
           ipcChannel.sendMessage('system-info-in');
           ipcChannel.once('system-info-out', (platform) => {
-            
             console.log({
               system: platform,
               version: version[0],
@@ -196,13 +189,10 @@ function CheckUpdatePage() {
           });
         });
       } else {
-        
         ipcChannel.sendMessage('version');
         ipcChannel.once('version-out', (version) => {
-          
           ipcChannel.sendMessage('system-info-in');
           ipcChannel.once('system-info-out', (platform) => {
-            
             console.log({
               system: platform,
               version: version[0],
@@ -224,12 +214,12 @@ function CheckUpdatePage() {
     // ipcChannel.sendMessage('clean-log');
 
     //  setTimeout(() => {
-    
+
     // ipcChannel.sendMessage('update-check');
-    
+
     // ipcChannel.once('update-check-out', (message) => {
-    //   
-    //   
+    //
+    //
     //   setStatePage({
     //     ...statePage,
     //     update: message[0],
@@ -289,12 +279,8 @@ function CheckUpdatePage() {
         modal: modalData,
       });
 
-      
       ipcChannel.sendMessage('check-git');
       ipcChannel.once('check-git', (error, cloneStatusCheck, stderr) => {
-        
-        
-        
         cloneStatusCheck = cloneStatusCheck.replace('\n', '');
         cloneStatusCheck.includes('true')
           ? (cloneStatusCheck = true)
@@ -313,11 +299,8 @@ function CheckUpdatePage() {
     if (cloned === false) {
       if (navigator.onLine) {
         ipcChannel.sendMessage(`clone`, branch);
-        
+
         ipcChannel.once('clone', (error, cloneStatusClone, stderr) => {
-          
-          
-          
           if (cloneStatusClone.includes('true')) {
             setStatePage({ ...statePage, downloadComplete: true });
           }
@@ -337,11 +320,8 @@ function CheckUpdatePage() {
     } else if (cloned === true) {
       if (navigator.onLine) {
         ipcChannel.sendMessage('pull', branch);
-        
+
         ipcChannel.once('pull', (error, pullStatus, stderr) => {
-          
-          
-          
           setStatePage({ ...statePage, downloadComplete: true });
           // Update timeout
         });
@@ -388,59 +368,76 @@ function CheckUpdatePage() {
       if (messageLogCurrent.includes('done')) {
         clearInterval(interval);
       } else {
-        
       }
     }, pollingTime);
 
     return () => clearInterval(interval);
   }, []);
 
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
   return (
-    <Wrapper>
-      {update === 'up-to-date' && (
-        <>
-          <Header title="EmuDeck Git cloning log" />
-          <Main>
-            <>
-              <p className="lead">
-                If you can't get past this screen send us the log down bellow{' '}
-                {system === 'win32' && (
-                  <a
-                    target="_blank"
-                    className="https://emudeck.github.io/common-issues/windows/#emudeck-is-stuck-on-the-checking-for-updates-message"
-                  >
-                    Wiki FAQ
-                  </a>
-                )}
-                {system !== 'win32' && (
-                  <a
-                    target="_blank"
-                    className="link-simple link-simple--1"
-                    href="https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading"
-                  >
-                    Wiki FAQ
-                  </a>
-                )}
-              </p>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        {update === 'up-to-date' && (
+          <>
+            <Header title="EmuDeck Git cloning log" />
+            <Main>
+              <>
+                <p className="lead">
+                  If you can't get past this screen send us the log down bellow{' '}
+                  {system === 'win32' && (
+                    <a
+                      target="_blank"
+                      className="https://emudeck.github.io/common-issues/windows/#emudeck-is-stuck-on-the-checking-for-updates-message"
+                    >
+                      Wiki FAQ
+                    </a>
+                  )}
+                  {system !== 'win32' && (
+                    <a
+                      target="_blank"
+                      className="link-simple link-simple--1"
+                      href="https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading"
+                    >
+                      Wiki FAQ
+                    </a>
+                  )}
+                </p>
 
-              <ProgressBar css="progress--success" infinite={true} max="100" />
-            </>
+                <ProgressBar
+                  css="progress--success"
+                  infinite={true}
+                  max="100"
+                />
+              </>
 
-            <code
-              style={{
-                fontSize: '14px',
-                Height: '100%',
-                overflow: 'auto',
-                whiteSpace: 'pre-line',
-              }}
-            >
-              {messageLog}
-            </code>
-          </Main>
-        </>
-      )}
-      <EmuModal modal={modal} />
-    </Wrapper>
+              <code
+                style={{
+                  fontSize: '14px',
+                  Height: '100%',
+                  overflow: 'auto',
+                  whiteSpace: 'pre-line',
+                }}
+              >
+                {messageLog}
+              </code>
+            </Main>
+          </>
+        )}
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 

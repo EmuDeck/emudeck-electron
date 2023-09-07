@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef, useRef } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -447,6 +447,8 @@ function WelcomePage() {
       function: () => {},
     },
   ];
+
+  //GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -456,6 +458,7 @@ function WelcomePage() {
       setStatePage({ ...statePage, dom: domElements });
     }
   }, [statePage]);
+
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}

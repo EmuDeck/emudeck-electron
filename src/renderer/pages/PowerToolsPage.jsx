@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
@@ -17,9 +18,18 @@ function PowerToolsPage() {
     pass1: 'a',
     pass2: 'b',
     modal: false,
+    dom: undefined,
   });
-  const { disabledNext, disabledBack, hasSudo, sudoPass, modal, pass1, pass2 } =
-    statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    hasSudo,
+    sudoPass,
+    modal,
+    pass1,
+    pass2,
+    dom,
+  } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
@@ -92,7 +102,6 @@ function PowerToolsPage() {
     ]);
 
     ipcChannel.once('powerTools', (status) => {
-      
       const { stdout } = status;
 
       let modalData;
@@ -132,7 +141,6 @@ function PowerToolsPage() {
     ]);
 
     ipcChannel.once('checkPWD', (messagePWD) => {
-      
       const stdout = messagePWD.replace('\n', '');
       let stdoutPWD;
       stdout.includes('NP') ? (stdoutPWD = false) : (stdoutPWD = true);
@@ -143,27 +151,41 @@ function PowerToolsPage() {
     });
   }, []);
 
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
   return (
-    <Wrapper>
-      <Header title="Configure Power Tools" />
-      <PowerTools
-        installClick={installPowerTools}
-        sudoPass={sudoPass}
-        onChange={setSudoPass}
-        onChangeSetPass={setPassword}
-        onChangeCheckPass={checkPassword}
-        onClick={createSudo}
-        hasSudo={hasSudo}
-        passValidates={pass1 === pass2}
-      />
-      <Footer
-        next={false}
-        nextText={sudoPass ? 'Continue' : 'Skip'}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
-      <EmuModal modal={modal} />
-    </Wrapper>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Configure Power Tools" />
+        <PowerTools
+          installClick={installPowerTools}
+          sudoPass={sudoPass}
+          onChange={setSudoPass}
+          onChangeSetPass={setPassword}
+          onChangeCheckPass={checkPassword}
+          onClick={createSudo}
+          hasSudo={hasSudo}
+          passValidates={pass1 === pass2}
+        />
+        <Footer
+          next={false}
+          nextText={sudoPass ? 'Continue' : 'Skip'}
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 

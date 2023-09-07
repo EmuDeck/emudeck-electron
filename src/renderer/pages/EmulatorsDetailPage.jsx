@@ -1,12 +1,40 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuDetail from 'components/organisms/Wrappers/EmuDetail';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
+import {
+  citraControls,
+  citraHotkeys,
+  duckstationControls,
+  duckstationHotkeys,
+  duckstationHotkeys,
+  gamecubeControls,
+  gamecubeHotkeysExpert,
+  gamecubeHotkeys,
+  primehackControls,
+  primehackHotkeysExpert,
+  primehackHotkeys,
+  pcsx2Controls,
+  pcsx2HotkeysExpert,
+  pcsx2Hotkeys,
+  raHotkeys,
+  wiiClassicHotkeys,
+  wiiControls,
+  wiiHotkeysExpert,
+  wiiHotkeys,
+  wiiNunchuckControls,
+  cemuControls,
+  cemuHotkeys,
+  yuzuControls,
+  yuzuHotkeysExpert,
+  yuzuHotkeys,
+} from 'components/utils/images/hotkeys.js';
 const emuData = require('data/emuData.json');
 
 function EmulatorsDetailPage() {
@@ -23,6 +51,7 @@ function EmulatorsDetailPage() {
     updates: null,
     newDesiredVersions: null,
     modal: null,
+    dom: undefined,
   });
   const {
     disabledNext,
@@ -31,13 +60,12 @@ function EmulatorsDetailPage() {
     modal,
     updates,
     newDesiredVersions,
+    dom,
   } = statePage;
 
   const yuzuEAaddToken = () => {
     ipcChannel.sendMessage('emudeck', [`YuzuEA_addToken|||YuzuEA_addToken`]);
-    ipcChannel.once('YuzuEA_addToken', (message) => {
-      
-    });
+    ipcChannel.once('YuzuEA_addToken', (message) => {});
   };
 
   const diff = (obj1, obj2) => {
@@ -163,9 +191,8 @@ function EmulatorsDetailPage() {
   const checkBios = (biosCommand) => {
     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
-      
       status = status.stdout;
-      
+
       status = status.replace('\n', '');
       let biosStatus;
       status.includes('true') ? (biosStatus = true) : (biosStatus = false);
@@ -196,6 +223,189 @@ function EmulatorsDetailPage() {
     });
   };
 
+  const closeModal = () => {
+    const modalData = {
+      active: false,
+    };
+    setStatePage({ ...statePage, modal: modalData });
+  };
+
+  const showControls = (emulator, code) => {
+    switch (emulator) {
+      case 'ra':
+        img = raControls;
+        break;
+      case 'primehack':
+        img = primehackControls;
+        break;
+      case 'ppsspp':
+        img = ppssppControls;
+        break;
+      case 'duckstation':
+        img = duckstationControls;
+        break;
+      case 'melonds':
+        img = melondsControls;
+        break;
+      case 'citra':
+        img = citraControls;
+        break;
+      case 'pcsx2':
+        img = pcsx2Controls;
+        break;
+      case 'rpcs3':
+        img = rpcs3Controls;
+        break;
+      case 'yuzu':
+        img = yuzuControls;
+        break;
+      case 'ryujinx':
+        img = ryujinxControls;
+        break;
+      case 'xemu':
+        img = xemuControls;
+        break;
+      case 'cemu':
+        img = cemuControls;
+        break;
+      case 'rmg':
+        img = rmgControls;
+        break;
+      case 'mame':
+        img = mameControls;
+        break;
+      case 'vita3k':
+        img = vita3kControls;
+        break;
+      case 'scummvm':
+        img = scummvmControls;
+        break;
+      case 'xenia':
+        img = xeniaControls;
+        break;
+      case 'mgba':
+        img = mgbaControls;
+        break;
+      case 'ares':
+        img = aresControls;
+        break;
+      case 'gamecube':
+        img = gamecubeControls;
+        break;
+      case 'wii_nunchuck':
+        img = wiiNunchuckControls;
+        break;
+      case 'wii_classic':
+        img = wiiClassicHotkeys;
+        break;
+      case 'wii':
+        img = wiiControls;
+        break;
+      default:
+        img = defaultControls;
+        break;
+    }
+    const modalData = {
+      active: true,
+      body: <img onClick={() => closeModal()} src={img} alt="Controls" />,
+      css: 'emumodal--full',
+    };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+  };
+
+  const showHotkeys = (emulator, code) => {
+    console.log({ emulator });
+    let img;
+    switch (emulator) {
+      case 'ra':
+        img = raHotkeys;
+        break;
+      case 'primehack':
+        img = primehackHotkeys;
+        break;
+      case 'ppsspp':
+        img = ppssppHotkeys;
+        break;
+      case 'duckstation':
+        img = duckstationHotkeys;
+        break;
+      case 'melonds':
+        img = melondsHotkeys;
+        break;
+      case 'citra':
+        img = citraHotkeys;
+        break;
+      case 'pcsx2':
+        img = pcsx2Hotkeys;
+        break;
+      case 'rpcs3':
+        img = rpcs3Hotkeys;
+        break;
+      case 'yuzu':
+        img = yuzuHotkeys;
+        break;
+      case 'ryujinx':
+        img = ryujinxHotkeys;
+        break;
+      case 'xemu':
+        img = xemuHotkeys;
+        break;
+      case 'cemu':
+        img = cemuHotkeys;
+        break;
+      case 'rmg':
+        img = rmgHotkeys;
+        break;
+      case 'mame':
+        img = mameHotkeys;
+        break;
+      case 'vita3k':
+        img = vita3kHotkeys;
+        break;
+      case 'scummvm':
+        img = scummvmHotkeys;
+        break;
+      case 'xenia':
+        img = xeniaHotkeys;
+        break;
+      case 'mgba':
+        img = mgbaHotkeys;
+        break;
+      case 'ares':
+        img = aresHotkeys;
+        break;
+      case 'gamecube':
+        img = gamecubeHotkeys;
+        break;
+      case 'gamecube_expert':
+        img = gamecubeHotkeysExpert;
+        break;
+      case 'wii':
+        img = wiiHotkeys;
+        break;
+      case 'wii_expert':
+        img = wiiHotkeysExpert;
+        break;
+
+      default:
+        img = defaultControls;
+        break;
+    }
+
+    const modalData = {
+      active: true,
+      body: <img onClick={() => closeModal()} src={img} alt="Hotkeys" />,
+      css: 'emumodal--full',
+    };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+  };
+
   const reInstallEmu = (emulator, code) => {
     const modalData = {
       active: true,
@@ -218,7 +428,6 @@ function EmulatorsDetailPage() {
     }
 
     ipcChannel.once(`${code}_install`, (message) => {
-      
       let status = message.stdout;
       status.replace('\n', '');
       // Lets check if it did install
@@ -227,7 +436,6 @@ function EmulatorsDetailPage() {
       ]);
 
       ipcChannel.once(`${code}_IsInstalled`, (message) => {
-        
         status = message.stdout;
         status.replace('\n', '');
 
@@ -286,8 +494,6 @@ function EmulatorsDetailPage() {
   };
 
   const installEmu = (emulator, code) => {
-    
-
     const modalData = {
       active: true,
       header: <span className="h4">Installing {code}</span>,
@@ -305,7 +511,6 @@ function EmulatorsDetailPage() {
     ]);
 
     ipcChannel.once(`${code}_install`, (message) => {
-      
       let status = message.stdout;
       status.replace('\n', '');
       // Lets check if it did install
@@ -314,7 +519,6 @@ function EmulatorsDetailPage() {
       ]);
 
       ipcChannel.once(`${code}_IsInstalled`, (message) => {
-        
         status = message.stdout;
         status.replace('\n', '');
 
@@ -399,9 +603,8 @@ function EmulatorsDetailPage() {
     }
 
     ipcChannel.once(`${code}_uninstall`, (status) => {
-      
       status = status.stdout;
-      
+
       status = status.replace('\n', '');
       // Lets check if it did install
       ipcChannel.sendMessage('emudeck', [
@@ -409,7 +612,6 @@ function EmulatorsDetailPage() {
       ]);
 
       ipcChannel.once(`${code}_IsInstalled`, (status) => {
-        
         status = status.stdout;
         status = status.replace('\n', '');
 
@@ -489,9 +691,8 @@ function EmulatorsDetailPage() {
     }
 
     ipcChannel.once(`${code}_resetConfig`, (status) => {
-      
       status = status.stdout;
-      
+
       status = status.replace('\n', '');
 
       if (status.includes('true')) {
@@ -538,7 +739,6 @@ function EmulatorsDetailPage() {
   };
 
   useEffect(() => {
-    
     // We save it on localstorage
     const json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
@@ -567,7 +767,6 @@ function EmulatorsDetailPage() {
         checkBios('checkYuzuBios');
         break;
       default:
-        
     }
   }, []);
 
@@ -585,11 +784,10 @@ function EmulatorsDetailPage() {
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?
       if (repoVersions === '') {
-        
       }
 
       const updates = diff(repoVersions, stateCurrentConfigs);
-      
+
       setStatePage({
         ...statePage,
         updates,
@@ -603,7 +801,7 @@ function EmulatorsDetailPage() {
   useEffect(() => {
     if (modal === false) {
       const updates = diff(newDesiredVersions, stateCurrentConfigs);
-      
+
       setStatePage({
         ...statePage,
         updates,
@@ -613,36 +811,52 @@ function EmulatorsDetailPage() {
       localStorage.setItem('current_versions_beta', json);
     }
   }, [modal]);
-  return (
-    <Wrapper>
-      <Header title={emuData[emulatorSelected].name} />
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
 
-      {updates && (
-        <EmuDetail
-          mode={mode}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-          emuData={emuData[emulatorSelected]}
-          updateAvailable={updates[emulator] !== undefined}
-          ps1={ps1Bios}
-          ps2={ps2Bios}
-          nswitch={switchBios}
-          segacd={segaCDBios}
-          saturn={saturnBios}
-          dreamcast={dreamcastBios}
-          nds={DSBios}
-          onChange={selectEmu}
-          onClick={resetEmu}
-          onClickInstall={installEmu}
-          onClickReInstall={reInstallEmu}
-          onClickUninstall={uninstallEmu}
-          installEmus={installEmus[emulatorSelected]}
-          yuzuEAaddToken={yuzuEAaddToken}
-        />
-      )}
-      <Footer next={false} />
-      <EmuModal modal={modal} />
-    </Wrapper>
+  return (
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title={emuData[emulatorSelected].name} />
+
+        {updates && (
+          <EmuDetail
+            mode={mode}
+            disabledNext={disabledNext}
+            disabledBack={disabledBack}
+            emuData={emuData[emulatorSelected]}
+            updateAvailable={updates[emulator] !== undefined}
+            ps1={ps1Bios}
+            ps2={ps2Bios}
+            nswitch={switchBios}
+            segacd={segaCDBios}
+            saturn={saturnBios}
+            dreamcast={dreamcastBios}
+            nds={DSBios}
+            onChange={selectEmu}
+            onClick={resetEmu}
+            onClickInstall={installEmu}
+            onClickReInstall={reInstallEmu}
+            onClickHotkeys={showHotkeys}
+            onClickControls={showControls}
+            onClickUninstall={uninstallEmu}
+            installEmus={installEmus[emulatorSelected]}
+            yuzuEAaddToken={yuzuEAaddToken}
+          />
+        )}
+        <Footer next={false} />
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 

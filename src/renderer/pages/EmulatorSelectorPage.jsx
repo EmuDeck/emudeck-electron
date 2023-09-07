@@ -1,6 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
@@ -68,15 +69,13 @@ function EmulatorSelectorPage() {
     data: '',
     modal: false,
     lastSelected: undefined,
+    dom: undefined,
   });
-  const { disabledNext, disabledBack, data, modal, lastSelected } = statePage;
+  const { disabledNext, disabledBack, data, modal, lastSelected, dom } =
+    statePage;
 
   const setAlternativeEmulator = (system, emuName, emuName2, disable) => {
-    
-
     if (emuName == 'ra' || emuName == 'ares') {
-      
-
       setState({
         ...state,
         emulatorAlternative: {
@@ -428,8 +427,6 @@ function EmulatorSelectorPage() {
         // };
       }
 
-      
-
       systemsValue = {
         gba: systemsOption.gba ? systemsOption.gba : emulatorAlternative.gba,
         n64: systemsOption.n64 ? systemsOption.n64 : emulatorAlternative.n64,
@@ -509,16 +506,16 @@ function EmulatorSelectorPage() {
 
     setPreviousState(installEmus);
 
-    //     installEmus.forEach((element) => 
+    //     installEmus.forEach((element) =>
     //
     //
-    //     
+    //
     //     Object.keys(changedKeys).map((key) => (emuModified = key));
     //     if (
     //       installEmus[emuModified] !== undefined &&
     //       installEmus[emuModified].status
     //     ) {
-    //       
+    //
     //
     //     }
 
@@ -1019,17 +1016,31 @@ function EmulatorSelectorPage() {
     }
   }, [installEmus]);
 
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
   return (
-    <Wrapper>
-      <Header title="Emulators for" bold={`${device}`} />
-      <EmulatorSelector data={data} onClick={toggleEmus} images={images} />
-      <Footer
-        next="emulator-configuration"
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
-      <EmuModal modal={modal} />
-    </Wrapper>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Emulators for" bold={`${device}`} />
+        <EmulatorSelector data={data} onClick={toggleEmus} images={images} />
+        <Footer
+          next="emulator-configuration"
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 

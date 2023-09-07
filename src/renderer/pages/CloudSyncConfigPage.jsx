@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { BtnSimple } from 'getbasecore/Atoms';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
@@ -19,9 +20,16 @@ function CloudSyncPageConfig() {
     disableButton: false,
     showLoginButton: false,
     modal: undefined,
+    dom: undefined,
   });
-  const { disabledNext, disabledBack, disableButton, showLoginButton, modal } =
-    statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    disableButton,
+    showLoginButton,
+    modal,
+    dom,
+  } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
@@ -62,23 +70,17 @@ function CloudSyncPageConfig() {
   };
 
   const uploadAll = () => {
-    
     const modalData = {
       active: true,
       header: <span className="h4">Uploading</span>,
-      body: (
-        <p>
-          Please stand by...
-        </p>
-      ),
+      body: <p>Please stand by...</p>,
       css: 'emumodal--xs',
     };
     setStatePage({ ...statePage, modal: modalData });
-    
+
     ipcChannel.sendMessage('emudeck', [`uploadAll|||cloud_sync_uploadEmuAll`]);
 
     ipcChannel.once('uploadAll', (message) => {
-      
       const modalData = {
         active: true,
         header: <span className="h4">Upload Complete</span>,
@@ -95,25 +97,19 @@ function CloudSyncPageConfig() {
   };
 
   const downloadAll = () => {
-    
     const modalData = {
       active: true,
       header: <span className="h4">Downloading</span>,
-      body: (
-        <p>
-          Please stand by...
-        </p>
-      ),
+      body: <p>Please stand by...</p>,
       css: 'emumodal--xs',
     };
     setStatePage({ ...statePage, modal: modalData });
-    
+
     ipcChannel.sendMessage('emudeck', [
       `downloadAll|||cloud_sync_downloadEmuAll`,
     ]);
 
     ipcChannel.once('downloadAll', (message) => {
-      
       const modalData = {
         active: true,
         header: <span className="h4">Download Complete</span>,
@@ -141,7 +137,7 @@ function CloudSyncPageConfig() {
     //   ]);
     //   ipcChannel.once('cloud_sync_install_and_config_with_code', (message) => {
     //     // No versioning found, what to do?
-    //     
+    //
     //     alert(
     //       `All Done, every time you load a game your Game states and Saved games will be synced to ${cloudSync}`
     //     );
@@ -158,7 +154,6 @@ function CloudSyncPageConfig() {
     } else {
       cloudFunction = 'cloud_backup_install_and_config';
     }
-    
 
     ipcChannel.sendMessage('emudeck', [
       `cloud_saves|||${cloudFunction} ${cloudSync}`,
@@ -313,25 +308,39 @@ function CloudSyncPageConfig() {
     return 'copy-games';
   };
 
-  return (
-    <Wrapper>
-      <Header title="Cloud Saves - Select your provider" />
-      <CloudSyncConfig
-        onClick={cloudSyncSet}
-        onClickInstall={installRclone}
-        onClickUninstall={uninstallRclone}
-        disableButton={disableButton}
-        showLoginButton={showLoginButton}
-      />
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
 
-      <Footer
-        next={nextButtonStatus()}
-        nextText="Copy games"
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
-      <EmuModal modal={modal} />
-    </Wrapper>
+  return (
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Cloud Saves - Select your provider" />
+        <CloudSyncConfig
+          onClick={cloudSyncSet}
+          onClickInstall={installRclone}
+          onClickUninstall={uninstallRclone}
+          disableButton={disableButton}
+          showLoginButton={showLoginButton}
+        />
+
+        <Footer
+          next={nextButtonStatus()}
+          nextText="Copy games"
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 
