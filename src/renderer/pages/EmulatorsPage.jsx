@@ -312,7 +312,6 @@ function EmulatorsPage() {
                       description="Update all of your configurations at once. New configurations might contain bug fixes or performance improvements. This will overwrite any global emulator settings you have changed. Per game settings will be retained."
                       button="Update"
                       onClick={() => resetEmus()}
-                      notification
                     />
                   </div>
                 )}
@@ -351,9 +350,8 @@ function EmulatorsPage() {
                     }
                   }
                   return (
-                    <div data-col-md="2">
+                    <div key={item.id} data-col-md="2">
                       <CardSettings
-                        key={item.id}
                         icon={img}
                         css="is-highlighted"
                         btnCSS={
@@ -366,7 +364,9 @@ function EmulatorsPage() {
                         button={item.status === true ? 'Manage' : 'Install'}
                         onClick={() => navigate(`/emulators-detail/${item.id}`)}
                         notification={
-                          item.status === true ? updateNotif != undefined : ''
+                          item.status === true
+                            ? updateNotif != undefined
+                            : false
                         }
                       />
                     </div>
