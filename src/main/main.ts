@@ -42,7 +42,6 @@ fs.exists(`${os.homedir()}/emudeck/emudeck.AppImage.log`, function (exists) {
   if (exists) {
     fs.unlinkSync(`${os.homedir()}/emudeck/emudeck.AppImage.log`);
   } else {
-    
   }
 });
 
@@ -206,7 +205,7 @@ const createWindow = async () => {
     }
 
     // Adjust zoom factor according to DPI or scale factor that we determined before
-    
+
     // mainWindow.webContents.setZoomFactor(scaleFactorW);
     mainWindow.show();
   });
@@ -224,7 +223,6 @@ const createWindow = async () => {
     win.loadURL(edata.url);
 
     const contents = win.webContents;
-    
 
     // shell.openExternal(edata.url);
     return { action: 'deny' };
@@ -307,9 +305,7 @@ ipcMain.on('emudeck', async (event, command) => {
   // Lets detect if the repo was cloned properly
   if (fs.existsSync(allPath)) {
     // file exists
-    
   } else {
-    
     event.reply(backChannel, 'nogit');
     let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout master && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
 
@@ -364,9 +360,7 @@ ipcMain.on('emudeckAdmin', async (event, command) => {
   // Lets detect if the repo was cloned properly
   if (fs.existsSync(allPath)) {
     // file exists
-    
   } else {
-    
     event.reply(backChannel, 'nogit');
     let bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
 
@@ -488,7 +482,7 @@ ipcMain.on('update-check', async (event, command) => {
   result
     .then((checkResult: UpdateCheckResult) => {
       const { updateInfo } = checkResult;
-      
+
       logCommand(updateInfo);
       logCommand('UPDATE: CHECKING');
       //  updateInfo:
@@ -507,13 +501,11 @@ ipcMain.on('update-check', async (event, command) => {
         numeric: true,
         sensitivity: 'base',
       });
-      
-      
-      
+
       logCommand('UPDATE: COMPARING VERSIONS');
       if (versionCheck === 1 || versionCheck === 0) {
         logCommand('UPDATE: UP TO DATE');
-        
+
         event.reply('update-check-out', ['up-to-date', updateInfo]);
         logCommand(`${JSON.stringify(updateInfo)}`);
       } else {
@@ -522,7 +514,7 @@ ipcMain.on('update-check', async (event, command) => {
           shellType
         );
         logCommand('UPDATE: UPDATING!');
-        
+
         event.reply('update-check-out', ['updating', updateInfo]);
         logCommand(`${JSON.stringify(updateInfo)}`);
 
@@ -735,11 +727,9 @@ ipcMain.on('saveSettings', async (event, command) => {
 
   fs.writeFile(settingsFile, jsonContent, 'utf8', function (err) {
     if (err) {
-      
       event.reply(backChannel, err);
     }
     event.reply(backChannel, 'true');
-    
   });
 });
 
@@ -835,7 +825,6 @@ ipcMain.on('get-store', async (event) => {
         };
         resolve(masterJson);
       }).then((masterJson) => {
-        
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/store.json`,
           JSON.stringify(masterJson)
@@ -859,8 +848,6 @@ ipcMain.on('get-store', async (event) => {
 });
 
 ipcMain.on('build-store', async (event) => {
-  
-
   const buildJson = (system, name) => {
     // GB HomebrewGames
     let dir;
@@ -899,7 +886,6 @@ ipcMain.on('build-store', async (event) => {
         };
         resolve(masterJson);
       }).then((masterJson) => {
-        
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/${system}.json`,
           JSON.stringify(masterJson)
@@ -928,7 +914,7 @@ ipcMain.on('installGame', async (event, command) => {
   const system = command[2];
 
   const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
-  
+
   // Alternative syntax using RegExp constructor
   // const regex = new RegExp('([^\\/]+?)(?=\\.\\w+$)|([^\\/]+?)(?=$)', '')
 
@@ -952,7 +938,7 @@ ipcMain.on('installGame', async (event, command) => {
 
 ipcMain.on('unInstallGame', async (event, command) => {
   const backChannel = 'unInstallGame';
-  
+
   const game = command[0];
   const system = command[2];
 
@@ -1097,9 +1083,7 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('session-created', (session) => {
-  
-});
+app.on('session-created', (session) => {});
 
 ipcMain.on('run-app', async (event, appPath) => {
   let appPathFixed = appPath.replace(/[\r\n]+/g, '');
@@ -1131,7 +1115,6 @@ if (!gotTheLock) {
     'second-instance',
     (event, commandLine, workingDirectory, additionalData) => {
       // Print out data received from the second instance.
-      
 
       // Someone tried to run a second instance, we should focus our window.
       if (myWindow) {

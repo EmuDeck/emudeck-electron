@@ -66,6 +66,7 @@ function EmulatorsDetailPage() {
 
   const yuzuEAsetToken = (data) => {
     console.log({ data });
+    let yuzuEAtokenValue;
     data.target.value === ''
       ? (yuzuEAtokenValue = null)
       : (yuzuEAtokenValue = data.target.value);
@@ -138,7 +139,7 @@ function EmulatorsDetailPage() {
       active: true,
       body: (
         <>
-          <p>Please wait, checking Yuzu Early Access Token</p>
+          <p>Please wait, installing Yuzu Early Access</p>
         </>
       ),
       footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
@@ -146,6 +147,7 @@ function EmulatorsDetailPage() {
     setStatePage({
       ...statePage,
       modal: modalData,
+      css: 'emumodal--xs',
     });
 
     ipcChannel.sendMessage('emudeck', [
@@ -157,7 +159,7 @@ function EmulatorsDetailPage() {
     ipcChannel.once('YuzuEA_addToken', (message) => {
       console.log({ message });
       const stdout = message.stdout;
-      const response = stdout.replace('\n', '');
+      const response = stdout.replaceAll('\n', '');
       //We store the token for next installs
 
       switch (response) {
@@ -175,11 +177,18 @@ function EmulatorsDetailPage() {
           modalBody = (
             <>
               <p>
-                Yuzu Early Access {code} has been installed, now you can play
-                games using the same Yuzu launcher using EmulationStation-DE or
-                adding them to your Steam Library using Steam Rom Manager. You
-                don't need to do setup anything else.
+                Yuzu Early Access has been installed, you can play games as
+                always. EmuDeck will detect you have Yuzu EA and use that
+                instead.You don't need to do setup anything else.
               </p>
+            </>
+          );
+          break;
+        default:
+          modalHeader = <span className="h4">Unknown error!</span>;
+          modalBody = (
+            <>
+              <p>There's been an error, please try again</p>
             </>
           );
           break;
@@ -190,6 +199,7 @@ function EmulatorsDetailPage() {
         header: modalHeader,
         body: modalBody,
         footer: modalFooter,
+        css: 'emumodal--xs',
       };
       setStatePage({
         ...statePage,
