@@ -14,9 +14,9 @@ function ConfirmationPage() {
     disabledNext: false,
     disabledBack: false,
     data: '',
-    dom,
+    dom: undefined,
   });
-  const { disabledNext, disabledBack, data, dom: undefined } = statePage;
+  const { disabledNext, disabledBack, data, dom } = statePage;
 
   // Enabling button when changing the global state only if we have a device selected
   useEffect(() => {

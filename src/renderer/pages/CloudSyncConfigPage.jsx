@@ -8,6 +8,7 @@ import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import { useParams } from 'react-router-dom';
 import CloudSyncConfig from 'components/organisms/Wrappers/CloudSyncConfig';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 
 function CloudSyncPageConfig() {
   const { state, setState } = useContext(GlobalContext);
@@ -74,7 +75,7 @@ function CloudSyncPageConfig() {
       active: true,
       header: <span className="h4">Uploading</span>,
       body: <p>Please stand by...</p>,
-      css: 'emumodal--xs',
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
     };
     setStatePage({ ...statePage, modal: modalData });
 
@@ -101,6 +102,7 @@ function CloudSyncPageConfig() {
       active: true,
       header: <span className="h4">Downloading</span>,
       body: <p>Please stand by...</p>,
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
       css: 'emumodal--xs',
     };
     setStatePage({ ...statePage, modal: modalData });
