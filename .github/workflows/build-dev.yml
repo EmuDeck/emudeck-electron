@@ -123,8 +123,12 @@ jobs:
           npm run postinstall
           npm run build
           npm exec electron-builder -- --publish always --win
+          npm exec electron-builder -- --publish always --mac
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: EmuDeck-dev-AppImage
-          path: '**/*.exe'
+          name: EmuDeck-dev
+          path: |
+            '**/*.exe'
+            '**/*.dmg'

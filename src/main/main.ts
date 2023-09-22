@@ -1106,6 +1106,16 @@ ipcMain.on('run-app', async (event, appPath) => {
   } else {
     externalApp = spawn('xdg-open', [appPathFixed]);
   }
+
+  externalApp.on('error', (err) => {
+    event.reply('run-app', 'error');
+  });
+  externalApp.on('close', (code) => {
+    event.reply('run-app', code);
+  });
+  externalApp.on('spawn', () => {
+    event.reply('run-app', 'launched');
+  });
   externalApp.on('exit', (code) => {
     event.reply('run-app', code);
   });

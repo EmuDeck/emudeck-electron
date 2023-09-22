@@ -7,6 +7,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import { useNavigate } from 'react-router-dom';
+
 // import { useTranslation } from 'react-i18next';
 import Welcome from 'components/organisms/Wrappers/Welcome';
 import {
@@ -51,6 +52,91 @@ function WelcomePage() {
     if (second) {
       navigate('/rom-storage');
     }
+  };
+
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const openSRM = () => {
+    let modalData = {
+      active: true,
+      header: <span className="h4">Launching Steam Rom Manager</span>,
+      body: (
+        <>
+          <p>
+            We will close Steam if its running and then Steam Rom Manager will
+            open, this could take a few seconds, please wait.
+          </p>
+        </>
+      ),
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
+
+    if (system === 'win32') {
+      setStatePage({ ...statePage, modal: modalData });
+      ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
+      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
+      let srmPath;
+      if (storagePath === '' || !storagePath || storagePath === null) {
+        srmPath = 'C:\\';
+      } else {
+        srmPath = storagePath;
+      }
+      ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
+    } else if (system === 'darwin') {
+      setStatePage({ ...statePage, modal: modalData });
+      ipcChannel.sendMessage('bash', [`killall steam`]);
+      ipcChannel.sendMessage('run-app', `/Applications/Steam Rom Manager.app`);
+    } else {
+      modalData = {
+        active: true,
+        header: <span className="h4">Launching Steam Rom Manager</span>,
+        body: (
+          <>
+            <p>
+              We will close Steam if its running and then Steam Rom Manager will
+              open, this could take a few seconds, please wait.
+            </p>
+            <strong>
+              Desktop controls will temporarily revert to touch/trackpad/L2/R2.
+            </strong>
+          </>
+        ),
+        footer: (
+          <ProgressBar css="progress--success" infinite={true} max="100" />
+        ),
+        css: 'emumodal--sm',
+      };
+      setStatePage({ ...statePage, modal: modalData });
+      ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam`]);
+      ipcChannel.sendMessage(
+        'run-app',
+        `${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage`
+      );
+    }
+    ipcChannel.once('run-app', (message) => {
+      console.log({ message });
+      if (message.includes('launched')) {
+        const timerId = setTimeout(() => {
+          setStatePage({
+            ...statePage,
+            modal: {
+              active: false,
+            },
+          });
+          clearTimeout(timerId);
+        }, 5000);
+      } else {
+        setStatePage({
+          ...statePage,
+          modal: {
+            active: false,
+          },
+        });
+      }
+    });
   };
 
   // show changelog after update
@@ -108,67 +194,6 @@ function WelcomePage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
-
-  const openSRM = () => {
-    if (system === 'win32') {
-      const modalData = {
-        active: true,
-        header: <span className="h4">Launching Steam Rom Manager</span>,
-        body: (
-          <>
-            <p>
-              We will close Steam if its running and then Steam Rom Manager will
-              open, this could take a few seconds, please wait.
-            </p>
-            <ProgressBar css="progress--success" infinite={true} max="100" />
-          </>
-        ),
-        css: 'emumodal--xs',
-      };
-      setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
-      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
-      let srmPath;
-
-      if (storagePath === '' || !storagePath || storagePath === null) {
-        srmPath = 'C:\\';
-      } else {
-        srmPath = storagePath;
-      }
-      ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
-
-      console.log(`${srmPath}Emulation\\tools\\srm.exe`);
-      ipcChannel.once('run-app', (message) => {
-        console.log({ message });
-      });
-    } else {
-      const modalData = {
-        active: true,
-        header: <span className="h4">Launching Steam Rom Manager</span>,
-        body: (
-          <>
-            <p>
-              To add your Emulators and EmulationStation-DE to steam hit
-              Preview, then Generate App List, then wait for the images to
-              download
-            </p>
-            <p>
-              When you are happy with your image choices hit Save App List and
-              wait for it to say it's completed.
-            </p>
-            <strong>
-              Desktop controls will temporarily revert to touch/trackpad/L2/R2.
-            </strong>
-          </>
-        ),
-        css: 'emumodal--sm',
-      };
-      setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [
-        `(kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
-      ]);
-    }
-  };
 
   const openCSM = () => {
     ipcChannel.sendMessage('bash', [
@@ -275,7 +300,9 @@ function WelcomePage() {
     },
   ];
 
-  const settingsCards = [
+  let settingsCards;
+
+  settingsCards = [
     {
       icon: [iconJoystick],
       title: 'Steam ROM Manager',
@@ -448,6 +475,68 @@ function WelcomePage() {
     },
   ];
 
+  if (system === 'darwin') {
+    settingsCards = [
+      {
+        icon: [iconJoystick],
+        title: 'Steam ROM Manager',
+        description: 'Add emulators, tools, or ROMs to your Steam Library',
+        button: 'Launch',
+        btnCSS: 'btn-simple--5',
+        status: true,
+        function: () => functions.openSRM(),
+      },
+      {
+        icon: [iconQuick],
+        title: 'Quick Reset',
+        description:
+          'Update or reset your installation to the latest EmuDeck version in one easy click',
+        button: 'Reinstall',
+        btnCSS: 'btn-simple--5',
+        status: true,
+        function: () => selectMode('easy'),
+      },
+      {
+        icon: [iconCustom],
+        title: 'Custom Reset',
+        description:
+          'Update or reset your installation to the latest EmuDeck version in custom mode',
+        button: 'Reinstall',
+        btnCSS: 'btn-simple--5',
+        status: true,
+        function: () => selectMode('expert'),
+      },
+      {
+        icon: [iconSuccess],
+        title: 'BIOS Checker',
+        description: 'Use the EmuDeck BIOS Checker to validate your BIOS',
+        button: 'More info',
+        btnCSS: 'btn-simple--5',
+        status: true,
+        function: () => functions.navigate('/check-bios'),
+      },
+      {
+        icon: [iconPrize],
+        title: 'RetroAchievements',
+        description:
+          'Configure RetroAchievements for Duckstation, PCSX2, and RetroArch',
+        button: 'More info',
+        btnCSS: 'btn-simple--5',
+        status: true,
+        function: () => functions.navigate('/RA-achievements-config'),
+      },
+      {
+        icon: [iconList],
+        title: 'ChangeLog',
+        description: 'Read about the latest changes to EmuDeck',
+        button: 'Read',
+        btnCSS: 'btn-simple--5',
+        status: true,
+        function: () => functions.navigate('/change-log'),
+      },
+    ];
+  }
+
   //GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
@@ -459,24 +548,29 @@ function WelcomePage() {
     }
   }, [statePage]);
 
+  let systemName;
+
+  switch (system) {
+    case 'darwin':
+      systemName = '\uF8FF';
+      break;
+    case 'win32':
+      systemName = 'Windows';
+      break;
+    default:
+      systemName = 'Linux';
+  }
+
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
         {second === false && (
-          <Header
-            title={`Welcome to EmuDeck for ${system} ${
-              system === 'darwin' ? '\uF8FF' : ''
-            }`}
-          />
+          <Header title={`Welcome to EmuDeck for ${systemName}`} />
         )}
 
         {second === true && (
-          <Header
-            title={`Welcome back to EmuDeck for ${system}  ${
-              system === 'darwin' ? '\uF8FF' : ''
-            }`}
-          />
+          <Header title={`Welcome back to EmuDeck for ${systemName}`} />
         )}
         <Welcome
           settingsCards={settingsCards}

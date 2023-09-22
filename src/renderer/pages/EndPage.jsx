@@ -73,58 +73,84 @@ function EndPage() {
     // }
   };
   const openSRM = () => {
-    if (system === 'win32') {
-      const modalData = {
-        active: true,
-        header: <span className="h4">Launching Steam Rom Manager</span>,
-        body: (
+    let modalData = {
+      active: true,
+      header: <span className="h4">Launching Steam Rom Manager</span>,
+      body: (
+        <>
           <p>
             We will close Steam if its running and then Steam Rom Manager will
             open, this could take a few seconds, please wait.
           </p>
-        ),
-        css: 'emumodal--xs',
-      };
+        </>
+      ),
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
+
+    if (system === 'win32') {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
       ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
       let srmPath;
-
       if (storagePath === '' || !storagePath || storagePath === null) {
         srmPath = 'C:\\';
       } else {
         srmPath = storagePath;
       }
       ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
-
-      ipcChannel.once('run-app', (message) => {});
+    } else if (system === 'darwin') {
+      setStatePage({ ...statePage, modal: modalData });
+      ipcChannel.sendMessage('bash', [`killall steam`]);
+      ipcChannel.sendMessage('run-app', `/Applications/Steam Rom Manager.app`);
     } else {
-      const modalData = {
+      modalData = {
         active: true,
         header: <span className="h4">Launching Steam Rom Manager</span>,
         body: (
           <>
             <p>
-              To add your Emulators and EmulationStation-DE to steam hit
-              Preview, then Generate App List, then wait for the images to
-              download
-            </p>
-            <p>
-              When you are happy with your image choices hit Save App List and
-              wait for it to say it's completed.
+              We will close Steam if its running and then Steam Rom Manager will
+              open, this could take a few seconds, please wait.
             </p>
             <strong>
               Desktop controls will temporarily revert to touch/trackpad/L2/R2.
             </strong>
           </>
         ),
+        footer: (
+          <ProgressBar css="progress--success" infinite={true} max="100" />
+        ),
         css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [
-        `(kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
-      ]);
+      ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam`]);
+      ipcChannel.sendMessage(
+        'run-app',
+        `${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage`
+      );
     }
+    ipcChannel.once('run-app', (message) => {
+      console.log({ message });
+      if (message.includes('launched')) {
+        const timerId = setTimeout(() => {
+          setStatePage({
+            ...statePage,
+            modal: {
+              active: false,
+            },
+          });
+          clearTimeout(timerId);
+        }, 5000);
+      } else {
+        setStatePage({
+          ...statePage,
+          modal: {
+            active: false,
+          },
+        });
+      }
+    });
   };
 
   const showLog = () => {

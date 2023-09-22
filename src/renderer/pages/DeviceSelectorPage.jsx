@@ -16,6 +16,7 @@ import {
   imgayaneogeek,
   imglinux,
   imgwindows,
+  imgmac,
 } from 'components/utils/images/images';
 
 function DeviceSelectorPage() {
@@ -86,6 +87,9 @@ function DeviceSelectorPage() {
       case 'Steam Deck':
         resolutionsObj = deck;
         break;
+      case 'Mac':
+        resolutionsObj = deck;
+        break;
       case 'Anbernic Win600':
         resolutionsObj = deck;
         break;
@@ -127,6 +131,12 @@ function DeviceSelectorPage() {
     localStorage.setItem('settings_emudeck', json);
   }, [state]);
 
+  useEffect(() => {
+    if (system === 'darwin') {
+      deviceSet('Mac');
+    }
+  }, []);
+
   //GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
@@ -144,7 +154,16 @@ function DeviceSelectorPage() {
       <Wrapper>
         <Header title={`Select your device `} />
         <DeviceSelector data={data} onClick={deviceSet}>
-          {system !== 'win32' && (
+          {system === 'darwin' && (
+            <Card
+              css={device === 'Mac' && 'is-selected'}
+              onClick={() => deviceSet('Mac')}
+            >
+              <img src={imgmac} width="100" alt="Background" />
+              <span className="h6">Mac</span>
+            </Card>
+          )}
+          {system !== 'win32' && system !== 'darwin' && (
             <>
               <Card
                 css={device === 'Steam Deck' && 'is-selected'}

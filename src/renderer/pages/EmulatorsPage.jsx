@@ -301,7 +301,7 @@ function EmulatorsPage() {
           {updates && (
             <>
               <div className="container--grid">
-                {Object.keys(updates).length > 0 && (
+                {Object.keys(updates).length > 0 && system !== 'darwin' && (
                   <div data-col-md="4">
                     <CardSettings
                       icon={iconGear}
@@ -315,7 +315,7 @@ function EmulatorsPage() {
                     />
                   </div>
                 )}
-                {system !== 'win32' && (
+                {system !== 'win32' && system !== 'darwin' && (
                   <div data-col-md="4">
                     <CardSettings
                       icon={iconPackage}
@@ -346,6 +346,12 @@ function EmulatorsPage() {
                       item.id === 'mgba' ||
                       item.id === 'xenia'
                     ) {
+                      return;
+                    }
+                  }
+
+                  if (system === 'darwin') {
+                    if (item.id !== 'ra') {
                       return;
                     }
                   }
