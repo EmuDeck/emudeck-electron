@@ -130,5 +130,5 @@ jobs:
         with:
           name: EmuDeck-dev
           path: |
-            '**/*.exe'
-            '**/*.dmg'
+            **/*.exe
+            **/*.dmg
