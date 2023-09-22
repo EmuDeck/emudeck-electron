@@ -62,16 +62,12 @@ jobs:
           npm run postinstall
           npm run build
           npm exec electron-builder -- --publish always --linux
-          npm exec electron-builder -- --publish always --mac --arm64
-          npm exec electron-builder -- --publish always --mac --x64
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: EmuDeck-dev-app
-          path: |
-            '**/*.AppImage'
-            '**/*.dmg'
+          name: EmuDeck-dev-AppImage
+          path: '**/*.AppImage'
   publish-windows:
     # To enable auto publishing to github, update your electron publisher
     # config in package.json > "build" and remove the conditional below
