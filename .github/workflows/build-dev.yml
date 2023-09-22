@@ -68,7 +68,7 @@ jobs:
         with:
           name: EmuDeck-dev-AppImage
           path: '**/*.AppImage'
-  publish-windows:
+  publish-windows-mac:
     # To enable auto publishing to github, update your electron publisher
     # config in package.json > "build" and remove the conditional below
     #if: ${{ github.repository_owner === 'electron-react-boilerplate' }}
@@ -128,7 +128,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: EmuDeck-dev
+          name: EmuDeck-dev-win-mac
           path: |
             **/*.exe
             **/*.dmg
