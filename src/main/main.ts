@@ -647,6 +647,9 @@ ipcMain.on('pull', async (event, branch) => {
   const backChannel = 'pull';
   let bashCommand = `cd ~/.config/EmuDeck/backend && script ~/.config/EmuDeck/msg.log -c 'git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull' && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
 
+  if (os.platform().includes('darwin')) {
+    bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
+  }
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git reset --hard ; git clean -fd ; git checkout ${branchGIT} ; git pull --allow-unrelated-histories -X theirs; Stop-Transcript; cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit "}`;
   }
@@ -1003,8 +1006,9 @@ ipcMain.on('validate-git', async (event) => {
 
 ipcMain.on('validate-7Zip', async (event) => {
   const backChannel = 'validate-7Zip';
-  const path1 = 'C:/Program Files/7-zip';
-  const path2 = 'C:/Program Files (x86)/7-zip';
+  const programFilesPath = process.env.ProgramFiles;
+  const path1 = `${programFilesPath}/7-zip`;
+  const path2 = `${programFilesPath} (x86)/7-zip`;
   if (fs.existsSync(path1)) {
     event.reply(backChannel, {
       stdout: true,
@@ -1046,8 +1050,9 @@ ipcMain.on('validate-7Zip', async (event) => {
 
 ipcMain.on('validate-Steam', async (event) => {
   const backChannel = 'validate-Steam';
-  const path1 = 'C:/Program Files/Steam';
-  const path2 = 'C:/Program Files (x86)/Steam';
+  const programFilesPath = process.env.ProgramFiles;
+  const path1 = `${programFilesPath}/Steam`;
+  const path2 = `${programFilesPath} (x86)/Steam`;
   if (fs.existsSync(path1)) {
     event.reply(backChannel, {
       stdout: true,
