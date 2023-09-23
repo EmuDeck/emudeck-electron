@@ -63,14 +63,12 @@ function WelcomePage() {
       active: true,
       header: <span className="h4">Launching Steam Rom Manager</span>,
       body: (
-        <>
-          <p>
-            We will close Steam if its running and then Steam Rom Manager will
-            open, this could take a few seconds, please wait.
-          </p>
-        </>
+        <p>
+          We will close Steam if its running and then Steam Rom Manager will
+          open, this could take a few seconds, please wait.
+        </p>
       ),
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
 
@@ -104,9 +102,7 @@ function WelcomePage() {
             </strong>
           </>
         ),
-        footer: (
-          <ProgressBar css="progress--success" infinite={true} max="100" />
-        ),
+        footer: <ProgressBar css="progress--success" infinite max="100" />,
         css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
@@ -537,7 +533,7 @@ function WelcomePage() {
     ];
   }
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -557,8 +553,18 @@ function WelcomePage() {
     case 'win32':
       systemName = 'Windows';
       break;
+    case 'SteamOS':
+      systemName = 'SteamOS';
+      break;
+    case 'ChimeraOS':
+      systemName = 'ChimeraOS';
+      break;
+    case 'chimeraOS':
+      systemName = 'ChimeraOS';
+      break;
     default:
       systemName = 'Linux';
+      break;
   }
 
   return (
