@@ -101,7 +101,7 @@ function EmulatorsPage() {
       active: true,
       header: <span className="h4">Resetting Emulators configuration</span>,
       body: <p>Please wait while we reset all the Emulators configuration</p>,
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
 
@@ -134,13 +134,15 @@ function EmulatorsPage() {
           }
         }
 
+        if (item.id === 'ares') {
+          return;
+        }
+
         const modalData = {
           active: true,
           header: <span className="h4">Resetting {code}'s configuration</span>,
           body: <p>Please wait while we reset {code}'s configuration</p>,
-          footer: (
-            <ProgressBar css="progress--success" infinite={true} max="100" />
-          ),
+          footer: <ProgressBar css="progress--success" infinite max="100" />,
           css: 'emumodal--xs',
         };
 
@@ -164,12 +166,10 @@ function EmulatorsPage() {
                 <span className="h4">{name}'s configuration updated!</span>
               ),
               body: (
-                <>
-                  <p>
-                    {name}'s configuration was updated with our latest
-                    improvements, optimizations and bug fixes!
-                  </p>
-                </>
+                <p>
+                  {name}'s configuration was updated with our latest
+                  improvements, optimizations and bug fixes!
+                </p>
               ),
               footer: '',
               css: 'emumodal--xs',
@@ -191,9 +191,7 @@ function EmulatorsPage() {
                 <span className="h4">{name} configuration reset failed</span>
               ),
               body: (
-                <>
-                  <p>There was an issue trying to reset {name} configuration</p>
-                </>
+                <p>There was an issue trying to reset {name} configuration</p>
               ),
               css: 'emumodal--xs',
             };
@@ -276,7 +274,7 @@ function EmulatorsPage() {
     }
   }, [modal]);
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -348,6 +346,9 @@ function EmulatorsPage() {
                     ) {
                       return;
                     }
+                  }
+                  if (item.id === 'ares') {
+                    return;
                   }
 
                   if (system === 'darwin') {
