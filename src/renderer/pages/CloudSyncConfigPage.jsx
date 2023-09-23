@@ -35,7 +35,7 @@ function CloudSyncPageConfig() {
   const ipcChannel = window.electron.ipcRenderer;
 
   const cloudSyncSet = (item) => {
-    let modalData = undefined;
+    let modalData;
     if (item === 'Emudeck-GDrive') {
       modalData = {
         active: true,
@@ -75,7 +75,7 @@ function CloudSyncPageConfig() {
       active: true,
       header: <span className="h4">Uploading</span>,
       body: <p>Please stand by...</p>,
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
     };
     setStatePage({ ...statePage, modal: modalData });
 
@@ -102,7 +102,7 @@ function CloudSyncPageConfig() {
       active: true,
       header: <span className="h4">Downloading</span>,
       body: <p>Please stand by...</p>,
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
     setStatePage({ ...statePage, modal: modalData });
@@ -152,7 +152,7 @@ function CloudSyncPageConfig() {
     });
     let cloudFunction;
     if (cloudSyncType === 'Sync') {
-      cloudFunction = 'cloud_sync_install_and_config';
+      cloudFunction = 'cloud_sync_install_and_config ';
     } else {
       cloudFunction = 'cloud_backup_install_and_config';
     }
@@ -297,10 +297,12 @@ function CloudSyncPageConfig() {
   };
 
   useEffect(() => {
-    ipcChannel.sendMessage('emudeck', [
-      `save-setting|||setSetting rclone_provider ${cloudSync}`,
-    ]);
-    localStorage.setItem('settings_emudeck', json);
+    if (cloudSync !== '' || cloudSync !== undefined) {
+      ipcChannel.sendMessage('emudeck', [
+        `save-setting|||setSetting rclone_provider ${cloudSync}`,
+      ]);
+      localStorage.setItem('settings_emudeck', json);
+    }
   }, [cloudSync]);
 
   const nextButtonStatus = () => {
@@ -310,7 +312,7 @@ function CloudSyncPageConfig() {
     return 'copy-games';
   };
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;

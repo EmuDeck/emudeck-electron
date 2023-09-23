@@ -109,7 +109,7 @@ export default function App() {
     bezels: true,
     powerTools: false,
     GyroDSU: false,
-    cloudSync: '',
+    cloudSync: undefined,
     cloudSyncType: 'Sync',
     cloudSyncStatus: false,
     sudoPass: 'Decky!',
