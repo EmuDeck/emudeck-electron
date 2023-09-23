@@ -158,6 +158,10 @@ function EndPage() {
       ipcChannel.sendMessage('bash-nolog', [
         `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/emudeck.log -Tail 100 -Wait }"`,
       ]);
+    } else if (system === 'darwin') {
+      ipcChannel.sendMessage('bash-nolog', [
+        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/emudeck/emudeck.log"'`,
+      ]);
     } else {
       ipcChannel.sendMessage('bash-nolog', [
         `konsole -e tail -f "$HOME/emudeck/emudeck.log"`,
@@ -653,9 +657,15 @@ function EndPage() {
           const { stdout } = messageFinalSetting;
           // Installation
 
-          ipcChannel.sendMessage('bash-nolog', [
-            `bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
-          ]);
+          if (system === 'darwin') {
+            ipcChannel.sendMessage('bash-nolog', [
+              `osascript -e 'tell app "Terminal" to do script "bash ~/.config/EmuDeck/backend/setup.sh"'`,
+            ]);
+          } else {
+            ipcChannel.sendMessage('bash-nolog', [
+              `bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
+            ]);
+          }
 
           ipcChannel.sendMessage('emudeck', [
             `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > ~/.config/EmuDeck/msg.log && printf "\ec" && echo true`,

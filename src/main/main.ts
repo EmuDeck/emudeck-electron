@@ -615,7 +615,9 @@ ipcMain.on('clone', async (event, branch) => {
   }
   const backChannel = 'clone';
   let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && script ~/.config/EmuDeck/msg.log -c 'git clone --no-single-branch --depth=1 ${repo} ~/.config/EmuDeck/backend/' && cd ~/.config/EmuDeck/backend && script ~/.config/EmuDeck/msg.log -c 'git checkout ${branchGIT}' && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
-
+  if (os.platform().includes('darwin')) {
+    bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 ${repo} ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branchGIT} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
+  }
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
   }

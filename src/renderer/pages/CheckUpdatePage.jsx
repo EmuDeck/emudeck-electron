@@ -77,8 +77,17 @@ function CheckUpdatePage() {
       modal: false,
     });
   };
+  //Darwin terminal permissions
+  useEffect(() => {
+    if (system === 'darwin') {
+      ipcChannel.sendMessage('bash-nolog', [
+        `osascript -e 'tell app "Terminal" to do script "pwd"'`,
+      ]);
+    }
+  }, [system]);
 
   let updateTimeOut;
+
   useEffect(() => {
     // Update timeout + Force clone check
 
