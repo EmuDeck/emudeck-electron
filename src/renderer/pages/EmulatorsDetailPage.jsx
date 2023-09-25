@@ -863,12 +863,15 @@ function EmulatorsDetailPage() {
       body: (
         <>
           <p>
-            Migrating from Flatpak to Appimage will result in a more frecuently
-            updated emulator and in some cases even better performance.
+            It's migration time! To keep things simple, the version of RPCS3 you
+            are using is unofficially supported by the primary developers of
+            RPCS3. This migration will download the RPCS3 AppImage, which will
+            also include frequent updates and performance improvements.
           </p>
           <p>
-            We will migrate all your saved games so you can continue playing as
-            if nothing had happened
+            EmuDeck will migrate your saves and your configurations (yes your
+            per-game configurations too), so you can continue playing right
+            away.
           </p>
         </>
       ),
