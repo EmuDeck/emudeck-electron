@@ -75,7 +75,7 @@ function EmulatorSelectorPage() {
     statePage;
 
   const setAlternativeEmulator = (system, emuName, emuName2, disable) => {
-    if (emuName == 'ra' || emuName == 'ares') {
+    if (emuName === 'ra' || emuName === 'ares') {
       setState({
         ...state,
         emulatorAlternative: {
@@ -87,30 +87,28 @@ function EmulatorSelectorPage() {
           [emuName2]: { ...installEmus[emuName2], status: false },
         },
       });
+    } else if (emuName2 === 'multiemulator' || emuName2 === 'both') {
+      setState({
+        ...state,
+        emulatorAlternative: {
+          ...emulatorAlternative,
+          [system]: emuName,
+        },
+      });
     } else {
-      if (emuName2 === 'multiemulator' || emuName2 === 'both') {
-        setState({
-          ...state,
-          emulatorAlternative: {
-            ...emulatorAlternative,
-            [system]: emuName,
-          },
-        });
-      } else {
-        setStatePage({ ...statePage, lastSelected: emuName });
+      setStatePage({ ...statePage, lastSelected: emuName });
 
-        setState({
-          ...state,
-          emulatorAlternative: {
-            ...emulatorAlternative,
-            [system]: emuName,
-          },
-          installEmus: {
-            ...installEmus,
-            [emuName2]: { ...installEmus[emuName2], status: false },
-          },
-        });
-      }
+      setState({
+        ...state,
+        emulatorAlternative: {
+          ...emulatorAlternative,
+          [system]: emuName,
+        },
+        installEmus: {
+          ...installEmus,
+          [emuName2]: { ...installEmus[emuName2], status: false },
+        },
+      });
     }
     closeModal();
   };
@@ -118,7 +116,7 @@ function EmulatorSelectorPage() {
   const closeModal = () => {
     setStatePage({ ...statePage, modal: false });
   };
-  //This funciones enable / disable RA, Ares, standalone alternative emulators when unselecting any of them
+  // This funciones enable / disable RA, Ares, standalone alternative emulators when unselecting any of them
   //   const defineMultiOrStandalone = (standalone) => {
   //     let system, emuToEnable;
   //     switch (standalone) {
@@ -154,30 +152,28 @@ function EmulatorSelectorPage() {
   let modalData = {};
   const toggleEmus = (emulatorProp) => {
     const { status } = installEmus[emulatorProp];
-    let enable = status ? false : true;
+    const enable = !status;
     let multiemulatorValue;
     let systemsValue = {};
     let systemsOption = {};
 
-    //Enabling
+    // Enabling
     if (enable) {
       if (emulatorProp === 'xenia') {
         modalData = {
           active: true,
           header: <span className="h4">Xenia Emulator - Disclaimer</span>,
           body: (
-            <>
-              <p>
-                Xenia is an experimental Emulator, don't expect a lot of games
-                to work.
-              </p>
-            </>
+            <p>
+              Xenia is an experimental Emulator, don't expect a lot of games to
+              work.
+            </p>
           ),
         };
-        //setStatePage({ ...statePage, modal: modalData });
+        // setStatePage({ ...statePage, modal: modalData });
       }
 
-      //Setting multiemulator
+      // Setting multiemulator
       if (emulatorProp === 'ares' || emulatorProp === 'ra') {
         multiemulatorValue = emulatorProp;
       } else {
@@ -245,7 +241,7 @@ function EmulatorSelectorPage() {
         }
       }
 
-      //ARREGLAR ESTO
+      // ARREGLAR ESTO
 
       systemsValue = {
         gba: systemsOption.gba ? systemsOption.gba : emulatorAlternative.gba,
@@ -260,7 +256,7 @@ function EmulatorSelectorPage() {
           : emulatorAlternative.mame,
       };
 
-      //Setting standalone vs multiemulator
+      // Setting standalone vs multiemulator
       //       if (emulatorProp === 'mgba') {
       //         systems.gba = 'mgba';
       //       } else if (emulatorAlternative.gba !== 'mgba') {
@@ -278,10 +274,10 @@ function EmulatorSelectorPage() {
       //         n64: systems.n64;
       //       }
 
-      //Disabling
+      // Disabling
     } else {
       setStatePage({ ...statePage, lastSelected: '' });
-      //Setting multiemulator
+      // Setting multiemulator
       if (emulatorProp === 'ares' || emulatorProp === 'ra') {
         if (emulatorProp === 'ares') {
           multiemulatorValue = 'ra';
@@ -292,7 +288,7 @@ function EmulatorSelectorPage() {
         multiemulatorValue = emulatorAlternative.multiemulator;
       }
 
-      //Setting standalone vs multiemulator
+      // Setting standalone vs multiemulator
 
       if (emulatorProp === 'ares' || emulatorProp === 'ra') {
         systemsOption = {
@@ -485,13 +481,13 @@ function EmulatorSelectorPage() {
   const [changedKeys, setChangedKeys] = useState({});
   let emuModified = '';
   useEffect(() => {
-    let emuOption1,
-      emuOption2,
-      emuID1,
-      emuID2,
-      system,
-      multiemulatorName,
-      multiemulatorID;
+    let emuOption1;
+    let emuOption2;
+    let emuID1;
+    let emuID2;
+    let system;
+    let multiemulatorName;
+    let multiemulatorID;
 
     const keys = Object.keys(previousState);
     const changed = {};
@@ -521,7 +517,7 @@ function EmulatorSelectorPage() {
 
     emuModified = '';
 
-    //RA + Ares
+    // RA + Ares
     if (installEmus.ares.status && installEmus.ra.status) {
       if (emulatorAlternative.multiemulator !== 'both') {
         emuOption1 = 'ares';
@@ -534,20 +530,23 @@ function EmulatorSelectorPage() {
           body: (
             <>
               <p>
-                You've selected two emulators for the same system, which one do
+                You've selected two emulators for the same systems, which one do
                 you want to use for Classic games like Super Nintendo, Nes,
                 Nintendo 64, Dreamcast, etc?
               </p>
               <div className="h5">
-                <strong>RetroArch</strong> has these pros:
+                <strong>RetroArch (recommended)</strong> has these pros:
               </div>
               <ol className="list">
                 <li>RetroAchievements</li>
                 <li>Bezels & Shaders</li>
                 <li>Auto Save States</li>
-                <li>
-                  Multiplatform ( Mac, Linux, Windows, Anbernic, Batocera, etc )
-                </li>
+              </ol>
+              <div className="h5">
+                <strong>ares</strong> has this pro:
+              </div>
+              <ol className="list">
+                <li>Alternative for people that dislike RetroArch</li>
               </ol>
               <p>
                 If you chose Both, we will use Ares when available, and
@@ -624,21 +623,18 @@ function EmulatorSelectorPage() {
                 you want to use for GameBoy Advance.
               </p>
               <div className="h5">
-                <strong>RetroArch</strong> has these pros:
+                <strong>RetroArch (recommended)</strong> has these pros:
               </div>
               <ol className="list">
                 <li>RetroAchievements</li>
                 <li>Bezels & Shaders</li>
                 <li>Auto Save States</li>
-                <li>
-                  Multiplatform ( Mac, Linux, Windows, Anbernic, Batocera, etc )
-                </li>
               </ol>
               <div className="h5">
                 <strong>mGBA</strong> has this pro:
               </div>
               <ol className="list">
-                <li>GBA Link</li>
+                <li>GBA Link for Multiplayer, Pokemon Trading, etc.</li>
               </ol>
               <p>
                 We will only add the parser according to your selection so you
@@ -656,7 +652,7 @@ function EmulatorSelectorPage() {
       (installEmus.rmg.status && installEmus.ra.status) ||
       (installEmus.rmg.status && installEmus.ares.status)
     ) {
-      //alert(emuModified);
+      // alert(emuModified);
       if (lastSelected === 'rmg') {
         multiemulatorID = 'multiemulator';
         multiemulatorName = 'RetroArch';
@@ -679,21 +675,18 @@ function EmulatorSelectorPage() {
                 you want to use
               </p>
               <div className="h5">
-                <strong>RetroArch</strong> has these pros:
+                <strong>RetroArch (recommended)</strong> has these pros:
               </div>
               <ol className="list">
                 <li>RetroAchievements</li>
                 <li>Bezels & Shaders</li>
                 <li>Auto Save States</li>
-                <li>
-                  Multiplatform ( Mac, Linux, Windows, Anbernic, Batocera, etc )
-                </li>
               </ol>
               <div className="h5">
                 <strong>RMG</strong> has this pro:
               </div>
               <ol className="list">
-                <li>NPI</li>
+                <li>Better Performance</li>
               </ol>
               <p>
                 We will only add the parser according to your selection so you
@@ -738,15 +731,12 @@ function EmulatorSelectorPage() {
                 <li>RetroAchievements</li>
                 <li>Bezels & Shaders</li>
                 <li>Auto Save States</li>
-                <li>
-                  Multiplatform ( Mac, Linux, Windows, Anbernic, Batocera, etc )
-                </li>
               </ol>
               <div className="h5">
-                <strong>duckstation</strong> has this pro:
+                <strong>DuckStation (recommended)</strong> has this pro:
               </div>
               <ol className="list">
-                <li>NPI</li>
+                <li>Better Performance</li>
               </ol>
               <p>
                 We will only add the parser according to your selection so you
@@ -791,15 +781,12 @@ function EmulatorSelectorPage() {
                 <li>RetroAchievements</li>
                 <li>Bezels & Shaders</li>
                 <li>Auto Save States</li>
-                <li>
-                  Multiplatform ( Mac, Linux, Windows, Anbernic, Batocera, etc )
-                </li>
               </ol>
               <div className="h5">
-                <strong>melonDS</strong> has this pro:
+                <strong>melonDS (recommended)</strong> has this pros:
               </div>
               <ol className="list">
-                <li>NPI</li>
+                <li>Better performance and scaling</li>
               </ol>
               <p>
                 We will only add the parser according to your selection so you
@@ -844,15 +831,13 @@ function EmulatorSelectorPage() {
                 <li>RetroAchievements</li>
                 <li>Bezels & Shaders</li>
                 <li>Auto Save States</li>
-                <li>
-                  Multiplatform ( Mac, Linux, Windows, Anbernic, Batocera, etc )
-                </li>
               </ol>
               <div className="h5">
-                <strong>ppsspp</strong> has this pro:
+                <strong>PPSSPP (recommended)</strong> has this pro:
               </div>
               <ol className="list">
-                <li>NPI</li>
+                <li>Better performance</li>
+                <li>Better compatibility</li>
               </ol>
               <p>
                 We will only add the parser according to your selection so you
@@ -891,21 +876,13 @@ function EmulatorSelectorPage() {
                 you want to use
               </p>
               <div className="h5">
-                <strong>RetroArch</strong> has these pros:
+                <strong>RetroArch (recommended)</strong> has these pros:
               </div>
               <ol className="list">
                 <li>RetroAchievements</li>
                 <li>Bezels & Shaders</li>
                 <li>Auto Save States</li>
-                <li>
-                  Multiplatform ( Mac, Linux, Windows, Anbernic, Batocera, etc )
-                </li>
-              </ol>
-              <div className="h5">
-                <strong>mame</strong> has this pro:
-              </div>
-              <ol className="list">
-                <li>NPI</li>
+                <li>3 different cores: 2003 plus, 2010 and current</li>
               </ol>
               <p>
                 We will only add the parser according to your selection so you
@@ -950,15 +927,12 @@ function EmulatorSelectorPage() {
                 <li>RetroAchievements</li>
                 <li>Bezels & Shaders</li>
                 <li>Auto Save States</li>
-                <li>
-                  Multiplatform ( Mac, Linux, Windows, Anbernic, Batocera, etc )
-                </li>
               </ol>
               <div className="h5">
-                <strong>scummvm</strong> has this pro:
+                <strong>ScummVM (recommended)</strong> has this pro:
               </div>
               <ol className="list">
-                <li>NPI</li>
+                <li>Better compatibility</li>
               </ol>
               <p>
                 We will only add the parser according to your selection so you
@@ -1016,7 +990,7 @@ function EmulatorSelectorPage() {
     }
   }, [installEmus]);
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;

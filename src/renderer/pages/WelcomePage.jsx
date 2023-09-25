@@ -363,7 +363,7 @@ function WelcomePage() {
         'A Decky Loader Plugin to easily view emulator hotkeys and configure EmuDeck while in Game Mode',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'Win32',
+      status: system !== 'win32',
       function: () => functions.navigate('/decky-controls'),
     },
     {
