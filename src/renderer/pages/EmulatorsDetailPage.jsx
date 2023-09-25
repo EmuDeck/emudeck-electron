@@ -606,8 +606,8 @@ function EmulatorsDetailPage() {
         } else {
           const modalData = {
             active: true,
-            header: `<span className="h4">${code} failed</span>`,
-            body: `<p>There was an issue trying to install ${code}</p>`,
+            header: <span className="h4">{code} failed</span>,
+            body: <p>There was an issue trying to install {code}</p>,
             css: 'emumodal--xs',
           };
 
@@ -907,7 +907,7 @@ function EmulatorsDetailPage() {
   const doMigration = (code) => {
     const modalData = {
       active: true,
-      body: `<p>Please wait, migrating ${code}</p>`,
+      body: <p>Please wait, migrating {code}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
     };
     setStatePage({
@@ -926,17 +926,15 @@ function EmulatorsDetailPage() {
       if (response.includes('true')) {
         modalData = {
           active: true,
-          header: `<span className="h4">{code} success!</span>`,
-          body: `<p>
-              {code} has been migrated, have fun!
-            </p>`,
+          header: <span className="h4">{code} success!</span>,
+          body: <p>{code} has been migrated, have fun!</p>,
           css: 'emumodal--xs',
         };
       } else {
         modalData = {
           active: true,
-          header: `<span className="h4">${code} failed</span>`,
-          body: `<p>There was an issue trying to migrate ${code}</p>`,
+          header: <span className="h4">{code} failed</span>,
+          body: <p>There was an issue trying to migrate {code}</p>,
           css: 'emumodal--xs',
         };
       }
