@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import { useParams } from 'react-router-dom';
@@ -14,8 +15,9 @@ function CloudSyncPage() {
     disabledNext: false,
     disabledBack: false,
     disableButton: false,
+    dom: undefined,
   });
-  const { disabledNext, disabledBack, disableButton } = statePage;
+  const { disabledNext, disabledBack, disableButton, dom } = statePage;
 
   const cloudSyncSet = (item) => {
     setState({
@@ -32,22 +34,36 @@ function CloudSyncPage() {
       : `cloud-sync-config/${type}`;
   };
 
-  return (
-    <Wrapper>
-      <Header title="Cloud Saves" />
-      <CloudSync
-        onClick={cloudSyncSet}
-        disableButton={disableButton}
-        showNone={type !== 'welcome'}
-      />
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
 
-      <Footer
-        next={nextButtonStatus()}
-        nextText={cloudSyncType === 'none' ? 'Copy Games' : 'Next'}
-        disabledNext={disabledNext}
-        disabledBack={type !== 'welcome'}
-      />
-    </Wrapper>
+  return (
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Cloud Saves" />
+        <CloudSync
+          onClick={cloudSyncSet}
+          disableButton={disableButton}
+          showNone={type !== 'welcome'}
+        />
+
+        <Footer
+          next={nextButtonStatus()}
+          nextText={cloudSyncType === 'none' ? 'Copy Games' : 'Next'}
+          disabledNext={disabledNext}
+          disabledBack={type !== 'welcome'}
+        />
+      </Wrapper>
+    </div>
   );
 }
 

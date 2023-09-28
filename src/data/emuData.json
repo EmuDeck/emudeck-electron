@@ -22,6 +22,17 @@
       "11": ["Toggle Runahead", "SELECT+DPAD⬆️"]
     }
   },
+  "ares": {
+    "id": "ares",
+    "name": "ares",
+    "code": "ares",
+    "wiki": "",
+    "description": "ares is an open-source multi-system emulator with a focus on accuracy and preservation.",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "Atari, WonderSwan, Pocket Challenge, ColecoVision, MSX, PC Engine, NES, Super Nintendo, GameBoy, GameBoy Color, GameBoy Advance, Satellaview, Nintendo64, Sufami Turbo, Master System, Genesis, Game Gear, SegaCD, Sega32x, ZX Spectrum, Neo Geo, Neo Geo Pocket, Playstation",
+    "hotkeys": {}
+  },
   "cemu": {
     "id": "cemu",
     "name": "Cemu",

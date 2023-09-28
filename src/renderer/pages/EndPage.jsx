@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 
 import { BtnSimple } from 'getbasecore/Atoms';
@@ -16,9 +17,10 @@ function EndPage() {
     disabledBack: true,
     data: '',
     step: undefined,
+    dom: undefined,
   });
 
-  const { disabledNext, data, step } = statePage;
+  const { disabledNext, data, step, dom } = statePage;
   const {
     second,
     branch,
@@ -42,7 +44,7 @@ function EndPage() {
   const readMSG = () => {
     ipcChannel.sendMessage('getMSG', []);
     ipcChannel.on('getMSG', (messageInput) => {
-      // // console.log({ message });
+      //
       const messageArray = messageInput.stdout.split('#');
       const messageText = messageArray[1];
       let messagePercent = messageArray[0];
@@ -71,67 +73,94 @@ function EndPage() {
     // }
   };
   const openSRM = () => {
-    if (system === 'win32') {
-      const modalData = {
-        active: true,
-        header: <span className="h4">Launching Steam Rom Manager</span>,
-        body: (
+    let modalData = {
+      active: true,
+      header: <span className="h4">Launching Steam Rom Manager</span>,
+      body: (
+        <>
           <p>
             We will close Steam if its running and then Steam Rom Manager will
             open, this could take a few seconds, please wait.
           </p>
-        ),
-        css: 'emumodal--xs',
-      };
+        </>
+      ),
+      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      css: 'emumodal--xs',
+    };
+
+    if (system === 'win32') {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
       ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
       let srmPath;
-
       if (storagePath === '' || !storagePath || storagePath === null) {
         srmPath = 'C:\\';
       } else {
         srmPath = storagePath;
       }
       ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
-
-      console.log(`${srmPath}Emulation\\tools\\srm.exe`);
-      ipcChannel.once('run-app', (message) => {
-        console.log({ message });
-      });
+    } else if (system === 'darwin') {
+      setStatePage({ ...statePage, modal: modalData });
+      ipcChannel.sendMessage('bash', [`killall steam`]);
+      ipcChannel.sendMessage('run-app', `/Applications/Steam Rom Manager.app`);
     } else {
-      const modalData = {
+      modalData = {
         active: true,
         header: <span className="h4">Launching Steam Rom Manager</span>,
         body: (
           <>
             <p>
-              To add your Emulators and EmulationStation-DE to steam hit
-              Preview, then Generate App List, then wait for the images to
-              download
-            </p>
-            <p>
-              When you are happy with your image choices hit Save App List and
-              wait for it to say it's completed.
+              We will close Steam if its running and then Steam Rom Manager will
+              open, this could take a few seconds, please wait.
             </p>
             <strong>
               Desktop controls will temporarily revert to touch/trackpad/L2/R2.
             </strong>
           </>
         ),
+        footer: (
+          <ProgressBar css="progress--success" infinite={true} max="100" />
+        ),
         css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [
-        `(kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
-      ]);
+      ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam`]);
+      ipcChannel.sendMessage(
+        'run-app',
+        `${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage`
+      );
     }
+    ipcChannel.once('run-app', (message) => {
+      console.log({ message });
+      if (message.includes('launched')) {
+        const timerId = setTimeout(() => {
+          setStatePage({
+            ...statePage,
+            modal: {
+              active: false,
+            },
+          });
+          clearTimeout(timerId);
+        }, 5000);
+      } else {
+        setStatePage({
+          ...statePage,
+          modal: {
+            active: false,
+          },
+        });
+      }
+    });
   };
 
   const showLog = () => {
     if (system === 'win32') {
       ipcChannel.sendMessage('bash-nolog', [
         `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/emudeck.log -Tail 100 -Wait }"`,
+      ]);
+    } else if (system === 'darwin') {
+      ipcChannel.sendMessage('bash-nolog', [
+        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/emudeck/emudeck.log"'`,
       ]);
     } else {
       ipcChannel.sendMessage('bash-nolog', [
@@ -215,18 +244,15 @@ function EndPage() {
       localStorage.setItem('settings_emudeck', json);
 
       if (system === 'win32') {
-        // console.log('saving settings');
-
         ipcChannel.sendMessage('bash-nolog', [
           `echo ${state.achievements.token} > "%userprofile%/AppData/Roaming/EmuDeck/.rat"`,
         ]);
         ipcChannel.sendMessage('bash-nolog', [
           `echo ${state.achievements.user} > "%userprofile%/AppData/Roaming/EmuDeck/.rau"`,
         ]);
-        // console.log({ state });
+
         ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
         ipcChannel.once('saveSettings', () => {
-          // console.log({ saveSettings });
           ipcChannel.sendMessage('bash-nolog', [
             `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/setup.ps1`,
           ]);
@@ -243,8 +269,6 @@ function EndPage() {
 
         // Wait for settings.sh creation.
         ipcChannel.once('startSettings', () => {
-          // console.log('startSettings');
-
           // System
           ipcChannel.sendMessage('bash', [
             `echo system="${system}" >> ${settingsFile}`,
@@ -595,28 +619,59 @@ function EndPage() {
             `echo xeniaResolution="${state.resolutions.xenia}" >> ${settingsFile}`,
           ]);
 
+          //ParserExclusion
+
+          ipcChannel.sendMessage('bash', [
+            `echo emuGBA="${state.emulatorAlternative.gba}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuMAME="${state.emulatorAlternative.mame}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuMULTI="${state.emulatorAlternative.multiemulator}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuN64="${state.emulatorAlternative.n64}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuNDS="${state.emulatorAlternative.nds}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuPSP="${state.emulatorAlternative.psp}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuPSX="${state.emulatorAlternative.psx}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuSCUMMVM="${state.emulatorAlternative.scummvm}" >> ${settingsFile}`,
+          ]);
+
           // Closing
-          // console.log('finalSetting');
+
           ipcChannel.sendMessage('bash-nolog', [
             `finalSetting|||echo finishedUI="done" >> ${settingsFile} && echo true`,
           ]);
         });
 
         ipcChannel.once('finalSetting', (messageFinalSetting) => {
-          // console.log('Running installer');
           const { stdout } = messageFinalSetting;
           // Installation
 
-          ipcChannel.sendMessage('bash-nolog', [
-            `bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
-          ]);
+          if (system === 'darwin') {
+            ipcChannel.sendMessage('bash-nolog', [
+              `osascript -e 'tell app "Terminal" to do script "bash ~/.config/EmuDeck/backend/setup.sh"'`,
+            ]);
+          } else {
+            ipcChannel.sendMessage('bash-nolog', [
+              `bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
+            ]);
+          }
 
           ipcChannel.sendMessage('emudeck', [
             `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > ~/.config/EmuDeck/msg.log && printf "\ec" && echo true`,
           ]);
         });
         ipcChannel.once('finish', (messageFinish) => {
-          // console.log('finish');
           const { stdout } = messageFinish;
           if (stdout.includes('true')) {
             setStatePage({ ...statePage, disabledNext: false });
@@ -626,70 +681,84 @@ function EndPage() {
     }
   }, [second]);
 
-  return (
-    <Wrapper>
-      {disabledNext === true && (
-        <Header title="We are completing your installation..." />
-      )}
-      {disabledNext === false && step === undefined && system !== 'win32' && (
-        <Header title="Installation complete!" />
-      )}
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
 
-      {disabledNext === false &&
-        step === undefined &&
-        device === 'Asus Rog Ally' && (
-          <Header title="Asus Rog Ally Controller configuration" />
+  return (
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        {disabledNext === true && (
+          <Header title="We are completing your installation..." />
+        )}
+        {disabledNext === false && step === undefined && system !== 'win32' && (
+          <Header title="Installation complete!" />
         )}
 
-      {disabledNext === false &&
-        step === undefined &&
-        device !== 'Asus Rog Ally' &&
-        system === 'win32' && <Header title="Controller configuration" />}
+        {disabledNext === false &&
+          step === undefined &&
+          device === 'Asus Rog Ally' && (
+            <Header title="Asus Rog Ally Controller configuration" />
+          )}
 
-      <End
-        onClick={openSRM}
-        onClickWin32Config={configureControllers}
-        data={data}
-        step={step}
-        message={message}
-        percentage={percentage}
-        disabledNext={disabledNext}
-      />
-      <footer className="footer">
-        <BtnSimple
-          css="btn-simple--1"
-          type="button"
-          aria="Go Back"
-          disabled={false}
-          onClick={showLog}
-        >
-          Watch Log
-        </BtnSimple>
+        {disabledNext === false &&
+          step === undefined &&
+          device !== 'Asus Rog Ally' &&
+          system === 'win32' && <Header title="Controller configuration" />}
 
-        <BtnSimple
-          css="btn-simple--1"
-          type="button"
-          aria="Go Next"
-          disabled={disabledNext && 'true'}
-          onClick={() => navigate('/cloud-sync')}
-        >
-          Next
-          <svg
-            className="rightarrow"
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+        <End
+          onClick={openSRM}
+          onClickWin32Config={configureControllers}
+          data={data}
+          step={step}
+          message={message}
+          percentage={percentage}
+          disabledNext={disabledNext}
+        />
+        <footer className="footer">
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria="Go Back"
+            disabled={false}
+            onClick={showLog}
           >
-            <path
-              fill="currentColor"
-              d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
-            />
-          </svg>
-        </BtnSimple>
-      </footer>
-    </Wrapper>
+            Watch Log
+          </BtnSimple>
+
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria="Go Next"
+            disabled={disabledNext && 'true'}
+            onClick={() => navigate('/cloud-sync')}
+          >
+            Next
+            <svg
+              className="rightarrow"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill="currentColor"
+                d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
+              />
+            </svg>
+          </BtnSimple>
+        </footer>
+      </Wrapper>
+    </div>
   );
 }
 

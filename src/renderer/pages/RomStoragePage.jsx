@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
@@ -21,9 +22,17 @@ function RomStoragePage() {
     sdCardName: undefined,
     status: undefined,
     modal: undefined,
+    dom: undefined,
   });
-  const { disabledNext, disabledBack, sdCardValid, sdCardName, status, modal } =
-    statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    sdCardValid,
+    sdCardName,
+    status,
+    modal,
+    dom,
+  } = statePage;
   const { system, storagePath } = state;
 
   const storageSet = (storageName) => {
@@ -47,7 +56,7 @@ function RomStoragePage() {
 
       ipcChannel.once('customLocation', (message) => {
         const stdout = message.stdout.replace('\n', '');
-        console.log({ message });
+
         const storagePath = stdout;
 
         setStatePage({
@@ -75,12 +84,12 @@ function RomStoragePage() {
         ipcChannel.once('testLocation', (messageLocation) => {
           if (messageLocation) {
             const stdoutLocation = messageLocation.stdout.replace('\n', '');
-            // console.log({ message });
+
             let statusLocation;
             stdoutLocation.includes('Valid')
               ? (statusLocation = true)
               : (statusLocation = false);
-            // console.log({ status });
+
             if (statusLocation === true) {
               setStatePage({
                 ...statePage,
@@ -146,7 +155,6 @@ function RomStoragePage() {
   const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
-      // console.log(message);
       let stdout = message.stdout.replace('\n', '');
       if (stdout === '') {
         stdout = null;
@@ -167,8 +175,6 @@ function RomStoragePage() {
     ]);
 
     ipcChannel.once('SDCardValid', (message) => {
-      // console.log(message);
-
       if (message === 'nogit') {
         const modalData = {
           active: true,
@@ -219,27 +225,41 @@ function RomStoragePage() {
     }
   }, [sdCardName]);
 
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
   return (
-    <Wrapper>
-      <Header title="Select your ROM Directory " />
-      <RomStorage
-        status={status}
-        sdCardValid={sdCardValid}
-        showSDCard={system !== 'win32'}
-        showInternal={system !== 'win32'}
-        reloadSDcard={checkSDValid}
-        sdCardName={sdCardName}
-        customPath={storagePath}
-        onClick={storageSet}
-      />
-      <Footer
-        next="device-selector"
-        nextText="Next"
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
-      <EmuModal modal={modal} />
-    </Wrapper>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Select your ROM Directory " />
+        <RomStorage
+          status={status}
+          sdCardValid={sdCardValid}
+          showSDCard={system !== 'win32'}
+          showInternal={system !== 'win32'}
+          reloadSDcard={checkSDValid}
+          sdCardName={sdCardName}
+          customPath={storagePath}
+          onClick={storageSet}
+        />
+        <Footer
+          next="device-selector"
+          nextText="Next"
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 

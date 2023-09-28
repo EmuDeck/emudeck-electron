@@ -1,14 +1,18 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Main from 'components/organisms/Main/Main';
 import CardSettings from 'components/molecules/CardSettings/CardSettings';
-import Notification from 'components/molecules/Notification/Notification';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
+
 import {
   imgra,
+  imgares,
   imgdolphin,
   imgprimehack,
   imgppsspp,
@@ -36,6 +40,7 @@ import {
 
 const images = {
   ra: imgra,
+  ares: imgares,
   dolphin: imgdolphin,
   primehack: imgprimehack,
   ppsspp: imgppsspp,
@@ -67,20 +72,16 @@ function EmulatorsPage() {
     disabledNext: false,
     disabledBack: false,
     updates: null,
-    showNotification: undefined,
-    textNotification: '',
-    disableInstallButton: false,
-    disableResetButton: false,
     newDesiredVersions: null,
+    dom: undefined,
   });
   const {
     disabledNext,
     disabledBack,
     updates,
-    showNotification,
-    textNotification,
     newDesiredVersions,
-    disableResetButton,
+    modal,
+    dom,
   } = statePage;
 
   const { system, installEmus } = state;
@@ -96,12 +97,18 @@ function EmulatorsPage() {
   pageRef.current = statePage;
 
   const resetEmus = () => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Resetting Emulators configuration</span>,
+      body: <p>Please wait while we reset all the Emulators configuration</p>,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
+      css: 'emumodal--xs',
+    };
+
     setStatePage({
       ...pageRef.current,
-      disableResetButton: true,
+      modal: modalData,
     });
-
-    console.log({ updates });
 
     setTimeout(() => {
       let i = 2;
@@ -123,25 +130,54 @@ function EmulatorsPage() {
             item.id === 'xemu' ||
             item.id === 'mgba'
           ) {
-            console.log('NOT SUPPORTED');
             return;
           }
         }
+
+        if (item.id === 'ares') {
+          return;
+        }
+
+        const modalData = {
+          active: true,
+          header: <span className="h4">Resetting {code}'s configuration</span>,
+          body: <p>Please wait while we reset {code}'s configuration</p>,
+          footer: <ProgressBar css="progress--success" infinite max="100" />,
+          css: 'emumodal--xs',
+        };
+
+        setStatePage({
+          ...pageRef.current,
+          modal: modalData,
+        });
 
         ipcChannel.sendMessage('emudeck', [
           `${code}_resetConfig|||sleep ${i} && ${code}_resetConfig`,
         ]);
 
         ipcChannel.once(`${code}_resetConfig`, (message) => {
-          console.log(`${code}_resetConfig`);
           let status = message.stdout;
           status = status.replace('\n', '');
 
           if (status.includes('true')) {
+            const modalData = {
+              active: true,
+              header: (
+                <span className="h4">{name}'s configuration updated!</span>
+              ),
+              body: (
+                <p>
+                  {name}'s configuration was updated with our latest
+                  improvements, optimizations and bug fixes!
+                </p>
+              ),
+              footer: '',
+              css: 'emumodal--xs',
+            };
+
             setStatePage({
               ...pageRef.current,
-              textNotification: `${name} configuration updated! 🎉`,
-              showNotification: true,
+              modal: modalData,
             });
 
             setStateCurrentConfigs({
@@ -149,10 +185,20 @@ function EmulatorsPage() {
               [id]: { ...countRef.current[id], version },
             });
           } else {
+            const modalData = {
+              active: true,
+              header: (
+                <span className="h4">{name} configuration reset failed</span>
+              ),
+              body: (
+                <p>There was an issue trying to reset {name} configuration</p>
+              ),
+              css: 'emumodal--xs',
+            };
+
             setStatePage({
               ...pageRef.current,
-              textNotification: `There was an issue trying to reset ${name} configuration 😥`,
-              showNotification: true,
+              modal: modalData,
             });
           }
         });
@@ -160,17 +206,6 @@ function EmulatorsPage() {
       });
     }, 1000);
   };
-
-  useEffect(() => {
-    if (showNotification === true) {
-      setTimeout(() => {
-        setStatePage({
-          ...statePage,
-          showNotification: false,
-        });
-      }, 1000);
-    }
-  }, [showNotification]);
 
   useEffect(() => {
     // Clean win32 systems
@@ -190,7 +225,6 @@ function EmulatorsPage() {
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?
       if (repoVersions === '') {
-        console.log('no versioning found');
       }
 
       // Thanks chatGPT lol
@@ -209,7 +243,6 @@ function EmulatorsPage() {
         ...statePage,
         updates: differences,
         newDesiredVersions: repoVersions,
-        disableResetButton: false,
       });
     });
 
@@ -217,9 +250,9 @@ function EmulatorsPage() {
   }, []);
 
   useEffect(() => {
-    if (showNotification === false) {
+    if (modal === false) {
       // const updates = diff(newDesiredVersions, stateCurrentConfigs);
-
+      alert('false');
       const obj1 = newDesiredVersions;
       const obj2 = stateCurrentConfigs;
 
@@ -230,7 +263,6 @@ function EmulatorsPage() {
           updates[key] = obj1[key];
         }
       }
-      console.log({ updates });
 
       setStatePage({
         ...statePage,
@@ -240,103 +272,125 @@ function EmulatorsPage() {
       const json = JSON.stringify(stateCurrentConfigs);
       localStorage.setItem('current_versions_beta', json);
     }
-  }, [showNotification]);
+  }, [modal]);
+
+  // GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
 
   return (
-    <Wrapper>
-      <Header title="Manage your Emulators" />
-      <p className="lead">
-        On this page, you can update your configurations or install new
-        emulators. An orange notification means you have a configuration update
-        ready for the respective emulator.
-      </p>
-      <Notification css={showNotification ? 'is-animated' : 'nope'}>
-        {textNotification}
-      </Notification>
-      <Main>
-        {updates && (
-          <>
-            <div className="container--grid">
-              {Object.keys(updates).length > 0 && (
-                <div data-col-md="4">
-                  <CardSettings
-                    icon={iconGear}
-                    css="is-highlighted"
-                    btnCSS="btn-simple--1"
-                    iconSize="md"
-                    title="Update all Configurations"
-                    description="Update all of your configurations at once. New configurations might contain bug fixes or performance improvements. This will overwrite any global emulator settings you have changed. Per game settings will be retained."
-                    button={disableResetButton ? 'Please wait...' : 'Update'}
-                    onClick={() => resetEmus()}
-                    disabled={disableResetButton}
-                    notification
-                  />
-                </div>
-              )}
-              {system !== 'win32' && (
-                <div data-col-md="4">
-                  <CardSettings
-                    icon={iconPackage}
-                    css="is-highlighted"
-                    btnCSS="btn-simple--1"
-                    iconSize="md"
-                    button="Update"
-                    title="Update your Emulators"
-                    description="Update your emulators right from EmuDeck"
-                    onClick={() => navigate(`/update-emulators`)}
-                  />
-                </div>
-              )}
-            </div>
-            <hr />
-            <div className="container--grid">
-              {installEmusArray.map((item) => {
-                const img = images[item.id];
-                const updateNotif = updates[item.id];
-                if (system === 'win32') {
-                  if (
-                    item.id === 'primehack' ||
-                    item.id === 'rmg' ||
-                    item.id === 'mame' ||
-                    item.id === 'vita3k' ||
-                    item.id === 'scummvm' ||
-                    item.id === 'xemu' ||
-                    item.id === 'mgba' ||
-                    item.id === 'xenia'
-                  ) {
-                    return;
-                  }
-                }
-                return (
-                  <div data-col-md="2">
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Manage your Emulators" />
+        <p className="lead">
+          On this page, you can update your configurations or install new
+          emulators. An orange notification means you have a configuration
+          update ready for the respective emulator.
+        </p>
+        <Main>
+          {updates && (
+            <>
+              <div className="container--grid">
+                {Object.keys(updates).length > 0 && system !== 'darwin' && (
+                  <div data-col-md="4">
                     <CardSettings
-                      key={item.id}
-                      icon={img}
+                      icon={iconGear}
                       css="is-highlighted"
-                      btnCSS={
-                        item.status === true ? 'btn-simple--5' : 'btn-simple--2'
-                      }
-                      iconSize="sm"
-                      title={`${item.name}`}
-                      button={item.status === true ? 'Manage' : 'Install'}
-                      onClick={() => navigate(`/emulators-detail/${item.id}`)}
-                      notification={
-                        item.status === true ? updateNotif != undefined : ''
-                      }
+                      btnCSS="btn-simple--1"
+                      iconSize="md"
+                      title="Update all Configurations"
+                      description="Update all of your configurations at once. New configurations might contain bug fixes or performance improvements. This will overwrite any global emulator settings you have changed. Per game settings will be retained."
+                      button="Update"
+                      onClick={() => resetEmus()}
                     />
                   </div>
-                );
-              })}
-            </div>
-          </>
-        )}
-      </Main>
-      <Footer
-        next={false}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
-    </Wrapper>
+                )}
+                {system !== 'win32' && system !== 'darwin' && (
+                  <div data-col-md="4">
+                    <CardSettings
+                      icon={iconPackage}
+                      css="is-highlighted"
+                      btnCSS="btn-simple--1"
+                      iconSize="md"
+                      button="Update"
+                      title="Update your Emulators"
+                      description="Update your emulators right from EmuDeck"
+                      onClick={() => navigate(`/update-emulators`)}
+                    />
+                  </div>
+                )}
+              </div>
+              <hr />
+              <div className="container--grid">
+                {installEmusArray.map((item) => {
+                  const img = images[item.id];
+                  const updateNotif = updates[item.id];
+                  if (system === 'win32') {
+                    if (
+                      item.id === 'primehack' ||
+                      item.id === 'rmg' ||
+                      item.id === 'mame' ||
+                      item.id === 'vita3k' ||
+                      item.id === 'scummvm' ||
+                      item.id === 'xemu' ||
+                      item.id === 'mgba' ||
+                      item.id === 'xenia'
+                    ) {
+                      return;
+                    }
+                  }
+                  if (item.id === 'ares') {
+                    return;
+                  }
+
+                  if (system === 'darwin') {
+                    if (item.id !== 'ra') {
+                      return;
+                    }
+                  }
+                  return (
+                    <div key={item.id} data-col-md="2">
+                      <CardSettings
+                        icon={img}
+                        css="is-highlighted"
+                        btnCSS={
+                          item.status === true
+                            ? 'btn-simple--5'
+                            : 'btn-simple--2'
+                        }
+                        iconSize="sm"
+                        title={`${item.name}`}
+                        button={item.status === true ? 'Manage' : 'Install'}
+                        onClick={() => navigate(`/emulators-detail/${item.id}`)}
+                        notification={
+                          item.status === true
+                            ? updateNotif != undefined
+                            : false
+                        }
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </Main>
+        <Footer
+          next={false}
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 
