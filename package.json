@@ -217,6 +217,7 @@
       "gatekeeperAssess": false
     },
     "dmg": {
+      "sign": false,
       "contents": [
         {
           "x": 130,

@@ -37,7 +37,7 @@ function CheckUpdatePage() {
           Please stand by while we check if there is a new version available...
         </p>
       ),
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     },
   });
@@ -77,11 +77,11 @@ function CheckUpdatePage() {
       modal: false,
     });
   };
-  //Darwin terminal permissions
+  // Darwin terminal permissions
   useEffect(() => {
     if (system === 'darwin') {
       ipcChannel.sendMessage('bash-nolog', [
-        `osascript -e 'tell app "Terminal" to do script "pwd"'`,
+        `osascript -e 'tell app "Terminal" to do script "pwd && exit"'`,
       ]);
     }
   }, [system]);
@@ -117,9 +117,7 @@ function CheckUpdatePage() {
                 tight.
               </p>
             ),
-            footer: (
-              <ProgressBar css="progress--success" infinite={true} max="100" />
-            ),
+            footer: <ProgressBar css="progress--success" infinite max="100" />,
             css: 'emumodal--xs',
           };
         }
@@ -277,9 +275,7 @@ function CheckUpdatePage() {
             </BtnSimple>
           </>
         ),
-        footer: (
-          <ProgressBar css="progress--success" infinite={true} max="100" />
-        ),
+        footer: <ProgressBar css="progress--success" infinite max="100" />,
         css: 'emumodal--xs',
       };
 
@@ -365,7 +361,7 @@ function CheckUpdatePage() {
     ipcChannel.on('getMSG', (messageInput) => {
       const messageText = messageInput.stdout;
       setMsg({ messageLog: messageText });
-      //scrollToBottom();
+      // scrollToBottom();
     });
   };
 
@@ -383,7 +379,7 @@ function CheckUpdatePage() {
     return () => clearInterval(interval);
   }, []);
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -418,17 +414,14 @@ function CheckUpdatePage() {
                       target="_blank"
                       className="link-simple link-simple--1"
                       href="https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading"
+                      rel="noreferrer"
                     >
                       Wiki FAQ
                     </a>
                   )}
                 </p>
 
-                <ProgressBar
-                  css="progress--success"
-                  infinite={true}
-                  max="100"
-                />
+                <ProgressBar css="progress--success" infinite max="100" />
               </>
 
               <code
