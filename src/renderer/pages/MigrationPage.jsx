@@ -1,6 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 
@@ -19,6 +21,8 @@ function MigrationPage() {
     status: undefined,
     storageDestination: undefined,
     storagePathDestination: undefined,
+    modal: undefined,
+    dom: undefined,
   });
   const {
     disabledNext,
@@ -29,10 +33,11 @@ function MigrationPage() {
     status,
     storagePathDestination,
     storageDestination,
+    modal,
+    dom,
   } = statePage;
 
   const storageSet = (storageName) => {
-    // console.log(({ storageName });
     // We prevent the function to continue if the custom location testing is still in progress
     if (status === 'testing') {
       return;
@@ -52,12 +57,12 @@ function MigrationPage() {
 
         ipcChannel.once('testLocation', (messageLocation) => {
           const stdoutLocation = messageLocation.stdout.replace('\n', '');
-          // console.log(({ stdout });
+
           let statusLocation;
           stdoutLocation.includes('Valid')
             ? (statusLocation = true)
             : (statusLocation = false);
-          // console.log(({ status });
+
           if (statusLocation === true) {
             setStatePage({
               ...statePage,
@@ -66,12 +71,20 @@ function MigrationPage() {
               storagePathDestination: stdout,
             });
           } else {
-            alert('Non writable directory selected, please choose another.');
+            const modalData = {
+              active: true,
+              header: <span className="h4">Ooops 😞</span>,
+              body: (
+                <p>Non writable directory selected, please choose another.</p>
+              ),
+              css: 'emumodal--xs',
+            };
             setStatePage({
               ...statePage,
               disabledNext: true,
               storageDestination: null,
               storagePathDestination: null,
+              modal: modalData,
             });
           }
         });
@@ -101,7 +114,6 @@ function MigrationPage() {
     ]);
 
     ipcChannel.once('SDCardValid', (message) => {
-      // console.log((message);
       const stdout = message.stdout.replace('\n', '');
       let status;
       stdout.includes('Valid') ? (status = true) : (status = false);
@@ -135,7 +147,6 @@ function MigrationPage() {
   const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
-      // console.log((message);
       let stdout = message.stdout.replace('\n', '');
       if (stdout === '') {
         stdout = null;
@@ -183,27 +194,42 @@ function MigrationPage() {
     localStorage.setItem('settings_emudeck', json);
   }, [state]);
 
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
   return (
-    <Wrapper>
-      <Header title="Migrate your installation" />
-      <Migration
-        sdCardValid={sdCardValid}
-        reloadSDcard={checkSDValid}
-        sdCardName={sdCardName}
-        onClick={storageSet}
-        onClickStart={startMigration}
-        storage={storage}
-        storageDestination={storageDestination}
-        storagePath={storagePath}
-        storagePathDestination={storagePathDestination}
-        statusMigration={statusMigration}
-      />
-      <Footer
-        next={false}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
-    </Wrapper>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Migrate your installation" />
+        <Migration
+          sdCardValid={sdCardValid}
+          reloadSDcard={checkSDValid}
+          sdCardName={sdCardName}
+          onClick={storageSet}
+          onClickStart={startMigration}
+          storage={storage}
+          storageDestination={storageDestination}
+          storagePath={storagePath}
+          storagePathDestination={storagePathDestination}
+          statusMigration={statusMigration}
+        />
+        <Footer
+          next={false}
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 

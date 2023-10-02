@@ -21,7 +21,7 @@ import RAAchievementsConfigPage from 'pages/RAAchievementsConfigPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
-import DeckyControlsPage from 'pages/DeckyControlsPage';
+import EmuDeckyPage from 'pages/EmuDeckyPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
 import CheckDependenciesPage from 'pages/CheckDependenciesPage';
 import CHDToolPage from 'pages/CHDToolPage';
@@ -85,10 +85,12 @@ export default function App() {
     scummvm: { id: 'scummvm', code: 'ScummVM', version: 0 },
     xenia: { id: 'xenia', code: 'Xenia', version: 0 },
     mgba: { id: 'mgba', code: 'mGBA', version: 0 },
+    ares: { id: 'ares', code: 'ares', version: 0 },
   });
 
   const [state, setState] = useState({
     app: 'electron',
+    yuzuEAtoken: null,
     patreonToken: null,
     patreonStatus: false,
     version: '',
@@ -107,10 +109,10 @@ export default function App() {
     bezels: true,
     powerTools: false,
     GyroDSU: false,
-    cloudSync: '',
+    cloudSync: undefined,
     cloudSyncType: 'Sync',
     cloudSyncStatus: false,
-    sudoPass: '',
+    sudoPass: 'Decky!',
     language: 'en',
     achievements: {
       user: '',
@@ -214,6 +216,7 @@ export default function App() {
         name: 'Xenia',
       },
       mgba: { id: 'mgba', status: false, installed: undefined, name: 'mGBA' },
+      ares: { id: 'ares', status: false, installed: undefined, name: 'ares' },
     },
     overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
@@ -236,6 +239,17 @@ export default function App() {
       vita3k: { id: 'vita3k', status: true, name: 'Vita3K' },
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
       mgba: { id: 'mgba', status: true, name: 'mGBA' },
+      ares: { id: 'ares', status: false, name: 'ares' },
+    },
+    emulatorAlternative: {
+      gba: 'multiemulator',
+      mame: 'multiemulator',
+      n64: 'multiemulator',
+      nds: 'melonDS',
+      psp: 'ppsspp',
+      psx: 'duckstation',
+      scummvm: 'scummvm',
+      multiemulator: 'ra',
     },
     resolutions: {
       dolphin: '720P',
@@ -339,7 +353,7 @@ export default function App() {
           <Route exact path="/shaders-3d-classic" element={<Shaders3DPage />} />
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
-          <Route exact path="/decky-controls" element={<DeckyControlsPage />} />
+          <Route exact path="/decky-controls" element={<EmuDeckyPage />} />
 
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
           <Route exact path="/change-log" element={<ChangeLogPage />} />

@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuGuide from 'components/organisms/Wrappers/EmuGuide';
@@ -20,6 +21,7 @@ function EmuGuidePage() {
     textNotification: '',
     disableInstallButton: false,
     disableResetButton: false,
+    dom: undefined,
   });
   const {
     disabledNext,
@@ -29,6 +31,7 @@ function EmuGuidePage() {
     textNotification,
     disableInstallButton,
     disableResetButton,
+    dom,
   } = statePage;
 
   // TODO: Use only one state for bioses, doing it this way is quick but madness
@@ -43,9 +46,8 @@ function EmuGuidePage() {
   const checkBios = (biosCommand) => {
     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
-      // console.log({ biosCommand });
       status = status.stdout;
-      // console.log({ status });
+
       status = status.replace('\n', '');
       let biosStatus;
       status.includes('true') ? (biosStatus = true) : (biosStatus = false);
@@ -77,8 +79,6 @@ function EmuGuidePage() {
   };
 
   const installEmu = (emulator, name) => {
-    console.log(emulator);
-
     setStatePage({
       ...statePage,
       disableInstallButton: true,
@@ -89,9 +89,8 @@ function EmuGuidePage() {
     ]);
 
     ipcChannel.once(`${name}_install`, (status) => {
-      // console.log({ status });
       status = status.stdout;
-      // console.log({ status });
+
       status = status.replace('\n', '');
       // Lets check if it did install
       ipcChannel.sendMessage('emudeck', [
@@ -99,9 +98,8 @@ function EmuGuidePage() {
       ]);
 
       ipcChannel.once(`${name}_IsInstalled`, (status) => {
-        // console.log({ status });
         status = status.stdout;
-        console.log({ status });
+
         status = status.replace('\n', '');
 
         if (status.includes('true')) {
@@ -112,7 +110,6 @@ function EmuGuidePage() {
             disableInstallButton: false,
           });
           // We set the emu as install = yes
-          alert(name);
           setState({
             ...state,
             installEmus: {
@@ -141,8 +138,6 @@ function EmuGuidePage() {
   };
 
   const uninstallEmu = (emulator, name, alternative = false) => {
-    console.log(emulator);
-
     if (
       confirm(
         'Are you sure you want to uninstall? Your saved games will be deleted'
@@ -165,9 +160,8 @@ function EmuGuidePage() {
       }
 
       ipcChannel.once(`${name}_uninstall`, (status) => {
-        // console.log({ status });
         status = status.stdout;
-        // console.log({ status });
+
         status = status.replace('\n', '');
         // Lets check if it did install
         ipcChannel.sendMessage('emudeck', [
@@ -175,9 +169,8 @@ function EmuGuidePage() {
         ]);
 
         ipcChannel.once(`${name}_IsInstalled`, (status) => {
-          // console.log({ status });
           status = status.stdout;
-          console.log({ status });
+
           status = status.replace('\n', '');
 
           if (status.includes('false')) {
@@ -223,9 +216,8 @@ function EmuGuidePage() {
       `${name}_resetConfig|||${name}_resetConfig`,
     ]);
     ipcChannel.once(`${name}_resetConfig`, (status) => {
-      console.log(`${name}_resetConfig`);
       status = status.stdout;
-      console.log({ status });
+
       status = status.replace('\n', '');
 
       if (status.includes('true')) {
@@ -277,35 +269,49 @@ function EmuGuidePage() {
     }
   };
 
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
   return (
-    <Wrapper>
-      <Header title={emuData[emulatorSelected].name} />
-      <EmuGuide
-        mode={mode}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-        emuData={emuData[emulatorSelected]}
-        ps1={ps1Bios}
-        ps2={ps2Bios}
-        nswitch={switchBios}
-        segacd={segaCDBios}
-        saturn={saturnBios}
-        dreamcast={dreamcastBios}
-        nds={DSBios}
-        onChange={selectEmu}
-        onClick={resetEmu}
-        onClickInstall={installEmu}
-        onClickUninstall={uninstallEmu}
-        showNotification={showNotification}
-        textNotification={textNotification}
-        installEmus={installEmus[emulatorSelected]}
-      />
-      <Footer
-        next={false}
-        disableInstallButton={!!disableInstallButton}
-        disableResetButton={!!disableResetButton}
-      />
-    </Wrapper>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title={emuData[emulatorSelected].name} />
+        <EmuGuide
+          mode={mode}
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+          emuData={emuData[emulatorSelected]}
+          ps1={ps1Bios}
+          ps2={ps2Bios}
+          nswitch={switchBios}
+          segacd={segaCDBios}
+          saturn={saturnBios}
+          dreamcast={dreamcastBios}
+          nds={DSBios}
+          onChange={selectEmu}
+          onClick={resetEmu}
+          onClickInstall={installEmu}
+          onClickUninstall={uninstallEmu}
+          showNotification={showNotification}
+          textNotification={textNotification}
+          installEmus={installEmus[emulatorSelected]}
+        />
+        <Footer
+          next={false}
+          disableInstallButton={!!disableInstallButton}
+          disableResetButton={!!disableResetButton}
+        />
+      </Wrapper>
+    </div>
   );
 }
 

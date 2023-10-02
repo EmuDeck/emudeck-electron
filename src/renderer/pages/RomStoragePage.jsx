@@ -1,7 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 
@@ -19,9 +21,18 @@ function RomStoragePage() {
     sdCardValid: null,
     sdCardName: undefined,
     status: undefined,
+    modal: undefined,
+    dom: undefined,
   });
-  const { disabledNext, disabledBack, sdCardValid, sdCardName, status } =
-    statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    sdCardValid,
+    sdCardName,
+    status,
+    modal,
+    dom,
+  } = statePage;
   const { system, storagePath } = state;
 
   const storageSet = (storageName) => {
@@ -32,14 +43,22 @@ function RomStoragePage() {
 
     if (storageName === 'Custom') {
       if (system === 'win32') {
-        alert('This will take a few seconds. Please wait after clicking OK');
+        const modalData = {
+          active: true,
+          header: <span className="h4">Collecting Drives Names</span>,
+          body: <p>This will take a few seconds. Please wait...</p>,
+          css: 'emumodal--xs',
+        };
+        setStatePage({ ...statePage, modal: modalData });
       }
 
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
         const stdout = message.stdout.replace('\n', '');
-        // console.log({ message });
+
+        const storagePath = stdout;
+
         setStatePage({
           ...statePage,
           disabledNext: true,
@@ -48,7 +67,7 @@ function RomStoragePage() {
         setState({
           ...state,
           storage: storageName,
-          storagePath: stdout,
+          storagePath,
         });
         // is it valid?
 
@@ -63,25 +82,43 @@ function RomStoragePage() {
         }
 
         ipcChannel.once('testLocation', (messageLocation) => {
-          const stdoutLocation = messageLocation.stdout.replace('\n', '');
-          // console.log({ message });
-          let statusLocation;
-          stdoutLocation.includes('Valid')
-            ? (statusLocation = true)
-            : (statusLocation = false);
-          // console.log({ status });
-          if (statusLocation === true) {
-            setStatePage({
-              ...statePage,
-              disabledNext: false,
-              status: undefined,
-            });
+          if (messageLocation) {
+            const stdoutLocation = messageLocation.stdout.replace('\n', '');
+
+            let statusLocation;
+            stdoutLocation.includes('Valid')
+              ? (statusLocation = true)
+              : (statusLocation = false);
+
+            if (statusLocation === true) {
+              setStatePage({
+                ...statePage,
+                disabledNext: false,
+                status: undefined,
+              });
+            } else {
+              const modalData = {
+                active: true,
+                header: <span className="h4">Ooops 😞</span>,
+                body: <p>There was an error detecting your storage...</p>,
+                css: 'emumodal--xs',
+              };
+              setStatePage({ ...statePage, modal: modalData });
+            }
           } else {
-            alert('Non writable directory selected, please choose another.');
+            const modalData = {
+              active: true,
+              header: <span className="h4">Ooops 😞</span>,
+              body: (
+                <p>Non writable directory selected, please choose another.</p>
+              ),
+              css: 'emumodal--xs',
+            };
             setStatePage({
               ...statePage,
               disabledNext: true,
               status: undefined,
+              modal: modalData,
             });
             setState({
               ...state,
@@ -118,7 +155,6 @@ function RomStoragePage() {
   const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
-      // console.log(message);
       let stdout = message.stdout.replace('\n', '');
       if (stdout === '') {
         stdout = null;
@@ -139,12 +175,17 @@ function RomStoragePage() {
     ]);
 
     ipcChannel.once('SDCardValid', (message) => {
-      // console.log(message);
-
       if (message === 'nogit') {
-        alert(
-          'Backend not found, EmuDeck will try to download the missing component and then it will restart itself'
-        );
+        const modalData = {
+          active: true,
+          header: <span className="h4">Ooops 😞</span>,
+          body: <p>There was an error, please restart EmuDeck...</p>,
+          css: 'emumodal--xs',
+        };
+        setStatePage({
+          ...statePage,
+          modal: modalData,
+        });
       }
 
       const stdout = message.stdout.replace('\n', '');
@@ -184,26 +225,41 @@ function RomStoragePage() {
     }
   }, [sdCardName]);
 
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
   return (
-    <Wrapper>
-      <Header title="Select your ROM Directory" bold="" />
-      <RomStorage
-        status={status}
-        sdCardValid={sdCardValid}
-        showSDCard={system !== 'win32'}
-        showInternal={system !== 'win32'}
-        reloadSDcard={checkSDValid}
-        sdCardName={sdCardName}
-        customPath={storagePath}
-        onClick={storageSet}
-      />
-      <Footer
-        next="device-selector"
-        nextText="Next"
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
-    </Wrapper>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Select your ROM Directory " />
+        <RomStorage
+          status={status}
+          sdCardValid={sdCardValid}
+          showSDCard={system !== 'win32'}
+          showInternal={system !== 'win32'}
+          reloadSDcard={checkSDValid}
+          sdCardName={sdCardName}
+          customPath={storagePath}
+          onClick={storageSet}
+        />
+        <Footer
+          next="device-selector"
+          nextText="Next"
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 

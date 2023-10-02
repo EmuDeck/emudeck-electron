@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 //
 import { BtnSimple, FormInputSimple } from 'getbasecore/Atoms';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Main from 'components/organisms/Main/Main';
 import Header from 'components/organisms/Header/Header';
 
@@ -37,11 +38,20 @@ function PatroenLoginPage() {
     accessAllowed: false,
     patreonToken: null,
     errorMessage: undefined,
+    dom: undefined,
   });
-  const { patreonClicked, status, accessAllowed, patreonToken, errorMessage } =
-    statePage;
+  const {
+    patreonClicked,
+    status,
+    accessAllowed,
+    patreonToken,
+    errorMessage,
+    dom,
+  } = statePage;
 
   const { state, setState, setStateCurrentConfigs } = useContext(GlobalContext);
+
+  const { installEmus, overwriteConfigEmus, achievements, shaders } = state;
 
   //
   // Web services
@@ -65,7 +75,6 @@ function PatroenLoginPage() {
   const patreonSetToken = (data) => {
     let patronTokenValue;
 
-    console.log(data.target.value);
     data.target.value === ''
       ? (patronTokenValue = null)
       : (patronTokenValue = data.target.value);
@@ -113,6 +122,14 @@ function PatroenLoginPage() {
           return;
         }
 
+        if (patreonJson.cancel) {
+          setStatePage({
+            ...statePage,
+            accessAllowed: 'cancel',
+          });
+          return;
+        }
+
         // eslint-disable-next-line promise/always-return
         if (patreonJson.status === true) {
           setStatePage({
@@ -123,7 +140,6 @@ function PatroenLoginPage() {
         }
       })
       .catch((error) => {
-        console.log({ error });
         setStatePage({
           ...statePage,
           status: null,
@@ -141,74 +157,6 @@ function PatroenLoginPage() {
       navigate('/check-updates');
     } else if (patreonTokenLS) {
       patreonCheckToken(patreonTokenLS);
-    } else {
-      const settingsStorage = JSON.parse(
-        localStorage.getItem('settings_emudeck')
-      );
-      if (settingsStorage) {
-        const { patreonToken, system, device, installEmus } = settingsStorage;
-
-        if (patreonToken !== null) {
-          setStatePage({
-            ...statePage,
-            errorMessage: 'Please log back in to Patron.',
-          });
-          const updateOrLogin = confirm(
-            'Please log again to Patreon enable EmuDeck updates'
-          );
-          if (!updateOrLogin) {
-            const shadersStored = settingsStorage.shaders;
-            const overwriteConfigEmusStored =
-              settingsStorage.overwriteConfigEmus;
-            const achievementsStored = settingsStorage.achievements;
-
-            console.log({ overwriteConfigEmusStored });
-            console.log({ overwriteConfigEmus });
-
-            delete settingsStorage.installEmus.primehacks;
-            delete settingsStorage.installEmus.cemunative;
-            delete settingsStorage.overwriteConfigEmus.primehacks;
-            const installEmusStored = settingsStorage.installEmus;
-
-            // Theres probably a better way to do this...
-            console.log('2 - VERSION - CHECKING');
-            ipcChannel.sendMessage('version');
-
-            ipcChannel.once('version-out', (version) => {
-              console.log('2 - VERSION - GETTING');
-              console.log({ version });
-              ipcChannel.sendMessage('system-info-in');
-              ipcChannel.once('system-info-out', (platform) => {
-                console.log('2 - VERSION - GETTING SYSTEM TOO');
-                console.log({
-                  system: platform,
-                  version: version[0],
-                  gamemode: version[1],
-                });
-                setState({
-                  ...state,
-                  ...settingsStorage,
-                  installEmus: { ...installEmus, ...installEmusStored },
-                  overwriteConfigEmus: {
-                    ...overwriteConfigEmus,
-                    ...overwriteConfigEmusStored,
-                  },
-                  achievements: {
-                    ...achievements,
-                    ...achievementsStored,
-                  },
-                  shaders: { ...shaders, ...shadersStored },
-                  system: platform,
-                  version: version[0],
-                  gamemode: version[1],
-                  branch,
-                });
-              });
-            });
-            navigate('/welcome');
-          }
-        }
-      }
     }
   }, []);
 
@@ -216,82 +164,156 @@ function PatroenLoginPage() {
     if (accessAllowed === true) {
       localStorage.setItem('patreon_token', patreonToken);
       navigate('/check-updates');
+    } else if (accessAllowed === 'cancel') {
+      const updateOrLogin = confirm(
+        'Please log back in to Patreon to keep EmuDeck updated. Press OK to log in again or Cancel to continue with no updates'
+      );
+      if (!updateOrLogin) {
+        const settingsStorage = JSON.parse(
+          localStorage.getItem('settings_emudeck')
+        );
+        const shadersStored = settingsStorage.shaders;
+        const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
+        const achievementsStored = settingsStorage.achievements;
+
+        delete settingsStorage.installEmus.primehacks;
+        delete settingsStorage.installEmus.cemunative;
+        delete settingsStorage.overwriteConfigEmus.primehacks;
+        const installEmusStored = settingsStorage.installEmus;
+
+        // Theres probably a better way to do this...
+
+        ipcChannel.sendMessage('version');
+
+        ipcChannel.once('version-out', (version) => {
+          ipcChannel.sendMessage('system-info-in');
+          ipcChannel.once('system-info-out', (platform) => {
+            console.log({
+              system: platform,
+              version: version[0],
+              gamemode: version[1],
+            });
+            setState({
+              ...state,
+              ...settingsStorage,
+              installEmus: { ...installEmus, ...installEmusStored },
+              overwriteConfigEmus: {
+                ...overwriteConfigEmus,
+                ...overwriteConfigEmusStored,
+              },
+              achievements: {
+                ...achievements,
+                ...achievementsStored,
+              },
+              shaders: { ...shaders, ...shadersStored },
+              system: platform,
+              version: version[0],
+              gamemode: version[1],
+              branch,
+            });
+          });
+        });
+      }
     }
   }, [accessAllowed]);
+
+  useEffect(() => {
+    window.reload;
+  }, [patreonToken]);
+
+  useEffect(() => {
+    if (state.version != '') {
+      navigate('/welcome');
+    }
+  }, [state]);
 
   //
   // Render
   //
-  return (
-    <Wrapper>
-      <Header title="Login into Patreon" />
-      <Main>
-        {errorMessage === undefined && (
-          <p className="lead">
-            Please login to patreon in order to access this beta.
-          </p>
-        )}
-        {!!errorMessage && <p className="lead">{errorMessage}</p>}
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
 
-        {!patreonClicked && (
-          <>
+  return (
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Login into Patreon" />
+        <Main>
+          {errorMessage === undefined && (
+            <p className="lead">
+              Please login to patreon in order to access this beta.
+            </p>
+          )}
+          {!!errorMessage && <p className="lead">{errorMessage}</p>}
+
+          {!patreonClicked && (
+            <>
+              <BtnSimple
+                css="btn-simple--3"
+                type="link"
+                target="_blank"
+                href="https://token.emudeck.com/"
+                aria="Next"
+                onClick={() => patreonShowInput()}
+              >
+                Login with Patreon
+              </BtnSimple>
+              <BtnSimple
+                css="btn-simple--3"
+                type="link"
+                target="_blank"
+                href="https://patreon.com/"
+                aria="Next"
+              >
+                Change Patreon Account
+              </BtnSimple>
+            </>
+          )}
+          {!patreonClicked && (
             <BtnSimple
-              css="btn-simple--3"
-              type="link"
+              css="btn-simple--2"
+              type="button"
               target="_blank"
-              href="https://token.emudeck.com/"
               aria="Next"
               onClick={() => patreonShowInput()}
             >
-              Login with Patreon
+              Login with Token
             </BtnSimple>
-            <BtnSimple
-              css="btn-simple--3"
-              type="link"
-              target="_blank"
-              href="https://patreon.com/"
-              aria="Next"
-            >
-              Change Patreon Account
-            </BtnSimple>
-          </>
-        )}
-        {!patreonClicked && (
-          <BtnSimple
-            css="btn-simple--2"
-            type="button"
-            target="_blank"
-            aria="Next"
-            onClick={() => patreonShowInput()}
-          >
-            Login with Token
-          </BtnSimple>
-        )}
-        {patreonClicked && (
-          <div className="form">
-            <FormInputSimple
-              label="Token"
-              type="token"
-              name="token"
-              id="token"
-              value={patreonToken}
-              onChange={patreonSetToken}
-            />
-            {patreonToken !== null && (
-              <BtnSimple
-                css="btn-simple--3"
-                type="button"
-                aria="Next"
-                onClick={() => patreonCheckToken()}
-              >
-                {status === null && 'Check Token'}
-                {status === 'checking' && 'Checking token...'}
-              </BtnSimple>
-            )}
-          </div>
-        )}
-      </Main>
-    </Wrapper>
+          )}
+          {patreonClicked && (
+            <div className="form">
+              <FormInputSimple
+                label="Token"
+                type="token"
+                name="token"
+                id="token"
+                value={patreonToken}
+                onChange={patreonSetToken}
+              />
+              {patreonToken !== null && (
+                <BtnSimple
+                  css="btn-simple--3"
+                  type="button"
+                  aria="Next"
+                  onClick={() => patreonCheckToken()}
+                >
+                  {status === null && 'Check Token'}
+                  {status === 'checking' && 'Checking token...'}
+                </BtnSimple>
+              )}
+            </div>
+          )}
+        </Main>
+      </Wrapper>
+    </div>
   );
 }
 

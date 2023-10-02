@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Card from 'components/molecules/Card/Card';
@@ -25,8 +26,9 @@ function ChangeLogPage() {
     current: 0,
     img: img0,
     log: [],
+    dom: undefined,
   });
-  const { disabledNext, disabledBack, current, img, log } = statePage;
+  const { disabledNext, disabledBack, current, img, log, dom } = statePage;
   const { system, branch } = state;
 
   const imgC0 = img0;
@@ -81,76 +83,90 @@ function ChangeLogPage() {
     });
   }, []);
 
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
   return (
-    <Wrapper>
-      <Header title="Latest" bold="changes" />
-      <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
-        <div className="container--grid">
-          <div data-col-sm="4">
-            <div
-              className="changelog-scroll"
-              style={{
-                height: '62vh',
-                overflow: 'auto',
-                overflowX: 'hidden',
-                paddingRight: '20px',
-              }}
-            >
-              <ul>
-                {log.map((item, i) => {
-                  return (
-                    <li tabIndex="0" key={i}>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Latest changes" />
+        <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
+          <div className="container--grid">
+            <div data-col-sm="4">
+              <div
+                className="changelog-scroll"
+                style={{
+                  height: '62vh',
+                  overflow: 'auto',
+                  overflowX: 'hidden',
+                  paddingRight: '20px',
+                }}
+              >
+                <ul>
+                  {log.map((item, i) => {
+                    return (
+                      <li tabIndex="0" key={i}>
+                        <Card
+                          css={current === i && 'is-selected'}
+                          onClick={() => activeItem(i)}
+                        >
+                          <span className="h5">{item.title}</span>
+                        </Card>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+            <div data-col-sm="8">
+              {log.map((item, i) => {
+                return (
+                  <div tabIndex="0" key={i}>
+                    {current === i && (
                       <Card
-                        css={current === i && 'is-selected'}
                         onClick={() => activeItem(i)}
+                        css={current === i && 'is-selected'}
                       >
-                        <span className="h5">{item.title}</span>
+                        {item.image === 'true' && (
+                          <div
+                            style={{
+                              maxHeight: 280,
+                              overflow: 'hidden',
+                              marginBottom: 10,
+                              borderRadius: 10,
+                            }}
+                          >
+                            <img src={img} alt="Image" />
+                          </div>
+                        )}
+                        <p
+                          dangerouslySetInnerHTML={{ __html: item.description }}
+                        />
                       </Card>
-                    </li>
-                  );
-                })}
-              </ul>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
-          <div data-col-sm="8">
-            {log.map((item, i) => {
-              return (
-                <div tabIndex="0" key={i}>
-                  {current === i && (
-                    <Card
-                      onClick={() => activeItem(i)}
-                      css={current === i && 'is-selected'}
-                    >
-                      {item.image === 'true' && (
-                        <div
-                          style={{
-                            maxHeight: 280,
-                            overflow: 'hidden',
-                            marginBottom: 10,
-                            borderRadius: 10,
-                          }}
-                        >
-                          <img src={img} alt="Image" />
-                        </div>
-                      )}
-                      <p
-                        dangerouslySetInnerHTML={{ __html: item.description }}
-                      />
-                    </Card>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </ChangeLog>
-      <Footer
-        next={false}
-        backText="Back to Home"
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
-    </Wrapper>
+        </ChangeLog>
+        <Footer
+          next={false}
+          backText="Back to Home"
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
+      </Wrapper>
+    </div>
   );
 }
 

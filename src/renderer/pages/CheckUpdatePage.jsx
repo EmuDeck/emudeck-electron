@@ -1,19 +1,18 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useContext, useRef, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+
 import { useNavigate } from 'react-router-dom';
 import { Alert, Form } from 'getbasecore/Molecules';
 import Main from 'components/organisms/Main/Main';
 import Card from 'components/molecules/Card/Card';
 
-import {
-  BtnSimple,
-  ProgressBar,
-  FormInputSimple,
-  LinkSimple,
-} from 'getbasecore/Atoms';
+import { BtnSimple, FormInputSimple, LinkSimple } from 'getbasecore/Atoms';
 // Ask for branch
 const branchFile = require('data/branch.json');
 
@@ -29,9 +28,29 @@ function CheckUpdatePage() {
     update: null,
     cloned: null,
     data: '',
+    dom: undefined,
+    modal: {
+      active: true,
+      header: <span className="h4">Checking for updates...</span>,
+      body: (
+        <p>
+          Please stand by while we check if there is a new version available...
+        </p>
+      ),
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
+      css: 'emumodal--xs',
+    },
   });
-  const { disabledNext, disabledBack, downloadComplete, data, cloned, update } =
-    statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    downloadComplete,
+    data,
+    cloned,
+    update,
+    modal,
+    dom,
+  } = statePage;
   const navigate = useNavigate();
 
   const {
@@ -52,26 +71,27 @@ function CheckUpdatePage() {
   const downloadCompleteRef = useRef(downloadComplete);
   downloadCompleteRef.current = downloadComplete;
 
-  // Download files
-  const [counter, setCounter] = useState(0);
+  const closeModal = () => {
+    setStatePage({
+      ...statePage,
+      modal: false,
+    });
+  };
+  // Darwin terminal permissions
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCounter((prevCounter) => {
-        if (prevCounter === 110) {
-          prevCounter = -10;
-        }
-        return prevCounter + 1;
-      });
-    }, 100);
+    if (system === 'darwin') {
+      ipcChannel.sendMessage('bash-nolog', [
+        `osascript -e 'tell app "Terminal" to do script "pwd && exit"'`,
+      ]);
+    }
+  }, [system]);
 
-    return () => clearInterval(interval);
-  }, []);
   let updateTimeOut;
+
   useEffect(() => {
     // Update timeout + Force clone check
-    console.log('UPDATE - SETTING TIMER FOR TIMEOUT');
+
     updateTimeOut = setTimeout(() => {
-      console.log('UPDATE - TIMEOUT REACHED!');
       setStatePage({
         ...statePage,
         update: 'up-to-date',
@@ -80,21 +100,37 @@ function CheckUpdatePage() {
     }, 10000);
 
     if (navigator.onLine) {
-      console.log('UPDATE - CHECKING');
       ipcChannel.sendMessage('update-check');
-      console.log('UPDATE - WAITING');
+
       ipcChannel.once('update-check-out', (message) => {
         // We clear the timeout
         clearTimeout(updateTimeOut);
-        console.log('UPDATE - GETTING INFO:');
-        console.log({ message });
+
+        let modalData;
+        if (message[0] == 'updating') {
+          modalData = {
+            active: true,
+            header: <span className="h4">🎉 Update found! 🎉</span>,
+            body: (
+              <p className="h5">
+                EmuDeck will restart as soon as it finishes the update. Hold on
+                tight.
+              </p>
+            ),
+            footer: <ProgressBar css="progress--success" infinite max="100" />,
+            css: 'emumodal--xs',
+          };
+        }
+
         setStatePage({
           ...statePage,
           update: message[0],
           data: message[1],
+          modal: modalData,
         });
         if (message[0] === 'up-to-date') {
           updateFiles();
+        } else {
         }
       });
     } else {
@@ -103,7 +139,6 @@ function CheckUpdatePage() {
         ...statePage,
         update: 'up-to-date',
       });
-      console.log('No internet connection');
     }
 
     const updateFiles = () => {
@@ -117,14 +152,11 @@ function CheckUpdatePage() {
       const settingsStorage = JSON.parse(
         localStorage.getItem('settings_emudeck')
       );
-      // console.log({ settingsStorage });
+
       if (settingsStorage) {
         const shadersStored = settingsStorage.shaders;
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
         const achievementsStored = settingsStorage.achievements;
-
-        console.log({ overwriteConfigEmusStored });
-        console.log({ overwriteConfigEmus });
 
         delete settingsStorage.installEmus.primehacks;
         delete settingsStorage.installEmus.cemunative;
@@ -132,15 +164,12 @@ function CheckUpdatePage() {
         const installEmusStored = settingsStorage.installEmus;
 
         // Theres probably a better way to do this...
-        console.log('2 - VERSION - CHECKING');
+
         ipcChannel.sendMessage('version');
 
         ipcChannel.once('version-out', (version) => {
-          console.log('2 - VERSION - GETTING');
-          console.log({ version });
           ipcChannel.sendMessage('system-info-in');
           ipcChannel.once('system-info-out', (platform) => {
-            console.log('2 - VERSION - GETTING SYSTEM TOO');
             console.log({
               system: platform,
               version: version[0],
@@ -167,13 +196,10 @@ function CheckUpdatePage() {
           });
         });
       } else {
-        console.log('1 - VERSION - CHECKING');
         ipcChannel.sendMessage('version');
         ipcChannel.once('version-out', (version) => {
-          console.log('1 - VERSION - GETTING');
           ipcChannel.sendMessage('system-info-in');
           ipcChannel.once('system-info-out', (platform) => {
-            console.log('1 - VERSION - GETTING SYSTEM TOO');
             console.log({
               system: platform,
               version: version[0],
@@ -195,12 +221,12 @@ function CheckUpdatePage() {
     // ipcChannel.sendMessage('clean-log');
 
     //  setTimeout(() => {
-    // console.log('UPDATE - CHECKING');
+
     // ipcChannel.sendMessage('update-check');
-    // console.log('UPDATE - WAITING');
+
     // ipcChannel.once('update-check-out', (message) => {
-    //   console.log('UPDATE - GETTING INFO:');
-    //   console.log({ message });
+    //
+    //
     //   setStatePage({
     //     ...statePage,
     //     update: message[0],
@@ -222,12 +248,44 @@ function CheckUpdatePage() {
     }
     if (update === 'up-to-date') {
       // is the git repo cloned?
-      console.log('check-git');
+
+      const modalData = {
+        active: true,
+        header: <span className="h4">Building EmuDeck backend...</span>,
+        body: (
+          <>
+            <p>
+              Please wait a few seconds
+              <br />
+              <br />
+            </p>
+            <BtnSimple
+              css="btn-simple--3"
+              type="link"
+              target="_blank"
+              aria="Next"
+              href={
+                system === 'win32'
+                  ? 'https://emudeck.github.io/common-issues/windows/#emudeck-is-stuck-on-the-checking-for-updates-message'
+                  : 'https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading'
+              }
+              onClick={() => closeModal()}
+            >
+              Help!, I'm stuck
+            </BtnSimple>
+          </>
+        ),
+        footer: <ProgressBar css="progress--success" infinite max="100" />,
+        css: 'emumodal--xs',
+      };
+
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
+
       ipcChannel.sendMessage('check-git');
       ipcChannel.once('check-git', (error, cloneStatusCheck, stderr) => {
-        console.log({ error });
-        console.log({ cloneStatusCheck });
-        console.log({ stderr });
         cloneStatusCheck = cloneStatusCheck.replace('\n', '');
         cloneStatusCheck.includes('true')
           ? (cloneStatusCheck = true)
@@ -246,26 +304,29 @@ function CheckUpdatePage() {
     if (cloned === false) {
       if (navigator.onLine) {
         ipcChannel.sendMessage(`clone`, branch);
-        console.log('clone');
+
         ipcChannel.once('clone', (error, cloneStatusClone, stderr) => {
-          console.log({ error });
-          console.log({ cloneStatusClone });
-          console.log({ stderr });
           if (cloneStatusClone.includes('true')) {
             setStatePage({ ...statePage, downloadComplete: true });
           }
         });
       } else {
-        alert('You need to be connected to the internet');
+        const modalData = {
+          active: true,
+          header: <span className="h4">Ooops 😞</span>,
+          body: <p>You need to be connected to the internet.</p>,
+          css: 'emumodal--xs',
+        };
+        setStatePage({
+          ...statePage,
+          modal: modalData,
+        });
       }
     } else if (cloned === true) {
       if (navigator.onLine) {
         ipcChannel.sendMessage('pull', branch);
-        console.log('pull');
+
         ipcChannel.once('pull', (error, pullStatus, stderr) => {
-          console.log({ error });
-          console.log({ pullStatus });
-          console.log({ stderr });
           setStatePage({ ...statePage, downloadComplete: true });
           // Update timeout
         });
@@ -281,67 +342,104 @@ function CheckUpdatePage() {
     }
   }, [downloadComplete]);
 
-  return (
-    <Wrapper>
-      {update === null && (
-        <>
-          <Header title="Checking for updates..." />
-          <p className="h5">
-            Please stand by while we check if there is a new version available.
-            <br />
-            If this message does not disappear in about 20 seconds, please
-            restart the application.
-          </p>
-          <ProgressBar css="progress--success" value={counter} max="100" />
-        </>
-      )}
+  let pollingTime = 500;
+  if (system === 'win32') {
+    pollingTime = 2000;
+  }
 
-      {update === 'updating' && (
-        <>
-          <Header title="🎉 Update found! 🎉" />
-          <p className="h5">
-            We found an update! EmuDeck will restart as soon as it finishes
-            installing the latest update. Hold on tight.
-          </p>
-          <ProgressBar css="progress--success" value={counter} max="100" />
-        </>
-      )}
-      {update === 'up-to-date' && (
-        <>
-          {second === true && <Header title="Checking for updates" />}
-          {second === false && <Header title="Welcome to EmuDeck" />}
-          <Main>
-            {downloadComplete === null && (
+  const [msg, setMsg] = useState({
+    messageLog: '',
+    percentage: 0,
+  });
+
+  const { messageLog } = msg;
+  const messageLogRef = useRef(messageLog);
+  messageLogRef.current = messageLog;
+
+  const readMSG = () => {
+    ipcChannel.sendMessage('getMSG', []);
+    ipcChannel.on('getMSG', (messageInput) => {
+      const messageText = messageInput.stdout;
+      setMsg({ messageLog: messageText });
+      // scrollToBottom();
+    });
+  };
+
+  // Reading messages from backend
+  useEffect(() => {
+    const interval = setInterval(() => {
+      readMSG();
+      const messageLogCurrent = messageLogRef.current;
+      if (messageLogCurrent.includes('done')) {
+        clearInterval(interval);
+      } else {
+      }
+    }, pollingTime);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
+  return (
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        {update === 'up-to-date' && (
+          <>
+            <Header title="EmuDeck Git cloning log" />
+            <Main>
               <>
-                <p className="h5">
-                  Downloading Files. If this progress bar does not disappear
-                  shortly, please restart the application and check if you can
-                  reach GitHub Servers and check our{' '}
-                  <a
-                    className="link-simple link-simple--1"
-                    href="https://github.com/dragoonDorise/EmuDeck/wiki/Frequently-Asked-Questions#why-wont-emudeck-download"
-                  >
-                    Wiki FAQ
-                  </a>{' '}
-                  for possible solutions.
+                <p className="lead">
+                  If you can't get past this screen send us the log down bellow{' '}
+                  {system === 'win32' && (
+                    <a
+                      target="_blank"
+                      className="https://emudeck.github.io/common-issues/windows/#emudeck-is-stuck-on-the-checking-for-updates-message"
+                    >
+                      Wiki FAQ
+                    </a>
+                  )}
+                  {system !== 'win32' && (
+                    <a
+                      target="_blank"
+                      className="link-simple link-simple--1"
+                      href="https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading"
+                      rel="noreferrer"
+                    >
+                      Wiki FAQ
+                    </a>
+                  )}
                 </p>
 
-                <ProgressBar
-                  css="progress--success"
-                  value={counter}
-                  max="100"
-                />
+                <ProgressBar css="progress--success" infinite max="100" />
               </>
-            )}
-          </Main>
-          <Footer
-            next="welcome"
-            disabledNext={disabledNext}
-            disabledBack={disabledBack}
-          />
-        </>
-      )}
-    </Wrapper>
+
+              <code
+                style={{
+                  fontSize: '14px',
+                  Height: '100%',
+                  overflow: 'auto',
+                  whiteSpace: 'pre-line',
+                }}
+              >
+                {messageLog}
+              </code>
+            </Main>
+          </>
+        )}
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 

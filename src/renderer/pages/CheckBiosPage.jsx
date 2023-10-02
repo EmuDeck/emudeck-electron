@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +14,7 @@ function CheckBiosPage() {
     disabledNext: true,
     disabledBack: false,
     showNotification: false,
+    dom: undefined,
   });
 
   // TODO: Use only one state for bioses, doing it this way is quick but madness
@@ -24,16 +26,15 @@ function CheckBiosPage() {
   const [dreamcastBios, setDreamcastBios] = useState(null);
   const [DSBios, setDSBios] = useState(null);
 
-  const { disabledNext, disabledBack, showNotification } = statePage;
+  const { disabledNext, disabledBack, showNotification, dom } = statePage;
   const navigate = useNavigate();
   const ipcChannel = window.electron.ipcRenderer;
 
   const checkBios = (biosCommand) => {
     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
-      console.log({ biosCommand });
       status = status.stdout;
-      console.log({ status });
+
       status = status.replace('\n', '');
       let biosStatus;
       status.includes('true') ? (biosStatus = true) : (biosStatus = false);
@@ -84,26 +85,40 @@ function CheckBiosPage() {
     checkBios('checkDSBios');
   }, []);
 
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
   return (
-    <Wrapper>
-      <Header title="Bios files" bold="checker" />
-      <CheckBios
-        checkBiosAgain={checkBiosAgain}
-        ps1Bios={ps1Bios}
-        ps2Bios={ps2Bios}
-        switchBios={switchBios}
-        segaCDBios={segaCDBios}
-        saturnBios={saturnBios}
-        dreamcastBios={dreamcastBios}
-        DSBios={DSBios}
-        showNotification={showNotification}
-      />
-      <Footer
-        next={false}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
-    </Wrapper>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Bios files checker" />
+        <CheckBios
+          checkBiosAgain={checkBiosAgain}
+          ps1Bios={ps1Bios}
+          ps2Bios={ps2Bios}
+          switchBios={switchBios}
+          segaCDBios={segaCDBios}
+          saturnBios={saturnBios}
+          dreamcastBios={dreamcastBios}
+          DSBios={DSBios}
+          showNotification={showNotification}
+        />
+        <Footer
+          next={false}
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
+      </Wrapper>
+    </div>
   );
 }
 

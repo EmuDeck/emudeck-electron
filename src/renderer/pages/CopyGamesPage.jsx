@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
-import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Wrapper from 'components/molecules/Wrapper/Wrapper'; import GamePad from 'components/organisms/GamePad/GamePad';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import { BtnSimple } from 'getbasecore/Atoms';
 import CopyGames from 'components/organisms/Wrappers/CopyGames';
@@ -19,6 +20,8 @@ function CopyGamesPage() {
     status: undefined,
     storageUSB: undefined,
     storageUSBPath: undefined,
+    modal: undefined,
+    dom: undefined,
   });
   const {
     statusCopyGames,
@@ -26,10 +29,11 @@ function CopyGamesPage() {
     status,
     storageUSBPath,
     storageUSB,
+    modal,
+    dom,
   } = statePage;
 
   const storageSet = (storageName) => {
-    // console.log({ storageName });
     // We prevent the function to continue if the custom location testing is still in progress
     if (status === 'testing') {
       return;
@@ -39,7 +43,6 @@ function CopyGamesPage() {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
-        // console.log({ message });
         const pathUSB = message.stdout.replace('\n', '');
         setStatePage({
           ...statePage,
@@ -55,12 +58,11 @@ function CopyGamesPage() {
         ]);
 
         ipcChannel.once('testLocation', (message) => {
-          // console.log({ message });
           const stdout = message.stdout.replace('\n', '');
-          // console.log({ stdout });
+
           let status;
           stdout.includes('Valid') ? (status = true) : (status = false);
-          // console.log({ status });
+
           if (status === true) {
             setStatePage({
               ...statePage,
@@ -70,7 +72,14 @@ function CopyGamesPage() {
               storageUSBPath: pathUSB,
             });
           } else {
-            alert('Non writable directory selected, please choose another.');
+            const modalData = {
+              active: true,
+              header: <span className="h4">Ooops 😞</span>,
+              body: (
+                <p>Non writable directory selected, please choose another.</p>
+              ),
+              css: 'emumodal--xs',
+            };
             setStatePage({
               ...statePage,
               disabledNext: true,
@@ -78,6 +87,7 @@ function CopyGamesPage() {
               storageUSB: undefined,
               storageUSBPath: undefined,
               statusCreateStructure: null,
+              modal: modalData,
             });
           }
         });
@@ -110,7 +120,7 @@ function CopyGamesPage() {
 
     ipcChannel.once('CreateStructureUSB', (message) => {
       const stdout = message.stdout.replace('\n', '');
-      // console.log({ message });
+
       setStatePage({
         ...statePage,
         statusCreateStructure: true,
@@ -120,18 +130,57 @@ function CopyGamesPage() {
 
   const openSRM = () => {
     if (system === 'win32') {
-      ipcChannel.sendMessage('bash', [
-        `${storagePath.substring(
-          0,
-          2
-        )} && cd \\ && cd Emulation && cd tools && start srm.exe`,
-      ]);
+      const modalData = {
+        active: true,
+        header: <span className="h4">Launching Steam Rom Manager</span>,
+        body: (
+          <p>
+            We will close Steam if its running and then Steam Rom Manager will
+            open, this could take a few seconds, please wait.
+          </p>
+        ),
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
+      ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
+      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
+      let srmPath;
+
+      if (storagePath === '' || !storagePath || storagePath === null) {
+        srmPath = 'C:\\';
+      } else {
+        srmPath = storagePath;
+      }
+      ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
+
+      ipcChannel.once('run-app', (message) => {});
     } else {
+      const modalData = {
+        active: true,
+        header: <span className="h4">Launching Steam Rom Manager</span>,
+        body: (
+          <>
+            <p>
+              To add your Emulators and EmulationStation-DE to steam hit
+              Preview, then Generate App List, then wait for the images to
+              download
+            </p>
+            <p>
+              When you are happy with your image choices hit Save App List and
+              wait for it to say it's completed.
+            </p>
+            <strong>
+              Desktop controls will temporarily revert to touch/trackpad/L2/R2.
+            </strong>
+          </>
+        ),
+        css: 'emumodal--sm',
+      };
+      setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage('bash', [
-        `zenity --question --width 450 --title "Close Steam/Steam Input?" --text "$(printf "<b>Exit Steam to launch Steam Rom Manager? </b>\n\n To add your Emulators and EmulationStation-DE to steam hit Preview, then Generate App List, then wait for the images to download\n\nWhen you are happy with your image choices hit Save App List and wait for it to say it's completed.\n\nDesktop controls will temporarily revert to touch/trackpad/L2/R2")" && (kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
+        `(kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
       ]);
     }
-
     setTimeout(() => {
       navigate('/welcome');
     }, 5000);
@@ -144,104 +193,119 @@ function CopyGamesPage() {
     });
   };
 
+  //GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
+
   return (
-    <Wrapper>
-      {statusCopyGames !== true && system !== 'win32' && (
-        <Header title="Use a USB Drive to transfer your games" />
-      )}
-
-      <CopyGames
-        onClick={storageSet}
-        onClickStart={startCreateStructureOnUSB}
-        onClickCopyGames={startCopyGames}
-        storagUSB={storageUSB}
-        storageUSBPath={storageUSBPath}
-        statusCopyGames={system === 'win32' ? true : statusCopyGames}
-        statusCreateStructure={statusCreateStructure}
-      />
-      <footer className="footer">
-        {statusCopyGames === true && (
-          <BtnSimple
-            css="btn-simple--2"
-            type="button"
-            aria="Go Next"
-            onClick={() => navigate('/welcome')}
-          >
-            Skip for now
-          </BtnSimple>
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        {statusCopyGames !== true && system !== 'win32' && (
+          <Header title="Use a USB Drive to transfer your games" />
         )}
 
-        {system === 'win32' && (
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Go Next"
-            onClick={() => openSRM()}
-          >
-            Open Steam ROM Manager
-            <svg
-              className="rightarrow"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="currentColor"
-                d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
-              />
-            </svg>
-          </BtnSimple>
-        )}
-
-        {statusCopyGames === true && (
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Go Next"
-            onClick={() => openSRM()}
-          >
-            Open Steam ROM Manager
-            <svg
-              className="rightarrow"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="currentColor"
-                d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
-              />
-            </svg>
-          </BtnSimple>
-        )}
-        {statusCreateStructure === null &&
-          statusCopyGames !== true &&
-          !second && (
+        <CopyGames
+          onClick={storageSet}
+          onClickStart={startCreateStructureOnUSB}
+          onClickCopyGames={startCopyGames}
+          storagUSB={storageUSB}
+          storageUSBPath={storageUSBPath}
+          statusCopyGames={system === 'win32' ? true : statusCopyGames}
+          statusCreateStructure={statusCreateStructure}
+        />
+        <footer className="footer">
+          {statusCopyGames === true && (
             <BtnSimple
-              css="btn-simple--3"
+              css="btn-simple--2"
               type="button"
               aria="Go Next"
-              onClick={() => skipAddingGames()}
+              onClick={() => navigate('/welcome')}
             >
-              Skip
+              Skip for now
             </BtnSimple>
           )}
-        {second && statusCopyGames === null && (
-          <BtnSimple
-            css="btn-simple--2"
-            type="button"
-            aria="Go Back"
-            onClick={() => navigate('/welcome')}
-          >
-            Skip for now
-          </BtnSimple>
-        )}
-      </footer>
-    </Wrapper>
+
+          {system === 'win32' && (
+            <BtnSimple
+              css="btn-simple--1"
+              type="button"
+              aria="Go Next"
+              onClick={() => openSRM()}
+            >
+              Open Steam ROM Manager
+              <svg
+                className="rightarrow"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill="currentColor"
+                  d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
+                />
+              </svg>
+            </BtnSimple>
+          )}
+
+          {statusCopyGames === true && (
+            <BtnSimple
+              css="btn-simple--1"
+              type="button"
+              aria="Go Next"
+              onClick={() => openSRM()}
+            >
+              Open Steam ROM Manager
+              <svg
+                className="rightarrow"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill="currentColor"
+                  d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
+                />
+              </svg>
+            </BtnSimple>
+          )}
+          {statusCreateStructure === null &&
+            statusCopyGames !== true &&
+            !second && (
+              <BtnSimple
+                css="btn-simple--3"
+                type="button"
+                aria="Go Next"
+                onClick={() => skipAddingGames()}
+              >
+                Skip
+              </BtnSimple>
+            )}
+          {second && statusCopyGames === null && (
+            <BtnSimple
+              css="btn-simple--2"
+              type="button"
+              aria="Go Back"
+              onClick={() => navigate('/welcome')}
+            >
+              Skip for now
+            </BtnSimple>
+          )}
+        </footer>
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 

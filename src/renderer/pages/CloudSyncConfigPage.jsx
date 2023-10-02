@@ -1,10 +1,14 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import { BtnSimple } from 'getbasecore/Atoms';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import { useParams } from 'react-router-dom';
 import CloudSyncConfig from 'components/organisms/Wrappers/CloudSyncConfig';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 
 function CloudSyncPageConfig() {
   const { state, setState } = useContext(GlobalContext);
@@ -16,13 +20,37 @@ function CloudSyncPageConfig() {
     disabledBack: false,
     disableButton: false,
     showLoginButton: false,
+    modal: undefined,
+    dom: undefined,
   });
-  const { disabledNext, disabledBack, disableButton, showLoginButton } =
-    statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    disableButton,
+    showLoginButton,
+    modal,
+    dom,
+  } = statePage;
 
   const ipcChannel = window.electron.ipcRenderer;
 
   const cloudSyncSet = (item) => {
+    let modalData;
+    if (item === 'Emudeck-GDrive') {
+      modalData = {
+        active: true,
+        header: <span className="h4">Warning</span>,
+        body: (
+          <p>
+            If you are using a free Google Drive account we don't recomended to
+            use it with CloudSync since Google will throttle your connection,
+            making CloudSync really really slow.
+          </p>
+        ),
+        css: 'emumodal--sm',
+      };
+    }
+
     setState({
       ...state,
       cloudSync: item,
@@ -30,6 +58,72 @@ function CloudSyncPageConfig() {
     setStatePage({
       ...statePage,
       showLoginButton: false,
+      modal: modalData,
+    });
+  };
+
+  const closeModal = () => {
+    const modalData = { active: false };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+  };
+
+  const uploadAll = () => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Uploading</span>,
+      body: <p>Please stand by...</p>,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
+    };
+    setStatePage({ ...statePage, modal: modalData });
+
+    ipcChannel.sendMessage('emudeck', [`uploadAll|||cloud_sync_uploadEmuAll`]);
+
+    ipcChannel.once('uploadAll', (message) => {
+      const modalData = {
+        active: true,
+        header: <span className="h4">Upload Complete</span>,
+        body: (
+          <p>
+            All your saved games and states have been uploaded to your cloud
+            provider.
+          </p>
+        ),
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
+    });
+  };
+
+  const downloadAll = () => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Downloading</span>,
+      body: <p>Please stand by...</p>,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
+      css: 'emumodal--xs',
+    };
+    setStatePage({ ...statePage, modal: modalData });
+
+    ipcChannel.sendMessage('emudeck', [
+      `downloadAll|||cloud_sync_downloadEmuAll`,
+    ]);
+
+    ipcChannel.once('downloadAll', (message) => {
+      const modalData = {
+        active: true,
+        header: <span className="h4">Download Complete</span>,
+        body: (
+          <p>
+            All your saved games and states have been downloaded from your cloud
+            provider.
+          </p>
+        ),
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
     });
   };
 
@@ -45,7 +139,7 @@ function CloudSyncPageConfig() {
     //   ]);
     //   ipcChannel.once('cloud_sync_install_and_config_with_code', (message) => {
     //     // No versioning found, what to do?
-    //     console.log('cloudSync', message);
+    //
     //     alert(
     //       `All Done, every time you load a game your Game states and Saved games will be synced to ${cloudSync}`
     //     );
@@ -58,7 +152,7 @@ function CloudSyncPageConfig() {
     });
     let cloudFunction;
     if (cloudSyncType === 'Sync') {
-      cloudFunction = 'cloud_sync_install_and_config';
+      cloudFunction = 'cloud_sync_install_and_config ';
     } else {
       cloudFunction = 'cloud_backup_install_and_config';
     }
@@ -71,17 +165,54 @@ function CloudSyncPageConfig() {
       const { stdout } = message;
 
       if (stdout.includes('true')) {
+        const modalData = {
+          active: true,
+          header: <span className="h4">CloudSync Configured</span>,
+          body: (
+            <>
+              <p>
+                Now every time you load a game your game states and saved games
+                will be synced to the cloud. Keep in mind that every time you
+                play on a device that last save will be the one on the cloud
+              </p>
+              <p>Do you want to upload or download all your saved games now?</p>
+            </>
+          ),
+          css: 'emumodal--sm',
+          footer: (
+            <>
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                aria="Download all saves from your Cloud Provider"
+                onClick={() => downloadAll()}
+              >
+                Download all saves
+              </BtnSimple>
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                aria="Upload all your saves to your Cloud Provider"
+                onClick={() => uploadAll()}
+              >
+                Upload all saves
+              </BtnSimple>
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                aria="Close"
+                onClick={() => closeModal()}
+              >
+                Close
+              </BtnSimple>
+            </>
+          ),
+        };
         setState({
           ...state,
           cloudSyncStatus: true,
         });
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
-        alert(
-          'CloudSync Configured! Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud'
-        );
+        setStatePage({ ...statePage, disableButton: false, modal: modalData });
       }
     });
     // }
@@ -97,16 +228,22 @@ function CloudSyncPageConfig() {
     ]);
     ipcChannel.once('cloud_sync_uninstall', (message) => {
       // No versioning found, what to do?
+
+      const modalData = {
+        active: true,
+        header: <span className="h4">Cloud Sync uninstalled</span>,
+        css: 'emumodal--xs',
+      };
       setStatePage({
         ...state,
         cloudSync: null,
         disableButton: false,
+        modal: modalData,
       });
       setState({
         ...state,
         cloudSyncStatus: false,
       });
-      alert(`Cloud Sync uninstalled`);
     });
   };
 
@@ -122,13 +259,23 @@ function CloudSyncPageConfig() {
       ]);
       ipcChannel.once('rclone_install', (message) => {
         // No versioning found, what to do?
+        const modalData = {
+          active: true,
+          header: <span className="h4">CloudSave Configured</span>,
+          body: (
+            <p>
+              All Done, every time you load a Game your Game states and Saved
+              games will be synced to ${cloudSync} in the background every 5
+              minutes
+            </p>
+          ),
+          css: 'emumodal--sm',
+        };
         setStatePage({
           ...statePage,
           disableButton: false,
+          modal: modalData,
         });
-        alert(
-          `All Done, every time you load a Game your Game states and Saved games will be synced to ${cloudSync}`
-        );
       });
     } else {
       ipcChannel.sendMessage('emudeck', [
@@ -150,10 +297,12 @@ function CloudSyncPageConfig() {
   };
 
   useEffect(() => {
-    ipcChannel.sendMessage('emudeck', [
-      `save-setting|||setSetting rclone_provider ${cloudSync}`,
-    ]);
-    localStorage.setItem('settings_emudeck', json);
+    if (cloudSync !== '' || cloudSync !== undefined) {
+      ipcChannel.sendMessage('emudeck', [
+        `save-setting|||setSetting rclone_provider ${cloudSync}`,
+      ]);
+      localStorage.setItem('settings_emudeck', json);
+    }
   }, [cloudSync]);
 
   const nextButtonStatus = () => {
@@ -163,24 +312,39 @@ function CloudSyncPageConfig() {
     return 'copy-games';
   };
 
-  return (
-    <Wrapper>
-      <Header title="Cloud Saves - Select your provider" />
-      <CloudSyncConfig
-        onClick={cloudSyncSet}
-        onClickInstall={installRclone}
-        onClickUninstall={uninstallRclone}
-        disableButton={disableButton}
-        showLoginButton={showLoginButton}
-      />
+  // GamePad
+  const domElementsRef = useRef(null);
+  const domElementsCur = domElementsRef.current;
+  let domElements;
+  useEffect(() => {
+    if (domElementsCur && dom === undefined) {
+      domElements = domElementsCur.querySelectorAll('button');
+      setStatePage({ ...statePage, dom: domElements });
+    }
+  }, [statePage]);
 
-      <Footer
-        next={nextButtonStatus()}
-        nextText="Copy games"
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
-    </Wrapper>
+  return (
+    <div style={{ height: '100vh' }} ref={domElementsRef}>
+      {dom !== undefined && <GamePad elements={dom} />}
+      <Wrapper>
+        <Header title="Cloud Saves - Select your provider" />
+        <CloudSyncConfig
+          onClick={cloudSyncSet}
+          onClickInstall={installRclone}
+          onClickUninstall={uninstallRclone}
+          disableButton={disableButton}
+          showLoginButton={showLoginButton}
+        />
+
+        <Footer
+          next={nextButtonStatus()}
+          nextText="Copy games"
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
+        <EmuModal modal={modal} />
+      </Wrapper>
+    </div>
   );
 }
 

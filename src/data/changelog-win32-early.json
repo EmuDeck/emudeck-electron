@@ -1,5 +1,41 @@
 [
   {
+    "title": "Some new stuff",
+    "type": "STEAMOS",
+    "description": "<ul> <li>When setting up Cloud Sync you'll get the option to download or upload all your saves at once.</li> <li>EmuDeck folder with launchers on the Start Menu ( Use these if you plan to use the emulators with any other frontend besides Steam. For Controls to work you must add that frontend to Steam and launch it from there. )</li> <li>New Citra shortcuts, Select + L1 to load state, Select + L2 to load state, Select + R1/R2 to switch layouts.</li><li>Instructions on how to use EmuDeck when using other launchers</li><li>Steam proccess detection</li></ul>",
+    "image": "false"
+  },
+  {
+    "title": "A lot of fixes",
+    "type": "STEAMOS",
+    "description": " <ul> <li> Cloudsync will be launched on EmulationStation only when launching games, speeding up EmulationStation launch and exit<li> <li>New CloudSync speed improvements<li> <li>CloudSync can now be uninstalled<li> <li>Handheld shaders are now working<li> <li>Not being able to download a new version of SteamRomManager from Manage Emulators.<li> <li>MelonDS and PPSSPP now works with cloudSync<li> <li>MelonDS wasn't being installed on first launch<li> <li>PPSSPP now works with cloudSync<li> <li>Error when long pressing the L1 button on games like ZTOTK<li> <li>Dolphin aspect ratio selector now works on Quicksettings.<li> <li>Quicksettings, proper names for the buttons<li> </ul>",
+    "image": "false"
+  },
+  {
+    "title": "2.1.14 Drive Selector Fix",
+    "type": "STEAMOS",
+    "description": "Fixed an issue where the drive selector might not pick the proper drive letter. Added a warning message in case this bug reappears",
+    "image": "false"
+  },
+  {
+    "title": "2.1.14 Ally config screen",
+    "type": "STEAMOS",
+    "description": "After installation we now show the user how to properly configure the Asus Ally controls with EmuDeck.",
+    "image": "false"
+  },
+  {
+    "title": "2.1.14 SRM Fix",
+    "type": "STEAMOS",
+    "description": "Steam Rom manager should always launch now from EmuDeck.",
+    "image": "false"
+  },
+  {
+    "title": "2.1.14 Removed Gaming Mode",
+    "type": "STEAMOS",
+    "description": "Removed until we can do further testing",
+    "image": "false"
+  },
+  {
     "title": "2.1.13 New Patreon Login",
     "type": "STEAMOS",
     "description": "New login method to fix antivirus getting on the way. Added option to switch Patron Accounts on login",
@@ -9,6 +45,12 @@
     "title": "2.1.13 New Gaming Mode",
     "type": "STEAMOS",
     "description": "Now you can select how you want your device to boot, directly into Steam UI ( aka Big Picture Mode ) and go straight to gaming!",
+    "image": "false"
+  },
+  {
+    "title": "2.1.13 Device Optimizations",
+    "type": "STEAMOS",
+    "description": "Pick your device and we will chose the best settings for them",
     "image": "false"
   },
   {
