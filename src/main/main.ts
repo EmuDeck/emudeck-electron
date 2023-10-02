@@ -645,6 +645,7 @@ ipcMain.on('pull', async (event, branch) => {
       branchGIT = options.branch;
     }
   }
+
   const backChannel = 'pull';
   let bashCommand = `cd ~/.config/EmuDeck/backend && script ~/.config/EmuDeck/msg.log -c 'git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull' && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
 
@@ -1010,6 +1011,7 @@ ipcMain.on('validate-7Zip', async (event) => {
   const programFilesPath = process.env.ProgramFiles;
   const path1 = `${programFilesPath}/7-zip`;
   const path2 = `${programFilesPath} (x86)/7-zip`;
+  const path3 = `${homeUser}/AppData/Roaming/EmuDeck/backend/wintools/7z.exe`;
   if (fs.existsSync(path1)) {
     event.reply(backChannel, {
       stdout: true,
@@ -1017,6 +1019,13 @@ ipcMain.on('validate-7Zip', async (event) => {
     return;
   }
   if (fs.existsSync(path2)) {
+    event.reply(backChannel, {
+      stdout: true,
+    });
+    return;
+  }
+  }
+  if (fs.existsSync(path3)) {
     event.reply(backChannel, {
       stdout: true,
     });
