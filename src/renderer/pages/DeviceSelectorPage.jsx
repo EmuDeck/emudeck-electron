@@ -17,6 +17,7 @@ import {
   imglinux,
   imgwindows,
   imgmac,
+  imgchimeraOS,
 } from 'components/utils/images/images';
 
 function DeviceSelectorPage() {
@@ -179,7 +180,7 @@ function DeviceSelectorPage() {
                 <img src={imgWin600} width="100" alt="Background" />
                 <span className="h6">Anbernic WIN600</span>
               </Card>
-              {/*
+
             <Card
               css={device === 'Linux PC' && 'is-selected'}
               onClick={() => deviceSet('Linux PC')}
@@ -187,7 +188,19 @@ function DeviceSelectorPage() {
               <img src={imglinux} width="100" alt="Background" />
               <span className="h6">Linux PC</span>
             </Card>
-            */}
+
+            <Card
+              css={device === 'ChimeraOS' && 'is-selected'}
+              onClick={() => deviceSet('ChimeraOS')}
+            >
+              <img src={imgchimeraOS} width="100" alt="Background" />
+              <span className="h6">ChimeraOS</span>
+            </Card>
+
+
+
+
+
             </>
           )}
           {system === 'win32' && (
