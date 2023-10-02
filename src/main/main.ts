@@ -1011,6 +1011,7 @@ ipcMain.on('validate-7Zip', async (event) => {
   const programFilesPath = process.env.ProgramFiles;
   const path1 = `${programFilesPath}/7-zip`;
   const path2 = `${programFilesPath} (x86)/7-zip`;
+  const path3 = `${homeUser}/AppData/Roaming/EmuDeck/backend/wintools/7z.exe`;
   if (fs.existsSync(path1)) {
     event.reply(backChannel, {
       stdout: true,
@@ -1018,6 +1019,13 @@ ipcMain.on('validate-7Zip', async (event) => {
     return;
   }
   if (fs.existsSync(path2)) {
+    event.reply(backChannel, {
+      stdout: true,
+    });
+    return;
+  }
+  }
+  if (fs.existsSync(path3)) {
     event.reply(backChannel, {
       stdout: true,
     });
