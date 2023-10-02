@@ -7,6 +7,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import { useNavigate } from 'react-router-dom';
+import { BtnSimple } from 'getbasecore/Atoms';
 
 // import { useTranslation } from 'react-i18next';
 import Welcome from 'components/organisms/Wrappers/Welcome';
@@ -52,6 +53,14 @@ function WelcomePage() {
     if (second) {
       navigate('/rom-storage');
     }
+  };
+
+  const closeModal = () => {
+    const modalData = { active: false };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
   };
 
   const sleep = (ms) => {
@@ -138,8 +147,9 @@ function WelcomePage() {
   // show changelog after update
   useEffect(() => {
     const showChangelog = localStorage.getItem('show_changelog');
-
-    if (showChangelog === 'true') {
+    console.log({second})
+    console.log({showChangelog})
+    if (showChangelog === true) {
       navigate('/change-log');
     }
 
@@ -172,12 +182,48 @@ function WelcomePage() {
         if (Object.keys(differences).length > 0) {
           setStatePage({ ...statePage, updates: true });
         }
-      } else {
+
+
+
         const json = JSON.stringify(repoVersions);
         localStorage.removeItem('current_versions_beta');
         localStorage.setItem('current_versions_beta', json);
 
         setStateCurrentConfigs(repoVersions);
+      }else{
+
+        if (showChangelog === null && branch === "beta"){
+          modalData = {
+                active: true,
+                header: <span className="h4">Welcome to EmuDeck's public beta!</span>,
+                body: (
+                  <>
+                  <p>
+                    This build has some unstable features that are not yet present in the public build so some bugs are expected.
+                  </p>
+                  <p>
+                  But it's still missing some exclusive features that are only available in our <strong>Early Access</strong> program in Patreon, like exclusive support forums or <strong>CloudSync</strong> that allows you to sync your saved games seamessly over the cloud between different EmuDeck and even other platform like OnionOS, local multiplayer, interoperability with other platforms, and more things to come!</p>
+                  </>
+                ),
+                css: 'emumodal--sm',
+                footer:<><BtnSimple
+                  css="btn-simple--1"
+                  type="link"
+                  aria="Next"
+                  href="https://www.patreon.com/bePatron?u=29065992"
+                >
+                  Check Patron
+                </BtnSimple><BtnSimple
+                  css="btn-simple--1"
+                  type="button"
+                  aria="Next"
+                  onClick={() => closeModal()}
+                >
+                  Close
+                </BtnSimple></>
+          }
+          setStatePage({ ...statePage, modal: modalData });
+        }
       }
     });
 
@@ -300,6 +346,17 @@ function WelcomePage() {
 
   settingsCards = [
     {
+      icon: [iconPrize],
+      title: 'Early Access',
+      description: 'Support EmuDeck on Patreon and get early access to our latest features',
+      button: 'Donate',
+      btnCSS: 'btn-simple--3',
+      status: branch === 'demo',
+      type: 'link',
+      href: 'https://www.patreon.com/bePatron?u=29065992',
+      function: () => {},
+    },
+    {
       icon: [iconJoystick],
       title: 'Steam ROM Manager',
       description: 'Add emulators, tools, or ROMs to your Steam Library',
@@ -314,7 +371,7 @@ function WelcomePage() {
       description: 'Transfer your games using a USB Drive',
       button: 'Add more games',
       btnCSS: 'btn-simple--1',
-      status: system === 'SteamOS',
+      status: system !== 'win32' || system !== 'darwin',
       function: () => functions.navigate('/copy-games'),
     },
     {
@@ -381,7 +438,7 @@ function WelcomePage() {
       description: 'Compress your ROMs to optimize your storage',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32',
+      status: system !== 'win32' || system !== 'darwin',
       function: () => functions.navigate('/chd-tool'),
     },
     {
@@ -399,7 +456,7 @@ function WelcomePage() {
       description: 'Sync or backup your saves and save states to the cloud',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: true,
+      status: branch === 'early' || branch === 'dev',
       function: () => functions.navigate('/cloud-sync/welcome'),
     },
     {
@@ -408,7 +465,7 @@ function WelcomePage() {
       description: 'Manage your cloud services, Xbox Cloud Gaming, and more!',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32',
+      status: system !== 'win32' || system !== 'darwin',
       function: () => functions.openCSM(),
     },
     {
@@ -428,7 +485,7 @@ function WelcomePage() {
         'Migrate your EmuDeck installation to your SD Card or vice versa',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32',
+      status: system !== 'win32' || system !== 'darwin',
       function: () => functions.navigate('/migration'),
     },
     {
@@ -437,7 +494,7 @@ function WelcomePage() {
       description: 'Troubleshoot your EmuDeck install',
       button: 'Upload',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32',
+      status: system !== 'win32' || system !== 'darwin',
       function: () => functions.sprunge(),
     },
     {
@@ -455,19 +512,8 @@ function WelcomePage() {
       description: 'Uninstall EmuDeck from your system',
       button: 'Uninstall',
       btnCSS: 'btn-simple--3',
-      status: system !== 'win32',
+      status: system !== 'win32' || system !== 'darwin',
       function: () => functions.navigate('/uninstall'),
-    },
-    {
-      icon: [iconPrize],
-      title: 'Become a Patron',
-      description: 'Consider supporting EmuDeck on Patreon',
-      button: 'Donate',
-      btnCSS: 'btn-simple--3',
-      status: branch !== 'early',
-      type: 'link',
-      href: 'https://www.patreon.com/bePatron?u=29065992',
-      function: () => {},
     },
   ];
 
@@ -529,6 +575,17 @@ function WelcomePage() {
         btnCSS: 'btn-simple--5',
         status: true,
         function: () => functions.navigate('/change-log'),
+      },
+      {
+        icon: [iconPrize],
+        title: 'Early Access',
+        description: 'Support EmuDeck on Patreon and get early access to our latest features',
+        button: 'Donate',
+        btnCSS: 'btn-simple--3',
+        status: branch !== 'early',
+        type: 'link',
+        href: 'https://www.patreon.com/bePatron?u=29065992',
+        function: () => {},
       },
     ];
   }

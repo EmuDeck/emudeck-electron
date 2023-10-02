@@ -692,6 +692,12 @@ function EndPage() {
     }
   }, [statePage]);
 
+  let nextPage = "/copy-games";
+
+  if (branch === "early" || branch === "dev"){
+    nextPage = "/cloud-sync";
+  }
+
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
@@ -734,27 +740,27 @@ function EndPage() {
             Watch Log
           </BtnSimple>
 
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Go Next"
-            disabled={disabledNext && 'true'}
-            onClick={() => navigate('/cloud-sync')}
-          >
-            Next
-            <svg
-              className="rightarrow"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <BtnSimple
+              css="btn-simple--1"
+              type="button"
+              aria="Go Next"
+              disabled={disabledNext && 'true'}
+              onClick={() => navigate(nextPage)}
             >
-              <path
-                fill="currentColor"
-                d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
-              />
-            </svg>
+              Next
+              <svg
+                className="rightarrow"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill="currentColor"
+                  d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
+                />
+              </svg>
           </BtnSimple>
         </footer>
       </Wrapper>
