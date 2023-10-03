@@ -1,4 +1,5 @@
-import Wrapper from 'components/molecules/Wrapper/Wrapper'; import GamePad from 'components/organisms/GamePad/GamePad';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 
 function ErrorPage() {
