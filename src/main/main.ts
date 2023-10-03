@@ -1009,28 +1009,28 @@ ipcMain.on('validate-git', async (event) => {
 ipcMain.on('validate-7Zip', async (event) => {
   const backChannel = 'validate-7Zip';
   const programFilesPath = process.env.ProgramFiles;
+  const homeUser = os.homedir();
   const path1 = `${programFilesPath}/7-zip`;
   const path2 = `${programFilesPath} (x86)/7-zip`;
   const path3 = `${homeUser}/AppData/Roaming/EmuDeck/backend/wintools/7z.exe`;
-    if (fs.existsSync(path1)) {
-      event.reply(backChannel, {
-        stdout: true,
-      });
-      return;
-    }
-    if (fs.existsSync(path2)) {
-      event.reply(backChannel, {
-        stdout: true,
-      });
-      return;
-    }
-    if (fs.existsSync(path3)) {
-      event.reply(backChannel, {
-        stdout: true,
-      });
-      return;
-    }
-
+  if (fs.existsSync(path1)) {
+    event.reply(backChannel, {
+      stdout: true,
+    });
+    return;
+  }
+  if (fs.existsSync(path2)) {
+    event.reply(backChannel, {
+      stdout: true,
+    });
+    return;
+  }
+  if (fs.existsSync(path3)) {
+    event.reply(backChannel, {
+      stdout: true,
+    });
+    return;
+  }
 
   const bashCommand =
     'start powershell -ExecutionPolicy Bypass -command "& { winget install -e --id 7zip.7zip --accept-package-agreements --accept-source-agreements }';

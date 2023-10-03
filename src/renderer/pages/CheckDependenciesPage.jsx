@@ -119,7 +119,7 @@ function CheckDependenciesPage() {
     }
   }, [statusGIT, status7Zip]);
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -149,11 +149,7 @@ function CheckDependenciesPage() {
             {statusGIT === undefined && (
               <>
                 <span className="h6">Installing...</span>
-                <ProgressBar
-                  css="progress--success"
-                  infinite={true}
-                  max="100"
-                />
+                <ProgressBar css="progress--success" infinite max="100" />
               </>
             )}
 
@@ -174,11 +170,7 @@ function CheckDependenciesPage() {
             {status7Zip === undefined && (
               <>
                 <span className="h6">Installing...</span>
-                <ProgressBar
-                  css="progress--success"
-                  infinite={true}
-                  max="100"
-                />
+                <ProgressBar css="progress--success" infinite max="100" />
               </>
             )}
             <hr />
@@ -195,11 +187,7 @@ function CheckDependenciesPage() {
             {statusSteam === undefined && (
               <>
                 <span className="h6">Checking...</span>
-                <ProgressBar
-                  css="progress--success"
-                  infinite={true}
-                  max="100"
-                />
+                <ProgressBar css="progress--success" infinite max="100" />
               </>
             )}
             {statusSteam !== true && (
