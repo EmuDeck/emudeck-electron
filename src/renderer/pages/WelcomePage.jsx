@@ -147,8 +147,8 @@ function WelcomePage() {
   // show changelog after update
   useEffect(() => {
     const showChangelog = localStorage.getItem('show_changelog');
-    console.log({second})
-    console.log({showChangelog})
+    console.log({ second });
+    console.log({ showChangelog });
     if (showChangelog === true) {
       navigate('/change-log');
     }
@@ -183,47 +183,55 @@ function WelcomePage() {
           setStatePage({ ...statePage, updates: true });
         }
 
-
-
         const json = JSON.stringify(repoVersions);
         localStorage.removeItem('current_versions_beta');
         localStorage.setItem('current_versions_beta', json);
 
         setStateCurrentConfigs(repoVersions);
-      }else{
-
-        if (showChangelog === null && branch === "beta"){
-          modalData = {
-                active: true,
-                header: <span className="h4">Welcome to EmuDeck's public beta!</span>,
-                body: (
-                  <>
-                  <p>
-                    This build has some unstable features that are not yet present in the public build so some bugs are expected.
-                  </p>
-                  <p>
-                  But it's still missing some exclusive features that are only available in our <strong>Early Access</strong> program in Patreon, like exclusive support forums or <strong>CloudSync</strong> that allows you to sync your saved games seamessly over the cloud between different EmuDeck and even other platform like OnionOS, local multiplayer, interoperability with other platforms, and more things to come!</p>
-                  </>
-                ),
-                css: 'emumodal--sm',
-                footer:<><BtnSimple
-                  css="btn-simple--1"
-                  type="link"
-                  aria="Next"
-                  href="https://www.patreon.com/bePatron?u=29065992"
-                >
-                  Check Patron
-                </BtnSimple><BtnSimple
-                  css="btn-simple--1"
-                  type="button"
-                  aria="Next"
-                  onClick={() => closeModal()}
-                >
-                  Close
-                </BtnSimple></>
-          }
-          setStatePage({ ...statePage, modal: modalData });
-        }
+      } else if (showChangelog === null && branch === 'beta') {
+        modalData = {
+          active: true,
+          header: <span className="h4">Welcome to EmuDeck's public beta!</span>,
+          body: (
+            <>
+              <p>
+                This build has some unstable features that are not yet present
+                in the public build so some bugs are expected.
+              </p>
+              <p>
+                But it's still missing some exclusive features that are only
+                available in our <strong>Early Access</strong> program in
+                Patreon, like exclusive support forums or{' '}
+                <strong>CloudSync</strong> that allows you to sync your saved
+                games seamessly over the cloud between different EmuDeck and
+                even other platform like OnionOS, local multiplayer,
+                interoperability with other platforms, and more things to come!
+              </p>
+            </>
+          ),
+          css: 'emumodal--sm',
+          footer: (
+            <>
+              <BtnSimple
+                css="btn-simple--1"
+                type="link"
+                aria="Next"
+                href="https://www.patreon.com/bePatron?u=29065992"
+              >
+                Check Patron
+              </BtnSimple>
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                aria="Next"
+                onClick={() => closeModal()}
+              >
+                Close
+              </BtnSimple>
+            </>
+          ),
+        };
+        setStatePage({ ...statePage, modal: modalData });
       }
     });
 
@@ -259,7 +267,7 @@ function WelcomePage() {
     let url;
     {
       system === 'win32'
-        ? (url = 'https://emudeck.github.io/common-issues/windows/')
+        ? (url = 'https://emudeck.github.io/known-issues/windows/')
         : (url = 'https://emudeck.github.io/?search=true');
     }
 
@@ -348,7 +356,8 @@ function WelcomePage() {
     {
       icon: [iconPrize],
       title: 'Early Access',
-      description: 'Support EmuDeck on Patreon and get early access to our latest features',
+      description:
+        'Support EmuDeck on Patreon and get early access to our latest features',
       button: 'Donate',
       btnCSS: 'btn-simple--3',
       status: branch === 'demo',
@@ -371,7 +380,7 @@ function WelcomePage() {
       description: 'Transfer your games using a USB Drive',
       button: 'Add more games',
       btnCSS: 'btn-simple--1',
-      status: system !== 'win32' || system !== 'darwin',
+      status: system !== 'win32' && system !== 'darwin',
       function: () => functions.navigate('/copy-games'),
     },
     {
@@ -438,7 +447,7 @@ function WelcomePage() {
       description: 'Compress your ROMs to optimize your storage',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32' || system !== 'darwin',
+      status: system !== 'win32' && system !== 'darwin',
       function: () => functions.navigate('/chd-tool'),
     },
     {
@@ -456,7 +465,7 @@ function WelcomePage() {
       description: 'Sync or backup your saves and save states to the cloud',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: branch === 'early' || branch === 'dev',
+      status: branch === 'early' || branch === 'dev',
       function: () => functions.navigate('/cloud-sync/welcome'),
     },
     {
@@ -465,7 +474,7 @@ function WelcomePage() {
       description: 'Manage your cloud services, Xbox Cloud Gaming, and more!',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32' || system !== 'darwin',
+      status: system !== 'win32' && system !== 'darwin',
       function: () => functions.openCSM(),
     },
     {
@@ -485,7 +494,7 @@ function WelcomePage() {
         'Migrate your EmuDeck installation to your SD Card or vice versa',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32' || system !== 'darwin',
+      status: system !== 'win32' && system !== 'darwin',
       function: () => functions.navigate('/migration'),
     },
     {
@@ -494,7 +503,7 @@ function WelcomePage() {
       description: 'Troubleshoot your EmuDeck install',
       button: 'Upload',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32' || system !== 'darwin',
+      status: system !== 'win32' && system !== 'darwin',
       function: () => functions.sprunge(),
     },
     {
@@ -512,7 +521,7 @@ function WelcomePage() {
       description: 'Uninstall EmuDeck from your system',
       button: 'Uninstall',
       btnCSS: 'btn-simple--3',
-      status: system !== 'win32' || system !== 'darwin',
+      status: system !== 'win32' && system !== 'darwin',
       function: () => functions.navigate('/uninstall'),
     },
   ];
@@ -579,7 +588,8 @@ function WelcomePage() {
       {
         icon: [iconPrize],
         title: 'Early Access',
-        description: 'Support EmuDeck on Patreon and get early access to our latest features',
+        description:
+          'Support EmuDeck on Patreon and get early access to our latest features',
         button: 'Donate',
         btnCSS: 'btn-simple--3',
         status: branch !== 'early',
