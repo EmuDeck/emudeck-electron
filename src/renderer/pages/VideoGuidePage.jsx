@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Wrapper from 'components/molecules/Wrapper/Wrapper'; import GamePad from 'components/organisms/GamePad/GamePad';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 
