@@ -465,7 +465,7 @@ function WelcomePage() {
       description: 'Sync or backup your saves and save states to the cloud',
       button: 'More info',
       btnCSS: 'btn-simple--5',
-      status: branch === 'early' || branch === 'dev',
+      status: branch.includes('early') || branch === 'dev',
       function: () => functions.navigate('/cloud-sync/welcome'),
     },
     {
@@ -592,7 +592,7 @@ function WelcomePage() {
           'Support EmuDeck on Patreon and get early access to our latest features',
         button: 'Donate',
         btnCSS: 'btn-simple--3',
-        status: branch !== 'early',
+        status: !branch.includes('early'),
         type: 'link',
         href: 'https://www.patreon.com/bePatron?u=29065992',
         function: () => {},
