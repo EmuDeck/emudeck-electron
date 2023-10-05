@@ -77,14 +77,12 @@ function EndPage() {
       active: true,
       header: <span className="h4">Launching Steam Rom Manager</span>,
       body: (
-        <>
-          <p>
-            We will close Steam if its running and then Steam Rom Manager will
-            open, this could take a few seconds, please wait.
-          </p>
-        </>
+        <p>
+          We will close Steam if its running and then Steam Rom Manager will
+          open, this could take a few seconds, please wait.
+        </p>
       ),
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
 
@@ -118,9 +116,7 @@ function EndPage() {
             </strong>
           </>
         ),
-        footer: (
-          <ProgressBar css="progress--success" infinite={true} max="100" />
-        ),
+        footer: <ProgressBar css="progress--success" infinite max="100" />,
         css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
@@ -619,7 +615,7 @@ function EndPage() {
             `echo xeniaResolution="${state.resolutions.xenia}" >> ${settingsFile}`,
           ]);
 
-          //ParserExclusion
+          // ParserExclusion
 
           ipcChannel.sendMessage('bash', [
             `echo emuGBA="${state.emulatorAlternative.gba}" >> ${settingsFile}`,
@@ -681,7 +677,7 @@ function EndPage() {
     }
   }, [second]);
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -692,10 +688,10 @@ function EndPage() {
     }
   }, [statePage]);
 
-  let nextPage = "/copy-games";
+  let nextPage = '/copy-games';
 
-  if (branch === "early" || branch === "dev"){
-    nextPage = "/cloud-sync";
+  if (branch.includes('early') || branch === 'dev') {
+    nextPage = '/cloud-sync';
   }
 
   return (
@@ -740,27 +736,27 @@ function EndPage() {
             Watch Log
           </BtnSimple>
 
-            <BtnSimple
-              css="btn-simple--1"
-              type="button"
-              aria="Go Next"
-              disabled={disabledNext && 'true'}
-              onClick={() => navigate(nextPage)}
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria="Go Next"
+            disabled={disabledNext && 'true'}
+            onClick={() => navigate(nextPage)}
+          >
+            Next
+            <svg
+              className="rightarrow"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Next
-              <svg
-                className="rightarrow"
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill="currentColor"
-                  d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
-                />
-              </svg>
+              <path
+                fill="currentColor"
+                d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
+              />
+            </svg>
           </BtnSimple>
         </footer>
       </Wrapper>

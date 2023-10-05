@@ -153,7 +153,7 @@ function PatroenLoginPage() {
   //
   useEffect(() => {
     const patreonTokenLS = localStorage.getItem('patreon_token');
-    if (branch !== 'early') {
+    if (!branch.includes('early')) {
       navigate('/check-updates');
     } else if (patreonTokenLS) {
       patreonCheckToken(patreonTokenLS);
@@ -230,7 +230,7 @@ function PatroenLoginPage() {
   //
   // Render
   //
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
