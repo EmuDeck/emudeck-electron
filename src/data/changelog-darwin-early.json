@@ -1,8 +1,8 @@
 [
   {
-    "title": "2.1.19 Mac support!",
+    "title": "Mac support!",
     "type": "STEAMOS",
-    "description": "We are launching this early build, only RetroArch systems are available in this release.",
+    "description": "We are launching the first proof of concept EmuDeck build for MacOS, only RetroArch systems are available in this release.",
     "image": "false"
   }
 ]

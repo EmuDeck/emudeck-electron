@@ -1,0 +1,14 @@
+[
+  {
+    "title": "First Public Beta!",
+    "type": "STEAMOS",
+    "description": "We are launching the first public Beta EmuDeck for Windows, not every emulator is present in this build.",
+    "image": "false"
+  },
+  {
+    "title": "Early Access",
+    "type": "STEAMOS",
+    "description": "Even with the public beta, the Early Access tier on our Patron will get our latest features like CloudSync or GamingMode, bug fixes and optimizations first. Check out our <a target='_blank' href='https://www.patreon.com/dragoonDorise'>Patreon</a> if you want to support us.",
+    "image": "false"
+  }
+]
