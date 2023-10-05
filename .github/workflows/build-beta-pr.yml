@@ -8,7 +8,6 @@ on:
 
 jobs:
   publish-linux:
-
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -18,7 +17,7 @@ jobs:
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v3
-          
+
       - name: Git Submodule Update
         run: git submodule update --init --recursive
 
@@ -43,13 +42,13 @@ jobs:
         run: |
           sed -i "s|main|beta|g" "./src/data/branch.json"
           sed -i "s|emudeck-electron|emudeck-electron-beta|g" "./package.json"
-      
+
       - name: build releases
         run: |
-           npm run postinstall
-           npm run build
-           npm exec electron-builder --linux
-           
+          npm run postinstall
+          npm run build
+          npm exec electron-builder --linux
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:

@@ -138,7 +138,7 @@ function DeviceSelectorPage() {
     }
   }, []);
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -180,27 +180,27 @@ function DeviceSelectorPage() {
                 <img src={imgWin600} width="100" alt="Background" />
                 <span className="h6">Anbernic WIN600</span>
               </Card>
+              {system !== 'win32' &&
+                system !== 'darwin' &&
+                system !== 'SteamOS' && (
+                  <>
+                    <Card
+                      css={device === 'Linux PC' && 'is-selected'}
+                      onClick={() => deviceSet('Linux PC')}
+                    >
+                      <img src={imglinux} width="100" alt="Background" />
+                      <span className="h6">Linux PC</span>
+                    </Card>
 
-            <Card
-              css={device === 'Linux PC' && 'is-selected'}
-              onClick={() => deviceSet('Linux PC')}
-            >
-              <img src={imglinux} width="100" alt="Background" />
-              <span className="h6">Linux PC</span>
-            </Card>
-
-            <Card
-              css={device === 'ChimeraOS' && 'is-selected'}
-              onClick={() => deviceSet('ChimeraOS')}
-            >
-              <img src={imgchimeraOS} width="100" alt="Background" />
-              <span className="h6">ChimeraOS</span>
-            </Card>
-
-
-
-
-
+                    <Card
+                      css={device === 'ChimeraOS' && 'is-selected'}
+                      onClick={() => deviceSet('ChimeraOS')}
+                    >
+                      <img src={imgchimeraOS} width="100" alt="Background" />
+                      <span className="h6">ChimeraOS</span>
+                    </Card>
+                  </>
+                )}
             </>
           )}
           {system === 'win32' && (

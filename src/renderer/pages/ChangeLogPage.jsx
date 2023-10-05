@@ -76,14 +76,29 @@ function ChangeLogPage() {
   useEffect(() => {
     localStorage.setItem('show_changelog', false);
 
-    const changeLogData = require(`data/changelog-${system}-${branch}.json`);
+    switch (system) {
+      case 'darwin':
+        systemName = 'darwin';
+        break;
+      case 'win32':
+        systemName = 'win32';
+        break;
+      case 'SteamOS':
+        systemName = 'SteamOS';
+        break;
+      default:
+        systemName = 'linux';
+        break;
+    }
+
+    const changeLogData = require(`data/changelog-${systemName}-${branch}.json`);
     setStatePage({
       ...statePage,
       log: changeLogData,
     });
   }, []);
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
