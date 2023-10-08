@@ -711,7 +711,7 @@ function EmulatorSelectorPage() {
           multiemulatorName = 'ares';
         }
 
-        emuOption1 = 'duckstation';
+        emuOption1 = 'DuckStation';
         emuOption2 = multiemulatorName;
         emuID2 = 'duckstation';
         emuID1 = multiemulatorID;
@@ -761,7 +761,7 @@ function EmulatorSelectorPage() {
           multiemulatorName = 'ares';
         }
 
-        emuOption1 = 'melonds';
+        emuOption1 = 'melonDS';
         emuOption2 = multiemulatorName;
         emuID2 = 'melonDS';
         emuID1 = multiemulatorID;
@@ -811,7 +811,7 @@ function EmulatorSelectorPage() {
           multiemulatorName = 'ares';
         }
 
-        emuOption1 = 'ppsspp';
+        emuOption1 = 'PPSSPP';
         emuOption2 = multiemulatorName;
         emuID2 = 'ppsspp';
         emuID1 = multiemulatorID;
@@ -862,7 +862,7 @@ function EmulatorSelectorPage() {
           multiemulatorName = 'ares';
         }
 
-        emuOption1 = 'mame';
+        emuOption1 = 'MAME';
         emuOption2 = multiemulatorName;
         emuID2 = 'mame';
         emuID1 = multiemulatorID;
@@ -907,7 +907,7 @@ function EmulatorSelectorPage() {
           multiemulatorName = 'ares';
         }
 
-        emuOption1 = 'scummvm';
+        emuOption1 = 'ScummVM';
         emuOption2 = multiemulatorName;
         emuID2 = 'scummvm';
         emuID1 = multiemulatorID;
@@ -927,12 +927,16 @@ function EmulatorSelectorPage() {
                 <li>RetroAchievements</li>
                 <li>Bezels & Shaders</li>
                 <li>Auto Save States</li>
+                <li>Better Keymapping and Controller support</li>
               </ol>
               <div className="h5">
-                <strong>ScummVM (recommended)</strong> has this pro:
+                <strong>ScummVM (recommended)</strong> has these pros:
               </div>
               <ol className="list">
-                <li>Better compatibility</li>
+                <li>Not an emulation but runs natively</li>
+                <li>Takes less resources</li>
+                <li>Has better compatibility</li>
+                <li>More flexible configuration</li>
               </ol>
               <p>
                 We will only add the parser according to your selection so you
@@ -1005,7 +1009,7 @@ function EmulatorSelectorPage() {
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
-        <Header title="Emulators for" bold={`${device}`} />
+        <Header title="Emulators and tools for" bold={`${device}`} />
         <EmulatorSelector data={data} onClick={toggleEmus} images={images} />
         <Footer
           next="emulator-configuration"
