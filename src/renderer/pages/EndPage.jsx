@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
-
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import { BtnSimple } from 'getbasecore/Atoms';
 
 import End from 'components/organisms/Wrappers/End';
@@ -123,7 +123,7 @@ function EndPage() {
       ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam`]);
       ipcChannel.sendMessage(
         'run-app',
-        `${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage`
+        `${storagePath}/Emulation/tools/Steam ROM Manager.AppImage`
       );
     }
     ipcChannel.once('run-app', (message) => {
