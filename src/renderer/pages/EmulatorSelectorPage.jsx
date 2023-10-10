@@ -28,7 +28,7 @@ import {
   imgrmg,
   imgscummvm,
   imgsupermodelista,
-  imgesde,
+  imgFrontESDE,
   imgmelonds,
   imgmgba,
 } from 'components/utils/images/images';
@@ -52,7 +52,7 @@ const images = {
   vita3k: imgvita3k,
   scummvm: imgscummvm,
   supermodelista: imgsupermodelista,
-  esde: imgesde,
+  esde: imgFrontESDE,
   rmg: imgrmg,
   mgba: imgmgba,
   xenia: imgxenia,

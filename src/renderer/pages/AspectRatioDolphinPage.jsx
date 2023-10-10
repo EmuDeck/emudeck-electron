@@ -27,7 +27,7 @@ function AspectRatioDolphinPage() {
     });
   };
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -48,7 +48,7 @@ function AspectRatioDolphinPage() {
           next={
             overwriteConfigEmus.ra.status === true
               ? 'shaders-handhelds'
-              : 'pegasus-theme'
+              : 'frontend-selector'
           }
           disabledNext={disabledNext}
           disabledBack={disabledBack}

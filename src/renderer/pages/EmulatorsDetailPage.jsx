@@ -42,7 +42,7 @@ const emuData = require('data/emuData.json');
 function EmulatorsDetailPage() {
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
-  const { installEmus, mode, system, yuzuEAtoken } = state;
+  const { installEmus, installFrontends, mode, system, yuzuEAtoken } = state;
 
   const { emulator } = useParams();
 
@@ -592,17 +592,32 @@ function EmulatorsDetailPage() {
             modal: modalData,
           });
           // We set the emu as install = yes
-          setState({
-            ...state,
-            installEmus: {
-              ...installEmus,
-              [emulator]: {
-                id: emulator,
-                name: code,
-                status: true,
+
+          if (emulator === 'esde' || emulator === 'pegasus') {
+            setState({
+              ...state,
+              installFrontends: {
+                ...installFrontends,
+                [emulator]: {
+                  id: emulator,
+                  name: code,
+                  status: true,
+                },
               },
-            },
-          });
+            });
+          } else {
+            setState({
+              ...state,
+              installEmus: {
+                ...installEmus,
+                [emulator]: {
+                  id: emulator,
+                  name: code,
+                  status: true,
+                },
+              },
+            });
+          }
         } else {
           const modalData = {
             active: true,

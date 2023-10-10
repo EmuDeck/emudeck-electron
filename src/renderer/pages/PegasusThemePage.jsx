@@ -4,25 +4,32 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
-
+import { useFetchCond } from 'hooks/useFetchCond';
 import PegasusTheme from 'components/organisms/Wrappers/PegasusTheme';
 
 function PegasusThemePage() {
   const { state, setState } = useContext(GlobalContext);
   const { device, mode } = state;
-  const [statePage] = useState({
+  const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    data: '',
+    themes: undefined,
     dom: undefined,
   });
-  const { disabledNext, disabledBack, data, dom } = statePage;
+  const { disabledNext, disabledBack, themes, dom } = statePage;
   const themeSet = (themeName) => {
     setState({
       ...state,
-      theme: themeName,
+      themePegasus: themeName,
     });
   };
+
+  const themesWS = useFetchCond('https://token.emudeck.com/pegasus-themes.php');
+  useEffect(() => {
+    themesWS.post({}).then((data) => {
+      setStatePage({ ...statePage, themes: data });
+    });
+  }, []);
 
   const nextPage = () => {
     if (
@@ -38,7 +45,7 @@ function PegasusThemePage() {
     return 'confirmation';
   };
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -53,8 +60,8 @@ function PegasusThemePage() {
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
-        <Header title="EmulationStation DE  Theme" />
-        <PegasusTheme data={data} onClick={themeSet} />
+        <Header title="Pegasus Default Theme" />
+        <PegasusTheme themes={themes} onClick={themeSet} />
         <Footer
           next={nextPage()}
           nextText="Next"
