@@ -179,7 +179,7 @@ function CopyGamesPage() {
       };
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage('bash', [
-        `(kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
+        `(kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/Steam ROM Manager.AppImage)`,
       ]);
     }
     setTimeout(() => {

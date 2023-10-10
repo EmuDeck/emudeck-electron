@@ -97,7 +97,7 @@ function EmulatorConfigurationPage() {
     nextPage = 'aspect-ratio-dolphin';
   }
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -112,7 +112,7 @@ function EmulatorConfigurationPage() {
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
-        <Header title="Emulator Configurations" />
+        <Header title="Emulator and Tools Configurations" />
         <EmulatorConfiguration
           data={data}
           onClick={toggleEmus}

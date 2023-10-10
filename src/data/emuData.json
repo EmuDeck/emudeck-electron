@@ -313,7 +313,7 @@
     "name": "ScummVM",
     "code": "ScummVM",
     "wiki": "https://github.com/dragoonDorise/EmuDeck/wiki/ScummVM",
-    "description": "ScummVM is a program that allows users to play supported adventure games, originally developed by Ludvig Strigeus and Vincent Hamm. Look behind you, a three-headed monkey!",
+    "description": "ScummVM is a program which allows you to run certain classic graphical adventure and role-playing games. It supports an extensive library of over 325 adventure games, including classic titles from iconic studios such as LucasArts, Sierra On-Line, Revolution Software, Cyan, Inc. and Westwood Studios",
     "special_configuration": "BIOS: No additional BIOS are required. Read the wiki, <a className='link' target='_blank' href='https://github.com/dragoonDorise/EmuDeck/wiki/ScummVM'>here</a>, for guides on how to configure ScummVM for Steam ROM Manager and EmulationStation-DE.",
     "bios": [],
     "systems": "Scumm and DOS Games",
