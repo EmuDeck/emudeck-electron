@@ -348,10 +348,8 @@ function EndPage() {
             `echo doSetupMGBA="${!!overwriteConfigEmus.mgba
               .status}" >> ${settingsFile}`,
           ]);
-
           ipcChannel.sendMessage('bash', [
-            `echo doSetupESDE="${!!overwriteConfigEmus.esde
-              .status}" >> ${settingsFile}`,
+            `echo doSetupESDE="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
             `echo doSetupSRM="${!!overwriteConfigEmus.srm
