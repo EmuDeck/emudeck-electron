@@ -5,11 +5,11 @@ import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import { useFetchCond } from 'hooks/useFetchCond';
-import PegasusTheme from 'components/organisms/Wrappers/PegasusTheme';
+import ESDETheme from 'components/organisms/Wrappers/ESDETheme';
 
-function PegasusThemePage() {
+function ESDEThemePage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, mode, installFrontends } = state;
+  const { device, mode } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -20,11 +20,11 @@ function PegasusThemePage() {
   const themeSet = (themeName) => {
     setState({
       ...state,
-      themePegasus: themeName,
+      themeESDE: themeName,
     });
   };
 
-  const themesWS = useFetchCond('https://token.emudeck.com/pegasus-themes.php');
+  const themesWS = useFetchCond('https://token.emudeck.com/esde-themes.php');
   useEffect(() => {
     themesWS.post({}).then((data) => {
       setStatePage({ ...statePage, themes: data });
@@ -32,8 +32,15 @@ function PegasusThemePage() {
   }, []);
 
   const nextPage = () => {
-    if (installFrontends.esde.status === true) {
-      return 'esde-theme';
+    if (
+      device === 'Linux PC' ||
+      device === 'Windows PC' ||
+      device === 'Windows Handlheld'
+    ) {
+      return 'emulator-resolution';
+    }
+    if (mode === 'easy') {
+      return 'end';
     }
     return 'confirmation';
   };
@@ -53,8 +60,8 @@ function PegasusThemePage() {
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
-        <Header title="Pegasus Default Theme" />
-        <PegasusTheme themes={themes} onClick={themeSet} />
+        <Header title="EmulationStation-DE Default Theme" />
+        <ESDETheme themes={themes} onClick={themeSet} />
         <Footer
           next={nextPage()}
           nextText="Next"
@@ -66,4 +73,4 @@ function PegasusThemePage() {
   );
 }
 
-export default PegasusThemePage;
+export default ESDEThemePage;

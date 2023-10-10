@@ -158,6 +158,7 @@ function FrontendSelectorPage() {
     }
 
     function launchModal() {
+      return;
       modalData = {
         ...modalData,
         header: <span className="h4">Conflicting Frontends</span>,
@@ -221,7 +222,7 @@ function FrontendSelectorPage() {
         />
         <Footer
           next={
-            installFrontends.pegasus.status ? 'pegasus-theme' : 'confirmation'
+            installFrontends.pegasus.status ? 'pegasus-theme' : 'esde-theme'
           }
           disabledNext={disabledNext}
           disabledBack={disabledBack}

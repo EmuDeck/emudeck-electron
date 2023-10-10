@@ -21,6 +21,7 @@ import RAAchievementsPage from 'pages/RAAchievementsPage';
 import RAAchievementsConfigPage from 'pages/RAAchievementsConfigPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
+import ESDEThemePage from 'pages/ESDEThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
 import EmuDeckyPage from 'pages/EmuDeckyPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
@@ -134,7 +135,6 @@ export default function App() {
       classic: false,
       classic3d: false,
     },
-    theme: 'EPICNOIR',
     themeESDE: 'EPICNOIR',
     themePegasus: 'gameOS',
     homebrewGames: false,
@@ -418,6 +418,7 @@ export default function App() {
           </Route>
 
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
+          <Route exact path="/esde-theme" element={<ESDEThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
       </Router>

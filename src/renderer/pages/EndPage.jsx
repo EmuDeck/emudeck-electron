@@ -441,16 +441,13 @@ function EndPage() {
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo doInstallESDE="${!!installFrontends.esde
-              .status}" >> ${settingsFile}`,
+            `echo doInstallESDE="${installFrontends.esde.status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo doInstallPegasus="${!!installFrontends.pegasus
-              .status}" >> ${settingsFile}`,
+            `echo doInstallPegasus="${installFrontends.pegasus.status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo steamAsFrontend="${!!installFrontends.steam
-              .status}" >> ${settingsFile}`,
+            `echo steamAsFrontend="${installFrontends.steam.status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
             `echo doInstallCHD="true" >> ${settingsFile}`,
