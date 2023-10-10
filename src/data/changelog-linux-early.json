@@ -12,6 +12,12 @@
     "image": "false"
   },
   {
+    "title": "CloudSync 2.0",
+    "type": "STEAMOS",
+    "description": "Every time you launch an emulator we will compare a hash of what's in your device with what's on the cloud. This improves startup by a lot. And when you are playing, we will upload those saved games in the background, so exiting of a game an opening a new one now has almost zero loading time. We are still missing some notifications when all the uploads are being completed so you can turn off your device without interrumping any possible background upload.",
+    "image": "false"
+  },
+  {
     "title": "ChimeraOS",
     "type": "STEAMOS",
     "description": "Automatic fixes when being installed on a ChimeraOS system",
