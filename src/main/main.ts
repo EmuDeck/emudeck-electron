@@ -10,37 +10,33 @@
  */
 import path from 'path';
 import { exec, spawn } from 'child_process';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+// eslint-disable-next-line
 import MenuBuilder from './menu';
+// eslint-disable-next-line
 import { resolveHtmlPath } from './util';
 import fakeOSFile from '../data/local-fake-os.json';
 
 const { fakeOS } = fakeOSFile;
 
 const os = require('os');
-const slash = require('slash');
-const https = require('https');
 const fs = require('fs');
-const shellQuote = require('shell-quote');
 const lsbRelease = require('lsb-release');
 
-let shellType;
+let shellType: any;
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
     autoUpdater.autoDownload = false;
-
-    // autoUpdater.checkForUpdatesAndNotify();
   }
 }
 
-fs.exists(`${os.homedir()}/emudeck/emudeck.AppImage.log`, function (exists) {
+fs.exists(`${os.homedir()}/emudeck/emudeck.AppImage.log`, (exists: any) => {
   if (exists) {
     fs.unlinkSync(`${os.homedir()}/emudeck/emudeck.AppImage.log`);
-  } else {
   }
 });
 
@@ -53,14 +49,12 @@ const gotTheLock = app.requestSingleInstanceLock();
 
 const Promise = require('bluebird');
 
-const promiseFromChildProcess = (child) => {
-  return new Promise(function (resolve, reject) {
-    child.addListener('error', reject);
-    child.addListener('exit', resolve);
-  });
-};
-
-const logCommand = (bashCommand, stdout, stderr) => {
+const logCommand = (
+  bashCommand: any,
+  error: any = '',
+  stdout: any = '',
+  stderr: any = ''
+) => {
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
   const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
@@ -76,32 +70,42 @@ const logCommand = (bashCommand, stdout, stderr) => {
   const bashCommandString = bashCommand ? bashCommand.toString() : '';
   const stdoutString = stdout ? stdout.toString() : '';
   const stderrString = stderr ? stderr.toString() : '';
+  const errorString = error ? error.toString() : '';
 
   // const escapedBashCommandString = shellQuote.quote([bashCommandString], { noGlob: true });
   // const escapedStdoutString = shellQuote.quote([stdoutString], { noGlob: true });
   // const escapedStderrString = shellQuote.quote([stderrString], { noGlob: true });
 
   const logEntry = `[${date}] ${bashCommandString}\n`;
-  fs.appendFile(logFile, logEntry, (err) => {
-    if (err) {
-      console.error(`Error writing to log file: ${err}`);
+  fs.appendFile(logFile, logEntry, (errlogEntry: any) => {
+    if (errlogEntry) {
+      console.error(`Error writing to log file: ${errlogEntry}`);
     }
   });
 
   if (stdout) {
     const stdoutEntry = `[${date}] stdout: ${stdoutString}\n`;
-    fs.appendFile(logFile, stdoutEntry, (err) => {
-      if (err) {
-        console.error(`Error writing to log file: ${err}`);
+    fs.appendFile(logFile, stdoutEntry, (errstdout: any) => {
+      if (errstdout) {
+        console.error(`Error writing to log file: ${errstdout}`);
+      }
+    });
+  }
+
+  if (error) {
+    const stdoutEntry = `[${date}] error: ${errorString}\n`;
+    fs.appendFile(logFile, stdoutEntry, (errerror: any) => {
+      if (errerror) {
+        console.error(`Error writing to log file: ${errerror}`);
       }
     });
   }
 
   if (stderr) {
     const stderrEntry = `[${date}] stderr: ${stderrString}\n`;
-    fs.appendFile(logFile, stderrEntry, (err) => {
-      if (err) {
-        console.error(`Error writing to log file: ${err}`);
+    fs.appendFile(logFile, stderrEntry, (errstderrEntry: any) => {
+      if (errstderrEntry) {
+        console.error(`Error writing to log file: ${errstderrEntry}`);
       }
     });
   }
@@ -152,25 +156,25 @@ const createWindow = async () => {
 
   const { screen } = require('electron');
   const primaryDisplay = screen.getPrimaryDisplay();
-  const { width, height } = primaryDisplay.workAreaSize;
+  const { height } = primaryDisplay.workAreaSize;
   const screenHeight = height < 701 ? 600 : 720;
-  const isFullscreen = height < 701 ? false : false;
+  const isFullscreen = false;
   // const os = require('os');
-  let scaleFactorW;
-  let scaleFactorH;
-  let dpi;
-  if (os.platform() === 'darwin') {
-    dpi = 2;
-  } else {
-    dpi = 1;
-  }
 
-  scaleFactorW = 1 / ((1280 * dpi) / width);
-  scaleFactorH = 1 / ((screenHeight * dpi) / height);
-  let customWidth = 1280;
-  if (os.platform().includes('win32')) {
-    customWidth /= 2;
-  }
+  // let dpi;
+  // if (os.platform() === 'darwin') {
+  //   dpi = 2;
+  // } else {
+  //   dpi = 1;
+  // }
+
+  //  const scaleFactorW = 1 / ((1280 * dpi) / width);
+  //  const scaleFactorH = 1 / ((screenHeight * dpi) / height);
+
+  // if (os.platform().includes('win32')) {
+  //   let customWidth = 1280;
+  //   customWidth /= 2;
+  // }
 
   mainWindow = new BrowserWindow({
     show: false,
@@ -187,7 +191,6 @@ const createWindow = async () => {
         : path.join(__dirname, '../../.erb/dll/preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
-      enableRemoteModule: true,
     },
   });
 
@@ -220,9 +223,6 @@ const createWindow = async () => {
   mainWindow.webContents.setWindowOpenHandler((edata) => {
     const win = new BrowserWindow({ width: 1000, height: 600 });
     win.loadURL(edata.url);
-
-    const contents = win.webContents;
-
     // shell.openExternal(edata.url);
     return { action: 'deny' };
   });
@@ -242,12 +242,14 @@ const createWindow = async () => {
 // Backend function invokers
 //
 ipcMain.on('bash', async (event, command) => {
-  let backChannel;
-  let bashCommand;
+  let backChannel: any;
+  let bashCommand: any;
 
   if (command[0].includes('|||')) {
     const tempCommand = command[0].split('|||');
+    // eslint-disable-next-line
     backChannel = tempCommand[0];
+    // eslint-disable-next-line
     bashCommand = tempCommand[1];
   } else {
     backChannel = 'none';
@@ -262,28 +264,29 @@ ipcMain.on('bash', async (event, command) => {
 });
 
 ipcMain.on('bash-nolog', async (event, command) => {
-  let backChannel;
-  let bashCommand;
+  let backChannel: any;
+  let bashCommand: any;
 
   if (command[0].includes('|||')) {
     const tempCommand = command[0].split('|||');
+    // eslint-disable-next-line
     backChannel = tempCommand[0];
+    // eslint-disable-next-line
     bashCommand = tempCommand[1];
   } else {
     backChannel = 'none';
     bashCommand = command;
   }
 
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(`${bashCommand}`, shellType, (stdout) => {
     // event.reply('console', { backChannel });
-
     event.reply(backChannel, stdout);
   });
 });
 
 ipcMain.on('emudeck', async (event, command) => {
-  let backChannel;
-  let bashCommand;
+  let backChannel: any;
+  let bashCommand: any;
   let allPath;
   const homeUser = os.homedir();
   if (os.platform().includes('win32')) {
@@ -294,7 +297,9 @@ ipcMain.on('emudeck', async (event, command) => {
 
   if (command[0].includes('|||')) {
     const tempCommand = command[0].split('|||');
+    // eslint-disable-next-line
     backChannel = tempCommand[0];
+    // eslint-disable-next-line
     bashCommand = tempCommand[1];
   } else {
     backChannel = 'none';
@@ -315,7 +320,7 @@ ipcMain.on('emudeck', async (event, command) => {
     return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
       // event.reply('console', { backChannel });
       logCommand(bashCommand, error, stdout, stderr);
-      mainWindow.reload();
+      // mainWindow.reload();
     });
   }
 
@@ -339,61 +344,63 @@ ipcMain.on('emudeck', async (event, command) => {
   });
 });
 
-ipcMain.on('emudeckAdmin', async (event, command) => {
-  let backChannel;
-  let bashCommand;
-  let allPath;
-  const homeUser = os.homedir();
-
-  allPath = `${homeUser}/AppData/Roaming/EmuDeck/backend/functions/all.ps1`;
-
-  if (command[0].includes('|||')) {
-    const tempCommand = command[0].split('|||');
-    backChannel = tempCommand[0];
-    bashCommand = tempCommand[1];
-  } else {
-    backChannel = 'none';
-    bashCommand = command;
-  }
-
-  // Lets detect if the repo was cloned properly
-  if (fs.existsSync(allPath)) {
-    // file exists
-  } else {
-    event.reply(backChannel, 'nogit');
-    const bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
-
-    return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-      // event.reply('console', { backChannel });
-      logCommand(bashCommand, error, stdout, stderr);
-      mainWindow.reload();
-    });
-  }
-
-  let preCommand;
-
-  bashCommand = bashCommand.replaceAll('&&', ';');
-
-  preCommand = `PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& { Start-Process powershell -Command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} }" -Verb RunAs }"`;
-
-  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
-    // event.reply('console', { backChannel });
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, {
-      stdout,
-      stderr,
-      error,
-    });
-  });
-});
+// ipcMain.on('emudeckAdmin', async (event, command) => {
+//   let backChannel:any;
+//   let bashCommand:any;
+//   let allPath;
+//   const homeUser = os.homedir();
+//
+//   allPath = `${homeUser}/AppData/Roaming/EmuDeck/backend/functions/all.ps1`;
+//
+//   if (command[0].includes('|||')) {
+//     const tempCommand = command[0].split('|||');
+//     backChannel = tempCommand[0];
+//     bashCommand = tempCommand[1];
+//   } else {
+//     backChannel = 'none';
+//     bashCommand = command;
+//   }
+//
+//   // Lets detect if the repo was cloned properly
+//   if (fs.existsSync(allPath)) {
+//     // file exists
+//   } else {
+//     event.reply(backChannel, 'nogit');
+//     const bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
+//
+//     return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+//       // event.reply('console', { backChannel });
+//       logCommand(bashCommand, error, stdout, stderr);
+//       mainWindow.reload();
+//     });
+//   }
+//
+//   let preCommand;
+//
+//   bashCommand = bashCommand.replaceAll('&&', ';');
+//
+//   preCommand = `PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& { Start-Process powershell -Command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} }" -Verb RunAs }"`;
+//
+//   return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+//     // event.reply('console', { backChannel });
+//     logCommand(bashCommand, error, stdout, stderr);
+//     event.reply(backChannel, {
+//       stdout,
+//       stderr,
+//       error,
+//     });
+//   });
+// });
 
 ipcMain.on('emudeck-nolog', async (event, command) => {
-  let backChannel;
-  let bashCommand;
+  let backChannel: any;
+  let bashCommand: any;
 
   if (command[0].includes('|||')) {
     const tempCommand = command[0].split('|||');
+    // eslint-disable-next-line
     backChannel = tempCommand[0];
+    // eslint-disable-next-line
     bashCommand = tempCommand[1];
   } else {
     backChannel = 'none';
@@ -418,7 +425,7 @@ ipcMain.on('emudeck-nolog', async (event, command) => {
   });
 });
 
-ipcMain.on('getMSG', async (event, command) => {
+ipcMain.on('getMSG', async (event) => {
   const backChannel = 'getMSG';
   let bashCommand;
 
@@ -438,16 +445,16 @@ ipcMain.on('getMSG', async (event, command) => {
 });
 
 // UI commands
-ipcMain.on('close', async (event, command) => {
+ipcMain.on('close', async () => {
   app.quit();
 });
 
-ipcMain.on('moreZoom', async (event, command) => {
+ipcMain.on('moreZoom', async () => {
   const currentZoom = mainWindow.webContents.getZoomFactor();
   mainWindow.webContents.zoomFactor = currentZoom + 0.2;
 });
 
-ipcMain.on('lessZoom', async (event, command) => {
+ipcMain.on('lessZoom', async () => {
   const currentZoom = mainWindow.webContents.getZoomFactor();
   mainWindow.webContents.zoomFactor = currentZoom - 0.2;
 });
@@ -455,7 +462,7 @@ ipcMain.on('lessZoom', async (event, command) => {
 //
 // Updating the app
 //
-ipcMain.on('update-check', async (event, command) => {
+ipcMain.on('update-check', async (event) => {
   // Force no autoupdate
   // event.reply('update-check-out', 'up-to-date');
   // return;
@@ -470,7 +477,7 @@ ipcMain.on('update-check', async (event, command) => {
   // }
 
   if (process.env.NODE_ENV === 'development') {
-    setTimeout(function () {
+    setTimeout(() => {
       event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
       logCommand('UPDATE: DEV MODE');
     }, 500);
@@ -495,7 +502,6 @@ ipcMain.on('update-check', async (event, command) => {
 
       const version = app.getVersion();
       const versionOnline = updateInfo.version;
-
       const versionCheck = version.localeCompare(versionOnline, undefined, {
         numeric: true,
         sensitivity: 'base',
@@ -519,12 +525,17 @@ ipcMain.on('update-check', async (event, command) => {
 
         const doUpdate = autoUpdater.downloadUpdate();
 
-        doUpdate.then(() => {
-          autoUpdater.quitAndInstall(
-            true, // isSilent
-            true // isForceRunAfter, restart app after update is installed
-          );
-        });
+        doUpdate
+          .then(() => {
+            autoUpdater.quitAndInstall(
+              true, // isSilent
+              true // isForceRunAfter, restart app after update is installed
+            );
+          })
+          .catch((error) => {
+            // Manejar cualquier error que pueda ocurrir en doUpdate o autoUpdater
+            console.error('Error:', error);
+          });
       }
     })
     .catch((reason) => {
@@ -532,20 +543,26 @@ ipcMain.on('update-check', async (event, command) => {
     });
 
   // Abort the update if it hangs
-  const abortPromise = new Promise(function (resolve, reject) {
+  const abortPromise = new Promise(function (resolve: any) {
     setTimeout(resolve, 10000, 'abort');
   });
 
-  Promise.race([result, abortPromise]).then(function (value) {
-    if (value === 'abort') {
-      logCommand(`UPDATE: ABORTED TIMEOUT`);
-      event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
-      // mainWindow.reload()
-    }
-  });
+  Promise.race([result, abortPromise])
+    .then((value: any) => {
+      if (value === 'abort') {
+        logCommand(`UPDATE: ABORTED TIMEOUT`);
+        event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
+
+        // mainWindow.reload()
+      }
+    })
+    .catch((error: any) => {
+      // Manejar cualquier error que pueda ocurrir
+      console.error('Error:', error);
+    });
 });
 
-ipcMain.on('system-info-in', async (event, command) => {
+ipcMain.on('system-info-in', async (event) => {
   // const os = require('os');
   const isDebug =
     process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
@@ -554,7 +571,7 @@ ipcMain.on('system-info-in', async (event, command) => {
   }
 
   if (os.platform() === 'linux') {
-    lsbRelease(function (_, data) {
+    lsbRelease((_: any, data: any) => {
       event.reply('system-info-out', data.distributorID);
     });
   } else {
@@ -562,7 +579,7 @@ ipcMain.on('system-info-in', async (event, command) => {
   }
 });
 
-ipcMain.on('version', async (event, command) => {
+ipcMain.on('version', async (event: any) => {
   event.reply('version-out', [
     app.getVersion(),
     app.commandLine.hasSwitch('no-sandbox'),
@@ -572,7 +589,7 @@ ipcMain.on('version', async (event, command) => {
 //
 // Installing  Bash / PowerShell backend
 //
-ipcMain.on('check-git', async (event, branch) => {
+ipcMain.on('check-git', async (event) => {
   const backChannel = 'check-git';
   let bashCommand = `mkdir -p $HOME/emudeck/ && cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree`;
 
@@ -586,32 +603,12 @@ ipcMain.on('check-git', async (event, branch) => {
 });
 
 ipcMain.on('clone', async (event, branch) => {
-  const args = process.argv.slice(2);
-  let branchGIT;
-  let repo;
-  branchGIT = branch;
-  repo = 'https://github.com/dragoonDorise/EmuDeck.git';
+  const branchGIT = branch;
+  let repo = 'https://github.com/dragoonDorise/EmuDeck.git';
   if (os.platform().includes('win32')) {
     repo = 'https://github.com/EmuDeck/emudeck-we.git';
   }
 
-  if (args) {
-    const options = {};
-    args.forEach((arg) => {
-      if (arg.startsWith('--')) {
-        // Separar el nombre de la opción y el valor
-        const [name, value] = arg.slice(2).split('=');
-        // Almacenar la opción en el objeto de opciones
-        options[name] = value;
-      }
-    });
-    if (options.branch) {
-      branchGIT = options.branch;
-    }
-    if (options.repo) {
-      repo = options.repo;
-    }
-  }
   const backChannel = 'clone';
   let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && script ~/.config/EmuDeck/msg.log -c 'git clone --no-single-branch --depth=1 ${repo} ~/.config/EmuDeck/backend/' && cd ~/.config/EmuDeck/backend && script ~/.config/EmuDeck/msg.log -c 'git checkout ${branchGIT}' && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
   if (os.platform().includes('darwin')) {
@@ -627,25 +624,7 @@ ipcMain.on('clone', async (event, branch) => {
 });
 
 ipcMain.on('pull', async (event, branch) => {
-  const args = process.argv.slice(2);
-  let branchGIT;
-  branchGIT = branch;
-
-  if (args) {
-    const options = {};
-    args.forEach((arg) => {
-      if (arg.startsWith('--')) {
-        // Separar el nombre de la opción y el valor
-        const [name, value] = arg.slice(2).split('=');
-        // Almacenar la opción en el objeto de opciones
-        options[name] = value;
-      }
-    });
-    if (options.branch) {
-      branchGIT = options.branch;
-    }
-  }
-
+  const branchGIT = branch;
   const backChannel = 'pull';
   let bashCommand = `cd ~/.config/EmuDeck/backend && script ~/.config/EmuDeck/msg.log -c 'git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull' && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
 
@@ -655,6 +634,7 @@ ipcMain.on('pull', async (event, branch) => {
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript $env:USERPROFILE/AppData/Roaming/EmuDeck/msg.log; git reset --hard ; git clean -fd ; git checkout ${branchGIT} ; git pull --allow-unrelated-histories -X theirs; Stop-Transcript; cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit "}`;
   }
+
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
     event.reply(backChannel, stdout);
@@ -666,19 +646,19 @@ ipcMain.on('branch', async (event) => {
 });
 
 // GameMode setter
-ipcMain.on('isGameMode', async (event, command) => {
+ipcMain.on('isGameMode', async (event) => {
   const os = app.commandLine.hasSwitch('GameMode');
   event.reply('isGameMode-out', os);
 });
 
 // Other
-ipcMain.on('clean-log', async (event, command) => {
+ipcMain.on('clean-log', async () => {
   exec(`echo "[$(date)] App Installed" > $HOME/emudeck/Emudeck.AppImage.log`, {
     shell: '/bin/bash',
   });
 });
 
-ipcMain.on('debug', async (event, command) => {
+ipcMain.on('debug', async () => {
   mainWindow.webContents.openDevTools();
 });
 
@@ -730,7 +710,7 @@ ipcMain.on('saveSettings', async (event, command) => {
   const homedir = require('os').homedir();
   const settingsFile = `${homedir}/AppData/Roaming/EmuDeck/settings.json`;
 
-  fs.writeFile(settingsFile, jsonContent, 'utf8', function (err) {
+  fs.writeFile(settingsFile, jsonContent, 'utf8', function (err: any) {
     if (err) {
       event.reply(backChannel, err);
     }
@@ -809,11 +789,11 @@ ipcMain.on('get-store', async (event) => {
   const buildJsonStore = async () => {
     // GB HomebrewGames
     const dir = `${os.homedir()}/emudeck/store/`;
-    let jsonArray = [];
-    fs.readdir(dir, (err, files) => {
-      return new Promise((resolve, reject) => {
+    let jsonArray: any = [];
+    fs.readdir(dir, (err: any, files: any) => {
+      return new Promise((resolve: any, reject: any) => {
         if (err) reject(err);
-        files.forEach((file) => {
+        files.forEach((file: any) => {
           if (file.includes('.json') && !file.includes('store')) {
             const jsonPath = `${dir}${file}`;
             try {
@@ -829,7 +809,7 @@ ipcMain.on('get-store', async (event) => {
           store: jsonArray,
         };
         resolve(masterJson);
-      }).then((masterJson) => {
+      }).then((masterJson: any) => {
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/store.json`,
           JSON.stringify(masterJson)
@@ -838,24 +818,25 @@ ipcMain.on('get-store', async (event) => {
     });
   };
 
-  buildJsonStore().then(() => {
-    const jsonPath = `${userHomeDir}/emudeck/store/store.json`;
-    try {
+  buildJsonStore()
+    .then(() => {
+      const jsonPath = `${userHomeDir}/emudeck/store/store.json`;
       const data = fs.readFileSync(jsonPath);
       const json = JSON.parse(data);
       event.reply(backChannel, json);
-    } catch (err) {
-      console.error(err);
-    }
-  });
+    })
+    .catch((error) => {
+      // Manejar cualquier error que pueda ocurrir en doUpdate o autoUpdater
+      console.error('Error:', error);
+    });
 
   // });
 });
 
 ipcMain.on('build-store', async (event) => {
-  const buildJson = (system, name) => {
+  const buildJson = (system: any, name: any) => {
     // GB HomebrewGames
-    let dir;
+    let dir: any;
     if (os.platform().includes('win32')) {
       dir = `${os.homedir()}/AppData/Roaming/EmuDeck/backend/store/${system}/`;
     } else {
@@ -867,11 +848,11 @@ ipcMain.on('build-store', async (event) => {
       fs.mkdirSync(dirStore);
     }
 
-    let jsonArray = [];
-    fs.readdir(dir, (err, files) => {
-      return new Promise((resolve, reject) => {
+    let jsonArray: any = [];
+    fs.readdir(dir, (err: any, files: any) => {
+      return new Promise((resolve: any, reject: any) => {
         if (err) reject(err);
-        files.forEach((file) => {
+        files.forEach((file: any) => {
           if (file.includes('.json')) {
             const jsonPath = `${dir}${file}`;
             try {
@@ -890,7 +871,7 @@ ipcMain.on('build-store', async (event) => {
           games: jsonArray,
         };
         resolve(masterJson);
-      }).then((masterJson) => {
+      }).then((masterJson: any) => {
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/${system}.json`,
           JSON.stringify(masterJson)
@@ -917,13 +898,14 @@ ipcMain.on('installGame', async (event, command) => {
 
   const game = command[0];
   const system = command[2];
-
+  // eslint-disable-next-line
   const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
 
   // Alternative syntax using RegExp constructor
   // const regex = new RegExp('([^\\/]+?)(?=\\.\\w+$)|([^\\/]+?)(?=$)', '')
 
   let gameName = game.match(regex);
+  // eslint-disable-next-line
   gameName = gameName[0];
 
   let bashCommand = `emuDeckInstallHomebrewGame '${system}' '${gameName}' '${game}'`;
@@ -946,13 +928,14 @@ ipcMain.on('unInstallGame', async (event, command) => {
 
   const game = command[0];
   const system = command[2];
-
+  // eslint-disable-next-line
   const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
 
   // Alternative syntax using RegExp constructor
   // const regex = new RegExp('([^\\/]+?)(?=\\.\\w+$)|([^\\/]+?)(?=$)', '')
 
   let gameName = game.match(regex);
+  // eslint-disable-next-line
   gameName = gameName[0];
 
   let bashCommand = `emuDeckUnInstallHomebrewGame '${system}' '${gameName}' '${game}'`;
@@ -977,12 +960,16 @@ ipcMain.on('validate-git', async (event) => {
 
   const backChannel = 'validate-git';
   const bashCommand = 'git -v';
-
-  return exec(`${bashCommand}`, (error, stdout, stderr) => {
+  // eslint-disable-next-line
+  return exec(`${bashCommand}`, (error: any, stdout: any, stderr: any) => {
     logCommand(bashCommand, error, stdout, stderr);
 
     let status;
-    stdout.includes('git version') ? (status = true) : (status = false);
+    if (stdout.includes('git version')) {
+      status = true;
+    } else {
+      status = false;
+    }
 
     if (status === true) {
       event.reply(backChannel, {
@@ -1034,6 +1021,7 @@ ipcMain.on('validate-7Zip', async (event) => {
 
   const bashCommand =
     'start powershell -ExecutionPolicy Bypass -command "& { winget install -e --id 7zip.7zip --accept-package-agreements --accept-source-agreements }';
+  // eslint-disable-next-line
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
 
@@ -1082,7 +1070,7 @@ ipcMain.on('validate-Steam', async (event) => {
   });
 });
 
-ipcMain.on('reload', async (event) => {
+ipcMain.on('reload', async () => {
   mainWindow.reload();
 });
 
@@ -1098,7 +1086,9 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('session-created', (session) => {});
+app.on('session-created', (session: any) => {
+  console.log({ session });
+});
 
 ipcMain.on('run-app', async (event, appPath) => {
   let appPathFixed = appPath.replace(/[\r\n]+/g, '');
@@ -1117,37 +1107,34 @@ ipcMain.on('run-app', async (event, appPath) => {
     externalApp = spawn('xdg-open', [appPathFixed]);
   }
 
-  externalApp.on('error', (err) => {
-    event.reply('run-app', 'error');
+  externalApp.on('error', (err: any) => {
+    event.reply('run-app', err);
   });
-  externalApp.on('close', (code) => {
+  externalApp.on('close', (code: any) => {
     event.reply('run-app', code);
   });
   externalApp.on('spawn', () => {
     event.reply('run-app', 'launched');
   });
-  externalApp.on('exit', (code) => {
+  externalApp.on('exit', (code: any) => {
     event.reply('run-app', code);
   });
 });
 
-const myWindow = null;
+const myWindow: any = null;
 // no second instances
 if (!gotTheLock) {
   app.quit();
 } else {
-  app.on(
-    'second-instance',
-    (event, commandLine, workingDirectory, additionalData) => {
-      // Print out data received from the second instance.
+  app.on('second-instance', () => {
+    // Print out data received from the second instance.
 
-      // Someone tried to run a second instance, we should focus our window.
-      if (myWindow) {
-        if (myWindow.isMinimized()) myWindow.restore();
-        myWindow.focus();
-      }
+    // Someone tried to run a second instance, we should focus our window.
+    if (myWindow) {
+      if (myWindow.isMinimized()) myWindow.restore();
+      myWindow.focus();
     }
-  );
+  });
 
   app
     .whenReady()
