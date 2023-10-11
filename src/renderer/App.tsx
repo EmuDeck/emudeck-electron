@@ -8,6 +8,7 @@ import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
 import FrontendSelectorPage from 'pages/FrontendSelectorPage';
+import ParserSelectorPage from 'pages/ParserSelectorPage';
 import EmulatorConfigurationPage from 'pages/EmulatorConfigurationPage';
 import RomStoragePage from 'pages/RomStoragePage';
 import AspectRatioSegaPage from 'pages/AspectRatioSegaPage';
@@ -268,6 +269,7 @@ export default function App() {
       scummvm: 'scummvm',
       multiemulator: 'ra',
     },
+    revertParsers: false,
     resolutions: {
       dolphin: '720P',
       duckstation: '720P',
@@ -316,6 +318,11 @@ export default function App() {
             exact
             path="/frontend-selector"
             element={<FrontendSelectorPage />}
+          />
+          <Route
+            exact
+            path="/parser-selector"
+            element={<ParserSelectorPage />}
           />
           <Route
             exact

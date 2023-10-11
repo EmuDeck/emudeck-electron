@@ -115,7 +115,7 @@ function WelcomePage() {
         css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam`]);
+      ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam)`]);
       ipcChannel.sendMessage(
         'run-app',
         `"${storagePath}/Emulation/tools/Steam ROM Manager.AppImage"`
