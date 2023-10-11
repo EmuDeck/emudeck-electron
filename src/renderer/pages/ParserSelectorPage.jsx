@@ -1,11 +1,13 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
+import { useParams, useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
-import EmulatorSelector from 'components/organisms/Wrappers/EmulatorSelector';
+import ParserSelector from 'components/organisms/Wrappers/ParserSelector';
 import { BtnSimple } from 'getbasecore/Atoms';
 import {
   imgra,
@@ -59,10 +61,17 @@ const images = {
   srm: imgsrm,
 };
 
-function EmulatorSelectorPage() {
+function ParserSelectorPage() {
+  const ipcChannel = window.electron.ipcRenderer;
+  const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
-  const { device, installEmus, emulatorAlternative } = state;
+  const { device, installEmus, emulatorAlternative, revertParsers } = state;
 
+  useEffect(() => {
+    const ogStateEmus = state.installEmus;
+    const json = JSON.stringify(ogStateEmus);
+    localStorage.setItem('ogStateEmus', json);
+  }, []);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -74,7 +83,7 @@ function EmulatorSelectorPage() {
   const { disabledNext, disabledBack, data, modal, lastSelected, dom } =
     statePage;
 
-  const setAlternativeEmulator = (system, emuName, emuName2, disable) => {
+  const setAlternativeParser = (system, emuName, emuName2, disable) => {
     if (emuName === 'ra' || emuName === 'ares') {
       setState({
         ...state,
@@ -124,16 +133,15 @@ function EmulatorSelectorPage() {
     let multiemulatorValue;
     let systemsValue = {};
     let systemsOption = {};
-
     // Enabling
     if (enable) {
       if (emulatorProp === 'xenia') {
         modalData = {
           active: true,
-          header: <span className="h4">Xenia Emulator - Disclaimer</span>,
+          header: <span className="h4">Xenia Parser - Disclaimer</span>,
           body: (
             <p>
-              Xenia is an experimental Emulator, don't expect a lot of games to
+              Xenia is an experimental Parser, don't expect a lot of games to
               work.
             </p>
           ),
@@ -464,7 +472,7 @@ function EmulatorSelectorPage() {
                 type="button"
                 aria={emuOption1}
                 onClick={() =>
-                  setAlternativeEmulator(system, emuID2, emuID1, false)
+                  setAlternativeParser(system, emuID2, emuID1, false)
                 }
                 disabled={false}
               >
@@ -475,7 +483,7 @@ function EmulatorSelectorPage() {
                 type="button"
                 aria={emuOption2}
                 onClick={() =>
-                  setAlternativeEmulator(system, emuID1, emuID2, true)
+                  setAlternativeParser(system, emuID1, emuID2, true)
                 }
                 disabled={false}
               >
@@ -485,7 +493,7 @@ function EmulatorSelectorPage() {
                 css="btn-simple--3"
                 type="button"
                 aria="Go Back"
-                onClick={() => setAlternativeEmulator(system, 'both', 'both')}
+                onClick={() => setAlternativeParser(system, 'both', 'both')}
               >
                 Both
               </BtnSimple>
@@ -851,7 +859,7 @@ function EmulatorSelectorPage() {
     function launchModal() {
       modalData = {
         ...modalData,
-        header: <span className="h4">Conflicting Emulators</span>,
+        header: <span className="h4">Conflicting Parsers</span>,
         css: 'emumodal--sm',
         footer: (
           <>
@@ -860,7 +868,7 @@ function EmulatorSelectorPage() {
               type="button"
               aria={emuOption1}
               onClick={() =>
-                setAlternativeEmulator(system, emuID2, emuID1, false)
+                setAlternativeParser(system, emuID2, emuID1, false)
               }
               disabled={false}
             >
@@ -870,9 +878,7 @@ function EmulatorSelectorPage() {
               css="btn-simple--2"
               type="button"
               aria={emuOption2}
-              onClick={() =>
-                setAlternativeEmulator(system, emuID1, emuID2, true)
-              }
+              onClick={() => setAlternativeParser(system, emuID1, emuID2, true)}
               disabled={false}
             >
               {emuOption2}
@@ -881,7 +887,7 @@ function EmulatorSelectorPage() {
               css="btn-simple--3"
               type="button"
               aria="Go Back"
-              onClick={() => setAlternativeEmulator(system, 'both', 'both')}
+              onClick={() => setAlternativeParser(system, 'both', 'both')}
             >
               Both
             </BtnSimple>
@@ -892,6 +898,73 @@ function EmulatorSelectorPage() {
       setStatePage({ ...statePage, modal: modalData });
     }
   }, [installEmus]);
+
+  const saveParsers = () => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Updating Parsers!</span>,
+      body: <p>Please wait a few seconds...</p>,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
+      css: 'emumodal--xs',
+    };
+
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+
+    ipcChannel.sendMessage('emudeck', [
+      `parsersUpdate|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} >/dev/null && setSetting doInstallPrimeHack ${installEmus.primehack.status} >/dev/null && setSetting doInstallRPCS3 ${installEmus.rpcs3.status} >/dev/null && setSetting doInstallCitra ${installEmus.citra.status} >/dev/null && setSetting doInstallDolphin ${installEmus.dolphin.status} >/dev/null && setSetting doInstallPPSSPP ${installEmus.ppsspp.status} >/dev/null && setSetting doInstallXemu ${installEmus.xemu.status} >/dev/null && setSetting doInstallCemu ${installEmus.cemu.status} >/dev/null && setSetting doInstallXenia ${installEmus.xenia.status} >/dev/null && setSetting doInstallScummVM ${installEmus.scummvm.status} >/dev/null && setSetting doInstallRMG ${installEmus.rmg.status} >/dev/null && setSetting doInstallmelonDS ${installEmus.melonds.status} >/dev/null && setSetting doInstallVita3K ${installEmus.vita3k.status} >/dev/null && setSetting doInstallMGBA ${installEmus.mgba.status} >/dev/null && setSetting doInstallMAME ${installEmus.mame.status} >/dev/null && setSetting doInstallYuzu ${installEmus.yuzu.status} >/dev/null && setSetting doInstallRyujinx ${installEmus.ryujinx.status} >/dev/null && setSetting doInstallPCSX2QT ${installEmus.pcsx2.status} >/dev/null) >/dev/null && . ~/.config/EmuDeck/backend/functions/all.sh && SRM_init`,
+    ]);
+
+    ipcChannel.once(`parsersUpdate`, (message) => {
+      const status = message.stdout;
+      status.replace('\n', '');
+      console.log({ message });
+      let modalData;
+      if (status.includes('true')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">Success!</span>,
+          body: <p>All Parsers have been configured.</p>,
+          footer: (
+            <BtnSimple
+              css="btn-simple--1"
+              type="button"
+              onClick={() => navigate('/welcome')}
+            >
+              Close
+            </BtnSimple>
+          ),
+          css: 'emumodal--xs',
+        };
+      } else {
+        modalData = {
+          active: true,
+          header: <span className="h4">Failed</span>,
+          body: <p>There was an issue trying to configure your parsers</p>,
+          css: 'emumodal--xs',
+        };
+        console.log({ modalData });
+      }
+      // We revert back the emulators
+
+      constlocalogStateEmus = JSON.parse(localStorage.getItem('ogStateEmus'));
+
+      setState({
+        ...state,
+        installEmus: constlocalogStateEmus,
+        revertParsers: true,
+      });
+      console.log({ installEmus });
+      console.log({ constlocalogStateEmus });
+
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
+    });
+  };
 
   // GamePad
   const domElementsRef = useRef(null);
@@ -904,21 +977,51 @@ function EmulatorSelectorPage() {
     }
   }, [statePage]);
 
+  useEffect(() => {
+    if (revertParsers === true) {
+      console.log({ installEmus });
+      ipcChannel.sendMessage('emudeck', [
+        `installupdate|||setSetting doInstallPrimeHack ${installEmus.primehack.status} >/dev/null && setSetting doInstallRPCS3 ${installEmus.rpcs3.status} >/dev/null && setSetting doInstallCitra ${installEmus.citra.status} >/dev/null && setSetting doInstallDolphin ${installEmus.dolphin.status} && setSetting doInstallPPSSPP ${installEmus.ppsspp.status} >/dev/null && setSetting doInstallXemu ${installEmus.xemu.status} >/dev/null && setSetting doInstallCemu ${installEmus.cemu.status} >/dev/null && setSetting doInstallXenia ${installEmus.xenia.status} >/dev/null && setSetting doInstallScummVM ${installEmus.scummvm.status} >/dev/null && setSetting doInstallRMG ${installEmus.rmg.status} >/dev/null && setSetting doInstallmelonDS ${installEmus.melonds.status} >/dev/null && setSetting doInstallVita3K ${installEmus.vita3k.status} >/dev/null && setSetting doInstallMGBA ${installEmus.mgba.status} >/dev/null && setSetting doInstallMAME ${installEmus.mame.status} >/dev/null && setSetting doInstallYuzu ${installEmus.yuzu.status} >/dev/null && setSetting doInstallRyujinx ${installEmus.ryujinx.status} >/dev/null && setSetting doInstallPCSX2QT ${installEmus.pcsx2.status} >/dev/null`,
+      ]);
+      ipcChannel.once(`installupdate`, (message) => {
+        const status = message.stdout;
+        status.replace('\n', '');
+        console.log({ message });
+      });
+    }
+  }, [revertParsers]);
+
+  const json = JSON.stringify(state);
+  localStorage.setItem('settings_emudeck', json);
+
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
-        <Header title="Emulators and tools for" bold={`${device}`} />
-        <EmulatorSelector data={data} onClick={toggleEmus} images={images} />
-        <Footer
-          next="emulator-configuration"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
+        <Header title="Parsers and tools for" bold={`${device}`} />
+        <ParserSelector data={data} onClick={toggleEmus} images={images} />
+        <footer className="footer">
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            onClick={() => navigate(-1)}
+            aria="Go Back"
+          >
+            Back
+          </BtnSimple>
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria="Disabled"
+            onClick={() => saveParsers()}
+          >
+            Save Parsers
+          </BtnSimple>
+        </footer>
         <EmuModal modal={modal} />
       </Wrapper>
     </div>
   );
 }
 
-export default EmulatorSelectorPage;
+export default ParserSelectorPage;

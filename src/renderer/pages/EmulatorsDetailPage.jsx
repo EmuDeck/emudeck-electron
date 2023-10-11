@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -40,6 +40,7 @@ import {
 const emuData = require('data/emuData.json');
 
 function EmulatorsDetailPage() {
+  const navigate = useNavigate();
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
   const { installEmus, mode, system, yuzuEAtoken } = state;
@@ -76,6 +77,10 @@ function EmulatorsDetailPage() {
       ...state,
       yuzuEAtoken: yuzuEAtokenValue,
     });
+  };
+
+  const parserSeletor = () => {
+    navigate('/parser-selector');
   };
 
   const yuzuEAaskToken = () => {
@@ -1053,6 +1058,7 @@ function EmulatorsDetailPage() {
             onClickControls={showControls}
             onClickUninstall={uninstallEmu}
             onClickMigrate={onClickMigrate}
+            onClickParsers={parserSeletor}
             installEmus={installEmus[emulatorSelected]}
             yuzuEAaskToken={yuzuEAaskToken}
           />
