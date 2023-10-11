@@ -124,7 +124,7 @@ function EndPage() {
       ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam`]);
       ipcChannel.sendMessage(
         'run-app',
-        `${storagePath}/Emulation/tools/Steam ROM Manager.AppImage`
+        `"${storagePath}/Emulation/tools/Steam ROM Manager.AppImage"`
       );
     }
     ipcChannel.once('run-app', (message) => {
