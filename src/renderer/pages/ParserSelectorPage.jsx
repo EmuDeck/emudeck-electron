@@ -961,15 +961,15 @@ function ParserSelectorPage() {
       }
       // We revert back the emulators
 
-      constlocalogStateEmus = JSON.parse(localStorage.getItem('ogStateEmus'));
+      const localogStateEmus = JSON.parse(localStorage.getItem('ogStateEmus'));
 
       setState({
         ...state,
-        installEmus: constlocalogStateEmus,
+        installEmus: localogStateEmus,
         revertParsers: true,
       });
       console.log({ installEmus });
-      console.log({ constlocalogStateEmus });
+      console.log({ localogStateEmus });
 
       setStatePage({
         ...statePage,
