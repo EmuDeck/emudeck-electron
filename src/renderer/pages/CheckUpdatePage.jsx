@@ -156,9 +156,17 @@ function CheckUpdatePage() {
         const achievementsStored = settingsStorage.achievements;
 
         delete settingsStorage.installEmus.primehacks;
+        delete settingsStorage.installEmus.melonDS;
         delete settingsStorage.installEmus.cemunative;
         delete settingsStorage.overwriteConfigEmus.primehacks;
         const installEmusStored = settingsStorage.installEmus;
+        console.log(settingsStorage.emulatorAlternative.nds);
+        if (settingsStorage.emulatorAlternative.nds === 'melonDS') {
+          delete settingsStorage.emulatorAlternative.nds;
+          settingsStorage.emulatorAlternative.nds = 'melonds';
+        }
+
+        console.log(settingsStorage.emulatorAlternative.nds);
 
         // Theres probably a better way to do this...
 

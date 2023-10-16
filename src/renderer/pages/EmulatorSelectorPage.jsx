@@ -210,11 +210,11 @@ function EmulatorSelectorPage() {
               emulatorAlternative.mame === 'both' ? 'multiemulator' : 'mame',
           };
         }
-        if (emulatorProp === 'melonDS') {
+        if (emulatorProp === 'melonds') {
           systemsOption = {
             ...systemsOption,
             nds:
-              emulatorAlternative.nds === 'both' ? 'multiemulator' : 'melonDS',
+              emulatorAlternative.nds === 'both' ? 'multiemulator' : 'melonds',
           };
         }
       }
@@ -263,7 +263,7 @@ function EmulatorSelectorPage() {
           n64: emulatorAlternative.n64 === 'both' ? 'rmg' : '',
           psp: emulatorAlternative.psp === 'both' ? 'ppsspp' : '',
           psx: emulatorAlternative.psx === 'both' ? 'duckstation' : '',
-          nds: emulatorAlternative.nds === 'both' ? 'melonDS' : '',
+          nds: emulatorAlternative.nds === 'both' ? 'melonds' : '',
           mame: emulatorAlternative.mame === 'both' ? 'mame' : '',
         };
       } else {
@@ -344,15 +344,15 @@ function EmulatorSelectorPage() {
                 : 'mame',
           };
         }
-        if (emulatorProp === 'melonDS') {
+        if (emulatorProp === 'melonds') {
           systemsOption = {
             ...systemsOption,
             nds:
               emulatorAlternative.nds === 'both'
                 ? 'multiemulator'
-                : emulatorAlternative.nds === 'melonDS'
+                : emulatorAlternative.nds === 'melonds'
                 ? 'multiemulator'
-                : 'melonDS',
+                : 'melonds',
           };
         }
       }
@@ -517,10 +517,7 @@ function EmulatorSelectorPage() {
           active: true,
           body: (
             <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use for GameBoy Advance.
-              </p>
+              <p>Which emulator do you want to use for GameBoy Advance.</p>
               <div className="h5">
                 <strong>RetroArch (recommended)</strong> has these pros:
               </div>
@@ -569,10 +566,7 @@ function EmulatorSelectorPage() {
           active: true,
           body: (
             <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
+              <p>Which emulator do you want to use</p>
               <div className="h5">
                 <strong>RetroArch (recommended)</strong> has these pros:
               </div>
@@ -619,10 +613,7 @@ function EmulatorSelectorPage() {
           active: true,
           body: (
             <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
+              <p>Which emulator do you want to use</p>
               <div className="h5">
                 <strong>RetroArch</strong> has these prosss:
               </div>
@@ -662,17 +653,14 @@ function EmulatorSelectorPage() {
 
         emuOption1 = 'melonDS';
         emuOption2 = multiemulatorName;
-        emuID2 = 'melonDS';
+        emuID2 = 'melonds';
         emuID1 = multiemulatorID;
         system = 'nds';
         modalData = {
           active: true,
           body: (
             <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
+              <p>Which emulator do you want to use</p>
               <div className="h5">
                 <strong>RetroArch</strong> has these pros:
               </div>
@@ -719,10 +707,7 @@ function EmulatorSelectorPage() {
           active: true,
           body: (
             <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
+              <p>Which emulator do you want to use</p>
               <div className="h5">
                 <strong>RetroArch</strong> has these pros:
               </div>
@@ -770,10 +755,7 @@ function EmulatorSelectorPage() {
           active: true,
           body: (
             <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
+              <p>Which emulator do you want to use</p>
               <div className="h5">
                 <strong>RetroArch (recommended)</strong> has these pros:
               </div>
@@ -815,10 +797,7 @@ function EmulatorSelectorPage() {
           active: true,
           body: (
             <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
+              <p>Which emulator do you want to use</p>
               <div className="h5">
                 <strong>RetroArch</strong> has these pros:
               </div>
@@ -851,7 +830,7 @@ function EmulatorSelectorPage() {
     function launchModal() {
       modalData = {
         ...modalData,
-        header: <span className="h4">Conflicting Emulators</span>,
+        header: <span className="h4">RetroArch or Standalone Emulator?</span>,
         css: 'emumodal--sm',
         footer: (
           <>

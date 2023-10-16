@@ -246,7 +246,7 @@ export default function App() {
       gba: 'multiemulator',
       mame: 'multiemulator',
       n64: 'multiemulator',
-      nds: 'melonDS',
+      nds: 'melonds',
       psp: 'ppsspp',
       psx: 'duckstation',
       scummvm: 'scummvm',

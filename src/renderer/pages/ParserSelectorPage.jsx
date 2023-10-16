@@ -219,11 +219,11 @@ function ParserSelectorPage() {
               emulatorAlternative.mame === 'both' ? 'multiemulator' : 'mame',
           };
         }
-        if (emulatorProp === 'melonDS') {
+        if (emulatorProp === 'melonds') {
           systemsOption = {
             ...systemsOption,
             nds:
-              emulatorAlternative.nds === 'both' ? 'multiemulator' : 'melonDS',
+              emulatorAlternative.nds === 'both' ? 'multiemulator' : 'melonds',
           };
         }
       }
@@ -272,7 +272,7 @@ function ParserSelectorPage() {
           n64: emulatorAlternative.n64 === 'both' ? 'rmg' : '',
           psp: emulatorAlternative.psp === 'both' ? 'ppsspp' : '',
           psx: emulatorAlternative.psx === 'both' ? 'duckstation' : '',
-          nds: emulatorAlternative.nds === 'both' ? 'melonDS' : '',
+          nds: emulatorAlternative.nds === 'both' ? 'melonds' : '',
           mame: emulatorAlternative.mame === 'both' ? 'mame' : '',
         };
       } else {
@@ -359,9 +359,9 @@ function ParserSelectorPage() {
             nds:
               emulatorAlternative.nds === 'both'
                 ? 'multiemulator'
-                : emulatorAlternative.nds === 'melonDS'
+                : emulatorAlternative.nds === 'melonds'
                 ? 'multiemulator'
-                : 'melonDS',
+                : 'melonds',
           };
         }
       }
@@ -671,7 +671,7 @@ function ParserSelectorPage() {
 
         emuOption1 = 'melonDS';
         emuOption2 = multiemulatorName;
-        emuID2 = 'melonDS';
+        emuID2 = 'melonds';
         emuID1 = multiemulatorID;
         systemCode = 'nds';
         modalData = {
