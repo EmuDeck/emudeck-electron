@@ -278,7 +278,7 @@ ipcMain.on('bash-nolog', async (event, command) => {
     bashCommand = command;
   }
 
-  return exec(`${bashCommand}`, shellType, (stdout) => {
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     // event.reply('console', { backChannel });
     event.reply(backChannel, stdout);
   });
