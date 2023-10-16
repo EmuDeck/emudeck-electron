@@ -393,6 +393,18 @@ function EmulatorSelectorPage() {
   let emuModified = '';
 
   useEffect(() => {
+    if (
+      emulatorAlternative.gba === 'multiemulator' &&
+      emulatorAlternative.mame === 'multiemulator' &&
+      emulatorAlternative.n64 === 'multiemulator' &&
+      emulatorAlternative.nds === 'melonds' &&
+      emulatorAlternative.psp === 'ppsspp' &&
+      emulatorAlternative.psx === 'duckstation' &&
+      emulatorAlternative.scummvm === 'scummvm'
+    ) {
+      return;
+    }
+
     let emuOption1;
     let emuOption2;
     let emuID1;
@@ -870,7 +882,7 @@ function EmulatorSelectorPage() {
 
       setStatePage({ ...statePage, modal: modalData });
     }
-  }, [installEmus]);
+  }, [emulatorAlternative]);
 
   // GamePad
   const domElementsRef = useRef(null);
