@@ -128,21 +128,25 @@ function ParserSelectorPage() {
   };
 
   let modalData = {};
+
   const toggleEmus = (emulatorProp) => {
     const { status } = installEmus[emulatorProp];
     const enable = !status;
     let multiemulatorValue;
     let systemsValue = {};
     let systemsOption = {};
+
     // Enabling
     if (enable) {
+      setStatePage({ ...statePage, lastSelected: emulatorProp });
+
       if (emulatorProp === 'xenia') {
         modalData = {
           active: true,
-          header: <span className="h4">Xenia Parser - Disclaimer</span>,
+          header: <span className="h4">Xenia Emulator - Disclaimer</span>,
           body: (
             <p>
-              Xenia is an experimental Parser, don't expect a lot of games to
+              Xenia is an experimental Emulator, don't expect a lot of games to
               work.
             </p>
           ),
@@ -247,10 +251,8 @@ function ParserSelectorPage() {
       console.log({ systemsValue });
 
       // Disabling
-    }
-    // Disabling
-    else {
-      setStatePage({ ...statePage, lastSelected: '' });
+    } else {
+      setStatePage({ ...statePage, lastSelected: undefined });
       // Setting multiemulator
       if (emulatorProp === 'ares' || emulatorProp === 'ra') {
         if (emulatorProp === 'ares') {
@@ -353,7 +355,7 @@ function ParserSelectorPage() {
                 : 'mame',
           };
         }
-        if (emulatorProp === 'melonDS') {
+        if (emulatorProp === 'melonds') {
           systemsOption = {
             ...systemsOption,
             nds:
@@ -402,70 +404,474 @@ function ParserSelectorPage() {
   let emuModified = '';
 
   useEffect(() => {
-    let emuOption1;
-    let emuOption2;
-    let emuID1;
-    let emuID2;
-    let systemCode;
-    let multiemulatorName;
-    let multiemulatorID;
+    if (lastSelected !== undefined) {
+      let emuOption1;
+      let emuOption2;
+      let emuID1;
+      let emuID2;
+      let system;
+      let multiemulatorName;
+      let multiemulatorID;
 
-    const keys = Object.keys(previousState);
-    const changed = {};
+      const keys = Object.keys(previousState);
+      const changed = {};
 
-    for (const key of keys) {
-      if (previousState[key] !== installEmus[key]) {
-        changed[key] = installEmus[key];
+      for (const key of keys) {
+        if (previousState[key] !== installEmus[key]) {
+          changed[key] = installEmus[key];
+        }
       }
-    }
 
-    setChangedKeys(changed);
+      setChangedKeys(changed);
 
-    setPreviousState(installEmus);
+      setPreviousState(installEmus);
 
-    emuModified = '';
+      emuModified = '';
 
-    // RA + Ares
-    if (installEmus.ares.status && installEmus.ra.status) {
-      if (emulatorAlternative.multiemulator !== 'both') {
-        emuOption1 = 'ares';
-        emuOption2 = 'RetroArch';
-        emuID2 = 'ares';
-        emuID1 = 'ra';
-        systemCode = 'multiemulator';
+      // RA + Ares
+      if (installEmus.ares.status && installEmus.ra.status) {
+        if (emulatorAlternative.multiemulator !== 'both') {
+          emuOption1 = 'ares';
+          emuOption2 = 'RetroArch';
+          emuID2 = 'ares';
+          emuID1 = 'ra';
+          system = 'multiemulator';
+          modalData = {
+            active: true,
+            body: (
+              <>
+                <p>
+                  You've selected two emulators for the same systems, which one
+                  do you want to use for Classic games like Super Nintendo, Nes,
+                  Nintendo 64, Dreamcast, etc?
+                </p>
+                <div className="h5">
+                  <strong>RetroArch (recommended)</strong> has these pros:
+                </div>
+                <ol className="list">
+                  <li>RetroAchievements</li>
+                  <li>Bezels & Shaders</li>
+                  <li>Auto Save States</li>
+                </ol>
+                <div className="h5">
+                  <strong>ares</strong> has this pro:
+                </div>
+                <ol className="list">
+                  <li>Alternative for people that dislike RetroArch</li>
+                </ol>
+                <p>
+                  If you chose Both, we will use Ares when available, and
+                  RetroArch for all the other cores
+                </p>
+                <p>
+                  We will only add the parser according to your selection so you
+                  don't end up with duplicates in your library.
+                </p>
+              </>
+            ),
+            footer: (
+              <>
+                <BtnSimple
+                  css="btn-simple--1"
+                  type="button"
+                  aria={emuOption1}
+                  onClick={() =>
+                    setAlternativeParser(system, emuID2, emuID1, false)
+                  }
+                  disabled={false}
+                >
+                  {emuOption1}
+                </BtnSimple>
+                <BtnSimple
+                  css="btn-simple--2"
+                  type="button"
+                  aria={emuOption2}
+                  onClick={() =>
+                    setAlternativeParser(system, emuID1, emuID2, true)
+                  }
+                  disabled={false}
+                >
+                  {emuOption2}
+                </BtnSimple>
+                <BtnSimple
+                  css="btn-simple--3"
+                  type="button"
+                  aria="Go Back"
+                  onClick={() => setAlternativeParser(system, 'both', 'both')}
+                >
+                  Both
+                </BtnSimple>
+              </>
+            ),
+          };
+        }
+      }
+
+      // //RA || ARES + mGBA
+      if (
+        (installEmus.mgba.status &&
+          installEmus.ra.status &&
+          lastSelected === 'mgba') ||
+        (installEmus.mgba.status &&
+          installEmus.ares.status &&
+          lastSelected === 'mgba')
+      ) {
+        if (emulatorAlternative.gba !== 'both') {
+          multiemulatorID = 'multiemulator';
+          multiemulatorName = 'RetroArch';
+          if (installEmus.ares.status) {
+            multiemulatorID = 'multiemulator';
+            multiemulatorName = 'ares';
+          }
+
+          emuOption1 = 'mGBA';
+          emuOption2 = multiemulatorName;
+          emuID2 = 'mgba';
+          emuID1 = multiemulatorID;
+          system = 'gba';
+          modalData = {
+            active: true,
+            body: (
+              <>
+                <p>Which emulator do you want to use for GameBoy Advance.</p>
+                <div className="h5">
+                  <strong>RetroArch (recommended)</strong> has these pros:
+                </div>
+                <ol className="list">
+                  <li>RetroAchievements</li>
+                  <li>Bezels & Shaders</li>
+                  <li>Auto Save States</li>
+                </ol>
+                <div className="h5">
+                  <strong>mGBA</strong> has this pro:
+                </div>
+                <ol className="list">
+                  <li>GBA Link for Multiplayer, Pokemon Trading, etc.</li>
+                </ol>
+                <p>
+                  We will only add the parser according to your selection so you
+                  don't end up with duplicates in your library.
+                </p>
+              </>
+            ),
+          };
+          const myTimeout = setTimeout(launchModal, 500);
+        }
+      }
+
+      // //RA || ARES + rmg
+      if (
+        (installEmus.rmg.status &&
+          installEmus.ra.status &&
+          lastSelected === 'rmg') ||
+        (installEmus.rmg.status &&
+          installEmus.ares.status &&
+          lastSelected === 'rmg')
+      ) {
+        // alert(emuModified);
+        if (emulatorAlternative.n64 !== 'both') {
+          multiemulatorID = 'multiemulator';
+          multiemulatorName = 'RetroArch';
+          if (installEmus.ares.status) {
+            multiemulatorID = 'multiemulator';
+            multiemulatorName = 'ares';
+          }
+
+          emuOption1 = 'rmg';
+          emuOption2 = multiemulatorName;
+          emuID2 = 'rmg';
+          emuID1 = multiemulatorID;
+          system = 'n64';
+          modalData = {
+            active: true,
+            body: (
+              <>
+                <p>Which emulator do you want to use</p>
+                <div className="h5">
+                  <strong>RetroArch (recommended)</strong> has these pros:
+                </div>
+                <ol className="list">
+                  <li>RetroAchievements</li>
+                  <li>Bezels & Shaders</li>
+                  <li>Auto Save States</li>
+                </ol>
+                <div className="h5">
+                  <strong>RMG</strong> has this pro:
+                </div>
+                <ol className="list">
+                  <li>Better Performance</li>
+                </ol>
+                <p>
+                  We will only add the parser according to your selection so you
+                  don't end up with duplicates in your library.
+                </p>
+              </>
+            ),
+          };
+          const myTimeout = setTimeout(launchModal, 500);
+        }
+      }
+
+      if (
+        (installEmus.duckstation.status &&
+          installEmus.ra.status &&
+          lastSelected === 'duckstation') ||
+        (installEmus.duckstation.status &&
+          installEmus.ares.status &&
+          lastSelected === 'duckstation')
+      ) {
+        if (emulatorAlternative.psx !== 'both') {
+          multiemulatorID = 'multiemulator';
+          multiemulatorName = 'RetroArch';
+          if (installEmus.ares.status) {
+            multiemulatorID = 'multiemulator';
+            multiemulatorName = 'ares';
+          }
+
+          emuOption1 = 'DuckStation';
+          emuOption2 = multiemulatorName;
+          emuID2 = 'duckstation';
+          emuID1 = multiemulatorID;
+          system = 'psx';
+          modalData = {
+            active: true,
+            body: (
+              <>
+                <p>Which emulator do you want to use</p>
+                <div className="h5">
+                  <strong>RetroArch</strong> has these prosss:
+                </div>
+                <ol className="list">
+                  <li>RetroAchievements</li>
+                  <li>Bezels & Shaders</li>
+                  <li>Auto Save States</li>
+                </ol>
+                <div className="h5">
+                  <strong>DuckStation (recommended)</strong> has this pro:
+                </div>
+                <ol className="list">
+                  <li>Better Performance</li>
+                </ol>
+                <p>
+                  We will only add the parser according to your selection so you
+                  don't end up with duplicates in your library.
+                </p>
+              </>
+            ),
+          };
+          const myTimeout = setTimeout(launchModal, 500);
+        }
+      }
+
+      if (
+        (installEmus.melonds.status &&
+          installEmus.ra.status &&
+          lastSelected === 'melonds') ||
+        (installEmus.melonds.status &&
+          installEmus.ares.status &&
+          lastSelected === 'melonds')
+      ) {
+        if (emulatorAlternative.nds !== 'both') {
+          multiemulatorID = 'multiemulator';
+          multiemulatorName = 'RetroArch';
+          if (installEmus.ares.status) {
+            multiemulatorID = 'multiemulator';
+            multiemulatorName = 'ares';
+          }
+
+          emuOption1 = 'melonDS';
+          emuOption2 = multiemulatorName;
+          emuID2 = 'melonds';
+          emuID1 = multiemulatorID;
+          system = 'nds';
+          modalData = {
+            active: true,
+            body: (
+              <>
+                <p>Which emulator do you want to use</p>
+                <div className="h5">
+                  <strong>RetroArch</strong> has these pros:
+                </div>
+                <ol className="list">
+                  <li>RetroAchievements</li>
+                  <li>Bezels & Shaders</li>
+                  <li>Auto Save States</li>
+                </ol>
+                <div className="h5">
+                  <strong>melonDS (recommended)</strong> has this pros:
+                </div>
+                <ol className="list">
+                  <li>Better performance and scaling</li>
+                </ol>
+                <p>
+                  We will only add the parser according to your selection so you
+                  don't end up with duplicates in your library.
+                </p>
+              </>
+            ),
+          };
+          const myTimeout = setTimeout(launchModal, 500);
+        }
+      }
+
+      if (
+        (installEmus.ppsspp.status &&
+          installEmus.ra.status &&
+          lastSelected === 'ppsspp') ||
+        (installEmus.ppsspp.status &&
+          installEmus.ares.status &&
+          lastSelected === 'ppsspp')
+      ) {
+        if (emulatorAlternative.psp !== 'both') {
+          multiemulatorID = 'multiemulator';
+          multiemulatorName = 'RetroArch';
+          if (installEmus.ares.status) {
+            multiemulatorID = 'multiemulator';
+            multiemulatorName = 'ares';
+          }
+
+          emuOption1 = 'PPSSPP';
+          emuOption2 = multiemulatorName;
+          emuID2 = 'ppsspp';
+          emuID1 = multiemulatorID;
+          system = 'psp';
+          modalData = {
+            active: true,
+            body: (
+              <>
+                <p>Which emulator do you want to use</p>
+                <div className="h5">
+                  <strong>RetroArch</strong> has these pros:
+                </div>
+                <ol className="list">
+                  <li>RetroAchievements</li>
+                  <li>Bezels & Shaders</li>
+                  <li>Auto Save States</li>
+                </ol>
+                <div className="h5">
+                  <strong>PPSSPP (recommended)</strong> has this pro:
+                </div>
+                <ol className="list">
+                  <li>Better performance</li>
+                  <li>Better compatibility</li>
+                </ol>
+                <p>
+                  We will only add the parser according to your selection so you
+                  don't end up with duplicates in your library.
+                </p>
+              </>
+            ),
+          };
+          const myTimeout = setTimeout(launchModal, 500);
+        }
+      }
+
+      if (
+        (installEmus.mame.status &&
+          installEmus.ra.status &&
+          lastSelected === 'mame') ||
+        (installEmus.mame.status &&
+          installEmus.ares.status &&
+          lastSelected === 'mame')
+      ) {
+        if (emulatorAlternative.mame !== 'both') {
+          multiemulatorID = 'multiemulator';
+          multiemulatorName = 'RetroArch';
+          if (installEmus.ares.status) {
+            multiemulatorID = 'multiemulator';
+            multiemulatorName = 'ares';
+          }
+
+          emuOption1 = 'MAME';
+          emuOption2 = multiemulatorName;
+          emuID2 = 'mame';
+          emuID1 = multiemulatorID;
+          system = 'mame';
+          modalData = {
+            active: true,
+            body: (
+              <>
+                <p>Which emulator do you want to use</p>
+                <div className="h5">
+                  <strong>RetroArch (recommended)</strong> has these pros:
+                </div>
+                <ol className="list">
+                  <li>RetroAchievements</li>
+                  <li>Bezels & Shaders</li>
+                  <li>Auto Save States</li>
+                  <li>3 different cores: 2003 plus, 2010 and current</li>
+                </ol>
+                <p>
+                  We will only add the parser according to your selection so you
+                  don't end up with duplicates in your library.
+                </p>
+              </>
+            ),
+          };
+          const myTimeout = setTimeout(launchModal, 500);
+        }
+      }
+
+      if (
+        (installEmus.scummvm.status &&
+          installEmus.ra.status &&
+          lastSelected === 'scummvm') ||
+        (installEmus.scummvm.status &&
+          installEmus.ares.status &&
+          lastSelected === 'scummvm')
+      ) {
+        if (emulatorAlternative.scummvm !== 'both') {
+          multiemulatorID = 'multiemulator';
+          multiemulatorName = 'RetroArch';
+          if (installEmus.ares.status) {
+            multiemulatorID = 'multiemulator';
+            multiemulatorName = 'ares';
+          }
+
+          emuOption1 = 'ScummVM';
+          emuOption2 = multiemulatorName;
+          emuID2 = 'scummvm';
+          emuID1 = multiemulatorID;
+          system = 'scummvm';
+          modalData = {
+            active: true,
+            body: (
+              <>
+                <p>Which emulator do you want to use</p>
+                <div className="h5">
+                  <strong>RetroArch</strong> has these pros:
+                </div>
+                <ol className="list">
+                  <li>RetroAchievements</li>
+                  <li>Bezels & Shaders</li>
+                  <li>Auto Save States</li>
+                  <li>Better Keymapping and Controller support</li>
+                </ol>
+                <div className="h5">
+                  <strong>ScummVM (recommended)</strong> has these pros:
+                </div>
+                <ol className="list">
+                  <li>Not an emulation but runs natively</li>
+                  <li>Takes less resources</li>
+                  <li>Has better compatibility</li>
+                  <li>More flexible configuration</li>
+                </ol>
+                <p>
+                  We will only add the parser according to your selection so you
+                  don't end up with duplicates in your library.
+                </p>
+              </>
+            ),
+          };
+          const myTimeout = setTimeout(launchModal, 500);
+        }
+      }
+
+      function launchModal() {
         modalData = {
-          active: true,
-          body: (
-            <>
-              <p>
-                You've selected two emulators for the same systems, which one do
-                you want to use for Classic games like Super Nintendo, Nes,
-                Nintendo 64, Dreamcast, etc?
-              </p>
-              <div className="h5">
-                <strong>RetroArch (recommended)</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>RetroAchievements</li>
-                <li>Bezels & Shaders</li>
-                <li>Auto Save States</li>
-              </ol>
-              <div className="h5">
-                <strong>ares</strong> has this pro:
-              </div>
-              <ol className="list">
-                <li>Alternative for people that dislike RetroArch</li>
-              </ol>
-              <p>
-                If you chose Both, we will use Ares when available, and
-                RetroArch for all the other cores
-              </p>
-              <p>
-                We will only add the parser according to your selection so you
-                don't end up with duplicates in your library.
-              </p>
-            </>
-          ),
+          ...modalData,
+          header: <span className="h4">RetroArch or Standalone Emulator?</span>,
+          css: 'emumodal--sm',
           footer: (
             <>
               <BtnSimple
@@ -473,7 +879,7 @@ function ParserSelectorPage() {
                 type="button"
                 aria={emuOption1}
                 onClick={() =>
-                  setAlternativeParser(systemCode, emuID2, emuID1, false)
+                  setAlternativeParser(system, emuID2, emuID1, false)
                 }
                 disabled={false}
               >
@@ -484,7 +890,7 @@ function ParserSelectorPage() {
                 type="button"
                 aria={emuOption2}
                 onClick={() =>
-                  setAlternativeParser(systemCode, emuID1, emuID2, true)
+                  setAlternativeParser(system, emuID1, emuID2, true)
                 }
                 disabled={false}
               >
@@ -494,411 +900,16 @@ function ParserSelectorPage() {
                 css="btn-simple--3"
                 type="button"
                 aria="Go Back"
-                onClick={() => setAlternativeParser(systemCode, 'both', 'both')}
+                onClick={() => setAlternativeParser(system, 'both', 'both')}
               >
                 Both
               </BtnSimple>
             </>
           ),
         };
+
+        setStatePage({ ...statePage, modal: modalData });
       }
-    }
-
-    // //RA || ARES + mGBA
-    if (
-      (installEmus.mgba.status && installEmus.ra.status) ||
-      (installEmus.mgba.status && installEmus.ares.status)
-    ) {
-      if (emulatorAlternative.gba !== 'both') {
-        multiemulatorID = 'multiemulator';
-        multiemulatorName = 'RetroArch';
-        if (installEmus.ares.status) {
-          multiemulatorID = 'multiemulator';
-          multiemulatorName = 'ares';
-        }
-
-        emuOption1 = 'mGBA';
-        emuOption2 = multiemulatorName;
-        emuID2 = 'mgba';
-        emuID1 = multiemulatorID;
-        systemCode = 'gba';
-        modalData = {
-          active: true,
-          body: (
-            <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use for GameBoy Advance.
-              </p>
-              <div className="h5">
-                <strong>RetroArch (recommended)</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>RetroAchievements</li>
-                <li>Bezels & Shaders</li>
-                <li>Auto Save States</li>
-              </ol>
-              <div className="h5">
-                <strong>mGBA</strong> has this pro:
-              </div>
-              <ol className="list">
-                <li>GBA Link for Multiplayer, Pokemon Trading, etc.</li>
-              </ol>
-              <p>
-                We will only add the parser according to your selection so you
-                don't end up with duplicates in your library.
-              </p>
-            </>
-          ),
-        };
-        const myTimeout = setTimeout(launchModal, 500);
-      }
-    }
-
-    // //RA || ARES + rmg
-    if (
-      (installEmus.rmg.status && installEmus.ra.status) ||
-      (installEmus.rmg.status && installEmus.ares.status)
-    ) {
-      // alert(emuModified);
-      if (emulatorAlternative.n64 !== 'both') {
-        multiemulatorID = 'multiemulator';
-        multiemulatorName = 'RetroArch';
-        if (installEmus.ares.status) {
-          multiemulatorID = 'multiemulator';
-          multiemulatorName = 'ares';
-        }
-
-        emuOption1 = 'rmg';
-        emuOption2 = multiemulatorName;
-        emuID2 = 'rmg';
-        emuID1 = multiemulatorID;
-        systemCode = 'n64';
-        modalData = {
-          active: true,
-          body: (
-            <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
-              <div className="h5">
-                <strong>RetroArch (recommended)</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>RetroAchievements</li>
-                <li>Bezels & Shaders</li>
-                <li>Auto Save States</li>
-              </ol>
-              <div className="h5">
-                <strong>RMG</strong> has this pro:
-              </div>
-              <ol className="list">
-                <li>Better Performance</li>
-              </ol>
-              <p>
-                We will only add the parser according to your selection so you
-                don't end up with duplicates in your library.
-              </p>
-            </>
-          ),
-        };
-        const myTimeout = setTimeout(launchModal, 500);
-      }
-    }
-
-    if (
-      (installEmus.duckstation.status && installEmus.ra.status) ||
-      (installEmus.duckstation.status && installEmus.ares.status)
-    ) {
-      if (emulatorAlternative.psx !== 'both') {
-        multiemulatorID = 'multiemulator';
-        multiemulatorName = 'RetroArch';
-        if (installEmus.ares.status) {
-          multiemulatorID = 'multiemulator';
-          multiemulatorName = 'ares';
-        }
-
-        emuOption1 = 'DuckStation';
-        emuOption2 = multiemulatorName;
-        emuID2 = 'duckstation';
-        emuID1 = multiemulatorID;
-        systemCode = 'psx';
-        modalData = {
-          active: true,
-          body: (
-            <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
-              <div className="h5">
-                <strong>RetroArch</strong> has these prosss:
-              </div>
-              <ol className="list">
-                <li>RetroAchievements</li>
-                <li>Bezels & Shaders</li>
-                <li>Auto Save States</li>
-              </ol>
-              <div className="h5">
-                <strong>DuckStation (recommended)</strong> has this pro:
-              </div>
-              <ol className="list">
-                <li>Better Performance</li>
-              </ol>
-              <p>
-                We will only add the parser according to your selection so you
-                don't end up with duplicates in your library.
-              </p>
-            </>
-          ),
-        };
-        const myTimeout = setTimeout(launchModal, 500);
-      }
-    }
-
-    if (
-      (installEmus.melonds.status && installEmus.ra.status) ||
-      (installEmus.melonds.status && installEmus.ares.status)
-    ) {
-      if (emulatorAlternative.nds !== 'both') {
-        multiemulatorID = 'multiemulator';
-        multiemulatorName = 'RetroArch';
-        if (installEmus.ares.status) {
-          multiemulatorID = 'multiemulator';
-          multiemulatorName = 'ares';
-        }
-
-        emuOption1 = 'melonDS';
-        emuOption2 = multiemulatorName;
-        emuID2 = 'melonds';
-        emuID1 = multiemulatorID;
-        systemCode = 'nds';
-        modalData = {
-          active: true,
-          body: (
-            <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
-              <div className="h5">
-                <strong>RetroArch</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>RetroAchievements</li>
-                <li>Bezels & Shaders</li>
-                <li>Auto Save States</li>
-              </ol>
-              <div className="h5">
-                <strong>melonDS (recommended)</strong> has this pros:
-              </div>
-              <ol className="list">
-                <li>Better performance and scaling</li>
-              </ol>
-              <p>
-                We will only add the parser according to your selection so you
-                don't end up with duplicates in your library.
-              </p>
-            </>
-          ),
-        };
-        const myTimeout = setTimeout(launchModal, 500);
-      }
-    }
-
-    if (
-      (installEmus.ppsspp.status && installEmus.ra.status) ||
-      (installEmus.ppsspp.status && installEmus.ares.status)
-    ) {
-      if (emulatorAlternative.psp !== 'both') {
-        multiemulatorID = 'multiemulator';
-        multiemulatorName = 'RetroArch';
-        if (installEmus.ares.status) {
-          multiemulatorID = 'multiemulator';
-          multiemulatorName = 'ares';
-        }
-
-        emuOption1 = 'PPSSPP';
-        emuOption2 = multiemulatorName;
-        emuID2 = 'ppsspp';
-        emuID1 = multiemulatorID;
-        systemCode = 'psp';
-        modalData = {
-          active: true,
-          body: (
-            <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
-              <div className="h5">
-                <strong>RetroArch</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>RetroAchievements</li>
-                <li>Bezels & Shaders</li>
-                <li>Auto Save States</li>
-              </ol>
-              <div className="h5">
-                <strong>PPSSPP (recommended)</strong> has this pro:
-              </div>
-              <ol className="list">
-                <li>Better performance</li>
-                <li>Better compatibility</li>
-              </ol>
-              <p>
-                We will only add the parser according to your selection so you
-                don't end up with duplicates in your library.
-              </p>
-            </>
-          ),
-        };
-        const myTimeout = setTimeout(launchModal, 500);
-      }
-    }
-
-    if (
-      (installEmus.mame.status && installEmus.ra.status) ||
-      (installEmus.mame.status && installEmus.ares.status)
-    ) {
-      if (emulatorAlternative.mame !== 'both') {
-        multiemulatorID = 'multiemulator';
-        multiemulatorName = 'RetroArch';
-        if (installEmus.ares.status) {
-          multiemulatorID = 'multiemulator';
-          multiemulatorName = 'ares';
-        }
-
-        emuOption1 = 'MAME';
-        emuOption2 = multiemulatorName;
-        emuID2 = 'mame';
-        emuID1 = multiemulatorID;
-        systemCode = 'mame';
-        modalData = {
-          active: true,
-          body: (
-            <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
-              <div className="h5">
-                <strong>RetroArch (recommended)</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>RetroAchievements</li>
-                <li>Bezels & Shaders</li>
-                <li>Auto Save States</li>
-                <li>3 different cores: 2003 plus, 2010 and current</li>
-              </ol>
-              <p>
-                We will only add the parser according to your selection so you
-                don't end up with duplicates in your library.
-              </p>
-            </>
-          ),
-        };
-        const myTimeout = setTimeout(launchModal, 500);
-      }
-    }
-
-    if (
-      (installEmus.scummvm.status && installEmus.ra.status) ||
-      (installEmus.scummvm.status && installEmus.ares.status)
-    ) {
-      if (emulatorAlternative.scummvm !== 'both') {
-        multiemulatorID = 'multiemulator';
-        multiemulatorName = 'RetroArch';
-        if (installEmus.ares.status) {
-          multiemulatorID = 'multiemulator';
-          multiemulatorName = 'ares';
-        }
-
-        emuOption1 = 'ScummVM';
-        emuOption2 = multiemulatorName;
-        emuID2 = 'scummvm';
-        emuID1 = multiemulatorID;
-        systemCode = 'scummvm';
-        modalData = {
-          active: true,
-          body: (
-            <>
-              <p>
-                You've selected two emulators for the same system, which one do
-                you want to use
-              </p>
-              <div className="h5">
-                <strong>RetroArch</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>RetroAchievements</li>
-                <li>Bezels & Shaders</li>
-                <li>Auto Save States</li>
-                <li>Better Keymapping and Controller support</li>
-              </ol>
-              <div className="h5">
-                <strong>ScummVM (recommended)</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>Not an emulation but runs natively</li>
-                <li>Takes less resources</li>
-                <li>Has better compatibility</li>
-                <li>More flexible configuration</li>
-              </ol>
-              <p>
-                We will only add the parser according to your selection so you
-                don't end up with duplicates in your library.
-              </p>
-            </>
-          ),
-        };
-        const myTimeout = setTimeout(launchModal, 500);
-      }
-    }
-
-    function launchModal() {
-      modalData = {
-        ...modalData,
-        header: <span className="h4">Conflicting Parsers</span>,
-        css: 'emumodal--sm',
-        footer: (
-          <>
-            <BtnSimple
-              css="btn-simple--1"
-              type="button"
-              aria={emuOption1}
-              onClick={() =>
-                setAlternativeParser(systemCode, emuID2, emuID1, false)
-              }
-              disabled={false}
-            >
-              {emuOption1}
-            </BtnSimple>
-            <BtnSimple
-              css="btn-simple--2"
-              type="button"
-              aria={emuOption2}
-              onClick={() =>
-                setAlternativeParser(systemCode, emuID1, emuID2, true)
-              }
-              disabled={false}
-            >
-              {emuOption2}
-            </BtnSimple>
-            <BtnSimple
-              css="btn-simple--3"
-              type="button"
-              aria="Go Back"
-              onClick={() => setAlternativeParser(systemCode, 'both', 'both')}
-            >
-              Both
-            </BtnSimple>
-          </>
-        ),
-      };
-
-      setStatePage({ ...statePage, modal: modalData });
     }
   }, [installEmus]);
 
