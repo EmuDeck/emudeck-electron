@@ -72,6 +72,123 @@ function ParserSelectorPage() {
     const ogStateEmus = state.installEmus;
     const json = JSON.stringify(ogStateEmus);
     localStorage.setItem('ogStateEmus', json);
+    setState({
+      ...state,
+      emulatorAlternative: {
+        gba: 'multiemulator',
+        mame: 'multiemulator',
+        n64: 'multiemulator',
+        nds: 'multiemulator',
+        psp: 'multiemulator',
+        psx: 'multiemulator',
+        scummvm: 'multiemulator',
+        multiemulator: 'ra',
+      },
+      installEmus: {
+        ra: {
+          id: 'ra',
+          status: true,
+          installed: undefined,
+          name: 'RetroArch',
+        },
+        dolphin: {
+          id: 'dolphin',
+          status: false,
+          installed: undefined,
+          name: 'Dolphin',
+        },
+        primehack: {
+          id: 'primehack',
+          status: false,
+          installed: undefined,
+          name: 'Primehack',
+        },
+        ppsspp: {
+          id: 'ppsspp',
+          status: false,
+          installed: undefined,
+          name: 'PPSSPP',
+        },
+        duckstation: {
+          id: 'duckstation',
+          status: false,
+          installed: undefined,
+          name: 'DuckStation',
+        },
+        melonds: {
+          id: 'melonds',
+          status: false,
+          installed: undefined,
+          name: 'melonDS',
+        },
+        citra: {
+          id: 'citra',
+          status: false,
+          installed: undefined,
+          name: 'Citra',
+        },
+        pcsx2: {
+          id: 'pcsx2',
+          status: false,
+          installed: undefined,
+          name: 'PCSX2',
+        },
+        rpcs3: {
+          id: 'rpcs3',
+          status: false,
+          installed: undefined,
+          name: 'RPCS3',
+        },
+        yuzu: { id: 'yuzu', status: false, installed: undefined, name: 'Yuzu' },
+        ryujinx: {
+          id: 'ryujinx',
+          status: false,
+          installed: undefined,
+          name: 'Ryujinx',
+        },
+        xemu: { id: 'xemu', status: false, installed: undefined, name: 'Xemu' },
+        cemu: { id: 'cemu', status: false, installed: undefined, name: 'Cemu' },
+        srm: {
+          id: 'srm',
+          status: false,
+          installed: undefined,
+          name: 'Steam Rom Manager',
+        },
+        rmg: {
+          id: 'rmg',
+          status: false,
+          installed: undefined,
+          name: "Rosalie's Mupen Gui",
+        },
+        esde: {
+          id: 'esde',
+          status: false,
+          installed: undefined,
+          name: 'EmulationStation-DE',
+        },
+        mame: { id: 'mame', status: false, name: 'MAME' },
+        vita3k: {
+          id: 'vita3k',
+          status: false,
+          installed: undefined,
+          name: 'Vita3K',
+        },
+        scummvm: {
+          id: 'scummvm',
+          status: false,
+          installed: undefined,
+          name: 'ScummVM',
+        },
+        xenia: {
+          id: 'xenia',
+          status: false,
+          installed: false,
+          name: 'Xenia',
+        },
+        mgba: { id: 'mgba', status: false, installed: undefined, name: 'mGBA' },
+        ares: { id: 'ares', status: false, installed: undefined, name: 'ares' },
+      },
+    });
   }, []);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -913,6 +1030,24 @@ function ParserSelectorPage() {
     }
   }, [installEmus]);
 
+  const restoreParsers = () => {
+    // We revert back the emulators status
+    const localogStateEmus = JSON.parse(localStorage.getItem('ogStateEmus'));
+
+    setState({
+      ...state,
+      installEmus: localogStateEmus,
+      revertParsers: true,
+    });
+
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+
+    navigate(-1);
+  };
+
   const saveParsers = () => {
     const modalData = {
       active: true,
@@ -961,7 +1096,7 @@ function ParserSelectorPage() {
           ),
           css: 'emumodal--xs',
         };
-      } else {
+      } else if (system !== 'win32') {
         modalData = {
           active: true,
           header: <span className="h4">Failed</span>,
@@ -1027,13 +1162,13 @@ function ParserSelectorPage() {
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
-        <Header title="Parsers and tools for" bold={`${device}`} />
+        <Header title="Parsers for Steam Rom Manager" />
         <ParserSelector data={data} onClick={toggleEmus} images={images} />
         <footer className="footer">
           <BtnSimple
             css="btn-simple--2"
             type="button"
-            onClick={() => navigate(-1)}
+            onClick={() => restoreParsers()}
             aria="Go Back"
           >
             Back
