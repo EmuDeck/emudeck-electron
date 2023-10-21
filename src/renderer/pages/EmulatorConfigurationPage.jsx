@@ -27,7 +27,7 @@ import {
   imgrmg,
   imgscummvm,
   imgsupermodelista,
-  imgesde,
+  imgFrontESDE,
   imgmelonds,
   imgmgba,
 } from 'components/utils/images/images';
@@ -52,7 +52,7 @@ const images = {
   scummvm: imgscummvm,
   supermodelista: imgsupermodelista,
   srm: imgsrm,
-  esde: imgesde,
+  esde: imgFrontESDE,
   mgba: imgmgba,
   xenia: imgxenia,
 };
@@ -92,7 +92,7 @@ function EmulatorConfigurationPage() {
     overwriteConfigEmus.ra.status === false &&
     overwriteConfigEmus.dolphin.status === false
   ) {
-    nextPage = 'pegasus-theme';
+    nextPage = 'frontend-selector';
   } else {
     nextPage = 'aspect-ratio-dolphin';
   }

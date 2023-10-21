@@ -154,7 +154,8 @@ function CheckUpdatePage() {
         const shadersStored = settingsStorage.shaders;
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
         const achievementsStored = settingsStorage.achievements;
-
+        delete settingsStorage.installEmus.esde;
+        delete settingsStorage.overwriteConfigEmus.esde;
         delete settingsStorage.installEmus.primehacks;
         delete settingsStorage.installEmus.melonDS;
         delete settingsStorage.installEmus.cemunative;

@@ -29,6 +29,7 @@ function EndPage() {
     device,
     system,
     installEmus,
+    installFrontends,
     overwriteConfigEmus,
   } = state;
   const ipcChannel = window.electron.ipcRenderer;
@@ -347,10 +348,8 @@ function EndPage() {
             `echo doSetupMGBA="${!!overwriteConfigEmus.mgba
               .status}" >> ${settingsFile}`,
           ]);
-
           ipcChannel.sendMessage('bash', [
-            `echo doSetupESDE="${!!overwriteConfigEmus.esde
-              .status}" >> ${settingsFile}`,
+            `echo doSetupESDE="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
             `echo doSetupSRM="${!!overwriteConfigEmus.srm
@@ -440,8 +439,13 @@ function EndPage() {
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo doInstallESDE="${!!installEmus.esde
-              .status}" >> ${settingsFile}`,
+            `echo doInstallESDE="${installFrontends.esde.status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doInstallPegasus="${installFrontends.pegasus.status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo steamAsFrontend="${installFrontends.steam.status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
             `echo doInstallCHD="true" >> ${settingsFile}`,
@@ -539,7 +543,10 @@ function EndPage() {
 
           // theme
           ipcChannel.sendMessage('bash', [
-            `echo esdeTheme="${state.theme}" >> ${settingsFile}`,
+            `echo esdeTheme="${state.themeESDE}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo pegasusTheme="${state.themePegasus}" >> ${settingsFile}`,
           ]);
 
           // AdvancedSettings
