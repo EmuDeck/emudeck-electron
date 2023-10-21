@@ -23,7 +23,9 @@ function RomStoragePage() {
     status: undefined,
     modal: undefined,
     dom: undefined,
+    hddrives: [],
   });
+
   const {
     disabledNext,
     disabledBack,
@@ -32,8 +34,11 @@ function RomStoragePage() {
     status,
     modal,
     dom,
+    hddrives,
   } = statePage;
   const { system, storagePath } = state;
+
+  console.log(hddrives);
 
   const storageSet = (storageName) => {
     // We prevent the function to continue if the custom location testing is still in progress
@@ -42,16 +47,6 @@ function RomStoragePage() {
     }
 
     if (storageName === 'Custom') {
-      if (system === 'win32') {
-        const modalData = {
-          active: true,
-          header: <span className="h4">Collecting Drives Names</span>,
-          body: <p>This will take a few seconds. Please wait...</p>,
-          css: 'emumodal--xs',
-        };
-        setStatePage({ ...statePage, modal: modalData });
-      }
-
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
@@ -71,15 +66,9 @@ function RomStoragePage() {
         });
         // is it valid?
 
-        if (system === 'win32') {
-          ipcChannel.sendMessage('emudeck', [
-            `testLocation|||testLocationValid 'custom' '${stdout}'`,
-          ]);
-        } else {
-          ipcChannel.sendMessage('emudeck', [
-            `testLocation|||testLocationValid "custom" "${stdout}"`,
-          ]);
-        }
+        ipcChannel.sendMessage('emudeck', [
+          `testLocation|||testLocationValid "custom" "${stdout}"`,
+        ]);
 
         ipcChannel.once('testLocation', (messageLocation) => {
           if (messageLocation) {
@@ -139,11 +128,21 @@ function RomStoragePage() {
         ...statePage,
         disabledNext: false,
       });
-    } else {
+    } else if (storageName === 'Internal Storage') {
       setState({
         ...state,
         storage: storageName,
         storagePath: '$HOME',
+      });
+      setStatePage({
+        ...statePage,
+        disabledNext: false,
+      });
+    } else {
+      setState({
+        ...state,
+        storage: `${storageName}\\`,
+        storagePath: `${storageName}\\`,
       });
       setStatePage({
         ...statePage,
@@ -203,6 +202,24 @@ function RomStoragePage() {
     });
   };
 
+  const getHDdrives = () => {
+    ipcChannel.sendMessage('emudeck', ['getLocations|||getLocations']);
+
+    ipcChannel.once('getLocations', (message) => {
+      const hdrives = message.stdout;
+
+      const hdrivesCleanup = hdrives.replace(/(\r\n|\r|\n)/g, '');
+      const jsonDrives = JSON.parse(hdrivesCleanup);
+
+      setStatePage({
+        ...statePage,
+        modal: false,
+        hddrives: jsonDrives,
+      });
+      console.log({ statePage });
+    });
+  };
+
   // Do we have a valid SD Card?
   useEffect(() => {
     if (navigator.onLine === false) {
@@ -212,6 +229,16 @@ function RomStoragePage() {
 
     if (system !== 'win32') {
       checkSDValid();
+    } else if (system === 'win32') {
+      const modalData = {
+        active: true,
+        header: <span className="h4">Collecting Drives Names</span>,
+        body: <p>This will take a few seconds. Please wait...</p>,
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
+      // We get the drives
+      getHDdrives();
     }
   }, []);
 
@@ -225,7 +252,7 @@ function RomStoragePage() {
     }
   }, [sdCardName]);
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -246,6 +273,7 @@ function RomStoragePage() {
           sdCardValid={sdCardValid}
           showSDCard={system !== 'win32'}
           showInternal={system !== 'win32'}
+          hddrives={system === 'win32' ? hddrives : false}
           reloadSDcard={checkSDValid}
           sdCardName={sdCardName}
           customPath={storagePath}
