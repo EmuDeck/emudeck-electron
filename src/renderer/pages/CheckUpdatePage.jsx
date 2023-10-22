@@ -161,10 +161,26 @@ function CheckUpdatePage() {
         delete settingsStorage.installEmus.cemunative;
         delete settingsStorage.overwriteConfigEmus.primehacks;
         const installEmusStored = settingsStorage.installEmus;
-        console.log(settingsStorage.emulatorAlternative.nds);
+
         if (settingsStorage.emulatorAlternative.nds === 'melonDS') {
           delete settingsStorage.emulatorAlternative.nds;
           settingsStorage.emulatorAlternative.nds = 'melonds';
+        }
+
+        if (settingsStorage.themeESDE === 'EPICNOIR') {
+          delete settingsStorage.themeESDE;
+          settingsStorage.themeESDE = [
+            'https://github.com/anthonycaccese/epic-noir-revisited-es-de.git',
+            'epic-noir-revisited-es-de',
+          ];
+        }
+
+        if (settingsStorage.themePegasus === 'gameOS') {
+          delete settingsStorage.themePegasus;
+          settingsStorage.themePegasus = [
+            'https://github.com/PlayingKarrde/gameOS.git',
+            'gameOS',
+          ];
         }
 
         console.log(settingsStorage.emulatorAlternative.nds);
