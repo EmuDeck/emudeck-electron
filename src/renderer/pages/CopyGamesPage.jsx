@@ -184,7 +184,7 @@ function CopyGamesPage() {
     }
     setTimeout(() => {
       navigate('/welcome');
-    }, 5000);
+    }, 10000);
   };
 
   const skipAddingGames = () => {

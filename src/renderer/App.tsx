@@ -136,8 +136,11 @@ export default function App() {
       classic: false,
       classic3d: false,
     },
-    themeESDE: 'EPICNOIR',
-    themePegasus: 'gameOS',
+    themeESDE: [
+      'https://github.com/anthonycaccese/epic-noir-revisited-es-de.git',
+      'epic-noir-revisited-es-de',
+    ],
+    themePegasus: ['https://github.com/PlayingKarrde/gameOS.git', 'gameOS'],
     homebrewGames: false,
     installEmus: {
       ra: { id: 'ra', status: true, installed: undefined, name: 'RetroArch' },
@@ -238,25 +241,29 @@ export default function App() {
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
       mgba: { id: 'mgba', status: true, name: 'mGBA' },
       ares: { id: 'ares', status: false, name: 'ares' },
+      pegasus: { id: 'pegasus', status: false, name: 'Pegasus' },
     },
     installFrontends: {
       esde: {
         id: 'esde',
-        status: false,
+        status: true,
         installed: undefined,
         name: 'EmulationStation-DE',
+        desc: 'Add this launhcer to your Steam Library. Recommended for big colections',
       },
       pegasus: {
         id: 'pegasus',
-        status: true,
+        status: false,
         installed: undefined,
         name: 'Pegasus',
+        desc: 'Add this launcher to your Steam Library. Recommended for big colections',
       },
       steam: {
         id: 'steam',
         status: true,
         installed: undefined,
         name: 'Steam Library',
+        desc: 'Integrate your games inside your Steam Library. Recommended for curated collections',
       },
     },
     emulatorAlternative: {
