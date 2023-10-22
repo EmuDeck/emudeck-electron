@@ -132,7 +132,7 @@ function WelcomePage() {
             },
           });
           clearTimeout(timerId);
-        }, 5000);
+        }, 10000);
       } else {
         setStatePage({
           ...statePage,

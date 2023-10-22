@@ -138,7 +138,7 @@ function EndPage() {
             },
           });
           clearTimeout(timerId);
-        }, 5000);
+        }, 10000);
       } else {
         setStatePage({
           ...statePage,
@@ -543,10 +543,16 @@ function EndPage() {
 
           // theme
           ipcChannel.sendMessage('bash', [
-            `echo esdeTheme="${state.themeESDE}" >> ${settingsFile}`,
+            `echo esdeThemeUrl="${state.themeESDE[0]}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo pegasusTheme="${state.themePegasus}" >> ${settingsFile}`,
+            `echo esdeThemeName="${state.themeESDE[1]}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo pegasusThemeUrl="${state.themePegasus[0]}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo pegasusThemeName="${state.themePegasus[1]}" >> ${settingsFile}`,
           ]);
 
           // AdvancedSettings

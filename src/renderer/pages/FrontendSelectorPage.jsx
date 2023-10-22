@@ -8,9 +8,7 @@ import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import FrontendSelector from 'components/organisms/Wrappers/FrontendSelector';
 import { BtnSimple } from 'getbasecore/Atoms';
 import {
-  imgFrontESDE,
   themesPegasusGameOS,
-  imgFrontSteam,
   rbsimple2,
   imgSTEAM,
 } from 'components/utils/images/images';
@@ -23,7 +21,7 @@ const images = {
 
 function FrontendSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, installFrontends } = state;
+  const { device, installFrontends, mode } = state;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -77,13 +75,30 @@ function FrontendSelectorPage() {
     if (enable) {
       console.log('enable');
     } else {
+      if (frontendProp === 'steam') {
+        const modalData = {
+          active: true,
+          header: <span className="h4">You still need Steam</span>,
+          css: 'emumodal--sm',
+          body: (
+            <p>
+              Remember that even if you don't want to add your games to your
+              Steam Library, you still need to run Steam Rom Manager at the end
+              on the installation to add the other Frontends to Steam and you
+              have to launch them from there so things like CloudSync and
+              controllers hotkeys work.
+            </p>
+          ),
+        };
+        setStatePage({
+          ...statePage,
+          modal: modalData,
+          lastSelected: frontendProp,
+        });
+      }
+
       console.log('disable');
     }
-
-    setStatePage({
-      ...statePage,
-      lastSelected: frontendProp,
-    });
 
     setState({
       ...state,
@@ -210,6 +225,20 @@ function FrontendSelectorPage() {
     }
   }, [statePage]);
 
+  const nextPage = () => {
+    if (
+      device === 'Linux PC' ||
+      device === 'Windows PC' ||
+      device === 'Windows Handlheld'
+    ) {
+      return 'emulator-resolution';
+    }
+    if (mode === 'easy') {
+      return 'end';
+    }
+    return 'confirmation';
+  };
+
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
@@ -221,10 +250,10 @@ function FrontendSelectorPage() {
           images={images}
         />
         <Footer
-          next={
-            installFrontends.pegasus.status ? 'pegasus-theme' : 'esde-theme'
+          next={!installFrontends.esde.status ? nextPage() : 'esde-theme'}
+          disabledNext={
+            !installFrontends.esde.status && !installFrontends.steam.status
           }
-          disabledNext={disabledNext}
           disabledBack={disabledBack}
         />
         <EmuModal modal={modal} />
