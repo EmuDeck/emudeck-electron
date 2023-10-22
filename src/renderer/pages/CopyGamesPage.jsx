@@ -12,7 +12,7 @@ function CopyGamesPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const navigate = useNavigate();
   const { state } = useContext(GlobalContext);
-  const { storagePath, second, system } = state;
+  const { storagePath, second, system, installFrontends } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
@@ -221,6 +221,7 @@ function CopyGamesPage() {
           storageUSBPath={storageUSBPath}
           statusCopyGames={system === 'win32' ? true : statusCopyGames}
           statusCreateStructure={statusCreateStructure}
+          installFrontends={installFrontends}
         />
         <footer className="footer">
           {statusCopyGames === true && (
