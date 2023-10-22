@@ -134,7 +134,7 @@ function CheckDependenciesPage() {
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
-        <Header title="Installing dependencies..." />
+        <Header title="Checking dependencies..." />
 
         <ul>
           <li>
@@ -200,6 +200,30 @@ function CheckDependenciesPage() {
                 Install Steam
               </a>
             )}
+            <hr />
+          </li>
+          <li>
+            <p className="h6">
+              If you can't go past this screen copy these commands in a
+              Powershell window.
+            </p>
+            <p className="h6">
+              If you are using Windows 10 Home you'll need to manually enable
+              Developer Mode in your Windows Settings
+            </p>
+            <code>
+              winget install -e --id Git.Git --accept-package-agreements
+              --accept-source-agreements;
+              <br />
+              winget install -e --id 7zip.7zip --accept-package-agreements
+              --accept-source-agreements;
+              <br />
+              winget install Microsoft.VCRedist.2015+.x64
+              --accept-package-agreements --accept-source-agreements;
+              <br />
+              winget install Microsoft.VCRedist.2015+.x86
+              --accept-package-agreements --accept-source-agreements
+            </code>
           </li>
         </ul>
       </Wrapper>
