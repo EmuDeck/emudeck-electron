@@ -7,6 +7,8 @@ import PatreonLoginPage from 'pages/PatroenLoginPage';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
+import FrontendSelectorPage from 'pages/FrontendSelectorPage';
+import ParserSelectorPage from 'pages/ParserSelectorPage';
 import EmulatorConfigurationPage from 'pages/EmulatorConfigurationPage';
 import RomStoragePage from 'pages/RomStoragePage';
 import AspectRatioSegaPage from 'pages/AspectRatioSegaPage';
@@ -20,6 +22,7 @@ import RAAchievementsPage from 'pages/RAAchievementsPage';
 import RAAchievementsConfigPage from 'pages/RAAchievementsConfigPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
+import ESDEThemePage from 'pages/ESDEThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
 import EmuDeckyPage from 'pages/EmuDeckyPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
@@ -80,6 +83,7 @@ export default function App() {
     srm: { id: 'srm', code: 'SRM', version: 0 },
     rmg: { id: 'rmg', code: 'RMG', version: 0 },
     esde: { id: 'esde', code: 'ESDE', version: 0 },
+    pegasus: { id: 'pegasus', code: 'Pegasus', version: 0 },
     mame: { id: 'mame', code: 'MAME', version: 0 },
     vita3k: { id: 'vita3k', code: 'Vita3k', version: 0 },
     scummvm: { id: 'scummvm', code: 'ScummVM', version: 0 },
@@ -132,7 +136,11 @@ export default function App() {
       classic: false,
       classic3d: false,
     },
-    theme: 'EPICNOIR',
+    themeESDE: [
+      'https://github.com/anthonycaccese/epic-noir-revisited-es-de.git',
+      'epic-noir-revisited-es-de',
+    ],
+    themePegasus: ['https://github.com/PlayingKarrde/gameOS.git', 'gameOS'],
     homebrewGames: false,
     installEmus: {
       ra: { id: 'ra', status: true, installed: undefined, name: 'RetroArch' },
@@ -190,12 +198,6 @@ export default function App() {
         installed: undefined,
         name: "Rosalie's Mupen Gui",
       },
-      esde: {
-        id: 'esde',
-        status: true,
-        installed: undefined,
-        name: 'EmulationStation-DE',
-      },
       mame: { id: 'mame', status: false, name: 'MAME' },
       vita3k: {
         id: 'vita3k',
@@ -234,23 +236,47 @@ export default function App() {
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
       rmg: { id: 'rmg', status: false, name: "Rosalie's Mupen Gui" },
-      esde: { id: 'esde', status: true, name: 'EmulationStation-DE' },
       mame: { id: 'mame', status: true, name: 'MAME' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita3K' },
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
       mgba: { id: 'mgba', status: true, name: 'mGBA' },
       ares: { id: 'ares', status: false, name: 'ares' },
+      pegasus: { id: 'pegasus', status: false, name: 'Pegasus' },
+    },
+    installFrontends: {
+      esde: {
+        id: 'esde',
+        status: true,
+        installed: undefined,
+        name: 'EmulationStation-DE',
+        desc: 'Add this launhcer to your Steam Library. Recommended for big colections',
+      },
+      pegasus: {
+        id: 'pegasus',
+        status: false,
+        installed: undefined,
+        name: 'Pegasus',
+        desc: 'Add this launcher to your Steam Library. Recommended for big colections',
+      },
+      steam: {
+        id: 'steam',
+        status: true,
+        installed: undefined,
+        name: 'Steam Library',
+        desc: 'Integrate your games inside your Steam Library. Recommended for curated collections',
+      },
     },
     emulatorAlternative: {
       gba: 'multiemulator',
       mame: 'multiemulator',
       n64: 'multiemulator',
-      nds: 'melonDS',
+      nds: 'melonds',
       psp: 'ppsspp',
       psx: 'duckstation',
       scummvm: 'scummvm',
       multiemulator: 'ra',
     },
+    revertParsers: false,
     resolutions: {
       dolphin: '720P',
       duckstation: '720P',
@@ -294,6 +320,16 @@ export default function App() {
             exact
             path="/emulator-selector"
             element={<EmulatorSelectorPage />}
+          />
+          <Route
+            exact
+            path="/frontend-selector"
+            element={<FrontendSelectorPage />}
+          />
+          <Route
+            exact
+            path="/parser-selector"
+            element={<ParserSelectorPage />}
           />
           <Route
             exact
@@ -396,6 +432,7 @@ export default function App() {
           </Route>
 
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
+          <Route exact path="/esde-theme" element={<ESDEThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
       </Router>

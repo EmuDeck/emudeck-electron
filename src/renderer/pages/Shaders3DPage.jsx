@@ -27,7 +27,7 @@ function Shaders3DPage() {
     });
   };
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -50,7 +50,7 @@ function Shaders3DPage() {
           disabledBack={disabledBack}
         />
         <Footer
-          next="pegasus-theme"
+          next="frontend-selector"
           disabledNext={disabledNext}
           disabledBack={disabledBack}
         />

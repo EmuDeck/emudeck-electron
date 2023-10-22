@@ -4,27 +4,45 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
+import { useFetchCond } from 'hooks/useFetchCond';
+import ESDETheme from 'components/organisms/Wrappers/ESDETheme';
 
-import AspectRatioDolphin from 'components/organisms/Wrappers/AspectRatioDolphin';
-
-function AspectRatioDolphinPage() {
+function ESDEThemePage() {
   const { state, setState } = useContext(GlobalContext);
-  const { ar, overwriteConfigEmus } = state;
-  const [statePage] = useState({
+  const { device, mode } = state;
+  const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    data: '',
+    themes: undefined,
     dom: undefined,
   });
-  const { disabledNext, disabledBack, data, dom } = statePage;
-  const arSet = (arStatus) => {
+  const { disabledNext, disabledBack, themes, dom } = statePage;
+  const themeSet = (themeName) => {
     setState({
       ...state,
-      ar: {
-        ...ar,
-        dolphin: arStatus,
-      },
+      themeESDE: themeName,
     });
+  };
+
+  const themesWS = useFetchCond('https://token.emudeck.com/esde-themes.php');
+  useEffect(() => {
+    themesWS.post({}).then((data) => {
+      setStatePage({ ...statePage, themes: data });
+    });
+  }, []);
+
+  const nextPage = () => {
+    if (
+      device === 'Linux PC' ||
+      device === 'Windows PC' ||
+      device === 'Windows Handlheld'
+    ) {
+      return 'emulator-resolution';
+    }
+    if (mode === 'easy') {
+      return 'end';
+    }
+    return 'confirmation';
   };
 
   // GamePad
@@ -42,14 +60,11 @@ function AspectRatioDolphinPage() {
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
-        <Header title="Configure Aspect Ratio for GameCube games" />
-        <AspectRatioDolphin data={data} onClick={arSet} />
+        <Header title="EmulationStation-DE Default Theme" />
+        <ESDETheme themes={themes} onClick={themeSet} />
         <Footer
-          next={
-            overwriteConfigEmus.ra.status === true
-              ? 'shaders-handhelds'
-              : 'frontend-selector'
-          }
+          next={nextPage()}
+          nextText="Next"
           disabledNext={disabledNext}
           disabledBack={disabledBack}
         />
@@ -58,4 +73,4 @@ function AspectRatioDolphinPage() {
   );
 }
 
-export default AspectRatioDolphinPage;
+export default ESDEThemePage;

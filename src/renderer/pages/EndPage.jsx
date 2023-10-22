@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
-
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import { BtnSimple } from 'getbasecore/Atoms';
 
 import End from 'components/organisms/Wrappers/End';
@@ -29,6 +29,7 @@ function EndPage() {
     device,
     system,
     installEmus,
+    installFrontends,
     overwriteConfigEmus,
   } = state;
   const ipcChannel = window.electron.ipcRenderer;
@@ -120,10 +121,10 @@ function EndPage() {
         css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam`]);
+      ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam)`]);
       ipcChannel.sendMessage(
         'run-app',
-        `${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage`
+        `"${storagePath}/Emulation/tools/Steam ROM Manager.AppImage"`
       );
     }
     ipcChannel.once('run-app', (message) => {
@@ -137,7 +138,7 @@ function EndPage() {
             },
           });
           clearTimeout(timerId);
-        }, 5000);
+        }, 10000);
       } else {
         setStatePage({
           ...statePage,
@@ -347,10 +348,8 @@ function EndPage() {
             `echo doSetupMGBA="${!!overwriteConfigEmus.mgba
               .status}" >> ${settingsFile}`,
           ]);
-
           ipcChannel.sendMessage('bash', [
-            `echo doSetupESDE="${!!overwriteConfigEmus.esde
-              .status}" >> ${settingsFile}`,
+            `echo doSetupESDE="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
             `echo doSetupSRM="${!!overwriteConfigEmus.srm
@@ -440,8 +439,13 @@ function EndPage() {
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo doInstallESDE="${!!installEmus.esde
-              .status}" >> ${settingsFile}`,
+            `echo doInstallESDE="${installFrontends.esde.status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doInstallPegasus="${installFrontends.pegasus.status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo steamAsFrontend="${installFrontends.steam.status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
             `echo doInstallCHD="true" >> ${settingsFile}`,
@@ -539,7 +543,16 @@ function EndPage() {
 
           // theme
           ipcChannel.sendMessage('bash', [
-            `echo esdeTheme="${state.theme}" >> ${settingsFile}`,
+            `echo esdeThemeUrl="${state.themeESDE[0]}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo esdeThemeName="${state.themeESDE[1]}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo pegasusThemeUrl="${state.themePegasus[0]}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo pegasusThemeName="${state.themePegasus[1]}" >> ${settingsFile}`,
           ]);
 
           // AdvancedSettings

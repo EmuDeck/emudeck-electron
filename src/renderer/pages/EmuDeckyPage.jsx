@@ -56,7 +56,7 @@ function EmuDeckyPage() {
       active: true,
       header: <span className="h4">Success!</span>,
       body: <p>Password created</p>,
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
 
@@ -87,7 +87,7 @@ function EmuDeckyPage() {
       active: true,
       header: <span className="h4">Installing EmuDecky</span>,
       body: <p>Please wait while we install the plugin</p>,
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
 
@@ -138,18 +138,19 @@ function EmuDeckyPage() {
       'checkPWD|||passwd -S $(whoami) | awk -F " " "{print $2}" & exit',
     ]);
 
-    ipcChannel.once('checkPWD', (message) => {
-      let sudo;
-      stdout = message.replace('\n', '');
-      stdout.includes('NP') ? (sudo = false) : (sudo = true);
+    ipcChannel.once('checkPWD', (messagePWD) => {
+      const stdout = messagePWD.replace('\n', '');
+      let stdoutPWD;
+      console.log({ stdout });
+      stdout.includes('NP') ? (stdoutPWD = false) : (stdoutPWD = true);
       setStatePage({
         ...statePage,
-        hasSudo: sudo,
+        hasSudo: stdoutPWD,
       });
     });
   }, []);
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;

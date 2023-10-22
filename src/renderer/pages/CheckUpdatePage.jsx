@@ -1,18 +1,15 @@
-import React, { useEffect, useState, useContext, useRef, useRef } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
-import Footer from 'components/organisms/Footer/Footer';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 
 import { useNavigate } from 'react-router-dom';
-import { Alert, Form } from 'getbasecore/Molecules';
 import Main from 'components/organisms/Main/Main';
-import Card from 'components/molecules/Card/Card';
 
-import { BtnSimple, FormInputSimple, LinkSimple } from 'getbasecore/Atoms';
+import { BtnSimple } from 'getbasecore/Atoms';
 // Ask for branch
 const branchFile = require('data/branch.json');
 
@@ -157,11 +154,20 @@ function CheckUpdatePage() {
         const shadersStored = settingsStorage.shaders;
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
         const achievementsStored = settingsStorage.achievements;
-
+        delete settingsStorage.installEmus.esde;
+        delete settingsStorage.overwriteConfigEmus.esde;
         delete settingsStorage.installEmus.primehacks;
+        delete settingsStorage.installEmus.melonDS;
         delete settingsStorage.installEmus.cemunative;
         delete settingsStorage.overwriteConfigEmus.primehacks;
         const installEmusStored = settingsStorage.installEmus;
+        console.log(settingsStorage.emulatorAlternative.nds);
+        if (settingsStorage.emulatorAlternative.nds === 'melonDS') {
+          delete settingsStorage.emulatorAlternative.nds;
+          settingsStorage.emulatorAlternative.nds = 'melonds';
+        }
+
+        console.log(settingsStorage.emulatorAlternative.nds);
 
         // Theres probably a better way to do this...
 
@@ -249,7 +255,7 @@ function CheckUpdatePage() {
     if (update === 'up-to-date') {
       // is the git repo cloned?
 
-      const modalData = {
+      const modalDataGit = {
         active: true,
         header: <span className="h4">Building EmuDeck backend...</span>,
         body: (
@@ -279,20 +285,28 @@ function CheckUpdatePage() {
         css: 'emumodal--xs',
       };
 
-      setStatePage({
-        ...statePage,
-        modal: modalData,
-      });
+      // setStatePage({
+      //   ...statePage,
+      //   modal: modalDataGit,
+      // });
 
       ipcChannel.sendMessage('check-git');
-      ipcChannel.once('check-git', (error, cloneStatusCheck, stderr) => {
-        cloneStatusCheck = cloneStatusCheck.replace('\n', '');
-        cloneStatusCheck.includes('true')
-          ? (cloneStatusCheck = true)
-          : (cloneStatusCheck = false);
+      ipcChannel.once('check-git', (error, stdout, stderr) => {
+        // alert('checking git');
+        console.log({ error, stdout, stderr });
+        const cloneStatusCheck = stdout.replace('\n', '');
+        let cloneStatusCheckValue;
+
+        if (cloneStatusCheck.includes('true')) {
+          cloneStatusCheckValue = true;
+        } else {
+          cloneStatusCheckValue = false;
+        }
+
         setStatePage({
           ...statePage,
-          cloned: cloneStatusCheck,
+          cloned: cloneStatusCheckValue,
+          modal: modalDataGit,
         });
       });
     }
@@ -300,8 +314,8 @@ function CheckUpdatePage() {
 
   useEffect(() => {
     // settings here
-
     if (cloned === false) {
+      // alert('cloneFalse');
       if (navigator.onLine) {
         ipcChannel.sendMessage(`clone`, branch);
 
@@ -323,14 +337,19 @@ function CheckUpdatePage() {
         });
       }
     } else if (cloned === true) {
+      // alert('cloned true');
       if (navigator.onLine) {
+        // alert(branch);
         ipcChannel.sendMessage('pull', branch);
 
-        ipcChannel.once('pull', (error, pullStatus, stderr) => {
+        ipcChannel.once('pull', (error, stdout, stderr) => {
+          // alert(error, stdout, stderr);
+          console.log({ error, stdout, stderr });
           setStatePage({ ...statePage, downloadComplete: true });
           // Update timeout
         });
       } else {
+        // alert('cloned desconocido');
         setStatePage({ ...statePage, downloadComplete: true });
       }
     }
@@ -394,6 +413,7 @@ function CheckUpdatePage() {
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
+        {cloned}
         {update === 'up-to-date' && (
           <>
             <Header title="EmuDeck Git cloning log" />

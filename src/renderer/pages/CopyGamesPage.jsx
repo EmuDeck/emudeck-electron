@@ -179,12 +179,12 @@ function CopyGamesPage() {
       };
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage('bash', [
-        `(kill -15 $(pidof steam) & ${storagePath}/Emulation/tools/srm/Steam-ROM-Manager.AppImage)`,
+        `(kill -15 $(pidof steam) & "${storagePath}/Emulation/tools/Steam ROM Manager.AppImage")`,
       ]);
     }
     setTimeout(() => {
       navigate('/welcome');
-    }, 5000);
+    }, 10000);
   };
 
   const skipAddingGames = () => {
@@ -194,7 +194,7 @@ function CopyGamesPage() {
     });
   };
 
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
