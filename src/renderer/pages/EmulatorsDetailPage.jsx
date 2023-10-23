@@ -163,18 +163,18 @@ function EmulatorsDetailPage() {
       const { stdout } = message;
       const response = stdout.replaceAll('\n', '');
       // We store the token for next installs
-
-      switch (response) {
-        case 'invalid':
+      console.log({ response });
+      switch (true) {
+        case response.includes('invalid'):
           modalHeader = <span className="h4">Wrong Token</span>;
           modalBody = 'Please check your Token and try again';
           break;
-        case 'fail':
+        case response.includes('fail'):
           modalHeader = <span className="h4">Yuzu Early Access Failed</span>;
           modalBody =
             'There was an issue installing Yuzu Early Access, please try again.';
           break;
-        case 'true':
+        case response.includes('true'):
           modalHeader = <span className="h4">Yuzu Early Access Success!</span>;
           modalBody = (
             <p>
