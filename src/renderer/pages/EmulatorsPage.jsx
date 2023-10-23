@@ -84,9 +84,10 @@ function EmulatorsPage() {
     dom,
   } = statePage;
 
-  const { system, installEmus } = state;
+  const { system, installEmus, installFrontends } = state;
 
   const installEmusArray = Object.values(installEmus);
+  const installFrontendsArray = Object.values(installFrontends);
 
   const ipcChannel = window.electron.ipcRenderer;
 
@@ -356,6 +357,37 @@ function EmulatorsPage() {
                       return;
                     }
                   }
+                  return (
+                    <div key={item.id} data-col-md="2">
+                      <CardSettings
+                        icon={img}
+                        css="is-highlighted"
+                        btnCSS={
+                          item.status === true
+                            ? 'btn-simple--5'
+                            : 'btn-simple--2'
+                        }
+                        iconSize="sm"
+                        title={`${item.name}`}
+                        button={item.status === true ? 'Manage' : 'Install'}
+                        onClick={() => navigate(`/emulators-detail/${item.id}`)}
+                        notification={
+                          item.status === true
+                            ? updateNotif != undefined
+                            : false
+                        }
+                      />
+                    </div>
+                  );
+                })}
+                {installFrontendsArray.map((item) => {
+                  const img = images[item.id];
+                  const updateNotif = updates[item.id];
+
+                  if (item.id === 'pegasus' || item.id === 'steam') {
+                    return;
+                  }
+
                   return (
                     <div key={item.id} data-col-md="2">
                       <CardSettings

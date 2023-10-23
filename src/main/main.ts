@@ -34,9 +34,9 @@ export default class AppUpdater {
   }
 }
 
-fs.exists(`${os.homedir()}/emudeck/emudeck.AppImage.log`, (exists: any) => {
+fs.exists(`${os.homedir()}/emudeck/logs/emudeckApp.log`, (exists: any) => {
   if (exists) {
-    fs.unlinkSync(`${os.homedir()}/emudeck/emudeck.AppImage.log`);
+    fs.unlinkSync(`${os.homedir()}/emudeck/logs/emudeckApp.log`);
   }
 });
 
@@ -62,9 +62,9 @@ const logCommand = (
   const date = `${mm}/${dd}/${yyyy}`;
   const homedir = os.homedir();
 
-  let logFile = `${homedir}/emudeck/Emudeck.AppImage.log`;
+  let logFile = `${homedir}/emudeck/logs/emudeckApp.log`;
   if (os.platform().includes('win32')) {
-    logFile = `${homedir}\\Emudeck.AppImage.log`;
+    logFile = `${homedir}\\emudeck\\logs\\emudeckApp.log`;
   }
 
   const bashCommandString = bashCommand ? bashCommand.toString() : '';
@@ -515,7 +515,7 @@ ipcMain.on('update-check', async (event) => {
         logCommand(`${JSON.stringify(updateInfo)}`);
       } else {
         exec(
-          `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/Emudeck.Update.log`,
+          `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/logs/EmudeckUpdate.log`,
           shellType
         );
         logCommand('UPDATE: UPDATING!');
@@ -653,7 +653,7 @@ ipcMain.on('isGameMode', async (event) => {
 
 // Other
 ipcMain.on('clean-log', async () => {
-  exec(`echo "[$(date)] App Installed" > $HOME/emudeck/Emudeck.AppImage.log`, {
+  exec(`echo "[$(date)] App Installed" > $HOME/emudeck/logs/EmudeckApp.log`, {
     shell: '/bin/bash',
   });
 });
