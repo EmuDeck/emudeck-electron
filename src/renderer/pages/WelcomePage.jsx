@@ -35,7 +35,8 @@ function WelcomePage() {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
-  const { system, mode, second, storagePath, gamemode, branch } = state;
+  const { system, systemName, mode, second, storagePath, gamemode, branch } =
+    state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: true,
@@ -47,6 +48,7 @@ function WelcomePage() {
     dom: undefined,
   });
   const { disabledNext, disabledBack, updates, modal, dom } = statePage;
+
   const navigate = useNavigate();
   const selectMode = (value) => {
     setState({ ...state, mode: value });
@@ -145,9 +147,35 @@ function WelcomePage() {
   };
 
   // show changelog after update
+
   useEffect(() => {
+    if (systemName === 'ERROR') {
+      const modalData = {
+        active: true,
+        header: (
+          <span className="h4">Error detecting your Operating System</span>
+        ),
+        body: (
+          <>
+            <p>Click on the Close button to try again</p>
+            <p>
+              If the issue persists, please contact us on Discord:
+              https://discord.com/invite/b9F7GpXtFP
+            </p>
+          </>
+        ),
+        footer: '',
+        css: 'emumodal--xs',
+      };
+      setStatePage({ ...statePage, modal: modalData });
+    }
+  }, [modal]);
+
+  useEffect(() => {
+    let modalData;
+
     const showChangelog = localStorage.getItem('show_changelog');
-    console.log({ second });
+    console.log({ system });
     console.log({ showChangelog });
     if (showChangelog === true) {
       navigate('/change-log');
@@ -180,7 +208,7 @@ function WelcomePage() {
         }
 
         if (Object.keys(differences).length > 0) {
-          setStatePage({ ...statePage, updates: true });
+          setStatePage({ ...statePage, updates: true, modal: modalData });
         }
 
         const json = JSON.stringify(repoVersions);
@@ -627,43 +655,14 @@ function WelcomePage() {
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
+
   useEffect(() => {
     if (domElementsCur && dom === undefined) {
       domElements = domElementsCur.querySelectorAll('button');
-      setStatePage({ ...statePage, dom: domElements });
-    }
-  }, [statePage]);
-
-  let systemName;
-  useEffect(() => {
-    switch (system) {
-      case 'darwin':
-        systemName = '\uF8FF';
-        break;
-      case 'win32':
-        systemName = 'Windows';
-        break;
-      case 'SteamOS':
-        systemName = 'SteamOS';
-        break;
-      case 'ChimeraOS':
-        systemName = 'ChimeraOS';
-        break;
-      case 'chimeraOS':
-        systemName = 'ChimeraOS';
-        break;
-      case '':
-        systemName = 'ERROR';
-        break;
-      case null:
-        systemName = 'ERROR';
-        break;
-      case undefined:
-        systemName = 'ERROR';
-        break;
-      default:
-        systemName = 'Linux';
-        break;
+      setStatePage({
+        ...statePage,
+        dom: domElements,
+      });
     }
   }, [statePage]);
 
@@ -678,20 +677,22 @@ function WelcomePage() {
         {second === true && (
           <Header title={`Welcome back to EmuDeck for ${systemName}`} />
         )}
-        <Welcome
-          settingsCards={settingsCards}
-          settingsCardsFeatured={settingsCardsFeatured}
-          functions={functions}
-          updates={updates}
-          alert={
-            second
-              ? ``
-              : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/Y5r2WZAImuY" target="_blank">Check out this guide</a>'
-          }
-          alertCSS="alert--info"
-          onClick={selectMode}
-        />
-        {second === false && (
+        {systemName !== 'ERROR' && (
+          <Welcome
+            settingsCards={settingsCards}
+            settingsCardsFeatured={settingsCardsFeatured}
+            functions={functions}
+            updates={updates}
+            alert={
+              second
+                ? ``
+                : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/Y5r2WZAImuY" target="_blank">Check out this guide</a>'
+            }
+            alertCSS="alert--info"
+            onClick={selectMode}
+          />
+        )}
+        {second === false && systemName !== 'ERROR' && (
           <Footer
             back={second ? 'tools-and-stuff' : false}
             backText={second ? 'Tools & stuff' : 'Install EmuDeck First'}

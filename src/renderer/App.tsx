@@ -106,6 +106,7 @@ export default function App() {
     second: false,
     mode: null,
     system: '',
+    systemName: '',
     device: 'Steam Deck',
     storage: null,
     storagePath: null,

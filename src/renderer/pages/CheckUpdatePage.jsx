@@ -202,6 +202,36 @@ function CheckUpdatePage() {
               version: version[0],
               gamemode: version[1],
             });
+            let systemNameValue;
+            switch (platform) {
+              case 'darwin':
+                systemNameValue = '\uF8FF';
+                break;
+              case 'win32':
+                systemNameValue = 'Windows';
+                break;
+              case 'SteamOS':
+                systemNameValue = 'SteamOS';
+                break;
+              case 'ChimeraOS':
+                systemNameValue = 'ChimeraOS';
+                break;
+              case 'chimeraOS':
+                systemNameValue = 'ChimeraOS';
+                break;
+              case '':
+                systemNameValue = 'ERROR';
+                break;
+              case null:
+                systemNameValue = 'ERROR';
+                break;
+              case undefined:
+                systemNameValue = 'ERROR';
+                break;
+              default:
+                systemNameValue = 'Linux';
+                break;
+            }
             setState({
               ...state,
               ...settingsStorage,
@@ -216,6 +246,7 @@ function CheckUpdatePage() {
               },
               shaders: { ...shaders, ...shadersStored },
               system: platform,
+              systemName: systemNameValue,
               version: version[0],
               gamemode: version[1],
               branch,
@@ -233,9 +264,40 @@ function CheckUpdatePage() {
               gamemode: version[1],
               branch,
             });
+            let systemNameValue;
+            switch (platform) {
+              case 'darwin':
+                systemNameValue = '\uF8FF';
+                break;
+              case 'win32':
+                systemNameValue = 'Windows';
+                break;
+              case 'SteamOS':
+                systemNameValue = 'SteamOS';
+                break;
+              case 'ChimeraOS':
+                systemNameValue = 'ChimeraOS';
+                break;
+              case 'chimeraOS':
+                systemNameValue = 'ChimeraOS';
+                break;
+              case '':
+                systemNameValue = 'ERROR';
+                break;
+              case null:
+                systemNameValue = 'ERROR';
+                break;
+              case undefined:
+                systemNameValue = 'ERROR';
+                break;
+              default:
+                systemNameValue = 'Linux';
+                break;
+            }
             setState({
               ...state,
               system: platform,
+              systemName: systemNameValue,
               version: version[0],
               gamemode: version[1],
               branch,

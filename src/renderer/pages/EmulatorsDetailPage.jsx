@@ -43,7 +43,14 @@ function EmulatorsDetailPage() {
   const navigate = useNavigate();
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
-  const { installEmus, mode, system, yuzuEAtoken, emulatorAlternative } = state;
+  const {
+    installEmus,
+    installFrontends,
+    mode,
+    system,
+    yuzuEAtoken,
+    emulatorAlternative,
+  } = state;
 
   const { emulator } = useParams();
 
@@ -1314,17 +1321,31 @@ function EmulatorsDetailPage() {
             modal: modalData,
           });
           // We set the emu as install = no
-          setState({
-            ...state,
-            installEmus: {
-              ...installEmus,
-              [emulator]: {
-                id: emulator,
-                name: code,
-                status: false,
+          if (emulator === 'esde' || emulator === 'pegasus') {
+            setState({
+              ...state,
+              installFrontends: {
+                ...installFrontends,
+                [emulator]: {
+                  id: emulator,
+                  name: code,
+                  status: false,
+                },
               },
-            },
-          });
+            });
+          } else {
+            setState({
+              ...state,
+              installEmus: {
+                ...installEmus,
+                [emulator]: {
+                  id: emulator,
+                  name: code,
+                  status: false,
+                },
+              },
+            });
+          }
         } else {
           const modalData = {
             active: true,
