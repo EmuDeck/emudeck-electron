@@ -1,5 +1,35 @@
 [
   {
+    "title": "Bug fixes",
+    "type": "STEAMOS",
+    "description": "Fixed Yuzu EA not installing and ESDE & SRM shorcuts not being created. Fixed CloudSync Download All, Upload All",
+    "image": "false"
+  },
+  {
+    "title": "ESDE Theme Selector",
+    "type": "STEAMOS",
+    "description": "We've completely redesigned the theme selector on Custom Install.",
+    "image": "false"
+  },
+  {
+    "title": "New SRM Features",
+    "type": "STEAMOS",
+    "description": "We've completely redesigned the EmuDeck theme and added dynamic parsers based in your installed emulators.",
+    "image": "false"
+  },
+  {
+    "title": "Better Linux support",
+    "type": "STEAMOS",
+    "description": "This new release includes a new installer that should install all the EmuDeck dependencies automatically.",
+    "image": "false"
+  },
+  {
+    "title": "CloudSync 2.0",
+    "type": "STEAMOS",
+    "description": "Every time you launch an emulator we will compare a hash of what's in your device with what's on the cloud. This improves startup by a lot. And when you are playing, we will upload those saved games in the background, so exiting of a game an opening a new one now has almost zero loading time. We are still missing some notifications when all the uploads are being completed so you can turn off your device without interrumping any possible background upload.",
+    "image": "false"
+  },
+  {
     "title": "Auto sudo",
     "type": "STEAMOS",
     "description": "If you don't have a sudo password set we will create a temporary for you so you can install Decky, Gyro and other stuff automatically, after installation we will remove the temporary password.",

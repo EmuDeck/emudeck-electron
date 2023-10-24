@@ -1,5 +1,23 @@
 [
   {
+    "title": "Bug fixes",
+    "type": "STEAMOS",
+    "description": "Fixed Yuzu EA not installing, Network drives are back, fixed issue with games containing '-' in the filename",
+    "image": "false"
+  },
+  {
+    "title": "ESDE Theme Selector",
+    "type": "STEAMOS",
+    "description": "We've completely redesigned the theme selector on Custom Install.",
+    "image": "false"
+  },
+  {
+    "title": "New SRM Features",
+    "type": "STEAMOS",
+    "description": "We've completely redesigned the EmuDeck theme and added dynamic parsers based in your installed emulators.",
+    "image": "false"
+  },
+  {
     "title": "Better installer",
     "type": "STEAMOS",
     "description": "We've completely revamped the dependecy installer so it should work better in those situations where Winget is not installed / updated.",

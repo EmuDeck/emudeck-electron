@@ -75,7 +75,7 @@ function ChangeLogPage() {
   // Hide changelog after seen
   useEffect(() => {
     localStorage.setItem('show_changelog', false);
-
+    let systemName;
     switch (system) {
       case 'darwin':
         systemName = 'darwin';
