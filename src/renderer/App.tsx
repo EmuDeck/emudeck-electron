@@ -235,6 +235,7 @@ export default function App() {
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
+      esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
       rmg: { id: 'rmg', status: false, name: "Rosalie's Mupen Gui" },
       mame: { id: 'mame', status: true, name: 'MAME' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita3K' },

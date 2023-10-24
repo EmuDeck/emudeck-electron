@@ -153,15 +153,15 @@ function EndPage() {
   const showLog = () => {
     if (system === 'win32') {
       ipcChannel.sendMessage('bash-nolog', [
-        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/emudeck.log -Tail 100 -Wait }"`,
+        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/logs/emudeckSetup.log -Tail 100 -Wait }"`,
       ]);
     } else if (system === 'darwin') {
       ipcChannel.sendMessage('bash-nolog', [
-        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/emudeck/emudeck.log"'`,
+        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/emudeck/logs/emudeckSetup.log"'`,
       ]);
     } else {
       ipcChannel.sendMessage('bash-nolog', [
-        `konsole -e tail -f "$HOME/emudeck/emudeck.log"`,
+        `konsole -e tail -f "$HOME/emudeck/logs/emudeckSetup.log"`,
       ]);
     }
   };
@@ -349,7 +349,8 @@ function EndPage() {
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo doSetupESDE="false" >> ${settingsFile}`,
+            `echo doSetupESDE="${!!overwriteConfigEmus.esde
+              .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
             `echo doSetupSRM="${!!overwriteConfigEmus.srm

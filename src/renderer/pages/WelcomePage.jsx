@@ -254,22 +254,45 @@ function WelcomePage() {
     });
   };
 
-  const sprunge = () => {
-    ipcChannel.sendMessage('bash', [
-      `sprunge|||cat ~/emudeck/emudeck.log | curl -F 'sprunge=<-' http://sprunge.us`,
-    ]);
-    ipcChannel.once('sprunge', (message) => {
-      prompt('Copy this url:', `${message}`);
+  const getLogs = () => {
+    ipcChannel.sendMessage('emudeck', [`zipLogs|||zipLogs`]);
+    ipcChannel.once('zipLogs', (message) => {
+      console.log({ message });
+      let modalData;
+      let { stdout } = message;
+
+      stdout = stdout.replace('\n', '');
+
+      if (stdout.includes('true')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">Success!</span>,
+          body: <p>We've created a Zip file with all your logs</p>,
+          css: 'emumodal--xs',
+        };
+      } else {
+        modalData = {
+          active: true,
+          header: <span className="h4">Error!</span>,
+          body: (
+            <p>
+              There was an issue getting your logs, please collect them manually
+              from the emudeck folder in your user folder.
+            </p>
+          ),
+          css: 'emumodal--xs',
+        };
+      }
+      setStatePage({ ...statePage, modal: modalData });
     });
   };
 
   const openWiki = () => {
     let url;
-    {
-      system === 'win32'
-        ? (url = 'https://emudeck.github.io/known-issues/windows/')
-        : (url = 'https://emudeck.github.io/?search=true');
-    }
+
+    system === 'win32'
+      ? (url = 'https://emudeck.github.io/known-issues/windows/')
+      : (url = 'https://emudeck.github.io/?search=true');
 
     window.open(url, '_blank');
   };
@@ -304,7 +327,7 @@ function WelcomePage() {
   const functions = {
     openSRM,
     openCSM,
-    sprunge,
+    getLogs,
     navigate,
     migrationFixSDPaths,
     openWiki,
@@ -404,6 +427,15 @@ function WelcomePage() {
       function: () => selectMode('expert'),
     },
     {
+      icon: [iconDoc],
+      title: 'Get Log files',
+      description: 'Send us your logs if you have issues',
+      button: 'Create Zip',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.getLogs(),
+    },
+    {
       icon: [iconCustom],
       title: 'Online Multiplayer',
       description: 'Play your emulators over internet with your friends',
@@ -496,15 +528,6 @@ function WelcomePage() {
       btnCSS: 'btn-simple--5',
       status: system !== 'win32' && system !== 'darwin',
       function: () => functions.navigate('/migration'),
-    },
-    {
-      icon: [iconDoc],
-      title: 'Fetch Log File',
-      description: 'Troubleshoot your EmuDeck install',
-      button: 'Upload',
-      btnCSS: 'btn-simple--5',
-      status: system !== 'win32' && system !== 'darwin',
-      function: () => functions.sprunge(),
     },
     {
       icon: [iconList],
@@ -612,27 +635,37 @@ function WelcomePage() {
   }, [statePage]);
 
   let systemName;
-
-  switch (system) {
-    case 'darwin':
-      systemName = '\uF8FF';
-      break;
-    case 'win32':
-      systemName = 'Windows';
-      break;
-    case 'SteamOS':
-      systemName = 'SteamOS';
-      break;
-    case 'ChimeraOS':
-      systemName = 'ChimeraOS';
-      break;
-    case 'chimeraOS':
-      systemName = 'ChimeraOS';
-      break;
-    default:
-      systemName = 'Linux';
-      break;
-  }
+  useEffect(() => {
+    switch (system) {
+      case 'darwin':
+        systemName = '\uF8FF';
+        break;
+      case 'win32':
+        systemName = 'Windows';
+        break;
+      case 'SteamOS':
+        systemName = 'SteamOS';
+        break;
+      case 'ChimeraOS':
+        systemName = 'ChimeraOS';
+        break;
+      case 'chimeraOS':
+        systemName = 'ChimeraOS';
+        break;
+      case '':
+        systemName = 'ERROR';
+        break;
+      case null:
+        systemName = 'ERROR';
+        break;
+      case undefined:
+        systemName = 'ERROR';
+        break;
+      default:
+        systemName = 'Linux';
+        break;
+    }
+  }, [statePage]);
 
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
