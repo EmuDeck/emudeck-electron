@@ -160,7 +160,7 @@ function EmulatorsDetailPage() {
     });
 
     ipcChannel.sendMessage('emudeck', [
-      `YuzuEA_addToken|||YuzuEA_addToken ${yuzuEAtoken}`,
+      `YuzuEA_addToken|||YuzuEA_addToken "${yuzuEAtoken}"`,
     ]);
     let modalHeader;
     let modalBody;
@@ -815,27 +815,28 @@ function EmulatorsDetailPage() {
       ]);
 
       ipcChannel.once(`${code}_IsInstalled`, (message) => {
+        console.log({ message });
         status = message.stdout;
         status.replace('\n', '');
 
         if (status.includes('true')) {
-          //           const modalData = {
-          //             active: true,
-          //             header: <span className="h4">{code} installed!</span>,
-          //             body: (
-          //               <p>
-          //                 {code} has been installed, now you can play games from {code}{' '}
-          //                 using EmulationStation-DE or adding them to your Steam Library
-          //                 using Steam Rom Manager
-          //               </p>
-          //             ),
-          //             css: 'emumodal--xs',
-          //           };
-          //
-          //           setStatePage({
-          //             ...statePage,
-          //             modal: modalData,
-          //           });
+          const modalData = {
+            active: true,
+            header: <span className="h4">{code} installed!</span>,
+            body: (
+              <p>
+                {code} has been installed, now you can play games from {code}{' '}
+                using EmulationStation-DE or adding them to your Steam Library
+                using Steam Rom Manager
+              </p>
+            ),
+            css: 'emumodal--xs',
+          };
+
+          setStatePage({
+            ...statePage,
+            modal: modalData,
+          });
           // We set the emu as install = yes
           setState({
             ...state,
