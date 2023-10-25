@@ -116,9 +116,12 @@ function WelcomePage() {
       };
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam)`]);
+      console.log(
+        `"${storagePath}/Emulation/tools/Steam ROM Manager.AppImage"`
+      );
       ipcChannel.sendMessage(
         'run-app',
-        `"${storagePath}/Emulation/tools/Steam ROM Manager.AppImage"`
+        `${storagePath}/Emulation/tools/Steam ROM Manager.AppImage`
       );
     }
     ipcChannel.once('run-app', (message) => {
@@ -254,12 +257,38 @@ function WelcomePage() {
     });
   };
 
-  const sprunge = () => {
-    ipcChannel.sendMessage('bash', [
-      `sprunge|||cat ~/emudeck/emudeck.log | curl -F 'sprunge=<-' http://sprunge.us`,
-    ]);
-    ipcChannel.once('sprunge', (message) => {
-      prompt('Copy this url:', `${message}`);
+  const getLogs = () => {
+    ipcChannel.sendMessage('emudeck', [`zipLogs|||zipLogs`]);
+    ipcChannel.once('zipLogs', (message) => {
+      console.log({ message });
+      let modalData;
+      let { stdout } = message;
+
+      stdout = stdout.replace('\n', '');
+
+      if (stdout.includes('true')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">Success!</span>,
+          body: (
+            <p>We've created a Zip file with all your logs on your Desktop</p>
+          ),
+          css: 'emumodal--xs',
+        };
+      } else {
+        modalData = {
+          active: true,
+          header: <span className="h4">Error!</span>,
+          body: (
+            <p>
+              There was an issue getting your logs, please collect them manually
+              from the emudeck folder in your user folder.
+            </p>
+          ),
+          css: 'emumodal--xs',
+        };
+      }
+      setStatePage({ ...statePage, modal: modalData });
     });
   };
 

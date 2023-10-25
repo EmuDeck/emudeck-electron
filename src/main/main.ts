@@ -1097,6 +1097,9 @@ ipcMain.on('run-app', async (event, appPath) => {
   if (appPathFixed.includes('USERPATH')) {
     appPathFixed = appPathFixed.replace('USERPATH', userFolder);
   }
+  if (!appPathFixed.includes('"')) {
+    appPathFixed = `"${appPathFixed}"`;
+  }
 
   let externalApp;
   if (os.platform().includes('win32')) {
@@ -1104,8 +1107,15 @@ ipcMain.on('run-app', async (event, appPath) => {
   } else if (os.platform().includes('darwin')) {
     externalApp = spawn('open', [appPathFixed]);
   } else {
-    externalApp = spawn('xdg-open', [appPathFixed]);
+    return exec(`${appPathFixed}`, shellType, (error, stdout, stderr) => {
+      // event.reply('console', { backChannel });
+      logCommand(appPathFixed, error, stdout, stderr);
+      event.reply('run-app', 'launched');
+    });
+    // externalApp = spawn('xdg-open', [appPathFixed]);
   }
+
+  fs.writeFileSync(`${os.homedir()}/emudeck/logs/run-app.log`, appPathFixed);
 
   externalApp.on('error', (err: any) => {
     event.reply('run-app', err);
