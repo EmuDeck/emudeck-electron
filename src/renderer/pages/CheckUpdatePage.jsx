@@ -340,7 +340,11 @@ function CheckUpdatePage() {
 
       const modalDataGit = {
         active: true,
-        header: <span className="h4">Building EmuDeck backend...</span>,
+        header: (
+          <span className="h4">
+            Building EmuDeck backend and running autodiagnostics...
+          </span>
+        ),
         body: (
           <>
             <p>
