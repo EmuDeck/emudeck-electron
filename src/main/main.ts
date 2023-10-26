@@ -1097,9 +1097,6 @@ ipcMain.on('run-app', async (event, appPath) => {
   if (appPathFixed.includes('USERPATH')) {
     appPathFixed = appPathFixed.replace('USERPATH', userFolder);
   }
-  if (!appPathFixed.includes('"')) {
-    appPathFixed = `"${appPathFixed}"`;
-  }
 
   let externalApp;
   if (os.platform().includes('win32')) {
@@ -1107,6 +1104,9 @@ ipcMain.on('run-app', async (event, appPath) => {
   } else if (os.platform().includes('darwin')) {
     externalApp = spawn('open', [appPathFixed]);
   } else {
+    if (!appPathFixed.includes('"')) {
+      appPathFixed = `"${appPathFixed}"`;
+    }
     return exec(`${appPathFixed}`, shellType, (error, stdout, stderr) => {
       // event.reply('console', { backChannel });
       logCommand(appPathFixed, error, stdout, stderr);
