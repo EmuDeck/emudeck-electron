@@ -25,7 +25,7 @@ function StoreFrontPage() {
       setStatePage({ ...statePage, disabledNext: false });
     }
   }, [state]);
-  //GamePad
+  // GamePad
   const domElementsRef = useRef(null);
   const domElementsCur = domElementsRef.current;
   let domElements;
@@ -41,7 +41,7 @@ function StoreFrontPage() {
       {dom !== undefined && <GamePad elements={dom} />}
       <div style={{ height: '100vh' }} ref={domElementsRef}>
         <Wrapper>
-          <Header title="" />
+          <Header title="EmuDeck Store" />
           <StoreFront
             data={data}
             disabledNext={disabledNext}
