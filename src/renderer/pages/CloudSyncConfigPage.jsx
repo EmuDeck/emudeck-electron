@@ -146,10 +146,20 @@ function CloudSyncPageConfig() {
     //   });
     // } else {
 
-    setStatePage({
-      ...statePage,
-      disableButton: true,
-    });
+    let modalData = {
+      active: true,
+      header: <span className="h4">Installing CloudSync</span>,
+      css: 'emumodal--xs',
+      body: (
+        <p>
+          Please stand by... this could take a while, depending on your provider
+          & internet speed
+        </p>
+      ),
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
+    };
+    setStatePage({ ...statePage, disableButton: true, modal: modalData });
+
     let cloudFunction;
     if (cloudSyncType === 'Sync') {
       cloudFunction = 'cloud_sync_install_and_config ';
@@ -163,7 +173,7 @@ function CloudSyncPageConfig() {
 
     ipcChannel.once('cloud_saves', (message) => {
       const { stdout } = message;
-
+      console.log({ stdout });
       if (stdout.includes('true')) {
         const modalData = {
           active: true,
@@ -212,8 +222,34 @@ function CloudSyncPageConfig() {
           ...state,
           cloudSyncStatus: true,
         });
-        setStatePage({ ...statePage, disableButton: false, modal: modalData });
+      } else {
+        setState({
+          ...state,
+          cloudSyncStatus: false,
+        });
       }
+      let warningChrome;
+      if (system !== 'win32') {
+        warningChrome = `Make sure you have Google Chrome installed, Firefox won't work. Once you have CloudSync installed you can remove Chrome`;
+      }
+
+      modalData = {
+        active: true,
+        header: <span className="h4">Error Installing CloudSync</span>,
+        css: 'emumodal--xs',
+        body: (
+          <>
+            <p>
+              There's been an issue installing CloudSync, please try again. Make
+              sure your credentials are correct.
+            </p>
+            <p>
+              <strong>{warningChrome}</strong>
+            </p>
+          </>
+        ),
+      };
+      setStatePage({ ...statePage, disableButton: false, modal: modalData });
     });
     // }
   };
@@ -262,14 +298,13 @@ function CloudSyncPageConfig() {
         const modalData = {
           active: true,
           header: <span className="h4">CloudSave Configured</span>,
+          css: 'emumodal--xs',
           body: (
             <p>
-              All Done, every time you load a Game your Game states and Saved
-              games will be synced to ${cloudSync} in the background every 5
-              minutes
+              All Done, your game states and saved games will be synced to $
+              {cloudSync} in the background every 5 minutes
             </p>
           ),
-          css: 'emumodal--sm',
         };
         setStatePage({
           ...statePage,
