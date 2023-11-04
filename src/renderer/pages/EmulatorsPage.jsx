@@ -203,21 +203,12 @@ function EmulatorsPage() {
     // Clean win32 systems
 
     if (system === 'win32') {
-      delete stateCurrentConfigs.primehack;
       delete stateCurrentConfigs.rmg;
-      delete stateCurrentConfigs.mame;
-      delete stateCurrentConfigs.vita3k;
-      delete stateCurrentConfigs.scummvm;
-      delete stateCurrentConfigs.xemu;
-      delete stateCurrentConfigs.mgba;
-      delete stateCurrentConfigs.xenia;
     }
 
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?
-      if (repoVersions === '') {
-      }
 
       // Thanks chatGPT lol
       const obj1 = repoVersions;

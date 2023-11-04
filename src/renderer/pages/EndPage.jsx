@@ -89,19 +89,16 @@ function EndPage() {
 
     if (system === 'win32') {
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
-      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
-      let srmPath;
-      if (storagePath === '' || !storagePath || storagePath === null) {
-        srmPath = 'C:\\';
-      } else {
-        srmPath = storagePath;
-      }
-      ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
+      ipcChannel.sendMessage(
+        'emudeck',
+        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/srm/steamrommanager.ps1"'
+      );
     } else if (system === 'darwin') {
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [`killall steam`]);
-      ipcChannel.sendMessage('run-app', `/Applications/Steam Rom Manager.app`);
+      ipcChannel.sendMessage(
+        'emudeck',
+        '/bin/bash/ "$toolsPath/launchers/srm/steamrommanager.sh"'
+      );
     } else {
       modalData = {
         active: true,
@@ -121,33 +118,20 @@ function EndPage() {
         css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam)`]);
       ipcChannel.sendMessage(
-        'run-app',
-        `"${storagePath}/Emulation/tools/Steam ROM Manager.AppImage"`
+        'emudeck',
+        '/bin/bash/ "$toolsPath/launchers/srm/steamrommanager.sh"'
       );
     }
-    ipcChannel.once('run-app', (message) => {
-      console.log({ message });
-      if (message.includes('launched')) {
-        const timerId = setTimeout(() => {
-          setStatePage({
-            ...statePage,
-            modal: {
-              active: false,
-            },
-          });
-          clearTimeout(timerId);
-        }, 10000);
-      } else {
-        setStatePage({
-          ...statePage,
-          modal: {
-            active: false,
-          },
-        });
-      }
-    });
+    const timerId = setTimeout(() => {
+      setStatePage({
+        ...statePage,
+        modal: {
+          active: false,
+        },
+      });
+      clearTimeout(timerId);
+    }, 10000);
   };
 
   const showLog = () => {
