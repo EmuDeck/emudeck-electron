@@ -317,16 +317,7 @@ function EmulatorsPage() {
                   const img = images[item.id];
                   const updateNotif = updates[item.id];
                   if (system === 'win32') {
-                    if (
-                      item.id === 'primehack' ||
-                      item.id === 'rmg' ||
-                      item.id === 'mame' ||
-                      item.id === 'vita3k' ||
-                      item.id === 'scummvm' ||
-                      item.id === 'xemu' ||
-                      item.id === 'mgba' ||
-                      item.id === 'xenia'
-                    ) {
+                    if (item.id === 'rmg') {
                       return;
                     }
                   }

@@ -277,6 +277,7 @@ export default function App() {
       psx: 'duckstation',
       scummvm: 'scummvm',
       multiemulator: 'ra',
+      dreamcast: 'multiemulator',
     },
     revertParsers: false,
     resolutions: {

@@ -138,15 +138,56 @@ function RomStoragePage() {
         ...statePage,
         disabledNext: false,
       });
-    } else {
-      setState({
-        ...state,
-        storage: `${storageName}\\`,
-        storagePath: `${storageName}\\`,
-      });
-      setStatePage({
-        ...statePage,
-        disabledNext: false,
+    } else if (system === 'win32') {
+      ipcChannel.sendMessage('emudeck', [
+        `testLocation|||testLocationValid "custom" "${stdout}"`,
+      ]);
+
+      ipcChannel.once('testLocation', (messageLocation) => {
+        if (messageLocation) {
+          const stdoutLocation = messageLocation.stdout.replace('\n', '');
+
+          let statusLocation;
+          stdoutLocation.includes('Valid')
+            ? (statusLocation = true)
+            : (statusLocation = false);
+
+          if (statusLocation === true) {
+            setStatePage({
+              ...statePage,
+              disabledNext: false,
+              status: undefined,
+            });
+          } else {
+            const modalData = {
+              active: true,
+              header: <span className="h4">Ooops 😞</span>,
+              body: <p>There was an error detecting your storage...</p>,
+              css: 'emumodal--xs',
+            };
+            setStatePage({ ...statePage, modal: modalData });
+          }
+        } else {
+          const modalData = {
+            active: true,
+            header: <span className="h4">Ooops 😞</span>,
+            body: (
+              <p>Non writable directory selected, please choose another.</p>
+            ),
+            css: 'emumodal--xs',
+          };
+          setStatePage({
+            ...statePage,
+            disabledNext: true,
+            status: undefined,
+            modal: modalData,
+          });
+          setState({
+            ...state,
+            storage: null,
+            storagePath: null,
+          });
+        }
       });
     }
   };
