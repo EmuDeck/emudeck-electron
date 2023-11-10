@@ -51,6 +51,20 @@ function CloudSyncPageConfig() {
       };
     }
 
+    if (item === 'Emudeck-SMB' || item === 'Emudeck-SFTP') {
+      modalData = {
+        active: true,
+        header: <span className="h4">Warning</span>,
+        body: (
+          <p>
+            You might need to create an emudeck folder in the root of your
+            storage before setting up CloudSync
+          </p>
+        ),
+        css: 'emumodal--sm',
+      };
+    }
+
     setState({
       ...state,
       cloudSync: item,
