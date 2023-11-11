@@ -9,7 +9,7 @@ import ESDETheme from 'components/organisms/Wrappers/ESDETheme';
 
 function ESDEThemePage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, mode } = state;
+  const { device, mode, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,

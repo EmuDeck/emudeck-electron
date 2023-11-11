@@ -614,6 +614,9 @@ function EndPage() {
           ipcChannel.sendMessage('bash', [
             `echo xeniaResolution="${state.resolutions.xenia}" >> ${settingsFile}`,
           ]);
+          ipcChannel.sendMessage('bash', [
+            `echo citraResolution="${state.resolutions.citra}" >> ${settingsFile}`,
+          ]);
 
           // ParserExclusion
 
