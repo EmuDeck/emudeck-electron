@@ -32,11 +32,7 @@ function ESDEThemePage() {
   }, []);
 
   const nextPage = () => {
-    if (
-      device === 'Linux PC' ||
-      device === 'Windows PC' ||
-      device === 'Windows Handlheld'
-    ) {
+    if (system !== 'SteamOS') {
       return 'emulator-resolution';
     }
     if (mode === 'easy') {

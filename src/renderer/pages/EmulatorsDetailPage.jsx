@@ -429,6 +429,9 @@ function EmulatorsDetailPage() {
       case 'vita3k':
         img = vita3kControls;
         break;
+      case 'flycast':
+        img = flycastControls;
+        break;
       case 'scummvm':
         img = scummvmControls;
         break;
@@ -516,6 +519,9 @@ function EmulatorsDetailPage() {
         break;
       case 'vita3k':
         img = vita3kHotkeys;
+        break;
+      case 'flycast':
+        img = flycastHotkeys;
         break;
       case 'scummvm':
         img = scummvmHotkeys;

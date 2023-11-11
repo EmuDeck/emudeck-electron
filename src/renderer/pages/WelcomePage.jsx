@@ -28,6 +28,7 @@ import {
   iconPackage,
   iconDisk,
   iconHelp,
+  iconScreen,
 } from 'components/utils/images/images';
 
 function WelcomePage() {
@@ -502,6 +503,15 @@ function WelcomePage() {
       btnCSS: 'btn-simple--5',
       status: true,
       function: () => functions.navigate('/check-bios'),
+    },
+    {
+      icon: [iconScreen],
+      title: 'Screen Resolution',
+      description: 'Upscale your emulators resolution',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: system !== 'aSteamOS',
+      function: () => functions.navigate('/change-resolution'),
     },
     {
       icon: [iconCloud],

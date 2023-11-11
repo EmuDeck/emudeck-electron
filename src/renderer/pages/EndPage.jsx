@@ -325,6 +325,10 @@ function EndPage() {
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
+            `echo doSetupFlycast="${!!overwriteConfigEmus.flycast
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
             `echo doSetupScummVM="${!!overwriteConfigEmus.scummvm
               .status}" >> ${settingsFile}`,
           ]);
@@ -411,6 +415,10 @@ function EndPage() {
           ]);
           ipcChannel.sendMessage('bash', [
             `echo doInstallVita3K="${!!installEmus.vita3k
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doInstallFlycast="${!!installEmus.flycast
               .status}" >> ${settingsFile}`,
           ]);
 
@@ -546,12 +554,6 @@ function EndPage() {
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo doRASignIn="false" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo doRAEnable="false" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
             `echo doESDEThemePicker="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
@@ -565,11 +567,11 @@ function EndPage() {
           ]);
 
           // Achievements
-          ipcChannel.sendMessage('bash-nolog', [
-            `echo '${state.achievements.token}' > $HOME/.config/EmuDeck/.rat`,
+          ipcChannel.sendMessage('bash', [
+            `echo achievementsUser="${state.achievements.user}" >> ${settingsFile}`,
           ]);
-          ipcChannel.sendMessage('bash-nolog', [
-            `echo '${state.achievements.user}' > $HOME/.config/EmuDeck/.rau`,
+          ipcChannel.sendMessage('bash', [
+            `echo achievementsUserToken="${state.achievements.token}" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [

@@ -48,6 +48,7 @@ function DeviceSelectorPage() {
       xenia: '720P',
       citra: '1080P',
       vita3k: '1080P',
+      flycast: '1080P',
       melonds: '1080P',
     };
 
@@ -64,6 +65,7 @@ function DeviceSelectorPage() {
       xenia: '720P',
       citra: '720P',
       vita3k: '720P',
+      flycast: '720P',
       melonds: '720P',
     };
 
@@ -80,6 +82,7 @@ function DeviceSelectorPage() {
       xenia: '1080P',
       citra: '1080P',
       vita3k: '1080P',
+      flycast: '1080P',
       melonds: '1080P',
     };
 
@@ -104,6 +107,12 @@ function DeviceSelectorPage() {
         resolutionsObj = amd6800U;
         break;
       case 'AYA Neo 2':
+        resolutionsObj = amd6800U;
+        break;
+      case 'AYA Neo Kun':
+        resolutionsObj = amd6800U;
+        break;
+      case 'Lenovo Legion Go':
         resolutionsObj = amd6800U;
         break;
       case 'Windows PC':
@@ -246,6 +255,20 @@ function DeviceSelectorPage() {
               >
                 <img src={imgayaneo2} width="100" alt="Background" />
                 <span className="h6">AYA Neo 2</span>
+              </Card>
+              <Card
+                css={device === 'AYA Neo Kun' && 'is-selected'}
+                onClick={() => deviceSet('AYA Neo Kun')}
+              >
+                <img src={imgayaneokun} width="100" alt="Background" />
+                <span className="h6">AYA Neo Kun</span>
+              </Card>
+              <Card
+                css={device === 'Lenovo Legion Go' && 'is-selected'}
+                onClick={() => deviceSet('Lenovo Legion Go')}
+              >
+                <img src={imglegiongo} width="100" alt="Background" />
+                <span className="h6">Lenovo Legion Go</span>
               </Card>
               <Card
                 css={device === 'Windows PC' && 'is-selected'}
