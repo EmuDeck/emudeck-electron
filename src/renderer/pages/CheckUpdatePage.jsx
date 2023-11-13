@@ -484,48 +484,46 @@ function CheckUpdatePage() {
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
         <Kamek />
+        <Header title="EmuDeck is loading..." />
         {update === 'up-to-date' && (
-          <>
-            <Header title="EmuDeck is loading..." />
-            <Main>
-              <>
-                <p className="lead">
-                  If you can't get past this screen send us the log down bellow{' '}
-                  {system === 'win32' && (
-                    <a
-                      target="_blank"
-                      className="https://emudeck.github.io/common-issues/windows/#emudeck-is-stuck-on-the-checking-for-updates-message"
-                    >
-                      Wiki FAQ
-                    </a>
-                  )}
-                  {system !== 'win32' && (
-                    <a
-                      target="_blank"
-                      className="link-simple link-simple--1"
-                      href="https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading"
-                      rel="noreferrer"
-                    >
-                      Wiki FAQ
-                    </a>
-                  )}
-                </p>
+          <Main>
+            <>
+              <p className="lead">
+                If you can't get past this screen send us the log down bellow{' '}
+                {system === 'win32' && (
+                  <a
+                    target="_blank"
+                    className="https://emudeck.github.io/common-issues/windows/#emudeck-is-stuck-on-the-checking-for-updates-message"
+                  >
+                    Wiki FAQ
+                  </a>
+                )}
+                {system !== 'win32' && (
+                  <a
+                    target="_blank"
+                    className="link-simple link-simple--1"
+                    href="https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading"
+                    rel="noreferrer"
+                  >
+                    Wiki FAQ
+                  </a>
+                )}
+              </p>
 
-                <ProgressBar css="progress--success" infinite max="100" />
-              </>
+              <ProgressBar css="progress--success" infinite max="100" />
+            </>
 
-              <code
-                style={{
-                  fontSize: '14px',
-                  Height: '100%',
-                  overflow: 'auto',
-                  whiteSpace: 'pre-line',
-                }}
-              >
-                {messageLog}
-              </code>
-            </Main>
-          </>
+            <code
+              style={{
+                fontSize: '14px',
+                Height: '100%',
+                overflow: 'auto',
+                whiteSpace: 'pre-line',
+              }}
+            >
+              {messageLog}
+            </code>
+          </Main>
         )}
         <EmuModal modal={modal} />
       </Wrapper>

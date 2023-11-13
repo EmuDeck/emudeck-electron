@@ -18,11 +18,13 @@ import {
   imgwindows,
   imgmac,
   imgchimeraOS,
+  imgayaneokun,
+  imglegiongo,
 } from 'components/utils/images/images';
 
 function DeviceSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, system, mode, resolutions } = state;
+  const { device, system, mode } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,

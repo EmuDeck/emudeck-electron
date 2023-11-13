@@ -13,7 +13,7 @@ function CheckDependenciesPage() {
   });
   const { statusGIT } = stateGIT;
   const [state7Zip, setState7Zip] = useState({
-    status7Zip: null,
+    status7Zip: true,
   });
   const { status7Zip } = state7Zip;
   const [stateSteam, setStateSteam] = useState({
@@ -155,23 +155,6 @@ function CheckDependenciesPage() {
 
             {statusGIT === false && status7Zip === true && (
               <span className="h6">Please restart EmuDeck to continue</span>
-            )}
-            <hr />
-          </li>
-          <li>
-            <p className="h5">
-              7Zip{' '}
-              <Img
-                src={status7Zip === true ? iconSuccess : iconDanger}
-                css="icon icon--xs"
-                alt="OK"
-              />
-            </p>
-            {status7Zip === undefined && (
-              <>
-                <span className="h6">Installing...</span>
-                <ProgressBar css="progress--success" infinite max="100" />
-              </>
             )}
             <hr />
           </li>
