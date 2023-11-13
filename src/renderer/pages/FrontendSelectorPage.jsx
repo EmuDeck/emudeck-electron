@@ -21,7 +21,7 @@ const images = {
 
 function FrontendSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, installFrontends, mode } = state;
+  const { device, installFrontends, mode, system } = state;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -37,11 +37,7 @@ function FrontendSelectorPage() {
     setStatePage({ ...statePage, modal: false });
   };
 
-  const setAlternativeFrontend = (
-    system,
-    frontendToEnable,
-    frontendToDisable
-  ) => {
+  const setAlternativeFrontend = (frontendToEnable, frontendToDisable) => {
     if (frontendToEnable !== 'both') {
       setState({
         ...state,
@@ -184,7 +180,7 @@ function FrontendSelectorPage() {
               css="btn-simple--1"
               type="button"
               aria={emuOption1}
-              onClick={() => setAlternativeFrontend(system, emuID1, emuID2)}
+              onClick={() => setAlternativeFrontend(emuID1, emuID2)}
               disabled={false}
             >
               {emuOption1}
@@ -193,7 +189,7 @@ function FrontendSelectorPage() {
               css="btn-simple--2"
               type="button"
               aria={emuOption2}
-              onClick={() => setAlternativeFrontend(system, emuID2, emuID1)}
+              onClick={() => setAlternativeFrontend(emuID2, emuID1)}
               disabled={false}
             >
               {emuOption2}
@@ -202,7 +198,7 @@ function FrontendSelectorPage() {
               css="btn-simple--3"
               type="button"
               aria="Go Back"
-              onClick={() => setAlternativeFrontend(system, 'both')}
+              onClick={() => setAlternativeFrontend('both')}
             >
               Both
             </BtnSimple>

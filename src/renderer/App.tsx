@@ -242,6 +242,7 @@ export default function App() {
       yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
       ryujinx: { id: 'ryujinx', status: true, name: 'Ryujinx' },
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
+      xenia: { id: 'xenia', status: true, name: 'Xenia' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
       esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
