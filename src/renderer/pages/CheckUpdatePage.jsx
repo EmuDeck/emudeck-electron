@@ -5,6 +5,7 @@ import GamePad from 'components/organisms/GamePad/GamePad';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+import Kamek from 'components/organisms/Kamek/Kamek';
 
 import { useNavigate } from 'react-router-dom';
 import Main from 'components/organisms/Main/Main';
@@ -35,7 +36,7 @@ function CheckUpdatePage() {
         </p>
       ),
       footer: <ProgressBar css="progress--success" infinite max="100" />,
-      css: 'emumodal--xs',
+      css: 'emumodal--xs emumodal--loading',
     },
   });
   const {
@@ -115,7 +116,7 @@ function CheckUpdatePage() {
               </p>
             ),
             footer: <ProgressBar css="progress--success" infinite max="100" />,
-            css: 'emumodal--xs',
+            css: 'emumodal--xs emumodal--loading',
           };
         }
 
@@ -346,30 +347,12 @@ function CheckUpdatePage() {
           </span>
         ),
         body: (
-          <>
-            <p>
-              Please wait a few seconds
-              <br />
-              <br />
-            </p>
-            <BtnSimple
-              css="btn-simple--3"
-              type="link"
-              target="_blank"
-              aria="Next"
-              href={
-                system === 'win32'
-                  ? 'https://emudeck.github.io/common-issues/windows/#emudeck-is-stuck-on-the-checking-for-updates-message'
-                  : 'https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading'
-              }
-              onClick={() => closeModal()}
-            >
-              Help!, I'm stuck
-            </BtnSimple>
-          </>
+          <p>
+            Please wait a few seconds, if this takes too long restart EmuDeck.
+          </p>
         ),
         footer: <ProgressBar css="progress--success" infinite max="100" />,
-        css: 'emumodal--xs',
+        css: 'emumodal--xs emumodal--loading',
       };
 
       // setStatePage({
@@ -416,7 +399,7 @@ function CheckUpdatePage() {
           active: true,
           header: <span className="h4">Ooops 😞</span>,
           body: <p>You need to be connected to the internet.</p>,
-          css: 'emumodal--xs',
+          css: 'emumodal--xs emumodal--loading',
         };
         setStatePage({
           ...statePage,
@@ -500,10 +483,10 @@ function CheckUpdatePage() {
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
-        {cloned}
+        <Kamek />
         {update === 'up-to-date' && (
           <>
-            <Header title="EmuDeck Git cloning log" />
+            <Header title="EmuDeck is loading..." />
             <Main>
               <>
                 <p className="lead">

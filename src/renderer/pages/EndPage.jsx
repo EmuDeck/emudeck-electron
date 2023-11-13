@@ -6,7 +6,7 @@ import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import { BtnSimple } from 'getbasecore/Atoms';
-
+import Sonic from 'components/organisms/Sonic/Sonic';
 import End from 'components/organisms/Wrappers/End';
 
 function EndPage() {
