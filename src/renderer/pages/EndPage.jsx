@@ -97,7 +97,7 @@ function EndPage() {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
-        '/bin/bash/ "$toolsPath/launchers/srm/steamrommanager.sh"'
+        '"$toolsPath/launchers/srm/steamrommanager.sh"'
       );
     } else {
       modalData = {
@@ -120,7 +120,7 @@ function EndPage() {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
-        '/bin/bash/ "$toolsPath/launchers/srm/steamrommanager.sh"'
+        '"$toolsPath/launchers/srm/steamrommanager.sh"'
       );
     }
     const timerId = setTimeout(() => {
