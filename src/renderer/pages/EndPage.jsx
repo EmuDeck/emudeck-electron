@@ -644,6 +644,9 @@ function EndPage() {
           ipcChannel.sendMessage('bash', [
             `echo emuSCUMMVM="${state.emulatorAlternative.scummvm}" >> ${settingsFile}`,
           ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuDreamcast="${state.emulatorAlternative.dreamcast}" >> ${settingsFile}`,
+          ]);
 
           // Closing
 

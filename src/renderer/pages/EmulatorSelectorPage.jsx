@@ -200,6 +200,15 @@ function EmulatorSelectorPage() {
                 : 'scummvm',
           };
         }
+        if (emulatorProp === 'flycast') {
+          systemsOption = {
+            ...systemsOption,
+            dreamcast:
+              emulatorAlternative.dreamcast === 'both'
+                ? 'multiemulator'
+                : 'flycast',
+          };
+        }
         if (emulatorProp === 'ppsspp') {
           systemsOption = {
             ...systemsOption,
@@ -234,6 +243,9 @@ function EmulatorSelectorPage() {
         psp: systemsOption.psp ? systemsOption.psp : emulatorAlternative.psp,
         psx: systemsOption.psx ? systemsOption.psx : emulatorAlternative.psx,
         nds: systemsOption.nds ? systemsOption.nds : emulatorAlternative.nds,
+        dreamcast: systemsOption.dreamcast
+          ? systemsOption.dreamcast
+          : emulatorAlternative.dreamcast,
         mame: systemsOption.mame
           ? systemsOption.mame
           : emulatorAlternative.mame,
@@ -265,6 +277,7 @@ function EmulatorSelectorPage() {
           n64: emulatorAlternative.n64 === 'both' ? 'rmg' : '',
           psp: emulatorAlternative.psp === 'both' ? 'ppsspp' : '',
           psx: emulatorAlternative.psx === 'both' ? 'duckstation' : '',
+          dreamcast: emulatorAlternative.dreamcast === 'both' ? 'flycast' : '',
           nds: emulatorAlternative.nds === 'both' ? 'melonds' : '',
           mame: emulatorAlternative.mame === 'both' ? 'mame' : '',
         };
@@ -311,6 +324,17 @@ function EmulatorSelectorPage() {
                 : emulatorAlternative.scummvm === 'scummvm'
                 ? 'multiemulator'
                 : 'scummvm',
+          };
+        }
+        if (emulatorProp === 'flycast') {
+          systemsOption = {
+            ...systemsOption,
+            flycast:
+              emulatorAlternative.dreamcast === 'both'
+                ? 'multiemulator'
+                : emulatorAlternative.dreamcast === 'flycast'
+                ? 'multiemulator'
+                : 'flycast',
           };
         }
         if (emulatorProp === 'ppsspp') {
@@ -367,6 +391,9 @@ function EmulatorSelectorPage() {
           : emulatorAlternative.scummvm,
         psp: systemsOption.psp ? systemsOption.psp : emulatorAlternative.psp,
         psx: systemsOption.psx ? systemsOption.psx : emulatorAlternative.psx,
+        dreamcast: systemsOption.dreamcast
+          ? systemsOption.dreamcast
+          : emulatorAlternative.dreamcast,
         nds: systemsOption.nds ? systemsOption.nds : emulatorAlternative.nds,
         mame: systemsOption.mame
           ? systemsOption.mame
@@ -846,6 +873,56 @@ function EmulatorSelectorPage() {
                   <li>Takes less resources</li>
                   <li>Has better compatibility</li>
                   <li>More flexible configuration</li>
+                </ol>
+                <p>
+                  We will only add the parser according to your selection so you
+                  don't end up with duplicates in your library.
+                </p>
+              </>
+            ),
+          };
+          const myTimeout = setTimeout(launchModal, 500);
+        }
+      }
+
+      if (
+        (installEmus.flycast.status &&
+          installEmus.ra.status &&
+          lastSelected === 'flycast') ||
+        (installEmus.flycast.status &&
+          installEmus.ares.status &&
+          lastSelected === 'flycast')
+      ) {
+        if (emulatorAlternative.dreamcast !== 'both') {
+          multiemulatorID = 'multiemulator';
+          multiemulatorName = 'RetroArch';
+          if (installEmus.ares.status) {
+            multiemulatorID = 'multiemulator';
+            multiemulatorName = 'ares';
+          }
+
+          emuOption1 = 'Flycast';
+          emuOption2 = multiemulatorName;
+          emuID2 = 'flycast';
+          emuID1 = multiemulatorID;
+          system = 'flycast';
+          modalData = {
+            active: true,
+            body: (
+              <>
+                <p>Which emulator do you want to use</p>
+                <div className="h5">
+                  <strong>RetroArch</strong> has these pros:
+                </div>
+                <ol className="list">
+                  <li>RetroAchievements</li>
+                  <li>Bezels & Shaders</li>
+                </ol>
+                <div className="h5">
+                  <strong>Flycast</strong> has this pro:
+                </div>
+                <ol className="list">
+                  <li>Better performance</li>
                 </ol>
                 <p>
                   We will only add the parser according to your selection so you

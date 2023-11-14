@@ -160,7 +160,7 @@ function CloudSyncPageConfig() {
     //   });
     // } else {
 
-    let modalData = {
+    const modalData = {
       active: true,
       header: <span className="h4">Installing CloudSync</span>,
       css: 'emumodal--xs',
@@ -188,8 +188,9 @@ function CloudSyncPageConfig() {
     ipcChannel.once('cloud_saves', (message) => {
       const { stdout } = message;
       console.log({ stdout });
+      let modalData;
       if (stdout.includes('true')) {
-        const modalData = {
+        modalData = {
           active: true,
           header: <span className="h4">CloudSync Configured</span>,
           body: (
@@ -237,6 +238,22 @@ function CloudSyncPageConfig() {
           cloudSyncStatus: true,
         });
       } else {
+        modalData = {
+          active: true,
+          header: <span className="h4">Error Installing CloudSync</span>,
+          css: 'emumodal--xs',
+          body: (
+            <>
+              <p>
+                There's been an issue installing CloudSync, please try again.
+                Make sure your credentials are correct.
+              </p>
+              <p>
+                <strong>{warningChrome}</strong>
+              </p>
+            </>
+          ),
+        };
         setState({
           ...state,
           cloudSyncStatus: false,
@@ -247,22 +264,6 @@ function CloudSyncPageConfig() {
         warningChrome = `Make sure you have Google Chrome installed, Firefox won't work. Once you have CloudSync installed you can remove Chrome`;
       }
 
-      modalData = {
-        active: true,
-        header: <span className="h4">Error Installing CloudSync</span>,
-        css: 'emumodal--xs',
-        body: (
-          <>
-            <p>
-              There's been an issue installing CloudSync, please try again. Make
-              sure your credentials are correct.
-            </p>
-            <p>
-              <strong>{warningChrome}</strong>
-            </p>
-          </>
-        ),
-      };
       setStatePage({ ...statePage, disableButton: false, modal: modalData });
     });
     // }
