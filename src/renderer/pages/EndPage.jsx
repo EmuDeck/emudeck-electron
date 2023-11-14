@@ -93,7 +93,7 @@ function EndPage() {
         'emudeck',
         'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/srm/steamrommanager.ps1"'
       );
-    } else if (system !== 'darwin') {
+    } else if (system === 'darwin') {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
