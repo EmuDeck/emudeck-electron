@@ -201,6 +201,9 @@ function WelcomePage() {
         localStorage.removeItem('current_versions_beta');
         localStorage.setItem('current_versions_beta', json);
 
+        localStorage.setItem('ogStateAlternative', '');
+        localStorage.setItem('ogStateEmus', '');
+
         setStateCurrentConfigs(repoVersions);
       } else if (showChangelog === null && branch === 'beta') {
         modalData = {

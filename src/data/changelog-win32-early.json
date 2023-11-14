@@ -2,7 +2,19 @@
   {
     "title": "Bug fixes",
     "type": "STEAMOS",
-    "description": "Fixed Yuzu EA not installing, Network drives are back, fixed issue with games containing '-' in the filename",
+    "description": "A TON of bugs related with SRM and parsers, SRM no longer hides some parsers randomly. CloudSync logs are now gone so it should work a bit faster. and a lot (more than 97 new commits to the code since last release)",
+    "image": "false"
+  },
+  {
+    "title": "New emulators",
+    "type": "STEAMOS",
+    "description": "Xemu, Xenia, mGBA, Vita3K, Flycast and MAME are now available as standalone emulators!",
+    "image": "false"
+  },
+  {
+    "title": "Unified controller hotkeys",
+    "type": "STEAMOS",
+    "description": "Windows and SteamOS/Linux now have the same hotkeys, so the basics are the same in all emulators: START + SELECT closes the emulator, SELECT + L1 Save State,  SELECT + R1 Load State. R2 and L2 will be used for stuff like speed up, rewind, change screen layout in DS and 3DS. In the future further improvements will be done to use the back buttons of the SteamDeck. And yes, gyro support will come too.",
     "image": "false"
   },
   {
