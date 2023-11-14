@@ -2,7 +2,19 @@
   {
     "title": "Bug fixes",
     "type": "STEAMOS",
-    "description": "Fixed Yuzu EA not installing and ESDE & SRM shorcuts not being created. Fixed CloudSync Download All, Upload All",
+    "description": "A TON of bugs related with SRM and parsers, SRM no longer hides some parsers randomly. CloudSync logs are now gone so it should work a bit faster. and a lot (more than 97 new commits to the code since last release)",
+    "image": "false"
+  },
+  {
+    "title": "Unified controller hotkeys",
+    "type": "STEAMOS",
+    "description": "Windows and SteamOS/Linux now have the same hotkeys, so the basics are the same in all emulators: START + SELECT closes the emulator, SELECT + L1 Save State,  SELECT + R1 Load State. R2 and L2 will be used for stuff like speed up, rewind, change screen layout in DS and 3DS. In the future further improvements will be done to use the back buttons of the SteamDeck. And yes, gyro support will come too.",
+    "image": "false"
+  },
+  {
+    "title": "Flycast",
+    "type": "STEAMOS",
+    "description": "Flycast is now available as a standalone option for Dreamcast & Naomi Games",
     "image": "false"
   },
   {
@@ -51,12 +63,6 @@
     "title": "Refined UI",
     "type": "STEAMOS",
     "description": "We've made some changes here and there to make the experience a bit better when installing Emulators",
-    "image": "false"
-  },
-  {
-    "title": "Installation Game",
-    "type": "STEAMOS",
-    "description": "We've added a small game so while EmuDeck is installing you can kill some aliens ( keyboard or gamepad in keyboard mode required for now)",
     "image": "false"
   }
 ]

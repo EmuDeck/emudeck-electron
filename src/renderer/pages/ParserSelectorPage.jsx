@@ -71,9 +71,13 @@ function ParserSelectorPage() {
     state;
 
   useEffect(() => {
+    const ogStateAlternativeValues = state.emulatorAlternative;
+    let json = JSON.stringify(ogStateAlternativeValues);
+    localStorage.setItem('ogStateAlternative', json);
     const ogStateEmus = state.installEmus;
-    const json = JSON.stringify(ogStateEmus);
+    json = JSON.stringify(ogStateEmus);
     localStorage.setItem('ogStateEmus', json);
+
     setState({
       ...state,
       emulatorAlternative: {
@@ -87,23 +91,12 @@ function ParserSelectorPage() {
         multiemulator: 'ra',
       },
       installEmus: {
+        ...installEmus,
         ra: {
           id: 'ra',
           status: true,
           installed: undefined,
           name: 'RetroArch',
-        },
-        dolphin: {
-          id: 'dolphin',
-          status: false,
-          installed: undefined,
-          name: 'Dolphin',
-        },
-        primehack: {
-          id: 'primehack',
-          status: false,
-          installed: undefined,
-          name: 'Primehack',
         },
         ppsspp: {
           id: 'ppsspp',
@@ -123,58 +116,13 @@ function ParserSelectorPage() {
           installed: undefined,
           name: 'melonDS',
         },
-        citra: {
-          id: 'citra',
-          status: false,
-          installed: undefined,
-          name: 'Citra',
-        },
-        pcsx2: {
-          id: 'pcsx2',
-          status: false,
-          installed: undefined,
-          name: 'PCSX2',
-        },
-        rpcs3: {
-          id: 'rpcs3',
-          status: false,
-          installed: undefined,
-          name: 'RPCS3',
-        },
-        yuzu: { id: 'yuzu', status: false, installed: undefined, name: 'Yuzu' },
-        ryujinx: {
-          id: 'ryujinx',
-          status: false,
-          installed: undefined,
-          name: 'Ryujinx',
-        },
-        xemu: { id: 'xemu', status: false, installed: undefined, name: 'Xemu' },
-        cemu: { id: 'cemu', status: false, installed: undefined, name: 'Cemu' },
-        srm: {
-          id: 'srm',
-          status: false,
-          installed: undefined,
-          name: 'Steam Rom Manager',
-        },
         rmg: {
           id: 'rmg',
           status: false,
           installed: undefined,
           name: "Rosalie's Mupen Gui",
         },
-        esde: {
-          id: 'esde',
-          status: false,
-          installed: undefined,
-          name: 'EmulationStation-DE',
-        },
         mame: { id: 'mame', status: false, name: 'MAME' },
-        vita3k: {
-          id: 'vita3k',
-          status: false,
-          installed: undefined,
-          name: 'Vita3K',
-        },
         flycast: {
           id: 'flycast',
           status: false,
@@ -186,12 +134,6 @@ function ParserSelectorPage() {
           status: false,
           installed: undefined,
           name: 'ScummVM',
-        },
-        xenia: {
-          id: 'xenia',
-          status: false,
-          installed: false,
-          name: 'Xenia',
         },
         mgba: { id: 'mgba', status: false, installed: undefined, name: 'mGBA' },
         ares: { id: 'ares', status: false, installed: undefined, name: 'ares' },
@@ -1113,10 +1055,14 @@ function ParserSelectorPage() {
   const restoreParsers = () => {
     // We revert back the emulators status
     const localogStateEmus = JSON.parse(localStorage.getItem('ogStateEmus'));
+    const localogStateAlternativeEmus = JSON.parse(
+      localStorage.getItem('ogStateAlternative')
+    );
 
     setState({
       ...state,
       installEmus: localogStateEmus,
+      emulatorAlternative: localogStateAlternativeEmus,
       revertParsers: true,
     });
 
@@ -1144,14 +1090,14 @@ function ParserSelectorPage() {
 
     if (system === 'win32') {
       ipcChannel.sendMessage('emudeck', [
-        `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPrimeHack ${installEmus.primehack.status}; setSetting doInstallRPCS3 ${installEmus.rpcs3.status}; setSetting doInstallCitra ${installEmus.citra.status}; setSetting doInstallDolphin ${installEmus.dolphin.status}; setSetting doInstallPPSSPP ${installEmus.ppsspp.status}; setSetting doInstallXemu ${installEmus.xemu.status}; setSetting doInstallCemu ${installEmus.cemu.status}; setSetting doInstallXenia ${installEmus.xenia.status}; setSetting doInstallScummVM ${installEmus.scummvm.status}; setSetting doInstallRMG ${installEmus.rmg.status}; setSetting doInstallmelonDS ${installEmus.melonds.status}; setSetting doInstallVita3K ${installEmus.vita3k.status}; setSetting doInstallFlycast ${installEmus.flycast.status}; setSetting doInstallMGBA ${installEmus.mgba.status}; setSetting doInstallMAME ${installEmus.mame.status}; setSetting doInstallYuzu ${installEmus.yuzu.status}; setSetting doInstallRyujinx ${installEmus.ryujinx.status}; setSetting doInstallPCSX2QT ${installEmus.pcsx2.status}; echo "true"`,
+        `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPrimeHack ${installEmus.primehack.status}; setSetting doInstallRPCS3 ${installEmus.rpcs3.status}; setSetting doInstallCitra ${installEmus.citra.status}; setSetting doInstallDolphin ${installEmus.dolphin.status}; setSetting doInstallPPSSPP ${installEmus.ppsspp.status}; setSetting doInstallXemu ${installEmus.xemu.status}; setSetting doInstallCemu ${installEmus.cemu.status}; setSetting doInstallXenia ${installEmus.xenia.status}; setSetting doInstallScummVM ${installEmus.scummvm.status}; setSetting doInstallRMG ${installEmus.rmg.status}; setSetting doInstallmelonDS ${installEmus.melonds.status}; setSetting doInstallVita3K ${installEmus.vita3k.status}; setSetting doInstallFlycast ${installEmus.flycast.status}; setSetting doInstallMGBA ${installEmus.mgba.status}; setSetting doInstallMAME ${installEmus.mame.status}; setSetting doInstallYuzu ${installEmus.yuzu.status}; setSetting doInstallRyujinx ${installEmus.ryujinx.status}; setSetting doInstallPCSX2QT ${installEmus.pcsx2.status}; setSetting doInstallDuck ${installEmus.duckstation.status}; echo "true"`,
       ]);
       ipcChannel.once(`parsersUpdatePrev`, (message) => {
         ipcChannel.sendMessage('emudeck', [`parsersUpdate|||SRM_init`]);
       });
     } else {
       ipcChannel.sendMessage('emudeck', [
-        `parsersUpdate|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} >/dev/null && setSetting doInstallPrimeHack ${installEmus.primehack.status} >/dev/null && setSetting doInstallRPCS3 ${installEmus.rpcs3.status} >/dev/null && setSetting doInstallCitra ${installEmus.citra.status} >/dev/null && setSetting doInstallDolphin ${installEmus.dolphin.status} >/dev/null && setSetting doInstallPPSSPP ${installEmus.ppsspp.status} >/dev/null && setSetting doInstallXemu ${installEmus.xemu.status} >/dev/null && setSetting doInstallCemu ${installEmus.cemu.status} >/dev/null && setSetting doInstallXenia ${installEmus.xenia.status} >/dev/null && setSetting doInstallScummVM ${installEmus.scummvm.status} >/dev/null && setSetting doInstallRMG ${installEmus.rmg.status} >/dev/null && setSetting doInstallmelonDS ${installEmus.melonds.status} >/dev/null && setSetting doInstallVita3K ${installEmus.vita3k.status} >/dev/null && setSetting doInstallFlycast ${installEmus.flycast.status} >/dev/null && setSetting doInstallMGBA ${installEmus.mgba.status} >/dev/null && setSetting doInstallMAME ${installEmus.mame.status} >/dev/null && setSetting doInstallYuzu ${installEmus.yuzu.status} >/dev/null && setSetting doInstallRyujinx ${installEmus.ryujinx.status} >/dev/null && setSetting doInstallPCSX2QT ${installEmus.pcsx2.status} >/dev/null) >/dev/null && . ~/.config/EmuDeck/backend/functions/all.sh && SRM_init`,
+        `parsersUpdate|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} >/dev/null && setSetting doInstallPrimeHack ${installEmus.primehack.status} >/dev/null && setSetting doInstallRPCS3 ${installEmus.rpcs3.status} >/dev/null && setSetting doInstallCitra ${installEmus.citra.status} >/dev/null && setSetting doInstallDolphin ${installEmus.dolphin.status} >/dev/null && setSetting doInstallPPSSPP ${installEmus.ppsspp.status} >/dev/null && setSetting doInstallXemu ${installEmus.xemu.status} >/dev/null && setSetting doInstallCemu ${installEmus.cemu.status} >/dev/null && setSetting doInstallXenia ${installEmus.xenia.status} >/dev/null && setSetting doInstallScummVM ${installEmus.scummvm.status} >/dev/null && setSetting doInstallRMG ${installEmus.rmg.status} >/dev/null && setSetting doInstallmelonDS ${installEmus.melonds.status} >/dev/null && setSetting doInstallVita3K ${installEmus.vita3k.status} >/dev/null && setSetting doInstallFlycast ${installEmus.flycast.status} >/dev/null && setSetting doInstallMGBA ${installEmus.mgba.status} >/dev/null && setSetting doInstallMAME ${installEmus.mame.status} >/dev/null && setSetting doInstallYuzu ${installEmus.yuzu.status} >/dev/null && setSetting doInstallRyujinx ${installEmus.ryujinx.status} >/dev/null && setSetting doInstallPCSX2QT ${installEmus.pcsx2.status} >/dev/null && setSetting doInstallDuck ${installEmus.duckstation.status} >/dev/null) >/dev/null && . ~/.config/EmuDeck/backend/functions/all.sh && SRM_init`,
       ]);
     }
 
@@ -1186,21 +1132,20 @@ function ParserSelectorPage() {
         console.log({ modalData });
       }
       // We revert back the emulators
-
-      const localogStateEmus = JSON.parse(localStorage.getItem('ogStateEmus'));
-
-      setState({
-        ...state,
-        installEmus: localogStateEmus,
-        revertParsers: true,
-      });
-      console.log({ installEmus });
-      console.log({ localogStateEmus });
-
-      setStatePage({
-        ...statePage,
-        modal: modalData,
-      });
+      restoreParsers();
+      //       const localogStateEmus = JSON.parse(localStorage.getItem('ogStateEmus'));
+      //
+      //       setState({
+      //         ...state,
+      //         installEmus: localogStateEmus,
+      //         revertParsers: true,
+      //       });
+      //
+      //       setStatePage({
+      //         ...statePage,
+      //         modal: modalData,
+      //       });
+      // navigate('/welcome');
     });
   };
 
@@ -1231,12 +1176,16 @@ function ParserSelectorPage() {
         const status = message.stdout;
         status.replace('\n', '');
         console.log({ message });
+        setState({
+          ...state,
+          revertParsers: false,
+        });
       });
     }
   }, [revertParsers]);
 
-  const json = JSON.stringify(state);
-  localStorage.setItem('settings_emudeck', json);
+  // const json = JSON.stringify(state);
+  // localStorage.setItem('settings_emudeck', json);
 
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
