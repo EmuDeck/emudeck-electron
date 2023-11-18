@@ -1052,26 +1052,28 @@ function ParserSelectorPage() {
     }
   }, [installEmus]);
 
-  const restoreParsers = () => {
+  const restoreParsers = (restoreAlternative) => {
     // We revert back the emulators status
     const localogStateEmus = JSON.parse(localStorage.getItem('ogStateEmus'));
     const localogStateAlternativeEmus = JSON.parse(
       localStorage.getItem('ogStateAlternative')
     );
-
-    setState({
-      ...state,
-      installEmus: localogStateEmus,
-      emulatorAlternative: localogStateAlternativeEmus,
-      revertParsers: true,
-    });
-
-    setStatePage({
-      ...statePage,
-      modal: modalData,
-    });
-
-    navigate(-1);
+    if (restoreAlternative) {
+      setState({
+        ...state,
+        installEmus: localogStateEmus,
+        emulatorAlternative: localogStateAlternativeEmus,
+        revertParsers: false,
+      });
+      navigate(-1);
+    } else {
+      setState({
+        ...state,
+        installEmus: localogStateEmus,
+        revertParsers: false,
+      });
+      navigate('/welcome');
+    }
   };
 
   const saveParsers = () => {
@@ -1115,7 +1117,7 @@ function ParserSelectorPage() {
             <BtnSimple
               css="btn-simple--1"
               type="button"
-              onClick={() => navigate('/welcome')}
+              onClick={() => restoreParsers(false)}
             >
               Close
             </BtnSimple>
@@ -1129,23 +1131,11 @@ function ParserSelectorPage() {
           body: <p>There was an issue trying to configure your parsers</p>,
           css: 'emumodal--xs',
         };
-        console.log({ modalData });
       }
-      // We revert back the emulators
-      restoreParsers();
-      //       const localogStateEmus = JSON.parse(localStorage.getItem('ogStateEmus'));
-      //
-      //       setState({
-      //         ...state,
-      //         installEmus: localogStateEmus,
-      //         revertParsers: true,
-      //       });
-      //
-      //       setStatePage({
-      //         ...statePage,
-      //         modal: modalData,
-      //       });
-      // navigate('/welcome');
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
     });
   };
 
@@ -1197,7 +1187,7 @@ function ParserSelectorPage() {
           <BtnSimple
             css="btn-simple--2"
             type="button"
-            onClick={() => restoreParsers()}
+            onClick={() => restoreParsers(true)}
             aria="Go Back"
           >
             Back
