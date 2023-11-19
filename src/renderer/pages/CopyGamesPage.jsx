@@ -130,60 +130,63 @@ function CopyGamesPage() {
   };
 
   const openSRM = () => {
+    let modalData = {
+      active: true,
+      header: <span className="h4">Launching Steam Rom Manager</span>,
+      body: (
+        <p>
+          We will close Steam if its running and then Steam Rom Manager will
+          open, this could take a few seconds, please wait.
+        </p>
+      ),
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
+      css: 'emumodal--xs',
+    };
+
     if (system === 'win32') {
-      const modalData = {
-        active: true,
-        header: <span className="h4">Launching Steam Rom Manager</span>,
-        body: (
-          <p>
-            We will close Steam if its running and then Steam Rom Manager will
-            open, this could take a few seconds, please wait.
-          </p>
-        ),
-        css: 'emumodal--xs',
-      };
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
-      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
-      let srmPath;
-
-      if (storagePath === '' || !storagePath || storagePath === null) {
-        srmPath = 'C:\\';
-      } else {
-        srmPath = storagePath;
-      }
-      ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
-
-      ipcChannel.once('run-app', (message) => {});
+      ipcChannel.sendMessage(
+        'emudeck',
+        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/srm/steamrommanager.ps1"'
+      );
+    } else if (system !== 'darwin') {
+      setStatePage({ ...statePage, modal: modalData });
+      ipcChannel.sendMessage(
+        'emudeck',
+        '"$toolsPath/launchers/srm/steamrommanager.sh"'
+      );
     } else {
-      const modalData = {
+      modalData = {
         active: true,
         header: <span className="h4">Launching Steam Rom Manager</span>,
         body: (
           <>
             <p>
-              To add your Emulators and EmulationStation-DE to steam hit
-              Preview, then Generate App List, then wait for the images to
-              download
-            </p>
-            <p>
-              When you are happy with your image choices hit Save App List and
-              wait for it to say it's completed.
+              We will close Steam if its running and then Steam Rom Manager will
+              open, this could take a few seconds, please wait.
             </p>
             <strong>
               Desktop controls will temporarily revert to touch/trackpad/L2/R2.
             </strong>
           </>
         ),
+        footer: <ProgressBar css="progress--success" infinite max="100" />,
         css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [
-        `(kill -15 $(pidof steam) & "${storagePath}/Emulation/tools/Steam ROM Manager.AppImage")`,
-      ]);
+      ipcChannel.sendMessage(
+        'emudeck',
+        '"$toolsPath/launchers/srm/steamrommanager.sh"'
+      );
     }
-    setTimeout(() => {
-      navigate('/welcome');
+    const timerId = setTimeout(() => {
+      setStatePage({
+        ...statePage,
+        modal: {
+          active: false,
+        },
+      });
+      clearTimeout(timerId);
     }, 10000);
   };
 

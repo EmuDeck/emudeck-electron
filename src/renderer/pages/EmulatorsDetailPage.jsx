@@ -429,6 +429,9 @@ function EmulatorsDetailPage() {
       case 'vita3k':
         img = vita3kControls;
         break;
+      case 'flycast':
+        img = flycastControls;
+        break;
       case 'scummvm':
         img = scummvmControls;
         break;
@@ -516,6 +519,9 @@ function EmulatorsDetailPage() {
         break;
       case 'vita3k':
         img = vita3kHotkeys;
+        break;
+      case 'flycast':
+        img = flycastHotkeys;
         break;
       case 'scummvm':
         img = scummvmHotkeys;
@@ -740,14 +746,11 @@ function EmulatorsDetailPage() {
 
     if (system === 'win32') {
       ipcChannel.sendMessage('emudeck', [
-        `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status};setSetting doInstallmelonDS ${state.installEmus.melonds.status};setSetting doInstallDuck ${state.installEmus.duckstation.status};`,
+        `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status};setSetting doInstallmelonDS ${state.installEmus.melonds.status};setSetting doInstallDuck ${state.installEmus.duckstation.status};;setSetting doInstallFlycast ${state.installEmus.dreamcast.status}`,
       ]);
-      /*
-      setSetting doInstallMAME ${state.installEmus.mame.status};setSetting doInstallMAME ${state.installEmus.mame.status};setSetting doInstallMAME ${state.installEmus.mame};setSetting doInstallRMG ${state.installEmus.rmg.status};setSetting doInstallScummVM ${state.installEmus.scummvm.status};setSetting doInstallScummVM ${state.installEmus.scummvm.status
-      */
     } else {
       ipcChannel.sendMessage('emudeck', [
-        `parsersUpdatePrev|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} && setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame.status} >/dev/null && setSetting doInstallmelonDS ${state.installEmus.melonds.status} >/dev/null && setSetting doInstallDuck ${state.installEmus.duckstation.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame} >/dev/null && setSetting doInstallRMG ${state.installEmus.rmg.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status}} >/dev/null) >/dev/null`,
+        `parsersUpdatePrev|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} && setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame.status} >/dev/null && setSetting doInstallmelonDS ${state.installEmus.melonds.status} >/dev/null && setSetting doInstallDuck ${state.installEmus.duckstation.status} >/dev/null && setSetting doInstallFlycast ${state.installEmus.flycast.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame} >/dev/null && setSetting doInstallRMG ${state.installEmus.rmg.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status}} >/dev/null) >/dev/null`,
       ]);
     }
 
@@ -759,29 +762,32 @@ function EmulatorsDetailPage() {
       const status = message.stdout;
       status.replace('\n', '');
       console.log({ message });
-      const modalData = {
-        active: true,
-        header: <span className="h4">Success!</span>,
-        body: (
-          <p>
-            The emulator has been installed, now you can play games using
-            EmulationStation-DE or adding them to your Steam Library using Steam
-            Rom Manager
-          </p>
-        ),
-
-        footer: (
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            onClick={() => navigate('/welcome')}
-          >
-            Close
-          </BtnSimple>
-        ),
-        css: 'emumodal--xs',
-      };
-
+      let modalData;
+      if (status.includes('true')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">Success!</span>,
+          body: <p>All Parsers have been configured.</p>,
+          footer: (
+            <BtnSimple
+              css="btn-simple--1"
+              type="button"
+              onClick={() => navigate('/welcome')}
+            >
+              Close
+            </BtnSimple>
+          ),
+          css: 'emumodal--xs',
+        };
+      } else if (system !== 'win32') {
+        modalData = {
+          active: true,
+          header: <span className="h4">Failed</span>,
+          body: <p>There was an issue trying to configure your parsers</p>,
+          css: 'emumodal--xs',
+        };
+        console.log({ modalData });
+      }
       setStatePage({
         ...statePage,
         modal: modalData,
@@ -856,7 +862,8 @@ function EmulatorsDetailPage() {
             emulator === 'scummvm' ||
             emulator === 'duckstation' ||
             emulator === 'mame' ||
-            emulator === 'rmg'
+            emulator === 'rmg' ||
+            emulator === 'flycast'
           ) {
             let emuOption1;
             let emuOption2;
@@ -997,6 +1004,52 @@ function EmulatorsDetailPage() {
                       </ol>
                       <div className="h5">
                         <strong>DuckStation (recommended)</strong> has this pro:
+                      </div>
+                      <ol className="list">
+                        <li>Better Performance</li>
+                      </ol>
+                      <p>
+                        We will only add the parser according to your selection
+                        so you don't end up with duplicates in your library.
+                      </p>
+                    </>
+                  ),
+                };
+                const myTimeout = setTimeout(launchModal, 500);
+              }
+            }
+
+            if (
+              (emulator === 'flycast' && installEmus.ra.status) ||
+              (emulator === 'flycast' && installEmus.ares.status)
+            ) {
+              if (emulatorAlternative.dreamcast !== 'both') {
+                multiemulatorID = 'multiemulator';
+                multiemulatorName = 'RetroArch';
+                if (installEmus.ares.status) {
+                  multiemulatorID = 'multiemulator';
+                  multiemulatorName = 'ares';
+                }
+
+                emuOption1 = 'Flycast';
+                emuOption2 = multiemulatorName;
+                emuID2 = 'flycast';
+                emuID1 = multiemulatorID;
+                system = 'dreamcast';
+                modalData = {
+                  active: true,
+                  body: (
+                    <>
+                      <p>Which emulator do you want to use</p>
+                      <div className="h5">
+                        <strong>RetroArch</strong> has these prosss:
+                      </div>
+                      <ol className="list">
+                        <li>RetroAchievements</li>
+                        <li>Bezels & Shaders</li>
+                      </ol>
+                      <div className="h5">
+                        <strong>Flycast (recommended)</strong> has this pro:
                       </div>
                       <ol className="list">
                         <li>Better Performance</li>

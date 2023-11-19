@@ -52,6 +52,7 @@ import AutoSavePage from 'pages/AutoSavePage';
 import ConfirmationPage from 'pages/ConfirmationPage';
 import StoreFrontPage from 'pages/StoreFrontPage';
 import EmulatorResolutionPage from 'pages/EmulatorResolutionPage';
+import EmulatorConfigResolutionPage from 'pages/EmulatorConfigResolutionPage';
 
 import EndPage from 'pages/EndPage';
 
@@ -86,6 +87,7 @@ export default function App() {
     pegasus: { id: 'pegasus', code: 'Pegasus', version: 0 },
     mame: { id: 'mame', code: 'MAME', version: 0 },
     vita3k: { id: 'vita3k', code: 'Vita3k', version: 0 },
+    flycast: { id: 'flycast', code: 'Flycast', version: 0 },
     scummvm: { id: 'scummvm', code: 'ScummVM', version: 0 },
     xenia: { id: 'xenia', code: 'Xenia', version: 0 },
     mgba: { id: 'mgba', code: 'mGBA', version: 0 },
@@ -206,6 +208,12 @@ export default function App() {
         installed: undefined,
         name: 'Vita3K',
       },
+      flycast: {
+        id: 'flycast',
+        status: false,
+        installed: undefined,
+        name: 'Flycast',
+      },
       scummvm: {
         id: 'scummvm',
         status: true,
@@ -234,12 +242,14 @@ export default function App() {
       yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
       ryujinx: { id: 'ryujinx', status: true, name: 'Ryujinx' },
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
+      xenia: { id: 'xenia', status: true, name: 'Xenia' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
       esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
       rmg: { id: 'rmg', status: false, name: "Rosalie's Mupen Gui" },
       mame: { id: 'mame', status: true, name: 'MAME' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita3K' },
+      flycast: { id: 'flycast', status: true, name: 'Flycast' },
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
       mgba: { id: 'mgba', status: true, name: 'mGBA' },
       ares: { id: 'ares', status: false, name: 'ares' },
@@ -277,6 +287,7 @@ export default function App() {
       psx: 'duckstation',
       scummvm: 'scummvm',
       multiemulator: 'ra',
+      dreamcast: 'multiemulator',
     },
     revertParsers: false,
     resolutions: {
@@ -292,6 +303,7 @@ export default function App() {
       xenia: '720P',
       citra: '720P',
       vita3k: '720P',
+      flycast: '720P',
       melonds: '720P',
     },
   });
@@ -343,6 +355,12 @@ export default function App() {
             path="/emulator-resolution"
             element={<EmulatorResolutionPage />}
           />
+          <Route
+            exact
+            path="/change-resolution"
+            element={<EmulatorConfigResolutionPage />}
+          />
+
           <Route exact path="/rom-storage" element={<RomStoragePage />} />
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
 

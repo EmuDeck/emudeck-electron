@@ -51,6 +51,20 @@ function CloudSyncPageConfig() {
       };
     }
 
+    if (item === 'Emudeck-SMB' || item === 'Emudeck-SFTP') {
+      modalData = {
+        active: true,
+        header: <span className="h4">Warning</span>,
+        body: (
+          <p>
+            You might need to create an emudeck folder in the root of your
+            storage before setting up CloudSync
+          </p>
+        ),
+        css: 'emumodal--sm',
+      };
+    }
+
     setState({
       ...state,
       cloudSync: item,
@@ -146,10 +160,20 @@ function CloudSyncPageConfig() {
     //   });
     // } else {
 
-    setStatePage({
-      ...statePage,
-      disableButton: true,
-    });
+    const modalData = {
+      active: true,
+      header: <span className="h4">Installing CloudSync</span>,
+      css: 'emumodal--xs',
+      body: (
+        <p>
+          Please stand by... this could take a while, depending on your provider
+          & internet speed
+        </p>
+      ),
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
+    };
+    setStatePage({ ...statePage, disableButton: true, modal: modalData });
+
     let cloudFunction;
     if (cloudSyncType === 'Sync') {
       cloudFunction = 'cloud_sync_install_and_config ';
@@ -163,9 +187,10 @@ function CloudSyncPageConfig() {
 
     ipcChannel.once('cloud_saves', (message) => {
       const { stdout } = message;
-
+      console.log({ stdout });
+      let modalData;
       if (stdout.includes('true')) {
-        const modalData = {
+        modalData = {
           active: true,
           header: <span className="h4">CloudSync Configured</span>,
           body: (
@@ -212,8 +237,34 @@ function CloudSyncPageConfig() {
           ...state,
           cloudSyncStatus: true,
         });
-        setStatePage({ ...statePage, disableButton: false, modal: modalData });
+      } else {
+        modalData = {
+          active: true,
+          header: <span className="h4">Error Installing CloudSync</span>,
+          css: 'emumodal--xs',
+          body: (
+            <>
+              <p>
+                There's been an issue installing CloudSync, please try again.
+                Make sure your credentials are correct.
+              </p>
+              <p>
+                <strong>{warningChrome}</strong>
+              </p>
+            </>
+          ),
+        };
+        setState({
+          ...state,
+          cloudSyncStatus: false,
+        });
       }
+      let warningChrome;
+      if (system !== 'win32') {
+        warningChrome = `Make sure you have Google Chrome installed, Firefox won't work. Once you have CloudSync installed you can remove Chrome`;
+      }
+
+      setStatePage({ ...statePage, disableButton: false, modal: modalData });
     });
     // }
   };
@@ -262,14 +313,13 @@ function CloudSyncPageConfig() {
         const modalData = {
           active: true,
           header: <span className="h4">CloudSave Configured</span>,
+          css: 'emumodal--xs',
           body: (
             <p>
-              All Done, every time you load a Game your Game states and Saved
-              games will be synced to ${cloudSync} in the background every 5
-              minutes
+              All Done, your game states and saved games will be synced to $
+              {cloudSync} in the background every 5 minutes
             </p>
           ),
-          css: 'emumodal--sm',
         };
         setStatePage({
           ...statePage,

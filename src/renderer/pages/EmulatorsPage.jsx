@@ -26,6 +26,7 @@ import {
   imgxemu,
   imgmame,
   imgvita3k,
+  imgflycast,
   imgxenia,
   imgsrm,
   imgrmg,
@@ -55,6 +56,7 @@ const images = {
   xemu: imgxemu,
   mame: imgmame,
   vita3k: imgvita3k,
+  flycast: imgflycast,
   scummvm: imgscummvm,
   supermodelista: imgsupermodelista,
   esde: imgFrontESDE,
@@ -121,16 +123,7 @@ function EmulatorsPage() {
         const { version } = item;
 
         if (system === 'win32') {
-          if (
-            item.id === 'primehack' ||
-            item.id === 'primehacks' ||
-            item.id === 'rmg' ||
-            item.id === 'mame' ||
-            item.id === 'vita3k' ||
-            item.id === 'scummvm' ||
-            item.id === 'xemu' ||
-            item.id === 'mgba'
-          ) {
+          if (item.id === 'rmg' || item.id === 'mgba') {
             return;
           }
         }
@@ -212,21 +205,12 @@ function EmulatorsPage() {
     // Clean win32 systems
 
     if (system === 'win32') {
-      delete stateCurrentConfigs.primehack;
       delete stateCurrentConfigs.rmg;
-      delete stateCurrentConfigs.mame;
-      delete stateCurrentConfigs.vita3k;
-      delete stateCurrentConfigs.scummvm;
-      delete stateCurrentConfigs.xemu;
-      delete stateCurrentConfigs.mgba;
-      delete stateCurrentConfigs.xenia;
     }
 
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?
-      if (repoVersions === '') {
-      }
 
       // Thanks chatGPT lol
       const obj1 = repoVersions;
@@ -335,16 +319,7 @@ function EmulatorsPage() {
                   const img = images[item.id];
                   const updateNotif = updates[item.id];
                   if (system === 'win32') {
-                    if (
-                      item.id === 'primehack' ||
-                      item.id === 'rmg' ||
-                      item.id === 'mame' ||
-                      item.id === 'vita3k' ||
-                      item.id === 'scummvm' ||
-                      item.id === 'xemu' ||
-                      item.id === 'mgba' ||
-                      item.id === 'xenia'
-                    ) {
+                    if (item.id === 'rmg') {
                       return;
                     }
                   }

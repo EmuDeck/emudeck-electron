@@ -790,8 +790,9 @@ ipcMain.on('get-store', async (event) => {
     // GB HomebrewGames
     const dir = `${os.homedir()}/emudeck/store/`;
     let jsonArray: any = [];
-    fs.readdir(dir, (err: any, files: any) => {
-      return new Promise((resolve: any, reject: any) => {
+
+    await new Promise((resolve: any, reject: any) => {
+      fs.readdir(dir, (err: any, files: any) => {
         if (err) reject(err);
         files.forEach((file: any) => {
           if (file.includes('.json') && !file.includes('store')) {
@@ -805,14 +806,49 @@ ipcMain.on('get-store', async (event) => {
             }
           }
         });
-        const masterJson = {
-          store: jsonArray,
+        const storeJson = {
+          data: jsonArray,
         };
-        resolve(masterJson);
-      }).then((masterJson: any) => {
+        resolve(storeJson);
+      });
+    }).then(async (storeJson: any) => {
+      const dir = `${os.homedir()}/emudeck/feeds/`;
+      let jsonArray: any = [];
+
+      await new Promise((resolve: any, reject: any) => {
+        fs.readdir(dir, (err: any, files: any) => {
+          if (err) reject(err);
+          files.forEach((file: any) => {
+            if (file.includes('.json') && !file.includes('store')) {
+              const jsonPath = `${dir}${file}`;
+              try {
+                const data = fs.readFileSync(jsonPath);
+                const json = JSON.parse(data);
+                jsonArray = jsonArray.concat(json);
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          });
+          const feedsJson = {
+            data: jsonArray,
+          };
+
+          // console.log({ storeJson });
+          // console.log({ jsonArray });
+          const fullJson = {
+            store: storeJson,
+            feeds: feedsJson,
+          };
+
+          console.log({ fullJson });
+
+          resolve(fullJson);
+        });
+      }).then((fullJson: any) => {
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/store.json`,
-          JSON.stringify(masterJson)
+          JSON.stringify(fullJson)
         );
       });
     });
@@ -829,8 +865,6 @@ ipcMain.on('get-store', async (event) => {
       // Manejar cualquier error que pueda ocurrir en doUpdate o autoUpdater
       console.error('Error:', error);
     });
-
-  // });
 });
 
 ipcMain.on('build-store', async (event) => {
@@ -864,17 +898,17 @@ ipcMain.on('build-store', async (event) => {
             }
           }
         });
-        const masterJson = {
+        const storeJson = {
           system: `${system}`,
           status: 'true',
           name: `${name}`,
           games: jsonArray,
         };
-        resolve(masterJson);
-      }).then((masterJson: any) => {
+        resolve(storeJson);
+      }).then((storeJson: any) => {
         fs.writeFileSync(
           `${os.homedir()}/emudeck/store/${system}.json`,
-          JSON.stringify(masterJson)
+          JSON.stringify(storeJson)
         );
       });
     });

@@ -5,6 +5,7 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
+
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import { useNavigate } from 'react-router-dom';
 import { BtnSimple } from 'getbasecore/Atoms';
@@ -28,6 +29,7 @@ import {
   iconPackage,
   iconDisk,
   iconHelp,
+  iconScreen,
 } from 'components/utils/images/images';
 
 function WelcomePage() {
@@ -65,6 +67,21 @@ function WelcomePage() {
     });
   };
 
+  const uninstall = () => {
+    if (system === 'win32') {
+      setStatePage({ ...statePage, modal: modalData });
+      ipcChannel.sendMessage(
+        'emudeck',
+        'powershell -ExecutionPolicy Bypass -NoProfile -File "$env:APPDATA/EmuDeck/backend/uninstall.ps1"'
+      );
+    } else {
+      ipcChannel.sendMessage(
+        'bash',
+        'bash "~/.config/EmuDeck/backend/uninstall.sh"'
+      );
+    }
+  };
+
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
@@ -85,19 +102,16 @@ function WelcomePage() {
 
     if (system === 'win32') {
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
-      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
-      let srmPath;
-      if (storagePath === '' || !storagePath || storagePath === null) {
-        srmPath = 'C:\\';
-      } else {
-        srmPath = storagePath;
-      }
-      ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
-    } else if (system === 'darwin') {
+      ipcChannel.sendMessage(
+        'emudeck',
+        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"'
+      );
+    } else if (system !== 'darwin') {
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [`killall steam`]);
-      ipcChannel.sendMessage('run-app', `/Applications/Steam Rom Manager.app`);
+      ipcChannel.sendMessage(
+        'emudeck',
+        '"$toolsPath/launchers/srm/steamrommanager.sh"'
+      );
     } else {
       modalData = {
         active: true,
@@ -117,36 +131,20 @@ function WelcomePage() {
         css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam)`]);
-      console.log(
-        `"${storagePath}/Emulation/tools/Steam ROM Manager.AppImage"`
-      );
       ipcChannel.sendMessage(
-        'run-app',
-        `${storagePath}/Emulation/tools/Steam ROM Manager.AppImage`
+        'emudeck',
+        '"$toolsPath/launchers/srm/steamrommanager.sh"'
       );
     }
-    ipcChannel.once('run-app', (message) => {
-      console.log({ message });
-      if (message.includes('launched')) {
-        const timerId = setTimeout(() => {
-          setStatePage({
-            ...statePage,
-            modal: {
-              active: false,
-            },
-          });
-          clearTimeout(timerId);
-        }, 10000);
-      } else {
-        setStatePage({
-          ...statePage,
-          modal: {
-            active: false,
-          },
-        });
-      }
-    });
+    const timerId = setTimeout(() => {
+      setStatePage({
+        ...statePage,
+        modal: {
+          active: false,
+        },
+      });
+      clearTimeout(timerId);
+    }, 10000);
   };
 
   // show changelog after update
@@ -217,6 +215,9 @@ function WelcomePage() {
         const json = JSON.stringify(repoVersions);
         localStorage.removeItem('current_versions_beta');
         localStorage.setItem('current_versions_beta', json);
+
+        localStorage.setItem('ogStateAlternative', '');
+        localStorage.setItem('ogStateEmus', '');
 
         setStateCurrentConfigs(repoVersions);
       } else if (showChangelog === null && branch === 'beta') {
@@ -523,6 +524,15 @@ function WelcomePage() {
       function: () => functions.navigate('/check-bios'),
     },
     {
+      icon: [iconScreen],
+      title: 'Screen Resolution',
+      description: 'Upscale your emulators resolution',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: system !== 'aSteamOS',
+      function: () => functions.navigate('/change-resolution'),
+    },
+    {
       icon: [iconCloud],
       title: 'Cloud Saves',
       description: 'Sync or backup your saves and save states to the cloud',
@@ -575,8 +585,8 @@ function WelcomePage() {
       description: 'Uninstall EmuDeck from your system',
       button: 'Uninstall',
       btnCSS: 'btn-simple--3',
-      status: system !== 'win32' && system !== 'darwin',
-      function: () => functions.navigate('/uninstall'),
+      status: system !== 'darwin',
+      function: () => functions.uninstall(),
     },
   ];
 

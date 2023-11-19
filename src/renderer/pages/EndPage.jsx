@@ -6,7 +6,7 @@ import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import { BtnSimple } from 'getbasecore/Atoms';
-
+import Sonic from 'components/organisms/Sonic/Sonic';
 import End from 'components/organisms/Wrappers/End';
 
 function EndPage() {
@@ -89,19 +89,16 @@ function EndPage() {
 
     if (system === 'win32') {
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('emudeck', [`PS3Folders|||RPCS3_renameFolders`]);
-      ipcChannel.sendMessage('bash', [`taskkill /IM steam.exe /F`]);
-      let srmPath;
-      if (storagePath === '' || !storagePath || storagePath === null) {
-        srmPath = 'C:\\';
-      } else {
-        srmPath = storagePath;
-      }
-      ipcChannel.sendMessage('run-app', `${srmPath}Emulation\\tools\\srm.exe`);
-    } else if (system === 'darwin') {
+      ipcChannel.sendMessage(
+        'emudeck',
+        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/srm/steamrommanager.ps1"'
+      );
+    } else if (system !== 'darwin') {
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [`killall steam`]);
-      ipcChannel.sendMessage('run-app', `/Applications/Steam Rom Manager.app`);
+      ipcChannel.sendMessage(
+        'emudeck',
+        '"$toolsPath/launchers/srm/steamrommanager.sh"'
+      );
     } else {
       modalData = {
         active: true,
@@ -121,33 +118,20 @@ function EndPage() {
         css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage('bash', [`kill -15 $(pidof steam)`]);
       ipcChannel.sendMessage(
-        'run-app',
-        `"${storagePath}/Emulation/tools/Steam ROM Manager.AppImage"`
+        'emudeck',
+        '"$toolsPath/launchers/srm/steamrommanager.sh"'
       );
     }
-    ipcChannel.once('run-app', (message) => {
-      console.log({ message });
-      if (message.includes('launched')) {
-        const timerId = setTimeout(() => {
-          setStatePage({
-            ...statePage,
-            modal: {
-              active: false,
-            },
-          });
-          clearTimeout(timerId);
-        }, 10000);
-      } else {
-        setStatePage({
-          ...statePage,
-          modal: {
-            active: false,
-          },
-        });
-      }
-    });
+    const timerId = setTimeout(() => {
+      setStatePage({
+        ...statePage,
+        modal: {
+          active: false,
+        },
+      });
+      clearTimeout(timerId);
+    }, 10000);
   };
 
   const showLog = () => {
@@ -341,6 +325,10 @@ function EndPage() {
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
+            `echo doSetupFlycast="${!!overwriteConfigEmus.flycast
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
             `echo doSetupScummVM="${!!overwriteConfigEmus.scummvm
               .status}" >> ${settingsFile}`,
           ]);
@@ -427,6 +415,10 @@ function EndPage() {
           ]);
           ipcChannel.sendMessage('bash', [
             `echo doInstallVita3K="${!!installEmus.vita3k
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doInstallFlycast="${!!installEmus.flycast
               .status}" >> ${settingsFile}`,
           ]);
 
@@ -562,12 +554,6 @@ function EndPage() {
           ]);
 
           ipcChannel.sendMessage('bash', [
-            `echo doRASignIn="false" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
-            `echo doRAEnable="false" >> ${settingsFile}`,
-          ]);
-          ipcChannel.sendMessage('bash', [
             `echo doESDEThemePicker="false" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
@@ -581,11 +567,11 @@ function EndPage() {
           ]);
 
           // Achievements
-          ipcChannel.sendMessage('bash-nolog', [
-            `echo '${state.achievements.token}' > $HOME/.config/EmuDeck/.rat`,
+          ipcChannel.sendMessage('bash', [
+            `echo achievementsUser="${state.achievements.user}" >> ${settingsFile}`,
           ]);
-          ipcChannel.sendMessage('bash-nolog', [
-            `echo '${state.achievements.user}' > $HOME/.config/EmuDeck/.rau`,
+          ipcChannel.sendMessage('bash', [
+            `echo achievementsUserToken="${state.achievements.token}" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
@@ -628,6 +614,9 @@ function EndPage() {
           ipcChannel.sendMessage('bash', [
             `echo xeniaResolution="${state.resolutions.xenia}" >> ${settingsFile}`,
           ]);
+          ipcChannel.sendMessage('bash', [
+            `echo citraResolution="${state.resolutions.citra}" >> ${settingsFile}`,
+          ]);
 
           // ParserExclusion
 
@@ -654,6 +643,9 @@ function EndPage() {
           ]);
           ipcChannel.sendMessage('bash', [
             `echo emuSCUMMVM="${state.emulatorAlternative.scummvm}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
+            `echo emuDreamcast="${state.emulatorAlternative.dreamcast}" >> ${settingsFile}`,
           ]);
 
           // Closing
