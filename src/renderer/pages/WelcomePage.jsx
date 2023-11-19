@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+  useCallback,
+} from 'react';
 import { GlobalContext } from 'context/globalContext';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -50,6 +56,12 @@ function WelcomePage() {
     dom: undefined,
   });
   const { disabledNext, disabledBack, updates, modal, dom } = statePage;
+
+  const [stateNavigation, setStateNavigation] = useState({
+    domFocus: undefined,
+    move: false,
+  });
+  const { domFocus, move } = stateNavigation;
 
   const navigate = useNavigate();
   const selectMode = (value) => {
@@ -670,8 +682,8 @@ function WelcomePage() {
   let domElements;
 
   useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
+    if (dom === undefined) {
+      domElements = document.querySelectorAll('button');
       setStatePage({
         ...statePage,
         dom: domElements,
