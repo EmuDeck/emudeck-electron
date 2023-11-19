@@ -67,6 +67,21 @@ function WelcomePage() {
     });
   };
 
+  const uninstall = () => {
+    if (system === 'win32') {
+      setStatePage({ ...statePage, modal: modalData });
+      ipcChannel.sendMessage(
+        'emudeck',
+        'powershell -ExecutionPolicy Bypass -NoProfile -File "$env:APPDATA/EmuDeck/backend/uninstall.ps1"'
+      );
+    } else {
+      ipcChannel.sendMessage(
+        'bash',
+        'bash "~/.config/EmuDeck/backend/uninstall.sh"'
+      );
+    }
+  };
+
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
@@ -570,8 +585,8 @@ function WelcomePage() {
       description: 'Uninstall EmuDeck from your system',
       button: 'Uninstall',
       btnCSS: 'btn-simple--3',
-      status: system !== 'win32' && system !== 'darwin',
-      function: () => functions.navigate('/uninstall'),
+      status: system !== 'darwin',
+      function: () => functions.uninstall(),
     },
   ];
 
