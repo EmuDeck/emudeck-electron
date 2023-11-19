@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+  useCallback,
+} from 'react';
 import { GlobalContext } from 'context/globalContext';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -50,6 +56,12 @@ function WelcomePage() {
     dom: undefined,
   });
   const { disabledNext, disabledBack, updates, modal, dom } = statePage;
+
+  const [stateNavigation, setStateNavigation] = useState({
+    domFocus: undefined,
+    move: false,
+  });
+  const { domFocus, move } = stateNavigation;
 
   const navigate = useNavigate();
   const selectMode = (value) => {
@@ -669,9 +681,50 @@ function WelcomePage() {
   const domElementsCur = domElementsRef.current;
   let domElements;
 
+  // Keys Movement
+  const keyFunction = useCallback(
+    (event) => {
+      if (dom !== undefined) {
+        let newFocus = domFocus || 0; // Inicializa en 0 si es undefined
+
+        switch (event.key) {
+          case 'ArrowRight':
+          case 'ArrowLeft':
+          case 'ArrowUp':
+          case 'ArrowDown':
+            newFocus +=
+              event.key === 'ArrowDown' || event.key === 'ArrowRight' ? 1 : -1;
+            break;
+          default:
+            break;
+        }
+
+        setStateNavigation({
+          domFocus: Math.max(0, Math.min(newFocus, dom.length - 1)),
+        });
+      }
+    },
+    [domFocus, setStateNavigation, dom]
+  );
+
   useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
+    if (dom && domFocus) {
+      console.log({ domFocus });
+      dom[domFocus].focus();
+    }
+  }, [domFocus, dom]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', keyFunction, false);
+
+    return () => {
+      document.removeEventListener('keydown', keyFunction, false);
+    };
+  }, [keyFunction]);
+
+  useEffect(() => {
+    if (dom === undefined) {
+      domElements = document.querySelectorAll('button');
       setStatePage({
         ...statePage,
         dom: domElements,
