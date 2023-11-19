@@ -57,12 +57,6 @@ function WelcomePage() {
   });
   const { disabledNext, disabledBack, updates, modal, dom } = statePage;
 
-  const [stateNavigation, setStateNavigation] = useState({
-    domFocus: undefined,
-    move: false,
-  });
-  const { domFocus, move } = stateNavigation;
-
   const navigate = useNavigate();
   const selectMode = (value) => {
     setState({ ...state, mode: value });
