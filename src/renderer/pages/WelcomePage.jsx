@@ -681,47 +681,6 @@ function WelcomePage() {
   const domElementsCur = domElementsRef.current;
   let domElements;
 
-  // Keys Movement
-  const keyFunction = useCallback(
-    (event) => {
-      if (dom !== undefined) {
-        let newFocus = domFocus || 0; // Inicializa en 0 si es undefined
-
-        switch (event.key) {
-          case 'ArrowRight':
-          case 'ArrowLeft':
-          case 'ArrowUp':
-          case 'ArrowDown':
-            newFocus +=
-              event.key === 'ArrowDown' || event.key === 'ArrowRight' ? 1 : -1;
-            break;
-          default:
-            break;
-        }
-
-        setStateNavigation({
-          domFocus: Math.max(0, Math.min(newFocus, dom.length - 1)),
-        });
-      }
-    },
-    [domFocus, setStateNavigation, dom]
-  );
-
-  useEffect(() => {
-    if (dom && domFocus) {
-      console.log({ domFocus });
-      dom[domFocus].focus();
-    }
-  }, [domFocus, dom]);
-
-  useEffect(() => {
-    document.addEventListener('keydown', keyFunction, false);
-
-    return () => {
-      document.removeEventListener('keydown', keyFunction, false);
-    };
-  }, [keyFunction]);
-
   useEffect(() => {
     if (dom === undefined) {
       domElements = document.querySelectorAll('button');
