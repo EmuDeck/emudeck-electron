@@ -375,6 +375,7 @@ function WelcomePage() {
     navigate,
     migrationFixSDPaths,
     openWiki,
+    uninstall,
   };
 
   const settingsCardsFeatured = [
