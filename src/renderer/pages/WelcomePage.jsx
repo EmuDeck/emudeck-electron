@@ -156,7 +156,7 @@ function WelcomePage() {
         },
       });
       clearTimeout(timerId);
-    }, 10000);
+    }, 30000);
   };
 
   // show changelog after update
