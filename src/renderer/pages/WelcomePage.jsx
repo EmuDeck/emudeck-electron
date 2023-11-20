@@ -81,7 +81,6 @@ function WelcomePage() {
 
   const uninstall = () => {
     if (system === 'win32') {
-      setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
         'powershell -ExecutionPolicy Bypass -NoProfile -File "$env:APPDATA/EmuDeck/backend/uninstall.ps1"'
