@@ -343,12 +343,14 @@ function CheckUpdatePage() {
         active: true,
         header: (
           <span className="h4">
-            Building EmuDeck backend and running autodiagnostics...
+            Building EmuDeck backend and running autodiagnostics in the
+            background...
           </span>
         ),
         body: (
           <p>
-            Please wait a few seconds, if this takes too long restart EmuDeck.
+            Please wait a few seconds,{' '}
+            <strong>if this takes too long restart EmuDeck.</strong>
           </p>
         ),
         footer: <ProgressBar css="progress--success" infinite max="100" />,

@@ -91,7 +91,7 @@ function EndPage() {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
-        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/srm/steamrommanager.ps1"'
+        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"'
       );
     } else if (system === 'darwin') {
       setStatePage({ ...statePage, modal: modalData });
@@ -131,7 +131,7 @@ function EndPage() {
         },
       });
       clearTimeout(timerId);
-    }, 10000);
+    }, 30000);
   };
 
   const showLog = () => {
