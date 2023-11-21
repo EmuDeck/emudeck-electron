@@ -75,7 +75,6 @@ function WelcomePage() {
 
   const uninstall = () => {
     if (system === 'win32') {
-      setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
         'powershell -ExecutionPolicy Bypass -NoProfile -File "$env:APPDATA/EmuDeck/backend/uninstall.ps1"'
@@ -112,7 +111,7 @@ function WelcomePage() {
         'emudeck',
         'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"'
       );
-    } else if (system === 'darwin') {
+    } else if (system !== 'darwin') {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
@@ -150,7 +149,7 @@ function WelcomePage() {
         },
       });
       clearTimeout(timerId);
-    }, 10000);
+    }, 30000);
   };
 
   // show changelog after update
@@ -369,6 +368,7 @@ function WelcomePage() {
     navigate,
     migrationFixSDPaths,
     openWiki,
+    uninstall,
   };
 
   const settingsCardsFeatured = [
