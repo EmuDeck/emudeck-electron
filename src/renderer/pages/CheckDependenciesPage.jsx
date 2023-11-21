@@ -4,8 +4,13 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import { Img } from 'getbasecore/Atoms';
+import Card from 'components/molecules/Card/Card';
 import { iconSuccess, iconDanger } from 'components/utils/images/images';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
+
+import gitLogo from 'assets/git-logo.png';
+import steamLogo from 'assets/steam-logo.png';
 
 function CheckDependenciesPage() {
   const [stateGIT, setStateGIT] = useState({
@@ -26,8 +31,9 @@ function CheckDependenciesPage() {
 
   const [statePage, setStatePage] = useState({
     dom: undefined,
+    modal: false,
   });
-  const { dom } = statePage;
+  const { dom, modal } = statePage;
 
   const [counter, setCounter] = useState(0);
   useEffect(() => {
@@ -97,6 +103,28 @@ function CheckDependenciesPage() {
     });
   };
 
+  const showModal = (url) => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Downloading dependency</span>,
+      body: (
+        <>
+          <p>
+            If your download doesn't start please open this url in a browser:
+          </p>
+          <p>
+            <strong>{url}</strong>
+          </p>
+          <p>
+            After that, restart EmuDeck, if the problem persists restart your
+            device.
+          </p>
+        </>
+      ),
+    };
+    setStatePage({ ...statePage, modal: modalData });
+  };
+
   useEffect(() => {
     ipcChannel.sendMessage('system-info-in');
     ipcChannel.once('system-info-out', (system) => {
@@ -134,81 +162,64 @@ function CheckDependenciesPage() {
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
       <Wrapper>
-        <Header title="Checking dependencies..." />
+        {statusGIT === undefined ||
+          (statusSteam === undefined && (
+            <Header title="Checking dependencies..." />
+          ))}
 
-        <ul>
-          <li>
-            <p className="h5">
-              GIT{' '}
-              <Img
-                src={statusGIT === true ? iconSuccess : iconDanger}
-                css="icon icon--xs"
-                alt="OK"
-              />
-            </p>
-            {statusGIT === undefined && (
-              <>
-                <span className="h6">Installing...</span>
-                <ProgressBar css="progress--success" infinite max="100" />
-              </>
-            )}
+        {!statusGIT ||
+          (!statusSteam && (
+            <>
+              <Header title="Missing dependencies..." />
+              <p className="lead">
+                Please install the following programs, EmuDeck needs them to
+                work. After that, restart EmuDeck, if the problem persists
+                restart your device.
+              </p>
+            </>
+          ))}
 
-            {statusGIT === false && status7Zip === true && (
-              <span className="h6">Please restart EmuDeck to continue</span>
-            )}
-            <hr />
-          </li>
-          <li>
-            <p className="h5">
-              Steam{' '}
-              <Img
-                src={statusSteam === true ? iconSuccess : iconDanger}
-                css="icon icon--xs"
-                alt="OK"
-              />
-            </p>
-            {statusSteam === undefined && (
-              <>
-                <span className="h6">Checking...</span>
-                <ProgressBar css="progress--success" infinite max="100" />
-              </>
-            )}
-            {statusSteam !== true && (
-              <a
-                className="btn-simple btn-simple--1 btn-simple--xs"
-                href="https://store.steampowered.com/about/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Install Steam
-              </a>
-            )}
-            <hr />
-          </li>
-          <li>
-            <p className="h6">
-              If you can't go past this screen copy these commands in a
-              Powershell window.
-            </p>
-            <p className="h6">
-              If you are using Windows 10 Home you'll need to manually enable
-              Developer Mode in your Windows Settings
-            </p>
-            <code>
-              winget install -e --id Git.Git --accept-package-agreements
-              --accept-source-agreements;
-              <br />
-              winget install -e --id 7zip.7zip --accept-package-agreements
-              --accept-source-agreements;
-              <br />
-              winget install Microsoft.VCRedist.2015+.x64
-              --accept-package-agreements --accept-source-agreements;
-              <br />
-              winget install Microsoft.VCRedist.2015+.x86
-              --accept-package-agreements --accept-source-agreements
-            </code>
-          </li>
-        </ul>
+        <div className="container--grid">
+          {statusGIT !== true && (
+            <div data-col-sm="2">
+              <Card css="is-selected">
+                <img src={gitLogo} alt="GIT" />
+                <a
+                  className="btn-simple btn-simple--1 btn-simple--xs"
+                  href="https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe"
+                  rel="noreferrer"
+                  onClick={() =>
+                    showModal(
+                      'https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe'
+                    )
+                  }
+                >
+                  Download GIT
+                </a>
+              </Card>
+            </div>
+          )}
+          {statusSteam !== true && (
+            <div data-col-sm="2">
+              <Card css="is-selected">
+                <img src={steamLogo} alt="Steam" />
+                <a
+                  className="btn-simple btn-simple--1 btn-simple--xs"
+                  href="https://cdn.akamai.steamstatic.com/client/installer/SteamSetup.exe"
+                  rel="noreferrer"
+                  onClick={() =>
+                    showModal(
+                      'https://cdn.akamai.steamstatic.com/client/installer/SteamSetup.exe'
+                    )
+                  }
+                >
+                  Install Steam
+                </a>
+              </Card>
+            </div>
+          )}
+        </div>
+        <EmuModal modal={modal} />
       </Wrapper>
     </div>
   );
