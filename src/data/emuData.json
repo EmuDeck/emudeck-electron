@@ -54,13 +54,13 @@
     "altName": "CemuNative",
     "altCode": "CemuNative",
     "altButton": "Install Cemu AppImage",
-    "altWarning": "This action will install Cemu Appimage alongside your current Cemu.",
+    "altWarning": "This action will install Cemu AppImage alongside your current Cemu.",
     "alt2": true,
     "alt2Id": "CemuNative",
     "alt2Name": "CemuNative",
     "alt2Code": "CemuNative",
     "alt2Button": "Reset Cemu AppImage",
-    "alt2Warning": "This action will install Cemu Appimage alongside your current Cemu."
+    "alt2Warning": "This action will install Cemu AppImage alongside your current Cemu."
   },
   "dolphin": {
     "id": "dolphin",
