@@ -566,7 +566,7 @@ function WelcomePage() {
     },
 
     {
-      status: 'separator',
+      status: system !== 'win32' ? 'separator' : false,
       title: 'Third Party tools',
     },
 
