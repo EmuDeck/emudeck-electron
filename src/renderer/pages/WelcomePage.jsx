@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+  useCallback,
+} from 'react';
 import { GlobalContext } from 'context/globalContext';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -69,7 +75,6 @@ function WelcomePage() {
 
   const uninstall = () => {
     if (system === 'win32') {
-      setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
         'powershell -ExecutionPolicy Bypass -NoProfile -File "$env:APPDATA/EmuDeck/backend/uninstall.ps1"'
@@ -144,7 +149,7 @@ function WelcomePage() {
         },
       });
       clearTimeout(timerId);
-    }, 10000);
+    }, 30000);
   };
 
   // show changelog after update
@@ -363,6 +368,7 @@ function WelcomePage() {
     navigate,
     migrationFixSDPaths,
     openWiki,
+    uninstall,
   };
 
   const settingsCardsFeatured = [
@@ -415,7 +421,7 @@ function WelcomePage() {
         'Support EmuDeck on Patreon and get early access to our latest features',
       button: 'Donate',
       btnCSS: 'btn-simple--3',
-      status: branch === 'demo',
+      status: branch !== 'early',
       type: 'link',
       href: 'https://www.patreon.com/bePatron?u=29065992',
       function: () => {},
@@ -435,7 +441,14 @@ function WelcomePage() {
       description: 'Transfer your games using a USB Drive',
       button: 'Add more games',
       btnCSS: 'btn-simple--1',
-      status: system !== 'win32' && system !== 'darwin',
+      status:
+        system === 'win32' && system === 'darwin'
+          ? false
+          : systemName === 'SteamOS' ||
+            systemName === 'Linux' ||
+            systemName === 'Chimera'
+          ? true
+          : 'disabled',
       function: () => functions.navigate('/copy-games'),
     },
     {
@@ -459,14 +472,104 @@ function WelcomePage() {
       function: () => selectMode('expert'),
     },
     {
-      icon: [iconDoc],
-      title: 'Get Log files',
-      description: 'Send us your logs if you have issues',
-      button: 'Create Zip',
+      status: 'separator',
+      title: 'Other Settings',
+    },
+    {
+      icon: [iconScreen],
+      title: 'Screen Resolution',
+      description: 'Upscale your emulators resolution',
+      button: 'More info',
       btnCSS: 'btn-simple--5',
       status: true,
-      function: () => functions.getLogs(),
+      function: () => functions.navigate('/change-resolution'),
     },
+    {
+      icon: [iconPrize],
+      title: 'RetroAchievements',
+      description:
+        'Configure RetroAchievements for Duckstation, PCSX2, and RetroArch',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/RA-achievements-config'),
+    },
+
+    {
+      status: 'separator',
+      title: 'EmuDeck Exclusive Tools',
+    },
+
+    {
+      icon: [iconCompress],
+      title: 'EmuDeck Compressor',
+      description: 'Compress your ROMs to optimize your storage',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status:
+        system === 'win32' && system === 'darwin'
+          ? false
+          : systemName === 'SteamOS' ||
+            systemName === 'Linux' ||
+            systemName === 'Chimera'
+          ? true
+          : 'disabled',
+      function: () => functions.navigate('/chd-tool'),
+    },
+    {
+      icon: [iconSuccess],
+      title: 'BIOS Checker',
+      description: 'Use the EmuDeck BIOS Checker to validate your BIOS',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: true,
+      function: () => functions.navigate('/check-bios'),
+    },
+
+    {
+      icon: [iconCloud],
+      title: 'Cloud Saves',
+      description: 'Sync or backup your saves and save states to the cloud',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: branch.includes('early') || branch === 'dev' ? true : 'early',
+      function: () => functions.navigate('/cloud-sync/welcome'),
+    },
+
+    {
+      icon: [iconMigrate],
+      title: 'Migrate Installation',
+      description:
+        'Migrate your EmuDeck installation to your SD Card or vice versa',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status:
+        system === 'win32' && system === 'darwin'
+          ? false
+          : systemName === 'SteamOS' ||
+            systemName === 'Linux' ||
+            systemName === 'Chimera'
+          ? true
+          : 'disabled',
+      function: () => functions.navigate('/migration'),
+    },
+
+    {
+      icon: [iconPlugin],
+      title: 'EmuDecky',
+      description:
+        'Plugin to easily view emulator hotkeys and configure EmuDeck in Gaming Mode',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: system !== 'win32',
+      function: () => functions.navigate('/decky-controls'),
+    },
+
+    {
+      status: 'separator',
+      title: 'Third Party tools',
+    },
+
     {
       icon: [iconCustom],
       title: 'Online Multiplayer',
@@ -475,6 +578,15 @@ function WelcomePage() {
       btnCSS: 'btn-simple--5',
       status: false,
       function: () => functions.navigate('/remote-play-whatever'),
+    },
+    {
+      icon: [iconPlugin],
+      title: 'Gyroscope',
+      description: 'Enable your Steam Deck gyroscope in emulation',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status: system === 'SteamOS',
+      function: () => functions.navigate('/gyrodsu'),
     },
     {
       icon: [iconPlugin],
@@ -487,88 +599,29 @@ function WelcomePage() {
       function: () => functions.navigate('/power-tools'),
     },
     {
-      icon: [iconPlugin],
-      title: 'EmuDecky',
-      description:
-        'A Decky Loader Plugin to easily view emulator hotkeys and configure EmuDeck while in Game Mode',
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: system !== 'win32',
-      function: () => functions.navigate('/decky-controls'),
-    },
-    {
-      icon: [iconPlugin],
-      title: 'Gyroscope',
-      description: 'Enable your Steam Deck gyroscope in emulation',
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: system === 'SteamOS',
-      function: () => functions.navigate('/gyrodsu'),
-    },
-    {
-      icon: [iconCompress],
-      title: 'EmuDeck Compressor',
-      description: 'Compress your ROMs to optimize your storage',
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: system !== 'win32' && system !== 'darwin',
-      function: () => functions.navigate('/chd-tool'),
-    },
-    {
-      icon: [iconSuccess],
-      title: 'BIOS Checker',
-      description: 'Use the EmuDeck BIOS Checker to validate your BIOS',
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: true,
-      function: () => functions.navigate('/check-bios'),
-    },
-    {
-      icon: [iconScreen],
-      title: 'Screen Resolution',
-      description: 'Upscale your emulators resolution',
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: system !== 'aSteamOS',
-      function: () => functions.navigate('/change-resolution'),
-    },
-    {
-      icon: [iconCloud],
-      title: 'Cloud Saves',
-      description: 'Sync or backup your saves and save states to the cloud',
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: branch.includes('early') || branch === 'dev',
-      function: () => functions.navigate('/cloud-sync/welcome'),
-    },
-    {
-      icon: [iconCloud],
-      title: 'Cloud Services Manager',
-      description: 'Manage your cloud services, Xbox Cloud Gaming, and more!',
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: system !== 'win32' && system !== 'darwin',
-      function: () => functions.openCSM(),
+      status: 'separator',
+      title: 'Other stuff',
     },
     {
       icon: [iconPrize],
-      title: 'RetroAchievements',
+      title: 'Get Early Access',
       description:
-        'Configure RetroAchievements for Duckstation, PCSX2, and RetroArch',
-      button: 'More info',
-      btnCSS: 'btn-simple--5',
-      status: true,
-      function: () => functions.navigate('/RA-achievements-config'),
+        'Support EmuDeck on Patreon and get early access to our latest features',
+      button: 'Donate',
+      btnCSS: 'btn-simple--3',
+      status: !branch.includes('early'),
+      type: 'link',
+      href: 'https://www.patreon.com/bePatron?u=29065992',
+      function: () => {},
     },
     {
-      icon: [iconMigrate],
-      title: 'Migrate Installation',
-      description:
-        'Migrate your EmuDeck installation to your SD Card or vice versa',
-      button: 'More info',
+      icon: [iconDoc],
+      title: 'Get Log files',
+      description: 'Send us your logs if you have issues',
+      button: 'Create Zip',
       btnCSS: 'btn-simple--5',
-      status: system !== 'win32' && system !== 'darwin',
-      function: () => functions.navigate('/migration'),
+      status: true,
+      function: () => functions.getLogs(),
     },
     {
       icon: [iconList],
@@ -578,6 +631,23 @@ function WelcomePage() {
       btnCSS: 'btn-simple--5',
       status: true,
       function: () => functions.navigate('/change-log'),
+    },
+
+    {
+      icon: [iconCloud],
+      title: 'Cloud Services Manager',
+      description: 'Manage your cloud services, Xbox Cloud Gaming, and more!',
+      button: 'More info',
+      btnCSS: 'btn-simple--5',
+      status:
+        system === 'win32' && system === 'darwin'
+          ? false
+          : systemName === 'SteamOS' ||
+            systemName === 'Linux' ||
+            systemName === 'Chimera'
+          ? true
+          : 'disabled',
+      function: () => functions.openCSM(),
     },
     {
       icon: [iconUninstall],
@@ -598,7 +668,7 @@ function WelcomePage() {
         description: 'Add emulators, tools, or ROMs to your Steam Library',
         button: 'Launch',
         btnCSS: 'btn-simple--5',
-        status: true,
+        status: 'true',
         function: () => functions.openSRM(),
       },
       {
@@ -649,18 +719,6 @@ function WelcomePage() {
         status: true,
         function: () => functions.navigate('/change-log'),
       },
-      {
-        icon: [iconPrize],
-        title: 'Early Access',
-        description:
-          'Support EmuDeck on Patreon and get early access to our latest features',
-        button: 'Donate',
-        btnCSS: 'btn-simple--3',
-        status: !branch.includes('early'),
-        type: 'link',
-        href: 'https://www.patreon.com/bePatron?u=29065992',
-        function: () => {},
-      },
     ];
   }
 
@@ -670,8 +728,8 @@ function WelcomePage() {
   let domElements;
 
   useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
+    if (dom === undefined) {
+      domElements = document.querySelectorAll('button');
       setStatePage({
         ...statePage,
         dom: domElements,

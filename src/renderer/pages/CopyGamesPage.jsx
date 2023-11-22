@@ -4,6 +4,7 @@ import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import Header from 'components/organisms/Header/Header';
 import { BtnSimple } from 'getbasecore/Atoms';
 import CopyGames from 'components/organisms/Wrappers/CopyGames';
@@ -147,7 +148,7 @@ function CopyGamesPage() {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
-        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/srm/steamrommanager.ps1"'
+        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"'
       );
     } else if (system !== 'darwin') {
       setStatePage({ ...statePage, modal: modalData });
@@ -187,7 +188,7 @@ function CopyGamesPage() {
         },
       });
       clearTimeout(timerId);
-    }, 10000);
+    }, 30000);
   };
 
   const skipAddingGames = () => {
