@@ -4,6 +4,7 @@ import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import GamePad from 'components/organisms/GamePad/GamePad';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import Header from 'components/organisms/Header/Header';
 import { BtnSimple } from 'getbasecore/Atoms';
 import CopyGames from 'components/organisms/Wrappers/CopyGames';

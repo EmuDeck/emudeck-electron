@@ -735,16 +735,6 @@ function EndPage() {
           <BtnSimple
             css="btn-simple--1"
             type="button"
-            aria="Go Back"
-            disabled={false}
-            onClick={showLog}
-          >
-            Watch Log
-          </BtnSimple>
-
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
             aria="Go Next"
             disabled={disabledNext && 'true'}
             onClick={() => navigate(nextPage)}
