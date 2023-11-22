@@ -86,7 +86,7 @@ function EmulatorsPage() {
     dom,
   } = statePage;
 
-  const { system, installEmus, installFrontends } = state;
+  const { system, installEmus, installFrontends, branch } = state;
 
   const installEmusArray = Object.values(installEmus);
   const installFrontendsArray = Object.values(installFrontends);
@@ -320,6 +320,15 @@ function EmulatorsPage() {
                   const updateNotif = updates[item.id];
                   if (system === 'win32') {
                     if (item.id === 'rmg') {
+                      return;
+                    }
+                  }
+                  if (system === 'win32' && branch === 'beta') {
+                    if (
+                      item.id === 'mame' ||
+                      item.id === 'flycast' ||
+                      item.id === 'mgba'
+                    ) {
                       return;
                     }
                   }
