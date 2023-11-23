@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import { useParams } from 'react-router-dom';
 import CloudSyncConfig from 'components/organisms/Wrappers/CloudSyncConfig';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+import PatreonLogin from 'components/organisms/PatreonLogin/PatreonLogin';
 
 function CloudSyncPageConfig() {
   const { state, setState } = useContext(GlobalContext);
@@ -376,24 +377,26 @@ function CloudSyncPageConfig() {
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
-      <Wrapper>
-        <Header title="Cloud Saves - Select your provider" />
-        <CloudSyncConfig
-          onClick={cloudSyncSet}
-          onClickInstall={installRclone}
-          onClickUninstall={uninstallRclone}
-          disableButton={disableButton}
-          showLoginButton={showLoginButton}
-        />
+      <PatreonLogin>
+        <Wrapper>
+          <Header title="Cloud Saves - Select your provider" />
+          <CloudSyncConfig
+            onClick={cloudSyncSet}
+            onClickInstall={installRclone}
+            onClickUninstall={uninstallRclone}
+            disableButton={disableButton}
+            showLoginButton={showLoginButton}
+          />
 
-        <Footer
-          next={nextButtonStatus()}
-          nextText="Copy games"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
+          <Footer
+            next={nextButtonStatus()}
+            nextText="Copy games"
+            disabledNext={disabledNext}
+            disabledBack={disabledBack}
+          />
+          <EmuModal modal={modal} />
+        </Wrapper>
+      </PatreonLogin>
     </div>
   );
 }

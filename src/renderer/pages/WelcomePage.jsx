@@ -6,8 +6,9 @@ import React, {
   useCallback,
 } from 'react';
 import { GlobalContext } from 'context/globalContext';
-import GamePad from 'components/organisms/GamePad/GamePad';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import GamePad from 'components/organisms/GamePad/GamePad';
+
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
@@ -334,39 +335,11 @@ function WelcomePage() {
     window.open(url, '_blank');
   };
 
-  const migrationFixSDPaths = () => {
-    ipcChannel.sendMessage('emudeck', [`SDPaths|||Migration_fix_SDPaths`]);
-    ipcChannel.once('SDPaths', (message) => {
-      let modalData;
-      message.includes('true')
-        ? (modalData = {
-            active: true,
-            header: <span className="h4">Success!</span>,
-            body: <p>Paths fixed</p>,
-            css: 'emumodal--xs',
-          })
-        : (modalData = {
-            active: true,
-            header: <span className="h4">Ooops 😞</span>,
-            body: (
-              <p>
-                There was an error trying to fix your paths. If the problem
-                persist rerun SteamRomManager to fix them
-              </p>
-            ),
-            css: 'emumodal--xs',
-          });
-
-      setStatePage({ ...statePage, modal: modalData });
-    });
-  };
-
   const functions = {
     openSRM,
     openCSM,
     getLogs,
     navigate,
-    migrationFixSDPaths,
     openWiki,
     uninstall,
   };
@@ -635,7 +608,7 @@ function WelcomePage() {
 
     {
       icon: [iconCloud],
-      title: 'Cloud Services Manager',
+      title: 'Cloud Services',
       description: 'Manage your cloud services, Xbox Cloud Gaming, and more!',
       button: 'More info',
       btnCSS: 'btn-simple--5',
@@ -740,7 +713,7 @@ function WelcomePage() {
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
-      <Wrapper>
+      <Wrapper data={settingsCards} functions={functions}>
         {second === false && (
           <Header title={`Welcome to EmuDeck for ${systemName}`} />
         )}

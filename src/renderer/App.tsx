@@ -67,6 +67,10 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 const branch = require('data/branch.json');
 
 export default function App() {
+  const [stateAside, setStateAside] = useState({
+    links: false,
+  });
+
   const [stateCurrentConfigs, setStateCurrentConfigs] = useState({
     ra: { id: 'ra', code: 'RetroArch', version: 0 },
     dolphin: { id: 'dolphin', code: 'Dolphin', version: 0 },
@@ -315,6 +319,8 @@ export default function App() {
         setState,
         stateCurrentConfigs,
         setStateCurrentConfigs,
+        stateAside,
+        setStateAside,
       }}
     >
       <Router>
