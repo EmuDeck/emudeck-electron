@@ -628,7 +628,6 @@ function CheckUpdatePage() {
   }, [cloned]);
 
   useEffect(() => {
-    navigate('/emulators');
     if (downloadComplete === true) {
       if (second) {
         navigate('/emulators');
@@ -952,7 +951,12 @@ function CheckUpdatePage() {
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
-      <Wrapper data={settingsCards} functions={functions} aside={false}>
+      <Wrapper
+        css="wrapper__full"
+        data={settingsCards}
+        functions={functions}
+        aside={false}
+      >
         <Kamek />
         <Header title="EmuDeck is loading..." />
         <EmuModal modal={modal} />

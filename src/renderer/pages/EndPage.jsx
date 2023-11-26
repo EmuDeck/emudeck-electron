@@ -703,7 +703,7 @@ function EndPage() {
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
-      <Wrapper aside={false}>
+      <Wrapper css="wrapper__full" aside={false}>
         {disabledNext === true && (
           <Header title="We are completing your installation..." />
         )}
