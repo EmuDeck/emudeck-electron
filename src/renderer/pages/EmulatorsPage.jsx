@@ -35,9 +35,49 @@ import {
   imgFrontESDE,
   imgmelonds,
   imgmgba,
+  xemuBig,
+  cemuBig,
+  citraBig,
+  dolphinBig,
+  duckstationBig,
+  flycastBig,
+  melondsBig,
+  mgbaBig,
+  pcsx2Big,
+  ppssppBig,
+  primehackBig,
+  raBig,
+  rpcs3Big,
+  ryujinxBig,
+  scummvmBig,
+  vita3kBig,
+  xeniaBig,
+  yuzuBig,
+  esdeBig,
+  srmBig,
+} from 'components/utils/images/images';
+
+import {
+  iconSuccess,
+  iconCloud,
+  iconCompress,
+  iconGear,
+  iconList,
+  iconMigrate,
+  iconPlugin,
+  iconPrize,
+  iconUninstall,
+  iconQuick,
+  iconCustom,
+  iconDoc,
+  iconJoystick,
+  iconPackage,
+  iconDisk,
+  iconHelp,
+  iconScreen,
   iconGear,
   iconPackage,
-} from 'components/utils/images/images';
+} from 'components/utils/images/icons';
 
 const images = {
   ra: imgra,
@@ -64,6 +104,29 @@ const images = {
   mgba: imgmgba,
   xenia: imgxenia,
   srm: imgsrm,
+};
+
+const imagesBig = {
+  xemu: xemuBig,
+  cemu: cemuBig,
+  citra: citraBig,
+  dolphin: dolphinBig,
+  duckstation: duckstationBig,
+  flycast: flycastBig,
+  melonds: melondsBig,
+  mgba: mgbaBig,
+  pcsx2: pcsx2Big,
+  ppsspp: ppssppBig,
+  primehack: primehackBig,
+  ra: raBig,
+  rpcs3: rpcs3Big,
+  ryujinx: ryujinxBig,
+  scummvm: scummvmBig,
+  vita3k: vita3kBig,
+  xenia: xeniaBig,
+  yuzu: yuzuBig,
+  esde: esdeBig,
+  srm: srmBig,
 };
 
 function EmulatorsPage() {
@@ -284,8 +347,8 @@ function EmulatorsPage() {
           {updates && (
             <>
               <div className="container--grid">
-                {Object.keys(updates).length > 0 && system !== 'darwin' && (
-                  <div data-col-md="4">
+                {Object.keys(updates).length > 0 && (
+                  <div data-col-md="6">
                     <CardSettings
                       icon={iconGear}
                       css="is-highlighted"
@@ -299,7 +362,7 @@ function EmulatorsPage() {
                   </div>
                 )}
                 {system !== 'win32' && system !== 'darwin' && (
-                  <div data-col-md="4">
+                  <div data-col-md="6">
                     <CardSettings
                       icon={iconPackage}
                       css="is-highlighted"
@@ -317,6 +380,7 @@ function EmulatorsPage() {
               <div className="container--grid">
                 {installEmusArray.map((item) => {
                   const img = images[item.id];
+                  const picture = imagesBig[item.id];
                   const updateNotif = updates[item.id];
                   if (system === 'win32') {
                     if (item.id === 'rmg') {
@@ -337,14 +401,15 @@ function EmulatorsPage() {
                   }
 
                   if (system === 'darwin') {
-                    if (item.id !== 'ra') {
+                    if (item.id !== 'ra' && item.id !== 'srm') {
                       return;
                     }
                   }
                   return (
-                    <div key={item.id} data-col-md="2">
+                    <div key={item.id} data-col-md="4">
                       <CardSettings
                         icon={img}
+                        picture={picture}
                         css="is-highlighted"
                         btnCSS={
                           item.status === true
@@ -353,7 +418,7 @@ function EmulatorsPage() {
                         }
                         iconSize="sm"
                         title={`${item.name}`}
-                        button={item.status === true ? 'Manage' : 'Install'}
+                        button="Manage"
                         onClick={() => navigate(`/emulators-detail/${item.id}`)}
                         notification={
                           item.status === true
@@ -366,6 +431,7 @@ function EmulatorsPage() {
                 })}
                 {installFrontendsArray.map((item) => {
                   const img = images[item.id];
+                  const picture = imagesBig[item.id];
                   const updateNotif = updates[item.id];
 
                   if (item.id === 'pegasus' || item.id === 'steam') {
@@ -373,9 +439,10 @@ function EmulatorsPage() {
                   }
 
                   return (
-                    <div key={item.id} data-col-md="2">
+                    <div key={item.id} data-col-md="4">
                       <CardSettings
                         icon={img}
+                        picture={picture}
                         css="is-highlighted"
                         btnCSS={
                           item.status === true
@@ -384,7 +451,7 @@ function EmulatorsPage() {
                         }
                         iconSize="sm"
                         title={`${item.name}`}
-                        button={item.status === true ? 'Manage' : 'Install'}
+                        button="Manage"
                         onClick={() => navigate(`/emulators-detail/${item.id}`)}
                         notification={
                           item.status === true
@@ -401,6 +468,7 @@ function EmulatorsPage() {
         </Main>
         <Footer
           next={false}
+          back={false}
           disabledNext={disabledNext}
           disabledBack={disabledBack}
         />

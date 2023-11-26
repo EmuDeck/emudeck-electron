@@ -377,8 +377,9 @@ function CloudSyncPageConfig() {
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
-      <PatreonLogin>
-        <Wrapper>
+
+      <Wrapper>
+        <PatreonLogin>
           <Header title="Cloud Saves - Select your provider" />
           <CloudSyncConfig
             onClick={cloudSyncSet}
@@ -395,8 +396,8 @@ function CloudSyncPageConfig() {
             disabledBack={disabledBack}
           />
           <EmuModal modal={modal} />
-        </Wrapper>
-      </PatreonLogin>
+        </PatreonLogin>
+      </Wrapper>
     </div>
   );
 }

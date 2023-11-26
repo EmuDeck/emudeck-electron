@@ -135,15 +135,16 @@ function CheckDependenciesPage() {
         check7Zip();
         // //Steam?
         checkSteam();
+        navigate('/check-updates');
       } else {
-        navigate('/patreon-login');
+        navigate('/check-updates');
       }
     });
   }, []);
 
   useEffect(() => {
     if (statusGIT === true && status7Zip === true) {
-      navigate('/patreon-login');
+      navigate('/check-updates');
     }
   }, [statusGIT, status7Zip]);
 
@@ -161,7 +162,7 @@ function CheckDependenciesPage() {
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
-      <Wrapper>
+      <Wrapper aside={false}>
         {statusGIT === undefined ||
           (statusSteam === undefined && (
             <Header title="Checking dependencies..." />
