@@ -188,7 +188,7 @@ const createWindow = async () => {
       height: screenHeight,
       titleBarStyle: 'hidden',
       titleBarOverlay: {
-        color: '#ecf2f8',
+        color: 'transparent',
         symbolColor: '#111011',
         height: 40,
       },
