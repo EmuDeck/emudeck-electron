@@ -628,6 +628,7 @@ function CheckUpdatePage() {
   }, [cloned]);
 
   useEffect(() => {
+    navigate('/emulators');
     if (downloadComplete === true) {
       if (second) {
         navigate('/emulators');
