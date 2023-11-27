@@ -378,7 +378,6 @@
     "id": "esde",
     "name": "EmulationStation DE",
     "code": "ESDE",
-
     "description": "EmulationStation Desktop Edition (ES-DE) is a frontend application for browsing and launching games from your multi-platform game collection.",
     "special_configuration": "",
     "bios": [],
@@ -389,5 +388,15 @@
     "altCode": "ESDE20",
     "altButton": "Install ESDE 2.0 Prerelease",
     "altWarning": "This action will replace your installation with ESDE 2.0 Prerelease. To undone this action you'll need to click the ReInstall button"
+  },
+  "pegasus": {
+    "id": "pegasus",
+    "name": "Pegasus Frontend",
+    "code": "pegasus",
+    "description": "A cross platform, customizable graphical frontend for launching emulators and managing your game collection.",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "",
+    "alt": false
   }
 }

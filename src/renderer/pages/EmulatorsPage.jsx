@@ -35,26 +35,27 @@ import {
   imgFrontESDE,
   imgmelonds,
   imgmgba,
-  xemuBig,
-  cemuBig,
-  citraBig,
-  dolphinBig,
-  duckstationBig,
-  flycastBig,
-  melondsBig,
-  mgbaBig,
-  pcsx2Big,
-  ppssppBig,
-  primehackBig,
-  raBig,
-  rpcs3Big,
-  ryujinxBig,
-  scummvmBig,
-  vita3kBig,
-  xeniaBig,
-  yuzuBig,
-  esdeBig,
-  srmBig,
+  xemuGrid,
+  cemuGrid,
+  citraGrid,
+  dolphinGrid,
+  duckstationGrid,
+  flycastGrid,
+  melondsGrid,
+  mgbaGrid,
+  pcsx2Grid,
+  ppssppGrid,
+  primehackGrid,
+  raGrid,
+  rpcs3Grid,
+  ryujinxGrid,
+  scummvmGrid,
+  vita3kGrid,
+  xeniaGrid,
+  yuzuGrid,
+  esdeGrid,
+  srmGrid,
+  pegasusGrid,
 } from 'components/utils/images/images';
 
 import {
@@ -106,27 +107,28 @@ const images = {
   srm: imgsrm,
 };
 
-const imagesBig = {
-  xemu: xemuBig,
-  cemu: cemuBig,
-  citra: citraBig,
-  dolphin: dolphinBig,
-  duckstation: duckstationBig,
-  flycast: flycastBig,
-  melonds: melondsBig,
-  mgba: mgbaBig,
-  pcsx2: pcsx2Big,
-  ppsspp: ppssppBig,
-  primehack: primehackBig,
-  ra: raBig,
-  rpcs3: rpcs3Big,
-  ryujinx: ryujinxBig,
-  scummvm: scummvmBig,
-  vita3k: vita3kBig,
-  xenia: xeniaBig,
-  yuzu: yuzuBig,
-  esde: esdeBig,
-  srm: srmBig,
+const imagesGrid = {
+  xemu: xemuGrid,
+  cemu: cemuGrid,
+  citra: citraGrid,
+  dolphin: dolphinGrid,
+  duckstation: duckstationGrid,
+  flycast: flycastGrid,
+  melonds: melondsGrid,
+  mgba: mgbaGrid,
+  pcsx2: pcsx2Grid,
+  ppsspp: ppssppGrid,
+  primehack: primehackGrid,
+  ra: raGrid,
+  rpcs3: rpcs3Grid,
+  ryujinx: ryujinxGrid,
+  scummvm: scummvmGrid,
+  vita3k: vita3kGrid,
+  xenia: xeniaGrid,
+  yuzu: yuzuGrid,
+  esde: esdeGrid,
+  srm: srmGrid,
+  pegasus: pegasusGrid,
 };
 
 function EmulatorsPage() {
@@ -193,6 +195,12 @@ function EmulatorsPage() {
 
         if (item.id === 'ares') {
           return;
+        }
+
+        if (system === 'win32') {
+          if (item.id === 'rmg' || item.id === 'mgba') {
+            return;
+          }
         }
 
         const modalData = {
@@ -380,7 +388,7 @@ function EmulatorsPage() {
               <div className="container--grid">
                 {installEmusArray.map((item) => {
                   const img = images[item.id];
-                  const picture = imagesBig[item.id];
+                  const picture = imagesGrid[item.id];
                   const updateNotif = updates[item.id];
                   if (system === 'win32') {
                     if (item.id === 'rmg') {
@@ -431,10 +439,10 @@ function EmulatorsPage() {
                 })}
                 {installFrontendsArray.map((item) => {
                   const img = images[item.id];
-                  const picture = imagesBig[item.id];
+                  const picture = imagesGrid[item.id];
                   const updateNotif = updates[item.id];
 
-                  if (item.id === 'pegasus' || item.id === 'steam') {
+                  if (item.id === 'steam') {
                     return;
                   }
 

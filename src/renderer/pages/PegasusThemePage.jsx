@@ -9,7 +9,7 @@ import PegasusTheme from 'components/organisms/Wrappers/PegasusTheme';
 
 function PegasusThemePage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, mode, installFrontends } = state;
+  const { system, mode, installFrontends } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -32,10 +32,13 @@ function PegasusThemePage() {
   }, []);
 
   const nextPage = () => {
-    if (installFrontends.esde.status === true) {
-      return 'esde-theme';
+    if (system === 'SteamOS') {
+      return 'confirmation';
     }
-    return 'confirmation';
+    if (mode === 'easy') {
+      return 'end';
+    }
+    return 'emulator-resolution';
   };
 
   // GamePad
@@ -52,7 +55,7 @@ function PegasusThemePage() {
   return (
     <div style={{ height: '100vh' }} ref={domElementsRef}>
       {dom !== undefined && <GamePad elements={dom} />}
-      <Wrapper>
+      <Wrapper aside={false}>
         <Header title="Pegasus Default Theme" />
         <PegasusTheme themes={themes} onClick={themeSet} />
         <Footer

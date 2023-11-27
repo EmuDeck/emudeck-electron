@@ -222,13 +222,23 @@ function FrontendSelectorPage() {
   }, [statePage]);
 
   const nextPage = () => {
-    if (system !== 'SteamOS') {
-      return 'emulator-resolution';
+    if (installFrontends.pegasus.status && installFrontends.esde.status) {
+      return 'esde-theme';
     }
-    if (mode === 'easy') {
-      return 'end';
+    if (installFrontends.esde.status) {
+      return 'esde-theme';
     }
-    return 'confirmation';
+    if (installFrontends.pegasus.status) {
+      return 'pegasus-theme';
+    }
+
+    // if (system !== 'SteamOS') {
+    //   return 'emulator-resolution';
+    // }
+    // if (mode === 'easy') {
+    //   return 'end';
+    // }
+    // return 'confirmation';
   };
 
   return (
@@ -242,9 +252,11 @@ function FrontendSelectorPage() {
           images={images}
         />
         <Footer
-          next={!installFrontends.esde.status ? nextPage() : 'esde-theme'}
+          next={nextPage()}
           disabledNext={
-            !installFrontends.esde.status && !installFrontends.steam.status
+            !installFrontends.esde.status &&
+            !installFrontends.pegasus.status &&
+            !installFrontends.steam.status
           }
           disabledBack={disabledBack}
         />

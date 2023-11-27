@@ -452,7 +452,7 @@ function CheckUpdatePage() {
           // Update timeout
         });
       } else {
-        // alert('cloned desconocido');
+        alert("There's been an issue. Please restart EmuDeck and try again");
         setStatePage({ ...statePage, downloadComplete: true });
       }
     }
