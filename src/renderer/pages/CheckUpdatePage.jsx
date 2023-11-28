@@ -67,6 +67,22 @@ function CheckUpdatePage() {
     }
   }, [system]);
 
+  const showLog = () => {
+    if (system === 'win32') {
+      ipcChannel.sendMessage('bash-nolog', [
+        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/logs/git-pull.log -Tail 100 -Wait }"`,
+      ]);
+    } else if (system === 'darwin') {
+      ipcChannel.sendMessage('bash-nolog', [
+        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/emudeck/logs/git-pull.log"'`,
+      ]);
+    } else {
+      ipcChannel.sendMessage('bash-nolog', [
+        `konsole -e tail -f "$HOME/emudeck/logs/git-pull.log"`,
+      ]);
+    }
+  };
+
   useEffect(() => {
     // Update timeout + Force clone check
 
@@ -141,6 +157,7 @@ function CheckUpdatePage() {
         delete settingsStorage.installEmus.melonDS;
         delete settingsStorage.installEmus.cemunative;
         delete settingsStorage.overwriteConfigEmus.primehacks;
+        delete settingsStorage.installFrontends.pegasus;
         const installEmusStored = settingsStorage.installEmus;
 
         if (system === 'darwin') {
@@ -213,9 +230,6 @@ function CheckUpdatePage() {
             'gameOS',
           ];
         }
-
-        console.log(settingsStorage.emulatorAlternative.nds);
-
         // Theres probably a better way to do this...
 
         ipcChannel.sendMessage('version');

@@ -204,11 +204,11 @@ function DeviceSelectorPage() {
                     </Card>
 
                     <Card
-                      css={device === 'ChimeraOS' && 'is-selected'}
-                      onClick={() => deviceSet('ChimeraOS')}
+                      css={device === 'chimeraos' && 'is-selected'}
+                      onClick={() => deviceSet('chimeraos')}
                     >
                       <img src={imgchimeraOS} width="100" alt="Background" />
-                      <span className="h6">ChimeraOS</span>
+                      <span className="h6">chimeraos</span>
                     </Card>
                   </>
                 )}

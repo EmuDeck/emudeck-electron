@@ -40,6 +40,9 @@ import {
   citraGrid,
   dolphinGrid,
   duckstationGrid,
+  mameGrid,
+  rmgGrid,
+  supermodelGrid,
   flycastGrid,
   melondsGrid,
   mgbaGrid,
@@ -114,6 +117,9 @@ const imagesGrid = {
   dolphin: dolphinGrid,
   duckstation: duckstationGrid,
   flycast: flycastGrid,
+  mame: mameGrid,
+  rmg: rmgGrid,
+  supermodel: supermodelGrid,
   melonds: melondsGrid,
   mgba: mgbaGrid,
   pcsx2: pcsx2Grid,
@@ -164,6 +170,13 @@ function EmulatorsPage() {
   const pageRef = useRef(statePage);
   pageRef.current = statePage;
 
+  const showChangelog = localStorage.getItem('show_changelog');
+  console.log({ system });
+  console.log({ showChangelog });
+  if (showChangelog === true) {
+    navigate('/change-log');
+  }
+
   const resetEmus = () => {
     const modalData = {
       active: true,
@@ -188,19 +201,13 @@ function EmulatorsPage() {
         const { version } = item;
 
         if (system === 'win32') {
-          if (item.id === 'rmg' || item.id === 'mgba') {
+          if (item.id === 'rmg') {
             return;
           }
         }
 
         if (item.id === 'ares') {
           return;
-        }
-
-        if (system === 'win32') {
-          if (item.id === 'rmg' || item.id === 'mgba') {
-            return;
-          }
         }
 
         const modalData = {
@@ -418,7 +425,7 @@ function EmulatorsPage() {
                       <CardSettings
                         icon={img}
                         picture={picture}
-                        css="is-highlighted"
+                        css="is-nothighlighted"
                         btnCSS={
                           item.status === true
                             ? 'btn-simple--5'

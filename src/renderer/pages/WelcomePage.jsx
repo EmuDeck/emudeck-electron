@@ -105,13 +105,6 @@ function WelcomePage() {
   useEffect(() => {
     let modalData;
 
-    const showChangelog = localStorage.getItem('show_changelog');
-    console.log({ system });
-    console.log({ showChangelog });
-    if (showChangelog === true) {
-      navigate('/change-log');
-    }
-
     // Build games for the store
     ipcChannel.sendMessage('build-store');
     ipcChannel.once('build-store', (response) => {

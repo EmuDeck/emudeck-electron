@@ -29,6 +29,8 @@ import CheckBiosPage from 'pages/CheckBiosPage';
 import CheckDependenciesPage from 'pages/CheckDependenciesPage';
 import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
+import HelpPage from 'pages/HelpPage';
+import EarlyAccessPage from 'pages/EarlyAccessPage';
 
 import UpdateEmusPage from 'pages/UpdateEmusPage';
 
@@ -416,6 +418,8 @@ export default function App() {
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
           <Route exact path="/decky-controls" element={<EmuDeckyPage />} />
+          <Route exact path="/help" element={<HelpPage />} />
+          <Route exact path="/early-access" element={<EarlyAccessPage />} />
 
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
           <Route exact path="/change-log" element={<ChangeLogPage />} />
