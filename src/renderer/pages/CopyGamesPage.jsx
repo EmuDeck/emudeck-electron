@@ -233,7 +233,7 @@ function CopyGamesPage() {
               css="btn-simple--2"
               type="button"
               aria="Go Next"
-              onClick={() => navigate('/welcome')}
+              onClick={() => navigate('/emulators')}
             >
               Skip for now
             </BtnSimple>
