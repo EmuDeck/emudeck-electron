@@ -434,9 +434,9 @@ function EndPage() {
           ipcChannel.sendMessage('bash', [
             `echo doInstallESDE="${installFrontends.esde.status}" >> ${settingsFile}`,
           ]);
-          ipcChannel.sendMessage('bash', [
-            `echo doInstallPegasus="${installFrontends.pegasus.status}" >> ${settingsFile}`,
-          ]);
+          // ipcChannel.sendMessage('bash', [
+          //   `echo doInstallPegasus="${installFrontends.pegasus.status}" >> ${settingsFile}`,
+          // ]);
           ipcChannel.sendMessage('bash', [
             `echo steamAsFrontend="${installFrontends.steam.status}" >> ${settingsFile}`,
           ]);
@@ -670,7 +670,7 @@ function EndPage() {
           }
 
           ipcChannel.sendMessage('emudeck', [
-            `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > ~/.config/EmuDeck/msg.log && printf "\ec" && echo true`,
+            `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > "$HOME/emudeck/logs/msg.log" && printf "\ec" && echo true`,
           ]);
         });
         ipcChannel.once('finish', (messageFinish) => {

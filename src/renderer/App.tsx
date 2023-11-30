@@ -271,7 +271,7 @@ export default function App() {
       },
       pegasus: {
         id: 'pegasus',
-        status: true,
+        status: false,
         installed: undefined,
         name: 'Pegasus',
         desc: 'Add this launcher to your Steam Library. Recommended for big colections',
