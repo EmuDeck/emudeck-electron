@@ -157,7 +157,7 @@ function CheckUpdatePage() {
         delete settingsStorage.installEmus.melonDS;
         delete settingsStorage.installEmus.cemunative;
         delete settingsStorage.overwriteConfigEmus.primehacks;
-        delete settingsStorage.installFrontends.pegasus;
+        // delete settingsStorage.installFrontends.pegasus;
         const installEmusStored = settingsStorage.installEmus;
 
         if (system === 'darwin') {
