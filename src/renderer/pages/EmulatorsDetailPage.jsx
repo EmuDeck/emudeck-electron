@@ -1533,6 +1533,42 @@ function EmulatorsDetailPage() {
     });
   };
 
+  const showCustom = () => {
+    let bashCommand;
+    if (system === 'win32') {
+      bashCommand = `New-Item -ItemType Directory -Force -Path "$toolsPath\\srm\\userData\\parsers\\custom\\ -ErrorAction SilentlyContinue";Invoke-Item "$toolsPath\\srm\\userData\\parsers\\custom\\"`;
+    } else if (system === 'darwin') {
+      bashCommand = `mkdir -p "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"`;
+    } else {
+      bashCommand = `mkdir -p "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; gnome-open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; kde-open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"`;
+    }
+    ipcChannel.sendMessage('emudeck', [`openCustomFolder|||${bashCommand}`]);
+  };
+
+  const installOptional = () => {
+    const modalData = {
+      active: true,
+      body: (
+        <>
+          <p>Please wait, installing additional parsers:</p>
+          <ul className="list">
+            <li>Nintendo GameBoy - SameBoy</li>
+            <li>Nintendo GameBoy Color - SameBoy</li>
+            <li>Sega Saturn - Yabause</li>
+            <li>Nintendo GameBoy Color - mGBA Standalone</li>
+            <li>Nintendo GameBoy - mGBA Standalone</li>
+          </ul>
+        </>
+      ),
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
+    };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+    ipcChannel.sendMessage('emudeck', [`${code}_migrate|||${code}_migrate`]);
+  };
+
   const doMigration = (code) => {
     const modalData = {
       active: true,
@@ -1676,6 +1712,8 @@ function EmulatorsDetailPage() {
             nds={DSBios}
             onChange={selectEmu}
             onClick={resetEmu}
+            onClickCustomParser={showCustom}
+            onClickOptionalParser={installOptional}
             onClickInstall={installEmu}
             onClickReInstall={reInstallEmu}
             onClickHotkeys={showHotkeys}
