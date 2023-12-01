@@ -10,9 +10,8 @@ function EarlyAccessPage() {
     <Wrapper>
       <Header title="Help us supporting EmuDeck" />
       <p className="lead">
-        EmuDeck is and always will be free, but it's a lot of work, so in order
-        to being able to keep working on it we accept donations via Patreon. As
-        a member of our community you'll get early access to our latest
+        Donate on Patreon and help us grow and improve! As a member of our community
+        you'll get 1 on 1 individual support and early access to our latest
         features, some of them exclusive for patrons only.
       </p>
       <Main>
