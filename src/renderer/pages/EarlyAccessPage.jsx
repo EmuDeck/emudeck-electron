@@ -8,35 +8,16 @@ import { BtnSimple } from 'getbasecore/Atoms';
 function EarlyAccessPage() {
   return (
     <Wrapper>
-      <Header title="Pick your subscription" />
+      <Header title="Help us supporting EmuDeck" />
+      <p className="lead">
+        EmuDeck is and always will be free, but it's a lot of work, so in order
+        to being able to keep working on it we accept donations via Patreon. As
+        a member of our community you'll get early access to our latest
+        features, some of them exclusive for patrons only.
+      </p>
       <Main>
         <div className="container--grid">
-          <div data-col-sm="4">
-            <Card css="is-selected card--image">
-              <img
-                src="https://c10.patreonusercontent.com/4/patreon-media/p/reward/8177547/d25d1d8a63be4156bb9674e1ec648742/eyJ3Ijo0MDB9/2.png?token-time=2145916800&token-hash=eCnq7Vd9gAQZKL260iHqfYYpmoNncD0vTP-YbQlDwfw%3D"
-                alt="Keep up the Work"
-              />
-              <span className="h4">Keep up the Work</span>
-              <span className="h5">1€/month</span>
-              <BtnSimple
-                css="btn-simple--2"
-                type="link"
-                target="_blank"
-                href="https://www.patreon.com/checkout/dragoonDorise?rid=8177547"
-                aria="Next"
-              >
-                Join
-              </BtnSimple>
-              <p>
-                With this you will allow me to continue developing more themes
-                and apps
-              </p>
-              <ul className="list">
-                <li>- General Support</li>
-              </ul>
-            </Card>
-          </div>
+          <div data-col-sm="2" />
           <div data-col-sm="4">
             <Card css="is-selected card--image">
               <img
@@ -73,7 +54,7 @@ function EarlyAccessPage() {
                 src="https://c10.patreonusercontent.com/4/patreon-media/p/reward/8681416/3c5aa559e51c41f89b0fe48ea1e01318/eyJ3Ijo0MDB9/2.png?token-time=2145916800&token-hash=wMOmBQQnP02K1L6iOHDX0mLF9p0cbzuePcQVLlNSF2I%3D"
                 alt="Keep up the Work"
               />
-              <span className="h4">Keep up the Work</span>
+              <span className="h4">EmuDeck Fan</span>
               <span className="h5">10€/month</span>
               <BtnSimple
                 css="btn-simple--2"
@@ -97,6 +78,7 @@ function EarlyAccessPage() {
               </ul>
             </Card>
           </div>
+          <div data-col-sm="2" />
         </div>
       </Main>
       <Footer nextText="Exit" next="emulators" />

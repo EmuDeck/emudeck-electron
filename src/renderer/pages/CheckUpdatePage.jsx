@@ -52,6 +52,7 @@ function CheckUpdatePage() {
     system,
     second,
     installEmus,
+    installFrontends,
     overwriteConfigEmus,
     shaders,
     achievements,
@@ -157,8 +158,8 @@ function CheckUpdatePage() {
         delete settingsStorage.installEmus.melonDS;
         delete settingsStorage.installEmus.cemunative;
         delete settingsStorage.overwriteConfigEmus.primehacks;
-        // delete settingsStorage.installFrontends.pegasus;
         const installEmusStored = settingsStorage.installEmus;
+        const installFrontendsStored = settingsStorage.installFrontends;
 
         if (system === 'darwin') {
           delete settingsStorage.installEmus.ares;
@@ -276,6 +277,10 @@ function CheckUpdatePage() {
               ...state,
               ...settingsStorage,
               installEmus: { ...installEmus, ...installEmusStored },
+              installFrontends: {
+                ...installFrontends,
+                ...installFrontendsStored,
+              },
               overwriteConfigEmus: {
                 ...overwriteConfigEmus,
                 ...overwriteConfigEmusStored,

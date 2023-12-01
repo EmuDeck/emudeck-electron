@@ -186,12 +186,6 @@ const createWindow = async () => {
       width: 1280,
       // width: 1280,
       height: screenHeight,
-      titleBarStyle: 'hidden',
-      titleBarOverlay: {
-        color: 'transparent',
-        symbolColor: '#111011',
-        height: 40,
-      },
       icon: getAssetPath('icon.png'),
       resizable: true,
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
