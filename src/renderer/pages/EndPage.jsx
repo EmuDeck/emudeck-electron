@@ -341,6 +341,10 @@ function EndPage() {
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
+            `echo doSetupPegasus="${!!overwriteConfigEmus.esde
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
             `echo doSetupSRM="${!!overwriteConfigEmus.srm
               .status}" >> ${settingsFile}`,
           ]);
@@ -434,9 +438,9 @@ function EndPage() {
           ipcChannel.sendMessage('bash', [
             `echo doInstallESDE="${installFrontends.esde.status}" >> ${settingsFile}`,
           ]);
-          // ipcChannel.sendMessage('bash', [
-          //   `echo doInstallPegasus="${installFrontends.pegasus.status}" >> ${settingsFile}`,
-          // ]);
+          ipcChannel.sendMessage('bash', [
+            `echo doInstallPegasus="${installFrontends.pegasus.status}" >> ${settingsFile}`,
+          ]);
           ipcChannel.sendMessage('bash', [
             `echo steamAsFrontend="${installFrontends.steam.status}" >> ${settingsFile}`,
           ]);
@@ -545,7 +549,7 @@ function EndPage() {
             `echo pegasusThemeUrl="${state.themePegasus[0]}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo pegasusThemeName="${state.themePegasus[1]}" >> ${settingsFile}`,
+            `echo pegasusThemeName='"${state.themePegasus[1]}"' >> ${settingsFile}`,
           ]);
 
           // AdvancedSettings
