@@ -200,24 +200,12 @@ function WelcomePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 
-  // GamePad
-  const domElementsRef = useRef(null);
-  const domElementsCur = domElementsRef.current;
-  let domElements;
 
-  useEffect(() => {
-    if (dom === undefined) {
-      domElements = document.querySelectorAll('button');
-      setStatePage({
-        ...statePage,
-        dom: domElements,
-      });
-    }
-  }, [statePage]);
+
 
   return (
-    <div style={{ height: '100vh' }} ref={domElementsRef}>
-      {dom !== undefined && <GamePad elements={dom} />}
+    <div style={{ height: '100vh' }} >
+
       <Wrapper aside={false}>
         {second === false && (
           <Header title={`Welcome to EmuDeck for ${systemName}`} />

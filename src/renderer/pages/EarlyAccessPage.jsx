@@ -8,11 +8,11 @@ import { BtnSimple } from 'getbasecore/Atoms';
 function EarlyAccessPage() {
   return (
     <Wrapper>
-      <Header title="Help us supporting EmuDeck" />
+      <Header title="Help us by supporting EmuDeck" />
       <p className="lead">
-        Donate on Patreon and help us grow and improve! As a member of our community
-        you'll get 1 on 1 individual support and early access to our latest
-        features, some of them exclusive for patrons only.
+        Donate on Patreon and help us grow and improve! As a member of our
+        community you'll get 1 on 1 individual support and early access to our
+        latest features, some of them exclusive for patrons only.
       </p>
       <Main>
         <div className="container--grid">

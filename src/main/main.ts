@@ -25,6 +25,14 @@ const os = require('os');
 const fs = require('fs');
 const lsbRelease = require('lsb-release');
 
+const homeUser = os.homedir();
+let allPath;
+if (os.platform().includes('win32')) {
+  allPath = `${homeUser}/AppData/Roaming/EmuDeck/backend/functions/all.ps1`;
+} else {
+  allPath = `${homeUser}/.config/EmuDeck/backend/functions/all.sh`;
+}
+
 let shellType: any;
 export default class AppUpdater {
   constructor() {
@@ -334,13 +342,6 @@ ipcMain.on('bash-nolog', async (event, command) => {
 ipcMain.on('emudeck', async (event, command) => {
   let backChannel: any;
   let bashCommand: any;
-  let allPath;
-  const homeUser = os.homedir();
-  if (os.platform().includes('win32')) {
-    allPath = `${homeUser}/AppData/Roaming/EmuDeck/backend/functions/all.ps1`;
-  } else {
-    allPath = `${homeUser}/.config/EmuDeck/backend/functions/all.sh`;
-  }
 
   if (command[0].includes('|||')) {
     const tempCommand = command[0].split('|||');
@@ -625,19 +626,15 @@ ipcMain.on('clone', async (event, branch) => {
 ipcMain.on('pull', async (event, branch) => {
   const branchGIT = branch;
   const backChannel = 'pull';
-  let bashCommand = `cd ~/.config/EmuDeck/backend && touch ~/emudeck/logs/git.log && script ~/emudeck/logs/git.log -c 'git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull' && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
-
-  if (os.platform().includes('darwin')) {
-    bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
-  }
-  if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:USERPROFILE/EmuDeck/logs/git.log"; git reset --hard ; git clean -fd ; git checkout ${branchGIT} ; git pull --allow-unrelated-histories -X theirs;cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit; Stop-Transcript; "}`;
-  }
-
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, stdout);
-  });
+  const bashCommand = `API_pull ${branchGIT}`;
+  return exec(
+    `. ${allPath}; ${bashCommand}`,
+    shellType,
+    (error, stdout, stderr) => {
+      logCommand(bashCommand, error, stdout, stderr);
+      event.reply(backChannel, stdout);
+    }
+  );
 });
 
 ipcMain.on('branch', async (event) => {
