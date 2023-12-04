@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import Main from 'components/organisms/Main/Main';
 
 import { BtnSimple } from 'getbasecore/Atoms';
+
 // Ask for branch
 const branchFile = require('data/branch.json');
 
@@ -39,52 +40,49 @@ function CheckUpdatePage() {
       css: 'emumodal--xs emumodal--loading',
     },
   });
-  const {
-    disabledNext,
-    disabledBack,
-    downloadComplete,
-    data,
-    cloned,
-    update,
-    modal,
-    dom,
-  } = statePage;
+  const { downloadComplete, cloned, update, modal, dom } = statePage;
   const navigate = useNavigate();
-
-  const {
-    device,
-    system,
-    mode,
-    command,
-    second,
-    installEmus,
-    overwriteConfigEmus,
-    shaders,
-    achievements,
-  } = state;
-
   const updateRef = useRef(update);
   updateRef.current = update;
 
   const downloadCompleteRef = useRef(downloadComplete);
   downloadCompleteRef.current = downloadComplete;
 
-  const closeModal = () => {
-    setStatePage({
-      ...statePage,
-      modal: false,
-    });
-  };
+  const {
+    system,
+    second,
+    installEmus,
+    installFrontends,
+    overwriteConfigEmus,
+    shaders,
+    achievements,
+  } = state;
+
+  let updateTimeOut;
   // Darwin terminal permissions
   useEffect(() => {
-    if (system === 'darwin') {
+    if (system === 'darwin' && second === false) {
       ipcChannel.sendMessage('bash-nolog', [
         `osascript -e 'tell app "Terminal" to do script "pwd && exit"'`,
       ]);
     }
   }, [system]);
 
-  let updateTimeOut;
+  const showLog = (system) => {
+    if (system === 'win32') {
+      ipcChannel.sendMessage('bash-nolog', [
+        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/logs/git.log -Tail 100 -Wait }"`,
+      ]);
+    } else if (system === 'darwin') {
+      ipcChannel.sendMessage('bash-nolog', [
+        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/emudeck/logs/git.log"'`,
+      ]);
+    } else {
+      ipcChannel.sendMessage('bash-nolog', [
+        `konsole -e tail -f "$HOME/emudeck/logs/git.log"`,
+      ]);
+    }
+  };
 
   useEffect(() => {
     // Update timeout + Force clone check
@@ -161,6 +159,51 @@ function CheckUpdatePage() {
         delete settingsStorage.installEmus.cemunative;
         delete settingsStorage.overwriteConfigEmus.primehacks;
         const installEmusStored = settingsStorage.installEmus;
+        const installFrontendsStored = settingsStorage.installFrontends;
+
+        if (system === 'darwin') {
+          delete settingsStorage.installEmus.ares;
+          delete settingsStorage.installEmus.cemu;
+          delete settingsStorage.installEmus.citra;
+          delete settingsStorage.installEmus.dolphin;
+          delete settingsStorage.installEmus.duckstation;
+          delete settingsStorage.installEmus.flycast;
+          delete settingsStorage.installEmus.mame;
+          delete settingsStorage.installEmus.melonds;
+          delete settingsStorage.installEmus.mgba;
+          delete settingsStorage.installEmus.pcsx2;
+          delete settingsStorage.installEmus.ppsspp;
+          delete settingsStorage.installEmus.primehack;
+          delete settingsStorage.installEmus.rmg;
+          delete settingsStorage.installEmus.rpcs3;
+          delete settingsStorage.installEmus.ryujinx;
+          delete settingsStorage.installEmus.scummvm;
+          delete settingsStorage.installEmus.vita3k;
+          delete settingsStorage.installEmus.xemu;
+          delete settingsStorage.installEmus.xenia;
+          delete settingsStorage.installEmus.yuzu;
+
+          delete settingsStorage.overwriteConfigEmus.ares;
+          delete settingsStorage.overwriteConfigEmus.cemu;
+          delete settingsStorage.overwriteConfigEmus.citra;
+          delete settingsStorage.overwriteConfigEmus.dolphin;
+          delete settingsStorage.overwriteConfigEmus.duckstation;
+          delete settingsStorage.overwriteConfigEmus.flycast;
+          delete settingsStorage.overwriteConfigEmus.mame;
+          delete settingsStorage.overwriteConfigEmus.melonds;
+          delete settingsStorage.overwriteConfigEmus.mgba;
+          delete settingsStorage.overwriteConfigEmus.pcsx2;
+          delete settingsStorage.overwriteConfigEmus.ppsspp;
+          delete settingsStorage.overwriteConfigEmus.primehack;
+          delete settingsStorage.overwriteConfigEmus.rmg;
+          delete settingsStorage.overwriteConfigEmus.rpcs3;
+          delete settingsStorage.overwriteConfigEmus.ryujinx;
+          delete settingsStorage.overwriteConfigEmus.scummvm;
+          delete settingsStorage.overwriteConfigEmus.vita3k;
+          delete settingsStorage.overwriteConfigEmus.xemu;
+          delete settingsStorage.overwriteConfigEmus.xenia;
+          delete settingsStorage.overwriteConfigEmus.yuzu;
+        }
 
         if (!settingsStorage.overwriteConfigEmus.esde) {
           settingsStorage.overwriteConfigEmus.esde = {
@@ -188,9 +231,6 @@ function CheckUpdatePage() {
             'gameOS',
           ];
         }
-
-        console.log(settingsStorage.emulatorAlternative.nds);
-
         // Theres probably a better way to do this...
 
         ipcChannel.sendMessage('version');
@@ -237,6 +277,10 @@ function CheckUpdatePage() {
               ...state,
               ...settingsStorage,
               installEmus: { ...installEmus, ...installEmusStored },
+              installFrontends: {
+                ...installFrontends,
+                ...installFrontendsStored,
+              },
               overwriteConfigEmus: {
                 ...overwriteConfigEmus,
                 ...overwriteConfigEmusStored,
@@ -347,13 +391,19 @@ function CheckUpdatePage() {
             background...
           </span>
         ),
-        body: (
-          <p>
-            Please wait a few seconds,{' '}
-            <strong>if this takes too long restart EmuDeck.</strong>
-          </p>
+        body: <ProgressBar css="progress--success" infinite max="100" />,
+        footer: (
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria="Show log"
+            disabled={false}
+            style={{ marginBottom: 0 }}
+            onClick={() => showLog(system)}
+          >
+            See more details {system}
+          </BtnSimple>
         ),
-        footer: <ProgressBar css="progress--success" infinite max="100" />,
         css: 'emumodal--xs emumodal--loading',
       };
 
@@ -382,7 +432,7 @@ function CheckUpdatePage() {
         });
       });
     }
-  }, [update]);
+  }, [update, system]);
 
   useEffect(() => {
     // settings here
@@ -421,7 +471,7 @@ function CheckUpdatePage() {
           // Update timeout
         });
       } else {
-        // alert('cloned desconocido');
+        alert("There's been an issue. Please restart EmuDeck and try again");
         setStatePage({ ...statePage, downloadComplete: true });
       }
     }
@@ -429,104 +479,19 @@ function CheckUpdatePage() {
 
   useEffect(() => {
     if (downloadComplete === true) {
-      navigate('/welcome');
+      if (second) {
+        navigate('/emulators');
+      } else {
+        navigate('/welcome');
+      }
     }
   }, [downloadComplete]);
 
-  let pollingTime = 500;
-  if (system === 'win32') {
-    pollingTime = 2000;
-  }
-
-  const [msg, setMsg] = useState({
-    messageLog: '',
-    percentage: 0,
-  });
-
-  const { messageLog } = msg;
-  const messageLogRef = useRef(messageLog);
-  messageLogRef.current = messageLog;
-
-  const readMSG = () => {
-    ipcChannel.sendMessage('getMSG', []);
-    ipcChannel.on('getMSG', (messageInput) => {
-      const messageText = messageInput.stdout;
-      setMsg({ messageLog: messageText });
-      // scrollToBottom();
-    });
-  };
-
-  // Reading messages from backend
-  useEffect(() => {
-    const interval = setInterval(() => {
-      readMSG();
-      const messageLogCurrent = messageLogRef.current;
-      if (messageLogCurrent.includes('done')) {
-        clearInterval(interval);
-      } else {
-      }
-    }, pollingTime);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // GamePad
-  const domElementsRef = useRef(null);
-  const domElementsCur = domElementsRef.current;
-  let domElements;
-  useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
-      setStatePage({ ...statePage, dom: domElements });
-    }
-  }, [statePage]);
-
   return (
-    <div style={{ height: '100vh' }} ref={domElementsRef}>
-      {dom !== undefined && <GamePad elements={dom} />}
-      <Wrapper>
+    <div style={{ height: '100vh' }}>
+      <Wrapper css="wrapper__full" aside={false}>
         <Kamek />
         <Header title="EmuDeck is loading..." />
-        {update === 'up-to-date' && (
-          <Main>
-            <>
-              <p className="lead">
-                If you can't get past this screen send us the log down bellow{' '}
-                {system === 'win32' && (
-                  <a
-                    target="_blank"
-                    className="https://emudeck.github.io/common-issues/windows/#emudeck-is-stuck-on-the-checking-for-updates-message"
-                  >
-                    Wiki FAQ
-                  </a>
-                )}
-                {system !== 'win32' && (
-                  <a
-                    target="_blank"
-                    className="link-simple link-simple--1"
-                    href="https://emudeck.github.io/frequently-asked-questions/steamos/#why-is-emudeck-not-downloading"
-                    rel="noreferrer"
-                  >
-                    Wiki FAQ
-                  </a>
-                )}
-              </p>
-
-              <ProgressBar css="progress--success" infinite max="100" />
-            </>
-
-            <code
-              style={{
-                fontSize: '14px',
-                Height: '100%',
-                overflow: 'auto',
-                whiteSpace: 'pre-line',
-              }}
-            >
-              {messageLog}
-            </code>
-          </Main>
-        )}
         <EmuModal modal={modal} />
       </Wrapper>
     </div>

@@ -9,7 +9,7 @@ import ESDETheme from 'components/organisms/Wrappers/ESDETheme';
 
 function ESDEThemePage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, mode, system } = state;
+  const { mode, system, installFrontends } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -32,30 +32,24 @@ function ESDEThemePage() {
   }, []);
 
   const nextPage = () => {
-    if (system !== 'SteamOS') {
-      return 'emulator-resolution';
+    if (installFrontends.pegasus.status === true) {
+      return 'pegasus-theme';
+    }
+    if (system === 'SteamOS') {
+      return 'confirmation';
     }
     if (mode === 'easy') {
       return 'end';
     }
-    return 'confirmation';
+    return 'emulator-resolution';
   };
 
-  // GamePad
-  const domElementsRef = useRef(null);
-  const domElementsCur = domElementsRef.current;
-  let domElements;
-  useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
-      setStatePage({ ...statePage, dom: domElements });
-    }
-  }, [statePage]);
+
 
   return (
-    <div style={{ height: '100vh' }} ref={domElementsRef}>
-      {dom !== undefined && <GamePad elements={dom} />}
-      <Wrapper>
+    <div style={{ height: '100vh' }} >
+      
+      <Wrapper aside={false}>
         <Header title="EmulationStation-DE Default Theme" />
         <ESDETheme themes={themes} onClick={themeSet} />
         <Footer

@@ -341,6 +341,10 @@ function EndPage() {
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
+            `echo doSetupPegasus="${!!overwriteConfigEmus.esde
+              .status}" >> ${settingsFile}`,
+          ]);
+          ipcChannel.sendMessage('bash', [
             `echo doSetupSRM="${!!overwriteConfigEmus.srm
               .status}" >> ${settingsFile}`,
           ]);
@@ -545,7 +549,7 @@ function EndPage() {
             `echo pegasusThemeUrl="${state.themePegasus[0]}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo pegasusThemeName="${state.themePegasus[1]}" >> ${settingsFile}`,
+            `echo pegasusThemeName='"${state.themePegasus[1]}"' >> ${settingsFile}`,
           ]);
 
           // AdvancedSettings
@@ -670,7 +674,7 @@ function EndPage() {
           }
 
           ipcChannel.sendMessage('emudeck', [
-            `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > ~/.config/EmuDeck/msg.log && printf "\ec" && echo true`,
+            `finish|||checkForFile ~/.config/EmuDeck/.ui-finished delete && echo 'Starting...' > "$HOME/emudeck/logs/msg.log" && printf "\ec" && echo true`,
           ]);
         });
         ipcChannel.once('finish', (messageFinish) => {
@@ -683,16 +687,7 @@ function EndPage() {
     }
   }, [second]);
 
-  // GamePad
-  const domElementsRef = useRef(null);
-  const domElementsCur = domElementsRef.current;
-  let domElements;
-  useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
-      setStatePage({ ...statePage, dom: domElements });
-    }
-  }, [statePage]);
+
 
   let nextPage = '/copy-games';
 
@@ -701,9 +696,9 @@ function EndPage() {
   }
 
   return (
-    <div style={{ height: '100vh' }} ref={domElementsRef}>
-      {dom !== undefined && <GamePad elements={dom} />}
-      <Wrapper>
+    <div style={{ height: '100vh' }} >
+      
+      <Wrapper css="wrapper__full" aside={false}>
         {disabledNext === true && (
           <Header title="We are completing your installation..." />
         )}

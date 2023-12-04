@@ -370,7 +370,7 @@
     "code": "SRM",
 
     "description": "Add your ROMS and emulators to your Steam Library.",
-    "special_configuration": "Steam ROM Manager is pre-configured by EmuDeck. Each parser generally corresponds to an emulator or tool. Enable your preferred parsers, generate and save an app list, and start playing right away in Game Mode",
+    "special_configuration": "Steam ROM Manager is pre-configured by EmuDeck. Each parser generally corresponds to an emulator or tool. Enable your preferred parsers, generate and save an app list, and start playing right away in Game Mode<br/>Parsers are created dynamically based in your selection when installing EmuDeck.<br/><br/>You can create your own custom parsers in json format and place them in the custom parsers folder. EmuDeck won't delete them if you update.<br/><br/><strong>You can also add some optional pre-configured parsers and use them as guidance to create your own:</strong><ul className='list'><li>Nintendo GameBoy - SameBoy</li><li>Nintendo GameBoy Color - SameBoy</li><li>Sega Saturn - Yabause</li><li>Nintendo GameBoy Color - mGBA Standalone</li><li>Nintendo GameBoy - mGBA Standalone</li></ul>",
     "bios": [],
     "systems": ""
   },
@@ -378,7 +378,6 @@
     "id": "esde",
     "name": "EmulationStation DE",
     "code": "ESDE",
-
     "description": "EmulationStation Desktop Edition (ES-DE) is a frontend application for browsing and launching games from your multi-platform game collection.",
     "special_configuration": "",
     "bios": [],
@@ -389,5 +388,15 @@
     "altCode": "ESDE20",
     "altButton": "Install ESDE 2.0 Prerelease",
     "altWarning": "This action will replace your installation with ESDE 2.0 Prerelease. To undone this action you'll need to click the ReInstall button"
+  },
+  "pegasus": {
+    "id": "pegasus",
+    "name": "Pegasus Frontend",
+    "code": "pegasus",
+    "description": "A cross platform, customizable graphical frontend for launching emulators and managing your game collection.",
+    "special_configuration": "Pegasus doesn't have a parser so you need to parse your games using EmulationStation DE, after that both frontends will use the same assets",
+    "bios": [],
+    "systems": "",
+    "alt": false
   }
 }

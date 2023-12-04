@@ -29,6 +29,8 @@ import CheckBiosPage from 'pages/CheckBiosPage';
 import CheckDependenciesPage from 'pages/CheckDependenciesPage';
 import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
+import HelpPage from 'pages/HelpPage';
+import EarlyAccessPage from 'pages/EarlyAccessPage';
 
 import UpdateEmusPage from 'pages/UpdateEmusPage';
 
@@ -67,6 +69,10 @@ import 'getbasecore/src/components/atoms/Typography/core_typography.scss';
 const branch = require('data/branch.json');
 
 export default function App() {
+  const [stateAside, setStateAside] = useState({
+    links: false,
+  });
+
   const [stateCurrentConfigs, setStateCurrentConfigs] = useState({
     ra: { id: 'ra', code: 'RetroArch', version: 0 },
     dolphin: { id: 'dolphin', code: 'Dolphin', version: 0 },
@@ -265,7 +271,7 @@ export default function App() {
       },
       pegasus: {
         id: 'pegasus',
-        status: false,
+        status: true,
         installed: undefined,
         name: 'Pegasus',
         desc: 'Add this launcher to your Steam Library. Recommended for big colections',
@@ -315,6 +321,8 @@ export default function App() {
         setState,
         stateCurrentConfigs,
         setStateCurrentConfigs,
+        stateAside,
+        setStateAside,
       }}
     >
       <Router>
@@ -324,7 +332,7 @@ export default function App() {
           <Route exact path="/check-updates" element={<CheckUpdatePage />} />
           <Route exact path="/patreon-login" element={<PatreonLoginPage />} />
 
-          <Route exact path="/welcome" element={<WelcomePage />} />
+          <Route exact path="/welcome" element={<EmulatorsPage />} />
           <Route
             exact
             path="/device-selector"
@@ -410,6 +418,8 @@ export default function App() {
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
           <Route exact path="/decky-controls" element={<EmuDeckyPage />} />
+          <Route exact path="/help" element={<HelpPage />} />
+          <Route exact path="/early-access" element={<EarlyAccessPage />} />
 
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
           <Route exact path="/change-log" element={<ChangeLogPage />} />

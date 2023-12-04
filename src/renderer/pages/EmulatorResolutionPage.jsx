@@ -26,27 +26,15 @@ function EmulatorResolutionPage() {
   });
   const { dom } = statePage;
 
-  // GamePad
-  const domElementsRef = useRef(null);
-  const domElementsCur = domElementsRef.current;
-  let domElements;
-  useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
-      setStatePage({ ...statePage, dom: domElements });
-    }
-  }, [statePage]);
+
 
   return (
-    <div style={{ height: '100vh' }} ref={domElementsRef}>
-      {dom !== undefined && <GamePad elements={dom} />}
+    <div style={{ height: '100vh' }} >
+      
       <Wrapper>
         <Header title="Emulator Resolution" />
         <EmulatorResolution onClick={setResolution} />
-        <Footer
-          next={system === 'win33' ? 'game-mode' : 'confirmation'}
-          nextText="Next"
-        />
+        <Footer next="confirmation" nextText="Next" />
       </Wrapper>
     </div>
   );
