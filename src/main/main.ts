@@ -32,6 +32,12 @@ if (os.platform().includes('win32')) {
 } else {
   allPath = `${homeUser}/.config/EmuDeck/backend/functions/all.sh`;
 }
+let startCommand;
+let finishCommand;
+if (os.platform().includes('win32')) {
+  startCommand = 'powershell -ExecutionPolicy Bypass -command "& {';
+  finishCommand = '}"';
+}
 
 let shellType: any;
 export default class AppUpdater {
@@ -626,9 +632,10 @@ ipcMain.on('clone', async (event, branch) => {
 ipcMain.on('pull', async (event, branch) => {
   const branchGIT = branch;
   const backChannel = 'pull';
-  const bashCommand = `API_pull ${branchGIT}`;
+  const bashCommand = `API_pull "${branchGIT}"`;
+
   return exec(
-    `. ${allPath}; ${bashCommand}`,
+    `${startCommand} . ${allPath}; ${bashCommand} ${finishCommand}`,
     shellType,
     (error, stdout, stderr) => {
       logCommand(bashCommand, error, stdout, stderr);
