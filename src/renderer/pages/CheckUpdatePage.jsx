@@ -401,7 +401,7 @@ function CheckUpdatePage() {
             style={{ marginBottom: 0 }}
             onClick={() => showLog(system)}
           >
-            See more details {system}
+            See more details
           </BtnSimple>
         ),
         css: 'emumodal--xs emumodal--loading',
