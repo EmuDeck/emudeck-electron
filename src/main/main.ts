@@ -632,17 +632,35 @@ ipcMain.on('clone', async (event, branch) => {
 ipcMain.on('pull', async (event, branch) => {
   const branchGIT = branch;
   const backChannel = 'pull';
-  const bashCommand = `API_pull "${branchGIT}"`;
+  let bashCommand = `cd ~/.config/EmuDeck/backend && touch ~/emudeck/logs/git.log && script ~/emudeck/logs/git.log -c 'git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull' && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
 
-  return exec(
-    `${startCommand} . ${allPath}; ${bashCommand} ${finishCommand}`,
-    shellType,
-    (error, stdout, stderr) => {
-      logCommand(bashCommand, error, stdout, stderr);
-      event.reply(backChannel, stdout);
-    }
-  );
+  if (os.platform().includes('darwin')) {
+    bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
+  }
+  if (os.platform().includes('win32')) {
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:USERPROFILE/EmuDeck/logs/git.log"; git reset --hard ; git clean -fd ; git checkout ${branchGIT} ; git pull --allow-unrelated-histories -X theirs;cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit; Stop-Transcript; "}`;
+  }
+
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, stdout);
+  });
 });
+// Next release
+// ipcMain.on('pull', async (event, branch) => {
+//   const branchGIT = branch;
+//   const backChannel = 'pull';
+//   const bashCommand = `API_pull "${branchGIT}"`;
+//
+//   return exec(
+//     `${startCommand} . ${allPath}; ${bashCommand} ${finishCommand}`,
+//     shellType,
+//     (error, stdout, stderr) => {
+//       logCommand(bashCommand, error, stdout, stderr);
+//       event.reply(backChannel, stdout);
+//     }
+//   );
+// });
 
 ipcMain.on('branch', async (event) => {
   event.reply('branch-out', process.env.BRANCH);

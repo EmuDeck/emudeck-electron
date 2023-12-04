@@ -68,7 +68,7 @@ function CheckUpdatePage() {
     }
   }, [system]);
 
-  const showLog = () => {
+  const showLog = (system) => {
     if (system === 'win32') {
       ipcChannel.sendMessage('bash-nolog', [
         `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/logs/git.log -Tail 100 -Wait }"`,
@@ -399,9 +399,9 @@ function CheckUpdatePage() {
             aria="Show log"
             disabled={false}
             style={{ marginBottom: 0 }}
-            onClick={() => showLog()}
+            onClick={() => showLog(system)}
           >
-            See more details
+            See more details {system}
           </BtnSimple>
         ),
         css: 'emumodal--xs emumodal--loading',
@@ -432,7 +432,7 @@ function CheckUpdatePage() {
         });
       });
     }
-  }, [update]);
+  }, [update, system]);
 
   useEffect(() => {
     // settings here
@@ -487,11 +487,8 @@ function CheckUpdatePage() {
     }
   }, [downloadComplete]);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper css="wrapper__full" aside={false}>
         <Kamek />
         <Header title="EmuDeck is loading..." />
