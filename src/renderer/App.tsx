@@ -332,7 +332,7 @@ export default function App() {
           <Route exact path="/check-updates" element={<CheckUpdatePage />} />
           <Route exact path="/patreon-login" element={<PatreonLoginPage />} />
 
-          <Route exact path="/welcome" element={<EmulatorsPage />} />
+          <Route exact path="/welcome" element={<WelcomePage />} />
           <Route
             exact
             path="/device-selector"

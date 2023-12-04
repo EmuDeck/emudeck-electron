@@ -223,7 +223,7 @@ function PatroenLoginPage() {
 
   useEffect(() => {
     if (state.version != '') {
-      navigate('/welcome');
+      navigate('/emulators');
     }
   }, [state]);
 
@@ -231,10 +231,8 @@ function PatroenLoginPage() {
   // Render
   //
 
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Login into Patreon" />
         <Main>

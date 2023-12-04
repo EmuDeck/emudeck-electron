@@ -198,11 +198,8 @@ function CopyGamesPage() {
     });
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         {statusCopyGames !== true && system !== 'win32' && (
           <Header title="Use a USB Drive to transfer your games" />
@@ -294,7 +291,7 @@ function CopyGamesPage() {
               css="btn-simple--2"
               type="button"
               aria="Go Back"
-              onClick={() => navigate('/welcome')}
+              onClick={() => navigate('/emulators')}
             >
               Skip for now
             </BtnSimple>

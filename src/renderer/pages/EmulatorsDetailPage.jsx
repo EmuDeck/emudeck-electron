@@ -772,7 +772,7 @@ function EmulatorsDetailPage() {
             <BtnSimple
               css="btn-simple--1"
               type="button"
-              onClick={() => navigate('/welcome')}
+              onClick={() => navigate('/emulators')}
             >
               Close
             </BtnSimple>
@@ -1680,10 +1680,8 @@ function EmulatorsDetailPage() {
     }
   }, [modal]);
 
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title={emuData[emulatorSelected].name} />
 

@@ -1072,7 +1072,7 @@ function ParserSelectorPage() {
         installEmus: localogStateEmus,
         revertParsers: false,
       });
-      navigate('/welcome');
+      navigate('/emulators');
     }
   };
 
@@ -1141,8 +1141,6 @@ function ParserSelectorPage() {
     });
   };
 
-
-
   useEffect(() => {
     if (revertParsers === true) {
       console.log({ installEmus });
@@ -1171,8 +1169,7 @@ function ParserSelectorPage() {
   // localStorage.setItem('settings_emudeck', json);
 
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Parsers for Steam Rom Manager" />
         <ParserSelector data={data} onClick={toggleEmus} images={images} />
