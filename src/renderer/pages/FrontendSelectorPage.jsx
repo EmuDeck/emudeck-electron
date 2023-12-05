@@ -133,40 +133,40 @@ function FrontendSelectorPage() {
 
     setPreviousState(installFrontends);
 
-    if (installFrontends.pegasus.status && installFrontends.esde.status) {
-      if (lastSelected === 'pegasus' || lastSelected === 'esde') {
-        emuOption1 = 'Pegasus';
-        emuOption2 = 'Emulation Station DE';
-        emuID1 = 'pegasus';
-        emuID2 = 'esde';
-        system = 'pegasus';
-        modalData = {
-          active: true,
-          body: (
-            <>
-              <p>You've selected two frontends that are similar</p>
-              <div className="h5">
-                <strong>Pegasus</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>Lorem Ipsum</li>
-              </ol>
-              <div className="h5">
-                <strong>Emulation Station</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>Lorem Ipsum</li>
-              </ol>
-              <p>
-                We will only add the parser according to your selection so you
-                don't end up with duplicates in your library.
-              </p>
-            </>
-          ),
-        };
-        const myTimeout = setTimeout(launchModal, 500);
-      }
-    }
+    // if (installFrontends.pegasus.status && installFrontends.esde.status) {
+    //   if (lastSelected === 'pegasus' || lastSelected === 'esde') {
+    //     emuOption1 = 'Pegasus';
+    //     emuOption2 = 'Emulation Station DE';
+    //     emuID1 = 'pegasus';
+    //     emuID2 = 'esde';
+    //     system = 'pegasus';
+    //     modalData = {
+    //       active: true,
+    //       body: (
+    //         <>
+    //           <p>You've selected two frontends that are similar</p>
+    //           <div className="h5">
+    //             <strong>Pegasus</strong> has these pros:
+    //           </div>
+    //           <ol className="list">
+    //             <li>Lorem Ipsum</li>
+    //           </ol>
+    //           <div className="h5">
+    //             <strong>Emulation Station</strong> has these pros:
+    //           </div>
+    //           <ol className="list">
+    //             <li>Lorem Ipsum</li>
+    //           </ol>
+    //           <p>
+    //             We will only add the parser according to your selection so you
+    //             don't end up with duplicates in your library.
+    //           </p>
+    //         </>
+    //       ),
+    //     };
+    //     const myTimeout = setTimeout(launchModal, 500);
+    //   }
+    // }
 
     function launchModal() {
       return;
@@ -210,18 +210,16 @@ function FrontendSelectorPage() {
     }
   }, [installFrontends]);
 
-
-
   const nextPage = () => {
-    if (installFrontends.pegasus.status && installFrontends.esde.status) {
-      return 'esde-theme';
-    }
+    // if (installFrontends.pegasus.status && installFrontends.esde.status) {
+    //   return 'esde-theme';
+    // }
     if (installFrontends.esde.status) {
       return 'esde-theme';
     }
-    if (installFrontends.pegasus.status) {
-      return 'pegasus-theme';
-    }
+    // if (installFrontends.pegasus.status) {
+    //   return 'pegasus-theme';
+    // }
 
     // if (system !== 'SteamOS') {
     //   return 'emulator-resolution';
@@ -233,8 +231,7 @@ function FrontendSelectorPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Frontends for" bold={`${device}`} />
         <FrontendSelector
@@ -245,9 +242,7 @@ function FrontendSelectorPage() {
         <Footer
           next={nextPage()}
           disabledNext={
-            !installFrontends.esde.status &&
-            !installFrontends.pegasus.status &&
-            !installFrontends.steam.status
+            !installFrontends.esde.status && !installFrontends.steam.status
           }
           disabledBack={disabledBack}
         />

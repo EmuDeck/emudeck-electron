@@ -143,24 +143,25 @@ function WelcomePage() {
         localStorage.setItem('ogStateEmus', '');
 
         setStateCurrentConfigs(repoVersions);
-      } else if (showChangelog === null && branch === 'beta') {
+      } else if (branch === 'main') {
         modalData = {
           active: true,
-          header: <span className="h4">Welcome to EmuDeck's public beta!</span>,
+          header: <span className="h4">Welcome to EmuDeck's demo!</span>,
           body: (
             <>
               <p>
-                This build has some unstable features that are not yet present
-                in the public build so some bugs are expected.
+                This build has limited features so you can test EmuDeck before
+                its public release.
               </p>
               <p>
-                But it's still missing some exclusive features that are only
-                available in our <strong>Early Access</strong> program in
-                Patreon, like exclusive support forums or{' '}
-                <strong>CloudSync</strong> that allows you to sync your saved
-                games seamessly over the cloud between different EmuDeck and
-                even other platform like OnionOS, local multiplayer,
-                interoperability with other platforms, and more things to come!
+                This demo only contains EmulationStation and RetroArch, you can
+                have access to all features now on our{' '}
+                <strong>Early Access</strong> program in Patreon, or wait a
+                little longer for the public release.
+              </p>
+              <p>
+                This demo will update itself to the public release whenever it's
+                available
               </p>
             </>
           ),
@@ -200,12 +201,8 @@ function WelcomePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 
-
-
-
   return (
-    <div style={{ height: '100vh' }} >
-
+    <div style={{ height: '100vh' }}>
       <Wrapper aside={false}>
         {second === false && (
           <Header title={`Welcome to EmuDeck for ${systemName}`} />
@@ -216,9 +213,6 @@ function WelcomePage() {
         )}
         {systemName !== 'ERROR' && (
           <Welcome
-            settingsCards={}
-            settingsCardsFeatured={}
-            functions={}
             updates={updates}
             alert={
               second
