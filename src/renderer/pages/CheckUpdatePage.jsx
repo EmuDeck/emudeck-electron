@@ -62,6 +62,8 @@ function CheckUpdatePage() {
   } = state;
 
   let updateTimeOut;
+  let pullTimeOut;
+  let cloneTimeOut;
   // Darwin terminal permissions
   useEffect(() => {
     if (system === 'darwin' && second === false) {
@@ -442,9 +444,32 @@ function CheckUpdatePage() {
       // alert('cloneFalse');
       if (navigator.onLine) {
         ipcChannel.sendMessage(`clone`, branch);
-
-        ipcChannel.once('clone', (error, cloneStatusClone, stderr) => {
+        cloneTimeOut = setTimeout(() => {
+          ipcChannel.sendMessage('check-git-status', branch);
+          ipcChannel.once('check-git-status', (error) => {
+            if (error.includes('not a git directory')) {
+              // alert('There seems to be an issue, please restart EmuDeck');
+              const modalData = {
+                active: true,
+                header: <span className="h4">Ooops 😞</span>,
+                body: (
+                  <p>
+                    There seems to be an issue building the backend. Please
+                    restart EmuDeck if this screen doesn't dissapear in about 5
+                    seconds
+                  </p>
+                ),
+                css: 'emumodal--xs',
+              };
+              setStatePage({ ...statePageRef.current, modal: modalData });
+            } else {
+              setStatePage({ ...statePageRef.current, downloadComplete: true });
+            }
+          });
+        }, 60000);
+        ipcChannel.once('clone', (error, cloneStatusClone) => {
           if (cloneStatusClone.includes('true')) {
+            clearTimeout(cloneTimeOut);
             setStatePage({ ...statePage, downloadComplete: true });
             console.log({ downloadComplete });
           }
@@ -467,18 +492,42 @@ function CheckUpdatePage() {
         // alert(branch);
         console.log(`GIT PULL ${branch}`);
         ipcChannel.sendMessage('pull', branch);
-
+        pullTimeOut = setTimeout(() => {
+          ipcChannel.sendMessage('check-git-status', branch);
+          ipcChannel.once('check-git-status', (error) => {
+            console.log({ error });
+            if (error.includes('Your branch is up to date')) {
+              setStatePage({ ...statePageRef.current, downloadComplete: true });
+            } else {
+              const modalData = {
+                active: true,
+                header: <span className="h4">Ooops 😞</span>,
+                body: (
+                  <p>
+                    There's been an issue building the backend, please restart
+                    EmuDeck if this screen doesn't dissapear in about 5 seconds.
+                  </p>
+                ),
+                footer: '',
+                css: 'emumodal--xs',
+              };
+              setStatePage({
+                ...statePageRef.current,
+                modal: modalData,
+              });
+            }
+          });
+        }, 20000);
         ipcChannel.once('pull', (error, stdout, stderr) => {
           console.log('GIT PULL response');
           console.log({ error, stdout, stderr });
+
           updateTimeOut = setTimeout(() => {
+            clearTimeout(pullTimeOut);
             setStatePage({ ...statePageRef.current, downloadComplete: true });
           }, 1000);
-
-          // Update timeout
         });
       } else {
-        alert("There's been an issue. Please restart EmuDeck and try again");
         setStatePage({ ...statePage, downloadComplete: true });
       }
     }

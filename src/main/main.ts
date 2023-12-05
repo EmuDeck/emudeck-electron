@@ -646,6 +646,24 @@ ipcMain.on('pull', async (event, branch) => {
     event.reply(backChannel, stdout);
   });
 });
+
+ipcMain.on('check-git-status', async (event) => {
+  const backChannel = 'check-git-status';
+  let bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
+
+  if (os.platform().includes('darwin')) {
+    bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
+  }
+  if (os.platform().includes('win32')) {
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git status`;
+  }
+
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, stdout);
+  });
+});
+
 // Next release
 // ipcMain.on('pull', async (event, branch) => {
 //   const branchGIT = branch;
