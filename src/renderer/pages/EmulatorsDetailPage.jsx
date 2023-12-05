@@ -1566,7 +1566,15 @@ function EmulatorsDetailPage() {
       ...statePage,
       modal: modalData,
     });
-    ipcChannel.sendMessage('emudeck', [`${code}_migrate|||${code}_migrate`]);
+    ipcChannel.sendMessage('emudeck', [
+      `API_optional_parsers|||API_optional_parsers`,
+    ]);
+
+    ipcChannel.once(`API_optional_parsers`, (message) => {
+      const stdout = message.message;
+
+      closeModal();
+    });
   };
 
   const doMigration = (code) => {
