@@ -40,7 +40,10 @@ function CheckUpdatePage() {
       css: 'emumodal--xs emumodal--loading',
     },
   });
-  const { downloadComplete, cloned, update, modal, dom } = statePage;
+
+  const statePageRef = useRef(statePage);
+  statePageRef.current = statePage;
+  const { downloadComplete, cloned, update, modal } = statePageRef.current;
   const navigate = useNavigate();
   const updateRef = useRef(update);
   updateRef.current = update;
@@ -415,7 +418,6 @@ function CheckUpdatePage() {
       ipcChannel.sendMessage('check-git');
       ipcChannel.once('check-git', (error, stdout, stderr) => {
         // alert('checking git');
-        console.log({ error, stdout, stderr });
         const cloneStatusCheck = stdout.replace('\n', '');
         let cloneStatusCheckValue;
 
@@ -444,6 +446,7 @@ function CheckUpdatePage() {
         ipcChannel.once('clone', (error, cloneStatusClone, stderr) => {
           if (cloneStatusClone.includes('true')) {
             setStatePage({ ...statePage, downloadComplete: true });
+            console.log({ downloadComplete });
           }
         });
       } else {
@@ -462,12 +465,16 @@ function CheckUpdatePage() {
       // alert('cloned true');
       if (navigator.onLine) {
         // alert(branch);
+        console.log(`GIT PULL ${branch}`);
         ipcChannel.sendMessage('pull', branch);
 
         ipcChannel.once('pull', (error, stdout, stderr) => {
-          // alert(error, stdout, stderr);
+          console.log('GIT PULL response');
           console.log({ error, stdout, stderr });
-          setStatePage({ ...statePage, downloadComplete: true });
+          updateTimeOut = setTimeout(() => {
+            setStatePage({ ...statePageRef.current, downloadComplete: true });
+          }, 1000);
+
           // Update timeout
         });
       } else {
@@ -478,6 +485,7 @@ function CheckUpdatePage() {
   }, [cloned]);
 
   useEffect(() => {
+    console.log({ downloadComplete });
     if (downloadComplete === true) {
       if (second) {
         navigate('/emulators');
