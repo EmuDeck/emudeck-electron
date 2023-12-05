@@ -135,33 +135,25 @@ function CheckDependenciesPage() {
         check7Zip();
         // //Steam?
         checkSteam();
+        navigate('/check-updates');
       } else {
-        navigate('/patreon-login');
+        navigate('/check-updates');
       }
     });
   }, []);
 
   useEffect(() => {
     if (statusGIT === true && status7Zip === true) {
-      navigate('/patreon-login');
+      navigate('/check-updates');
     }
   }, [statusGIT, status7Zip]);
 
-  // GamePad
-  const domElementsRef = useRef(null);
-  const domElementsCur = domElementsRef.current;
-  let domElements;
-  useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
-      setStatePage({ ...statePage, dom: domElements });
-    }
-  }, [statePage]);
+
 
   return (
-    <div style={{ height: '100vh' }} ref={domElementsRef}>
-      {dom !== undefined && <GamePad elements={dom} />}
-      <Wrapper>
+    <div style={{ height: '100vh' }} >
+      
+      <Wrapper aside={false}>
         {statusGIT === undefined ||
           (statusSteam === undefined && (
             <Header title="Checking dependencies..." />

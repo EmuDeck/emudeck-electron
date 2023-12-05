@@ -42,7 +42,7 @@ function PowerToolsPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: 'Decky!',
+        sudoPass: system === 'chimeraos' ? 'gamer' : 'Decky!',
       });
     }
   };
@@ -55,7 +55,7 @@ function PowerToolsPage() {
       active: true,
       header: <span className="h4">Success!</span>,
       body: <p>Password created</p>,
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
 
@@ -84,9 +84,9 @@ function PowerToolsPage() {
   const installPowerTools = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing PowerTools</span>,
+      header: <span className="h4">Installing PowerControls</span>,
       body: <p>Please wait while we install the plugin</p>,
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
 
@@ -98,7 +98,7 @@ function PowerToolsPage() {
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
 
     ipcChannel.sendMessage('emudeck', [
-      `powerTools|||Plugins_installPluginLoader ${escapedPass} && Plugins_installPowerTools ${escapedPass} && echo true`,
+      `powerTools|||Plugins_installPluginLoader ${escapedPass} && Plugins_installPowerControls ${escapedPass} && echo true`,
     ]);
 
     ipcChannel.once('powerTools', (status) => {
@@ -109,7 +109,7 @@ function PowerToolsPage() {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,
-          body: <p>PowerTools Installed</p>,
+          body: <p>PowerControls Installed</p>,
           css: 'emumodal--xs',
         };
 
@@ -151,22 +151,13 @@ function PowerToolsPage() {
     });
   }, []);
 
-  //GamePad
-  const domElementsRef = useRef(null);
-  const domElementsCur = domElementsRef.current;
-  let domElements;
-  useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
-      setStatePage({ ...statePage, dom: domElements });
-    }
-  }, [statePage]);
+
 
   return (
-    <div style={{ height: '100vh' }} ref={domElementsRef}>
-      {dom !== undefined && <GamePad elements={dom} />}
+    <div style={{ height: '100vh' }} >
+      
       <Wrapper>
-        <Header title="Configure Power Tools" />
+        <Header title="Configure PowerControls" />
         <PowerTools
           installClick={installPowerTools}
           sudoPass={sudoPass}

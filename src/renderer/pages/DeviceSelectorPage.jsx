@@ -149,20 +149,11 @@ function DeviceSelectorPage() {
     }
   }, []);
 
-  // GamePad
-  const domElementsRef = useRef(null);
-  const domElementsCur = domElementsRef.current;
-  let domElements;
-  useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
-      setStatePage({ ...statePage, dom: domElements });
-    }
-  }, [statePage]);
+
 
   return (
-    <div style={{ height: '100vh' }} ref={domElementsRef}>
-      {dom !== undefined && <GamePad elements={dom} />}
+    <div style={{ height: '100vh' }} >
+      
       <Wrapper>
         <Header title={`Select your device `} />
         <DeviceSelector data={data} onClick={deviceSet}>
@@ -204,11 +195,11 @@ function DeviceSelectorPage() {
                     </Card>
 
                     <Card
-                      css={device === 'ChimeraOS' && 'is-selected'}
-                      onClick={() => deviceSet('ChimeraOS')}
+                      css={device === 'chimeraos' && 'is-selected'}
+                      onClick={() => deviceSet('chimeraos')}
                     >
                       <img src={imgchimeraOS} width="100" alt="Background" />
-                      <span className="h6">ChimeraOS</span>
+                      <span className="h6">chimeraos</span>
                     </Card>
                   </>
                 )}

@@ -35,9 +35,53 @@ import {
   imgFrontESDE,
   imgmelonds,
   imgmgba,
+  xemuGrid,
+  cemuGrid,
+  citraGrid,
+  dolphinGrid,
+  duckstationGrid,
+  mameGrid,
+  rmgGrid,
+  supermodelGrid,
+  flycastGrid,
+  melondsGrid,
+  mgbaGrid,
+  pcsx2Grid,
+  ppssppGrid,
+  primehackGrid,
+  raGrid,
+  rpcs3Grid,
+  ryujinxGrid,
+  scummvmGrid,
+  vita3kGrid,
+  xeniaGrid,
+  yuzuGrid,
+  esdeGrid,
+  srmGrid,
+  pegasusGrid,
+} from 'components/utils/images/images';
+
+import {
+  iconSuccess,
+  iconCloud,
+  iconCompress,
+  iconGear,
+  iconList,
+  iconMigrate,
+  iconPlugin,
+  iconPrize,
+  iconUninstall,
+  iconQuick,
+  iconCustom,
+  iconDoc,
+  iconJoystick,
+  iconPackage,
+  iconDisk,
+  iconHelp,
+  iconScreen,
   iconGear,
   iconPackage,
-} from 'components/utils/images/images';
+} from 'components/utils/images/icons';
 
 const images = {
   ra: imgra,
@@ -66,6 +110,33 @@ const images = {
   srm: imgsrm,
 };
 
+const imagesGrid = {
+  xemu: xemuGrid,
+  cemu: cemuGrid,
+  citra: citraGrid,
+  dolphin: dolphinGrid,
+  duckstation: duckstationGrid,
+  flycast: flycastGrid,
+  mame: mameGrid,
+  rmg: rmgGrid,
+  supermodel: supermodelGrid,
+  melonds: melondsGrid,
+  mgba: mgbaGrid,
+  pcsx2: pcsx2Grid,
+  ppsspp: ppssppGrid,
+  primehack: primehackGrid,
+  ra: raGrid,
+  rpcs3: rpcs3Grid,
+  ryujinx: ryujinxGrid,
+  scummvm: scummvmGrid,
+  vita3k: vita3kGrid,
+  xenia: xeniaGrid,
+  yuzu: yuzuGrid,
+  esde: esdeGrid,
+  srm: srmGrid,
+  pegasus: pegasusGrid,
+};
+
 function EmulatorsPage() {
   const navigate = useNavigate();
   const { state, stateCurrentConfigs, setStateCurrentConfigs } =
@@ -86,7 +157,7 @@ function EmulatorsPage() {
     dom,
   } = statePage;
 
-  const { system, installEmus, installFrontends } = state;
+  const { system, installEmus, installFrontends, branch } = state;
 
   const installEmusArray = Object.values(installEmus);
   const installFrontendsArray = Object.values(installFrontends);
@@ -98,6 +169,13 @@ function EmulatorsPage() {
 
   const pageRef = useRef(statePage);
   pageRef.current = statePage;
+
+  const showChangelog = localStorage.getItem('show_changelog');
+  console.log({ system });
+  console.log({ showChangelog });
+  if (showChangelog === true) {
+    navigate('/change-log');
+  }
 
   const resetEmus = () => {
     const modalData = {
@@ -123,7 +201,7 @@ function EmulatorsPage() {
         const { version } = item;
 
         if (system === 'win32') {
-          if (item.id === 'rmg' || item.id === 'mgba') {
+          if (item.id === 'rmg') {
             return;
           }
         }
@@ -259,20 +337,11 @@ function EmulatorsPage() {
     }
   }, [modal]);
 
-  // GamePad
-  const domElementsRef = useRef(null);
-  const domElementsCur = domElementsRef.current;
-  let domElements;
-  useEffect(() => {
-    if (domElementsCur && dom === undefined) {
-      domElements = domElementsCur.querySelectorAll('button');
-      setStatePage({ ...statePage, dom: domElements });
-    }
-  }, [statePage]);
+
 
   return (
-    <div style={{ height: '100vh' }} ref={domElementsRef}>
-      {dom !== undefined && <GamePad elements={dom} />}
+    <div style={{ height: '100vh' }} >
+      
       <Wrapper>
         <Header title="Manage your Emulators" />
         <p className="lead">
@@ -284,8 +353,8 @@ function EmulatorsPage() {
           {updates && (
             <>
               <div className="container--grid">
-                {Object.keys(updates).length > 0 && system !== 'darwin' && (
-                  <div data-col-md="4">
+                {Object.keys(updates).length > 0 && (
+                  <div data-col-md="6">
                     <CardSettings
                       icon={iconGear}
                       css="is-highlighted"
@@ -299,7 +368,7 @@ function EmulatorsPage() {
                   </div>
                 )}
                 {system !== 'win32' && system !== 'darwin' && (
-                  <div data-col-md="4">
+                  <div data-col-md="6">
                     <CardSettings
                       icon={iconPackage}
                       css="is-highlighted"
@@ -317,9 +386,19 @@ function EmulatorsPage() {
               <div className="container--grid">
                 {installEmusArray.map((item) => {
                   const img = images[item.id];
+                  const picture = imagesGrid[item.id];
                   const updateNotif = updates[item.id];
                   if (system === 'win32') {
                     if (item.id === 'rmg') {
+                      return;
+                    }
+                  }
+                  if (system === 'win32' && branch === 'beta') {
+                    if (
+                      item.id === 'mame' ||
+                      item.id === 'flycast' ||
+                      item.id === 'mgba'
+                    ) {
                       return;
                     }
                   }
@@ -328,15 +407,16 @@ function EmulatorsPage() {
                   }
 
                   if (system === 'darwin') {
-                    if (item.id !== 'ra') {
+                    if (item.id !== 'ra' && item.id !== 'srm') {
                       return;
                     }
                   }
                   return (
-                    <div key={item.id} data-col-md="2">
+                    <div key={item.id} data-col-md="4">
                       <CardSettings
                         icon={img}
-                        css="is-highlighted"
+                        picture={picture}
+                        css="is-nothighlighted"
                         btnCSS={
                           item.status === true
                             ? 'btn-simple--5'
@@ -344,7 +424,7 @@ function EmulatorsPage() {
                         }
                         iconSize="sm"
                         title={`${item.name}`}
-                        button={item.status === true ? 'Manage' : 'Install'}
+                        button="Manage"
                         onClick={() => navigate(`/emulators-detail/${item.id}`)}
                         notification={
                           item.status === true
@@ -357,16 +437,18 @@ function EmulatorsPage() {
                 })}
                 {installFrontendsArray.map((item) => {
                   const img = images[item.id];
+                  const picture = imagesGrid[item.id];
                   const updateNotif = updates[item.id];
 
-                  if (item.id === 'pegasus' || item.id === 'steam') {
+                  if (item.id === 'steam') {
                     return;
                   }
 
                   return (
-                    <div key={item.id} data-col-md="2">
+                    <div key={item.id} data-col-md="4">
                       <CardSettings
                         icon={img}
+                        picture={picture}
                         css="is-highlighted"
                         btnCSS={
                           item.status === true
@@ -375,7 +457,7 @@ function EmulatorsPage() {
                         }
                         iconSize="sm"
                         title={`${item.name}`}
-                        button={item.status === true ? 'Manage' : 'Install'}
+                        button="Manage"
                         onClick={() => navigate(`/emulators-detail/${item.id}`)}
                         notification={
                           item.status === true
@@ -392,6 +474,7 @@ function EmulatorsPage() {
         </Main>
         <Footer
           next={false}
+          back={false}
           disabledNext={disabledNext}
           disabledBack={disabledBack}
         />
