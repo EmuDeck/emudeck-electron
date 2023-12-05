@@ -130,10 +130,3 @@ jobs:
         with:
           name: EmuDeck-early-windows
           path: '**/*.exe'
-release:
-  steps:
-    - name: Release
-  uses: softprops/action-gh-release@v1
-  with:
-    repository: EmuDeck/emudeck-early-releases
-    token: ${{ secrets.RELEASE_TOKEN }}
