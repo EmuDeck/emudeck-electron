@@ -29,6 +29,7 @@ import {
   imgscummvm,
   imgsupermodelista,
   imgFrontESDE,
+  imgFrontPegasus,
   imgmelonds,
   imgmgba,
 } from 'components/utils/images/images';
@@ -57,6 +58,7 @@ const images = {
   esde: imgFrontESDE,
   mgba: imgmgba,
   xenia: imgxenia,
+  pegasus: imgFrontPegasus,
 };
 
 function EmulatorConfigurationPage() {
@@ -99,11 +101,8 @@ function EmulatorConfigurationPage() {
     nextPage = 'aspect-ratio-dolphin';
   }
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Emulator and Tools Configurations" />
         <EmulatorConfiguration

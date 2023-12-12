@@ -1,68 +1,80 @@
 [
   {
-    "title": "Bug fixes",
+    "title": "EmuDeck for Windows",
     "type": "STEAMOS",
-    "description": "A TON of bugs related with SRM and parsers, SRM no longer hides some parsers randomly. CloudSync logs are now gone so it should work a bit faster. and a lot (more than 97 new commits to the code since last release)",
-    "image": "false"
+    "description": "EmuDeck for Windows Beta is now available! Download it from emudeck.com",
+    "image": "true"
   },
   {
-    "title": "Unified controller hotkeys",
+    "title": "Pegasus Frontend",
     "type": "STEAMOS",
-    "description": "Windows and SteamOS/Linux now have the same hotkeys, so the basics are the same in all emulators: START + SELECT closes the emulator, SELECT + L1 Save State,  SELECT + R1 Load State. R2 and L2 will be used for stuff like speed up, rewind, change screen layout in DS and 3DS. In the future further improvements will be done to use the back buttons of the SteamDeck. And yes, gyro support will come too.",
-    "image": "false"
+    "description": "An old friend comes back from the EmuDeck origins, Pegasus Frontend. Uses the same artwork you already have downloaded for EmulationStation DE",
+    "image": "true"
   },
   {
-    "title": "Flycast",
+    "title": "Frontend Selector",
     "type": "STEAMOS",
-    "description": "Flycast is now available as a standalone option for Dreamcast & Naomi Games",
-    "image": "false"
+    "description": "EmulationStation DE, Pegasus, Steam? Chose your favourite frontend.",
+    "image": "true"
   },
   {
-    "title": "ESDE Theme Selector",
+    "title": "Theme Selector",
     "type": "STEAMOS",
-    "description": "We've completely redesigned the theme selector on Custom Install.",
-    "image": "false"
+    "description": "Pick your favourite theme for Pegasus or EmulationStation DE when installing in Custom Mode.",
+    "image": "true"
   },
   {
-    "title": "New SRM Features",
+    "title": "Steam Rom Manager",
     "type": "STEAMOS",
-    "description": "We've completely redesigned the EmuDeck theme and added dynamic parsers based in your installed emulators.",
-    "image": "false"
+    "description": "We've completely redesigned the EmuDeck theme and added dynamic parsers, only the emulators you have installed will appear on SRM. WE've also added an option to pick between RetroArch or Standalone emulator for some systems",
+    "image": "true"
   },
   {
     "title": "Better Linux support",
     "type": "STEAMOS",
-    "description": "This new release includes a new installer that should install all the EmuDeck dependencies automatically.",
-    "image": "false"
+    "description": "The Install script will install all dependencies needed for Debian, Arch, Fedora, Suse and Void based distros.",
+    "image": "true"
   },
   {
-    "title": "CloudSync 2.0",
+    "title": "ChimeraOS",
     "type": "STEAMOS",
-    "description": "Every time you launch an emulator we will compare a hash of what's in your device with what's on the cloud. This improves startup by a lot. And when you are playing, we will upload those saved games in the background, so exiting of a game an opening a new one now has almost zero loading time. We are still missing some notifications when all the uploads are being completed so you can turn off your device without interrumping any possible background upload.",
-    "image": "false"
+    "description": "New UI for ChimeraOS, and a new third party feature to add PowerControl to control the TDP on your Handheld",
+    "image": "true"
   },
   {
-    "title": "Auto sudo",
+    "title": "AutoSudo",
     "type": "STEAMOS",
-    "description": "If you don't have a sudo password set we will create a temporary for you so you can install Decky, Gyro and other stuff automatically, after installation we will remove the temporary password.",
-    "image": "false"
+    "description": "If you don't have a sudo password set we will create a temporary for you so you can install Decky, Gyro and other stuff automatically. After that we will remove the temporary password.",
+    "image": "true"
   },
   {
-    "title": "EmuDecky Plugin",
+    "title": "EmuDecky",
     "type": "STEAMOS",
     "description": "New Decky plugin to check hotkeys, toggle bezels, aspect ratios, etc. while in gaming mode. No need of going into Desktop mode",
-    "image": "false"
-  },
-  {
-    "title": "Dynamic Parsers",
-    "type": "STEAMOS",
-    "description": "If you do a custom install, you'll get the option to customize your Steam Rom Manager parsers depending on the emulators selected so don't end up with duplicates in your Steam Library.",
-    "image": "false"
+    "image": "true"
   },
   {
     "title": "Refined UI",
     "type": "STEAMOS",
-    "description": "We've made some changes here and there to make the experience a bit better when installing Emulators",
-    "image": "false"
+    "description": "We've made some changes here and there to make the experience a bit better when installing Emulators. All the GUI has been customized per each OS EmuDeck will run on. Dark and light themes available.",
+    "image": "true"
+  },
+  {
+    "title": "Resolution Selector",
+    "type": "STEAMOS",
+    "description": "Change your emulator resolution right within EmuDeck",
+    "image": "true"
+  },
+  {
+    "title": "Flycast",
+    "type": "STEAMOS",
+    "description": "New emulator for Dreamcast and Naomi games",
+    "image": "true"
+  },
+  {
+    "title": "Early Access",
+    "type": "STEAMOS",
+    "description": "Early Access users have exclusive access to features months before they are released, the upcoming <strong>Android and Mac</strong> ports of EmuDeck, <strong>CloudSync</strong> to have all your saved games sync between any EmuDeck installation, no matter if its Linux, Windows, Mac or <strong>OnionOS.</strong>. Windows users can also turn their handhelds into a SteamDeck with our <strong>BootMode</strong>",
+    "image": "true"
   }
 ]

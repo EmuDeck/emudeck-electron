@@ -22,6 +22,8 @@ import RAAchievementsPage from 'pages/RAAchievementsPage';
 import RAAchievementsConfigPage from 'pages/RAAchievementsConfigPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
+import PegasusThemeChoicePage from 'pages/PegasusThemeChoicePage';
+
 import ESDEThemePage from 'pages/ESDEThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
 import EmuDeckyPage from 'pages/EmuDeckyPage';
@@ -252,6 +254,7 @@ export default function App() {
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
       esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
+      pegasus: { id: 'pegasus', status: true, name: 'Pegasus' },
       rmg: { id: 'rmg', status: false, name: "Rosalie's Mupen Gui" },
       mame: { id: 'mame', status: true, name: 'MAME' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita3K' },
@@ -259,7 +262,6 @@ export default function App() {
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
       mgba: { id: 'mgba', status: true, name: 'mGBA' },
       ares: { id: 'ares', status: false, name: 'ares' },
-      pegasus: { id: 'pegasus', status: false, name: 'Pegasus' },
     },
     installFrontends: {
       esde: {
@@ -274,7 +276,7 @@ export default function App() {
         status: true,
         installed: undefined,
         name: 'Pegasus',
-        desc: 'Add this launcher to your Steam Library. Recommended for big colections',
+        desc: 'Add this launcher to your Steam Library. Recommended for big colections. You need to run EmulationStation parsers to show artwork in Pegasus Themes',
       },
       steam: {
         id: 'steam',
@@ -462,6 +464,11 @@ export default function App() {
           </Route>
 
           <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
+          <Route
+            exact
+            path="/pegasus-theme-choice"
+            element={<PegasusThemeChoicePage />}
+          />
           <Route exact path="/esde-theme" element={<ESDEThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
         </Routes>
