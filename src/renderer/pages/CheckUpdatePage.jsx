@@ -538,7 +538,7 @@ function CheckUpdatePage() {
     console.log({ downloadComplete });
     if (downloadComplete === true) {
       if (second) {
-        navigate('/emulators');
+        navigate('/welcome');
       } else {
         navigate('/welcome');
       }
