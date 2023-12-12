@@ -6,17 +6,20 @@ import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Card from 'components/molecules/Card/Card';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog';
-import img0 from 'assets/banner_steamOS.jpg';
-import img1 from 'assets/banner_store.png';
-import img2 from 'assets/banner_ui.png';
-import img3 from 'assets/banner_melonds.png';
-import img4 from 'assets/banner_usbtransfer.png';
-import img5 from 'assets/banner_ESDE.jpg';
-import img6 from 'assets/banner_emulators_manage.png';
-import img7 from 'assets/banner_migration.png';
-import img8 from 'assets/banner_streaming.jpg';
-import img9 from 'assets/banner_emudeck-theme.png';
-import img10 from 'assets/banner_steaminput.jpg';
+import img0 from 'assets/changelog/banner_windows.png';
+import img1 from 'assets/changelog/banner_pegasus.png';
+import img2 from 'assets/changelog/banner_frontends.png';
+import img3 from 'assets/changelog/banner_theme_selector.png';
+import img4 from 'assets/changelog/banner_srm.png';
+import img5 from 'assets/changelog/banner_linux.png';
+import img6 from 'assets/changelog/banner_chimeraos.png';
+import img7 from 'assets/changelog/banner_autosudo.png';
+import img8 from 'assets/changelog/banner_decky.png';
+import img9 from 'assets/changelog/banner_gui.png';
+import img10 from 'assets/changelog/banner_resolution.png';
+import img11 from 'assets/changelog/banner_flycast.png';
+import img12 from 'assets/changelog/banner_early.png';
+import img13 from 'assets/changelog/banner_early.png';
 
 function ChangeLogPage() {
   const { state } = useContext(GlobalContext);
@@ -34,6 +37,7 @@ function ChangeLogPage() {
   const imgC0 = img0;
   const activeItem = (id) => {
     let imgID;
+
     switch (id) {
       case 0:
         imgID = img0;
@@ -64,8 +68,18 @@ function ChangeLogPage() {
         break;
       case 9:
         imgID = img9;
+        break;
       case 10:
         imgID = img10;
+        break;
+      case 11:
+        imgID = img11;
+        break;
+      case 12:
+        imgID = img12;
+        break;
+      case 13:
+        imgID = img13;
         break;
     }
 
@@ -98,11 +112,8 @@ function ChangeLogPage() {
     });
   }, []);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Latest changes" />
         <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>

@@ -159,6 +159,7 @@ function CheckUpdatePage() {
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
         const achievementsStored = settingsStorage.achievements;
         delete settingsStorage.installEmus.esde;
+        delete settingsStorage.installEmus.pegasus;
         delete settingsStorage.installEmus.primehacks;
         delete settingsStorage.installEmus.melonDS;
         delete settingsStorage.installEmus.cemunative;
@@ -406,7 +407,7 @@ function CheckUpdatePage() {
             style={{ marginBottom: 0 }}
             onClick={() => showLog(system)}
           >
-            See more details {system}
+            See more details
           </BtnSimple>
         ),
         css: 'emumodal--xs emumodal--loading',

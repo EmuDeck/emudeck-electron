@@ -42,8 +42,11 @@ function EarlyAccessPage() {
               <ul className="list">
                 <li>- Early access</li>
                 <li>- General Support</li>
-                <li>- Private community</li>
-                <li>- Acceso a Discord</li>
+                <li>
+                  - CloudSync ( Sync your saved games across Mac, Windows or
+                  Linux )
+                </li>
+                <li>- Private Discord community</li>
               </ul>
             </Card>
           </div>
@@ -70,10 +73,10 @@ function EarlyAccessPage() {
                 optimizations for others systems.
               </p>
               <ul className="list">
-                <li>- Early access</li>
-                <li>- General Support</li>
-                <li>- Private community</li>
-                <li>- Acceso a Discord</li>
+                <li>- Same features as Early Access and:</li>
+                <li>
+                  - Voting rights, let's shape the future of EmuDeck together
+                </li>
               </ul>
             </Card>
           </div>
