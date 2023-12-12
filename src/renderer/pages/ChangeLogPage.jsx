@@ -11,14 +11,14 @@ import img1 from 'assets/changelog/banner_pegasus.png';
 import img2 from 'assets/changelog/banner_frontends.png';
 import img3 from 'assets/changelog/banner_theme_selector.png';
 import img4 from 'assets/changelog/banner_srm.png';
-import img5 from 'assets/changelog/banner_linux.png';
-import img6 from 'assets/changelog/banner_chimeraOS.png';
-import img7 from 'assets/changelog/banner_autosudo.png';
-import img8 from 'assets/changelog/banner_decky.png';
-import img9 from 'assets/changelog/banner_gui.png';
-import img10 from 'assets/changelog/banner_resolution.png';
-import img11 from 'assets/changelog/banner_flycast.png';
-import img12 from 'assets/changelog/banner_early.png';
+import img5 from 'assets/changelog/banner_gui.png';
+import img6 from 'assets/changelog/banner_resolution.png';
+import img7 from 'assets/changelog/banner_flycast.png';
+import img8 from 'assets/changelog/banner_early.png';
+import img9 from 'assets/changelog/banner_linux.png';
+import img10 from 'assets/changelog/banner_chimeraOS.png';
+import img11 from 'assets/changelog/banner_autosudo.png';
+import img12 from 'assets/changelog/banner_decky.png';
 import img13 from 'assets/changelog/banner_early.png';
 
 function ChangeLogPage() {
