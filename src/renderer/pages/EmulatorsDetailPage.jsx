@@ -772,7 +772,7 @@ function EmulatorsDetailPage() {
             <BtnSimple
               css="btn-simple--1"
               type="button"
-              onClick={() => navigate('/emulators')}
+              onClick={() => navigate('/welcome')}
             >
               Close
             </BtnSimple>

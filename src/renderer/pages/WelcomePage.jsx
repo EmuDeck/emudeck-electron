@@ -206,7 +206,7 @@ function WelcomePage() {
   return (
     <div style={{ height: '100vh' }} >
 
-      <Wrapper aside={false}>
+      <Wrapper aside={second === true}>
         {second === false && (
           <Header title={`Welcome to EmuDeck for ${systemName}`} />
         )}
