@@ -27,6 +27,7 @@ import {
   imgmame,
   imgvita3k,
   imgflycast,
+  imgFrontPegasus,
   imgxenia,
   imgsrm,
   imgrmg,
@@ -108,6 +109,7 @@ const images = {
   mgba: imgmgba,
   xenia: imgxenia,
   srm: imgsrm,
+  pegasus: imgFrontPegasus,
 };
 
 const imagesGrid = {
@@ -337,11 +339,8 @@ function EmulatorsPage() {
     }
   }, [modal]);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Manage your Emulators" />
         <p className="lead">
