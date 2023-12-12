@@ -363,12 +363,8 @@ function CloudSyncPageConfig() {
     return 'copy-games';
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
-
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <PatreonLogin>
           <Header title="Cloud Saves - Select your provider" />
@@ -388,6 +384,12 @@ function CloudSyncPageConfig() {
           />
           <EmuModal modal={modal} />
         </PatreonLogin>
+        <Footer
+          next={nextButtonStatus()}
+          nextText="Copy games"
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+        />
       </Wrapper>
     </div>
   );
