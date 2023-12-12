@@ -32,9 +32,9 @@ function ESDEThemePage() {
   }, []);
 
   const nextPage = () => {
-    // if (installFrontends.pegasus.status === true) {
-    //   return 'pegasus-theme';
-    // }
+    if (installFrontends.pegasus.status === true) {
+      return 'pegasus-theme';
+    }
     if (system === 'SteamOS') {
       return 'confirmation';
     }
@@ -44,8 +44,11 @@ function ESDEThemePage() {
     return 'emulator-resolution';
   };
 
+
+
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '100vh' }} >
+      
       <Wrapper aside={false}>
         <Header title="EmulationStation-DE Default Theme" />
         <ESDETheme themes={themes} onClick={themeSet} />
