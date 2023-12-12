@@ -1,5 +1,11 @@
 [
   {
+    "title": "EmuDeck for Windows",
+    "type": "STEAMOS",
+    "description": "EmuDeck for Windows",
+    "image": "true"
+  },
+  {
     "title": "Pegasus Frontend",
     "type": "STEAMOS",
     "description": "An old friend comes back from the EmuDeck origins, Pegasus Frontend. Uses the same artwork you already have downloaded for EmulationStation DE",
@@ -33,6 +39,12 @@
     "title": "Resolution Selector",
     "type": "STEAMOS",
     "description": "Change your emulator resolution right within EmuDeck",
+    "image": "true"
+  },
+  {
+    "title": "Flycast",
+    "type": "STEAMOS",
+    "description": "New emulator for Dreamcast and Naomi games",
     "image": "true"
   },
   {
