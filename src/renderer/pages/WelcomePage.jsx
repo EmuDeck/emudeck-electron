@@ -211,15 +211,9 @@ function WelcomePage() {
           <Header title={`Welcome to EmuDeck for ${systemName}`} />
         )}
 
-        {second === true && (
-          <Header title={`Welcome back to EmuDeck for ${systemName}`} />
-        )}
+        {second === true && <Header title="Welcome back to EmuDeck" />}
         {systemName !== 'ERROR' && (
           <Welcome
-            settingsCards={}
-            settingsCardsFeatured={}
-            functions={}
-            updates={updates}
             alert={
               second
                 ? ``
