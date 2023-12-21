@@ -210,8 +210,6 @@ function FrontendSelectorPage() {
     }
   }, [installFrontends]);
 
-
-
   const nextPage = () => {
     if (installFrontends.pegasus.status && installFrontends.esde.status) {
       return 'esde-theme';
@@ -221,6 +219,9 @@ function FrontendSelectorPage() {
     }
     if (installFrontends.pegasus.status) {
       return 'pegasus-theme';
+    }
+    if (installFrontends.steam.status) {
+      return 'confirmation';
     }
 
     // if (system !== 'SteamOS') {
@@ -233,8 +234,7 @@ function FrontendSelectorPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Frontends for" bold={`${device}`} />
         <FrontendSelector
