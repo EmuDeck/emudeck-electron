@@ -62,6 +62,7 @@ function EmulatorsDetailPage() {
     newDesiredVersions: null,
     modal: null,
     dom: undefined,
+    lastSelected: null,
   });
   const {
     disabledNext,
@@ -70,8 +71,18 @@ function EmulatorsDetailPage() {
     modal,
     updates,
     newDesiredVersions,
-    dom,
+    lastSelected,
   } = statePage;
+
+  // TODO: Use only one state for bioses, doing it this way is quick but madness
+  const [ps1Bios, setps1Bios] = useState(null);
+  const [ps2Bios, setps2Bios] = useState(null);
+  const [switchBios, setSwitchBios] = useState(null);
+  const [segaCDBios, setSegaCDBios] = useState(null);
+  const [saturnBios, setSaturnBios] = useState(null);
+  const [dreamcastBios, setDreamcastBios] = useState(null);
+  const [DSBios, setDSBios] = useState(null);
+  const ipcChannel = window.electron.ipcRenderer;
 
   const yuzuEAsetToken = (data) => {
     console.log({ data });
@@ -216,10 +227,6 @@ function EmulatorsDetailPage() {
     });
   };
 
-  // const yuzuEAInstall = () => {
-  //
-  // };
-
   const diff = (obj1, obj2) => {
     // Make sure an object to compare is provided
     if (!obj2 || Object.prototype.toString.call(obj2) !== '[object Object]') {
@@ -331,15 +338,6 @@ function EmulatorsDetailPage() {
     return diffs;
   };
 
-  // TODO: Use only one state for bioses, doing it this way is quick but madness
-  const [ps1Bios, setps1Bios] = useState(null);
-  const [ps2Bios, setps2Bios] = useState(null);
-  const [switchBios, setSwitchBios] = useState(null);
-  const [segaCDBios, setSegaCDBios] = useState(null);
-  const [saturnBios, setSaturnBios] = useState(null);
-  const [dreamcastBios, setDreamcastBios] = useState(null);
-  const [DSBios, setDSBios] = useState(null);
-  const ipcChannel = window.electron.ipcRenderer;
   const checkBios = (biosCommand) => {
     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
@@ -656,145 +654,6 @@ function EmulatorsDetailPage() {
     });
   };
 
-  const saveParsers = () => {
-    const modalData = {
-      active: true,
-      header: <span className="h4">Updating Parsers!</span>,
-      body: <p>Please wait a few seconds...</p>,
-      footer: <ProgressBar css="progress--success" infinite max="100" />,
-      css: 'emumodal--xs',
-    };
-
-    setStatePage({
-      ...statePage,
-      modal: modalData,
-    });
-  };
-
-  const setAlternativeEmulator = (system, emuName, emuName2, disable) => {
-    if (emuName === 'ra' || emuName === 'ares') {
-      setState({
-        ...state,
-        emulatorAlternative: {
-          ...emulatorAlternative,
-          [system]: emuName,
-        },
-        installEmus: {
-          ...installEmus,
-          [emuName2]: { ...installEmus[emuName2], status: false },
-        },
-      });
-    } else if (emuName2 === 'multiemulator' || emuName2 === 'both') {
-      setState({
-        ...state,
-        emulatorAlternative: {
-          ...emulatorAlternative,
-          [system]: emuName,
-        },
-      });
-    } else {
-      setStatePage({ ...statePage, lastSelected: emuName });
-
-      setState({
-        ...state,
-        emulatorAlternative: {
-          ...emulatorAlternative,
-          [system]: emuName,
-        },
-        installEmus: {
-          ...installEmus,
-          [emuName2]: { ...installEmus[emuName2], status: false },
-        },
-      });
-    }
-    saveParsers();
-  };
-
-  useEffect(() => {
-    const ogStateAlternativeValues = emulatorAlternative;
-    const json = JSON.stringify(ogStateAlternativeValues);
-    localStorage.setItem('ogStateAlternative', json);
-  }, []);
-
-  useEffect(() => {
-    const ogStateAlternative = JSON.parse(
-      localStorage.getItem('ogStateAlternative')
-    );
-
-    function sameObjects(obj1, obj2) {
-      const keys1 = Object.keys(obj1);
-      const keys2 = Object.keys(obj2);
-
-      if (keys1.length !== keys2.length) {
-        return false;
-      }
-
-      for (const key of keys1) {
-        if (obj1[key] !== obj2[key]) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    const sameObject = sameObjects(ogStateAlternative, emulatorAlternative);
-
-    if (sameObject) {
-      return;
-    }
-
-    if (system === 'win32') {
-      ipcChannel.sendMessage('emudeck', [
-        `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status};setSetting doInstallmelonDS ${state.installEmus.melonds.status};setSetting doInstallDuck ${state.installEmus.duckstation.status};;setSetting doInstallFlycast ${state.installEmus.dreamcast.status}`,
-      ]);
-    } else {
-      ipcChannel.sendMessage('emudeck', [
-        `parsersUpdatePrev|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} && setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame.status} >/dev/null && setSetting doInstallmelonDS ${state.installEmus.melonds.status} >/dev/null && setSetting doInstallDuck ${state.installEmus.duckstation.status} >/dev/null && setSetting doInstallFlycast ${state.installEmus.flycast.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame} >/dev/null && setSetting doInstallRMG ${state.installEmus.rmg.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status}} >/dev/null) >/dev/null`,
-      ]);
-    }
-
-    ipcChannel.once(`parsersUpdatePrev`, () => {
-      ipcChannel.sendMessage('emudeck', [`parsersUpdate|||SRM_init`]);
-    });
-
-    ipcChannel.once(`parsersUpdate`, (message) => {
-      const status = message.stdout;
-      status.replace('\n', '');
-      console.log({ message });
-      let modalData;
-      if (status.includes('true')) {
-        modalData = {
-          active: true,
-          header: <span className="h4">Success!</span>,
-          body: <p>All Parsers have been configured.</p>,
-          footer: (
-            <BtnSimple
-              css="btn-simple--1"
-              type="button"
-              onClick={() => navigate('/welcome')}
-            >
-              Close
-            </BtnSimple>
-          ),
-          css: 'emumodal--xs',
-        };
-      } else if (system !== 'win32') {
-        modalData = {
-          active: true,
-          header: <span className="h4">Failed</span>,
-          body: <p>There was an issue trying to configure your parsers</p>,
-          css: 'emumodal--xs',
-        };
-        console.log({ modalData });
-      }
-      setStatePage({
-        ...statePage,
-        modal: modalData,
-      });
-    });
-  }, [emulatorAlternative]);
-
   const installEmu = (emulator, code) => {
     const modalData = {
       active: true,
@@ -865,437 +724,17 @@ function EmulatorsDetailPage() {
             emulator === 'rmg' ||
             emulator === 'flycast'
           ) {
-            let emuOption1;
-            let emuOption2;
-            let emuID1;
-            let emuID2;
-            let system;
-            let multiemulatorName;
-            let multiemulatorID;
-            let modalData;
-            // //RA || ARES + mGBA
-            if (
-              (emulator === 'mgba' && installEmus.ra.status) ||
-              (emulator === 'mgba' && installEmus.ares.status)
-            ) {
-              if (emulatorAlternative.gba !== 'both') {
-                multiemulatorID = 'multiemulator';
-                multiemulatorName = 'RetroArch';
-                if (installEmus.ares.status) {
-                  multiemulatorID = 'multiemulator';
-                  multiemulatorName = 'ares';
-                }
-
-                emuOption1 = 'mGBA';
-                emuOption2 = multiemulatorName;
-                emuID2 = 'mgba';
-                emuID1 = multiemulatorID;
-                system = 'gba';
-                modalData = {
-                  active: true,
-                  body: (
-                    <>
-                      <p>
-                        Which emulator do you want to use for GameBoy Advance.
-                      </p>
-                      <div className="h5">
-                        <strong>RetroArch (recommended)</strong> has these pros:
-                      </div>
-                      <ol className="list">
-                        <li>RetroAchievements</li>
-                        <li>Bezels & Shaders</li>
-                        <li>Auto Save States</li>
-                      </ol>
-                      <div className="h5">
-                        <strong>mGBA</strong> has this pro:
-                      </div>
-                      <ol className="list">
-                        <li>GBA Link for Multiplayer, Pokemon Trading, etc.</li>
-                      </ol>
-                      <p>
-                        We will only add the parser according to your selection
-                        so you don't end up with duplicates in your library.
-                      </p>
-                    </>
-                  ),
-                };
-                const myTimeout = setTimeout(launchModal, 500);
-              }
-            }
-
-            // //RA || ARES + rmg
-            if (
-              (emulator === 'rmg' && installEmus.ra.status) ||
-              (emulator === 'rmg' && installEmus.ares.status)
-            ) {
-              // alert(emuModified);
-              if (emulatorAlternative.n64 !== 'both') {
-                multiemulatorID = 'multiemulator';
-                multiemulatorName = 'RetroArch';
-                if (installEmus.ares.status) {
-                  multiemulatorID = 'multiemulator';
-                  multiemulatorName = 'ares';
-                }
-
-                emuOption1 = 'rmg';
-                emuOption2 = multiemulatorName;
-                emuID2 = 'rmg';
-                emuID1 = multiemulatorID;
-                system = 'n64';
-                modalData = {
-                  active: true,
-                  body: (
-                    <>
-                      <p>Which emulator do you want to use</p>
-                      <div className="h5">
-                        <strong>RetroArch (recommended)</strong> has these pros:
-                      </div>
-                      <ol className="list">
-                        <li>RetroAchievements</li>
-                        <li>Bezels & Shaders</li>
-                        <li>Auto Save States</li>
-                      </ol>
-                      <div className="h5">
-                        <strong>RMG</strong> has this pro:
-                      </div>
-                      <ol className="list">
-                        <li>Better Performance</li>
-                      </ol>
-                      <p>
-                        We will only add the parser according to your selection
-                        so you don't end up with duplicates in your library.
-                      </p>
-                    </>
-                  ),
-                };
-                const myTimeout = setTimeout(launchModal, 500);
-              }
-            }
-
-            if (
-              (emulator === 'duckstation' && installEmus.ra.status) ||
-              (emulator === 'duckstation' && installEmus.ares.status)
-            ) {
-              if (emulatorAlternative.psx !== 'both') {
-                multiemulatorID = 'multiemulator';
-                multiemulatorName = 'RetroArch';
-                if (installEmus.ares.status) {
-                  multiemulatorID = 'multiemulator';
-                  multiemulatorName = 'ares';
-                }
-
-                emuOption1 = 'DuckStation';
-                emuOption2 = multiemulatorName;
-                emuID2 = 'duckstation';
-                emuID1 = multiemulatorID;
-                system = 'psx';
-                modalData = {
-                  active: true,
-                  body: (
-                    <>
-                      <p>Which emulator do you want to use</p>
-                      <div className="h5">
-                        <strong>RetroArch</strong> has these prosss:
-                      </div>
-                      <ol className="list">
-                        <li>RetroAchievements</li>
-                        <li>Bezels & Shaders</li>
-                        <li>Auto Save States</li>
-                      </ol>
-                      <div className="h5">
-                        <strong>DuckStation (recommended)</strong> has this pro:
-                      </div>
-                      <ol className="list">
-                        <li>Better Performance</li>
-                      </ol>
-                      <p>
-                        We will only add the parser according to your selection
-                        so you don't end up with duplicates in your library.
-                      </p>
-                    </>
-                  ),
-                };
-                const myTimeout = setTimeout(launchModal, 500);
-              }
-            }
-
-            if (
-              (emulator === 'flycast' && installEmus.ra.status) ||
-              (emulator === 'flycast' && installEmus.ares.status)
-            ) {
-              if (emulatorAlternative.dreamcast !== 'both') {
-                multiemulatorID = 'multiemulator';
-                multiemulatorName = 'RetroArch';
-                if (installEmus.ares.status) {
-                  multiemulatorID = 'multiemulator';
-                  multiemulatorName = 'ares';
-                }
-
-                emuOption1 = 'Flycast';
-                emuOption2 = multiemulatorName;
-                emuID2 = 'flycast';
-                emuID1 = multiemulatorID;
-                system = 'dreamcast';
-                modalData = {
-                  active: true,
-                  body: (
-                    <>
-                      <p>Which emulator do you want to use</p>
-                      <div className="h5">
-                        <strong>RetroArch</strong> has these prosss:
-                      </div>
-                      <ol className="list">
-                        <li>RetroAchievements</li>
-                        <li>Bezels & Shaders</li>
-                      </ol>
-                      <div className="h5">
-                        <strong>Flycast (recommended)</strong> has this pro:
-                      </div>
-                      <ol className="list">
-                        <li>Better Performance</li>
-                      </ol>
-                      <p>
-                        We will only add the parser according to your selection
-                        so you don't end up with duplicates in your library.
-                      </p>
-                    </>
-                  ),
-                };
-                const myTimeout = setTimeout(launchModal, 500);
-              }
-            }
-
-            if (
-              (emulator === 'melonds' && installEmus.ra.status) ||
-              (emulator === 'melonds' && installEmus.ares.status)
-            ) {
-              if (emulatorAlternative.nds !== 'both') {
-                multiemulatorID = 'multiemulator';
-                multiemulatorName = 'RetroArch';
-                if (installEmus.ares.status) {
-                  multiemulatorID = 'multiemulator';
-                  multiemulatorName = 'ares';
-                }
-
-                emuOption1 = 'melonDS';
-                emuOption2 = multiemulatorName;
-                emuID2 = 'melonds';
-                emuID1 = multiemulatorID;
-                system = 'nds';
-                modalData = {
-                  active: true,
-                  body: (
-                    <>
-                      <p>Which emulator do you want to use</p>
-                      <div className="h5">
-                        <strong>RetroArch</strong> has these pros:
-                      </div>
-                      <ol className="list">
-                        <li>RetroAchievements</li>
-                        <li>Bezels & Shaders</li>
-                        <li>Auto Save States</li>
-                      </ol>
-                      <div className="h5">
-                        <strong>melonDS (recommended)</strong> has this pros:
-                      </div>
-                      <ol className="list">
-                        <li>Better performance and scaling</li>
-                      </ol>
-                      <p>
-                        We will only add the parser according to your selection
-                        so you don't end up with duplicates in your library.
-                      </p>
-                    </>
-                  ),
-                };
-                const myTimeout = setTimeout(launchModal, 500);
-              }
-            }
-
-            if (
-              (emulator === 'ppsspp' && installEmus.ra.status) ||
-              (emulator === 'ppsspp' && installEmus.ares.status)
-            ) {
-              multiemulatorID = 'multiemulator';
-              multiemulatorName = 'RetroArch';
-              if (installEmus.ares.status) {
-                multiemulatorID = 'multiemulator';
-                multiemulatorName = 'ares';
-              }
-
-              emuOption1 = 'PPSSPP';
-              emuOption2 = multiemulatorName;
-              emuID2 = 'ppsspp';
-              emuID1 = multiemulatorID;
-              system = 'psp';
-              modalData = {
-                active: true,
-                body: (
-                  <>
-                    <p>Which emulator do you want to use</p>
-                    <div className="h5">
-                      <strong>RetroArch</strong> has these pros:
-                    </div>
-                    <ol className="list">
-                      <li>RetroAchievements</li>
-                      <li>Bezels & Shaders</li>
-                      <li>Auto Save States</li>
-                    </ol>
-                    <div className="h5">
-                      <strong>PPSSPP (recommended)</strong> has this pro:
-                    </div>
-                    <ol className="list">
-                      <li>Better performance</li>
-                      <li>Better compatibility</li>
-                    </ol>
-                    <p>
-                      We will only add the parser according to your selection so
-                      you don't end up with duplicates in your library.
-                    </p>
-                  </>
-                ),
-              };
-              console.log({ modalData });
-              const myTimeout = setTimeout(launchModal, 500);
-            }
-
-            if (
-              (emulator === 'mame' && installEmus.ra.status) ||
-              (emulator === 'mame' && installEmus.ares.status)
-            ) {
-              if (emulatorAlternative.mame !== 'both') {
-                multiemulatorID = 'multiemulator';
-                multiemulatorName = 'RetroArch';
-                if (installEmus.ares.status) {
-                  multiemulatorID = 'multiemulator';
-                  multiemulatorName = 'ares';
-                }
-
-                emuOption1 = 'MAME';
-                emuOption2 = multiemulatorName;
-                emuID2 = 'mame';
-                emuID1 = multiemulatorID;
-                system = 'mame';
-                modalData = {
-                  active: true,
-                  body: (
-                    <>
-                      <p>Which emulator do you want to use</p>
-                      <div className="h5">
-                        <strong>RetroArch (recommended)</strong> has these pros:
-                      </div>
-                      <ol className="list">
-                        <li>RetroAchievements</li>
-                        <li>Bezels & Shaders</li>
-                        <li>Auto Save States</li>
-                        <li>3 different cores: 2003 plus, 2010 and current</li>
-                      </ol>
-                      <p>
-                        We will only add the parser according to your selection
-                        so you don't end up with duplicates in your library.
-                      </p>
-                    </>
-                  ),
-                };
-                const myTimeout = setTimeout(launchModal, 500);
-              }
-            }
-
-            if (
-              (emulator === 'scummvm' && installEmus.ra.status) ||
-              (emulator === 'scummvm' && installEmus.ares.status)
-            ) {
-              if (emulatorAlternative.scummvm !== 'both') {
-                multiemulatorID = 'multiemulator';
-                if (installEmus.ares.status) {
-                  multiemulatorID = 'multiemulator';
-                }
-
-                emuOption1 = 'ScummVM';
-                emuOption2 = multiemulatorName;
-                emuID2 = 'scummvm';
-                emuID1 = multiemulatorID;
-                system = 'scummvm';
-                modalData = {
-                  active: true,
-                  body: (
-                    <>
-                      <p>Which emulator do you want to use</p>
-                      <div className="h5">
-                        <strong>RetroArch</strong> has these pros:
-                      </div>
-                      <ol className="list">
-                        <li>RetroAchievements</li>
-                        <li>Bezels & Shaders</li>
-                        <li>Auto Save States</li>
-                        <li>Better Keymapping and Controller support</li>
-                      </ol>
-                      <div className="h5">
-                        <strong>ScummVM (recommended)</strong> has these pros:
-                      </div>
-                      <ol className="list">
-                        <li>Not an emulation but runs natively</li>
-                        <li>Takes less resources</li>
-                        <li>Has better compatibility</li>
-                        <li>More flexible configuration</li>
-                      </ol>
-                      <p>
-                        We will only add the parser according to your selection
-                        so you don't end up with duplicates in your library.
-                      </p>
-                    </>
-                  ),
-                };
-                const myTimeout = setTimeout(launchModal, 500);
-              }
-            }
-            console.log({ modalData });
-            function launchModal() {
-              modalData = {
-                ...modalData,
-                header: (
-                  <span className="h4">RetroArch or Standalone Emulator?</span>
-                ),
-                css: 'emumodal--sm',
-                footer: (
-                  <>
-                    <BtnSimple
-                      css="btn-simple--1"
-                      type="button"
-                      aria={emuOption1}
-                      onClick={() =>
-                        setAlternativeEmulator(system, emuID2, emuID1, false)
-                      }
-                      disabled={false}
-                    >
-                      {emuOption1}
-                    </BtnSimple>
-                    <BtnSimple
-                      css="btn-simple--2"
-                      type="button"
-                      aria={emuOption2}
-                      onClick={() =>
-                        setAlternativeEmulator(system, emuID1, emuID2, true)
-                      }
-                      disabled={false}
-                    >
-                      {emuOption2}
-                    </BtnSimple>
-                    <BtnSimple
-                      css="btn-simple--3"
-                      type="button"
-                      aria="Go Back"
-                      onClick={() =>
-                        setAlternativeEmulator(system, 'both', 'both')
-                      }
-                    >
-                      Both
-                    </BtnSimple>
-                  </>
-                ),
-              };
-              setStatePage({ ...statePage, modal: modalData });
-            }
+            const modalData = {
+              active: true,
+              header: <span className="h4">Parser update needed</span>,
+              body: (
+                <p>
+                  If you want to use this new Standalone emulator in Steam you
+                  need to go to Steam Rom Manager and pick the proper parser.
+                </p>
+              ),
+              css: 'emumodal--xs',
+            };
           }
         } else {
           const modalData = {
@@ -1614,13 +1053,23 @@ function EmulatorsDetailPage() {
     });
   };
 
+  const selectEmu = (e) => {
+    const emu = e.target.value;
+    if (emu != '-1') {
+      setStatePage({
+        ...statePage,
+        emulatorSelected: emu,
+      });
+    }
+  };
+
   useEffect(() => {
     // We save it on localstorage
     const json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
   }, [state]);
-
   useEffect(() => {
+    // Check for bios
     switch (emulator) {
       case 'ra':
         checkBios('checkPS1BIOS');
@@ -1644,18 +1093,8 @@ function EmulatorsDetailPage() {
         break;
       default:
     }
-  }, []);
 
-  const selectEmu = (e) => {
-    const emu = e.target.value;
-    if (emu != '-1') {
-      setStatePage({
-        ...statePage,
-        emulatorSelected: emu,
-      });
-    }
-  };
-  useEffect(() => {
+    // Check for updates
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?
@@ -1671,7 +1110,10 @@ function EmulatorsDetailPage() {
       });
     });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // save OG Alternatives
+    const ogStateAlternativeValues = emulatorAlternative;
+    const json = JSON.stringify(ogStateAlternativeValues);
+    localStorage.setItem('ogStateAlternative', json);
   }, []);
 
   useEffect(() => {
@@ -1687,6 +1129,91 @@ function EmulatorsDetailPage() {
       localStorage.setItem('current_versions_beta', json);
     }
   }, [modal]);
+
+  useEffect(() => {
+    if (lastSelected !== null) {
+      saveParsers();
+    }
+  }, [lastSelected]);
+
+  useEffect(() => {
+    const ogStateAlternative = JSON.parse(
+      localStorage.getItem('ogStateAlternative')
+    );
+
+    function sameObjects(obj1, obj2) {
+      const keys1 = Object.keys(obj1);
+      const keys2 = Object.keys(obj2);
+
+      if (keys1.length !== keys2.length) {
+        return false;
+      }
+
+      for (const key of keys1) {
+        if (obj1[key] !== obj2[key]) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    const sameObject = sameObjects(ogStateAlternative, emulatorAlternative);
+
+    if (sameObject) {
+      return;
+    }
+
+    if (system === 'win32') {
+      ipcChannel.sendMessage('emudeck', [
+        `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status};setSetting doInstallmelonDS ${state.installEmus.melonds.status};setSetting doInstallDuck ${state.installEmus.duckstation.status};;setSetting doInstallFlycast ${state.installEmus.dreamcast.status}`,
+      ]);
+    } else {
+      ipcChannel.sendMessage('emudeck', [
+        `parsersUpdatePrev|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} && setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame.status} >/dev/null && setSetting doInstallmelonDS ${state.installEmus.melonds.status} >/dev/null && setSetting doInstallDuck ${state.installEmus.duckstation.status} >/dev/null && setSetting doInstallFlycast ${state.installEmus.flycast.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame} >/dev/null && setSetting doInstallRMG ${state.installEmus.rmg.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status}} >/dev/null) >/dev/null`,
+      ]);
+    }
+
+    ipcChannel.once(`parsersUpdatePrev`, () => {
+      ipcChannel.sendMessage('emudeck', [`parsersUpdate|||SRM_init`]);
+    });
+
+    ipcChannel.once(`parsersUpdate`, (message) => {
+      const status = message.stdout;
+      status.replace('\n', '');
+      console.log({ message });
+      let modalData;
+      if (status.includes('true')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">Success!</span>,
+          body: <p>All Parsers have been configured.</p>,
+          footer: (
+            <BtnSimple
+              css="btn-simple--1"
+              type="button"
+              onClick={() => navigate('/welcome')}
+            >
+              Close
+            </BtnSimple>
+          ),
+          css: 'emumodal--xs',
+        };
+      } else if (system !== 'win32') {
+        modalData = {
+          active: true,
+          header: <span className="h4">Failed</span>,
+          body: <p>There was an issue trying to configure your parsers</p>,
+          css: 'emumodal--xs',
+        };
+        console.log({ modalData });
+      }
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
+    });
+  }, [emulatorAlternative]);
 
   return (
     <div style={{ height: '100vh' }}>

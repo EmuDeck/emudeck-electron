@@ -103,6 +103,10 @@ function WelcomePage() {
   }, [modal]);
 
   useEffect(() => {
+    if (second === true) {
+      navigate('/settings');
+    }
+
     let modalData;
 
     // Build games for the store
@@ -200,12 +204,8 @@ function WelcomePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 
-
-
-
   return (
-    <div style={{ height: '100vh' }} >
-
+    <div style={{ height: '100vh' }}>
       <Wrapper aside={second === true}>
         {second === false && (
           <Header title={`Welcome to EmuDeck for ${systemName}`} />
