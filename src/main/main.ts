@@ -10,7 +10,7 @@
  */
 import path from 'path';
 import { exec, spawn } from 'child_process';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 // eslint-disable-next-line
@@ -20,7 +20,7 @@ import { resolveHtmlPath } from './util';
 import fakeOSFile from '../data/local-fake-os.json';
 
 const { fakeOS } = fakeOSFile;
-
+const { shouldUseDarkColors } = nativeTheme;
 const os = require('os');
 const fs = require('fs');
 const lsbRelease = require('lsb-release');
@@ -194,6 +194,7 @@ const createWindow = async () => {
   if (process.env.NODE_ENV === 'development') {
     osCheck = fakeOS;
   }
+
   if (osCheck.includes('win32')) {
     browserWindowSettings = {
       show: false,
@@ -204,6 +205,12 @@ const createWindow = async () => {
       resizable: true,
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
       autoHideMenuBar: true,
+      titleBarStyle: 'hidden',
+      titleBarOverlay: {
+        color: shouldUseDarkColors ? '#FFFFFF00' : '#FFFFFF00',
+        symbolColor: shouldUseDarkColors ? '#FFFFFF' : '#444',
+        height: 30,
+      },
       webPreferences: {
         preload: app.isPackaged
           ? path.join(__dirname, 'preload.js')
