@@ -123,6 +123,13 @@ function EndPage() {
         '"$toolsPath/launchers/srm/steamrommanager.sh"'
       );
     }
+    let timer;
+
+    if (system === 'win32') {
+      timer = 30000;
+    } else {
+      timer = 10;
+    }
     const timerId = setTimeout(() => {
       setStatePage({
         ...statePage,
@@ -131,7 +138,7 @@ function EndPage() {
         },
       });
       clearTimeout(timerId);
-    }, 30000);
+    }, timer);
   };
 
   const showLog = () => {
@@ -687,8 +694,6 @@ function EndPage() {
     }
   }, [second]);
 
-
-
   let nextPage = '/copy-games';
 
   if (branch.includes('early') || branch === 'dev') {
@@ -696,8 +701,7 @@ function EndPage() {
   }
 
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper css="wrapper__full" aside={false}>
         {disabledNext === true && (
           <Header title="We are completing your installation..." />
