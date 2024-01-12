@@ -180,6 +180,13 @@ function CopyGamesPage() {
         '"$toolsPath/launchers/srm/steamrommanager.sh"'
       );
     }
+    let timer;
+
+    if (system === 'win32') {
+      timer = 30000;
+    } else {
+      timer = 10;
+    }
     const timerId = setTimeout(() => {
       setStatePage({
         ...statePage,
@@ -188,7 +195,7 @@ function CopyGamesPage() {
         },
       });
       clearTimeout(timerId);
-    }, 30000);
+    }, timer);
   };
 
   const skipAddingGames = () => {
