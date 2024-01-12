@@ -356,6 +356,27 @@ function CloudSyncPageConfig() {
     }
   }, [cloudSync]);
 
+  useEffect(() => {
+    if (system !== 'win32') {
+      const modalData = {
+        active: true,
+        header: <span className="h4">Google Chrome dependency</span>,
+        body: (
+          <p>
+            Make sure you have Google Chrome or any other Chromium browser set
+            as your default browser to install CloudSync. You can set your old
+            browser by default once the installation is complete.
+          </p>
+        ),
+        css: 'emumodal--sm',
+      };
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
+    }
+  }, []);
+
   const nextButtonStatus = () => {
     if (type === 'welcome') {
       return false;
@@ -376,12 +397,6 @@ function CloudSyncPageConfig() {
             showLoginButton={showLoginButton}
           />
 
-          <Footer
-            next={nextButtonStatus()}
-            nextText="Copy games"
-            disabledNext={disabledNext}
-            disabledBack={disabledBack}
-          />
           <EmuModal modal={modal} />
         </PatreonLogin>
         <Footer
