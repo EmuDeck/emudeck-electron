@@ -142,6 +142,78 @@ function CloudSyncPageConfig() {
     });
   };
 
+  const checkHealth = () => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Testing CloudSync</span>,
+      body: <p>Please wait a few minutes while we test your configuration.</p>,
+      css: 'emumodal--sm',
+    };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+    ipcChannel.sendMessage('emudeck', [`cloudSyncHealth|||cloudSyncHealth`]);
+
+    ipcChannel.once('cloudSyncHealth', (message) => {
+      const { stdout } = message;
+      let modalData;
+      if (stdout.includes('true')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">Success!</span>,
+          body: <p>Everything seems to be in order.</p>,
+          css: 'emumodal--sm',
+        };
+      } else if (stdout.includes('nobinary')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">Missing CloudSync binary</span>,
+          body: <p>Please try reinstalling CloudSync.</p>,
+          css: 'emumodal--sm',
+        };
+      } else if (stdout.includes('noconfig')) {
+        modalData = {
+          active: true,
+          header: (
+            <span className="h4">CloudSync failure - No config file</span>
+          ),
+          body: <p>Please try reinstalling CloudSync</p>,
+          css: 'emumodal--sm',
+        };
+      } else if (stdout.includes('noprovider')) {
+        modalData = {
+          active: true,
+          header: (
+            <span className="h4">
+              CloudSync failure - No cloud provider found
+            </span>
+          ),
+          body: <p>Please try reinstalling CloudSync</p>,
+          css: 'emumodal--sm',
+        };
+      } else if (stdout.includes('upload')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">CloudSync failure</span>,
+          body: <p>{stdout}</p>,
+          css: 'emumodal--sm',
+        };
+      } else if (stdout.includes('download')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">CloudSync failure</span>,
+          body: <p>{stdout}</p>,
+          css: 'emumodal--sm',
+        };
+      }
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
+    });
+  };
+
   const installRclone = () => {
     // OLD TOKEN upload, not needed for now
     // if (
@@ -191,6 +263,7 @@ function CloudSyncPageConfig() {
       console.log({ stdout });
       let modalData;
       if (stdout.includes('true')) {
+        checkHealth();
         modalData = {
           active: true,
           header: <span className="h4">CloudSync Configured</span>,
@@ -239,6 +312,11 @@ function CloudSyncPageConfig() {
           cloudSyncStatus: true,
         });
       } else {
+        checkHealth();
+        let warningChrome;
+        if (system !== 'win32') {
+          warningChrome = `Make sure you have Google Chrome installed, Firefox won't work. Once you have CloudSync installed you can remove Chrome`;
+        }
         modalData = {
           active: true,
           header: <span className="h4">Error Installing CloudSync</span>,
@@ -259,10 +337,6 @@ function CloudSyncPageConfig() {
           ...state,
           cloudSyncStatus: false,
         });
-      }
-      let warningChrome;
-      if (system !== 'win32') {
-        warningChrome = `Make sure you have Google Chrome installed, Firefox won't work. Once you have CloudSync installed you can remove Chrome`;
       }
 
       setStatePage({ ...statePage, disableButton: false, modal: modalData });
@@ -299,58 +373,10 @@ function CloudSyncPageConfig() {
     });
   };
 
-  const createDesktopIcon = () => {
-    setStatePage({
-      ...statePage,
-      disableButton: true,
-    });
-
-    if (system === 'win32') {
-      ipcChannel.sendMessage('emudeck', [
-        `rclone_install|||rclone_install ${cloudSync}`,
-      ]);
-      ipcChannel.once('rclone_install', (message) => {
-        // No versioning found, what to do?
-        const modalData = {
-          active: true,
-          header: <span className="h4">CloudSave Configured</span>,
-          css: 'emumodal--xs',
-          body: (
-            <p>
-              All Done, your game states and saved games will be synced to $
-              {cloudSync} in the background every 5 minutes
-            </p>
-          ),
-        };
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-          modal: modalData,
-        });
-      });
-    } else {
-      ipcChannel.sendMessage('emudeck', [
-        `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
-      ]);
-
-      ipcChannel.once('createDesktop', (message) => {
-        // No versioning found, what to do?
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
-      });
-
-      ipcChannel.sendMessage('bash-nolog', [
-        `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
-      ]);
-    }
-  };
-
   useEffect(() => {
     if (cloudSync !== '' || cloudSync !== undefined) {
       ipcChannel.sendMessage('emudeck', [
-        `save-setting|||setSetting rclone_provider ${cloudSync}`,
+        `save-setting|||setSetting rclone_provider ${cloudSync} && setSetting cloud_sync_provider ${cloudSync} `,
       ]);
       localStorage.setItem('settings_emudeck', json);
     }
@@ -393,6 +419,7 @@ function CloudSyncPageConfig() {
             onClick={cloudSyncSet}
             onClickInstall={installRclone}
             onClickUninstall={uninstallRclone}
+            onClickCheckHealth={checkHealth}
             disableButton={disableButton}
             showLoginButton={showLoginButton}
           />
