@@ -147,6 +147,7 @@ function CloudSyncPageConfig() {
       active: true,
       header: <span className="h4">Testing CloudSync</span>,
       body: <p>Please wait a few minutes while we test your configuration.</p>,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--sm',
     };
     setStatePage({
@@ -162,48 +163,15 @@ function CloudSyncPageConfig() {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,
-          body: <p>Everything seems to be in order.</p>,
+          body: <div dangerouslySetInnerHTML={{ __html: stdout }} />,
           css: 'emumodal--sm',
         };
-      } else if (stdout.includes('nobinary')) {
-        modalData = {
-          active: true,
-          header: <span className="h4">Missing CloudSync binary</span>,
-          body: <p>Please try reinstalling CloudSync.</p>,
-          css: 'emumodal--sm',
-        };
-      } else if (stdout.includes('noconfig')) {
-        modalData = {
-          active: true,
-          header: (
-            <span className="h4">CloudSync failure - No config file</span>
-          ),
-          body: <p>Please try reinstalling CloudSync</p>,
-          css: 'emumodal--sm',
-        };
-      } else if (stdout.includes('noprovider')) {
-        modalData = {
-          active: true,
-          header: (
-            <span className="h4">
-              CloudSync failure - No cloud provider found
-            </span>
-          ),
-          body: <p>Please try reinstalling CloudSync</p>,
-          css: 'emumodal--sm',
-        };
-      } else if (stdout.includes('upload')) {
+      } else {
+        console.log({ stdout });
         modalData = {
           active: true,
           header: <span className="h4">CloudSync failure</span>,
-          body: <p>{stdout}</p>,
-          css: 'emumodal--sm',
-        };
-      } else if (stdout.includes('download')) {
-        modalData = {
-          active: true,
-          header: <span className="h4">CloudSync failure</span>,
-          body: <p>{stdout}</p>,
+          body: <div dangerouslySetInnerHTML={{ __html: stdout }} />,
           css: 'emumodal--sm',
         };
       }
@@ -263,7 +231,7 @@ function CloudSyncPageConfig() {
       console.log({ stdout });
       let modalData;
       if (stdout.includes('true')) {
-        checkHealth();
+        // checkHealth();
         modalData = {
           active: true,
           header: <span className="h4">CloudSync Configured</span>,
@@ -312,7 +280,7 @@ function CloudSyncPageConfig() {
           cloudSyncStatus: true,
         });
       } else {
-        checkHealth();
+        // checkHealth();
         let warningChrome;
         if (system !== 'win32') {
           warningChrome = `Make sure you have Google Chrome installed, Firefox won't work. Once you have CloudSync installed you can remove Chrome`;
