@@ -41,28 +41,10 @@ function GameModePage() {
         active: true,
         header: <span className="h4">Game Mode enabled</span>,
         body: (
-          <>
-            <p>
-              Restart your device to go into Game Mode, Exit Steam to go back to
-              your Desktop
-            </p>
-            <p>
-              Make sure to add exceptions in your antivirus to these files
-              before restarting or your computer won't start properly.
-              <br />
-            </p>
-            <p>
-              <code>
-                USER\AppData\Roaming\EmuDeck\backend\tools\gamemode\enable.exe
-              </code>
-              <code>
-                USER\AppData\Roaming\EmuDeck\backend\tools\gamemode\disable.exe
-              </code>
-              <code>
-                USER\AppData\Roaming\EmuDeck\backend\tools\gamemode\login.exe
-              </code>
-            </p>
-          </>
+          <p>
+            Restart your device to go into Game Mode, Exit Steam to go back to
+            your Desktop
+          </p>
         ),
         css: 'emumodal--sm',
       };

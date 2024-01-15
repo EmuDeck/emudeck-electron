@@ -17,6 +17,7 @@ function RAAchievementsConfigPage() {
     data: '',
     dom: undefined,
   });
+  const modalDataConfig = null;
   const { disabledNext, disabledBack, data, dom } = statePage;
   const setAchievements = (data) => {
     if (data.target.name === 'user') {
@@ -50,11 +51,8 @@ function RAAchievementsConfigPage() {
     ipcChannel.once('setHardcore', (message) => {});
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Configure RetroAchievements" />
         <RAAchievements
@@ -62,6 +60,7 @@ function RAAchievementsConfigPage() {
           disabledBack
           onChange={setAchievements}
           onToggle={setAchievementsHardCore}
+          modalDataConfig={modalDataConfig}
         />
         <Footer
           next="welcome"
