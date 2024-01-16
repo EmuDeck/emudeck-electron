@@ -266,17 +266,6 @@ function PatroenLoginPage() {
               </BtnSimple>
             </>
           )}
-          {!patreonClicked && (
-            <BtnSimple
-              css="btn-simple--2"
-              type="button"
-              target="_blank"
-              aria="Next"
-              onClick={() => patreonShowInput()}
-            >
-              Login with Token
-            </BtnSimple>
-          )}
           {patreonClicked && (
             <div className="form">
               <FormInputSimple
