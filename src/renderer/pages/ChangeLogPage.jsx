@@ -19,7 +19,7 @@ import img9 from 'assets/changelog/banner_linux.png';
 import img10 from 'assets/changelog/banner_chimeraOS.png';
 import img11 from 'assets/changelog/banner_autosudo.png';
 import img12 from 'assets/changelog/banner_decky.png';
-import img13 from 'assets/changelog/banner_early.png';
+import img13 from 'assets/changelog/banner_input.png';
 
 function ChangeLogPage() {
   const { state } = useContext(GlobalContext);
