@@ -142,6 +142,46 @@ function CloudSyncPageConfig() {
     });
   };
 
+  const checkHealth = () => {
+    const modalData = {
+      active: true,
+      header: <span className="h4">Testing CloudSync</span>,
+      body: <p>Please wait a few minutes while we test your configuration.</p>,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
+      css: 'emumodal--sm',
+    };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+    ipcChannel.sendMessage('emudeck', [`cloudSyncHealth|||cloudSyncHealth`]);
+
+    ipcChannel.once('cloudSyncHealth', (message) => {
+      const { stdout } = message;
+      let modalData;
+      if (stdout.includes('true')) {
+        modalData = {
+          active: true,
+          header: <span className="h4">Success!</span>,
+          body: <div dangerouslySetInnerHTML={{ __html: stdout }} />,
+          css: 'emumodal--sm',
+        };
+      } else {
+        console.log({ stdout });
+        modalData = {
+          active: true,
+          header: <span className="h4">CloudSync failure</span>,
+          body: <div dangerouslySetInnerHTML={{ __html: stdout }} />,
+          css: 'emumodal--sm',
+        };
+      }
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
+    });
+  };
+
   const installRclone = () => {
     // OLD TOKEN upload, not needed for now
     // if (
@@ -191,6 +231,7 @@ function CloudSyncPageConfig() {
       console.log({ stdout });
       let modalData;
       if (stdout.includes('true')) {
+        // checkHealth();
         modalData = {
           active: true,
           header: <span className="h4">CloudSync Configured</span>,
@@ -239,6 +280,11 @@ function CloudSyncPageConfig() {
           cloudSyncStatus: true,
         });
       } else {
+        // checkHealth();
+        let warningChrome;
+        if (system !== 'win32') {
+          warningChrome = `Make sure you have Google Chrome installed, Firefox won't work. Once you have CloudSync installed you can remove Chrome`;
+        }
         modalData = {
           active: true,
           header: <span className="h4">Error Installing CloudSync</span>,
@@ -259,10 +305,6 @@ function CloudSyncPageConfig() {
           ...state,
           cloudSyncStatus: false,
         });
-      }
-      let warningChrome;
-      if (system !== 'win32') {
-        warningChrome = `Make sure you have Google Chrome installed, Firefox won't work. Once you have CloudSync installed you can remove Chrome`;
       }
 
       setStatePage({ ...statePage, disableButton: false, modal: modalData });
@@ -299,62 +341,35 @@ function CloudSyncPageConfig() {
     });
   };
 
-  const createDesktopIcon = () => {
-    setStatePage({
-      ...statePage,
-      disableButton: true,
-    });
-
-    if (system === 'win32') {
-      ipcChannel.sendMessage('emudeck', [
-        `rclone_install|||rclone_install ${cloudSync}`,
-      ]);
-      ipcChannel.once('rclone_install', (message) => {
-        // No versioning found, what to do?
-        const modalData = {
-          active: true,
-          header: <span className="h4">CloudSave Configured</span>,
-          css: 'emumodal--xs',
-          body: (
-            <p>
-              All Done, your game states and saved games will be synced to $
-              {cloudSync} in the background every 5 minutes
-            </p>
-          ),
-        };
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-          modal: modalData,
-        });
-      });
-    } else {
-      ipcChannel.sendMessage('emudeck', [
-        `createDesktop|||createDesktopShortcut "$HOME/Desktop/SaveBackup.desktop" "EmuDeck SaveBackup" ". $HOME/.config/EmuDeck/backend/functions/all.sh && rclone_setup" true`,
-      ]);
-
-      ipcChannel.once('createDesktop', (message) => {
-        // No versioning found, what to do?
-        setStatePage({
-          ...statePage,
-          disableButton: false,
-        });
-      });
-
-      ipcChannel.sendMessage('bash-nolog', [
-        `zenity --info --width=400 --text="Go to your Desktop and open the new EmuDeck SaveBackup icon.`,
-      ]);
-    }
-  };
-
   useEffect(() => {
     if (cloudSync !== '' || cloudSync !== undefined) {
       ipcChannel.sendMessage('emudeck', [
-        `save-setting|||setSetting rclone_provider ${cloudSync}`,
+        `save-setting|||setSetting rclone_provider ${cloudSync} && setSetting cloud_sync_provider ${cloudSync} `,
       ]);
       localStorage.setItem('settings_emudeck', json);
     }
   }, [cloudSync]);
+
+  useEffect(() => {
+    if (system !== 'win32') {
+      const modalData = {
+        active: true,
+        header: <span className="h4">Google Chrome dependency</span>,
+        body: (
+          <p>
+            Make sure you have Google Chrome or any other Chromium browser set
+            as your default browser to install CloudSync. You can set your old
+            browser by default once the installation is complete.
+          </p>
+        ),
+        css: 'emumodal--sm',
+      };
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
+    }
+  }, []);
 
   const nextButtonStatus = () => {
     if (type === 'welcome') {
@@ -372,16 +387,11 @@ function CloudSyncPageConfig() {
             onClick={cloudSyncSet}
             onClickInstall={installRclone}
             onClickUninstall={uninstallRclone}
+            onClickCheckHealth={checkHealth}
             disableButton={disableButton}
             showLoginButton={showLoginButton}
           />
 
-          <Footer
-            next={nextButtonStatus()}
-            nextText="Copy games"
-            disabledNext={disabledNext}
-            disabledBack={disabledBack}
-          />
           <EmuModal modal={modal} />
         </PatreonLogin>
         <Footer
