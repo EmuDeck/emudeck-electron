@@ -1,56 +1,8 @@
 [
   {
-    "title": "EmuDeck for Windows",
+    "title": "Bug fixes",
     "type": "STEAMOS",
-    "description": "EmuDeck for Windows",
-    "image": "true"
-  },
-  {
-    "title": "Pegasus Frontend",
-    "type": "STEAMOS",
-    "description": "An old friend comes back from the EmuDeck origins, Pegasus Frontend. Uses the same artwork you already have downloaded for EmulationStation DE",
-    "image": "true"
-  },
-  {
-    "title": "Frontend Selector",
-    "type": "STEAMOS",
-    "description": "EmulationStation DE, Pegasus, Steam? Chose your favourite frontend.",
-    "image": "true"
-  },
-  {
-    "title": "Theme Selector",
-    "type": "STEAMOS",
-    "description": "Pick your favourite theme for Pegasus or EmulationStation DE when installing in Custom Mode.",
-    "image": "true"
-  },
-  {
-    "title": "Steam Rom Manager",
-    "type": "STEAMOS",
-    "description": "We've completely redesigned the EmuDeck theme and added dynamic parsers, only the emulators you have installed will appear on SRM. WE've also added an option to pick between RetroArch or Standalone emulator for some systems",
-    "image": "true"
-  },
-  {
-    "title": "Refined UI",
-    "type": "STEAMOS",
-    "description": "We've made some changes here and there to make the experience a bit better when installing Emulators. All the GUI has been customized per each OS EmuDeck will run on. Dark and light themes available.",
-    "image": "true"
-  },
-  {
-    "title": "Resolution Selector",
-    "type": "STEAMOS",
-    "description": "Change your emulator resolution right within EmuDeck",
-    "image": "true"
-  },
-  {
-    "title": "Flycast",
-    "type": "STEAMOS",
-    "description": "New emulator for Dreamcast and Naomi games",
-    "image": "true"
-  },
-  {
-    "title": "Early Access",
-    "type": "STEAMOS",
-    "description": "Early Access users have exclusive access to features months before they are released, the upcoming <strong>Android and Mac</strong> ports of EmuDeck, <strong>CloudSync</strong> to have all your saved games sync between any EmuDeck installation, no matter if its Linux, Windows, Mac or <strong>OnionOS.</strong>. Windows users can also turn their handhelds into a SteamDeck with our <strong>BootMode</strong>",
-    "image": "true"
+    "description": "Several bug fixes",
+    "image": "false"
   }
 ]
