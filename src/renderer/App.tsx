@@ -230,7 +230,7 @@ export default function App() {
       },
       xenia: {
         id: 'xenia',
-        status: false,
+        status: true,
         installed: false,
         name: 'Xenia',
       },

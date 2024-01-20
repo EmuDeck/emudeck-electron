@@ -304,7 +304,8 @@ function EndPage() {
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo doSetupXenia="false" >> ${settingsFile}`,
+            `echo doSetupXenia="${!!overwriteConfigEmus.xenia
+              .status}" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
@@ -401,7 +402,8 @@ function EndPage() {
               .status}" >> ${settingsFile}`,
           ]);
           ipcChannel.sendMessage('bash', [
-            `echo doInstallXenia="false" >> ${settingsFile}`,
+            `echo doInstallXenia="${!!installEmus.xenia
+              .status}" >> ${settingsFile}`,
           ]);
 
           ipcChannel.sendMessage('bash', [
