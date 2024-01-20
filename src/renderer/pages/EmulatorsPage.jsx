@@ -159,7 +159,7 @@ function EmulatorsPage() {
     dom,
   } = statePage;
 
-  const { system, installEmus, installFrontends, branch } = state;
+  const { system, installEmus, installFrontends, branch, mode } = state;
 
   const installEmusArray = Object.values(installEmus);
   const installFrontendsArray = Object.values(installFrontends);
@@ -392,11 +392,13 @@ function EmulatorsPage() {
                       return;
                     }
                   }
-                  if (system === 'win32' && branch === 'beta') {
+                  if (mode === 'easy') {
                     if (
                       item.id === 'mame' ||
                       item.id === 'flycast' ||
-                      item.id === 'mgba'
+                      item.id === 'mgba' ||
+                      item.id === 'rmg' ||
+                      item.id === 'ryujinx'
                     ) {
                       return;
                     }
@@ -468,6 +470,12 @@ function EmulatorsPage() {
                   );
                 })}
               </div>
+
+              {mode === 'easy' && (
+                <strong>
+                  Do a Custom Reset if you want to add alternative emulators
+                </strong>
+              )}
             </>
           )}
         </Main>
