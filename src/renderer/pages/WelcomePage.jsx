@@ -103,8 +103,11 @@ function WelcomePage() {
   }, [modal]);
 
   useEffect(() => {
-    if (second === true) {
+    if (second === true && mode === 'expert') {
       navigate('/settings');
+    }
+    if (second === true && mode === 'easy') {
+      navigate('/store-front');
     }
 
     let modalData;
