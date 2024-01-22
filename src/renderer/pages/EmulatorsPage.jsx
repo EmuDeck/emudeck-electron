@@ -208,7 +208,7 @@ function EmulatorsPage() {
           }
         }
 
-        if (item.id === 'ares' && system === 'win32') {
+        if (item.id === 'ares') {
           return;
         }
 
@@ -398,11 +398,13 @@ function EmulatorsPage() {
                       item.id === 'flycast' ||
                       item.id === 'mgba' ||
                       item.id === 'rmg' ||
-                      item.id === 'ryujinx' ||
-                      item.id === 'ares'
+                      item.id === 'ryujinx'
                     ) {
                       return;
                     }
+                  }
+                  if (item.id === 'ares') {
+                    return;
                   }
 
                   if (system === 'darwin') {
