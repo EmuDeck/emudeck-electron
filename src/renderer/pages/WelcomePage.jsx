@@ -11,7 +11,7 @@ import GamePad from 'components/organisms/GamePad/GamePad';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
-
+import Main from 'components/organisms/Main/Main';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import { useNavigate } from 'react-router-dom';
 import { BtnSimple } from 'getbasecore/Atoms';
@@ -214,8 +214,7 @@ function WelcomePage() {
           <Header title={`Welcome to EmuDeck for ${systemName}`} />
         )}
 
-        {second === true && <Header title="Welcome back to EmuDeck" />}
-        {systemName !== 'ERROR' && (
+        {systemName !== 'ERROR' && second === false && (
           <Welcome
             alert={
               second
@@ -226,6 +225,7 @@ function WelcomePage() {
             onClick={selectMode}
           />
         )}
+
         {second === false && systemName !== 'ERROR' && (
           <Footer
             back={second ? 'tools-and-stuff' : false}

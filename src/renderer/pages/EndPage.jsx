@@ -219,11 +219,6 @@ function EndPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Marking as first run completed
-  useEffect(() => {
-    setState({ ...state, second: true });
-  }, []);
-
   // Running the installer
   useEffect(() => {
     if (second === true) {
