@@ -63,6 +63,7 @@ import EndPage from 'pages/EndPage';
 import ErrorPage from 'pages/ErrorPage';
 import Hotkeys from 'pages/Hotkeys';
 import Finish from 'pages/Finish';
+import AndroidRomStoragePage from 'pages/AndroidRomStoragePage';
 
 import { GlobalContext } from './context/globalContext';
 
@@ -131,6 +132,110 @@ export default function App() {
     cloudSyncStatus: false,
     sudoPass: 'Decky!',
     language: 'en',
+    android: {
+      installEmus: {
+        ra: {
+          id: 'ra',
+          status: true,
+          name: 'RetroArch',
+        },
+        dolphin: {
+          id: 'dolphin',
+          status: true,
+          name: 'Dolphin',
+        },
+        ppsspp: {
+          id: 'ppsspp',
+          status: true,
+          name: 'PPSSPP',
+        },
+        duckstation: {
+          id: 'duckstation',
+          status: true,
+          name: 'DuckStation',
+        },
+        citra: {
+          id: 'citra',
+          status: true,
+          name: 'Citra',
+        },
+        aethersx2: {
+          id: 'aethersx2',
+          status: true,
+          name: 'AetherSX2',
+        },
+        yuzu: {
+          id: 'yuzu',
+          status: true,
+          name: 'Yuzu',
+        },
+        vita3k: {
+          id: 'vita3k',
+          status: true,
+          name: 'Vita3K',
+        },
+        scummvm: {
+          id: 'scummvm',
+          status: true,
+          name: 'ScummVM',
+        },
+      },
+      overwriteConfigEmus: {
+        ra: {
+          id: 'ra',
+          status: true,
+          name: 'RetroArch',
+        },
+        dolphin: {
+          id: 'dolphin',
+          status: true,
+          name: 'Dolphin',
+        },
+        ppsspp: {
+          id: 'ppsspp',
+          status: true,
+          name: 'PPSSPP',
+        },
+        citra: {
+          id: 'citra',
+          status: true,
+          name: 'Citra',
+        },
+        aethersx2: {
+          id: 'pcsx2',
+          status: true,
+          name: 'AetherSX2',
+        },
+        yuzu: {
+          id: 'yuzu',
+          status: true,
+          name: 'Yuzu',
+        },
+        pegasus: {
+          id: 'pegasus',
+          status: true,
+          name: 'Pegasus',
+        },
+        vita3k: {
+          id: 'vita3k',
+          status: true,
+          name: 'Vita3K',
+        },
+        scummvm: {
+          id: 'scummvm',
+          status: true,
+          name: 'ScummVM',
+        },
+      },
+      installFrontends: {
+        pegasus: {
+          id: 'pegasus',
+          status: true,
+          name: 'Pegasus',
+          desc: 'Add this launcher to your Steam Library. Recommended for big colections. You need to run EmulationStation parsers to show artwork in Pegasus Themes',
+        },
+      },
+    },
     achievements: {
       user: '',
       pass: '',
@@ -475,6 +580,12 @@ export default function App() {
           <Route exact path="/end" element={<EndPage />} />
           <Route exact path="/hotkeys" element={<Hotkeys />} />
           <Route exact path="/finish" element={<Finish />} />
+
+          <Route
+            exact
+            path="/android-rom-storage"
+            element={<AndroidRomStoragePage />}
+          />
         </Routes>
       </Router>
     </GlobalContext.Provider>

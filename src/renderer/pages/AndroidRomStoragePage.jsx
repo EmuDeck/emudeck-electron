@@ -20,7 +20,7 @@ import RomStorage from 'components/organisms/Wrappers/RomStorage';
 // Imports & Requires
 //
 
-function RomStoragePage() {
+function AndroidRomStoragePage() {
   //
   // i18
   //
@@ -88,8 +88,11 @@ function RomStoragePage() {
         });
         setState({
           ...state,
-          storage: storageName,
-          storagePath,
+          android: {
+            ...state.android,
+            storage: storageName,
+            storagePath,
+          },
         });
         // is it valid?
 
@@ -138,8 +141,11 @@ function RomStoragePage() {
             });
             setState({
               ...state,
-              storage: null,
-              storagePath: null,
+              android: {
+                ...state.android,
+                storage: null,
+                storagePath: null,
+              },
             });
           }
         });
@@ -148,8 +154,11 @@ function RomStoragePage() {
       const sdCardPath = sdCardName;
       setState({
         ...state,
-        storage: storageName,
-        storagePath: sdCardPath,
+        android: {
+          ...state.android,
+          storage: storageName,
+          storagePath: asCardPath,
+        },
       });
       setStatePage({
         ...statePage,
@@ -158,8 +167,11 @@ function RomStoragePage() {
     } else if (storageName === 'Internal Storage') {
       setState({
         ...state,
-        storage: storageName,
-        storagePath: '$HOME',
+        android: {
+          ...state.android,
+          storage: storageName,
+          storagePath: '/storage/emulated/0',
+        },
       });
       setStatePage({
         ...statePage,
@@ -168,8 +180,11 @@ function RomStoragePage() {
     } else {
       setState({
         ...state,
-        storage: `${storageName}\\`,
-        storagePath: `${storageName}\\`,
+        android: {
+          ...state.android,
+          storage: storageName,
+          storagePath: storageName,
+        },
       });
       setStatePage({
         ...statePage,
@@ -177,74 +192,26 @@ function RomStoragePage() {
       });
     }
   };
-  // We get the SD Card name. Only Linux
-  const getSDName = () => {
-    ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
-    ipcChannel.once('SDCardName', (message) => {
-      let stdout = message.stdout.replace('\n', '');
-      if (stdout === '') {
-        stdout = null;
-      }
-      setStatePage({
-        ...statePage,
-        sdCardName: stdout,
-        sdCardValid: stdout != null,
-      });
-      setState({
-        ...state,
-      });
-    });
-  };
+
   // We heck if it's formated in a valid file system. Only Linux
-  const checkSDValid = () => {
-    ipcChannel.sendMessage('emudeck', [
-      'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
-    ]);
+  const getAndroidDrives = () => {
+    ipcChannel.sendMessage('emudeck', ['Android_ADB_init|||Android_ADB_init']);
 
-    ipcChannel.once('SDCardValid', (message) => {
-      if (message === 'nogit') {
-        const modalData = {
-          active: true,
-          header: <span className="h4">Ooops 😞</span>,
-          body: <p>There was an error, please restart EmuDeck...</p>,
-          css: 'emumodal--xs',
-        };
-        setStatePage({
-          ...statePage,
-          modal: modalData,
-        });
-      }
-
-      const stdout = message.stdout.replace('\n', '');
-      let statusSD;
-      stdout.includes('Valid') ? (statusSD = true) : (statusSD = false);
-      if (statusSD === true) {
-        getSDName();
-      } else {
-        setStatePage({
-          ...statePage,
-          sdCardName: false,
-          sdCardValid: false,
-        });
-      }
-    });
-  };
-  // In windows we search for all drives
-  const getHDdrives = () => {
-    ipcChannel.sendMessage('emudeck', ['getLocations|||getLocations']);
-
-    ipcChannel.once('getLocations', (message) => {
+    ipcChannel.once('Android_ADB_init', (message) => {
+      console.log({ message });
       const hdrives = message.stdout;
-
       const hdrivesCleanup = hdrives.replace(/(\r\n|\r|\n)/g, '');
-      const jsonDrives = JSON.parse(hdrivesCleanup);
+
+      console.log({ hdrivesCleanup });
+
+      const hdrivesJson = JSON.parse(hdrivesCleanup);
 
       setStatePage({
         ...statePage,
         modal: false,
-        hddrives: jsonDrives,
+        sdCardName: hdrivesJson.SDCardName,
+        sdCardValid: true,
       });
-      console.log({ statePage });
     });
   };
 
@@ -253,24 +220,14 @@ function RomStoragePage() {
   //
   // Do we have a valid SD Card?
   useEffect(() => {
-    if (navigator.onLine === false) {
-      navigate('/error');
-      return;
-    }
-
-    if (system !== 'win32') {
-      checkSDValid();
-    } else if (system === 'win32') {
-      const modalData = {
-        active: true,
-        header: <span className="h4">Collecting Drives Names</span>,
-        body: <p>This will take a few seconds. Please wait...</p>,
-        css: 'emumodal--xs',
-      };
-      setStatePage({ ...statePage, modal: modalData });
-      // We get the drives
-      getHDdrives();
-    }
+    const modalData = {
+      active: true,
+      header: <span className="h4">Collecting Android drives</span>,
+      body: <p>This will take a few seconds. Please wait...</p>,
+      css: 'emumodal--xs',
+    };
+    setStatePage({ ...statePage, modal: modalData });
+    getAndroidDrives();
   }, []);
 
   // We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation
@@ -292,15 +249,19 @@ function RomStoragePage() {
   //
   return (
     <Wrapper>
-      <Header title="Select your ROM Directory " />
+      <Header title="Select your ROM Directory for your Android Device" />
+      <p className="lead">
+        Your ROM directory will be squared away within an Emulation folder in
+        your selected directory.
+      </p>
       <RomStorage
         status={status}
         sdCardValid={sdCardValid}
-        showSDCard={system !== 'win32'}
-        showInternal={system !== 'win32'}
-        showCustom={!!(system !== 'win32' && system !== 'darwin')}
-        hddrives={system === 'win32' ? hddrives : false}
-        reloadSDcard={checkSDValid}
+        showSDCard={sdCardName !== ''}
+        showInternal
+        showCustom={false}
+        hddrives={false}
+        reloadSDcard={() => getAndroidDrives()}
         sdCardName={sdCardName}
         customPath={storagePath}
         onClick={storageSet}
@@ -316,4 +277,4 @@ function RomStoragePage() {
   );
 }
 
-export default RomStoragePage;
+export default AndroidRomStoragePage;
