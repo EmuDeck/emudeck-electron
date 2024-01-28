@@ -748,7 +748,11 @@ ipcMain.on('saveSettings', async (event, command) => {
   const jsonContent = JSON.stringify(jsonObj);
 
   const homedir = require('os').homedir();
-  const settingsFile = `${homedir}/AppData/Roaming/EmuDeck/settings.json`;
+
+  let settingsFile = `${homedir}/.config/EmuDeck/settings.json`;
+  if (os.platform().includes('win32')) {
+    settingsFile = `${homedir}/AppData/Roaming/EmuDeck/settings.json`;
+  }
 
   fs.writeFile(settingsFile, jsonContent, 'utf8', function (err: any) {
     if (err) {

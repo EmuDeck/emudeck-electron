@@ -328,7 +328,7 @@ function CopyGamesPage() {
   const skipAddingGames = () => {
     setStatePage({
       ...statePage,
-      statusCopyGames: true,
+      statusCopyGames: 'final',
     });
   };
 
@@ -524,7 +524,7 @@ function CopyGamesPage() {
           </>
         )}
 
-        {statusCopyGames === 'final' && state.mode === 'easy' && (
+        {statusCopyGames === 'final' && (
           <>
             <Header title="How would you like to launch your games?" />
 
@@ -543,7 +543,9 @@ function CopyGamesPage() {
                     [
                       () => selectFrontend('esde'),
                       frontend === 'esde' ? 'is-selected' : '',
-                      'Emulation Station DE',
+                      `Emulation Station DE ${
+                        state.mode === 'easy' ? ' ' : 'or Pegasus'
+                      } `,
                       'Recommended for huge libraries',
                       true,
                     ],
@@ -616,19 +618,6 @@ function CopyGamesPage() {
               onClick={() => skipAddingGames()}
             >
               Next
-              <svg
-                className="rightarrow"
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill="currentColor"
-                  d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
-                />
-              </svg>
             </BtnSimple>
           )}
 
