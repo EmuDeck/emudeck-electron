@@ -44,11 +44,11 @@ function AndroidRomStoragePage() {
     disabledNext: storage === null,
     disabledBack: false,
     data: '',
-    sdCardValid: null,
+    sdCardValid: false,
     sdCardName: undefined,
     status: undefined,
     modal: undefined,
-    dom: undefined,
+    isConnected: false,
     hddrives: [],
   });
 
@@ -59,7 +59,7 @@ function AndroidRomStoragePage() {
     sdCardName,
     status,
     modal,
-    hddrives,
+    isConnected,
   } = statePage;
   const { system, storagePath } = state;
 
@@ -198,11 +198,8 @@ function AndroidRomStoragePage() {
     ipcChannel.sendMessage('emudeck', ['Android_ADB_init|||Android_ADB_init']);
 
     ipcChannel.once('Android_ADB_init', (message) => {
-      console.log({ message });
       const hdrives = message.stdout;
       const hdrivesCleanup = hdrives.replace(/(\r\n|\r|\n)/g, '');
-
-      console.log({ hdrivesCleanup });
 
       const hdrivesJson = JSON.parse(hdrivesCleanup);
 
@@ -210,6 +207,7 @@ function AndroidRomStoragePage() {
         ...statePage,
         modal: false,
         sdCardName: hdrivesJson.SDCardName,
+        isConnected: hdrivesJson.isConnected,
         sdCardValid: true,
       });
     });
@@ -235,7 +233,10 @@ function AndroidRomStoragePage() {
     if (storage === 'SD-Card') {
       setState({
         ...state,
-        storagePath: sdCardName,
+        android: {
+          ...state.android,
+          storagePath: sdCardName,
+        },
       });
     }
   }, [sdCardName]);
@@ -257,8 +258,8 @@ function AndroidRomStoragePage() {
       <RomStorage
         status={status}
         sdCardValid={sdCardValid}
-        showSDCard={sdCardName !== ''}
-        showInternal
+        showSDCard={sdCardValid}
+        showInternal={isConnected}
         showCustom={false}
         hddrives={false}
         reloadSDcard={() => getAndroidDrives()}
