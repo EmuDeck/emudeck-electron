@@ -3,7 +3,7 @@ import { GlobalContext } from 'context/globalContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import PatreonLogin from 'components/organisms/PatreonLogin/PatreonLogin';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import GamePad from 'components/organisms/GamePad/GamePad';
+
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import GameMode from 'components/organisms/Wrappers/GameMode';

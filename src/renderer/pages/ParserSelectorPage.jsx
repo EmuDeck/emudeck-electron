@@ -3,7 +3,7 @@ import { GlobalContext } from 'context/globalContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
-import GamePad from 'components/organisms/GamePad/GamePad';
+
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';

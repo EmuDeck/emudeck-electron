@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 //
 import { BtnSimple, FormInputSimple } from 'getbasecore/Atoms';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import GamePad from 'components/organisms/GamePad/GamePad';
+
 import Main from 'components/organisms/Main/Main';
 import Header from 'components/organisms/Header/Header';
 
