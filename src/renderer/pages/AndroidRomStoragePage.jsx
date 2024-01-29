@@ -39,7 +39,8 @@ function AndroidRomStoragePage() {
   // States
   //
   const { state, setState } = useContext(GlobalContext);
-  const { storage } = state;
+  const { android } = state;
+  const { storage } = android;
   const [statePage, setStatePage] = useState({
     disabledNext: storage === null,
     disabledBack: false,
@@ -157,7 +158,7 @@ function AndroidRomStoragePage() {
         android: {
           ...state.android,
           storage: storageName,
-          storagePath: asCardPath,
+          storagePath: sdCardPath,
         },
       });
       setStatePage({
@@ -198,14 +199,30 @@ function AndroidRomStoragePage() {
     ipcChannel.sendMessage('emudeck', ['Android_ADB_init|||Android_ADB_init']);
 
     ipcChannel.once('Android_ADB_init', (message) => {
+      console.log({ message });
       const hdrives = message.stdout;
       const hdrivesCleanup = hdrives.replace(/(\r\n|\r|\n)/g, '');
 
       const hdrivesJson = JSON.parse(hdrivesCleanup);
+      let modalData;
+      if (!hdrivesJson.isConnected) {
+        modalData = {
+          active: true,
+          header: <span className="h4">Android Device not detected</span>,
+          body: (
+            <p>
+              Make sure your device is connected to this PC using an USB cable
+              and that you have enabled both <strong>Developer mode</strong> and{' '}
+              <strong>USB Debug mode</strong>
+            </p>
+          ),
+          css: 'emumodal--sm',
+        };
+      }
 
       setStatePage({
         ...statePage,
-        modal: false,
+        modal: hdrivesJson.isConnected ? false : modalData,
         sdCardName: hdrivesJson.SDCardName,
         isConnected: hdrivesJson.isConnected,
         sdCardValid: true,
@@ -231,6 +248,7 @@ function AndroidRomStoragePage() {
   // We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation
   useEffect(() => {
     if (storage === 'SD-Card') {
+      alert('ye');
       setState({
         ...state,
         android: {
@@ -250,7 +268,7 @@ function AndroidRomStoragePage() {
   //
   return (
     <Wrapper>
-      <Header title="Select your ROM Directory for your Android Device" />
+      <Header title="Select the ROM Storage for your Android Device" />
       <p className="lead">
         Your ROM directory will be squared away within an Emulation folder in
         your selected directory.
@@ -258,14 +276,15 @@ function AndroidRomStoragePage() {
       <RomStorage
         status={status}
         sdCardValid={sdCardValid}
-        showSDCard={sdCardValid}
-        showInternal={isConnected}
+        showSDCard={sdCardName !== ''}
+        showInternal={isConnected !== 'false'}
         showCustom={false}
         hddrives={false}
         reloadSDcard={() => getAndroidDrives()}
         sdCardName={sdCardName}
         customPath={storagePath}
         onClick={storageSet}
+        storage={storage}
       />
       <Footer
         next="device-selector"

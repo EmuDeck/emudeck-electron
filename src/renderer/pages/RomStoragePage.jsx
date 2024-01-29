@@ -304,6 +304,7 @@ function RomStoragePage() {
         sdCardName={sdCardName}
         customPath={storagePath}
         onClick={storageSet}
+        storage={storage}
       />
       <Footer
         next="device-selector"
