@@ -208,6 +208,12 @@ function EmulatorsPage() {
           if (item.id === 'rmg') {
             return;
           }
+          if (item.id === 'model2') {
+            return;
+          }
+          if (item.id === 'supermodel') {
+            return;
+          }
         }
 
         if (item.id === 'ares') {
