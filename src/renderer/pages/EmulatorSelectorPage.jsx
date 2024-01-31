@@ -986,7 +986,7 @@ function EmulatorSelectorPage() {
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Emulators and tools for" bold={`${device}`} />
+        <Header title={`Emulators and tools for ${device}`} />
         <EmulatorSelector data={data} onClick={toggleEmus} images={images} />
         <Footer
           next="emulator-configuration"

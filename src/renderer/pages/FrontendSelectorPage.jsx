@@ -236,7 +236,7 @@ function FrontendSelectorPage() {
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Frontends for" bold={`${device}`} />
+        <Header title={`Frontends for ${device}`} />
         <FrontendSelector
           lastSelected={lastSelected}
           onClick={toggleEmus}
