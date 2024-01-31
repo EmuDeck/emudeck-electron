@@ -63,7 +63,9 @@ import EndPage from 'pages/EndPage';
 import ErrorPage from 'pages/ErrorPage';
 import Hotkeys from 'pages/Hotkeys';
 import Finish from 'pages/Finish';
+
 import AndroidRomStoragePage from 'pages/AndroidRomStoragePage';
+import AndroidEndPage from 'pages/AndroidEndPage';
 
 import { GlobalContext } from './context/globalContext';
 
@@ -343,6 +345,18 @@ export default function App() {
       },
       mgba: { id: 'mgba', status: false, installed: undefined, name: 'mGBA' },
       ares: { id: 'ares', status: false, installed: undefined, name: 'ares' },
+      supermodel: {
+        id: 'supermodel',
+        status: true,
+        installed: undefined,
+        name: 'Supermodel',
+      },
+      model2: {
+        id: 'model2',
+        status: true,
+        installed: undefined,
+        name: 'Model2',
+      },
     },
     overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
@@ -369,6 +383,8 @@ export default function App() {
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
       mgba: { id: 'mgba', status: true, name: 'mGBA' },
       ares: { id: 'ares', status: false, name: 'ares' },
+      supermodel: { id: 'supermodel', status: true, name: 'Supermodel' },
+      model2: { id: 'model2', status: true, name: 'Model2' },
     },
     installFrontends: {
       esde: {
@@ -586,6 +602,7 @@ export default function App() {
             path="/android-rom-storage"
             element={<AndroidRomStoragePage />}
           />
+          <Route exact path="/android-end" element={<AndroidEndPage />} />
         </Routes>
       </Router>
     </GlobalContext.Provider>

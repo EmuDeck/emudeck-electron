@@ -28,10 +28,11 @@ import {
   imgsrm,
   imgrmg,
   imgscummvm,
-  imgsupermodelista,
   imgFrontESDE,
   imgmelonds,
   imgmgba,
+  imgsupermodel,
+  imgmodel2,
 } from 'components/utils/images/images';
 
 const images = {
@@ -53,12 +54,13 @@ const images = {
   vita3k: imgvita3k,
   flycast: imgflycast,
   scummvm: imgscummvm,
-  supermodelista: imgsupermodelista,
   esde: imgFrontESDE,
   rmg: imgrmg,
   mgba: imgmgba,
   xenia: imgxenia,
   srm: imgsrm,
+  supermodel: imgsupermodel,
+  model2: imgmodel2,
 };
 
 function EmulatorSelectorPage() {
@@ -981,11 +983,8 @@ function EmulatorSelectorPage() {
     }
   }, [installEmus]);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Emulators and tools for" bold={`${device}`} />
         <EmulatorSelector data={data} onClick={toggleEmus} images={images} />

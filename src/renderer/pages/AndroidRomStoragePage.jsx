@@ -158,7 +158,7 @@ function AndroidRomStoragePage() {
         android: {
           ...state.android,
           storage: storageName,
-          storagePath: sdCardPath,
+          storagePath: `/storage/${sdCardPath}`,
         },
       });
       setStatePage({
@@ -248,7 +248,6 @@ function AndroidRomStoragePage() {
   // We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation
   useEffect(() => {
     if (storage === 'SD-Card') {
-      alert('ye');
       setState({
         ...state,
         android: {
@@ -287,7 +286,7 @@ function AndroidRomStoragePage() {
         storage={storage}
       />
       <Footer
-        next="device-selector"
+        next="android-end"
         nextText="Next"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
