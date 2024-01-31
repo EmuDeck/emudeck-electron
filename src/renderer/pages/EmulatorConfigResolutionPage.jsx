@@ -5,15 +5,17 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import { BtnSimple } from 'getbasecore/Atoms';
 import Header from 'components/organisms/Header/Header';
-import Footer from 'components/organisms/Footer/Footer';
-
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import EmulatorResolution from 'components/organisms/Wrappers/EmulatorResolution';
 
 function EmulatorConfigResolutionPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { resolutions, system } = state;
-
+  const [statePage, setStatePage] = useState({
+    modal: false,
+  });
+  const { modal } = statePage;
   const navigate = useNavigate();
 
   const setResolution = (emulator, resolution) => {
@@ -29,46 +31,28 @@ function EmulatorConfigResolutionPage() {
   const saveResolutions = () => {
     const json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
-    if (system === 'win32') {
-      ipcChannel.sendMessage('emudeck', [
-        `setResolutions|||setSetting dolphinResolution ${state.resolutions.dolphin}
-				&& setSetting duckstationResolution ${state.resolutions.duckstation}
-				&& setSetting pcsx2Resolution ${state.resolutions.pcsx2}
-				&& setSetting yuzuResolution ${state.resolutions.yuzu}
-				&& setSetting ppssppResolution ${state.resolutions.ppsspp}
-				&& setSetting rpcs3Resolution ${state.resolutions.rpcs3}
-				&& setSetting ryujinxResolution ${state.resolutions.ryujinx}
-				&& setSetting xemuResolution ${state.resolutions.xemu}
-				&& setSetting xeniaResolution ${state.resolutions.xenia} && setResolutions`,
-      ]);
-    } else {
-      ipcChannel.sendMessage('emudeck', [
-        `setResolutions|||setSetting dolphinResolution ${state.resolutions.dolphin};
-				setSetting duckstationResolution ${state.resolutions.duckstation};
-				setSetting pcsx2Resolution ${state.resolutions.pcsx2};
-				setSetting yuzuResolution ${state.resolutions.yuzu};
-				setSetting ppssppResolution ${state.resolutions.ppsspp};
-				setSetting rpcs3Resolution ${state.resolutions.rpcs3};
-				setSetting ryujinxResolution ${state.resolutions.ryujinx};
-				setSetting xemuResolution ${state.resolutions.xemu};
-				setSetting xeniaResolution ${state.resolutions.xenia}; setResolutions`,
-      ]);
-    }
+
+    ipcChannel.sendMessage('emudeck', [
+      `setResolutions|||setSetting dolphinResolution ${state.resolutions.dolphin}; setSetting duckstationResolution ${state.resolutions.duckstation}; setSetting pcsx2Resolution ${state.resolutions.pcsx2}; setSetting yuzuResolution ${state.resolutions.yuzu}; setSetting ppssppResolution ${state.resolutions.ppsspp}; setSetting rpcs3Resolution ${state.resolutions.rpcs3}; setSetting ryujinxResolution ${state.resolutions.yuzu}; setSetting xemuResolution ${state.resolutions.xemu}; setSetting xeniaResolution ${state.resolutions.xenia}; setSetting citraResolution ${state.resolutions.citra}; setResolutions`,
+    ]);
+
     ipcChannel.once('setResolutions', (message) => {
-      navigate('/');
+      console.log({ message });
+      const modalData = {
+        active: true,
+        header: <span className="h4">Settings saved!</span>,
+        css: 'emumodal--sm',
+        body: <p>Your emulators now have the new resolutions you set.</p>,
+      };
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
     });
   };
 
-  const [statePage, setStatePage] = useState({
-    dom: undefined,
-  });
-  const { dom } = statePage;
-
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Emulator Resolution" />
         <EmulatorResolution onClick={setResolution} />
@@ -82,6 +66,7 @@ function EmulatorConfigResolutionPage() {
             Save settings
           </BtnSimple>
         </footer>
+        <EmuModal modal={modal} />
       </Wrapper>
     </div>
   );
