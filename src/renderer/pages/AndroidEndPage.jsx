@@ -189,7 +189,7 @@ function AndroidEndPage() {
       )}
       {disabledNext === false && (
         <>
-          <span className="h3">Instalation complete!</span>
+          <span className="h3">Installation complete!</span>
           <p className="lead">You need to do some steps manually:</p>
 
           <p className="lead">
