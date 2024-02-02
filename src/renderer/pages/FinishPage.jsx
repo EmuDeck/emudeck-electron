@@ -8,7 +8,7 @@ import { BtnSimple } from 'getbasecore/Atoms';
 import { GlobalContext } from 'context/globalContext';
 import { yoshiMario, yoshi } from 'components/utils/images/gifs';
 
-function Finish() {
+function FinishPage() {
   const { state, setState } = useContext(GlobalContext);
   const { system, second } = state;
   const navigate = useNavigate();
@@ -44,4 +44,4 @@ function Finish() {
   );
 }
 
-export default Finish;
+export default FinishPage;

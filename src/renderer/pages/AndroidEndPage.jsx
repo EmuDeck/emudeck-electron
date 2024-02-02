@@ -2,12 +2,11 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-
 import Header from 'components/organisms/Header/Header';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
-import { BtnSimple } from 'getbasecore/Atoms';
-import Sonic from 'components/organisms/Sonic/Sonic';
+import { Main } from 'components/organisms/Main/Main';
 import End from 'components/organisms/Wrappers/End';
+import { yoshiMario } from 'components/utils/images/gifs';
 
 function AndroidEndPage() {
   const navigate = useNavigate();
@@ -33,11 +32,11 @@ function AndroidEndPage() {
 
   const { message, percentage } = msg;
 
-  const settingsFile = '~/emudeck/settings.sh';
   const readMSG = () => {
     ipcChannel.sendMessage('getMSG', []);
     ipcChannel.on('getMSG', (messageInput) => {
       //
+      console.log({ messageInput });
       const messageArray = messageInput.stdout.split('#');
       const messageText = messageArray[1];
       let messagePercent = messageArray[0];
@@ -104,7 +103,7 @@ function AndroidEndPage() {
     if (system === 'win32') {
       timer = 30000;
     } else {
-      timer = 10;
+      timer = 10000;
     }
     const timerId = setTimeout(() => {
       setStatePage({
@@ -117,22 +116,6 @@ function AndroidEndPage() {
     }, timer);
   };
 
-  const showLog = () => {
-    if (system === 'win32') {
-      ipcChannel.sendMessage('bash-nolog', [
-        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/logs/emudeckSetupAndroid.log -Tail 100 -Wait }"`,
-      ]);
-    } else if (system === 'darwin') {
-      ipcChannel.sendMessage('bash-nolog', [
-        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/emudeck/logs/emudeckSetupAndroid.log"'`,
-      ]);
-    } else {
-      ipcChannel.sendMessage('bash-nolog', [
-        `konsole -e tail -f "$HOME/emudeck/logs/emudeckSetupAndroid.log"`,
-      ]);
-    }
-  };
-
   let pollingTime = 500;
   if (system === 'win32') {
     pollingTime = 2000;
@@ -140,20 +123,22 @@ function AndroidEndPage() {
 
   // Reading messages from backend
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (system === 'win32') {
-        readMSG();
-      } else {
-        readMSG();
-      }
+    if (disabledNext) {
+      const interval = setInterval(() => {
+        if (system === 'win32') {
+          readMSG();
+        } else {
+          readMSG();
+        }
 
-      if (message.includes('100')) {
-        clearInterval(interval);
-      }
-    }, pollingTime);
-
-    return () => clearInterval(interval);
-  }, []);
+        if (message.includes('100')) {
+          clearInterval(interval);
+          navigate('/android-finish');
+        }
+      }, pollingTime);
+      return () => clearInterval(interval);
+    }
+  }, [disabledNext]);
 
   // Running the installer
   useEffect(() => {
@@ -186,52 +171,39 @@ function AndroidEndPage() {
     });
   }, []);
 
-  const nextPage = '/android-copy-games';
-
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper css="wrapper__full" aside={false}>
-        {disabledNext === true && (
+    <Wrapper css="wrapper__full" aside={!disabledNext}>
+      {disabledNext === true && (
+        <>
           <Header title="We are completing your installation..." />
-        )}
-        {disabledNext === false && step === undefined && system !== 'win32' && (
-          <Header title="Installation complete!" />
-        )}
 
-        <End
-          onClick={openSRM}
-          data={data}
-          step={step}
-          message={message}
-          percentage={percentage}
-          disabledNext
-        />
-        <footer className="footer">
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Go Next"
-            disabled={disabledNext && 'true'}
-            onClick={() => navigate(nextPage)}
-          >
-            Next
-            <svg
-              className="rightarrow"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="currentColor"
-                d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
-              />
-            </svg>
-          </BtnSimple>
-        </footer>
-      </Wrapper>
-    </div>
+          <End
+            onClick={openSRM}
+            data={data}
+            step={step}
+            message={message}
+            percentage={percentage}
+            disabledNext
+          />
+        </>
+      )}
+      {disabledNext === false && (
+        <>
+          <span className="h3">Instalation complete!</span>
+          <p className="lead">You need to do some steps manually:</p>
+
+          <p className="lead">
+            You need to open every Emulator before launching Pegasus
+          </p>
+          <p className="lead">
+            We've downloaded the RetroArch cores for you but you need to
+            manually install them going to{' '}
+            <strong>Load Core --- Install or Restore a core</strong> and select
+            them one by one
+          </p>
+        </>
+      )}
+    </Wrapper>
   );
 }
 

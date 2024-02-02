@@ -62,7 +62,7 @@ import EndPage from 'pages/EndPage';
 
 import ErrorPage from 'pages/ErrorPage';
 import Hotkeys from 'pages/Hotkeys';
-import Finish from 'pages/Finish';
+import FinishPage from 'pages/FinishPage';
 
 import AndroidRomStoragePage from 'pages/AndroidRomStoragePage';
 import AndroidEndPage from 'pages/AndroidEndPage';
@@ -595,7 +595,7 @@ export default function App() {
           <Route exact path="/esde-theme" element={<ESDEThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
           <Route exact path="/hotkeys" element={<Hotkeys />} />
-          <Route exact path="/finish" element={<Finish />} />
+          <Route exact path="/finish" element={<FinishPage />} />
 
           <Route
             exact
