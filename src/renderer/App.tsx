@@ -3,7 +3,7 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 
 import CheckUpdatePage from 'pages/CheckUpdatePage';
-import PatreonLoginPage from 'pages/PatroenLoginPage';
+import PatreonLoginPage from 'pages/PatreonLoginPage';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';

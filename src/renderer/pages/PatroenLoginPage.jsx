@@ -23,7 +23,7 @@ const branchFile = require('data/branch.json');
 
 const { branch } = branchFile;
 
-function PatroenLoginPage() {
+function PatreonLoginPage() {
   //
   // i18
   //
@@ -295,4 +295,4 @@ function PatroenLoginPage() {
   );
 }
 
-export default PatroenLoginPage;
+export default PatreonLoginPage;
