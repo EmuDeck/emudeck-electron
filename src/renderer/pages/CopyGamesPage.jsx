@@ -439,25 +439,41 @@ function CopyGamesPage() {
               First, you will need to gather your ROMs and BIOS. These are
               copyright and EmuDeck will not provide these for legal reasons.
             </p>
-            <SelectorMenu
-              imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
-              options={[
-                [
-                  () => selectMode('manual'),
-                  mode === 'manual' ? 'is-selected' : '',
-                  'Manual copy',
-                  'You will need to copy your games manually',
-                  true,
-                ],
-                [
-                  () => selectMode('auto'),
-                  mode === 'auto' ? 'is-selected' : '',
-                  'Automatic import',
-                  "You'll need a different computer to create a USB Drive",
-                  true,
-                ],
-              ]}
-            />
+            {system !== 'win32' && (
+              <SelectorMenu
+                imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
+                options={[
+                  [
+                    () => selectMode('manual'),
+                    mode === 'manual' ? 'is-selected' : '',
+                    'Manual copy',
+                    'You will need to copy your games manually',
+                    true,
+                  ],
+                  [
+                    () => selectMode('auto'),
+                    mode === 'auto' ? 'is-selected' : '',
+                    'Automatic import',
+                    "You'll need a different computer to create a USB Drive",
+                    true,
+                  ],
+                ]}
+              />
+            )}
+            {system === 'win32' && (
+              <SelectorMenu
+                imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
+                options={[
+                  [
+                    () => selectMode('manual'),
+                    mode === 'manual' ? 'is-selected' : '',
+                    'Manual copy',
+                    'You will need to copy your games manually',
+                    true,
+                  ],
+                ]}
+              />
+            )}
           </>
         )}
 
