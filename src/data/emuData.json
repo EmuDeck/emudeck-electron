@@ -402,7 +402,7 @@
   "model2": {
     "id": "model2",
     "name": "Model2",
-    "code": "model2",
+    "code": "Model2",
     "wiki": "",
     "description": "Model 2 Emulator is a closed-source Sega Model 2 emulator for Windows written by Miguel Ãngel Horna, otherwise popularly known by his nick \"ElSemi\".",
     "special_configuration": "",
@@ -413,7 +413,7 @@
   "supermodel": {
     "id": "supermodel",
     "name": "Supermodel",
-    "code": "supermodel",
+    "code": "Supermodel",
     "wiki": "",
     "description": "Supermodel is an open-source Sega Model 3 emulator with good compatibility. The aim of the Supermodel project is to develop an emulator that is both accurate and playable.",
     "special_configuration": "",
