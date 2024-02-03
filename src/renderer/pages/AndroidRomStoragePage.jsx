@@ -6,14 +6,14 @@ import { GlobalContext } from 'context/globalContext';
 // Components
 //
 
+import { Iframe } from 'getbasecore/Atoms';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Main from 'components/organisms/Main/Main';
 import Footer from 'components/organisms/Footer/Footer';
 import RomStorage from 'components/organisms/Wrappers/RomStorage';
-import { Iframe } from 'getbasecore/Atoms';
-
+import PatreonLogin from 'components/organisms/PatreonLogin/PatreonLogin';
 //
 // Hooks
 //
@@ -275,60 +275,64 @@ function AndroidRomStoragePage() {
   //
   return (
     <Wrapper>
-      <Header title="Select the ROM Storage for your Android Device" />
-      <p className="lead">
-        Your ROM directory will be squared away within an Emulation folder in
-        your selected directory.
-      </p>
+      <PatreonLogin>
+        <Header title="Select the ROM Storage for your Android Device" />
+        <p className="lead">
+          Your ROM directory will be squared away within an Emulation folder in
+          your selected directory.
+        </p>
 
-      {isConnected === 'false' && (
-        <Main>
-          <div className="container container--grid">
-            <div data-col-sm="5">
-              <p className="h5">Make sure your Android device is:</p>
-              <ul className="list">
-                <li>- Connected using a USB with data transfer capabilities</li>
-                <li>- Developer & USB Debugging is enabled</li>
-                <li>- You've accepted all the prompts in your device</li>
-                <li>
-                  - You've selected <strong>File Transfer</strong> when asked by
-                  the device
-                </li>
-              </ul>
-            </div>
-            <div data-col-sm="4">
-              <div style={{ height: 'calc(100vh - 190px)' }}>
-                <span className="h5">How to enable Developer mode</span>
-                <Iframe src="https://www.youtube-nocookie.com/embed/p7DDuq56suU?autoplay=1&playlist=p7DDuq56suU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+        {isConnected === 'false' && (
+          <Main>
+            <div className="container container--grid">
+              <div data-col-sm="5">
+                <p className="h5">Make sure your Android device is:</p>
+                <ul className="list">
+                  <li>
+                    - Connected using a USB with data transfer capabilities
+                  </li>
+                  <li>- Developer & USB Debugging is enabled</li>
+                  <li>- You've accepted all the prompts in your device</li>
+                  <li>
+                    - You've selected <strong>File Transfer</strong> when asked
+                    by the device
+                  </li>
+                </ul>
+              </div>
+              <div data-col-sm="4">
+                <div style={{ height: 'calc(100vh - 190px)' }}>
+                  <span className="h5">How to enable Developer mode</span>
+                  <Iframe src="https://www.youtube-nocookie.com/embed/p7DDuq56suU?autoplay=1&playlist=p7DDuq56suU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+                </div>
               </div>
             </div>
-          </div>
-        </Main>
-      )}
-      {isConnected !== 'false' && (
-        <RomStorage
-          status={status}
-          sdCardValid={sdCardValid}
-          showSDCard={isConnected !== 'false' && sdCardValid}
-          showInternal={isConnected !== 'false'}
-          showCustom={false}
-          hddrives={false}
-          reloadSDcard={() => getAndroidDrives()}
-          sdCardName={sdCardName}
-          customPath={storagePath}
-          onClick={storageSet}
-          storage={storage}
-        />
-      )}
-      {storage !== '' && (
-        <Footer
-          next="android-end"
-          nextText="Next"
-          disabledNext={disabledNext}
-          disabledBack
-        />
-      )}
-      <EmuModal modal={modal} />
+          </Main>
+        )}
+        {isConnected !== 'false' && (
+          <RomStorage
+            status={status}
+            sdCardValid={sdCardValid}
+            showSDCard={isConnected !== 'false' && sdCardValid}
+            showInternal={isConnected !== 'false'}
+            showCustom={false}
+            hddrives={false}
+            reloadSDcard={() => getAndroidDrives()}
+            sdCardName={sdCardName}
+            customPath={storagePath}
+            onClick={storageSet}
+            storage={storage}
+          />
+        )}
+        {storage !== '' && (
+          <Footer
+            next="android-end"
+            nextText="Next"
+            disabledNext={disabledNext}
+            disabledBack
+          />
+        )}
+        <EmuModal modal={modal} />
+      </PatreonLogin>
     </Wrapper>
   );
 }
