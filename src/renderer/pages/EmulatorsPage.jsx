@@ -453,6 +453,12 @@ function EmulatorsPage() {
                     return;
                   }
 
+                  if (mode === 'easy') {
+                    if (item.id === 'pegasus') {
+                      return;
+                    }
+                  }
+
                   return (
                     <div key={item.id} data-col-md="4">
                       <CardSettings
