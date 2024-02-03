@@ -9,8 +9,10 @@ import { GlobalContext } from 'context/globalContext';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
+import Main from 'components/organisms/Main/Main';
 import Footer from 'components/organisms/Footer/Footer';
 import RomStorage from 'components/organisms/Wrappers/RomStorage';
+import { Iframe } from 'getbasecore/Atoms';
 
 //
 // Hooks
@@ -238,7 +240,12 @@ function AndroidRomStoragePage() {
     const modalData = {
       active: true,
       header: <span className="h4">Collecting Android drives</span>,
-      body: <p>This will take a few seconds. Please wait...</p>,
+      body: (
+        <p>
+          If this is your first install, please restart EmuDeck. Please wait
+          otherwise...
+        </p>
+      ),
       css: 'emumodal--xs',
     };
     setStatePage({ ...statePage, modal: modalData });
@@ -252,11 +259,12 @@ function AndroidRomStoragePage() {
         ...state,
         android: {
           ...state.android,
-          storagePath: sdCardName,
+          storagePath: '',
+          storage: '',
         },
       });
     }
-  }, [sdCardName]);
+  }, []);
 
   //
   // Logic
@@ -272,25 +280,54 @@ function AndroidRomStoragePage() {
         Your ROM directory will be squared away within an Emulation folder in
         your selected directory.
       </p>
-      <RomStorage
-        status={status}
-        sdCardValid={sdCardValid}
-        showSDCard={sdCardValid}
-        showInternal={isConnected !== 'false'}
-        showCustom={false}
-        hddrives={false}
-        reloadSDcard={() => getAndroidDrives()}
-        sdCardName={sdCardName}
-        customPath={storagePath}
-        onClick={storageSet}
-        storage={storage}
-      />
-      <Footer
-        next="android-end"
-        nextText="Next"
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
+
+      {isConnected === 'false' && (
+        <Main>
+          <div className="container container--grid">
+            <div data-col-sm="5">
+              <p className="h5">Make sure your Android device is:</p>
+              <ul className="list">
+                <li>- Connected using a USB with data transfer capabilities</li>
+                <li>- Developer & USB Debugging is enabled</li>
+                <li>- You've accepted all the prompts in your device</li>
+                <li>
+                  - You've selected <strong>File Transfer</strong> when asked by
+                  the device
+                </li>
+              </ul>
+            </div>
+            <div data-col-sm="4">
+              <div style={{ height: 'calc(100vh - 190px)' }}>
+                <span className="h5">How to enable Developer mode</span>
+                <Iframe src="https://www.youtube-nocookie.com/embed/p7DDuq56suU?autoplay=1&playlist=p7DDuq56suU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+              </div>
+            </div>
+          </div>
+        </Main>
+      )}
+      {isConnected !== 'false' && (
+        <RomStorage
+          status={status}
+          sdCardValid={sdCardValid}
+          showSDCard={isConnected !== 'false' && sdCardValid}
+          showInternal={isConnected !== 'false'}
+          showCustom={false}
+          hddrives={false}
+          reloadSDcard={() => getAndroidDrives()}
+          sdCardName={sdCardName}
+          customPath={storagePath}
+          onClick={storageSet}
+          storage={storage}
+        />
+      )}
+      {storage !== '' && (
+        <Footer
+          next="android-end"
+          nextText="Next"
+          disabledNext={disabledNext}
+          disabledBack
+        />
+      )}
       <EmuModal modal={modal} />
     </Wrapper>
   );
