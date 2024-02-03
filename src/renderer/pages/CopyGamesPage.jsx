@@ -309,7 +309,7 @@ function CopyGamesPage() {
     let timer;
 
     if (system === 'win32') {
-      timer = 30000;
+      timer = 10;
     } else {
       timer = 10;
     }

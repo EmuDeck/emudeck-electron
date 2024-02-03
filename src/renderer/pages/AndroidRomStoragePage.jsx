@@ -225,7 +225,7 @@ function AndroidRomStoragePage() {
         modal: hdrivesJson.isConnected ? false : modalData,
         sdCardName: hdrivesJson.SDCardName,
         isConnected: hdrivesJson.isConnected,
-        sdCardValid: true,
+        sdCardValid: hdrivesJson.SDCardName !== 'false',
       });
     });
   };
@@ -275,7 +275,7 @@ function AndroidRomStoragePage() {
       <RomStorage
         status={status}
         sdCardValid={sdCardValid}
-        showSDCard={sdCardName !== ''}
+        showSDCard={sdCardValid}
         showInternal={isConnected !== 'false'}
         showCustom={false}
         hddrives={false}
