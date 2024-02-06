@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import GamePad from 'components/organisms/GamePad/GamePad';
+
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
@@ -236,7 +236,7 @@ function FrontendSelectorPage() {
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Frontends for" bold={`${device}`} />
+        <Header title={`Frontends for ${device}`} />
         <FrontendSelector
           lastSelected={lastSelected}
           onClick={toggleEmus}

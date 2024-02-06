@@ -1,17 +1,43 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
-import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import GamePad from 'components/organisms/GamePad/GamePad';
+
+//
+// Components
+//
+
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
-
 import RomStorage from 'components/organisms/Wrappers/RomStorage';
 
+//
+// Hooks
+//
+
+//
+// Imports & Requires
+//
+
 function RomStoragePage() {
+  //
+  // i18
+  //
+
+  //
+  // Web services
+  //
+
+  //
+  // Const & Vars
+  //
   const ipcChannel = window.electron.ipcRenderer;
   const navigate = useNavigate();
+
+  //
+  // States
+  //
   const { state, setState } = useContext(GlobalContext);
   const { storage } = state;
   const [statePage, setStatePage] = useState({
@@ -33,13 +59,14 @@ function RomStoragePage() {
     sdCardName,
     status,
     modal,
-    dom,
     hddrives,
   } = statePage;
   const { system, storagePath } = state;
 
-  console.log(hddrives);
-
+  //
+  // Functions
+  //
+  // We set the selected storage
   const storageSet = (storageName) => {
     // We prevent the function to continue if the custom location testing is still in progress
     if (status === 'testing') {
@@ -150,7 +177,7 @@ function RomStoragePage() {
       });
     }
   };
-
+  // We get the SD Card name. Only Linux
   const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
@@ -168,6 +195,7 @@ function RomStoragePage() {
       });
     });
   };
+  // We heck if it's formated in a valid file system. Only Linux
   const checkSDValid = () => {
     ipcChannel.sendMessage('emudeck', [
       'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
@@ -201,7 +229,7 @@ function RomStoragePage() {
       }
     });
   };
-
+  // In windows we search for all drives
   const getHDdrives = () => {
     ipcChannel.sendMessage('emudeck', ['getLocations|||getLocations']);
 
@@ -220,6 +248,9 @@ function RomStoragePage() {
     });
   };
 
+  //
+  // UseEffects
+  //
   // Do we have a valid SD Card?
   useEffect(() => {
     if (navigator.onLine === false) {
@@ -252,33 +283,37 @@ function RomStoragePage() {
     }
   }, [sdCardName]);
 
+  //
+  // Logic
+  //
 
-
+  //
+  // Render
+  //
   return (
-    <div style={{ height: '100vh' }} >
-      
-      <Wrapper>
-        <Header title="Select your ROM Directory " />
-        <RomStorage
-          status={status}
-          sdCardValid={sdCardValid}
-          showSDCard={system !== 'win32'}
-          showInternal={system !== 'win32'}
-          hddrives={system === 'win32' ? hddrives : false}
-          reloadSDcard={checkSDValid}
-          sdCardName={sdCardName}
-          customPath={storagePath}
-          onClick={storageSet}
-        />
-        <Footer
-          next="device-selector"
-          nextText="Next"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title="Select your ROM Directory " />
+      <RomStorage
+        status={status}
+        sdCardValid={sdCardValid}
+        showSDCard={system !== 'win32'}
+        showInternal={system !== 'win32'}
+        showCustom={!!(system !== 'win32' && system !== 'darwin')}
+        hddrives={system === 'win32' ? hddrives : false}
+        reloadSDcard={checkSDValid}
+        sdCardName={sdCardName}
+        customPath={storagePath}
+        onClick={storageSet}
+        storage={storage}
+      />
+      <Footer
+        next="device-selector"
+        nextText="Next"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

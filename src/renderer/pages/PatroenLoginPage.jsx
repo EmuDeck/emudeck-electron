@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 //
 import { BtnSimple, FormInputSimple } from 'getbasecore/Atoms';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import GamePad from 'components/organisms/GamePad/GamePad';
+
 import Main from 'components/organisms/Main/Main';
 import Header from 'components/organisms/Header/Header';
 
@@ -23,7 +23,7 @@ const branchFile = require('data/branch.json');
 
 const { branch } = branchFile;
 
-function PatroenLoginPage() {
+function PatreonLoginPage() {
   //
   // i18
   //
@@ -295,4 +295,4 @@ function PatroenLoginPage() {
   );
 }
 
-export default PatroenLoginPage;
+export default PatreonLoginPage;
