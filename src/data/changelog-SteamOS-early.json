@@ -80,5 +80,11 @@
     "type": "STEAMOS",
     "description": "New Decky plugin to check hotkeys, toggle bezels, aspect ratios, etc. while in gaming mode. No need to go into Desktop mode",
     "image": "true"
+  },
+  {
+    "title": "New Steam Input profiles",
+    "type": "STEAMOS",
+    "description": "We've reduced the number of Steam Input profiles, added a new Xbox to Nintendo Layout profile and unified all the hotkeys along the emulators, don't forget to test the new radial menu on the left touchpad!",
+    "image": "true"
   }
 ]

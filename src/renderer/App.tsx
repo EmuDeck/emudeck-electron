@@ -3,7 +3,7 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 
 import CheckUpdatePage from 'pages/CheckUpdatePage';
-import PatreonLoginPage from 'pages/PatroenLoginPage';
+import PatreonLoginPage from 'pages/PatreonLoginPage';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
@@ -61,6 +61,11 @@ import EmulatorConfigResolutionPage from 'pages/EmulatorConfigResolutionPage';
 import EndPage from 'pages/EndPage';
 
 import ErrorPage from 'pages/ErrorPage';
+import Hotkeys from 'pages/Hotkeys';
+import FinishPage from 'pages/FinishPage';
+
+import AndroidRomStoragePage from 'pages/AndroidRomStoragePage';
+import AndroidEndPage from 'pages/AndroidEndPage';
 
 import { GlobalContext } from './context/globalContext';
 
@@ -129,6 +134,110 @@ export default function App() {
     cloudSyncStatus: false,
     sudoPass: 'Decky!',
     language: 'en',
+    android: {
+      installEmus: {
+        ra: {
+          id: 'ra',
+          status: true,
+          name: 'RetroArch',
+        },
+        dolphin: {
+          id: 'dolphin',
+          status: true,
+          name: 'Dolphin',
+        },
+        ppsspp: {
+          id: 'ppsspp',
+          status: true,
+          name: 'PPSSPP',
+        },
+        duckstation: {
+          id: 'duckstation',
+          status: true,
+          name: 'DuckStation',
+        },
+        citra: {
+          id: 'citra',
+          status: true,
+          name: 'Citra',
+        },
+        aethersx2: {
+          id: 'aethersx2',
+          status: true,
+          name: 'AetherSX2',
+        },
+        yuzu: {
+          id: 'yuzu',
+          status: true,
+          name: 'Yuzu',
+        },
+        vita3k: {
+          id: 'vita3k',
+          status: true,
+          name: 'Vita3K',
+        },
+        scummvm: {
+          id: 'scummvm',
+          status: true,
+          name: 'ScummVM',
+        },
+      },
+      overwriteConfigEmus: {
+        ra: {
+          id: 'ra',
+          status: true,
+          name: 'RetroArch',
+        },
+        dolphin: {
+          id: 'dolphin',
+          status: true,
+          name: 'Dolphin',
+        },
+        ppsspp: {
+          id: 'ppsspp',
+          status: true,
+          name: 'PPSSPP',
+        },
+        citra: {
+          id: 'citra',
+          status: true,
+          name: 'Citra',
+        },
+        aethersx2: {
+          id: 'pcsx2',
+          status: true,
+          name: 'AetherSX2',
+        },
+        yuzu: {
+          id: 'yuzu',
+          status: true,
+          name: 'Yuzu',
+        },
+        pegasus: {
+          id: 'pegasus',
+          status: true,
+          name: 'Pegasus',
+        },
+        vita3k: {
+          id: 'vita3k',
+          status: true,
+          name: 'Vita3K',
+        },
+        scummvm: {
+          id: 'scummvm',
+          status: true,
+          name: 'ScummVM',
+        },
+      },
+      installFrontends: {
+        pegasus: {
+          id: 'pegasus',
+          status: true,
+          name: 'Pegasus',
+          desc: 'Add this launcher to your Steam Library. Recommended for big colections. You need to run EmulationStation parsers to show artwork in Pegasus Themes',
+        },
+      },
+    },
     achievements: {
       user: '',
       pass: '',
@@ -236,6 +345,18 @@ export default function App() {
       },
       mgba: { id: 'mgba', status: false, installed: undefined, name: 'mGBA' },
       ares: { id: 'ares', status: false, installed: undefined, name: 'ares' },
+      supermodel: {
+        id: 'supermodel',
+        status: true,
+        installed: undefined,
+        name: 'Supermodel',
+      },
+      model2: {
+        id: 'model2',
+        status: true,
+        installed: undefined,
+        name: 'Model2',
+      },
     },
     overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
@@ -262,6 +383,8 @@ export default function App() {
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
       mgba: { id: 'mgba', status: true, name: 'mGBA' },
       ares: { id: 'ares', status: false, name: 'ares' },
+      supermodel: { id: 'supermodel', status: true, name: 'Supermodel' },
+      model2: { id: 'model2', status: true, name: 'Model2' },
     },
     installFrontends: {
       esde: {
@@ -471,6 +594,15 @@ export default function App() {
           />
           <Route exact path="/esde-theme" element={<ESDEThemePage />} />
           <Route exact path="/end" element={<EndPage />} />
+          <Route exact path="/hotkeys" element={<Hotkeys />} />
+          <Route exact path="/finish" element={<FinishPage />} />
+
+          <Route
+            exact
+            path="/android-rom-storage"
+            element={<AndroidRomStoragePage />}
+          />
+          <Route exact path="/android-end" element={<AndroidEndPage />} />
         </Routes>
       </Router>
     </GlobalContext.Provider>

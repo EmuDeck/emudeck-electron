@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import GamePad from 'components/organisms/GamePad/GamePad';
+
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 
@@ -27,7 +27,8 @@ import {
   imgsrm,
   imgrmg,
   imgscummvm,
-  imgsupermodelista,
+  imgsupermodel,
+  imgmodel2,
   imgFrontESDE,
   imgFrontPegasus,
   imgmelonds,
@@ -53,7 +54,8 @@ const images = {
   vita3k: imgvita3k,
   flycast: imgflycast,
   scummvm: imgscummvm,
-  supermodelista: imgsupermodelista,
+  supermodel: imgsupermodel,
+  model2: imgmodel2,
   srm: imgsrm,
   esde: imgFrontESDE,
   mgba: imgmgba,
