@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import GamePad from 'components/organisms/GamePad/GamePad';
+
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
@@ -28,10 +28,11 @@ import {
   imgsrm,
   imgrmg,
   imgscummvm,
-  imgsupermodelista,
   imgFrontESDE,
   imgmelonds,
   imgmgba,
+  imgsupermodel,
+  imgmodel2,
 } from 'components/utils/images/images';
 
 const images = {
@@ -53,12 +54,13 @@ const images = {
   vita3k: imgvita3k,
   flycast: imgflycast,
   scummvm: imgscummvm,
-  supermodelista: imgsupermodelista,
   esde: imgFrontESDE,
   rmg: imgrmg,
   mgba: imgmgba,
   xenia: imgxenia,
   srm: imgsrm,
+  supermodel: imgsupermodel,
+  model2: imgmodel2,
 };
 
 function EmulatorSelectorPage() {
@@ -981,13 +983,10 @@ function EmulatorSelectorPage() {
     }
   }, [installEmus]);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Emulators and tools for" bold={`${device}`} />
+        <Header title={`Emulators and tools for ${device}`} />
         <EmulatorSelector data={data} onClick={toggleEmus} images={images} />
         <Footer
           next="emulator-configuration"

@@ -2,7 +2,7 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import GamePad from 'components/organisms/GamePad/GamePad';
+
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Main from 'components/organisms/Main/Main';
@@ -32,7 +32,7 @@ import {
   imgsrm,
   imgrmg,
   imgscummvm,
-  imgsupermodelista,
+  imgsupermodel,
   imgFrontESDE,
   imgmelonds,
   imgmgba,
@@ -44,6 +44,7 @@ import {
   mameGrid,
   rmgGrid,
   supermodelGrid,
+  model2Grid,
   flycastGrid,
   melondsGrid,
   mgbaGrid,
@@ -103,7 +104,7 @@ const images = {
   vita3k: imgvita3k,
   flycast: imgflycast,
   scummvm: imgscummvm,
-  supermodelista: imgsupermodelista,
+  supermodel: imgsupermodel,
   esde: imgFrontESDE,
   rmg: imgrmg,
   mgba: imgmgba,
@@ -122,6 +123,7 @@ const imagesGrid = {
   mame: mameGrid,
   rmg: rmgGrid,
   supermodel: supermodelGrid,
+  model2: model2Grid,
   melonds: melondsGrid,
   mgba: mgbaGrid,
   pcsx2: pcsx2Grid,
@@ -204,6 +206,12 @@ function EmulatorsPage() {
 
         if (system === 'win32') {
           if (item.id === 'rmg') {
+            return;
+          }
+          if (item.id === 'model2') {
+            return;
+          }
+          if (item.id === 'supermodel') {
             return;
           }
         }
@@ -443,6 +451,12 @@ function EmulatorsPage() {
 
                   if (item.id === 'steam') {
                     return;
+                  }
+
+                  if (mode === 'easy') {
+                    if (item.id === 'pegasus') {
+                      return;
+                    }
                   }
 
                   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import GamePad from 'components/organisms/GamePad/GamePad';
+
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Card from 'components/molecules/Card/Card';
@@ -19,7 +19,7 @@ import img9 from 'assets/changelog/banner_linux.png';
 import img10 from 'assets/changelog/banner_chimeraOS.png';
 import img11 from 'assets/changelog/banner_autosudo.png';
 import img12 from 'assets/changelog/banner_decky.png';
-import img13 from 'assets/changelog/banner_early.png';
+import img13 from 'assets/changelog/banner_input.png';
 
 function ChangeLogPage() {
   const { state } = useContext(GlobalContext);

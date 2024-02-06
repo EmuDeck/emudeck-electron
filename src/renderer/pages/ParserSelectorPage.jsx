@@ -3,7 +3,7 @@ import { GlobalContext } from 'context/globalContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
-import GamePad from 'components/organisms/GamePad/GamePad';
+
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
@@ -30,7 +30,7 @@ import {
   imgsrm,
   imgrmg,
   imgscummvm,
-  imgsupermodelista,
+  imgsupermodel,
   imgesde,
   imgmelonds,
   imgmgba,
@@ -55,7 +55,7 @@ const images = {
   vita3k: imgvita3k,
   flycast: imgflycast,
   scummvm: imgscummvm,
-  supermodelista: imgsupermodelista,
+  supermodel: imgsupermodel,
   esde: imgesde,
   rmg: imgrmg,
   mgba: imgmgba,

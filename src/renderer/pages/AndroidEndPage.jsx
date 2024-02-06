@@ -2,14 +2,13 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-
 import Header from 'components/organisms/Header/Header';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
-import { BtnSimple } from 'getbasecore/Atoms';
-import Sonic from 'components/organisms/Sonic/Sonic';
+import { Main } from 'components/organisms/Main/Main';
 import End from 'components/organisms/Wrappers/End';
+import { yoshiMario } from 'components/utils/images/gifs';
 
-function EndPage() {
+function AndroidEndPage() {
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
@@ -20,18 +19,10 @@ function EndPage() {
     dom: undefined,
   });
 
-  const { disabledNext, data, step, dom } = statePage;
-  const {
-    second,
-    branch,
-    storagePath,
-    gamemode,
-    device,
-    system,
-    installEmus,
-    installFrontends,
-    overwriteConfigEmus,
-  } = state;
+  const { disabledNext, data, step } = statePage;
+  const { second, branch, gamemode, device, system, android } = state;
+  const { storagePath, installEmus, installFrontends, overwriteConfigEmus } =
+    android;
   const ipcChannel = window.electron.ipcRenderer;
 
   const [msg, setMsg] = useState({
@@ -41,11 +32,11 @@ function EndPage() {
 
   const { message, percentage } = msg;
 
-  const settingsFile = '~/emudeck/settings.sh';
   const readMSG = () => {
     ipcChannel.sendMessage('getMSG', []);
     ipcChannel.on('getMSG', (messageInput) => {
       //
+      console.log({ messageInput });
       const messageArray = messageInput.stdout.split('#');
       const messageText = messageArray[1];
       let messagePercent = messageArray[0];
@@ -112,7 +103,7 @@ function EndPage() {
     if (system === 'win32') {
       timer = 30000;
     } else {
-      timer = 10;
+      timer = 10000;
     }
     const timerId = setTimeout(() => {
       setStatePage({
@@ -125,22 +116,6 @@ function EndPage() {
     }, timer);
   };
 
-  const showLog = () => {
-    if (system === 'win32') {
-      ipcChannel.sendMessage('bash-nolog', [
-        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/logs/emudeckSetup.log -Tail 100 -Wait }"`,
-      ]);
-    } else if (system === 'darwin') {
-      ipcChannel.sendMessage('bash-nolog', [
-        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/emudeck/logs/emudeckSetup.log"'`,
-      ]);
-    } else {
-      ipcChannel.sendMessage('bash-nolog', [
-        `konsole -e tail -f "$HOME/emudeck/logs/emudeckSetup.log"`,
-      ]);
-    }
-  };
-
   let pollingTime = 500;
   if (system === 'win32') {
     pollingTime = 2000;
@@ -148,20 +123,22 @@ function EndPage() {
 
   // Reading messages from backend
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (system === 'win32') {
-        readMSG();
-      } else {
-        readMSG();
-      }
+    if (disabledNext) {
+      const interval = setInterval(() => {
+        if (system === 'win32') {
+          readMSG();
+        } else {
+          readMSG();
+        }
 
-      if (message.includes('100')) {
-        clearInterval(interval);
-      }
-    }, pollingTime);
-
-    return () => clearInterval(interval);
-  }, []);
+        if (message.includes('100')) {
+          clearInterval(interval);
+          navigate('/android-finish');
+        }
+      }, pollingTime);
+      return () => clearInterval(interval);
+    }
+  }, [disabledNext]);
 
   // Running the installer
   useEffect(() => {
@@ -180,11 +157,11 @@ function EndPage() {
     ipcChannel.once('saveSettings', () => {
       if (system === 'win32') {
         ipcChannel.sendMessage('bash-nolog', [
-          `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/setup.ps1`,
+          `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/android/setup.ps1`,
         ]);
       } else {
         ipcChannel.sendMessage('bash-nolog', [
-          `finish|||bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
+          `finish|||bash ~/.config/EmuDeck/backend/android/setup.sh ${branch} false`,
         ]);
       }
 
@@ -194,68 +171,40 @@ function EndPage() {
     });
   }, []);
 
-  let nextPage = '/copy-games';
-
-  if (branch.includes('early') || branch === 'dev') {
-    nextPage = '/cloud-sync';
-  }
-
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper css="wrapper__full" aside={false}>
-        {disabledNext === true && (
+    <Wrapper css="wrapper__full" aside={!disabledNext}>
+      {disabledNext === true && (
+        <>
           <Header title="We are completing your installation..." />
-        )}
-        {disabledNext === false && step === undefined && system !== 'win32' && (
-          <Header title="Installation complete!" />
-        )}
 
-        {disabledNext === false &&
-          step === undefined &&
-          device === 'Asus Rog Ally' && (
-            <Header title="Asus Rog Ally Controller configuration" />
-          )}
+          <End
+            onClick={openSRM}
+            data={data}
+            step={step}
+            message={message}
+            percentage={percentage}
+            disabledNext
+          />
+        </>
+      )}
+      {disabledNext === false && (
+        <>
+          <span className="h3">Installation complete!</span>
+          <p className="lead">You need to do some steps manually:</p>
 
-        {disabledNext === false &&
-          step === undefined &&
-          device !== 'Asus Rog Ally' &&
-          system === 'win32' && <Header title="Controller configuration" />}
-
-        <End
-          onClick={openSRM}
-          data={data}
-          step={step}
-          message={message}
-          percentage={percentage}
-          disabledNext={disabledNext}
-        />
-        <footer className="footer">
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Go Next"
-            disabled={disabledNext && 'true'}
-            onClick={() => navigate(nextPage)}
-          >
-            Next
-            <svg
-              className="rightarrow"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="currentColor"
-                d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
-              />
-            </svg>
-          </BtnSimple>
-        </footer>
-      </Wrapper>
-    </div>
+          <p className="lead">
+            You need to open every Emulator before launching Pegasus
+          </p>
+          <p className="lead">
+            We've downloaded the RetroArch cores for you but you need to
+            manually install them going to{' '}
+            <strong>Load Core --- Install or Restore a core</strong> and select
+            them one by one
+          </p>
+        </>
+      )}
+    </Wrapper>
   );
 }
 
-export default EndPage;
+export default AndroidEndPage;
