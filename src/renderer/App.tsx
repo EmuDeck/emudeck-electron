@@ -3,7 +3,6 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 
 import CheckUpdatePage from 'pages/CheckUpdatePage';
-import PatreonLoginPage from 'pages/PatreonLoginPage';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
@@ -455,7 +454,6 @@ export default function App() {
           <Route exact path="/" element={<CheckDependenciesPage />} />
           <Route exact path="/error" element={<ErrorPage />} />
           <Route exact path="/check-updates" element={<CheckUpdatePage />} />
-          <Route exact path="/patreon-login" element={<PatreonLoginPage />} />
 
           <Route exact path="/welcome" element={<WelcomePage />} />
           <Route
