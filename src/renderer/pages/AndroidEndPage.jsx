@@ -131,9 +131,8 @@ function AndroidEndPage() {
           readMSG();
         }
 
-        if (message.includes('100')) {
+        if (message.includes('100ANDROID')) {
           clearInterval(interval);
-          navigate('/android-finish');
         }
       }, pollingTime);
       return () => clearInterval(interval);
