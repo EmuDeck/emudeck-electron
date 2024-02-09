@@ -45,6 +45,9 @@ function AndroidEndPage() {
       messagePercent = messagePercent.replaceAll('\n\r', '');
       messagePercent = messagePercent.replaceAll('\r', '');
       setMsg({ message: messageText, percentage: messagePercent });
+      if (messageText.includes('100')) {
+        setStatePage({ ...statePage, disabledNext: false });
+      }
     });
   };
 
@@ -125,11 +128,7 @@ function AndroidEndPage() {
   useEffect(() => {
     if (disabledNext) {
       const interval = setInterval(() => {
-        if (system === 'win32') {
-          readMSG();
-        } else {
-          readMSG();
-        }
+        readMSG();
 
         if (message.includes('100ANDROID')) {
           clearInterval(interval);
