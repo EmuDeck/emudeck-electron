@@ -420,6 +420,14 @@ function EmulatorsPage() {
                       return;
                     }
                   }
+                  if (system === 'win32') {
+                    if (item.id === 'model2') {
+                      return;
+                    }
+                    if (item.id === 'supermodel') {
+                      return;
+                    }
+                  }
                   return (
                     <div key={item.id} data-col-md="4">
                       <CardSettings
