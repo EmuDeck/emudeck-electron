@@ -22,7 +22,7 @@ import RAAchievementsConfigPage from 'pages/RAAchievementsConfigPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import PegasusThemeChoicePage from 'pages/PegasusThemeChoicePage';
-
+import PatroenLoginPage from 'pages/PatroenLoginPage';
 import ESDEThemePage from 'pages/ESDEThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
 import EmuDeckyPage from 'pages/EmuDeckyPage';
@@ -451,7 +451,7 @@ export default function App() {
     >
       <Router>
         <Routes>
-          <Route exact path="/" element={<CheckDependenciesPage />} />
+          <Route exact path="/" element={<PatroenLoginPage />} />
           <Route exact path="/error" element={<ErrorPage />} />
           <Route exact path="/check-updates" element={<CheckUpdatePage />} />
 
@@ -491,6 +491,7 @@ export default function App() {
             path="/change-resolution"
             element={<EmulatorConfigResolutionPage />}
           />
+          <Route exact path="/patreon-login" element={<PatroenLoginPage />} />
 
           <Route exact path="/rom-storage" element={<RomStoragePage />} />
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />

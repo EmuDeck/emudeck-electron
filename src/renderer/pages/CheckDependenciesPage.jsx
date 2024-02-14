@@ -135,24 +135,21 @@ function CheckDependenciesPage() {
         check7Zip();
         // //Steam?
         checkSteam();
-        navigate('/check-updates');
+        navigate('/patreon-login');
       } else {
-        navigate('/check-updates');
+        navigate('/patreon-login');
       }
     });
   }, []);
 
   useEffect(() => {
     if (statusGIT === true && status7Zip === true) {
-      navigate('/check-updates');
+      navigate('/patreon-login');
     }
   }, [statusGIT, status7Zip]);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper aside={false}>
         {statusGIT === undefined ||
           (statusSteam === undefined && (
