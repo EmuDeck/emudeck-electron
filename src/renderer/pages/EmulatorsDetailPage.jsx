@@ -1151,7 +1151,6 @@ function EmulatorsDetailPage() {
 
       return true;
     }
-    console.log({ ogStateAlternative, emulatorAlternative });
     const sameObject = sameObjects(ogStateAlternative, emulatorAlternative);
 
     if (!sameObject) {

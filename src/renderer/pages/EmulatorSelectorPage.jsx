@@ -33,6 +33,7 @@ import {
   imgmgba,
   imgsupermodel,
   imgmodel2,
+  imgbigpemu,
 } from 'components/utils/images/images';
 
 const images = {
@@ -61,6 +62,7 @@ const images = {
   srm: imgsrm,
   supermodel: imgsupermodel,
   model2: imgmodel2,
+  bigpemu: imgbigpemu,
 };
 
 function EmulatorSelectorPage() {

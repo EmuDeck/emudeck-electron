@@ -356,6 +356,12 @@ export default function App() {
         installed: undefined,
         name: 'Model2',
       },
+      bigpemu: {
+        id: 'bigpemu',
+        status: false,
+        installed: undefined,
+        name: 'BigPEmu',
+      },
     },
     overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
@@ -384,6 +390,11 @@ export default function App() {
       ares: { id: 'ares', status: false, name: 'ares' },
       supermodel: { id: 'supermodel', status: true, name: 'Supermodel' },
       model2: { id: 'model2', status: true, name: 'Model2' },
+      bigpemu: {
+        id: 'bigpemu',
+        status: false,
+        name: 'BigPEmu',
+      },
     },
     installFrontends: {
       esde: {

@@ -45,6 +45,7 @@ import {
   rmgGrid,
   supermodelGrid,
   model2Grid,
+  bigpemuGrid,
   flycastGrid,
   melondsGrid,
   mgbaGrid,
@@ -139,6 +140,7 @@ const imagesGrid = {
   esde: esdeGrid,
   srm: srmGrid,
   pegasus: pegasusGrid,
+  bigpemu: bigpemuGrid,
 };
 
 function EmulatorsPage() {
@@ -212,6 +214,9 @@ function EmulatorsPage() {
             return;
           }
           if (item.id === 'supermodel') {
+            return;
+          }
+          if (item.id === 'bigpemu') {
             return;
           }
         }
@@ -425,6 +430,9 @@ function EmulatorsPage() {
                       return;
                     }
                     if (item.id === 'supermodel') {
+                      return;
+                    }
+                    if (item.id === 'bigpemu') {
                       return;
                     }
                   }
