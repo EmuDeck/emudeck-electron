@@ -65,7 +65,8 @@ const images = {
 
 function EmulatorSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, installEmus, emulatorAlternative, second } = state;
+  const { device, installEmus, emulatorAlternative, overwriteConfigEmus } =
+    state;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -410,6 +411,13 @@ function EmulatorSelectorPage() {
       installEmus: {
         ...installEmus,
         [emulatorProp]: { ...installEmus[emulatorProp], status: !status },
+      },
+      overwriteConfigEmus: {
+        ...overwriteConfigEmus,
+        [emulatorProp]: {
+          ...overwriteConfigEmus[emulatorProp],
+          status: !status,
+        },
       },
       emulatorAlternative: {
         ...emulatorAlternative,

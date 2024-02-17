@@ -12,6 +12,10 @@ function FinishPage() {
   const { state, setState } = useContext(GlobalContext);
   const { system, second } = state;
   const navigate = useNavigate();
+  useEffect(() => {
+    const json = JSON.stringify(state);
+    localStorage.setItem('settings_emudeck', json);
+  }, []);
 
   return (
     <Wrapper aside={second === true}>
