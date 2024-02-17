@@ -20,6 +20,7 @@ import img10 from 'assets/changelog/banner_chimeraOS.png';
 import img11 from 'assets/changelog/banner_autosudo.png';
 import img12 from 'assets/changelog/banner_decky.png';
 import img13 from 'assets/changelog/banner_input.png';
+import img14 from 'assets/emulators/grid/bigpemu.png';
 
 function ChangeLogPage() {
   const { state } = useContext(GlobalContext);
@@ -80,6 +81,9 @@ function ChangeLogPage() {
         break;
       case 13:
         imgID = img13;
+        break;
+      case 14:
+        imgID = img14;
         break;
     }
 

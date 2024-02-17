@@ -22,7 +22,7 @@ import RAAchievementsConfigPage from 'pages/RAAchievementsConfigPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import PegasusThemeChoicePage from 'pages/PegasusThemeChoicePage';
-
+import PatroenLoginPage from 'pages/PatroenLoginPage';
 import ESDEThemePage from 'pages/ESDEThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
 import EmuDeckyPage from 'pages/EmuDeckyPage';
@@ -356,6 +356,12 @@ export default function App() {
         installed: undefined,
         name: 'Model2',
       },
+      bigpemu: {
+        id: 'bigpemu',
+        status: false,
+        installed: undefined,
+        name: 'BigPEmu',
+      },
     },
     overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
@@ -368,7 +374,7 @@ export default function App() {
       pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
       yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-      ryujinx: { id: 'ryujinx', status: true, name: 'Ryujinx' },
+      ryujinx: { id: 'ryujinx', status: false, name: 'Ryujinx' },
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       xenia: { id: 'xenia', status: true, name: 'Xenia' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
@@ -376,14 +382,19 @@ export default function App() {
       esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
       pegasus: { id: 'pegasus', status: true, name: 'Pegasus' },
       rmg: { id: 'rmg', status: false, name: "Rosalie's Mupen Gui" },
-      mame: { id: 'mame', status: true, name: 'MAME' },
+      mame: { id: 'mame', status: false, name: 'MAME' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita3K' },
-      flycast: { id: 'flycast', status: true, name: 'Flycast' },
+      flycast: { id: 'flycast', status: false, name: 'Flycast' },
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
-      mgba: { id: 'mgba', status: true, name: 'mGBA' },
+      mgba: { id: 'mgba', status: false, name: 'mGBA' },
       ares: { id: 'ares', status: false, name: 'ares' },
       supermodel: { id: 'supermodel', status: true, name: 'Supermodel' },
       model2: { id: 'model2', status: true, name: 'Model2' },
+      bigpemu: {
+        id: 'bigpemu',
+        status: false,
+        name: 'BigPEmu',
+      },
     },
     installFrontends: {
       esde: {
@@ -451,7 +462,7 @@ export default function App() {
     >
       <Router>
         <Routes>
-          <Route exact path="/" element={<CheckDependenciesPage />} />
+          <Route exact path="/" element={<PatroenLoginPage />} />
           <Route exact path="/error" element={<ErrorPage />} />
           <Route exact path="/check-updates" element={<CheckUpdatePage />} />
 
@@ -491,6 +502,7 @@ export default function App() {
             path="/change-resolution"
             element={<EmulatorConfigResolutionPage />}
           />
+          <Route exact path="/patreon-login" element={<PatroenLoginPage />} />
 
           <Route exact path="/rom-storage" element={<RomStoragePage />} />
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
