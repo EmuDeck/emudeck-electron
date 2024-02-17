@@ -423,8 +423,8 @@
   },
   "bigpemu": {
     "id": "bigpemu",
-    "name": "BigPemu",
-    "code": "BigPemu",
+    "name": "BigPEmu",
+    "code": "BigPEmu",
     "wiki": "",
     "description": "BigPEmu is a closed-source Atari Jaguar emulator. It was originally developed for use in the game compilation Atari 50, and later made available for free separately",
     "special_configuration": "",
