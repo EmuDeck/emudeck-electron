@@ -1103,7 +1103,9 @@ function EmulatorsDetailPage() {
     });
 
     // save OG Alternatives
+
     const ogStateAlternativeValues = emulatorAlternative;
+    delete ogStateAlternativeValues.multiemulator;
     const json = JSON.stringify(ogStateAlternativeValues);
     localStorage.setItem('ogStateAlternative', json);
   }, []);
@@ -1149,62 +1151,60 @@ function EmulatorsDetailPage() {
 
       return true;
     }
-
+    console.log({ ogStateAlternative, emulatorAlternative });
     const sameObject = sameObjects(ogStateAlternative, emulatorAlternative);
 
-    if (sameObject) {
-      return;
-    }
-
-    if (system === 'win32') {
-      ipcChannel.sendMessage('emudeck', [
-        `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status};setSetting doInstallmelonDS ${state.installEmus.melonds.status};setSetting doInstallDuck ${state.installEmus.duckstation.status};;setSetting doInstallFlycast ${state.installEmus.dreamcast.status}`,
-      ]);
-    } else {
-      ipcChannel.sendMessage('emudeck', [
-        `parsersUpdatePrev|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} && setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame.status} >/dev/null && setSetting doInstallmelonDS ${state.installEmus.melonds.status} >/dev/null && setSetting doInstallDuck ${state.installEmus.duckstation.status} >/dev/null && setSetting doInstallFlycast ${state.installEmus.flycast.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame} >/dev/null && setSetting doInstallRMG ${state.installEmus.rmg.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status}} >/dev/null) >/dev/null`,
-      ]);
-    }
-
-    ipcChannel.once(`parsersUpdatePrev`, () => {
-      ipcChannel.sendMessage('emudeck', [`parsersUpdate|||SRM_init`]);
-    });
-
-    ipcChannel.once(`parsersUpdate`, (message) => {
-      const status = message.stdout;
-      status.replace('\n', '');
-      console.log({ message });
-      let modalData;
-      if (status.includes('true')) {
-        modalData = {
-          active: true,
-          header: <span className="h4">Success!</span>,
-          body: <p>All Parsers have been configured.</p>,
-          footer: (
-            <BtnSimple
-              css="btn-simple--1"
-              type="button"
-              onClick={() => navigate('/welcome')}
-            >
-              Close
-            </BtnSimple>
-          ),
-          css: 'emumodal--xs',
-        };
-      } else if (system !== 'win32') {
-        modalData = {
-          active: true,
-          header: <span className="h4">Failed</span>,
-          body: <p>There was an issue trying to configure your parsers</p>,
-          css: 'emumodal--xs',
-        };
-        console.log({ modalData });
+    if (!sameObject) {
+      if (system === 'win32') {
+        ipcChannel.sendMessage('emudeck', [
+          `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status};setSetting doInstallmelonDS ${state.installEmus.melonds.status};setSetting doInstallDuck ${state.installEmus.duckstation.status};;setSetting doInstallFlycast ${state.installEmus.dreamcast.status}`,
+        ]);
+      } else {
+        ipcChannel.sendMessage('emudeck', [
+          `parsersUpdatePrev|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} && setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame.status} >/dev/null && setSetting doInstallmelonDS ${state.installEmus.melonds.status} >/dev/null && setSetting doInstallDuck ${state.installEmus.duckstation.status} >/dev/null && setSetting doInstallFlycast ${state.installEmus.flycast.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame} >/dev/null && setSetting doInstallRMG ${state.installEmus.rmg.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status}} >/dev/null) >/dev/null`,
+        ]);
       }
-      setStatePage({
-        ...statePage,
-        modal: modalData,
+
+      ipcChannel.once(`parsersUpdatePrev`, () => {
+        ipcChannel.sendMessage('emudeck', [`parsersUpdate|||SRM_init`]);
       });
-    });
+
+      ipcChannel.once(`parsersUpdate`, (message) => {
+        const status = message.stdout;
+        status.replace('\n', '');
+        console.log({ message });
+        let modalData;
+        if (status.includes('true')) {
+          modalData = {
+            active: true,
+            header: <span className="h4">Success!</span>,
+            body: <p>All Parsers have been configured.</p>,
+            footer: (
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                onClick={() => navigate('/welcome')}
+              >
+                Close
+              </BtnSimple>
+            ),
+            css: 'emumodal--xs',
+          };
+        } else if (system !== 'win32') {
+          modalData = {
+            active: true,
+            header: <span className="h4">Failed</span>,
+            body: <p>There was an issue trying to configure your parsers</p>,
+            css: 'emumodal--xs',
+          };
+          console.log({ modalData });
+        }
+        setStatePage({
+          ...statePage,
+          modal: modalData,
+        });
+      });
+    }
   }, [emulatorAlternative]);
 
   return (
