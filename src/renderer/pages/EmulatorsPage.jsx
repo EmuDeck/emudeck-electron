@@ -176,13 +176,6 @@ function EmulatorsPage() {
   const pageRef = useRef(statePage);
   pageRef.current = statePage;
 
-  const showChangelog = localStorage.getItem('show_changelog');
-  console.log({ system });
-  console.log({ showChangelog });
-  if (showChangelog === true) {
-    navigate('/change-log');
-  }
-
   const resetEmus = () => {
     const modalData = {
       active: true,

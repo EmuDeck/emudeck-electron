@@ -92,5 +92,11 @@
     "type": "STEAMOS",
     "description": "New Jaguar Emulator",
     "image": "true"
+  },
+  {
+    "title": "Model 2 & Model 3",
+    "type": "STEAMOS",
+    "description": "New Emulators for the mighty Sega arcades, Model 2 and Model 3",
+    "image": "true"
   }
 ]
