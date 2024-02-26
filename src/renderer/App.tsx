@@ -65,6 +65,9 @@ import FinishPage from 'pages/FinishPage';
 
 import AndroidRomStoragePage from 'pages/AndroidRomStoragePage';
 import AndroidEndPage from 'pages/AndroidEndPage';
+import AndroidWelcomePage from 'pages/AndroidWelcomePage';
+import AndroidSetupPage from 'pages/AndroidSetupPage';
+import AndroidFinishPage from 'pages/AndroidFinishPage';
 
 import { GlobalContext } from './context/globalContext';
 
@@ -134,6 +137,7 @@ export default function App() {
     sudoPass: 'Decky!',
     language: 'en',
     android: {
+      second: false,
       installEmus: {
         ra: {
           id: 'ra',
@@ -565,6 +569,10 @@ export default function App() {
             <Route path=":emulator" element={<EmulatorsPage />} />
           </Route>
 
+          <Route exact path="/android-setup" element={<AndroidSetupPage />}>
+            <Route path=":emulator" element={<AndroidSetupPage />} />
+          </Route>
+
           <Route path="/emulators-detail" element={<EmulatorsDetailPage />}>
             <Route path=":emulator" element={<EmulatorsDetailPage />} />
             <Route path="" element={<EmulatorsDetailPage />} />
@@ -609,10 +617,16 @@ export default function App() {
 
           <Route
             exact
+            path="/android-welcome"
+            element={<AndroidWelcomePage />}
+          />
+          <Route
+            exact
             path="/android-rom-storage"
             element={<AndroidRomStoragePage />}
           />
           <Route exact path="/android-end" element={<AndroidEndPage />} />
+          <Route exact path="/android-finish" element={<AndroidFinishPage />} />
         </Routes>
       </Router>
     </GlobalContext.Provider>
