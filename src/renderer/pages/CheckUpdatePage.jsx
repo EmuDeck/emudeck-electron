@@ -217,7 +217,10 @@ function CheckUpdatePage() {
           };
         }
 
-        if (settingsStorage.emulatorAlternative.nds === 'melonDS') {
+        if (
+          settingsStorage.emulatorAlternative &&
+          settingsStorage.emulatorAlternative.nds === 'melonDS'
+        ) {
           delete settingsStorage.emulatorAlternative.nds;
           settingsStorage.emulatorAlternative.nds = 'melonds';
         }

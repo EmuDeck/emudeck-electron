@@ -153,7 +153,7 @@ function PatreonLoginPage() {
   //
   useEffect(() => {
     const patreonTokenLS = localStorage.getItem('patreon_token');
-    if (!branch.includes('early') && !branch.includes('dev')) {
+    if (!branch.includes('early')) {
       navigate('/check-updates');
     } else if (patreonTokenLS) {
       patreonCheckToken(patreonTokenLS);
