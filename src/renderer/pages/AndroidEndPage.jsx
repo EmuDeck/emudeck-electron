@@ -4,9 +4,38 @@ import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
-import { Main } from 'components/organisms/Main/Main';
-import End from 'components/organisms/Wrappers/End';
-import { yoshiMario } from 'components/utils/images/gifs';
+import Main from 'components/organisms/Main/Main';
+import Footer from 'components/organisms/Footer/Footer';
+import EmuModal from 'components/molecules/EmuModal/EmuModal';
+
+import {
+  imgra,
+  imgares,
+  imgdolphin,
+  imgprimehack,
+  imgppsspp,
+  imgduckstation,
+  imgcitra,
+  imgpcsx2,
+  imgrpcs3,
+  imgyuzu,
+  imgryujinx,
+  imgcemu,
+  imgxemu,
+  imgmame,
+  imgvita3k,
+  imgflycast,
+  imgxenia,
+  imgsrm,
+  imgrmg,
+  imgscummvm,
+  imgFrontESDE,
+  imgmelonds,
+  imgmgba,
+  imgsupermodel,
+  imgmodel2,
+  imgbigpemu,
+} from 'components/utils/images/images';
 
 function AndroidEndPage() {
   const navigate = useNavigate();
@@ -45,99 +74,32 @@ function AndroidEndPage() {
       messagePercent = messagePercent.replaceAll('\n\r', '');
       messagePercent = messagePercent.replaceAll('\r', '');
       setMsg({ message: messageText, percentage: messagePercent });
+      //
+      //       if (messageInput.includes('0')) {
+      //         setStatePage({ ...statePage, disabledNext: false });
+      //       }
+      //       if (messageText.includes('999')) {
+      //         setStatePage({ ...statePage, disabledNext: false });
+      //       }
     });
-  };
-
-  const openSRM = () => {
-    let modalData = {
-      active: true,
-      header: <span className="h4">Launching Steam Rom Manager</span>,
-      body: (
-        <p>
-          We will close Steam if its running and then Steam Rom Manager will
-          open, this could take a few seconds, please wait.
-        </p>
-      ),
-      footer: <ProgressBar css="progress--success" infinite max="100" />,
-      css: 'emumodal--xs',
-    };
-
-    if (system === 'win32') {
-      setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage(
-        'emudeck',
-        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"'
-      );
-    } else if (system !== 'darwin') {
-      setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage(
-        'emudeck',
-        '"$toolsPath/launchers/srm/steamrommanager.sh"'
-      );
-    } else {
-      modalData = {
-        active: true,
-        header: <span className="h4">Launching Steam Rom Manager</span>,
-        body: (
-          <>
-            <p>
-              We will close Steam if its running and then Steam Rom Manager will
-              open, this could take a few seconds, please wait.
-            </p>
-            <strong>
-              Desktop controls will temporarily revert to touch/trackpad/L2/R2.
-            </strong>
-          </>
-        ),
-        footer: <ProgressBar css="progress--success" infinite max="100" />,
-        css: 'emumodal--sm',
-      };
-      setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage(
-        'emudeck',
-        '"$toolsPath/launchers/srm/steamrommanager.sh"'
-      );
-    }
-    let timer;
-
-    if (system === 'win32') {
-      timer = 30000;
-    } else {
-      timer = 10000;
-    }
-    const timerId = setTimeout(() => {
-      setStatePage({
-        ...statePage,
-        modal: {
-          active: false,
-        },
-      });
-      clearTimeout(timerId);
-    }, timer);
   };
 
   let pollingTime = 500;
   if (system === 'win32') {
-    pollingTime = 2000;
+    pollingTime = 500;
   }
 
   // Reading messages from backend
   useEffect(() => {
+    let interval;
     if (disabledNext) {
-      const interval = setInterval(() => {
-        if (system === 'win32') {
-          readMSG();
-        } else {
-          readMSG();
-        }
-
-        if (message.includes('100')) {
-          clearInterval(interval);
-          navigate('/android-finish');
-        }
+      interval = setInterval(() => {
+        readMSG();
       }, pollingTime);
       return () => clearInterval(interval);
     }
+    clearInterval(interval);
+    navigate('/android-setup/Yuzu');
   }, [disabledNext]);
 
   // Running the installer
@@ -145,13 +107,6 @@ function AndroidEndPage() {
     const json = JSON.stringify(state);
 
     localStorage.setItem('settings_emudeck', json);
-
-    // ipcChannel.sendMessage('bash-nolog', [
-    //   `echo ${state.achievements.token} > "%userprofile%/AppData/Roaming/EmuDeck/.rat"`,
-    // ]);
-    // ipcChannel.sendMessage('bash-nolog', [
-    //   `echo ${state.achievements.user} > "%userprofile%/AppData/Roaming/EmuDeck/.rau"`,
-    // ]);
 
     ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
     ipcChannel.once('saveSettings', () => {
@@ -173,35 +128,18 @@ function AndroidEndPage() {
 
   return (
     <Wrapper css="wrapper__full" aside={!disabledNext}>
-      {disabledNext === true && (
-        <>
-          <Header title="We are completing your installation..." />
-
-          <End
-            onClick={openSRM}
-            data={data}
-            step={step}
-            message={message}
-            percentage={percentage}
-            disabledNext
+      {step !== 'setup' && (
+        <Main>
+          <EmuModal
+            modalActiveValue={disabledNext === true}
+            modalHeaderValue={
+              <span className="h4">Preparing your Android device...</span>
+            }
+            modalBodyValue={<p>{message}...</p>}
+            modalFooterValue=""
+            modalCSSValue="emumodal--xs"
           />
-        </>
-      )}
-      {disabledNext === false && (
-        <>
-          <span className="h3">Installation complete!</span>
-          <p className="lead">You need to do some steps manually:</p>
-
-          <p className="lead">
-            You need to open every Emulator before launching Pegasus
-          </p>
-          <p className="lead">
-            We've downloaded the RetroArch cores for you but you need to
-            manually install them going to{' '}
-            <strong>Load Core --- Install or Restore a core</strong> and select
-            them one by one
-          </p>
-        </>
+        </Main>
       )}
     </Wrapper>
   );

@@ -240,12 +240,7 @@ function AndroidRomStoragePage() {
     const modalData = {
       active: true,
       header: <span className="h4">Collecting Android drives</span>,
-      body: (
-        <p>
-          If this is your first install, please restart EmuDeck. Please wait
-          otherwise...
-        </p>
-      ),
+      body: <p>If your device is not detected, please restart EmuDeck...</p>,
       css: 'emumodal--xs',
     };
     setStatePage({ ...statePage, modal: modalData });

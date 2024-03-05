@@ -354,7 +354,7 @@ function CopyGamesPage() {
   };
 
   const openEmulationFolder = () => {
-    ipcChannel.sendMessage('run-app', `${storagePath}/Emulation`);
+    ipcChannel.sendMessage('open-folder', `${storagePath}/Emulation`);
 
     const modalData = {
       active: true,
