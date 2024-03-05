@@ -53,6 +53,7 @@ import EmulatorsPage from 'pages/EmulatorsPage';
 import EmulatorsDetailPage from 'pages/EmulatorsDetailPage';
 
 import AutoSavePage from 'pages/AutoSavePage';
+import ControllerLayoutPage from 'pages/ControllerLayoutPage';
 import ConfirmationPage from 'pages/ConfirmationPage';
 import StoreFrontPage from 'pages/StoreFrontPage';
 import EmulatorResolutionPage from 'pages/EmulatorResolutionPage';
@@ -440,6 +441,7 @@ export default function App() {
       multiemulator: 'ra',
       dreamcast: 'multiemulator',
     },
+    controllerLayout: 'baxy',
     revertParsers: false,
     resolutions: {
       dolphin: '720P',
@@ -518,6 +520,12 @@ export default function App() {
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
 
           <Route exact path="/auto-save" element={<AutoSavePage />} />
+          <Route
+            exact
+            path="/controller-layout"
+            element={<ControllerLayoutPage />}
+          />
+
           <Route exact path="/confirmation" element={<ConfirmationPage />} />
           <Route exact path="/store-front" element={<StoreFrontPage />} />
 
