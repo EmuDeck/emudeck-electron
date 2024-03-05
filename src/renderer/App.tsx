@@ -25,6 +25,7 @@ import PegasusThemeChoicePage from 'pages/PegasusThemeChoicePage';
 import PatroenLoginPage from 'pages/PatroenLoginPage';
 import ESDEThemePage from 'pages/ESDEThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
+import PowerControlsPage from 'pages/PowerControlsPage';
 import EmuDeckyPage from 'pages/EmuDeckyPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
 import CheckDependenciesPage from 'pages/CheckDependenciesPage';
@@ -89,10 +90,8 @@ export default function App() {
     ppsspp: { id: 'ppsspp', code: 'PPSSPP', version: 0 },
     duckstation: { id: 'duckstation', code: 'Duckstation', version: 0 },
     melonds: { id: 'melonds', code: 'melonDS', version: 0 },
-    citra: { id: 'citra', code: 'Citra', version: 0 },
     pcsx2: { id: 'pcsx2', code: 'PCSX2QT', version: 0 },
     rpcs3: { id: 'rpcs3', code: 'RPCS3', version: 0 },
-    yuzu: { id: 'yuzu', code: 'Yuzu', version: 0 },
     ryujinx: { id: 'ryujinx', code: 'Ryujinx', version: 0 },
     xemu: { id: 'xemu', code: 'Xemu', version: 0 },
     cemu: { id: 'cemu', code: 'Cemu', version: 0 },
@@ -159,20 +158,10 @@ export default function App() {
           status: true,
           name: 'DuckStation',
         },
-        citra: {
-          id: 'citra',
-          status: true,
-          name: 'Citra',
-        },
         aethersx2: {
           id: 'aethersx2',
           status: true,
           name: 'AetherSX2',
-        },
-        yuzu: {
-          id: 'yuzu',
-          status: true,
-          name: 'Yuzu',
         },
         vita3k: {
           id: 'vita3k',
@@ -201,20 +190,10 @@ export default function App() {
           status: true,
           name: 'PPSSPP',
         },
-        citra: {
-          id: 'citra',
-          status: true,
-          name: 'Citra',
-        },
         aethersx2: {
           id: 'pcsx2',
           status: true,
           name: 'AetherSX2',
-        },
-        yuzu: {
-          id: 'yuzu',
-          status: true,
-          name: 'Yuzu',
         },
         pegasus: {
           id: 'pegasus',
@@ -297,13 +276,11 @@ export default function App() {
         installed: undefined,
         name: 'melonDS',
       },
-      citra: { id: 'citra', status: true, installed: undefined, name: 'Citra' },
       pcsx2: { id: 'pcsx2', status: true, installed: undefined, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, installed: undefined, name: 'RPCS3' },
-      yuzu: { id: 'yuzu', status: true, installed: undefined, name: 'Yuzu' },
       ryujinx: {
         id: 'ryujinx',
-        status: false,
+        status: true,
         installed: undefined,
         name: 'Ryujinx',
       },
@@ -374,11 +351,9 @@ export default function App() {
       ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
       duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
       melonds: { id: 'melonds', status: true, name: 'melonDS' },
-      citra: { id: 'citra', status: true, name: 'Citra' },
       pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-      yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-      ryujinx: { id: 'ryujinx', status: false, name: 'Ryujinx' },
+      ryujinx: { id: 'ryujinx', status: true, name: 'Ryujinx' },
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       xenia: { id: 'xenia', status: true, name: 'Xenia' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
@@ -439,14 +414,12 @@ export default function App() {
       dolphin: '720P',
       duckstation: '720P',
       pcsx2: '720P',
-      yuzu: '720P',
       ppsspp: '720P',
       rpcs3: '720P',
       ryujinx: '720P',
       xemu: '720P',
       cemu: '720P',
       xenia: '720P',
-      citra: '720P',
       vita3k: '720P',
       flycast: '720P',
       melonds: '720P',
@@ -556,6 +529,7 @@ export default function App() {
           <Route exact path="/shaders-3d-classic" element={<Shaders3DPage />} />
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
+          <Route exact path="/power-controls" element={<PowerControlsPage />} />
           <Route exact path="/decky-controls" element={<EmuDeckyPage />} />
           <Route exact path="/help" element={<HelpPage />} />
           <Route exact path="/early-access" element={<EarlyAccessPage />} />
