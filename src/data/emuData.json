@@ -155,7 +155,7 @@
     "name": "Citra",
     "code": "Citra",
 
-    "description": "Citra was a Nintendo 3DS emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install.",
+    "description": "Citra was a Nintendo 3DS emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install.If you already have your Citra.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/citra folder. Emudeck does not download nor can it guarantee support if you run into any issues.",
     "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys.",
     "bios": [],
     "systems": "Nintendo 3DS",
@@ -212,7 +212,7 @@
     "name": "Yuzu",
     "code": "Yuzu",
 
-    "description": "Yuzu was a Nintendo Switch emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install.",
+    "description": "Yuzu was a Nintendo Switch emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install. If you already have your yuzu.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/yuzu folder. Emudeck does not download nor can it guarantee support if you run into any issues.",
     "special_configuration": "Firmware: Place keys and firmware place in: Emulation/bios/yuzu.",
     "bios": ["nswitch"],
     "systems": "Nintendo Switch",
