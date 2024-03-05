@@ -41,7 +41,7 @@ function Shaders3DPage() {
           disabledBack={disabledBack}
         />
         <Footer
-          next="frontend-selector"
+          next="controller-layout"
           disabledNext={disabledNext}
           disabledBack={disabledBack}
         />

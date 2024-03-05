@@ -100,7 +100,7 @@ function EmulatorConfigurationPage() {
     overwriteConfigEmus.ra.status === false &&
     overwriteConfigEmus.dolphin.status === false
   ) {
-    nextPage = 'frontend-selector';
+    nextPage = 'controller-layout';
   } else {
     nextPage = 'aspect-ratio-dolphin';
   }
