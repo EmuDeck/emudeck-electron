@@ -25,6 +25,7 @@ import PegasusThemeChoicePage from 'pages/PegasusThemeChoicePage';
 import PatroenLoginPage from 'pages/PatroenLoginPage';
 import ESDEThemePage from 'pages/ESDEThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
+import PowerControlsPage from 'pages/PowerControlsPage';
 import EmuDeckyPage from 'pages/EmuDeckyPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
 import CheckDependenciesPage from 'pages/CheckDependenciesPage';
@@ -279,7 +280,7 @@ export default function App() {
       rpcs3: { id: 'rpcs3', status: true, installed: undefined, name: 'RPCS3' },
       ryujinx: {
         id: 'ryujinx',
-        status: false,
+        status: true,
         installed: undefined,
         name: 'Ryujinx',
       },
@@ -352,7 +353,7 @@ export default function App() {
       melonds: { id: 'melonds', status: true, name: 'melonDS' },
       pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-      ryujinx: { id: 'ryujinx', status: false, name: 'Ryujinx' },
+      ryujinx: { id: 'ryujinx', status: true, name: 'Ryujinx' },
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       xenia: { id: 'xenia', status: true, name: 'Xenia' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
@@ -528,6 +529,7 @@ export default function App() {
           <Route exact path="/shaders-3d-classic" element={<Shaders3DPage />} />
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
+          <Route exact path="/power-controls" element={<PowerControlsPage />} />
           <Route exact path="/decky-controls" element={<EmuDeckyPage />} />
           <Route exact path="/help" element={<HelpPage />} />
           <Route exact path="/early-access" element={<EarlyAccessPage />} />

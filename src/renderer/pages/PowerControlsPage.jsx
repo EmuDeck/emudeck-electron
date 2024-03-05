@@ -84,7 +84,7 @@ function PowerToolsPage() {
   const installPowerTools = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing PowerTools</span>,
+      header: <span className="h4">Installing PowerControls</span>,
       body: <p>Please wait while we install the plugin</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
@@ -98,7 +98,7 @@ function PowerToolsPage() {
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
 
     ipcChannel.sendMessage('emudeck', [
-      `powerTools|||Plugins_installPluginLoader ${escapedPass} && Plugins_installPowerTools ${escapedPass} && echo true`,
+      `powerTools|||Plugins_installPluginLoader ${escapedPass} && Plugins_installPowerControls ${escapedPass} && echo true`,
     ]);
 
     ipcChannel.once('powerTools', (status) => {
@@ -109,7 +109,7 @@ function PowerToolsPage() {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,
-          body: <p>PowerTools Installed</p>,
+          body: <p>PowerControls Installed</p>,
           css: 'emumodal--xs',
         };
 
@@ -151,10 +151,13 @@ function PowerToolsPage() {
     });
   }, []);
 
+
+
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '100vh' }} >
+      
       <Wrapper>
-        <Header title="Configure PowerTools" />
+        <Header title="Configure PowerControls" />
         <PowerTools
           installClick={installPowerTools}
           sudoPass={sudoPass}

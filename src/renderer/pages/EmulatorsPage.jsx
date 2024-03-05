@@ -398,17 +398,7 @@ function EmulatorsPage() {
                       return;
                     }
                   }
-                  if (mode === 'easy') {
-                    if (
-                      item.id === 'mame' ||
-                      item.id === 'flycast' ||
-                      item.id === 'mgba' ||
-                      item.id === 'rmg' ||
-                      item.id === 'ryujinx'
-                    ) {
-                      return;
-                    }
-                  }
+
                   if (item.id === 'ares') {
                     return;
                   }

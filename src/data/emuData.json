@@ -155,7 +155,7 @@
     "name": "Citra",
     "code": "Citra",
 
-    "description": "Citra is a Nintendo 3DS emulator, developed by the Citra team. Unfortunately, the Steam Deck does not come with a 3D slider. ",
+    "description": "Citra was a Nintendo 3DS emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install.",
     "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys.",
     "bios": [],
     "systems": "Nintendo 3DS",
@@ -212,7 +212,7 @@
     "name": "Yuzu",
     "code": "Yuzu",
 
-    "description": "Yuzu is a Nintendo Switch emulator, originally developed by the Yuzu team.  Joy-Con drift not included.",
+    "description": "Yuzu was a Nintendo Switch emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install.",
     "special_configuration": "Firmware: Place keys and firmware place in: Emulation/bios/yuzu.",
     "bios": ["nswitch"],
     "systems": "Nintendo Switch",
