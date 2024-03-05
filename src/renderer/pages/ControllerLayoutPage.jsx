@@ -5,11 +5,10 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 
-import AspectRatioDolphin from 'components/organisms/Wrappers/AspectRatioDolphin';
+import ControllerLayout from 'components/organisms/Wrappers/ControllerLayout';
 
-function AspectRatioDolphinPage() {
+function ControllerLayoutPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { ar, overwriteConfigEmus } = state;
   const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -17,30 +16,20 @@ function AspectRatioDolphinPage() {
     dom: undefined,
   });
   const { disabledNext, disabledBack, data, dom } = statePage;
-  const arSet = (arStatus) => {
+  const controllerLayoutSet = (shaderStatus) => {
     setState({
       ...state,
-      ar: {
-        ...ar,
-        dolphin: arStatus,
-      },
+      controllerLayout: shaderStatus,
     });
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Configure Aspect Ratio for GameCube games" />
-        <AspectRatioDolphin data={data} onClick={arSet} />
+        <Header title="Configure Controller Layout" />
+        <ControllerLayout data={data} onClick={controllerLayoutSet} />
         <Footer
-          next={
-            overwriteConfigEmus.ra.status === true
-              ? 'shaders-handhelds'
-              : 'controller-layout'
-          }
+          next="frontend-selector"
           disabledNext={disabledNext}
           disabledBack={disabledBack}
         />
@@ -49,4 +38,4 @@ function AspectRatioDolphinPage() {
   );
 }
 
-export default AspectRatioDolphinPage;
+export default ControllerLayoutPage;

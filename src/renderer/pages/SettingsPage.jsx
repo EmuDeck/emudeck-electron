@@ -278,6 +278,25 @@ function SettingsPage() {
     });
   };
 
+  const controllerLayoutSet = (value) => {
+    setState({
+      ...state,
+      controllerLayout: value,
+    });
+
+    let functionAutoSave;
+    value === 'abxy'
+      ? (functionAutoSave = 'controllerLayout_ABXY')
+      : (functionAutoSave = 'controllerLayout_BAYX');
+
+    ipcChannel.sendMessage('emudeck', [
+      `controllerLayout|||${functionAutoSave}`,
+    ]);
+    ipcChannel.once('controllerLayout', () => {
+      notificationShow('🎉 Controller Layout updated!');
+    });
+  };
+
   useEffect(() => {
     localStorage.setItem('settings_emudeck', json);
   }, [state]);
@@ -316,11 +335,8 @@ function SettingsPage() {
     });
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Configure your Settings" />
         <Settings
@@ -336,6 +352,7 @@ function SettingsPage() {
           onClickCRT3D={onClickCRT3D}
           onClickLCD={onClickLCD}
           onClickAutoSave={autoSaveSet}
+          onClickControllerLayoutSet={controllerLayoutSet}
           onClickHomeBrew={HomeBrew}
           onClickBoot={onClickBoot}
         />
