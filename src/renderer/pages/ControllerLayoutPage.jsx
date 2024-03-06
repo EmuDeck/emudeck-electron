@@ -1,21 +1,22 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
-import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import { useNavigate } from 'react-router-dom';
 
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 
 import ControllerLayout from 'components/organisms/Wrappers/ControllerLayout';
 
 function ControllerLayoutPage() {
+  const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
+  const { system } = state;
   const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
-    data: '',
-    dom: undefined,
   });
-  const { disabledNext, disabledBack, data, dom } = statePage;
+  const { disabledNext, disabledBack } = statePage;
   const controllerLayoutSet = (shaderStatus) => {
     setState({
       ...state,
@@ -23,11 +24,17 @@ function ControllerLayoutPage() {
     });
   };
 
+  useEffect(() => {
+    if (system === 'win32') {
+      navigate('/frontend-selector');
+    }
+  }, []);
+
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Configure Controller Layout" />
-        <ControllerLayout data={data} onClick={controllerLayoutSet} />
+        <ControllerLayout onClick={controllerLayoutSet} />
         <Footer
           next="frontend-selector"
           disabledNext={disabledNext}
