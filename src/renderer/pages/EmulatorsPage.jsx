@@ -452,12 +452,6 @@ function EmulatorsPage() {
                     return;
                   }
 
-                  if (mode === 'easy') {
-                    if (item.id === 'pegasus') {
-                      return;
-                    }
-                  }
-
                   return (
                     <div key={item.id} data-col-md="4">
                       <CardSettings
@@ -483,12 +477,6 @@ function EmulatorsPage() {
                   );
                 })}
               </div>
-
-              {mode === 'easy' && (
-                <strong>
-                  Do a Custom Reset if you want to add alternative emulators
-                </strong>
-              )}
             </>
           )}
         </Main>
