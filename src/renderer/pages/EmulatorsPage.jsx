@@ -45,6 +45,7 @@ import {
   rmgGrid,
   supermodelGrid,
   model2Grid,
+  bigpemuGrid,
   flycastGrid,
   melondsGrid,
   mgbaGrid,
@@ -139,6 +140,7 @@ const imagesGrid = {
   esde: esdeGrid,
   srm: srmGrid,
   pegasus: pegasusGrid,
+  bigpemu: bigpemuGrid,
 };
 
 function EmulatorsPage() {
@@ -174,13 +176,6 @@ function EmulatorsPage() {
   const pageRef = useRef(statePage);
   pageRef.current = statePage;
 
-  const showChangelog = localStorage.getItem('show_changelog');
-  console.log({ system });
-  console.log({ showChangelog });
-  if (showChangelog === true) {
-    navigate('/change-log');
-  }
-
   const resetEmus = () => {
     const modalData = {
       active: true,
@@ -212,6 +207,9 @@ function EmulatorsPage() {
             return;
           }
           if (item.id === 'supermodel') {
+            return;
+          }
+          if (item.id === 'bigpemu') {
             return;
           }
         }
@@ -400,23 +398,24 @@ function EmulatorsPage() {
                       return;
                     }
                   }
-                  if (mode === 'easy') {
-                    if (
-                      item.id === 'mame' ||
-                      item.id === 'flycast' ||
-                      item.id === 'mgba' ||
-                      item.id === 'rmg' ||
-                      item.id === 'ryujinx'
-                    ) {
-                      return;
-                    }
-                  }
+
                   if (item.id === 'ares') {
                     return;
                   }
 
                   if (system === 'darwin') {
                     if (item.id !== 'ra' && item.id !== 'srm') {
+                      return;
+                    }
+                  }
+                  if (system === 'win32') {
+                    if (item.id === 'model2') {
+                      return;
+                    }
+                    if (item.id === 'supermodel') {
+                      return;
+                    }
+                    if (item.id === 'bigpemu') {
                       return;
                     }
                   }
@@ -453,12 +452,6 @@ function EmulatorsPage() {
                     return;
                   }
 
-                  if (mode === 'easy') {
-                    if (item.id === 'pegasus') {
-                      return;
-                    }
-                  }
-
                   return (
                     <div key={item.id} data-col-md="4">
                       <CardSettings
@@ -484,12 +477,6 @@ function EmulatorsPage() {
                   );
                 })}
               </div>
-
-              {mode === 'easy' && (
-                <strong>
-                  Do a Custom Reset if you want to add alternative emulators
-                </strong>
-              )}
             </>
           )}
         </Main>

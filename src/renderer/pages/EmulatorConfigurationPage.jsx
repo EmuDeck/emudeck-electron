@@ -29,6 +29,7 @@ import {
   imgscummvm,
   imgsupermodel,
   imgmodel2,
+  imgbigpemu,
   imgFrontESDE,
   imgFrontPegasus,
   imgmelonds,
@@ -56,6 +57,7 @@ const images = {
   scummvm: imgscummvm,
   supermodel: imgsupermodel,
   model2: imgmodel2,
+  bigpemu: imgbigpemu,
   srm: imgsrm,
   esde: imgFrontESDE,
   mgba: imgmgba,
@@ -98,7 +100,7 @@ function EmulatorConfigurationPage() {
     overwriteConfigEmus.ra.status === false &&
     overwriteConfigEmus.dolphin.status === false
   ) {
-    nextPage = 'frontend-selector';
+    nextPage = 'controller-layout';
   } else {
     nextPage = 'aspect-ratio-dolphin';
   }

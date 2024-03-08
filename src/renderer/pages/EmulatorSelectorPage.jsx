@@ -33,6 +33,7 @@ import {
   imgmgba,
   imgsupermodel,
   imgmodel2,
+  imgbigpemu,
 } from 'components/utils/images/images';
 
 const images = {
@@ -61,11 +62,13 @@ const images = {
   srm: imgsrm,
   supermodel: imgsupermodel,
   model2: imgmodel2,
+  bigpemu: imgbigpemu,
 };
 
 function EmulatorSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, installEmus, emulatorAlternative, second } = state;
+  const { device, installEmus, emulatorAlternative, overwriteConfigEmus } =
+    state;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -410,6 +413,13 @@ function EmulatorSelectorPage() {
       installEmus: {
         ...installEmus,
         [emulatorProp]: { ...installEmus[emulatorProp], status: !status },
+      },
+      overwriteConfigEmus: {
+        ...overwriteConfigEmus,
+        [emulatorProp]: {
+          ...overwriteConfigEmus[emulatorProp],
+          status: !status,
+        },
       },
       emulatorAlternative: {
         ...emulatorAlternative,

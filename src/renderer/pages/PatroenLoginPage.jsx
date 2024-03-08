@@ -238,7 +238,8 @@ function PatreonLoginPage() {
         <Main>
           {errorMessage === undefined && (
             <p className="lead">
-              Please login to patreon in order to access this beta.
+              Please login to patreon in order to access this early access
+              release.
             </p>
           )}
           {!!errorMessage && <p className="lead">{errorMessage}</p>}

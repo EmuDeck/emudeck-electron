@@ -3,7 +3,6 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 
 import CheckUpdatePage from 'pages/CheckUpdatePage';
-import PatreonLoginPage from 'pages/PatreonLoginPage';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
@@ -23,9 +22,10 @@ import RAAchievementsConfigPage from 'pages/RAAchievementsConfigPage';
 import RABezelsPage from 'pages/RABezelsPage';
 import PegasusThemePage from 'pages/PegasusThemePage';
 import PegasusThemeChoicePage from 'pages/PegasusThemeChoicePage';
-
+import PatroenLoginPage from 'pages/PatroenLoginPage';
 import ESDEThemePage from 'pages/ESDEThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
+import PowerControlsPage from 'pages/PowerControlsPage';
 import EmuDeckyPage from 'pages/EmuDeckyPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
 import CheckDependenciesPage from 'pages/CheckDependenciesPage';
@@ -53,6 +53,7 @@ import EmulatorsPage from 'pages/EmulatorsPage';
 import EmulatorsDetailPage from 'pages/EmulatorsDetailPage';
 
 import AutoSavePage from 'pages/AutoSavePage';
+import ControllerLayoutPage from 'pages/ControllerLayoutPage';
 import ConfirmationPage from 'pages/ConfirmationPage';
 import StoreFrontPage from 'pages/StoreFrontPage';
 import EmulatorResolutionPage from 'pages/EmulatorResolutionPage';
@@ -66,6 +67,9 @@ import FinishPage from 'pages/FinishPage';
 
 import AndroidRomStoragePage from 'pages/AndroidRomStoragePage';
 import AndroidEndPage from 'pages/AndroidEndPage';
+import AndroidWelcomePage from 'pages/AndroidWelcomePage';
+import AndroidSetupPage from 'pages/AndroidSetupPage';
+import AndroidFinishPage from 'pages/AndroidFinishPage';
 
 import { GlobalContext } from './context/globalContext';
 
@@ -135,6 +139,7 @@ export default function App() {
     sudoPass: 'Decky!',
     language: 'en',
     android: {
+      second: false,
       installEmus: {
         ra: {
           id: 'ra',
@@ -168,7 +173,7 @@ export default function App() {
         },
         yuzu: {
           id: 'yuzu',
-          status: true,
+          status: false,
           name: 'Yuzu',
         },
         vita3k: {
@@ -210,7 +215,7 @@ export default function App() {
         },
         yuzu: {
           id: 'yuzu',
-          status: true,
+          status: false,
           name: 'Yuzu',
         },
         pegasus: {
@@ -294,13 +299,18 @@ export default function App() {
         installed: undefined,
         name: 'melonDS',
       },
-      citra: { id: 'citra', status: true, installed: undefined, name: 'Citra' },
+      citra: {
+        id: 'citra',
+        status: false,
+        installed: undefined,
+        name: 'Citra',
+      },
       pcsx2: { id: 'pcsx2', status: true, installed: undefined, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, installed: undefined, name: 'RPCS3' },
-      yuzu: { id: 'yuzu', status: true, installed: undefined, name: 'Yuzu' },
+      yuzu: { id: 'yuzu', status: false, installed: undefined, name: 'Yuzu' },
       ryujinx: {
         id: 'ryujinx',
-        status: false,
+        status: true,
         installed: undefined,
         name: 'Ryujinx',
       },
@@ -357,6 +367,12 @@ export default function App() {
         installed: undefined,
         name: 'Model2',
       },
+      bigpemu: {
+        id: 'bigpemu',
+        status: false,
+        installed: undefined,
+        name: 'BigPEmu',
+      },
     },
     overwriteConfigEmus: {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
@@ -365,11 +381,11 @@ export default function App() {
       ppsspp: { id: 'ppsspp', status: true, name: 'PPSSPP' },
       duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
       melonds: { id: 'melonds', status: true, name: 'melonDS' },
-      citra: { id: 'citra', status: true, name: 'Citra' },
+      citra: { id: 'citra', status: false, name: 'Citra' },
       pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-      yuzu: { id: 'yuzu', status: true, name: 'Yuzu' },
-      ryujinx: { id: 'ryujinx', status: true, name: 'Ryujinx' },
+      yuzu: { id: 'yuzu', status: false, name: 'Yuzu' },
+      ryujinx: { id: 'ryujinx', status: false, name: 'Ryujinx' },
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       xenia: { id: 'xenia', status: true, name: 'Xenia' },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
@@ -377,14 +393,19 @@ export default function App() {
       esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
       pegasus: { id: 'pegasus', status: true, name: 'Pegasus' },
       rmg: { id: 'rmg', status: false, name: "Rosalie's Mupen Gui" },
-      mame: { id: 'mame', status: true, name: 'MAME' },
+      mame: { id: 'mame', status: false, name: 'MAME' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita3K' },
-      flycast: { id: 'flycast', status: true, name: 'Flycast' },
+      flycast: { id: 'flycast', status: false, name: 'Flycast' },
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
-      mgba: { id: 'mgba', status: true, name: 'mGBA' },
+      mgba: { id: 'mgba', status: false, name: 'mGBA' },
       ares: { id: 'ares', status: false, name: 'ares' },
       supermodel: { id: 'supermodel', status: true, name: 'Supermodel' },
       model2: { id: 'model2', status: true, name: 'Model2' },
+      bigpemu: {
+        id: 'bigpemu',
+        status: false,
+        name: 'BigPEmu',
+      },
     },
     installFrontends: {
       esde: {
@@ -420,6 +441,7 @@ export default function App() {
       multiemulator: 'ra',
       dreamcast: 'multiemulator',
     },
+    controllerLayout: 'bayx',
     revertParsers: false,
     resolutions: {
       dolphin: '720P',
@@ -452,10 +474,9 @@ export default function App() {
     >
       <Router>
         <Routes>
-          <Route exact path="/" element={<CheckDependenciesPage />} />
+          <Route exact path="/" element={<PatroenLoginPage />} />
           <Route exact path="/error" element={<ErrorPage />} />
           <Route exact path="/check-updates" element={<CheckUpdatePage />} />
-          <Route exact path="/patreon-login" element={<PatreonLoginPage />} />
 
           <Route exact path="/welcome" element={<WelcomePage />} />
           <Route
@@ -493,11 +514,18 @@ export default function App() {
             path="/change-resolution"
             element={<EmulatorConfigResolutionPage />}
           />
+          <Route exact path="/patreon-login" element={<PatroenLoginPage />} />
 
           <Route exact path="/rom-storage" element={<RomStoragePage />} />
           <Route exact path="/RA-bezels" element={<RABezelsPage />} />
 
           <Route exact path="/auto-save" element={<AutoSavePage />} />
+          <Route
+            exact
+            path="/controller-layout"
+            element={<ControllerLayoutPage />}
+          />
+
           <Route exact path="/confirmation" element={<ConfirmationPage />} />
           <Route exact path="/store-front" element={<StoreFrontPage />} />
 
@@ -542,6 +570,7 @@ export default function App() {
           <Route exact path="/shaders-3d-classic" element={<Shaders3DPage />} />
           <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
+          <Route exact path="/power-controls" element={<PowerControlsPage />} />
           <Route exact path="/decky-controls" element={<EmuDeckyPage />} />
           <Route exact path="/help" element={<HelpPage />} />
           <Route exact path="/early-access" element={<EarlyAccessPage />} />
@@ -553,6 +582,10 @@ export default function App() {
 
           <Route exact path="/emulators" element={<EmulatorsPage />}>
             <Route path=":emulator" element={<EmulatorsPage />} />
+          </Route>
+
+          <Route exact path="/android-setup" element={<AndroidSetupPage />}>
+            <Route path=":emulator" element={<AndroidSetupPage />} />
           </Route>
 
           <Route path="/emulators-detail" element={<EmulatorsDetailPage />}>
@@ -599,10 +632,16 @@ export default function App() {
 
           <Route
             exact
+            path="/android-welcome"
+            element={<AndroidWelcomePage />}
+          />
+          <Route
+            exact
             path="/android-rom-storage"
             element={<AndroidRomStoragePage />}
           />
           <Route exact path="/android-end" element={<AndroidEndPage />} />
+          <Route exact path="/android-finish" element={<AndroidFinishPage />} />
         </Routes>
       </Router>
     </GlobalContext.Provider>

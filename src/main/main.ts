@@ -1167,6 +1167,14 @@ app.on('window-all-closed', () => {
 app.on('session-created', (session: any) => {
   console.log({ session });
 });
+ipcMain.on('open-folder', async (event, path) => {
+  const bashCommand = `xdg-open ${path}`;
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    // event.reply('console', { backChannel });
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, stdout);
+  });
+});
 
 ipcMain.on('run-app', async (event, appPath) => {
   let appPathFixed = appPath.replace(/[\r\n]+/g, '');

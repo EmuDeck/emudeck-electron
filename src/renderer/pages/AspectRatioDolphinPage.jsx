@@ -39,7 +39,7 @@ function AspectRatioDolphinPage() {
           next={
             overwriteConfigEmus.ra.status === true
               ? 'shaders-handhelds'
-              : 'frontend-selector'
+              : 'controller-layout'
           }
           disabledNext={disabledNext}
           disabledBack={disabledBack}

@@ -39,7 +39,7 @@
     "code": "Cemu",
 
     "description": "Cemu is a Nintendo Wii U emulator, developed by Exzap and Petergov. That's right, you can emulate Breath of the Wild on the Steam Deck with Cemu.",
-    "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys. Place your Wii U ROMs here: Emulation/roms/wiiu/roms. To use Gyro, install SteamDeckGyro from the Tools & Stuff page.",
+    "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys. Place your Wii U ROMs here: Emulation/roms/wiiu/roms.",
     "bios": [],
     "systems": "Nintendo Wii U",
     "hotkeys": {
@@ -68,7 +68,7 @@
     "code": "Dolphin",
 
     "description": "Dolphin is a Nintendo Gamecube and Wii emulator, developed by the Dolphin Emulator Project. Re-live your Wii Sports days on the go with this emulator.",
-    "special_configuration": "BIOS: No additional BIOS are required. To improve performance, install Power Tools from the Tools & Stuff page. To use Gyro, install SteamDeckGyro from the Tools & Stuff page.",
+    "special_configuration": "BIOS: No additional BIOS are required.",
     "bios": [],
     "systems": "Nintendo Gamecube, Nintendo Wii",
     "hotkeys": {
@@ -110,7 +110,7 @@
     "code": "PPSSPP",
 
     "description": "PPSSPP is a Sony PSP emulator, originally developed by Henrik Rydgård. Portable games on the go, again.",
-    "special_configuration": "BIOS: No additional BIOS are required. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys.",
+    "special_configuration": "BIOS: No additional BIOS are required.",
     "bios": [],
     "systems": "Sony Playstation Portable",
     "hotkeys": {
@@ -128,7 +128,7 @@
     "code": "DuckStation",
 
     "description": "DuckStation is a Sony PlayStation 1 emulator, developed primarily by stenzek.",
-    "special_configuration": "BIOS: BIOS are required, ROMs do need region specific BIOS. EmuDeck's Steam Input profile is required for hotkeys.",
+    "special_configuration": "BIOS: BIOS are required, ROMs do need region specific BIOS.",
     "bios": ["ps1"],
     "systems": "Sony Playstation 1",
     "hotkeys": {
@@ -155,8 +155,8 @@
     "name": "Citra",
     "code": "Citra",
 
-    "description": "Citra is a Nintendo 3DS emulator, developed by the Citra team. Unfortunately, the Steam Deck does not come with a 3D slider. ",
-    "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys. To use Gyro, install SteamDeckGyro from the Tools & Stuff page.",
+    "description": "Citra was a Nintendo 3DS emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install. Emudeck does not download nor can it guarantee support if you run into any issues.",
+    "special_configuration": "If you already have your citra-qt.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/citra folder. ",
     "bios": [],
     "systems": "Nintendo 3DS",
     "hotkeys": {
@@ -199,7 +199,7 @@
     "code": "RPCS3",
 
     "description": "RPCS3 is a Sony PlayStation 3 emulator, originally developed by DH, Hykem, and AlexAltea. That's right, the Steam Deck can emulate PS3 too.",
-    "special_configuration": "Firmware: Install firmware through the RPCS3 UI. Follow RPSC3's Quickstart Guide: <a className='link' target='_blank' href='https://rpcs3.net/quickstart'>here</a>. You will need to tweak settings for most games. Check RPCS3's Wiki for specific setting recommendations.",
+    "special_configuration": "Firmware: Install firmware through the RPCS3 GUI. Follow RPSC3's Quickstart Guide: <a className='link' target='_blank' href='https://rpcs3.net/quickstart'>here</a>. You will need to tweak settings for most games. Check RPCS3's Wiki for specific setting recommendations.",
     "bios": [],
     "systems": "Sony Playstation 3",
     "hotkeys": {
@@ -212,8 +212,8 @@
     "name": "Yuzu",
     "code": "Yuzu",
 
-    "description": "Yuzu is a Nintendo Switch emulator, originally developed by the Yuzu team.  Joy-Con drift not included.",
-    "special_configuration": "Firmware: Place keys and firmware place in: Emulation/bios/yuzu. To use Gyro, install SteamDeckGyro from the from the Tools & Stuff page.",
+    "description": "Yuzu was a Nintendo Switch emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install. Emudeck does not download nor can it guarantee support if you run into any issues.",
+    "special_configuration": " If you already have your yuzu.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/yuzu folder. Firmware: Place keys and firmware place in: Emulation/bios/yuzu.",
     "bios": ["nswitch"],
     "systems": "Nintendo Switch",
     "hotkeys": {
@@ -233,7 +233,7 @@
     "code": "Ryujinx",
 
     "description": "Ryujinx is a Nintendo Switch emulator, originally developed by gdkchan. Ryujinx can promise excellent accuracy for your favorite Nintendo Switch games.",
-    "special_configuration": "Firmware: Install firmware through the Ryujinx UI. Place keys in: Emulation/bios/ryujinx/keys. To use Gyro, install SteamDeckGyro from the Tools & Stuff page.",
+    "special_configuration": "Firmware: Install firmware through the Ryujinx GUI. Place keys in: Emulation/bios/ryujinx/keys.",
     "bios": [],
     "systems": "Nintendo Switch",
     "hotkeys": {
@@ -250,15 +250,7 @@
     "special_configuration": "BIOS: BIOS are required: mcpx_1.0.bin and modified retail BIOS, Complex_4627v1.03.bin.",
     "bios": [],
     "systems": "Microsoft Xbox",
-    "hotkeys": {
-      "0": ["Action", "Keys"],
-      "1": ["Menu", "L3+R3"],
-      "2": ["Load State", "SELECT+L1"],
-      "3": ["Save State", "SELECT+R1"],
-      "4": ["Exit", "SELECT+START"],
-      "5": ["Fast Forward", "SELECT+R2"],
-      "6": ["Pause", "SELECT+A"]
-    }
+    "hotkeys": {}
   },
   "rmg": {
     "id": "rmg",
@@ -266,15 +258,16 @@
     "code": "RMG",
 
     "description": "Rosalie's Mupen GUI is a mupen64plus GUI, with a clean interface and a slew of features. Don't forget to blow on the cartridge.",
-    "special_configuration": "BIOS: 64DD games require BIOS. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys.",
+    "special_configuration": "BIOS: N64DD games require BIOS.",
     "bios": [],
     "systems": "Nintendo 64 and 64DD",
     "hotkeys": {
       "0": ["Action", "Keys"],
-      "1": ["Save State", "Left Trackpad"],
-      "2": ["Load State", "Left Trackpad"],
-      "3": ["Fast Forward", "Left Trackpad"],
-      "4": ["Pause", "Left Trackpad"]
+      "1": ["Load State", "SELECT+L1"],
+      "2": ["Save State", "SELECT+R1"],
+      "3": ["Exit", "SELECT+START"],
+      "4": ["Fast Forward", "SELECT+R2"],
+      "5": ["Pause", "SELECT+A"]
     }
   },
   "mame": {
@@ -300,7 +293,7 @@
     "code": "Vita3K",
 
     "description": "Vita3K is a Sony Playstation Vita emulator, developed by the Vita3K team. No memory card needed.",
-    "special_configuration": "Firmware: Install firmware through the Vita3K UI. Follow Vita3K's instructions in the UI. You will need to tweak settings for most games. Many are still not playable. Check Vita3K's compatibility list <strong><a href='https://vita3k.org/compatibility.html' target='_blank'>here</a></strong>.",
+    "special_configuration": "Firmware: Install firmware through the Vita3K GUI. Follow Vita3K's instructions in the GUI. You will need to tweak settings for most games. Many are still not playable. Check Vita3K's compatibility list <strong><a href='https://vita3k.org/compatibility.html' target='_blank'>here</a></strong>.",
     "bios": [],
     "systems": "PlayStation Vita",
     "hotkeys": {
@@ -313,10 +306,10 @@
     "name": "Flycast",
     "code": "Flycast",
 
-    "description": "Flycast is a multi-platform Sega Dreamcast, Naomi, Naomi 2, and Atomiswave emulator",
-    "special_configuration": "Firmware: Install firmware through the Vita3K UI. Follow Vita3K's instructions in the UI. You will need to tweak settings for most games. Many are still not playable. Check Vita3K's compatibility list <strong><a href='https://vita3k.org/compatibility.html' target='_blank'>here</a></strong>.",
+    "description": "Flycast is a multi-platform Sega Dreamcast, Atomiswave, NAOMI, and NAOMI 2",
+    "special_configuration": "",
     "bios": [],
-    "systems": "Sega Dreamcast, Naomi, Naomi 2, and Atomiswave",
+    "systems": "Sega Dreamcast, Atomiswave, NAOMI, and NAOMI 2",
     "hotkeys": {
       "0": ["Action", "Keys"],
       "1": ["Exit", "STEAM BUTTON"]
@@ -328,7 +321,7 @@
     "code": "ScummVM",
 
     "description": "ScummVM is a program which allows you to run certain classic graphical adventure and role-playing games. It supports an extensive library of over 325 adventure games, including classic titles from iconic studios such as LucasArts, Sierra On-Line, Revolution Software, Cyan, Inc. and Westwood Studios",
-    "special_configuration": "BIOS: No additional BIOS are required. Read the wiki, <a className='link' target='_blank' href='https://github.com/dragoonDorise/EmuDeck/wiki/ScummVM'>here</a>, for guides on how to configure ScummVM for Steam ROM Manager and EmulationStation-DE.",
+    "special_configuration": "BIOS: No additional BIOS are required. Read the wiki, <a className='link' target='_blank' href='https://emudeck.github.io/emulators/steamos/scummvm/#how-to-configure-scummvm-to-work-with-emulationstation-de-and-steam-rom-manager'>here</a>, for guides on how to configure ScummVM for Steam ROM Manager and ES-DE.",
     "bios": [],
     "systems": "Scumm and DOS Games",
     "hotkeys": {
@@ -370,15 +363,15 @@
     "code": "SRM",
 
     "description": "Add your ROMS and emulators to your Steam Library.",
-    "special_configuration": "Steam ROM Manager is pre-configured by EmuDeck. Each parser generally corresponds to an emulator or tool. Enable your preferred parsers, generate and save an app list, and start playing right away in Game Mode<br/>Parsers are created dynamically based in your selection when installing EmuDeck.<br/><br/>You can create your own custom parsers in json format and place them in the custom parsers folder. EmuDeck won't delete them if you update.<br/><br/><strong>You can also add some optional pre-configured parsers and use them as guidance to create your own:</strong><ul className='list'><li>Nintendo GameBoy - SameBoy</li><li>Nintendo GameBoy Color - SameBoy</li><li>Sega Saturn - Yabause</li><li>Nintendo GameBoy Color - mGBA Standalone</li><li>Nintendo GameBoy - mGBA Standalone</li></ul>",
+    "special_configuration": "Steam ROM Manager is pre-configured by EmuDeck. Each parser generally corresponds to an emulator or tool. Enable your preferred parsers, generate and save an app list, and start playing right away in Game Mode<br/>Parsers are created dynamically based in your selection when installing EmuDeck.",
     "bios": [],
     "systems": ""
   },
   "esde": {
     "id": "esde",
-    "name": "EmulationStation DE",
+    "name": "ES-DE",
     "code": "ESDE",
-    "description": "EmulationStation Desktop Edition (ES-DE) is a frontend application for browsing and launching games from your multi-platform game collection.",
+    "description": "ES-DE is a frontend application for browsing and launching games from your multi-platform game collection.",
     "special_configuration": "",
     "bios": [],
     "systems": "",
@@ -394,7 +387,7 @@
     "name": "Pegasus Frontend",
     "code": "pegasus",
     "description": "A cross platform, customizable graphical frontend for launching emulators and managing your game collection.",
-    "special_configuration": "Pegasus doesn't have a parser so you need to parse your games using EmulationStation DE, after that both frontends will use the same assets",
+    "special_configuration": "Pegasus does not have a built-in scraper so you will need to scrape your games using ES-DE. Scraped media is shared between the two applications.",
     "bios": [],
     "systems": "",
     "alt": false
@@ -404,7 +397,7 @@
     "name": "Model2",
     "code": "Model2",
     "wiki": "",
-    "description": "Model 2 Emulator is a closed-source Sega Model 2 emulator for Windows written by Miguel Ãngel Horna, otherwise popularly known by his nick \"ElSemi\".",
+    "description": "The Model 2 Emulator is a closed-source Sega Model 2 emulator written by Miguel Ãngel Horna, otherwise popularly known by his nick \"ElSemi\".",
     "special_configuration": "",
     "bios": [],
     "systems": "Sega Model 2",
@@ -419,6 +412,17 @@
     "special_configuration": "",
     "bios": [],
     "systems": "Sega Model 3",
+    "hotkeys": {}
+  },
+  "bigpemu": {
+    "id": "bigpemu",
+    "name": "BigPEmu",
+    "code": "BigPEmu",
+    "wiki": "",
+    "description": "BigPEmu is a closed-source Atari Jaguar emulator. It was originally developed for use in the game compilation Atari 50, and later made available for free separately",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "Atari Jaguar",
     "hotkeys": {}
   }
 }

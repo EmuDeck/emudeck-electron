@@ -86,5 +86,11 @@
     "type": "STEAMOS",
     "description": "We've reduced the number of Steam Input profiles, added a new Xbox to Nintendo Layout profile and unified all the hotkeys along the emulators, don't forget to test the new radial menu on the left touchpad!",
     "image": "true"
+  },
+  {
+    "title": "BigPemu",
+    "type": "STEAMOS",
+    "description": "New Jaguar Emulator",
+    "image": "true"
   }
 ]
