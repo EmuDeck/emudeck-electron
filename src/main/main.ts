@@ -533,6 +533,76 @@ ipcMain.on('update-check', async (event) => {
         );
         logCommand('UPDATE: UPDATING!');
 
+        event.reply('update-check-out', ['update-available', updateInfo]);
+        logCommand(`${JSON.stringify(updateInfo)}`);
+      }
+    })
+    .catch((reason) => {
+      logCommand(`${JSON.stringify(reason)}`);
+    });
+
+  // Abort the update if it hangs
+  const abortPromise = new Promise(function (resolve: any) {
+    setTimeout(resolve, 10000, 'abort');
+  });
+
+  Promise.race([result, abortPromise])
+    .then((value: any) => {
+      if (value === 'abort') {
+        logCommand(`UPDATE: ABORTED TIMEOUT`);
+        event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
+
+        // mainWindow.reload()
+      }
+    })
+    .catch((error: any) => {
+      // Manejar cualquier error que pueda ocurrir
+      console.error('Error:', error);
+    });
+});
+
+ipcMain.on('update-start', async (event) => {
+  // Force no autoupdate
+  // event.reply('update-check-out', 'up-to-date');
+  // return;
+
+  // Windows no update - temporary
+  // const os = require('os');
+  // if (os.platform().includes('win32')) {
+  //   setTimeout(function () {
+  //     event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
+  //     return;
+  //   }, 500);
+  // }
+
+  const result = autoUpdater.checkForUpdates();
+  logCommand('UPDATE: STARTING CHECK');
+  result
+    .then((checkResult: UpdateCheckResult) => {
+      const { updateInfo } = checkResult;
+
+      logCommand(updateInfo);
+
+      const version = app.getVersion();
+      const versionOnline = updateInfo.version;
+      const versionCheck = version.localeCompare(versionOnline, undefined, {
+        numeric: true,
+        sensitivity: 'base',
+      });
+
+      logCommand('UPDATE: COMPARING VERSIONS');
+      if (versionCheck === 1 || versionCheck === 0) {
+        logCommand('UPDATE: UP TO DATE');
+
+        event.reply('update-check-out', ['up-to-date', updateInfo]);
+        logCommand(`${JSON.stringify(updateInfo)}`);
+      } else {
+        exec(
+          `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/logs/EmudeckUpdate.log`,
+          shellType
+        );
+        logCommand('UPDATE: UPDATING!');
+
         event.reply('update-check-out', ['updating', updateInfo]);
         logCommand(`${JSON.stringify(updateInfo)}`);
 
