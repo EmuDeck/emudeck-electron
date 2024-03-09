@@ -1172,7 +1172,7 @@ ipcMain.on('open-folder', async (event, path) => {
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     // event.reply('console', { backChannel });
     logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, stdout);
+    event.reply('open-folder', stdout);
   });
 });
 
