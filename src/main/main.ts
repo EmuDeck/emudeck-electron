@@ -932,18 +932,20 @@ ipcMain.on('get-store', async (event) => {
       await new Promise((resolve: any, reject: any) => {
         fs.readdir(dir, (err: any, files: any) => {
           if (err) reject(err);
-          files.forEach((file: any) => {
-            if (file.includes('.json') && !file.includes('store')) {
-              const jsonPath = `${dir}${file}`;
-              try {
-                const data = fs.readFileSync(jsonPath);
-                const json = JSON.parse(data);
-                jsonArray = jsonArray.concat(json);
-              } catch (err) {
-                console.error(err);
+          if (files !== undefined) {
+            files.forEach((file: any) => {
+              if (file.includes('.json') && !file.includes('store')) {
+                const jsonPath = `${dir}${file}`;
+                try {
+                  const data = fs.readFileSync(jsonPath);
+                  const json = JSON.parse(data);
+                  jsonArray = jsonArray.concat(json);
+                } catch (err) {
+                  console.error(err);
+                }
               }
-            }
-          });
+            });
+          }
           const feedsJson = {
             data: jsonArray,
           };
