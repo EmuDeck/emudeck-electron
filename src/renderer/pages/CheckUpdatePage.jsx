@@ -217,8 +217,9 @@ function CheckUpdatePage() {
     };
 
     const updateFiles = () => {
+      // Get latest settings versions in storage
       const currentVersions = JSON.parse(
-        localStorage.getItem('current_versions_beta')
+        localStorage.getItem('current_versions')
       );
       if (currentVersions) {
         setStateCurrentConfigs({ ...currentVersions });
