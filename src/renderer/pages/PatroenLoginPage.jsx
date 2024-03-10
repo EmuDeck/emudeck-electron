@@ -38,18 +38,11 @@ function PatreonLoginPage() {
     accessAllowed: false,
     patreonToken: null,
     errorMessage: undefined,
-    dom: undefined,
   });
-  const {
-    patreonClicked,
-    status,
-    accessAllowed,
-    patreonToken,
-    errorMessage,
-    dom,
-  } = statePage;
+  const { patreonClicked, status, accessAllowed, patreonToken, errorMessage } =
+    statePage;
 
-  const { state, setState, setStateCurrentConfigs } = useContext(GlobalContext);
+  const { state, setState } = useContext(GlobalContext);
 
   const { installEmus, overwriteConfigEmus, achievements, shaders } = state;
 
