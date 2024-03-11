@@ -294,6 +294,7 @@ function EmulatorsPage() {
       delete stateCurrentConfigs.rmg;
     }
 
+    // We check if the user has pending updates
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?
@@ -341,7 +342,7 @@ function EmulatorsPage() {
       });
 
       const json = JSON.stringify(stateCurrentConfigs);
-      localStorage.setItem('current_versions_beta', json);
+      localStorage.setItem('current_versions', json);
     }
   }, [modal]);
 

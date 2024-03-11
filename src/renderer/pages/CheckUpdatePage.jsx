@@ -108,10 +108,10 @@ function CheckUpdatePage() {
         clearTimeout(updateTimeOut);
 
         let modalData;
-        if (message[0] == 'updating') {
+        if (message[0] === 'updating') {
           modalData = {
             active: true,
-            header: <span className="h4">🎉 Update found! 🎉</span>,
+            header: <span className="h4">🎉 Updating! 🎉</span>,
             body: (
               <p className="h5">
                 EmuDeck will restart as soon as it finishes the update. Hold on
@@ -120,6 +120,47 @@ function CheckUpdatePage() {
             ),
             footer: <ProgressBar css="progress--success" infinite max="100" />,
             css: 'emumodal--xs emumodal--loading',
+          };
+        }
+
+        if (message[0] === 'update-available') {
+          modalData = {
+            active: true,
+            header: <span className="h4">🎉 Update found! 🎉</span>,
+            body: (
+              <p className="lead">
+                Do you want to update? <br />
+                <strong>This update won't modify your games or settings</strong>
+                <br />
+                Please go to Manage Emulators to apply all the new
+                configurations.
+              </p>
+            ),
+            footer: (
+              <div>
+                <BtnSimple
+                  css="btn-simple--1"
+                  type="button"
+                  aria="Show log"
+                  disabled={false}
+                  style={{ marginBottom: 0 }}
+                  onClick={() => doUpdate()}
+                >
+                  Yes
+                </BtnSimple>
+                <BtnSimple
+                  css="btn-simple--1"
+                  type="button"
+                  aria="Show log"
+                  disabled={false}
+                  style={{ marginBottom: 0 }}
+                  onClick={() => cancelUpdate()}
+                >
+                  No
+                </BtnSimple>
+              </div>
+            ),
+            css: 'emumodal--sm',
           };
         }
 
@@ -142,9 +183,43 @@ function CheckUpdatePage() {
       });
     }
 
+    const doUpdate = () => {
+      ipcChannel.sendMessage('update-start');
+
+      ipcChannel.once('update-check-out', (message) => {
+        if (message[0] === 'updating') {
+          const modalData = {
+            active: true,
+            header: <span className="h4">🎉 Updating! 🎉</span>,
+            body: (
+              <p className="h5">
+                EmuDeck will restart as soon as it finishes the update. Hold on
+                tight.
+              </p>
+            ),
+            footer: <ProgressBar css="progress--success" infinite max="100" />,
+            css: 'emumodal--xs emumodal--loading',
+          };
+          setStatePage({
+            ...statePage,
+            modal: modalData,
+          });
+        }
+      });
+    };
+
+    const cancelUpdate = () => {
+      updateFiles();
+      setStatePage({
+        ...statePage,
+        update: 'up-to-date',
+      });
+    };
+
     const updateFiles = () => {
+      // Get latest settings versions in storage
       const currentVersions = JSON.parse(
-        localStorage.getItem('current_versions_beta')
+        localStorage.getItem('current_versions')
       );
       if (currentVersions) {
         setStateCurrentConfigs({ ...currentVersions });
@@ -494,6 +569,7 @@ function CheckUpdatePage() {
       // alert('cloned true');
       if (navigator.onLine) {
         // alert(branch);
+
         console.log(`GIT PULL ${branch}`);
         ipcChannel.sendMessage('pull', branch);
         pullTimeOut = setTimeout(() => {

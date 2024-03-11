@@ -41,8 +41,7 @@ import {
 function WelcomePage() {
   // const { t } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
-  const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
-    useContext(GlobalContext);
+  const { state, setState } = useContext(GlobalContext);
   const { system, systemName, mode, second, storagePath, gamemode, branch } =
     state;
   const [statePage, setStatePage] = useState({
@@ -103,15 +102,6 @@ function WelcomePage() {
   }, [modal]);
 
   useEffect(() => {
-    if (second === true && mode === 'expert') {
-      navigate('/settings');
-    }
-    if (second === true && mode === 'easy') {
-      navigate('/store-front');
-    }
-
-    let modalData;
-
     // Build games for the store
     ipcChannel.sendMessage('build-store');
     ipcChannel.once('build-store', (response) => {
@@ -121,79 +111,29 @@ function WelcomePage() {
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?
+      console.log({ repoVersions });
       if (repoVersions === '') {
         console.log('no versioning found');
       }
+      const currentVersions = JSON.parse(
+        localStorage.getItem('current_versions')
+      );
+      // If we don't have a previous log of the version, we make the one in the repo the default
+      if (!currentVersions) {
+        const json = JSON.stringify(repoVersions);
+        localStorage.setItem('current_versions', json);
+      }
 
       if (second === true) {
-        // Thanks chatGPT lol
-        const obj1 = repoVersions;
-        const obj2 = stateCurrentConfigs;
-
-        const differences = {};
-
-        for (const key in obj1) {
-          if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
-            differences[key] = obj1[key];
-          }
-        }
-
-        if (Object.keys(differences).length > 0) {
-          setStatePage({ ...statePage, updates: true, modal: modalData });
-        }
-
-        const json = JSON.stringify(repoVersions);
-        localStorage.removeItem('current_versions_beta');
-        localStorage.setItem('current_versions_beta', json);
-
         localStorage.setItem('ogStateAlternative', '');
         localStorage.setItem('ogStateEmus', '');
+      }
 
-        setStateCurrentConfigs(repoVersions);
-      } else if (showChangelog === null && branch === 'beta') {
-        modalData = {
-          active: true,
-          header: <span className="h4">Welcome to EmuDeck's public beta!</span>,
-          body: (
-            <>
-              <p>
-                This build has some unstable features that are not yet present
-                in the public build so some bugs are expected.
-              </p>
-              <p>
-                But it's still missing some exclusive features that are only
-                available in our <strong>Early Access</strong> program in
-                Patreon, like exclusive support forums or{' '}
-                <strong>CloudSync</strong> that allows you to sync your saved
-                games seamessly over the cloud between different EmuDeck and
-                even other platform like OnionOS, local multiplayer,
-                interoperability with other platforms, and more things to come!
-              </p>
-            </>
-          ),
-          css: 'emumodal--sm',
-          footer: (
-            <>
-              <BtnSimple
-                css="btn-simple--1"
-                type="link"
-                aria="Next"
-                href="https://www.patreon.com/bePatron?u=29065992"
-              >
-                Check Patron
-              </BtnSimple>
-              <BtnSimple
-                css="btn-simple--1"
-                type="button"
-                aria="Next"
-                onClick={() => closeModal()}
-              >
-                Close
-              </BtnSimple>
-            </>
-          ),
-        };
-        setStatePage({ ...statePage, modal: modalData });
+      if (second === true && mode === 'expert') {
+        navigate('/settings');
+      }
+      if (second === true && mode === 'easy') {
+        navigate('/store-front');
       }
     });
 
