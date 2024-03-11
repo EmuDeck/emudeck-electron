@@ -381,19 +381,38 @@ function CloudSyncPageConfig() {
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <PatreonLogin>
-          <Header title="Cloud Saves - Select your provider" />
-          <CloudSyncConfig
-            onClick={cloudSyncSet}
-            onClickInstall={installRclone}
-            onClickUninstall={uninstallRclone}
-            onClickCheckHealth={checkHealth}
-            disableButton={disableButton}
-            showLoginButton={showLoginButton}
-          />
+        {cloudSyncType == 'Sync' && (
+          <PatreonLogin>
+            <Header title="Cloud Sync - Select your provider" />
+            <CloudSyncConfig
+              onClick={cloudSyncSet}
+              onClickInstall={installRclone}
+              onClickUninstall={uninstallRclone}
+              onClickCheckHealth={checkHealth}
+              disableButton={disableButton}
+              showLoginButton={showLoginButton}
+            />
 
-          <EmuModal modal={modal} />
-        </PatreonLogin>
+            <EmuModal modal={modal} />
+          </PatreonLogin>
+        )}
+
+        {cloudSyncType == 'Save' && (
+          <>
+            <Header title="Cloud Backup - Select your provider" />
+            <CloudSyncConfig
+              onClick={cloudSyncSet}
+              onClickInstall={installRclone}
+              onClickUninstall={uninstallRclone}
+              onClickCheckHealth={checkHealth}
+              disableButton={disableButton}
+              showLoginButton={showLoginButton}
+            />
+
+            <EmuModal modal={modal} />
+          </>
+        )}
+
         <Footer
           next={nextButtonStatus()}
           nextText="Copy games"
