@@ -203,7 +203,7 @@ function CloudSyncPageConfig() {
 
     const modalData = {
       active: true,
-      header: <span className="h4">Installing CloudSync</span>,
+      header: <span className="h4">Installing Cloud{CloudSyncType}</span>,
       css: 'emumodal--xs',
       body: (
         <p>
@@ -216,11 +216,7 @@ function CloudSyncPageConfig() {
     setStatePage({ ...statePage, disableButton: true, modal: modalData });
 
     let cloudFunction;
-    if (cloudSyncType === 'Sync') {
-      cloudFunction = 'cloud_sync_install_and_config ';
-    } else {
-      cloudFunction = 'cloud_backup_install_and_config';
-    }
+    cloudFunction = 'cloud_sync_install_and_config ';
 
     ipcChannel.sendMessage('emudeck', [
       `cloud_saves|||${cloudFunction} ${cloudSync}`,
@@ -234,7 +230,7 @@ function CloudSyncPageConfig() {
         // checkHealth();
         modalData = {
           active: true,
-          header: <span className="h4">CloudSync Configured</span>,
+          header: <span className="h4">Cloud{CloudSyncType} Configured</span>,
           body: (
             <>
               <p>
@@ -256,7 +252,6 @@ function CloudSyncPageConfig() {
               >
                 Download all saves
               </BtnSimple>
-              {cloudSyncType === '' ? 'a' : 'b'}
               <BtnSimple
                 css="btn-simple--1"
                 type="button"
