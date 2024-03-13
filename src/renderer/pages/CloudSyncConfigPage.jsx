@@ -203,7 +203,7 @@ function CloudSyncPageConfig() {
 
     const modalData = {
       active: true,
-      header: <span className="h4">Installing Cloud{CloudSyncType}</span>,
+      header: <span className="h4">Installing Cloud{cloudSyncType}</span>,
       css: 'emumodal--xs',
       body: (
         <p>
@@ -230,7 +230,7 @@ function CloudSyncPageConfig() {
         // checkHealth();
         modalData = {
           active: true,
-          header: <span className="h4">Cloud{CloudSyncType} Configured</span>,
+          header: <span className="h4">Cloud{cloudSyncType} Configured</span>,
           body: (
             <>
               <p>
