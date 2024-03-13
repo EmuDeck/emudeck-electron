@@ -256,6 +256,7 @@ function CloudSyncPageConfig() {
               >
                 Download all saves
               </BtnSimple>
+              {cloudSyncType === '' ? 'a' : 'b'}
               <BtnSimple
                 css="btn-simple--1"
                 type="button"
@@ -283,17 +284,19 @@ function CloudSyncPageConfig() {
         // checkHealth();
         let warningChrome;
         if (system !== 'win32') {
-          warningChrome = `Make sure you have Google Chrome installed, Firefox won't work. Once you have CloudSync installed you can remove Chrome`;
+          warningChrome = `Make sure you have Google Chrome installed, Firefox won't work. Once you have Cloud${cloudSyncType} installed you can remove Chrome`;
         }
         modalData = {
           active: true,
-          header: <span className="h4">Error Installing CloudSync</span>,
+          header: (
+            <span className="h4">Error Installing Cloud{cloudSyncType}</span>
+          ),
           css: 'emumodal--xs',
           body: (
             <>
               <p>
-                There's been an issue installing CloudSync, please try again.
-                Make sure your credentials are correct.
+                There's been an issue installing Cloud{cloudSyncType}, please
+                try again. Make sure your credentials are correct.
               </p>
               <p>
                 <strong>{warningChrome}</strong>
@@ -358,8 +361,8 @@ function CloudSyncPageConfig() {
         body: (
           <p>
             Make sure you have Google Chrome or any other Chromium browser set
-            as your default browser to install CloudSync. You can set your old
-            browser by default once the installation is complete.
+            as your default browser to install Cloud{cloudSyncType}. You can set
+            your old browser by default once the installation is complete.
           </p>
         ),
         css: 'emumodal--sm',
@@ -381,38 +384,19 @@ function CloudSyncPageConfig() {
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        {cloudSyncType == 'Sync' && (
-          <PatreonLogin>
-            <Header title="Cloud Sync - Select your provider" />
-            <CloudSyncConfig
-              onClick={cloudSyncSet}
-              onClickInstall={installRclone}
-              onClickUninstall={uninstallRclone}
-              onClickCheckHealth={checkHealth}
-              disableButton={disableButton}
-              showLoginButton={showLoginButton}
-            />
+        <PatreonLogin>
+          <Header title={`Cloud${cloudSyncType} - Select your provider`} />
+          <CloudSyncConfig
+            onClick={cloudSyncSet}
+            onClickInstall={installRclone}
+            onClickUninstall={uninstallRclone}
+            onClickCheckHealth={checkHealth}
+            disableButton={disableButton}
+            showLoginButton={showLoginButton}
+          />
 
-            <EmuModal modal={modal} />
-          </PatreonLogin>
-        )}
-
-        {cloudSyncType == 'Save' && (
-          <>
-            <Header title="Cloud Backup - Select your provider" />
-            <CloudSyncConfig
-              onClick={cloudSyncSet}
-              onClickInstall={installRclone}
-              onClickUninstall={uninstallRclone}
-              onClickCheckHealth={checkHealth}
-              disableButton={disableButton}
-              showLoginButton={showLoginButton}
-            />
-
-            <EmuModal modal={modal} />
-          </>
-        )}
-
+          <EmuModal modal={modal} />
+        </PatreonLogin>
         <Footer
           next={nextButtonStatus()}
           nextText="Copy games"
