@@ -141,18 +141,25 @@ function CheckUpdatePage() {
                 <BtnSimple
                   css="btn-simple--1"
                   type="button"
-                  aria="Show log"
-                  disabled={false}
+                  aria="Yes"
                   style={{ marginBottom: 0 }}
                   onClick={() => doUpdate()}
                 >
                   Yes
                 </BtnSimple>
                 <BtnSimple
-                  css="btn-simple--1"
+                  css="btn-simple--2"
+                  type="link"
+                  aria="See Changelog"
+                  target="_blank"
+                  href="https://emudeck.github.io/blog/"
+                >
+                  See Changelog
+                </BtnSimple>
+                <BtnSimple
+                  css="btn-simple--3"
                   type="button"
-                  aria="Show log"
-                  disabled={false}
+                  aria="No"
                   style={{ marginBottom: 0 }}
                   onClick={() => cancelUpdate()}
                 >
@@ -616,11 +623,7 @@ function CheckUpdatePage() {
   useEffect(() => {
     console.log({ downloadComplete });
     if (downloadComplete === true) {
-      if (second) {
-        navigate('/welcome');
-      } else {
-        navigate('/welcome');
-      }
+      navigate('/welcome');
     }
   }, [downloadComplete]);
 
