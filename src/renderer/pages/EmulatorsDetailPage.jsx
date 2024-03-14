@@ -901,6 +901,7 @@ function EmulatorsDetailPage() {
         setStatePage({
           ...statePage,
           modal: modalData,
+          updateAvailable: undefined,
         });
         setStateCurrentConfigs({
           ...stateCurrentConfigs,
