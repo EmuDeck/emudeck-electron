@@ -62,29 +62,10 @@ import {
   esdeGrid,
   srmGrid,
   pegasusGrid,
+  aresGrid,
 } from 'components/utils/images/images';
 
-import {
-  iconSuccess,
-  iconCloud,
-  iconCompress,
-  iconGear,
-  iconList,
-  iconMigrate,
-  iconPlugin,
-  iconPrize,
-  iconUninstall,
-  iconQuick,
-  iconCustom,
-  iconDoc,
-  iconJoystick,
-  iconPackage,
-  iconDisk,
-  iconHelp,
-  iconScreen,
-  iconGear,
-  iconPackage,
-} from 'components/utils/images/icons';
+import { iconGear, iconPackage } from 'components/utils/images/icons';
 
 const images = {
   ra: imgra,
@@ -115,6 +96,7 @@ const images = {
 };
 
 const imagesGrid = {
+  ares: aresGrid,
   xemu: xemuGrid,
   cemu: cemuGrid,
   citra: citraGrid,
@@ -200,22 +182,15 @@ function EmulatorsPage() {
         const { version } = item;
 
         if (system === 'win32') {
-          if (item.id === 'rmg') {
+          if (
+            item.id === 'ares' ||
+            item.id === 'bigpemu' ||
+            item.id === 'model2' ||
+            item.id === 'rmg' ||
+            item.id === 'supermodel'
+          ) {
             return;
           }
-          if (item.id === 'model2') {
-            return;
-          }
-          if (item.id === 'supermodel') {
-            return;
-          }
-          if (item.id === 'bigpemu') {
-            return;
-          }
-        }
-
-        if (item.id === 'ares') {
-          return;
         }
 
         const modalData = {
@@ -395,13 +370,15 @@ function EmulatorsPage() {
                   const picture = imagesGrid[item.id];
                   const updateNotif = updates[item.id];
                   if (system === 'win32') {
-                    if (item.id === 'rmg') {
+                    if (
+                      item.id === 'ares' ||
+                      item.id === 'bigpemu' ||
+                      item.id === 'model2' ||
+                      item.id === 'rmg' ||
+                      item.id === 'supermodel'
+                    ) {
                       return;
                     }
-                  }
-
-                  if (item.id === 'ares') {
-                    return;
                   }
 
                   if (system === 'darwin') {
@@ -409,17 +386,7 @@ function EmulatorsPage() {
                       return;
                     }
                   }
-                  if (system === 'win32') {
-                    if (item.id === 'model2') {
-                      return;
-                    }
-                    if (item.id === 'supermodel') {
-                      return;
-                    }
-                    if (item.id === 'bigpemu') {
-                      return;
-                    }
-                  }
+
                   return (
                     <div key={item.id} data-col-md="4">
                       <CardSettings

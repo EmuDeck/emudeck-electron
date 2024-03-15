@@ -9,6 +9,7 @@ import EmulatorConfiguration from 'components/organisms/Wrappers/EmulatorConfigu
 
 import {
   imgra,
+  imgares,
   imgdolphin,
   imgprimehack,
   imgppsspp,
@@ -38,6 +39,7 @@ import {
 
 const images = {
   ra: imgra,
+  ares: imgares,
   dolphin: imgdolphin,
   primehack: imgprimehack,
   ppsspp: imgppsspp,
