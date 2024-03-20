@@ -218,6 +218,10 @@ function EmulatorsPage() {
           return;
         }
 
+        if (item.id === 'ares') {
+          return;
+        }
+
         const modalData = {
           active: true,
           header: <span className="h4">Resetting {code}'s configuration</span>,
