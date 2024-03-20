@@ -319,7 +319,7 @@ export default function App() {
       pcsx2: { id: 'pcsx2', status: true, installed: undefined, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, installed: undefined, name: 'RPCS3' },
       yuzu: { id: 'yuzu', status: false, installed: undefined, name: 'Yuzu' },
-      suyu: { id: 'suyu', status: false, installed: undefined, name: 'suyu' },
+      suyu: { id: 'suyu', status: true, installed: undefined, name: 'suyu' },
 
       ryujinx: {
         id: 'ryujinx',
@@ -398,7 +398,7 @@ export default function App() {
       pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
       yuzu: { id: 'yuzu', status: false, name: 'Yuzu' },
-      suyu: { id: 'suyu', status: false, name: 'suyu' },
+      suyu: { id: 'suyu', status: true, name: 'suyu' },
       ryujinx: { id: 'ryujinx', status: false, name: 'Ryujinx' },
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       xenia: { id: 'xenia', status: true, name: 'Xenia' },
