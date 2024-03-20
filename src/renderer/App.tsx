@@ -95,6 +95,7 @@ export default function App() {
     pcsx2: { id: 'pcsx2', code: 'PCSX2QT', version: 0 },
     rpcs3: { id: 'rpcs3', code: 'RPCS3', version: 0 },
     yuzu: { id: 'yuzu', code: 'Yuzu', version: 0 },
+    suyu: { id: 'suyu', code: 'suyu', version: 0 },
     ryujinx: { id: 'ryujinx', code: 'Ryujinx', version: 0 },
     xemu: { id: 'xemu', code: 'Xemu', version: 0 },
     cemu: { id: 'cemu', code: 'Cemu', version: 0 },
@@ -176,6 +177,11 @@ export default function App() {
           status: false,
           name: 'Yuzu',
         },
+        suyu: {
+          id: 'suyu',
+          status: false,
+          name: 'suyu',
+        },
         vita3k: {
           id: 'vita3k',
           status: true,
@@ -217,6 +223,11 @@ export default function App() {
           id: 'yuzu',
           status: false,
           name: 'Yuzu',
+        },
+        suyu: {
+          id: 'suyu',
+          status: false,
+          name: 'suyu',
         },
         pegasus: {
           id: 'pegasus',
@@ -308,6 +319,8 @@ export default function App() {
       pcsx2: { id: 'pcsx2', status: true, installed: undefined, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, installed: undefined, name: 'RPCS3' },
       yuzu: { id: 'yuzu', status: false, installed: undefined, name: 'Yuzu' },
+      suyu: { id: 'suyu', status: false, installed: undefined, name: 'suyu' },
+
       ryujinx: {
         id: 'ryujinx',
         status: true,
@@ -385,6 +398,7 @@ export default function App() {
       pcsx2: { id: 'pcsx2', status: true, name: 'PCSX2' },
       rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
       yuzu: { id: 'yuzu', status: false, name: 'Yuzu' },
+      suyu: { id: 'suyu', status: false, name: 'suyu' },
       ryujinx: { id: 'ryujinx', status: false, name: 'Ryujinx' },
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       xenia: { id: 'xenia', status: true, name: 'Xenia' },
@@ -448,6 +462,7 @@ export default function App() {
       duckstation: '720P',
       pcsx2: '720P',
       yuzu: '720P',
+      suyu: '720P',
       ppsspp: '720P',
       rpcs3: '720P',
       ryujinx: '720P',

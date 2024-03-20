@@ -207,6 +207,26 @@
       "1": ["Exit", "STEAM BUTTON"]
     }
   },
+  "suyu": {
+    "id": "suyu",
+    "name": "suyu",
+    "code": "suyu",
+
+    "description": "suyu, pronounced \"sue-you\" is the continuation of the world's most popular, open-source, Nintendo Switch emulator, yuzu..",
+    "special_configuration": "Firmware: Place keys and firmware place in: Emulation/bios/suyu.",
+    "bios": ["nswitch"],
+    "systems": "Nintendo Switch",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "SELECT+START"],
+      "2": ["Fast Forward", "SELECT+R2"],
+      "3": ["Pause", "SELECT+A"],
+      "4": ["Menu", "SELECT+R3"],
+      "5": ["Docked Mode", "START+DPAD ⬆️"],
+      "6": ["GPU Accuracy", "START+DPAD ⬇️"],
+      "7": ["Filter", "START+DPAD ⬅️"]
+    }
+  },
   "yuzu": {
     "id": "yuzu",
     "name": "Yuzu",
