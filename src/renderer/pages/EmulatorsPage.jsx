@@ -127,7 +127,7 @@ const imagesGrid = {
 
 function EmulatorsPage() {
   const navigate = useNavigate();
-  const { state, stateCurrentConfigs, setStateCurrentConfigs } =
+  const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -191,6 +191,10 @@ function EmulatorsPage() {
           ) {
             return;
           }
+        }
+
+        if (item.id === 'ares') {
+          return;
         }
 
         const modalData = {
@@ -259,6 +263,7 @@ function EmulatorsPage() {
         });
         i += 1;
       });
+      setStatePage({ ...statePage, updates: [] });
     }, 1000);
   };
 

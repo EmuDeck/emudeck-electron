@@ -78,7 +78,7 @@ function SettingsPage() {
     });
 
     switch (arStatus) {
-      case '32':
+      case 32:
         ipcChannel.sendMessage('emudeck', [
           'sega32|||RetroArch_mastersystem_ar32 && RetroArch_genesis_ar32  && RetroArch_segacd_ar32 && RetroArch_sega32x_ar32',
         ]);
@@ -110,7 +110,7 @@ function SettingsPage() {
       },
     });
     switch (arStatus) {
-      case '87':
+      case 87:
         ipcChannel.sendMessage('emudeck', [
           'snes87|||RetroArch_snes_ar87 && RetroArch_nes_ar87',
         ]);
@@ -123,7 +123,7 @@ function SettingsPage() {
           ]);
         }
         break;
-      case '32':
+      case 32:
         ipcChannel.sendMessage('emudeck', [
           'snes32|||RetroArch_snes_ar32 && RetroArch_nes_ar32',
         ]);
@@ -155,7 +155,7 @@ function SettingsPage() {
       },
     });
     switch (arStatus) {
-      case '169':
+      case 169:
         ipcChannel.sendMessage('emudeck', [
           '3d169|||RetroArch_Beetle_PSX_HW_wideScreenOn && DuckStation_wideScreenOn && RetroArch_Flycast_wideScreenOn && Xemu_wideScreenOn && RetroArch_dreamcast_bezelOff && RetroArch_psx_bezelOff',
         ]);
