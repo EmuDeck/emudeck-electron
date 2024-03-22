@@ -246,6 +246,8 @@ function CheckUpdatePage() {
         delete settingsStorage.installEmus.melonDS;
         delete settingsStorage.installEmus.cemunative;
         delete settingsStorage.overwriteConfigEmus.primehacks;
+        delete settingsStorage.installEmus.ares;
+        delete settingsStorage.overwriteConfigEmus.ares;
         const installEmusStored = settingsStorage.installEmus;
         const installFrontendsStored = settingsStorage.installFrontends;
 

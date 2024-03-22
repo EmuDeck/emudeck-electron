@@ -217,6 +217,10 @@ function EmulatorsPage() {
         if (item.id === 'ares') {
           return;
         }
+        console.log(installEmus[item.id].status);
+        if (!installEmus[item.id].status) {
+          return;
+        }
 
         const modalData = {
           active: true,
@@ -307,8 +311,13 @@ function EmulatorsPage() {
       const differences = {};
 
       for (const key in obj1) {
-        if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
-          differences[key] = obj1[key];
+        if (installEmus[obj1[key].id]) {
+          if (
+            JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key]) &&
+            installEmus[obj1[key].id].status
+          ) {
+            differences[key] = obj1[key];
+          }
         }
       }
 
