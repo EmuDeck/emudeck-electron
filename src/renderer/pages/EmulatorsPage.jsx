@@ -314,7 +314,8 @@ function EmulatorsPage() {
         if (installEmus[obj1[key].id]) {
           if (
             JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key]) &&
-            installEmus[obj1[key].id].status
+            installEmus[obj1[key].id].status &&
+            installEmus[obj1[key].code] !== 'BigPemu'
           ) {
             differences[key] = obj1[key];
           }
