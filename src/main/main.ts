@@ -1037,7 +1037,7 @@ ipcMain.on('build-store', async (event) => {
 
   buildJson('gb', 'GameBoy');
   buildJson('gbc', 'GameBoy Color');
-  buildJson('gba', 'GameBoy Advanced');
+  buildJson('gba', 'GameBoy Advance');
   buildJson('genesis', 'Genesis');
   buildJson('mastersystem', 'Master System');
   buildJson('nes', 'NES');
