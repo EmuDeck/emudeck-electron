@@ -684,17 +684,19 @@ ipcMain.on('git-magic', async (event, branch) => {
   let dir = path.join(app.getPath('appData'), '/EmuDeck/backend');
   if (os.platform().includes('win32')) {
     repo = 'https://github.com/EmuDeck/emudeck-we.git';
-    dir = path.join(app.getPath('appData'), 'Roaming/EmuDeck/backend');
+    dir = path.join(app.getPath('appData'), '/EmuDeck/backend');
   } else {
     dir = path.join(os.homedir(), '.config/EmuDeck/backend');
   }
+  console.log({ dir });
   let message;
   let bashCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
   if (os.platform().includes('win32')) {
     bashCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit "}`;
   }
 
-  const status = await git.status({ fs, dir, filepath: 'README.md' });
+  let status = await git.status({ fs, dir, filepath: 'README.md' });
+  console.log({ status });
   if (status === 'absent') {
     await git
       .clone({
@@ -717,6 +719,13 @@ ipcMain.on('git-magic', async (event, branch) => {
         author: { name: 'EmuDeck', email: 'noemail@emudeck.com' },
       })
       .then((message = 'success'));
+  }
+
+  status = await git.status({ fs, dir, filepath: 'README.md' });
+  if (status === 'absent') {
+    message = 'error';
+  } else {
+    message = 'success';
   }
 
   await git.checkout({
