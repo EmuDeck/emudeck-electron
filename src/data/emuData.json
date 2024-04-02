@@ -155,8 +155,8 @@
     "name": "Citra",
     "code": "Citra",
 
-    "description": "Citra was a Nintendo 3DS emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install.If you already have your Citra.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/citra folder. Emudeck does not download nor can it guarantee support if you run into any issues.",
-    "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys.",
+    "description": "Citra was a Nintendo 3DS emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install. Emudeck does not download nor can it guarantee support if you run into any issues.",
+    "special_configuration": "If you already have your citra-qt.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/citra folder. ",
     "bios": [],
     "systems": "Nintendo 3DS",
     "hotkeys": {
@@ -212,8 +212,8 @@
     "name": "Yuzu",
     "code": "Yuzu",
 
-    "description": "Yuzu was a Nintendo Switch emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install. If you already have your yuzu.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/yuzu folder. Emudeck does not download nor can it guarantee support if you run into any issues.",
-    "special_configuration": "Firmware: Place keys and firmware place in: Emulation/bios/yuzu.",
+    "description": "Yuzu was a Nintendo Switch emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install. Emudeck does not download nor can it guarantee support if you run into any issues.",
+    "special_configuration": " If you already have your yuzu.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/yuzu/yuzu-windows-msvc folder. Firmware: Place keys and firmware place in: Emulation/bios/yuzu.",
     "bios": ["nswitch"],
     "systems": "Nintendo Switch",
     "hotkeys": {
@@ -363,7 +363,7 @@
     "code": "SRM",
 
     "description": "Add your ROMS and emulators to your Steam Library.",
-    "special_configuration": "Steam ROM Manager is pre-configured by EmuDeck. Each parser generally corresponds to an emulator or tool. Enable your preferred parsers, generate and save an app list, and start playing right away in Game Mode<br/>Parsers are created dynamically based in your selection when installing EmuDeck.<br/><br/>You can create your own custom parsers in json format and place them in the custom parsers folder. Custom parsers will be retained on updates.<br/><br/><strong>You can also add some optional pre-configured parsers and use them as guidance to create your own:</strong><ul className='list'><li>Nintendo GameBoy - SameBoy</li><li>Nintendo GameBoy Color - SameBoy</li><li>Sega Saturn - Yabause</li><li>Nintendo GameBoy Color - mGBA Standalone</li><li>Nintendo GameBoy - mGBA Standalone</li></ul>",
+    "special_configuration": "Steam ROM Manager is pre-configured by EmuDeck. Each parser generally corresponds to an emulator or tool. Enable your preferred parsers, generate and save an app list, and start playing right away in Game Mode<br/>Parsers are created dynamically based in your selection when installing EmuDeck.",
     "bios": [],
     "systems": ""
   },

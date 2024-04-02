@@ -145,7 +145,7 @@ const imagesGrid = {
 
 function EmulatorsPage() {
   const navigate = useNavigate();
-  const { state, stateCurrentConfigs, setStateCurrentConfigs } =
+  const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -217,6 +217,10 @@ function EmulatorsPage() {
         if (item.id === 'ares') {
           return;
         }
+        console.log(installEmus[item.id].status);
+        if (!installEmus[item.id].status) {
+          return;
+        }
 
         const modalData = {
           active: true,
@@ -284,6 +288,7 @@ function EmulatorsPage() {
         });
         i += 1;
       });
+      setStatePage({ ...statePage, updates: [] });
     }, 1000);
   };
 
@@ -294,6 +299,7 @@ function EmulatorsPage() {
       delete stateCurrentConfigs.rmg;
     }
 
+    // We check if the user has pending updates
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
       // No versioning found, what to do?
@@ -305,8 +311,14 @@ function EmulatorsPage() {
       const differences = {};
 
       for (const key in obj1) {
-        if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
-          differences[key] = obj1[key];
+        if (installEmus[obj1[key].id]) {
+          if (
+            JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key]) &&
+            installEmus[obj1[key].id].status &&
+            installEmus[obj1[key].code] !== 'BigPemu'
+          ) {
+            differences[key] = obj1[key];
+          }
         }
       }
 
@@ -341,7 +353,7 @@ function EmulatorsPage() {
       });
 
       const json = JSON.stringify(stateCurrentConfigs);
-      localStorage.setItem('current_versions_beta', json);
+      localStorage.setItem('current_versions', json);
     }
   }, [modal]);
 
@@ -452,12 +464,6 @@ function EmulatorsPage() {
                     return;
                   }
 
-                  if (mode === 'easy') {
-                    if (item.id === 'pegasus') {
-                      return;
-                    }
-                  }
-
                   return (
                     <div key={item.id} data-col-md="4">
                       <CardSettings
@@ -483,12 +489,6 @@ function EmulatorsPage() {
                   );
                 })}
               </div>
-
-              {mode === 'easy' && (
-                <strong>
-                  Do a Custom Reset if you want to add alternative emulators
-                </strong>
-              )}
             </>
           )}
         </Main>

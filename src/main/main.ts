@@ -533,6 +533,76 @@ ipcMain.on('update-check', async (event) => {
         );
         logCommand('UPDATE: UPDATING!');
 
+        event.reply('update-check-out', ['update-available', updateInfo]);
+        logCommand(`${JSON.stringify(updateInfo)}`);
+      }
+    })
+    .catch((reason) => {
+      logCommand(`${JSON.stringify(reason)}`);
+    });
+
+  // Abort the update if it hangs
+  const abortPromise = new Promise(function (resolve: any) {
+    setTimeout(resolve, 10000, 'abort');
+  });
+
+  Promise.race([result, abortPromise])
+    .then((value: any) => {
+      if (value === 'abort') {
+        logCommand(`UPDATE: ABORTED TIMEOUT`);
+        event.reply('update-check-out', ['up-to-date', 'DEV MODE']);
+
+        // mainWindow.reload()
+      }
+    })
+    .catch((error: any) => {
+      // Manejar cualquier error que pueda ocurrir
+      console.error('Error:', error);
+    });
+});
+
+ipcMain.on('update-start', async (event) => {
+  // Force no autoupdate
+  // event.reply('update-check-out', 'up-to-date');
+  // return;
+
+  // Windows no update - temporary
+  // const os = require('os');
+  // if (os.platform().includes('win32')) {
+  //   setTimeout(function () {
+  //     event.reply('update-check-out', ['up-to-date', 'WIN MODE']);
+  //     return;
+  //   }, 500);
+  // }
+
+  const result = autoUpdater.checkForUpdates();
+  logCommand('UPDATE: STARTING CHECK');
+  result
+    .then((checkResult: UpdateCheckResult) => {
+      const { updateInfo } = checkResult;
+
+      logCommand(updateInfo);
+
+      const version = app.getVersion();
+      const versionOnline = updateInfo.version;
+      const versionCheck = version.localeCompare(versionOnline, undefined, {
+        numeric: true,
+        sensitivity: 'base',
+      });
+
+      logCommand('UPDATE: COMPARING VERSIONS');
+      if (versionCheck === 1 || versionCheck === 0) {
+        logCommand('UPDATE: UP TO DATE');
+
+        event.reply('update-check-out', ['up-to-date', updateInfo]);
+        logCommand(`${JSON.stringify(updateInfo)}`);
+      } else {
+        exec(
+          `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/logs/EmudeckUpdate.log`,
+          shellType
+        );
+        logCommand('UPDATE: UPDATING!');
+
         event.reply('update-check-out', ['updating', updateInfo]);
         logCommand(`${JSON.stringify(updateInfo)}`);
 
@@ -585,7 +655,11 @@ ipcMain.on('system-info-in', async (event) => {
 
   if (os.platform() === 'linux') {
     lsbRelease((_: any, data: any) => {
-      event.reply('system-info-out', data.distributorID);
+      if (data.distributorID) {
+        event.reply('system-info-out', data.distributorID);
+      } else {
+        event.reply('system-info-out', 'unknown');
+      }
     });
   } else {
     event.reply('system-info-out', os.platform());
@@ -602,67 +676,83 @@ ipcMain.on('version', async (event: any) => {
 //
 // Installing  Bash / PowerShell backend
 //
-ipcMain.on('check-git', async (event) => {
-  const backChannel = 'check-git';
-  let bashCommand = `mkdir -p $HOME/emudeck/ && cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree`;
 
-  if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git rev-parse --is-inside-work-tree`;
-  }
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, error, stdout, stderr);
-  });
-});
-
-ipcMain.on('clone', async (event, branch) => {
-  const branchGIT = branch;
+ipcMain.on('git-magic', async (event, branch) => {
+  const git = require('isomorphic-git');
+  const http = require('isomorphic-git/http/node');
   let repo = 'https://github.com/dragoonDorise/EmuDeck.git';
+  let dir = path.join(app.getPath('appData'), '/EmuDeck/backend');
   if (os.platform().includes('win32')) {
     repo = 'https://github.com/EmuDeck/emudeck-we.git';
+    dir = path.join(app.getPath('appData'), '/EmuDeck/backend');
+  } else {
+    dir = path.join(os.homedir(), '.config/EmuDeck/backend');
+  }
+  console.log({ dir });
+  let message;
+  let bashCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
+  if (os.platform().includes('win32')) {
+    bashCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit "}`;
   }
 
-  const backChannel = 'clone';
-  let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && mkdir -p ~/emudeck/logs && git clone --no-single-branch --depth=1 ${repo} ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branchGIT} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
-  if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:USERPROFILE/EmuDeck/logs"  -ErrorAction SilentlyContinue; Start-Transcript "$env:USERPROFILE/EmuDeck/logs/git.log"; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
+  let status = await git.status({ fs, dir, filepath: 'README.md' });
+  console.log({ status });
+  if (status === 'absent') {
+    await git
+      .clone({
+        fs,
+        http,
+        dir,
+        url: repo,
+        depth: 1,
+        onMessage: console.log,
+      })
+      .then((message = 'success'))
+      .catch((message = 'error'));
+  } else {
+    await git
+      .pull({
+        fs,
+        http,
+        dir,
+        singleBranch: true,
+        author: { name: 'EmuDeck', email: 'noemail@emudeck.com' },
+      })
+      .then((message = 'success'));
   }
+
+  status = await git.status({ fs, dir, filepath: 'README.md' });
+  if (status === 'absent') {
+    message = 'error';
+  } else {
+    message = 'success';
+  }
+
+  await git.checkout({
+    fs,
+    dir,
+    ref: branch,
+  });
+
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, error, stdout, stderr);
+    event.reply('git-magic', message);
   });
-});
 
-ipcMain.on('pull', async (event, branch) => {
-  const branchGIT = branch;
-  const backChannel = 'pull';
-  let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
-
-  if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:USERPROFILE/EmuDeck/logs/git.log"; git reset --hard ; git clean -fd ; git checkout ${branchGIT} ; git pull --allow-unrelated-histories -X theirs;cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit; Stop-Transcript; "}`;
-  }
-
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, stdout);
-  });
-});
-
-ipcMain.on('check-git-status', async (event) => {
-  const backChannel = 'check-git-status';
-  let bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
-
-  if (os.platform().includes('darwin')) {
-    bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
-  }
-  if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git status`;
-  }
-
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, stdout);
-  });
+  //   const backChannel = 'check-git-status';
+  //   let bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
+  //
+  //   if (os.platform().includes('darwin')) {
+  //     bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
+  //   }
+  //   if (os.platform().includes('win32')) {
+  //     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git status`;
+  //   }
+  //
+  //   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+  //     logCommand(bashCommand, error, stdout, stderr);
+  //     event.reply(backChannel, stdout);
+  //   });
 });
 
 // Next release
@@ -770,8 +860,14 @@ ipcMain.on('check-versions', async (event) => {
     jsonPath = `${userHomeDir}/AppData/Roaming/EmuDeck/backend/versions.json`;
   }
   try {
-    const data = fs.readFileSync(jsonPath);
-    const json = JSON.parse(data);
+    let json;
+    if (fs.existsSync(jsonPath)) {
+      const data = fs.readFileSync(jsonPath);
+      json = JSON.parse(data);
+    } else {
+      json = {};
+    }
+
     event.reply(backChannel, json);
   } catch (err) {
     console.error(err);
@@ -862,18 +958,20 @@ ipcMain.on('get-store', async (event) => {
       await new Promise((resolve: any, reject: any) => {
         fs.readdir(dir, (err: any, files: any) => {
           if (err) reject(err);
-          files.forEach((file: any) => {
-            if (file.includes('.json') && !file.includes('store')) {
-              const jsonPath = `${dir}${file}`;
-              try {
-                const data = fs.readFileSync(jsonPath);
-                const json = JSON.parse(data);
-                jsonArray = jsonArray.concat(json);
-              } catch (err) {
-                console.error(err);
+          if (files !== undefined) {
+            files.forEach((file: any) => {
+              if (file.includes('.json') && !file.includes('store')) {
+                const jsonPath = `${dir}${file}`;
+                try {
+                  const data = fs.readFileSync(jsonPath);
+                  const json = JSON.parse(data);
+                  jsonArray = jsonArray.concat(json);
+                } catch (err) {
+                  console.error(err);
+                }
               }
-            }
-          });
+            });
+          }
           const feedsJson = {
             data: jsonArray,
           };
@@ -1172,7 +1270,7 @@ ipcMain.on('open-folder', async (event, path) => {
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     // event.reply('console', { backChannel });
     logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, stdout);
+    event.reply('open-folder', stdout);
   });
 });
 

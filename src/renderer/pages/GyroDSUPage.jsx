@@ -34,67 +34,7 @@ function GyroDSUPage() {
 
   const ipcChannel = window.electron.ipcRenderer;
 
-  const setSudoPass = (data) => {
-    if (data.target.value != '') {
-      setStatePage({
-        ...statePage,
-        sudoPass: data.target.value,
-      });
-    } else {
-      setStatePage({
-        ...statePage,
-        sudoPass: 'Decky!',
-      });
-    }
-  };
-
-  const createSudo = (data) => {
-    ipcChannel.sendMessage('bash', [
-      `echo '${pass1}' > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
-    ]);
-    const modalData = {
-      active: true,
-      header: <span className="h4">Success!</span>,
-      body: <p>Password created</p>,
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
-      css: 'emumodal--xs',
-    };
-
-    setStatePage({
-      ...statePage,
-      hasSudo: true,
-      sudoPass: pass1,
-      modal: modalData,
-    });
-  };
-
-  const setPassword = (data) => {
-    setStatePage({
-      ...statePage,
-      pass1: data.target.value,
-    });
-  };
-
-  const checkPassword = (data) => {
-    setStatePage({
-      ...statePage,
-      pass2: data.target.value,
-    });
-  };
-
   const installGyro = (data) => {
-    const modalData = {
-      active: true,
-      header: <span className="h4">Installing GyroDSU</span>,
-      body: <p>Please wait while we install the plugin</p>,
-      footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
-      css: 'emumodal--xs',
-    };
-
-    setStatePage({
-      ...statePage,
-      modal: modalData,
-    });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('bash', [
       `Gyro|||konsole -e  sh -c '. ~/.config/EmuDeck/backend/functions/all.sh && Plugins_installSteamDeckGyroDSU "${escapedPass}" && echo "" && read -n 1 -s -r -p "Press any key to exit" && exit 0'`,
@@ -149,23 +89,11 @@ function GyroDSUPage() {
     });
   }, []);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Configure SteamDeckGyroDSU" />
-        <GyroDSU
-          installClick={installGyro}
-          sudoPass={sudoPass}
-          onChange={setSudoPass}
-          onChangeSetPass={setPassword}
-          onChangeCheckPass={checkPassword}
-          onClick={createSudo}
-          hasSudo={hasSudo}
-          passValidates={pass1 === pass2}
-        />
+        <GyroDSU installClick={installGyro} passValidates={pass1 === pass2} />
         <Footer
           next={false}
           nextText={sudoPass ? 'Continue' : 'Skip'}

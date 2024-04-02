@@ -62,12 +62,7 @@ function RAAchievementsConfigPage() {
           onToggle={setAchievementsHardCore}
           modalDataConfig={modalDataConfig}
         />
-        <Footer
-          next="welcome"
-          nextText={achievements.token ? 'Continue' : 'Skip'}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
+        <Footer disabledNext={disabledNext} disabledBack={disabledBack} />
       </Wrapper>
     </div>
   );
