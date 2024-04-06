@@ -130,10 +130,10 @@ function WelcomePage() {
       }
 
       if (second === true && mode === 'expert') {
-        navigate('/settings');
+        navigate('/emulators');
       }
       if (second === true && mode === 'easy') {
-        navigate('/store-front');
+        navigate('/emulators');
       }
     });
 
