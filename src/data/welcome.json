@@ -1,0 +1,51 @@
+[
+  {
+    "type": "banner",
+    "title": "Game of the month: Sonic 3 & Knuckles",
+    "href": "early-access",
+    "target": "navigate",
+    "img": "https://www.retroplace.com/pics/gen/packshots/39058--sonic-knuckles.png",
+    "imgL": "0px",
+    "imgT": "-30px",
+    "imgR": "auto",
+    "imgB": "0px",
+    "col": "7",
+    "titleL": "auto",
+    "titleT": "auto",
+    "titleR": "16px",
+    "titleB": "12px",
+    "titleW": "220px",
+    "align": "right",
+    "bg": "linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(45,122,253,1) 100%)",
+    "color": "white"
+  },
+  {
+    "type": "banner",
+    "title": "New Decky Plugin: EmuDecky",
+    "href": "early-access",
+    "target": "navigate",
+    "img": "https://decky.xyz/static/hero-512fcea47af0ed876a437f080c02bbe3.png",
+    "imgL": "0px",
+    "imgT": "auto",
+    "imgR": "auto",
+    "imgB": "0px",
+    "col": "5",
+    "titleL": "12px",
+    "titleT": "8px",
+    "titleR": "auto",
+    "titleB": "0px",
+    "titleW": "80%",
+    "align": "left",
+    "bg": "linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(1,14,61,1) 100%)",
+    "color": "white"
+  },
+  {
+    "type": "text",
+    "title": "Introducing Early Access",
+    "description": "Interested in getting new features early? Support EmuDeck on Patreon for a sneak peek of the latest features like Synced Saves across different EmuDeck installation and even other platform like OnionOS, local multiplayer, interoperability with other platforms, and more things to come!",
+    "href": "early-access",
+    "target": "navigate",
+    "bg": "rgb(251, 225, 109)",
+    "color": "#444"
+  }
+]

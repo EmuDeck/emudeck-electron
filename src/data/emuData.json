@@ -1,0 +1,428 @@
+{
+  "ra": {
+    "id": "ra",
+    "name": "RetroArch",
+    "code": "RetroArch",
+
+    "description": "",
+    "special_configuration": "Custom textures for the NES and N64 using EmuDeck's pre-created folder: Emulation/hdpacks",
+    "bios": ["ps1", "segacd", "saturn", "nds", "dreamcast"],
+    "systems": "Retro Game Systems, including but not limited to, Nintendo 64, Saturn and Dreamcast",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Menu", "L3+R3"],
+      "2": ["Load State", "SELECT+L1"],
+      "3": ["Save State", "SELECT+R1"],
+      "4": ["Exit", "SELECT+START"],
+      "5": ["Fast Forward", "SELECT+R2"],
+      "6": ["Pause", "SELECT+A"],
+      "8": ["Swap Screens", "R2"],
+      "9": ["Next Save Slot", "SELECT+DPAD➡️"],
+      "10": ["Previous Save Slot", "SELECT+DPAD⬅️"],
+      "11": ["Toggle Runahead", "SELECT+DPAD⬆️"]
+    }
+  },
+  "ares": {
+    "id": "ares",
+    "name": "ares",
+    "code": "ares",
+    "wiki": "",
+    "description": "ares is an open-source multi-system emulator with a focus on accuracy and preservation.",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "Atari, WonderSwan, Pocket Challenge, ColecoVision, MSX, PC Engine, NES, Super Nintendo, GameBoy, GameBoy Color, GameBoy Advance, Satellaview, Nintendo64, Sufami Turbo, Master System, Genesis, Game Gear, SegaCD, Sega32x, ZX Spectrum, Neo Geo, Neo Geo Pocket, Playstation",
+    "hotkeys": {}
+  },
+  "cemu": {
+    "id": "cemu",
+    "name": "Cemu",
+    "code": "Cemu",
+
+    "description": "Cemu is a Nintendo Wii U emulator, developed by Exzap and Petergov. That's right, you can emulate Breath of the Wild on the Steam Deck with Cemu.",
+    "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys. Place your Wii U ROMs here: Emulation/roms/wiiu/roms.",
+    "bios": [],
+    "systems": "Nintendo Wii U",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "START+SELECT"],
+      "2": ["Toggle Screens", "R4"],
+      "3": ["Swap Screens", "R5"],
+      "4": ["Blow Mic", "R3"]
+    },
+    "alt": true,
+    "altId": "cemunative",
+    "altName": "CemuNative",
+    "altCode": "CemuNative",
+    "altButton": "Install Cemu AppImage",
+    "altWarning": "This action will install Cemu AppImage alongside your current Cemu.",
+    "alt2": true,
+    "alt2Id": "CemuNative",
+    "alt2Name": "CemuNative",
+    "alt2Code": "CemuNative",
+    "alt2Button": "Reset Cemu AppImage",
+    "alt2Warning": "This action will install Cemu AppImage alongside your current Cemu."
+  },
+  "dolphin": {
+    "id": "dolphin",
+    "name": "Dolphin",
+    "code": "Dolphin",
+
+    "description": "Dolphin is a Nintendo Gamecube and Wii emulator, developed by the Dolphin Emulator Project. Re-live your Wii Sports days on the go with this emulator.",
+    "special_configuration": "BIOS: No additional BIOS are required.",
+    "bios": [],
+    "systems": "Nintendo Gamecube, Nintendo Wii",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Menu", "L3+R3"],
+      "2": ["Load State", "SELECT+L1"],
+      "3": ["Save State", "SELECT+R1"],
+      "4": ["Exit", "SELECT+START"],
+      "5": ["Fast Forward", "SELECT+R2"],
+      "6": ["Shake Wiimote", "L2"],
+      "7": ["Shake Nunchuck", "R2"],
+      "8": ["Attach Wiimote", "SELECT + Left Stick ⬇️"]
+    }
+  },
+  "primehack": {
+    "id": "primehack",
+    "name": "Primehack",
+    "code": "Primehack",
+
+    "description": "Primehack is a fork of Dolphin, intended to modernize the Metroid Prime trilogy, developed by shiiion. Modern FPS controls for the Metroid Prime Trilogy? You got it.",
+    "special_configuration": "BIOS: No additional BIOS are required. Only Metroid Prime Trilogy (Wii) is configured at this time.",
+    "bios": [],
+    "systems": "Nintendo Wii - Metroid Prime Trilogy",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Menu", "L3+R3"],
+      "2": ["Load State", "SELECT+L1"],
+      "3": ["Save State", "SELECT+R1"],
+      "4": ["Exit", "SELECT+START"],
+      "5": ["Fast Forward", "SELECT+R2"],
+      "6": ["Pause", "SELECT+A"],
+      "7": ["Next Save Slot", "START+R1"],
+      "8": ["Previous Save Slot", "START+L1"]
+    }
+  },
+  "ppsspp": {
+    "id": "ppsspp",
+    "name": "PPSSPP",
+    "code": "PPSSPP",
+
+    "description": "PPSSPP is a Sony PSP emulator, originally developed by Henrik Rydgård. Portable games on the go, again.",
+    "special_configuration": "BIOS: No additional BIOS are required.",
+    "bios": [],
+    "systems": "Sony Playstation Portable",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Quick Menu", "Left Trackpad"],
+      "2": ["Save State", "Left Trackpad"],
+      "3": ["Load State", "Left Trackpad"],
+      "4": ["Next Save Slot", "Left Trackpad"],
+      "5": ["Fast Forward", "Left Trackpad"]
+    }
+  },
+  "duckstation": {
+    "id": "duckstation",
+    "name": "DuckStation",
+    "code": "DuckStation",
+
+    "description": "DuckStation is a Sony PlayStation 1 emulator, developed primarily by stenzek.",
+    "special_configuration": "BIOS: BIOS are required, ROMs do need region specific BIOS.",
+    "bios": ["ps1"],
+    "systems": "Sony Playstation 1",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Menu", "STEAM+DPAD Left"]
+    }
+  },
+  "melonds": {
+    "id": "melonds",
+    "name": "melonDS",
+    "code": "melonDS",
+
+    "description": "melonDS is a Nintendo DS Emulator, originally developed by Arisotura. Close the lid when you're finished playing.",
+    "special_configuration": "BIOS: BIOS are optional. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys.",
+    "bios": ["nds"],
+    "systems": "Nintendo DS",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Menu", "Update Me"]
+    }
+  },
+  "citra": {
+    "id": "citra",
+    "name": "Citra",
+    "code": "Citra",
+
+    "description": "Citra was a Nintendo 3DS emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install. Emudeck does not download nor can it guarantee support if you run into any issues.",
+    "special_configuration": "If you already have your citra-qt.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/citra folder. ",
+    "bios": [],
+    "systems": "Nintendo 3DS",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "R5 (Longpress)"],
+      "2": ["FullScreen", "L4"],
+      "3": ["Swap Screens", "R4"],
+      "4": ["Toggle Layout", "L5"],
+      "5": ["Toggle Layout", "L5"],
+      "6": ["Save State", "Left Trackpad"],
+      "7": ["Load State", "Left Trackpad"],
+      "8": ["Fast Forward", "Left Trackpad"],
+      "9": ["Pause", "Left Trackpad"]
+    }
+  },
+  "pcsx2": {
+    "id": "pcsx2",
+    "name": "PCSX2QT",
+    "code": "PCSX2QT",
+
+    "description": "PCSX2 is a Sony Playstation 2 emulator, developed by the PCSX2 team. JRPGs galore.",
+    "special_configuration": "BIOS: BIOS are required, ROMs do not need region specific BIOS.",
+    "bios": ["ps2"],
+    "systems": "Sony Playstation 2",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Load State", "SELECT+L1"],
+      "2": ["Save State", "SELECT+R1"],
+      "3": ["Exit", "SELECT+START"],
+      "4": ["Fast Forward", "SELECT+R2"],
+      "5": ["Pause", "SELECT+A"],
+      "6": ["Software Rendering", "SELECT+LEFT"],
+      "7": ["Increase Upscale", "SELECT+UP"],
+      "8": ["Decrease Upscale", "SELECT+DOWN"]
+    }
+  },
+  "rpcs3": {
+    "id": "rpcs3",
+    "name": "RPCS3",
+    "code": "RPCS3",
+
+    "description": "RPCS3 is a Sony PlayStation 3 emulator, originally developed by DH, Hykem, and AlexAltea. That's right, the Steam Deck can emulate PS3 too.",
+    "special_configuration": "Firmware: Install firmware through the RPCS3 GUI. Follow RPSC3's Quickstart Guide: <a className='link' target='_blank' href='https://rpcs3.net/quickstart'>here</a>. You will need to tweak settings for most games. Check RPCS3's Wiki for specific setting recommendations.",
+    "bios": [],
+    "systems": "Sony Playstation 3",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "STEAM BUTTON"]
+    }
+  },
+  "yuzu": {
+    "id": "yuzu",
+    "name": "Yuzu",
+    "code": "Yuzu",
+
+    "description": "Yuzu was a Nintendo Switch emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install. Emudeck does not download nor can it guarantee support if you run into any issues.",
+    "special_configuration": " If you already have your yuzu.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/yuzu/yuzu-windows-msvc folder. Firmware: Place keys and firmware place in: Emulation/bios/yuzu.",
+    "bios": ["nswitch"],
+    "systems": "Nintendo Switch",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "SELECT+START"],
+      "2": ["Fast Forward", "SELECT+R2"],
+      "3": ["Pause", "SELECT+A"],
+      "4": ["Menu", "SELECT+R3"],
+      "5": ["Docked Mode", "START+DPAD ⬆️"],
+      "6": ["GPU Accuracy", "START+DPAD ⬇️"],
+      "7": ["Filter", "START+DPAD ⬅️"]
+    }
+  },
+  "ryujinx": {
+    "id": "ryujinx",
+    "name": "Ryujinx",
+    "code": "Ryujinx",
+
+    "description": "Ryujinx is a Nintendo Switch emulator, originally developed by gdkchan. Ryujinx can promise excellent accuracy for your favorite Nintendo Switch games.",
+    "special_configuration": "Firmware: Install firmware through the Ryujinx GUI. Place keys in: Emulation/bios/ryujinx/keys.",
+    "bios": [],
+    "systems": "Nintendo Switch",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "STEAM BUTTON"]
+    }
+  },
+  "xemu": {
+    "id": "xemu",
+    "name": "Xemu",
+    "code": "Xemu",
+
+    "description": "Xemu is a Microsoft Xbox emulator, originally developed by Matt Borgerson. Master Chief: I think we're just getting started. ",
+    "special_configuration": "BIOS: BIOS are required: mcpx_1.0.bin and modified retail BIOS, Complex_4627v1.03.bin.",
+    "bios": [],
+    "systems": "Microsoft Xbox",
+    "hotkeys": {}
+  },
+  "rmg": {
+    "id": "rmg",
+    "name": "Rosalie's Mupen GUI",
+    "code": "RMG",
+
+    "description": "Rosalie's Mupen GUI is a mupen64plus GUI, with a clean interface and a slew of features. Don't forget to blow on the cartridge.",
+    "special_configuration": "BIOS: N64DD games require BIOS.",
+    "bios": [],
+    "systems": "Nintendo 64 and 64DD",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Load State", "SELECT+L1"],
+      "2": ["Save State", "SELECT+R1"],
+      "3": ["Exit", "SELECT+START"],
+      "4": ["Fast Forward", "SELECT+R2"],
+      "5": ["Pause", "SELECT+A"]
+    }
+  },
+  "mame": {
+    "id": "mame",
+    "name": "MAME",
+    "code": "MAME",
+
+    "description": "MAME is a Multiple Arcade Machine Emulator, originally developed by Nicola Salmoria. Invite a friend over, and re-live the arcade days over a match of 1943 or Bubble Bobble.",
+    "special_configuration": "BIOS: BIOS are required for some MAME ROMs. Ideally use ROMS that are the same version as MAME's version. MAME often releases improved versions of ROMS to improve compatibility. EmuDeck currently supports the current versions:<br/>MAME (Standalone) and MAME (Current), MAME 2010, MAME 2003, as RetroArch Cores.",
+    "bios": [],
+    "systems": "Arcade",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Coin", "SELECT"],
+      "2": ["Start", "START"],
+      "3": ["Fast Forward", "SELECT+R2"],
+      "4": ["Exit", "STEAM BUTTON"]
+    }
+  },
+  "vita3k": {
+    "id": "vita3k",
+    "name": "Vita3K",
+    "code": "Vita3K",
+
+    "description": "Vita3K is a Sony Playstation Vita emulator, developed by the Vita3K team. No memory card needed.",
+    "special_configuration": "Firmware: Install firmware through the Vita3K GUI. Follow Vita3K's instructions in the GUI. You will need to tweak settings for most games. Many are still not playable. Check Vita3K's compatibility list <strong><a href='https://vita3k.org/compatibility.html' target='_blank'>here</a></strong>.",
+    "bios": [],
+    "systems": "PlayStation Vita",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "STEAM BUTTON"]
+    }
+  },
+  "flycast": {
+    "id": "flycast",
+    "name": "Flycast",
+    "code": "Flycast",
+
+    "description": "Flycast is a multi-platform Sega Dreamcast, Atomiswave, NAOMI, and NAOMI 2",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "Sega Dreamcast, Atomiswave, NAOMI, and NAOMI 2",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "STEAM BUTTON"]
+    }
+  },
+  "scummvm": {
+    "id": "scummvm",
+    "name": "ScummVM",
+    "code": "ScummVM",
+
+    "description": "ScummVM is a program which allows you to run certain classic graphical adventure and role-playing games. It supports an extensive library of over 325 adventure games, including classic titles from iconic studios such as LucasArts, Sierra On-Line, Revolution Software, Cyan, Inc. and Westwood Studios",
+    "special_configuration": "BIOS: No additional BIOS are required. Read the wiki, <a className='link' target='_blank' href='https://emudeck.github.io/emulators/steamos/scummvm/#how-to-configure-scummvm-to-work-with-emulationstation-de-and-steam-rom-manager'>here</a>, for guides on how to configure ScummVM for Steam ROM Manager and ES-DE.",
+    "bios": [],
+    "systems": "Scumm and DOS Games",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Menu", "START"]
+    }
+  },
+  "xenia": {
+    "id": "xenia",
+    "name": "Xenia",
+    "code": "Xenia",
+
+    "description": "Xenia is a Microsoft Xbox 360 emulator, originally developed by benvanik. Relive your Xbox Live Arcade Days.",
+    "special_configuration": "BIOS: No additional BIOS are required. Xenia is still in an experimental state, some games may not run or perform well.",
+    "bios": [],
+    "systems": "Microsoft Xbox 360",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "STEAM BUTTON"]
+    }
+  },
+  "mgba": {
+    "id": "mgba",
+    "name": "mGBA",
+    "code": "mGBA",
+
+    "description": "mGBA is a GameBoy, Gameboy Color, and Gameboy Advance emulator, originally developed by endrift. No link cable included.",
+    "special_configuration": "BIOS: No additional BIOS are required. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys.",
+    "bios": [],
+    "systems": "GameBoy Advance",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "STEAM BUTTON"]
+    }
+  },
+  "srm": {
+    "id": "srm",
+    "name": "Steam ROM Manager",
+    "code": "SRM",
+
+    "description": "Add your ROMS and emulators to your Steam Library.",
+    "special_configuration": "Steam ROM Manager is pre-configured by EmuDeck. Each parser generally corresponds to an emulator or tool. Enable your preferred parsers, generate and save an app list, and start playing right away in Game Mode<br/>Parsers are created dynamically based in your selection when installing EmuDeck.",
+    "bios": [],
+    "systems": ""
+  },
+  "esde": {
+    "id": "esde",
+    "name": "ES-DE",
+    "code": "ESDE",
+    "description": "ES-DE is a frontend application for browsing and launching games from your multi-platform game collection.",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "",
+    "alt": false,
+    "altId": "esde20",
+    "altName": "ESDE20",
+    "altCode": "ESDE20",
+    "altButton": "Install ESDE 2.0 Prerelease",
+    "altWarning": "This action will replace your installation with ESDE 2.0 Prerelease. To undone this action you'll need to click the ReInstall button"
+  },
+  "pegasus": {
+    "id": "pegasus",
+    "name": "Pegasus Frontend",
+    "code": "pegasus",
+    "description": "A cross platform, customizable graphical frontend for launching emulators and managing your game collection.",
+    "special_configuration": "Pegasus does not have a built-in scraper so you will need to scrape your games using ES-DE. Scraped media is shared between the two applications.",
+    "bios": [],
+    "systems": "",
+    "alt": false
+  },
+  "model2": {
+    "id": "model2",
+    "name": "Model2",
+    "code": "Model2",
+    "wiki": "",
+    "description": "The Model 2 Emulator is a closed-source Sega Model 2 emulator written by Miguel Ãngel Horna, otherwise popularly known by his nick \"ElSemi\".",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "Sega Model 2",
+    "hotkeys": {}
+  },
+  "supermodel": {
+    "id": "supermodel",
+    "name": "Supermodel",
+    "code": "Supermodel",
+    "wiki": "",
+    "description": "Supermodel is an open-source Sega Model 3 emulator with good compatibility. The aim of the Supermodel project is to develop an emulator that is both accurate and playable.",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "Sega Model 3",
+    "hotkeys": {}
+  },
+  "bigpemu": {
+    "id": "bigpemu",
+    "name": "BigPEmu",
+    "code": "BigPEmu",
+    "wiki": "",
+    "description": "BigPEmu is a closed-source Atari Jaguar emulator. It was originally developed for use in the game compilation Atari 50, and later made available for free separately",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "Atari Jaguar",
+    "hotkeys": {}
+  }
+}

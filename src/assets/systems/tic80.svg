@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 731.495 125.4"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="logo.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <metadata
+     id="metadata14">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3840"
+     inkscape:window-height="2065"
+     id="namedview10"
+     showgrid="false"
+     inkscape:zoom="0.66849398"
+     inkscape:cx="31.413895"
+     inkscape:cy="62.700001"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
+  <text
+     transform="translate(504.446 45.884)"
+     fill="#c23334"
+     font-family="ArialMT"
+     font-size="1"
+     id="text2">I don’t like bugs!</text>
+  <g
+     fill="#d7e6d0"
+     id="g6"
+     style="fill:#a7c898;fill-opacity:1">
+    <path
+       d="M218.495 47.509V9.505h-9.504V0h38.004v9.505h-9.504v38.004h-18.996zM265.991 47.509v-9.504h9.504v-28.5h-9.504V0h38.004v9.505h-9.504v28.5h9.504v9.504h-38.004zM322.991 47.509v-9.504H313.5v-28.5h9.491V0h28.5v9.505h-18.996v28.5h18.996v9.504h-28.5zm28.5-28.5V9.505h9.504v9.504h-9.504zm0 18.996V28.5h9.504v9.505h-9.504zM379.991 28.5v-9.491h28.5V28.5h-28.5zM436.991 47.509v-9.504H427.5V28.5h9.491v-9.491H427.5V9.505h9.491V0h28.5v9.505h-18.996v9.504h18.996V28.5h-18.996v9.505h18.996v9.504h-28.5zm28.5-28.5V9.505h9.504v9.504h-9.504zm0 18.996V28.5h9.504v9.505h-9.504zM493.991 47.509v-9.504H484.5v-28.5h9.491V0h28.5v9.505h-18.996v28.5h18.996v9.504h-28.5zm28.5-9.504v-28.5h9.504v28.5h-9.504zM18.995 115.909v-9.504H9.491V87.409H0v-9.504h9.491V68.4H28.5v9.505h18.995v9.504H28.5v18.996h18.995v9.504h-28.5zM66.491 115.909v-9.504h9.504V96.9h-9.504v-9.491h28.5v18.996h9.504v9.504H66.491zm9.504-38.004V68.4h18.996v9.505H75.995zM114 115.909V77.905h37.991v9.504h-18.996v28.5H114zm37.991 0v-28.5h9.504v28.5h-9.504zM171 96.9V77.905h9.491V96.9H171zm9.491 28.5v-9.491H199.5v-9.504h-19.009V96.9H199.5V77.905h18.995v38.004h-9.504v9.491h-28.5zM294.491 115.909v-9.504H285V87.409h9.491v-9.504h38.004v9.504H313.5v18.996h18.995v9.504h-38.004zM351.491 115.909v-9.504H342V87.409h9.491v-9.504h28.5v9.504h-18.996v18.996h18.996v9.504h-28.5zm28.5-9.504V87.409h9.504v18.996h-9.504zM399 115.909V77.905h18.995v9.504h9.505v-9.504h9.491v9.504h9.504v28.5h-9.504V96.9H427.5v19.009h-9.505V96.9h-9.504v19.009H399zM456 125.4V77.905h37.991v9.504h-18.996v18.996h18.996v9.504h-18.996v9.491H456zm37.991-18.995V87.409h9.504v18.996h-9.504zM513 106.405v-28.5h9.491v28.5H513zm9.491 9.504v-9.504H541.5v-28.5h18.995v38.004h-38.004zM588.995 115.909v-9.504h-9.504V87.409H570v-9.504h9.491V68.4H598.5v9.505h18.995v9.504H598.5v18.996h18.995v9.504h-28.5zM636.491 115.909v-9.504H627V87.409h9.491v-9.504h28.5v9.504h9.504V96.9H655.5v-9.491h-9.505V96.9h9.505v9.505h9.491v9.504h-28.5zM684 115.909V77.905h37.991v9.504h-18.996v28.5H684zM721.991 96.9v-9.491h9.504V96.9h-9.504z"
+       id="path4"
+       style="fill:#a7c898;fill-opacity:1" />
+  </g>
+</svg>
