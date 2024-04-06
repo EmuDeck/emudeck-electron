@@ -692,6 +692,16 @@ ipcMain.on('git-magic', async (event, branch) => {
       .then((message = 'success'))
       .catch((message = 'error'));
   } else {
+    //Fetch of new branches
+    await git.fetch({
+      fs,
+      http,
+      dir,
+      url: repo,
+      depth: 1,
+      tags: false,
+    });
+
     // Status Matrix Row Indexes (git reset)
     const FILEPATH = 0;
     const HEAD = 1;
