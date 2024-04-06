@@ -468,19 +468,8 @@ function CheckUpdatePage() {
             background...
           </span>
         ),
-        body: <ProgressBar css="progress--success" infinite max="100" />,
-        footer: (
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Show log"
-            disabled={false}
-            style={{ marginBottom: 0 }}
-            onClick={() => showLog(system)}
-          >
-            See more details
-          </BtnSimple>
-        ),
+        body: '',
+        footer: <ProgressBar css="progress--success" infinite max="100" />,
         css: 'emumodal--xs emumodal--loading',
       };
 
