@@ -367,24 +367,6 @@ ipcMain.on('emudeck', async (event, command) => {
     bashCommand = command;
   }
 
-  // Lets detect if the repo was cloned properly
-  if (fs.existsSync(allPath)) {
-    // file exists
-  } else {
-    event.reply(backChannel, 'nogit');
-    let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout master && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
-
-    if (os.platform().includes('win32')) {
-      bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:USERPROFILE/EmuDeck/logs/pull.log";  git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
-    }
-
-    return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-      // event.reply('console', { backChannel });
-      logCommand(bashCommand, error, stdout, stderr);
-      // mainWindow.reload();
-    });
-  }
-
   let preCommand;
 
   if (os.platform().includes('win32')) {
@@ -710,6 +692,29 @@ ipcMain.on('git-magic', async (event, branch) => {
       .then((message = 'success'))
       .catch((message = 'error'));
   } else {
+    // Status Matrix Row Indexes (git reset)
+    const FILEPATH = 0;
+    const HEAD = 1;
+    const WORKDIR = 2;
+    const STAGE = 3;
+
+    // Status Matrix State
+    const UNCHANGED = 1;
+
+    const allFiles = await git.statusMatrix({ dir, fs });
+    // Get all files which have been modified or staged - does not include new untracked files or deleted files
+
+    const modifiedFiles = allFiles
+      .filter((row) => row[WORKDIR] > UNCHANGED && row[STAGE] > UNCHANGED)
+      .map((row) => row[FILEPATH]);
+
+    console.log({ modifiedFiles });
+
+    // Delete modified/staged files
+    await Promise.all(modifiedFiles.map((path) => fs.promises.rm(path)));
+
+    await git.checkout({ dir, fs, ref: branch, force: true });
+
     await git
       .pull({
         fs,
