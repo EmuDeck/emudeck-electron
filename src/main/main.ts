@@ -666,7 +666,6 @@ ipcMain.on('git-magic', async (event, branch) => {
   let dir = path.join(app.getPath('appData'), '/EmuDeck/backend');
   if (os.platform().includes('win32')) {
     repo = 'https://github.com/EmuDeck/emudeck-we.git';
-    dir = path.join(app.getPath('appData'), '/EmuDeck/backend');
   } else {
     dir = path.join(os.homedir(), '.config/EmuDeck/backend');
   }
@@ -679,7 +678,18 @@ ipcMain.on('git-magic', async (event, branch) => {
 
   let status = await git.status({ fs, dir, filepath: 'README.md' });
   console.log({ status });
+  //No backend? we clone it.
   if (status === 'absent') {
+    await fs.rm(dir, { recursive: true, force: true }, (err) => {
+      if (err) {
+        // Ocurrió un error al eliminar el directorio
+        console.error(`Error deleting: ${err}`);
+        message = 'error';
+      }
+      message = 'success';
+      // Directorio eliminado con éxito
+      console.log('backend deleted 0');
+    });
     await git
       .clone({
         fs,
@@ -687,104 +697,104 @@ ipcMain.on('git-magic', async (event, branch) => {
         dir,
         url: repo,
         depth: 1,
-        onMessage: console.log,
       })
-      .then((message = 'success'))
-      .catch((message = 'error'));
+      .then((message = 'success'));
+
+    console.log({ message });
   } else {
+    //Git reset hard
+    try {
+      await git.checkout({
+        fs,
+        dir,
+        ref: 'HEAD',
+        force: true,
+      });
+      console.log('All changes discarded successfully.');
+    } catch (error) {
+      console.error('Error discarding all changes:', error);
+    }
+
     //Fetch of new branches
-    await git.fetch({
-      fs,
-      http,
-      dir,
-      url: repo,
-      depth: 1,
-      tags: false,
-    });
-
-    // Status Matrix Row Indexes (git reset)
-    const FILEPATH = 0;
-    const HEAD = 1;
-    const WORKDIR = 2;
-    const STAGE = 3;
-
-    // Status Matrix State
-    const UNCHANGED = 1;
-
-    const allFiles = await git.statusMatrix({ dir, fs });
-    // Get all files which have been modified or staged - does not include new untracked files or deleted files
-
-    const modifiedFiles = allFiles
-      .filter((row) => row[WORKDIR] > UNCHANGED && row[STAGE] > UNCHANGED)
-      .map((row) => row[FILEPATH]);
-
-    console.log({ modifiedFiles });
-
-    // Delete modified/staged files
-    await Promise.all(modifiedFiles.map((path) => fs.promises.rm(path)));
-
-    await git.checkout({ dir, fs, ref: branch, force: true });
-
-    await git
-      .pull({
+    try {
+      await git.fetch({
         fs,
         http,
         dir,
-        singleBranch: true,
+        url: repo,
+        depth: 1,
+        tags: false,
+      });
+      //Switch to the proper branch
+      await git.checkout({
+        fs,
+        dir,
+        ref: branch,
+      });
+      //Pull
+      await git.merge({
+        fs,
+        dir,
+        ours: branch,
+        theirs: `origin/${branch}`,
         author: { name: 'EmuDeck', email: 'noemail@emudeck.com' },
-      })
-      .then((message = 'success'));
+      });
+      status = await git.status({ fs, dir, filepath: 'README.md' });
+      if (status === 'absent' || status === '*deleted') {
+        message = 'error';
+      } else {
+        message = 'success';
+      }
+
+      status = await git.status({ fs, dir, filepath: '.git' });
+      console.log('status2', { status });
+      if (status === 'absent' || status === '*deleted') {
+        message = 'error';
+      } else {
+        message = 'success';
+      }
+    } catch (error) {
+      await fs.rm(dir, { recursive: true, force: true }, (err) => {
+        if (err) {
+          // Ocurrió un error al eliminar el directorio
+          console.error(`Error deleting: ${err}`);
+        }
+        message = 'error';
+        // Directorio eliminado con éxito
+        console.log('backend deleted 1');
+      });
+      await git
+        .clone({
+          fs,
+          http,
+          dir,
+          url: repo,
+          depth: 1,
+        })
+        .then((message = 'success'));
+    }
+    if (message === 'error') {
+      console.log('GIT ERRRORRR');
+      //We delete the backend and we we force a reload
+      await fs.rm(dir, { recursive: true, force: true }, (err) => {
+        if (err) {
+          // Ocurrió un error al eliminar el directorio
+          console.error(`Error deleting: ${err}`);
+          message = 'error';
+        }
+        message = 'success';
+        // Directorio eliminado con éxito
+        console.log('backend deleted 2');
+      });
+      message = 'error';
+    }
   }
-
-  status = await git.status({ fs, dir, filepath: 'README.md' });
-  if (status === 'absent') {
-    message = 'error';
-  } else {
-    message = 'success';
-  }
-
-  await git.checkout({
-    fs,
-    dir,
-    ref: branch,
-  });
-
+  console.log('GIT', { message });
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
     event.reply('git-magic', message);
   });
-
-  //   const backChannel = 'check-git-status';
-  //   let bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
-  //
-  //   if (os.platform().includes('darwin')) {
-  //     bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
-  //   }
-  //   if (os.platform().includes('win32')) {
-  //     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git status`;
-  //   }
-  //
-  //   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-  //     logCommand(bashCommand, error, stdout, stderr);
-  //     event.reply(backChannel, stdout);
-  //   });
 });
-
-// Next release
-// ipcMain.on('pull', async (event, branch) => {
-//   const branchGIT = branch;
-//   const backChannel = 'pull';
-//   const bashCommand = `API_pull "${branchGIT}"`;
-//
-//   return exec(
-//     `${startCommand} . ${allPath}; ${bashCommand} ${finishCommand}`,
-//     shellType,
-//     (error, stdout, stderr) => {
-//       logCommand(bashCommand, error, stdout, stderr);
-//       event.reply(backChannel, stdout);
-//     }
-//   );
-// });
 
 ipcMain.on('branch', async (event) => {
   event.reply('branch-out', process.env.BRANCH);

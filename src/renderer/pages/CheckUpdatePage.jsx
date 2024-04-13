@@ -494,13 +494,14 @@ function CheckUpdatePage() {
         } else {
           const modalData = {
             active: true,
-            header: <span className="h4">Ooops 😞</span>,
+            header: <span className="h4">Ooopsie 😞</span>,
             body: (
               <p>
                 There seems to be an issue downloading the backend. Please
                 restart EmuDeck after testing your network is working
               </p>
             ),
+            footer: <span></span>,
             css: 'emumodal--xs',
           };
 
