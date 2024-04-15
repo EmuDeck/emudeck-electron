@@ -676,19 +676,19 @@ ipcMain.on('git-magic', async (event, branch) => {
     bashCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit "}`;
   }
 
-  let status = await git.status({ fs, dir, filepath: 'README.md' });
-  console.log({ status });
+  let status = await git.status({ fs, dir, filepath: 'versions.json' });
+
   //No backend? we clone it.
   if (status === 'absent') {
+    //We delete the backend folder if exists, just in case
     await fs.rm(dir, { recursive: true, force: true }, (err) => {
       if (err) {
         // Ocurrió un error al eliminar el directorio
         console.error(`Error deleting: ${err}`);
         message = 'error';
       }
-      message = 'success';
       // Directorio eliminado con éxito
-      console.log('backend deleted 0');
+      console.log('backend deleted');
     });
     await git
       .clone({
@@ -699,95 +699,42 @@ ipcMain.on('git-magic', async (event, branch) => {
         depth: 1,
       })
       .then((message = 'success'));
-
-    console.log({ message });
   } else {
     //Git reset hard
-    try {
-      await git.checkout({
-        fs,
-        dir,
-        ref: 'HEAD',
-        force: true,
-      });
-      console.log('All changes discarded successfully.');
-    } catch (error) {
-      console.error('Error discarding all changes:', error);
-    }
+    await git.checkout({
+      fs,
+      dir,
+      force: true,
+    });
 
     //Fetch of new branches
-    try {
-      await git.fetch({
+    await git.fetch({
+      fs,
+      http,
+      dir,
+      url: repo,
+      tags: false,
+    });
+
+    //Branch checkout
+    await git.checkout({
+      fs,
+      dir,
+      ref: branch,
+      force: true,
+    });
+
+    //We update the local code
+    await git
+      .pull({
         fs,
         http,
         dir,
-        url: repo,
-        depth: 1,
-        tags: false,
-      });
-      //Switch to the proper branch
-      await git.checkout({
-        fs,
-        dir,
         ref: branch,
-      });
-      //Pull
-      await git.merge({
-        fs,
-        dir,
-        ours: branch,
-        theirs: `origin/${branch}`,
-        author: { name: 'EmuDeck', email: 'noemail@emudeck.com' },
-      });
-      status = await git.status({ fs, dir, filepath: 'README.md' });
-      if (status === 'absent' || status === '*deleted') {
-        message = 'error';
-      } else {
-        message = 'success';
-      }
-
-      status = await git.status({ fs, dir, filepath: '.git' });
-      console.log('status2', { status });
-      if (status === 'absent' || status === '*deleted') {
-        message = 'error';
-      } else {
-        message = 'success';
-      }
-    } catch (error) {
-      await fs.rm(dir, { recursive: true, force: true }, (err) => {
-        if (err) {
-          // Ocurrió un error al eliminar el directorio
-          console.error(`Error deleting: ${err}`);
-        }
-        message = 'error';
-        // Directorio eliminado con éxito
-        console.log('backend deleted 1');
-      });
-      await git
-        .clone({
-          fs,
-          http,
-          dir,
-          url: repo,
-          depth: 1,
-        })
-        .then((message = 'success'));
-    }
-    if (message === 'error') {
-      console.log('GIT ERRRORRR');
-      //We delete the backend and we we force a reload
-      await fs.rm(dir, { recursive: true, force: true }, (err) => {
-        if (err) {
-          // Ocurrió un error al eliminar el directorio
-          console.error(`Error deleting: ${err}`);
-          message = 'error';
-        }
-        message = 'success';
-        // Directorio eliminado con éxito
-        console.log('backend deleted 2');
-      });
-      message = 'error';
-    }
+        author: { name: 'EmuDeck', email: 'nomail@emudeck.com' },
+        singleBranch: true,
+      })
+      .then((message = 'success'));
   }
   console.log('GIT', { message });
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
