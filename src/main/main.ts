@@ -725,16 +725,47 @@ ipcMain.on('git-magic', async (event, branch) => {
     });
 
     //We update the local code
-    await git
-      .pull({
-        fs,
-        http,
-        dir,
-        ref: branch,
-        author: { name: 'EmuDeck', email: 'nomail@emudeck.com' },
-        singleBranch: true,
-      })
-      .then((message = 'success'));
+    try {
+      await git
+        .pull({
+          fs,
+          http,
+          dir,
+          ref: branch,
+          author: { name: 'EmuDeck', email: 'nomail@emudeck.com' },
+          singleBranch: true,
+        })
+        .then((message = 'success'));
+    } catch {
+      //We couldn't pull???
+      console.log('Deleting Backend');
+      await fs.rm(dir, { recursive: true, force: true }, (err) => {
+        if (err) {
+          console.error(`Error deleting: ${err}`);
+          message = 'error';
+        }
+        console.log('backend deleted');
+        //Let's clone again
+        git
+          .clone({
+            fs,
+            http,
+            dir,
+            url: repo,
+            depth: 1,
+          })
+          .then(
+            git.checkout({
+              fs,
+              dir,
+              ref: branch,
+              force: true,
+            })
+          )
+          .then((message = 'success'));
+        //Branch checkout
+      });
+    }
   }
   console.log('GIT', { message });
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
