@@ -700,29 +700,60 @@ ipcMain.on('git-magic', async (event, branch) => {
       })
       .then((message = 'success'));
   } else {
-    //Git reset hard
-    await git.checkout({
-      fs,
-      dir,
-      force: true,
-    });
+    try {
+      //Git reset hard
+      await git.checkout({
+        fs,
+        dir,
+        force: true,
+      });
 
-    //Fetch of new branches
-    await git.fetch({
-      fs,
-      http,
-      dir,
-      url: repo,
-      tags: false,
-    });
+      //Fetch of new branches
+      await git.fetch({
+        fs,
+        http,
+        dir,
+        url: repo,
+        tags: false,
+      });
 
-    //Branch checkout
-    await git.checkout({
-      fs,
-      dir,
-      ref: branch,
-      force: true,
-    });
+      //Branch checkout
+      await git.checkout({
+        fs,
+        dir,
+        ref: branch,
+        force: true,
+      });
+    } catch {
+      //We couldn't checkout???
+      console.log('Deleting Backend');
+      await fs.rm(dir, { recursive: true, force: true }, (err) => {
+        if (err) {
+          console.error(`Error deleting: ${err}`);
+          message = 'error';
+        }
+        console.log('backend deleted');
+        //Let's clone again
+        git
+          .clone({
+            fs,
+            http,
+            dir,
+            url: repo,
+            depth: 1,
+          })
+          .then(
+            git.checkout({
+              fs,
+              dir,
+              ref: branch,
+              force: true,
+            })
+          )
+          .then((message = 'success'));
+        //Branch checkout
+      });
+    }
 
     //We update the local code
     try {
