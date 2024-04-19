@@ -236,9 +236,6 @@ function PatreonLoginPage() {
       navigate('/check-updates');
     }
   }, [patreonToken]);
-  useEffect(() => {
-    window.reload;
-  }, [patreonTokenTemp]);
 
   useEffect(() => {
     if (state.version != '') {
