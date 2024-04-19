@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
@@ -143,7 +144,8 @@ const imagesGrid = {
   bigpemu: bigpemuGrid,
 };
 
-function EmulatorsPage() {
+function ManageEmulatorsPage() {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
@@ -360,12 +362,8 @@ function EmulatorsPage() {
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Manage your Emulators" />
-        <p className="lead">
-          On this page, you can update your configurations or install new
-          emulators. An orange notification means you have a configuration
-          update ready for the respective emulator.
-        </p>
+        <Header title={t('manageEmulators.title')} />
+        <p className="lead">{t('manageEmulators.description')}</p>
         <Main>
           {updates && (
             <>
@@ -377,9 +375,11 @@ function EmulatorsPage() {
                       css="is-highlighted"
                       btnCSS="btn-simple--1"
                       iconSize="md"
-                      title="Update all Configurations"
-                      description="Update all of your configurations at once. New configurations might contain bug fixes or performance improvements. This will overwrite any global emulator settings you have changed. Per game settings will be retained."
-                      button="Update"
+                      title={t('manageEmulators.updateConfigs.title')}
+                      description={t(
+                        'manageEmulators.updateConfigs.description'
+                      )}
+                      button={t('manageEmulators.updateConfigs.button')}
                       onClick={() => resetEmus()}
                     />
                   </div>
@@ -391,9 +391,9 @@ function EmulatorsPage() {
                       css="is-highlighted"
                       btnCSS="btn-simple--1"
                       iconSize="md"
-                      button="Update"
-                      title="Update your Emulators"
-                      description="Update your emulators right from EmuDeck"
+                      button={t('manageEmulators.updateEmus.button')}
+                      title={t('manageEmulators.updateEmus.title')}
+                      description={t('manageEmulators.updateEmus.description')}
                       onClick={() => navigate(`/update-emulators`)}
                     />
                   </div>
@@ -504,4 +504,4 @@ function EmulatorsPage() {
   );
 }
 
-export default EmulatorsPage;
+export default ManageEmulatorsPage;

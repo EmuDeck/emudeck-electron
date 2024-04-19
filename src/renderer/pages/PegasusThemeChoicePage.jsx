@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useFetchCond } from 'hooks/useFetchCond';
 import { useNavigate } from 'react-router-dom';

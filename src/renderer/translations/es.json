@@ -1,5 +1,18 @@
 {
   "translation": {
-    "title": "title en esp"
+    "manageEmulators": {
+      "title": "Gestiona tus Emuladores",
+      "description": "En esta página, puedes actualizar tus configuraciones o instalar nuevos emuladores. Una notificación naranja significa que tienes una actualización de configuración lista para el emulador correspondiente.",
+      "updateConfigs": {
+        "title": "Actualizar todas las configuraciones",
+        "description": "Actualiza todas tus configuraciones de una sola vez. Las nuevas configuraciones pueden contener correcciones de errores o mejoras de rendimiento. Esto sobrescribirá cualquier configuración global de emulador que hayas cambiado. Los ajustes por juego se conservarán",
+        "button": "Actualizar"
+      },
+      "updateEmus": {
+        "title": "Actualiza tus emuladores",
+        "description": "Actualiza tus emuladores directamente desde EmuDeck",
+        "button": "Actualizar"
+      }
+    }
   }
 }

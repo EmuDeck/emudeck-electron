@@ -1,5 +1,18 @@
 {
   "translation": {
-    "title": "title en ing"
+    "manageEmulators": {
+      "title": "Manage your Emulators",
+      "description": "On this page, you can update your configurations or install new emulators. An orange notification means you have a configuration update ready for the respective emulator.",
+      "updateConfigs": {
+        "title": "Update all Configurations",
+        "description": "Update all of your configurations at once. New configurations might contain bug fixes or performance improvements. This will overwrite any global emulator settings you have changed. Per game settings will be retained",
+        "button": "Update"
+      },
+      "updateEmus": {
+        "title": "Update your Emulators",
+        "description": "Update your emulators right from EmuDeck",
+        "button": "Update"
+      }
+    }
   }
 }

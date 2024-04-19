@@ -49,7 +49,7 @@ import VideoGuidePage from 'pages/VideoGuidePage';
 import MigrationPage from 'pages/MigrationPage';
 import CopyGamesPage from 'pages/CopyGamesPage';
 
-import EmulatorsPage from 'pages/EmulatorsPage';
+import ManageEmulatorsPage from 'pages/ManageEmulatorsPage';
 import EmulatorsDetailPage from 'pages/EmulatorsDetailPage';
 
 import AutoSavePage from 'pages/AutoSavePage';
@@ -580,8 +580,8 @@ export default function App() {
           <Route exact path="/settings" element={<SettingsPage />} />
           <Route exact path="/check-bios" element={<CheckBiosPage />} />
 
-          <Route exact path="/emulators" element={<EmulatorsPage />}>
-            <Route path=":emulator" element={<EmulatorsPage />} />
+          <Route exact path="/emulators" element={<ManageEmulatorsPage />}>
+            <Route path=":emulator" element={<ManageEmulatorsPage />} />
           </Route>
 
           <Route exact path="/android-setup" element={<AndroidSetupPage />}>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useRef, useEffect } from 'react';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
@@ -22,11 +23,8 @@ function UninstallPage() {
     ]);
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Uninstall EmuDeck" />
         <Uninstall

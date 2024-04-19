@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useRef } from 'react';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
@@ -151,11 +152,8 @@ function PowerToolsPage() {
     });
   }, []);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Configure PowerControls" />
         <PowerTools

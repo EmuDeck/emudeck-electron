@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -44,11 +45,8 @@ function ESDEThemePage() {
     return 'emulator-resolution';
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper aside={false}>
         <Header title="EmulationStation-DE Default Theme" />
         <ESDETheme themes={themes} onClick={themeSet} />
