@@ -242,6 +242,7 @@ function CheckUpdatePage() {
         const shadersStored = settingsStorage.shaders;
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
         const achievementsStored = settingsStorage.achievements;
+        delete settingsStorage.patreonToken; // We  prevent the token to be overwritten;
         delete settingsStorage.installEmus.esde;
         delete settingsStorage.installEmus.pegasus;
         delete settingsStorage.installEmus.primehacks;

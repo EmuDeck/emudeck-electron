@@ -690,13 +690,21 @@ ipcMain.on('git-magic', async (event, branch) => {
       // Directorio eliminado con éxito
       console.log('backend deleted');
     });
+    await git.clone({
+      fs,
+      http,
+      dir,
+      url: repo,
+      depth: 1,
+    });
+
+    //Branch checkout
     await git
-      .clone({
+      .checkout({
         fs,
-        http,
         dir,
-        url: repo,
-        depth: 1,
+        ref: branch,
+        force: true,
       })
       .then((message = 'success'));
   } else {
