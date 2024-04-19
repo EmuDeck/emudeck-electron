@@ -1,0 +1,36 @@
+{
+  "translation": {
+    "aside": {
+      "quickSettings": "Réglages Rapides",
+      "manageEmulators": "Gérer les Émulateurs",
+      "importGames": "Importer Jeux & BIOS",
+      "quickReset": "Réinitialisation Rapide",
+      "customReset": "Réinitialisation Personnalisée",
+      "screenResolution": "Résolution d'Écran",
+      "retroAchievements": "Succès Rétro",
+      "biosChecker": "Vérificateur de BIOS",
+      "cloudSaves": "Sauvegardes sur le Cloud",
+      "migrateInstalation": "Migrer l'Installation",
+      "gyro": "Gyroscope",
+      "earlyAccess": "Accès Anticipé",
+      "logFiles": "Obtenir les Fichiers de Log",
+      "changelog": "Journal des Modifications",
+      "cloudServices": "Services Cloud",
+      "uninstall": "Désinstaller"
+    },
+    "manageEmulators": {
+      "title": "Gérez vos émulateurs",
+      "description": "Sur cette page, vous pouvez mettre à jour vos configurations ou installer de nouveaux émulateurs. Une notification orange signifie que vous avez une mise à jour de configuration prête pour l'émulateur respectif.",
+      "updateConfigs": {
+        "title": "Mettre à jour toutes les configurations",
+        "description": "Mettez à jour toutes vos configurations en une fois. Les nouvelles configurations pourraient contenir des corrections de bugs ou des améliorations de performance. Cela écrasera tous les réglages d'émulateur globaux que vous avez modifiés. Les paramètres par jeu seront conservés",
+        "button": "Mettre à jour"
+      },
+      "updateEmus": {
+        "title": "Mettre à jour vos émulateurs",
+        "description": "Mettez à jour vos émulateurs directement depuis EmuDeck",
+        "button": "Mettre à jour"
+      }
+    }
+  }
+}

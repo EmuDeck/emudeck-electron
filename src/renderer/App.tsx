@@ -41,7 +41,7 @@ import CloudSyncConfigPage from 'pages/CloudSyncConfigPage';
 import GameModePage from 'pages/GameModePage';
 
 import ChangeLogPage from 'pages/ChangeLogPage';
-import SettingsPage from 'pages/SettingsPage';
+import QuickSettingsPage from 'pages/QuickSettingsPage';
 import UninstallPage from 'pages/UninstallPage';
 
 import RemotePlayWhateverPage from 'pages/RemotePlayWhateverPage';
@@ -577,7 +577,7 @@ export default function App() {
 
           <Route exact path="/chd-tool" element={<CHDToolPage />} />
           <Route exact path="/change-log" element={<ChangeLogPage />} />
-          <Route exact path="/settings" element={<SettingsPage />} />
+          <Route exact path="/settings" element={<QuickSettingsPage />} />
           <Route exact path="/check-bios" element={<CheckBiosPage />} />
 
           <Route exact path="/emulators" element={<ManageEmulatorsPage />}>

@@ -1,5 +1,37 @@
 {
   "translation": {
+    "general": {
+      "success": "Success",
+      "error": "Error",
+      "launching": "Launching"
+    },
+    "aside": {
+      "quickSettings": "Quick Settings",
+      "manageEmulators": "Manage Emulators",
+      "importGames": "Import Games & BIOS",
+      "quickReset": "Quick Reset",
+      "customReset": "Custom Reset",
+      "screenResolution": "Screen Resolution",
+      "retroAchievements": "Retro Achievements",
+      "biosChecker": "BIOS Checker",
+      "cloudSaves": "Cloud Saves",
+      "migrateInstalation": "Migrate Installation",
+      "gyro": "Gyroscope",
+      "earlyAccess": "Get Early Access",
+      "logFiles": "Get Log Files",
+      "changelog": "Changelog",
+      "cloudServices": "Cloud Services",
+      "uninstall": "Uninstall",
+      "logsSuccess": "We've created a Zip file with all your logs",
+      "logsError": "There was an issue getting your logs, please collect them manually from the emudeck folder in your user folder.",
+      "bootMode": "Gaming Mode",
+      "pegasusTheme": "Pegasus Theme",
+      "featured:": "Featured",
+      "otherSettings": "Other Settings",
+      "exclusiveTools": "EmuDeck exclusive tools",
+      "thirdParty": "Third Party Tools",
+      "other": "Other Stuff"
+    },
     "manageEmulators": {
       "title": "Manage your Emulators",
       "description": "On this page, you can update your configurations or install new emulators. An orange notification means you have a configuration update ready for the respective emulator.",
@@ -13,6 +45,20 @@
         "description": "Update your emulators right from EmuDeck",
         "button": "Update"
       }
+    },
+    "quickSettings": {
+      "title": "Configure your Settings",
+      "notifBezels": "Bezels updated!",
+      "notifSNESRatio": "SNES Aspect Ratio updated!",
+      "notifCloudSync": "CloudSync Status updated!",
+      "nofif3DAR": "3D Aspect Ratio updated!",
+      "nofifDolphinAR": "Dolphin Aspect Ratio updated!",
+      "nofifCRTShader": "CRT Shader updated!",
+      "nofif3DCRTShader": "3D CRT Shader updated!",
+      "nofifLCDShader": "LCD Shader updated!",
+      "nofifAutosave": "AutoSave updated!",
+      "nofifController": "Controller Layout updated!",
+      "nofifBoot": "BootMode updated, please restart your device!"
     }
   }
 }

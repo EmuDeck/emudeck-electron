@@ -1,5 +1,28 @@
 {
   "translation": {
+    "general": {
+      "success": "Éxito",
+      "error": "Error",
+      "launching": "Lanzando"
+    },
+    "aside": {
+      "quickSettings": "Ajustes Rápidos",
+      "manageEmulators": "Gestionar Emuladores",
+      "importGames": "Importar Juegos & BIOS",
+      "quickReset": "Reinicio Rápido",
+      "customReset": "Reinicio Personalizado",
+      "screenResolution": "Resolución de Pantalla",
+      "retroAchievements": "Logros Retro",
+      "biosChecker": "Verificador de BIOS",
+      "cloudSaves": "Guardados en la Nube",
+      "migrateInstalation": "Migrar Instalación",
+      "gyro": "Giroscopio",
+      "earlyAccess": "Acceso Anticipado",
+      "logFiles": "Obtener Archivos de Registro",
+      "changelog": "Registro de Cambios",
+      "cloudServices": "Servicios en la Nube",
+      "uninstall": "Desinstalar"
+    },
     "manageEmulators": {
       "title": "Gestiona tus Emuladores",
       "description": "En esta página, puedes actualizar tus configuraciones o instalar nuevos emuladores. Una notificación naranja significa que tienes una actualización de configuración lista para el emulador correspondiente.",
@@ -13,6 +36,20 @@
         "description": "Actualiza tus emuladores directamente desde EmuDeck",
         "button": "Actualizar"
       }
+    },
+    "quickSettings": {
+      "title": "Configura tus Ajustes",
+      "notifBezels": "¡Marcos actualizados!",
+      "notifSNESRatio": "¡Relación de aspecto de SNES actualizada!",
+      "notifCloudSync": "¡Estado de CloudSync actualizado!",
+      "nofif3DAR": "¡Relación de aspecto 3D actualizada!",
+      "nofifDolphinAR": "¡Relación de aspecto de Dolphin actualizada!",
+      "nofifCRTShader": "¡Shader CRT actualizado!",
+      "nofif3DCRTShader": "¡Shader CRT 3D actualizado!",
+      "nofifLCDShader": "¡Shader LCD actualizado!",
+      "nofifAutosave": "¡AutoGuardado actualizado!",
+      "nofifController": "¡Diseño del controlador actualizado!",
+      "nofifBoot": "¡Modo de arranque actualizado, por favor reinicia tu dispositivo!"
     }
   }
 }
