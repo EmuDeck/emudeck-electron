@@ -8,9 +8,11 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import RABezels from 'components/organisms/Wrappers/RABezels';
 
-const RABezelsPage = () => {
+const AndroidRABezelsPage = () => {
   const { state, setState } = useContext(GlobalContext);
-  const { bezels } = state;
+  const { android } = state;
+  const { bezels } = android;
+
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -20,7 +22,7 @@ const RABezelsPage = () => {
   const bezelsSet = (bezelStatus) => {
     setState({
       ...state,
-      bezels: bezelStatus,
+      android: { ...android, bezels: bezelStatus },
     });
   };
   //Enabling button when changing the global state only if we have a device selected
@@ -36,7 +38,7 @@ const RABezelsPage = () => {
         <Header title="Configure game bezels" />
         <RABezels bezels={bezels} onClick={bezelsSet} />
         <Footer
-          next="aspect-ratio-sega"
+          next="android-frontend-selector"
           disabledNext={disabledNext}
           disabledBack={disabledBack}
         />
@@ -45,4 +47,4 @@ const RABezelsPage = () => {
   );
 };
 
-export default RABezelsPage;
+export default AndroidRABezelsPage;

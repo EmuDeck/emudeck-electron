@@ -1008,7 +1008,7 @@ function AndroidEmulatorSelectorPage() {
           images={images}
         />
         <Footer
-          next="android-frontend-selector"
+          next="android-RA-bezels"
           disabledNext={disabledNext}
           disabledBack={disabledBack}
         />

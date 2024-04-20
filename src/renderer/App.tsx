@@ -68,6 +68,7 @@ import FinishPage from 'pages/FinishPage';
 
 import AndroidRomStoragePage from 'pages/AndroidRomStoragePage';
 import AndroidEmulatorSelectorPage from 'pages/AndroidEmulatorSelectorPage';
+import AndroidRABezelsPage from 'pages/AndroidRABezelsPage';
 import AndroidOwnAPKPage from 'pages/AndroidOwnAPKPage';
 import AndroidEndPage from 'pages/AndroidEndPage';
 import AndroidWelcomePage from 'pages/AndroidWelcomePage';
@@ -142,6 +143,7 @@ export default function App() {
     sudoPass: 'Decky!',
     language: 'en',
     android: {
+      bezels: true,
       second: false,
       installEmus: {
         ra: {
@@ -653,6 +655,11 @@ export default function App() {
             exact
             path="/android-emulator-selector"
             element={<AndroidEmulatorSelectorPage />}
+          />
+          <Route
+            exact
+            path="/android-RA-bezels"
+            element={<AndroidRABezelsPage />}
           />
           <Route
             exact
