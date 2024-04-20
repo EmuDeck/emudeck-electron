@@ -35,6 +35,7 @@ import {
   imgsupermodel,
   imgmodel2,
   imgbigpemu,
+  imgnethersx2,
 } from 'components/utils/images/images';
 
 const images = {
@@ -44,7 +45,7 @@ const images = {
   primehack: imgprimehack,
   ppsspp: imgppsspp,
   duckstation: imgduckstation,
-  citra: imgcitra,
+  citrammj: imgcitra,
   pcsx2: imgpcsx2,
   rpcs3: imgrpcs3,
   yuzu: imgyuzu,
@@ -64,12 +65,14 @@ const images = {
   supermodel: imgsupermodel,
   model2: imgmodel2,
   bigpemu: imgbigpemu,
+  nethersx2: imgnethersx2,
 };
 
-function EmulatorSelectorPage() {
+function AndroidEmulatorSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
-  const { device, installEmus, emulatorAlternative, overwriteConfigEmus } =
-    state;
+  const { device, android, emulatorAlternative, overwriteConfigEmus } = state;
+
+  const { installEmus } = android;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -997,7 +1000,7 @@ function EmulatorSelectorPage() {
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title={`Emulators and tools for ${device}`} />
+        <Header title={`Emulators and tools for Android`} />
         <EmulatorSelector
           installEmus={installEmus}
           data={data}
@@ -1005,7 +1008,7 @@ function EmulatorSelectorPage() {
           images={images}
         />
         <Footer
-          next="emulator-configuration"
+          next="android-frontend-selector"
           disabledNext={disabledNext}
           disabledBack={disabledBack}
         />
@@ -1015,4 +1018,4 @@ function EmulatorSelectorPage() {
   );
 }
 
-export default EmulatorSelectorPage;
+export default AndroidEmulatorSelectorPage;

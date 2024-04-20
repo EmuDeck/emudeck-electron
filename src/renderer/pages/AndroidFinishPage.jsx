@@ -61,9 +61,6 @@ function AndroidFinishPage() {
               If you dont, please reinstall EmuDeck on your device.
             </p>
           </div>
-          <div data-col-sm="6">
-            <img src={androidGif} alt="Android" />
-          </div>
         </div>
       </Main>
     </Wrapper>

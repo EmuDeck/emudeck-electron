@@ -59,9 +59,13 @@ function WelcomePage() {
 
   const navigate = useNavigate();
   const selectMode = (value) => {
-    setState({ ...state, mode: value });
-    if (second) {
-      navigate('/rom-storage');
+    if (value === 'android') {
+      navigate('/android-welcome');
+    } else {
+      setState({ ...state, mode: value });
+      if (second) {
+        navigate('/rom-storage');
+      }
     }
   };
 

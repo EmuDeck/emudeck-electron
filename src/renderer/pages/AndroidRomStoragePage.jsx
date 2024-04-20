@@ -322,10 +322,9 @@ function AndroidRomStoragePage() {
         )}
         {storage !== '' && (
           <Footer
-            next="android-end"
+            next="android-emulator-selector"
             nextText="Next"
             disabledNext={disabledNext}
-            disabledBack
           />
         )}
         <EmuModal modal={modal} />

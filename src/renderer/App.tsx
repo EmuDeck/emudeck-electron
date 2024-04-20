@@ -7,6 +7,7 @@ import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
 import FrontendSelectorPage from 'pages/FrontendSelectorPage';
+import AndroidFrontendSelectorPage from 'pages/AndroidFrontendSelectorPage';
 import ParserSelectorPage from 'pages/ParserSelectorPage';
 import EmulatorConfigurationPage from 'pages/EmulatorConfigurationPage';
 import RomStoragePage from 'pages/RomStoragePage';
@@ -66,6 +67,8 @@ import Hotkeys from 'pages/Hotkeys';
 import FinishPage from 'pages/FinishPage';
 
 import AndroidRomStoragePage from 'pages/AndroidRomStoragePage';
+import AndroidEmulatorSelectorPage from 'pages/AndroidEmulatorSelectorPage';
+import AndroidOwnAPKPage from 'pages/AndroidOwnAPKPage';
 import AndroidEndPage from 'pages/AndroidEndPage';
 import AndroidWelcomePage from 'pages/AndroidWelcomePage';
 import AndroidSetupPage from 'pages/AndroidSetupPage';
@@ -156,31 +159,26 @@ export default function App() {
           status: true,
           name: 'PPSSPP',
         },
-        duckstation: {
-          id: 'duckstation',
+        citrammj: {
+          id: 'citrammj',
           status: true,
-          name: 'DuckStation',
+          name: 'CitraMMJ',
         },
-        citra: {
-          id: 'citra',
+        nethersx2: {
+          id: 'nethersx2',
           status: true,
-          name: 'Citra',
-        },
-        aethersx2: {
-          id: 'aethersx2',
-          status: true,
-          name: 'AetherSX2',
+          name: 'NetherSX2',
         },
         yuzu: {
           id: 'yuzu',
           status: false,
           name: 'Yuzu',
         },
-        vita3k: {
-          id: 'vita3k',
-          status: true,
-          name: 'Vita3K',
-        },
+        // vita3k: {
+        //   id: 'vita3k',
+        //   status: false,
+        //   name: 'Vita3K',
+        // },
         scummvm: {
           id: 'scummvm',
           status: true,
@@ -239,7 +237,13 @@ export default function App() {
           id: 'pegasus',
           status: true,
           name: 'Pegasus',
-          desc: 'Add this launcher to your Steam Library. Recommended for big colections. You need to run EmulationStation parsers to show artwork in Pegasus Themes',
+          desc: 'Free but you need to scrape your artwork using Skrapper on your PC',
+        },
+        esde: {
+          id: 'esde',
+          status: false,
+          name: 'ES-DE',
+          desc: 'You need to bring your own ESDE apk as it is a paid app',
         },
       },
     },
@@ -639,6 +643,21 @@ export default function App() {
             exact
             path="/android-rom-storage"
             element={<AndroidRomStoragePage />}
+          />
+          <Route
+            exact
+            path="/android-frontend-selector"
+            element={<AndroidFrontendSelectorPage />}
+          />
+          <Route
+            exact
+            path="/android-emulator-selector"
+            element={<AndroidEmulatorSelectorPage />}
+          />
+          <Route
+            exact
+            path="/android-own-apk"
+            element={<AndroidOwnAPKPage />}
           />
           <Route exact path="/android-end" element={<AndroidEndPage />} />
           <Route exact path="/android-finish" element={<AndroidFinishPage />} />

@@ -239,6 +239,7 @@ function FrontendSelectorPage() {
       <Wrapper>
         <Header title={`Frontends for ${device}`} />
         <FrontendSelector
+          installFrontends={installFrontends}
           lastSelected={lastSelected}
           onClick={toggleEmus}
           images={images}

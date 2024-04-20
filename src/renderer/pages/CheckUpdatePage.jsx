@@ -252,6 +252,7 @@ function CheckUpdatePage() {
         delete settingsStorage.overwriteConfigEmus.primehacks;
         delete settingsStorage.installEmus.ares;
         delete settingsStorage.overwriteConfigEmus.ares;
+        delete settingsStorage.android;
         const installEmusStored = settingsStorage.installEmus;
         const installFrontendsStored = settingsStorage.installFrontends;
 
@@ -370,6 +371,7 @@ function CheckUpdatePage() {
                 systemNameValue = 'Linux';
                 break;
             }
+
             setState({
               ...state,
               ...settingsStorage,
