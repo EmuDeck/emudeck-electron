@@ -35,7 +35,7 @@ const AndroidRABezelsPage = () => {
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Configure game bezels" />
+        <Header title={t('AndroidRABezelsPage.title')} />
         <RABezels bezels={bezels} onClick={bezelsSet} />
         <Footer
           next="android-frontend-selector"

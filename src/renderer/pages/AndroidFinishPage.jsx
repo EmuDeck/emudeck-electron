@@ -31,7 +31,7 @@ import {
 import androidGif from 'assets/gifs/android.gif';
 
 function AndroidFinishPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({});
@@ -50,17 +50,10 @@ const { t, i18n } = useTranslation();
   return (
     <Wrapper aside>
       <Main>
-        <Header title="EmuDeck Android Installed!" />
+        <Header title={t('AndroidFinishPage.title')} />
         <div className="container--grid">
           <div data-col-sm="6">
-            {' '}
-            <p className="lead">
-              If everything went well, you should see Pegasus Frontend on your
-              Android device.
-            </p>
-            <p className="lead">
-              If you dont, please reinstall EmuDeck on your device.
-            </p>
+            <p className="lead">{t('AndroidFinishPage.description')}</p>
           </div>
         </div>
       </Main>

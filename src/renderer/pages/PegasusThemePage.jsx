@@ -50,7 +50,7 @@ const { t, i18n } = useTranslation();
         <PegasusTheme themes={themes} onClick={themeSet} />
         <Footer
           next={nextPage()}
-          nextText="Next"
+          nextText={t('general.next')}
           disabledNext={disabledNext}
           disabledBack={disabledBack}
         />

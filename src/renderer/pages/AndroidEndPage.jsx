@@ -40,7 +40,7 @@ import {
 } from 'components/utils/images/images';
 
 function AndroidEndPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
@@ -135,9 +135,9 @@ const { t, i18n } = useTranslation();
         <Main>
           <EmuModal
             modalActiveValue={disabledNext === true}
-            modalHeaderValue={
-              <span className="h4">Preparing your Android device...</span>
-            }
+            modalHeaderValue=<span className="h4">
+              {t('AndroidEndPage.title')}
+            </span>
             modalBodyValue={<p>{message}...</p>}
             modalFooterValue=""
             modalCSSValue="emumodal--xs"

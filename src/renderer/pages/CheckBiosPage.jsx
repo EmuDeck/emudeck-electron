@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import CheckBios from 'components/organisms/Wrappers/CheckBios';
 
 function CheckBiosPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
 
   const [statePage, setStatePage] = useState({
@@ -90,7 +90,7 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Bios files checker" />
+        <Header title={t('CheckBiosPage.title')} />
         <CheckBios
           checkBiosAgain={checkBiosAgain}
           ps1Bios={ps1Bios}

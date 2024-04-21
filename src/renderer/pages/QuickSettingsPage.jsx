@@ -54,7 +54,7 @@ function QuickSettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`bezels|||${functionBezel}`]);
     ipcChannel.once('bezels', () => {
-      notificationShow(`🎉 ${t('quickSettings.notifBezels')}`);
+      notificationShow(`🎉 ${t('QuickSettingsPage.notifBezels')}`);
     });
   };
   const onClickCloudSync = (cloudStatus) => {
@@ -67,7 +67,7 @@ function QuickSettingsPage() {
       `cloudSync|||cloud_sync_toggle ${cloudStatus}`,
     ]);
     ipcChannel.once('cloudSync', () => {
-      notificationShow(`🎉 ${t('quickSettings.notifCloudSync')}`);
+      notificationShow(`🎉 ${t('QuickSettingsPage.notifCloudSync')}`);
     });
   };
   const onClickSega = (arStatus) => {
@@ -85,7 +85,7 @@ function QuickSettingsPage() {
           'sega32|||RetroArch_mastersystem_ar32 && RetroArch_genesis_ar32  && RetroArch_segacd_ar32 && RetroArch_sega32x_ar32',
         ]);
         ipcChannel.once('sega32', () => {
-          notificationShow(`🎉 ${t('quickSettings.nofisSegaAR')}`);
+          notificationShow(`🎉 ${t('QuickSettingsPage.nofisSegaAR')}`);
         });
         break;
       default: // 43
@@ -93,7 +93,7 @@ function QuickSettingsPage() {
           'sega43|||RetroArch_mastersystem_ar43 && RetroArch_genesis_ar43  && RetroArch_segacd_ar43 && RetroArch_sega32x_ar43',
         ]);
         ipcChannel.once('sega43', () => {
-          notificationShow(`🎉 ${t('quickSettings.nofisSegaAR')}`);
+          notificationShow(`🎉 ${t('QuickSettingsPage.nofisSegaAR')}`);
         });
         if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
@@ -117,7 +117,7 @@ function QuickSettingsPage() {
           'snes87|||RetroArch_snes_ar87 && RetroArch_nes_ar87',
         ]);
         ipcChannel.once('snes87', () => {
-          notificationShow(`🎉 ${t('quickSettings.notifSNESRatio')}`);
+          notificationShow(`🎉 ${t('QuickSettingsPage.notifSNESRatio')}`);
         });
         if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
@@ -130,7 +130,7 @@ function QuickSettingsPage() {
           'snes32|||RetroArch_snes_ar32 && RetroArch_nes_ar32',
         ]);
         ipcChannel.once('snes32', () => {
-          notificationShow(`🎉 ${t('quickSettings.notifSNESRatio')}`);
+          notificationShow(`🎉 ${t('QuickSettingsPage.notifSNESRatio')}`);
         });
         break;
       default: // 43
@@ -138,7 +138,7 @@ function QuickSettingsPage() {
           'snes43|||RetroArch_snes_ar43 && RetroArch_nes_ar43',
         ]);
         ipcChannel.once('snes43', () => {
-          notificationShow(`🎉 ${t('quickSettings.notifSNESRatio')}`);
+          notificationShow(`🎉 ${t('QuickSettingsPage.notifSNESRatio')}`);
         });
         if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
@@ -162,7 +162,7 @@ function QuickSettingsPage() {
           '3d169|||RetroArch_Beetle_PSX_HW_wideScreenOn && DuckStation_wideScreenOn && RetroArch_Flycast_wideScreenOn && Xemu_wideScreenOn && RetroArch_dreamcast_bezelOff && RetroArch_psx_bezelOff',
         ]);
         ipcChannel.once('3d169', () => {
-          notificationShow(`🎉 ${t('quickSettings.nofif3DAR')}`);
+          notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
         });
         break;
       default: // 43
@@ -170,14 +170,14 @@ function QuickSettingsPage() {
           '3d43|||RetroArch_Flycast_wideScreenOff && RetroArch_Beetle_PSX_HW_wideScreenOff && DuckStation_wideScreenOff && Xemu_wideScreenOff',
         ]);
         ipcChannel.once('3d43', () => {
-          notificationShow(`🎉 ${t('quickSettings.nofif3DAR')}`);
+          notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
         });
         if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
             '3d43Bezels|||RetroArch_dreamcast_bezelOn && RetroArch_psx_bezelOn',
           ]);
           ipcChannel.once('3d43Bezels', () => {
-            notificationShow(`🎉 ${t('quickSettings.nofif3DAR')}`);
+            notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
           });
         }
         break;
@@ -194,12 +194,12 @@ function QuickSettingsPage() {
     if (arStatus === '169') {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOn']);
       ipcChannel.once('dolphin', () => {
-        notificationShow(`🎉 ${t('quickSettings.nofifDolphinAR')}`);
+        notificationShow(`🎉 ${t('QuickSettingsPage.nofifDolphinAR')}`);
       });
     } else {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOff']);
       ipcChannel.once('dolphin', () => {
-        notificationShow(`🎉 ${t('quickSettings.nofifDolphinAR')}`);
+        notificationShow(`🎉 ${t('QuickSettingsPage.nofifDolphinAR')}`);
       });
     }
   };
@@ -220,7 +220,7 @@ function QuickSettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`CRT|||${functionCRT}`]);
     ipcChannel.once('CRT', () => {
-      notificationShow(`🎉 ${t('quickSettings.nofifCRTShader')}`);
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofifCRTShader')}`);
     });
   };
   const onClickCRT3D = (arStatus) => {
@@ -240,7 +240,7 @@ function QuickSettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`CRT3D|||${functionCRT3D}`]);
     ipcChannel.once('CRT3D', () => {
-      notificationShow(`🎉 ${t('quickSettings.nofif3DCRTShader')}`);
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DCRTShader')}`);
     });
   };
   const onClickLCD = (arStatus) => {
@@ -259,7 +259,7 @@ function QuickSettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`LCD|||${functionLCD}`]);
     ipcChannel.once('LCD', () => {
-      notificationShow(`🎉 ${t('quickSettings.nofifLCDShader')}`);
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofifLCDShader')}`);
     });
   };
 
@@ -276,7 +276,7 @@ function QuickSettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`autoSave|||${functionAutoSave}`]);
     ipcChannel.once('autoSave', () => {
-      notificationShow(`🎉 ${t('quickSettings.nofifAutosave')}`);
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofifAutosave')}`);
     });
   };
 
@@ -295,7 +295,7 @@ function QuickSettingsPage() {
       `controllerLayout|||${functionAutoSave}`,
     ]);
     ipcChannel.once('controllerLayout', () => {
-      notificationShow(`🎉 ${t('quickSettings.nofifController')}`);
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofifController')}`);
     });
   };
 
@@ -316,14 +316,14 @@ function QuickSettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`bootMode|||${functionBootMode}`]);
     ipcChannel.once('bootMode', () => {
-      notificationShow(`🎉 ${t('quickSettings.nofifBoot')}`);
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofifBoot')}`);
     });
   };
 
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title={t('quickSettings.title')} />
+        <Header title={t('QuickSettingsPage.title')} />
         <Settings
           showNotification={showNotification}
           notificationText={notificationText}

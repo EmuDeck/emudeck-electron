@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import AspectRatioSNES from 'components/organisms/Wrappers/AspectRatioSNES';
 
 function AspectRatioSNESPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { ar } = state;
   const [statePage] = useState({
@@ -32,7 +32,7 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Configure Aspect Ratio for Classic Nintendo" />
+        <Header title={t('AspectRatioSNESPage.title')} />
         <AspectRatioSNES data={data} onClick={arSet} />
         <Footer
           next="aspect-ratio-3d"

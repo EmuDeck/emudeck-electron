@@ -10,7 +10,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import ControllerLayout from 'components/organisms/Wrappers/ControllerLayout';
 
 function ControllerLayoutPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const { system } = state;
@@ -35,7 +35,7 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Configure Controller Layout" />
+        <Header title={t('ControllerLayoutPage.title')} />
         <ControllerLayout onClick={controllerLayoutSet} />
         <Footer
           next="frontend-selector"

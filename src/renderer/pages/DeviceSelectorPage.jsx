@@ -24,7 +24,7 @@ import {
 } from 'components/utils/images/images';
 
 function DeviceSelectorPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { device, system, mode } = state;
   const [statePage, setStatePage] = useState({
@@ -154,7 +154,7 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title={`Select your device `} />
+        <Header title={t('DeviceSelectorPage.title')} />
         <DeviceSelector data={data} onClick={deviceSet}>
           {system === 'darwin' && (
             <Card

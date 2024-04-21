@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import AspectRatioDolphin from 'components/organisms/Wrappers/AspectRatioDolphin';
 
 function AspectRatioDolphinPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { ar, overwriteConfigEmus } = state;
   const [statePage] = useState({
@@ -32,7 +32,7 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Configure Aspect Ratio for GameCube games" />
+        <Header title={t('AspectRatioDolphinPage.title')} />
         <AspectRatioDolphin data={data} onClick={arSet} />
         <Footer
           next={

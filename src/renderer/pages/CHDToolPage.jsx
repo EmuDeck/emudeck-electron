@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import CHDTool from 'components/organisms/Wrappers/CHDTool';
 
 function CHDToolPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -29,7 +29,7 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="EmuDeck Compression Tool" />
+        <Header title={t('CHDToolPage.title')} />
         <CHDTool onClick={runCHD} />
         <Footer
           next={false}

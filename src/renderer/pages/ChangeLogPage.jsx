@@ -25,7 +25,7 @@ import img14 from 'assets/emulators/grid/bigpemu.png';
 import img15 from 'assets/emulators/grid/model.png';
 
 function ChangeLogPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -125,7 +125,7 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Latest changes" />
+        <Header title={t('ChangeLogPage.title')} />
         <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
           <div className="container--grid">
             <div data-col-sm="4">

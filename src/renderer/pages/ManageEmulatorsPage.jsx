@@ -362,8 +362,8 @@ function ManageEmulatorsPage() {
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title={t('manageEmulators.title')} />
-        <p className="lead">{t('manageEmulators.description')}</p>
+        <Header title={t('ManageEmulatorsPage.title')} />
+        <p className="lead">{t('ManageEmulatorsPage.description')}</p>
         <Main>
           {updates && (
             <>
@@ -375,11 +375,11 @@ function ManageEmulatorsPage() {
                       css="is-highlighted"
                       btnCSS="btn-simple--1"
                       iconSize="md"
-                      title={t('manageEmulators.updateConfigs.title')}
+                      title={t('ManageEmulatorsPage.updateConfigs.title')}
                       description={t(
-                        'manageEmulators.updateConfigs.description'
+                        'ManageEmulatorsPage.updateConfigs.description'
                       )}
-                      button={t('manageEmulators.updateConfigs.button')}
+                      button={t('ManageEmulatorsPage.updateConfigs.button')}
                       onClick={() => resetEmus()}
                     />
                   </div>
@@ -391,9 +391,11 @@ function ManageEmulatorsPage() {
                       css="is-highlighted"
                       btnCSS="btn-simple--1"
                       iconSize="md"
-                      button={t('manageEmulators.updateEmus.button')}
-                      title={t('manageEmulators.updateEmus.title')}
-                      description={t('manageEmulators.updateEmus.description')}
+                      button={t('ManageEmulatorsPage.updateEmus.button')}
+                      title={t('ManageEmulatorsPage.updateEmus.title')}
+                      description={t(
+                        'ManageEmulatorsPage.updateEmus.description'
+                      )}
                       onClick={() => navigate(`/update-emulators`)}
                     />
                   </div>

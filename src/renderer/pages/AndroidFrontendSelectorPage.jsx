@@ -21,7 +21,7 @@ const images = {
 };
 
 function AndroidFrontendSelectorPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { device, android, mode, system } = state;
   const { installFrontends } = android;
@@ -71,7 +71,7 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title={`Frontends for Android`} />
+        <Header title={t('AndroidFrontendSelectorPage.title')} />
         <FrontendSelector
           installFrontends={installFrontends}
           lastSelected={lastSelected}

@@ -269,7 +269,7 @@ const { t, i18n } = useTranslation();
                 type="link"
                 target="_blank"
                 href="https://token.emudeck.com/"
-                aria="Next"
+                aria={t('general.next')}
                 onClick={() => patreonShowInput()}
               >
                 Login with Patreon
@@ -279,7 +279,7 @@ const { t, i18n } = useTranslation();
                 type="link"
                 target="_blank"
                 href="https://patreon.com/"
-                aria="Next"
+                aria={t('general.next')}
               >
                 Change Patreon Account
               </BtnSimple>
@@ -299,7 +299,7 @@ const { t, i18n } = useTranslation();
                 <BtnSimple
                   css="btn-simple--3"
                   type="button"
-                  aria="Next"
+                  aria={t('general.next')}
                   onClick={() => patreonCheckToken()}
                 >
                   {status === null && 'Check Token'}

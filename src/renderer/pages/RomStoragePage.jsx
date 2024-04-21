@@ -310,7 +310,7 @@ const { t, i18n } = useTranslation();
       />
       <Footer
         next="device-selector"
-        nextText="Next"
+        nextText={t('general.next')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

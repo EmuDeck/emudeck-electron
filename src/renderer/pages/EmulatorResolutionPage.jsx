@@ -33,7 +33,7 @@ const { t, i18n } = useTranslation();
       <Wrapper>
         <Header title="Emulator Resolution" />
         <EmulatorResolution onClick={setResolution} />
-        <Footer next="confirmation" nextText="Next" />
+        <Footer next="confirmation" nextText={t('general.next')} />
       </Wrapper>
     </div>
   );

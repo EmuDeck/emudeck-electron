@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Confirmation from 'components/organisms/Wrappers/Confirmation';
 
 function ConfirmationPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state } = useContext(GlobalContext);
   const { bezels } = state;
   const [statePage, setStatePage] = useState({
@@ -30,7 +30,7 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Here is what EmuDeck will do" />
+        <Header title={t('ConfirmationPage.title')} />
         <Confirmation data={data} />
         <Footer
           next="end"

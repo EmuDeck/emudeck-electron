@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import AspectRatio3D from 'components/organisms/Wrappers/AspectRatio3D';
 
 function AspectRatio3DPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { ar } = state;
   const [statePage] = useState({
@@ -32,7 +32,8 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Configure Aspect Ratio for Classic 3D Games" />
+        <Header title={t('AspectRatio3DPage.title')} />
+
         <AspectRatio3D data={data} onClick={arSet} />
         <Footer
           next="aspect-ratio-dolphin"

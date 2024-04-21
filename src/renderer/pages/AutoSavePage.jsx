@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import AutoSave from 'components/organisms/Wrappers/AutoSave';
 
 function AutoSavePage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const [statePage] = useState({
     disabledNext: false,
@@ -28,7 +28,7 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Configure Auto Save" />
+        <Header title={t('AutoSavePage.title')} />
         <AutoSave data={data} onClick={autoSaveSet} />
         <Footer
           next="ra-achievements"

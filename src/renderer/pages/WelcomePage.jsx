@@ -88,18 +88,8 @@ function WelcomePage() {
     if (systemName === 'ERROR') {
       const modalData = {
         active: true,
-        header: (
-          <span className="h4">Error detecting your Operating System</span>
-        ),
-        body: (
-          <>
-            <p>Click on the Close button to try again</p>
-            <p>
-              If the issue persists, please contact us on Discord:
-              https://discord.com/invite/b9F7GpXtFP
-            </p>
-          </>
-        ),
+        header: <span className="h4">{t('WelcomePage.errorModal.title')}</span>,
+        body: t('WelcomePage.errorModal.description'),
         footer: '',
         css: 'emumodal--xs',
       };
@@ -157,28 +147,21 @@ function WelcomePage() {
     <div style={{ height: '100vh' }}>
       <Wrapper aside={second === true}>
         {second === false && (
-          <Header title={`Welcome to EmuDeck for ${systemName}`} />
+          <>
+            <Header
+              title={t('WelcomePage.title', { systemName: systemName })}
+            />
+            <p className="lead">{t('WelcomePage.description')}:</p>
+          </>
         )}
 
         {systemName !== 'ERROR' && second === false && (
-          <Welcome
-            alert={
-              second
-                ? ``
-                : 'Do you need help installing EmuDeck for the first time? <a href="https://youtu.be/Y5r2WZAImuY" target="_blank">Check out this guide</a>'
-            }
-            alertCSS="alert--info"
-            onClick={selectMode}
-          />
+          <Welcome onClick={selectMode} />
         )}
 
         {second === false && systemName !== 'ERROR' && (
           <Footer
-            back={second ? 'tools-and-stuff' : false}
-            backText={second ? 'Tools & stuff' : 'Install EmuDeck First'}
-            third={system !== 'win32' ? 'change-log' : ''}
-            thirdText="See changelog"
-            fourthText="Exit EmuDeck"
+            back={false}
             next="rom-storage"
             exit={gamemode}
             disabledNext={second ? false : disabledNext}
