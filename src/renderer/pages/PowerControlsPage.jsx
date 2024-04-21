@@ -9,6 +9,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import PowerTools from 'components/organisms/Wrappers/PowerTools';
 
 function PowerToolsPage() {
+const { t, i18n } = useTranslation();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,

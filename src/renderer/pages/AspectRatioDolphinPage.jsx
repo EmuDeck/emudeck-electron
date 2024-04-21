@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import AspectRatioDolphin from 'components/organisms/Wrappers/AspectRatioDolphin';
 
 function AspectRatioDolphinPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { ar, overwriteConfigEmus } = state;
   const [statePage] = useState({

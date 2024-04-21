@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import AspectRatioSNES from 'components/organisms/Wrappers/AspectRatioSNES';
 
 function AspectRatioSNESPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { ar } = state;
   const [statePage] = useState({

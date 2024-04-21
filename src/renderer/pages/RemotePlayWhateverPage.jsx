@@ -10,6 +10,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import RemotePlayWhatever from 'components/organisms/Wrappers/RemotePlayWhatever';
 
 function RemotePlayWhateverPage() {
+const { t, i18n } = useTranslation();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,

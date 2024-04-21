@@ -14,6 +14,7 @@ import gitLogo from 'assets/git-logo.png';
 import steamLogo from 'assets/steam-logo.png';
 
 function CheckDependenciesPage() {
+const { t, i18n } = useTranslation();
   const [stateGIT, setStateGIT] = useState({
     statusGIT: null,
   });

@@ -40,6 +40,7 @@ import {
 } from 'components/utils/images/images';
 
 function AndroidEndPage() {
+const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({

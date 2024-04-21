@@ -13,6 +13,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import PatreonLogin from 'components/organisms/PatreonLogin/PatreonLogin';
 
 function CloudSyncPageConfig() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const json = JSON.stringify(state);
   const { cloudSync, cloudSyncType, system, mode } = state;

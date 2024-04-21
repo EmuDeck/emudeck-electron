@@ -10,6 +10,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import ControllerLayout from 'components/organisms/Wrappers/ControllerLayout';
 
 function ControllerLayoutPage() {
+const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const { system } = state;

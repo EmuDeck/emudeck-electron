@@ -67,6 +67,7 @@ const images = {
 };
 
 function EmulatorConfigurationPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { overwriteConfigEmus } = state;
 

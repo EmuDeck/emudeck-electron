@@ -25,6 +25,7 @@ import PatreonLogin from 'components/organisms/PatreonLogin/PatreonLogin';
 //
 
 function AndroidRomStoragePage() {
+const { t, i18n } = useTranslation();
   //
   // i18
   //

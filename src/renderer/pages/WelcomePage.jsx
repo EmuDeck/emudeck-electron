@@ -40,6 +40,7 @@ import {
 } from 'components/utils/images/icons';
 
 function WelcomePage() {
+  const { t, i18n } = useTranslation();
   // const { t } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);

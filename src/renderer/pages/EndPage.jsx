@@ -11,6 +11,7 @@ import Sonic from 'components/organisms/Sonic/Sonic';
 import End from 'components/organisms/Wrappers/End';
 
 function EndPage() {
+const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({

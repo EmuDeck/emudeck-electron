@@ -8,6 +8,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import UpdateEmus from 'components/organisms/Wrappers/UpdateEmus';
 
 function UpdateEmusPage() {
+const { t, i18n } = useTranslation();
   const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,

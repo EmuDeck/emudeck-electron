@@ -41,6 +41,7 @@ import {
 const emuData = require('data/emuData.json');
 
 function EmulatorsDetailPage() {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);

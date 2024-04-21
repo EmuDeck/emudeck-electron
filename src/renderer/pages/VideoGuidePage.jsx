@@ -8,6 +8,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import VideoGuide from 'components/organisms/Wrappers/VideoGuide';
 
 function VideoGuidePage() {
+const { t, i18n } = useTranslation();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,

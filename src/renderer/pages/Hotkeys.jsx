@@ -9,6 +9,7 @@ import { BtnSimple } from 'getbasecore/Atoms';
 import { GlobalContext } from 'context/globalContext';
 
 function Hotkeys() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { system, second } = state;
   const navigate = useNavigate();

@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import CHDTool from 'components/organisms/Wrappers/CHDTool';
 
 function CHDToolPage() {
+const { t, i18n } = useTranslation();
   const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,

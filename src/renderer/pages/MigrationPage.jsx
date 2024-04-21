@@ -10,6 +10,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Migration from 'components/organisms/Wrappers/Migration';
 
 function MigrationPage() {
+const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { storage, storagePath } = state;

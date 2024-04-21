@@ -24,6 +24,7 @@ import {
 } from 'components/utils/images/images';
 
 function DeviceSelectorPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { device, system, mode } = state;
   const [statePage, setStatePage] = useState({

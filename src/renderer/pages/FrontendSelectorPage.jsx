@@ -21,6 +21,7 @@ const images = {
 };
 
 function FrontendSelectorPage() {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { device, installFrontends, mode, system } = state;
 

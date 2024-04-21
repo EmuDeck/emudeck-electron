@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import AspectRatio3D from 'components/organisms/Wrappers/AspectRatio3D';
 
 function AspectRatio3DPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { ar } = state;
   const [statePage] = useState({

@@ -29,6 +29,7 @@ import {
 } from 'components/utils/images/icons';
 
 function AndroidWelcomePage() {
+const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({});

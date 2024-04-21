@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import CloudSync from 'components/organisms/Wrappers/CloudSync';
 
 function CloudSyncPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { type } = useParams();
   const { cloudSyncType, mode } = state;

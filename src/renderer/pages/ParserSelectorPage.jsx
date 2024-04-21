@@ -65,6 +65,7 @@ const images = {
 };
 
 function ParserSelectorPage() {
+  const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);

@@ -67,6 +67,7 @@ const images = {
 };
 
 function EmulatorSelectorPage() {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { device, installEmus, emulatorAlternative, overwriteConfigEmus } =
     state;

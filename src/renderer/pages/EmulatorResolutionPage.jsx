@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import EmulatorResolution from 'components/organisms/Wrappers/EmulatorResolution';
 
 function EmulatorResolutionPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { resolutions, system } = state;
 

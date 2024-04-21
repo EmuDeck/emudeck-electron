@@ -62,6 +62,7 @@ import {
 } from 'components/utils/images/images';
 
 function AndroidSetupPage() {
+const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({});

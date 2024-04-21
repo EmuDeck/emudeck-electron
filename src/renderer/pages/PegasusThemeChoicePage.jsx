@@ -13,6 +13,7 @@ import { BtnSimple } from 'getbasecore/Atoms';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 
 function PegasusThemeChoicePage() {
+const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);

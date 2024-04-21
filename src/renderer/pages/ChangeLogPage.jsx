@@ -25,6 +25,7 @@ import img14 from 'assets/emulators/grid/bigpemu.png';
 import img15 from 'assets/emulators/grid/model.png';
 
 function ChangeLogPage() {
+const { t, i18n } = useTranslation();
   const { state } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,

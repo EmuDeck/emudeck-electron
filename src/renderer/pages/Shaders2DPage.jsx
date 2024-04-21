@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Shaders2D from 'components/organisms/Wrappers/Shaders2D';
 
 function Shaders2DPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { shaders } = state;
   const [statePage] = useState({

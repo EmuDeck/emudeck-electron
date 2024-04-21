@@ -4,6 +4,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Header from 'components/organisms/Header/Header';
 
 function AndroidOwnAPKPage() {
+const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>

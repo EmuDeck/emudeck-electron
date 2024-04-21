@@ -9,6 +9,7 @@ import { useFetchCond } from 'hooks/useFetchCond';
 import PegasusTheme from 'components/organisms/Wrappers/PegasusTheme';
 
 function PegasusThemePage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { system, mode, installFrontends } = state;
   const [statePage, setStatePage] = useState({

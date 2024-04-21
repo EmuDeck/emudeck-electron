@@ -7,6 +7,7 @@ import Card from 'components/molecules/Card/Card';
 import { BtnSimple } from 'getbasecore/Atoms';
 
 function EarlyAccessPage() {
+const { t, i18n } = useTranslation();
   return (
     <Wrapper>
       <Header title="Help us by supporting EmuDeck" />

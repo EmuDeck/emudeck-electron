@@ -69,6 +69,7 @@ const images = {
 };
 
 function AndroidEmulatorSelectorPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { device, android, emulatorAlternative, overwriteConfigEmus } = state;
 

@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Confirmation from 'components/organisms/Wrappers/Confirmation';
 
 function ConfirmationPage() {
+const { t, i18n } = useTranslation();
   const { state } = useContext(GlobalContext);
   const { bezels } = state;
   const [statePage, setStatePage] = useState({

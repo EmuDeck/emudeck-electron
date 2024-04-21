@@ -31,6 +31,7 @@ import {
 import androidGif from 'assets/gifs/android.gif';
 
 function AndroidFinishPage() {
+const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({});

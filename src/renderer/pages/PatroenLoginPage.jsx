@@ -25,6 +25,7 @@ const branchFile = require('data/branch.json');
 const { branch } = branchFile;
 
 function PatreonLoginPage() {
+const { t, i18n } = useTranslation();
   //
   // i18
   //

@@ -12,6 +12,7 @@ import { BtnSimple } from 'getbasecore/Atoms';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 
 function GameModePage() {
+const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { type } = useParams();

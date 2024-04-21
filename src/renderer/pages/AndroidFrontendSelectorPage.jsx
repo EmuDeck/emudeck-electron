@@ -21,6 +21,7 @@ const images = {
 };
 
 function AndroidFrontendSelectorPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { device, android, mode, system } = state;
   const { installFrontends } = android;

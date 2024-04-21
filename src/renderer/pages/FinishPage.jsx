@@ -10,6 +10,7 @@ import { GlobalContext } from 'context/globalContext';
 import { yoshiMario, yoshi } from 'components/utils/images/gifs';
 
 function FinishPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { system, second } = state;
   const navigate = useNavigate();

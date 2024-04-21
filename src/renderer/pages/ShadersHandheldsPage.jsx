@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import ShadersHandhelds from 'components/organisms/Wrappers/ShadersHandhelds';
 
 function ShadersHandheldsPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { shaders } = state;
   const [statePage] = useState({

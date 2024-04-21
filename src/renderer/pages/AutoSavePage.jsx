@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import AutoSave from 'components/organisms/Wrappers/AutoSave';
 
 function AutoSavePage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const [statePage] = useState({
     disabledNext: false,

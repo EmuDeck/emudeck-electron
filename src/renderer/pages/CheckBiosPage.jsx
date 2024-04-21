@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import CheckBios from 'components/organisms/Wrappers/CheckBios';
 
 function CheckBiosPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
 
   const [statePage, setStatePage] = useState({

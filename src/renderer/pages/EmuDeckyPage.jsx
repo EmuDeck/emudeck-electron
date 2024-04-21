@@ -10,6 +10,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import EmuDecky from 'components/organisms/Wrappers/EmuDecky';
 
 function EmuDeckyPage() {
+const { t, i18n } = useTranslation();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,

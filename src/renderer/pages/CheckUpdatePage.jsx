@@ -19,6 +19,7 @@ const branchFile = require('data/branch.json');
 const { branch } = branchFile;
 
 function CheckUpdatePage() {
+const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState, setStateCurrentConfigs } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({

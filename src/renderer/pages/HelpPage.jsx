@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import Footer from 'components/organisms/Footer/Footer';
 
 function HelpPage() {
+const { t, i18n } = useTranslation();
   return (
     <>
       <iframe

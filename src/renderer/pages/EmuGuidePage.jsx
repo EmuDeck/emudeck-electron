@@ -10,6 +10,7 @@ import EmuGuide from 'components/organisms/Wrappers/EmuGuide';
 const emuData = require('data/emuData.json');
 
 function EmuGuidePage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { installEmus, mode } = state;
   const { ryujinx } = installEmus;

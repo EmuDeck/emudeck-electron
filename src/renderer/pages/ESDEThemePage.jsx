@@ -9,6 +9,7 @@ import { useFetchCond } from 'hooks/useFetchCond';
 import ESDETheme from 'components/organisms/Wrappers/ESDETheme';
 
 function ESDEThemePage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { mode, system, installFrontends } = state;
   const [statePage, setStatePage] = useState({

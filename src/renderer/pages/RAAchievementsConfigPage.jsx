@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import RAAchievements from 'components/organisms/Wrappers/RAAchievements';
 
 function RAAchievementsConfigPage() {
+const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { achievements } = state;

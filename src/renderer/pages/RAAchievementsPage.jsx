@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import RAAchievements from 'components/organisms/Wrappers/RAAchievements';
 
 function RAAchievementsPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { achievements } = state;
   const [statePage] = useState({

@@ -22,6 +22,7 @@ import RomStorage from 'components/organisms/Wrappers/RomStorage';
 //
 
 function RomStoragePage() {
+const { t, i18n } = useTranslation();
   //
   // i18
   //

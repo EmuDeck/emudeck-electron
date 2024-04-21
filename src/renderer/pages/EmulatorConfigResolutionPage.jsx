@@ -10,6 +10,7 @@ import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import EmulatorResolution from 'components/organisms/Wrappers/EmulatorResolution';
 
 function EmulatorConfigResolutionPage() {
+const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { resolutions, system } = state;
