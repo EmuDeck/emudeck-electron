@@ -3,12 +3,22 @@
     "general": {
       "success": "Éxito",
       "error": "Error",
-      "launching": "Lanzando"
+      "launching": "Iniciando",
+      "continue": "Continuar",
+      "back": "Atrás",
+      "next": "Siguiente",
+      "skip": "Omitir",
+      "pressContinue": "Presiona Continuar cuando lo hayas hecho",
+      "yes": "Sí",
+      "no": "No",
+      "month": "mes",
+      "join": "Unirse",
+      "copyGames": "Copiar juegos"
     },
     "aside": {
       "quickSettings": "Ajustes Rápidos",
-      "manageEmulators": "Gestionar Emuladores",
-      "importGames": "Importar Juegos & BIOS",
+      "manageEmulators": "Administrar Emuladores",
+      "importGames": "Importar Juegos y BIOS",
       "quickReset": "Reinicio Rápido",
       "customReset": "Reinicio Personalizado",
       "screenResolution": "Resolución de Pantalla",
@@ -17,27 +27,36 @@
       "cloudSaves": "Guardados en la Nube",
       "migrateInstalation": "Migrar Instalación",
       "gyro": "Giroscopio",
-      "earlyAccess": "Acceso Anticipado",
+      "earlyAccess": "Obtener Acceso Anticipado",
       "logFiles": "Obtener Archivos de Registro",
       "changelog": "Registro de Cambios",
       "cloudServices": "Servicios en la Nube",
-      "uninstall": "Desinstalar"
+      "uninstall": "Desinstalar",
+      "logsSuccess": "Hemos creado un archivo Zip con todos tus registros",
+      "logsError": "Hubo un problema al obtener tus registros, por favor recógelos manualmente desde la carpeta emudeck en tu carpeta de usuario.",
+      "bootMode": "Modo de Juego",
+      "pegasusTheme": "Tema Pegasus",
+      "featured": "Destacados",
+      "otherSettings": "Otros Ajustes",
+      "exclusiveTools": "Herramientas exclusivas de EmuDeck",
+      "thirdParty": "Herramientas de Terceros",
+      "other": "Otras Cosas"
     },
-    "manageEmulators": {
-      "title": "Gestiona tus Emuladores",
-      "description": "En esta página, puedes actualizar tus configuraciones o instalar nuevos emuladores. Una notificación naranja significa que tienes una actualización de configuración lista para el emulador correspondiente.",
+    "ManageEmulatorsPage": {
+      "title": "Administra tus Emuladores",
+      "description": "En esta página, puedes actualizar tus configuraciones o instalar nuevos emuladores. Una notificación naranja significa que tienes una actualización de configuración lista para el respectivo emulador.",
       "updateConfigs": {
-        "title": "Actualizar todas las configuraciones",
-        "description": "Actualiza todas tus configuraciones de una sola vez. Las nuevas configuraciones pueden contener correcciones de errores o mejoras de rendimiento. Esto sobrescribirá cualquier configuración global de emulador que hayas cambiado. Los ajustes por juego se conservarán",
+        "title": "Actualizar todas las Configuraciones",
+        "description": "Actualiza todas tus configuraciones a la vez. Las nuevas configuraciones podrían contener correcciones de errores o mejoras de rendimiento. Esto sobrescribirá cualquier ajuste global de emulador que hayas cambiado. Los ajustes por juego se mantendrán",
         "button": "Actualizar"
       },
       "updateEmus": {
-        "title": "Actualiza tus emuladores",
+        "title": "Actualiza tus Emuladores",
         "description": "Actualiza tus emuladores directamente desde EmuDeck",
         "button": "Actualizar"
       }
     },
-    "quickSettings": {
+    "QuickSettingsPage": {
       "title": "Configura tus Ajustes",
       "notifBezels": "¡Marcos actualizados!",
       "notifSNESRatio": "¡Relación de aspecto de SNES actualizada!",
@@ -47,9 +66,249 @@
       "nofifCRTShader": "¡Shader CRT actualizado!",
       "nofif3DCRTShader": "¡Shader CRT 3D actualizado!",
       "nofifLCDShader": "¡Shader LCD actualizado!",
-      "nofifAutosave": "¡AutoGuardado actualizado!",
-      "nofifController": "¡Diseño del controlador actualizado!",
+      "nofifAutosave": "¡Autoguardado actualizado!",
+      "nofifController": "¡Distribución del controlador actualizada!",
       "nofifBoot": "¡Modo de arranque actualizado, por favor reinicia tu dispositivo!"
-    }
+    },
+    "AndroidEmulatorSelectorPage": {
+      "title": "Emuladores y herramientas para Android",
+      "description": ""
+    },
+    "AndroidEndPage": { "title": "Preparando tu dispositivo Android..." },
+    "AndroidFinishPage": {
+      "title": "¡EmuDeck Android Instalado!",
+      "description": "Si todo salió bien, deberías ver tu Frontend en tu dispositivo Android.<br/>Si no es así, por favor reinstala EmuDeck."
+    },
+    "AndroidFrontendSelectorPage": {
+      "title": "Frontends para Android",
+      "description": "Selecciona qué frontends te gustaría usar para lanzar tus juegos. Puedes seleccionar más de uno."
+    },
+    "AndroidOwnAPKPage": {
+      "title": "Trae tu propio APK",
+      "description": "¿Tienes otro emulador o quieres instalar ESDE?<br/>Pon todos tus APK en tu carpeta de descargas y EmuDeck los instalará<br/><strong>Por favor no uses APKs piratas</strong>"
+    },
+    "AndroidRABezelsPage": { "title": "Configura los marcos de juego" },
+    "AndroidRomStoragePage": {
+      "title": "Selecciona el Almacenamiento de ROM para tu dispositivo Android",
+      "warning": {
+        "title": "Asegúrate de que tu dispositivo Android esté:",
+        "line1": "- Conectado usando un USB con capacidades de transferencia de datos",
+        "line2": "- Desarrollador y depuración USB activados",
+        "line3": "- Has aceptado todas las solicitudes en tu dispositivo",
+        "line4": "- Has seleccionado Transferencia de archivos cuando te lo preguntó el dispositivo",
+        "title2": "Cómo activar el modo Desarrollador"
+      }
+    },
+    "AndroidSetupPage": {
+      "configs": {
+        "yuzu": "Ve a tu dispositivo, y haz clic en Comenzar y termina la configuración en tu dispositivo. Tus claves deberían estar en {{storage}}/Emulación/bios/yuzu/llaves.",
+        "ppsspp": "Ve a tu dispositivo y crea la carpeta PSP en {{storage}}/Emulación/guardados/. Presiona Continuar cuando lo hayas hecho.",
+        "nethersx2": "Ve a tu dispositivo y configura tu bios. Tu bios debería estar en {storage}/Emulación/bios/",
+        "ra1": "Ve a tu dispositivo, ve a Cargar Núcleo, Descargar Núcleo e instala todos los núcleos que necesites.",
+        "ra2": "Cada núcleo se usa para un sistema diferente, estos son los necesarios para los sistemas más comunes:",
+        "ra3": "mgba (GameBoy Advance), genesis_plus_gx(Genesis,MasterSystem), snex9x(Super Nintendo), melonds (Nintendo DS),mame2003_plus (MAME), mesen (NES), gambatte (GameBoy), mupen64plus_next(Nintendo 64), swanstation (Playstation 1)",
+        "ra4": "Luego ve a Ajustes, Directorio. Configura tu Sistema/Bios a {{storage}}/Emulación/bios. Configura Archivos Guardados a {{storage}}/Emulación/guardados/RetroArch/guardados y Estados Guardados a {{storage}}/Emulación/guardados/RetroArch/estados"
+      }
+    },
+    "AndroidWelcomePage": {
+      "description": "Esta versión de acceso anticipado te permite instalar varios emuladores y configuraciones en tu dispositivo Android",
+      "quickInstall": {
+        "title": "Instalar en Android",
+        "button": "Instalar",
+        "description": "Asistente que instalará tus Emuladores, copiará tu carpeta de bios actual y te guiará a través de la configuración de tu dispositivo Android"
+      },
+      "manageEmulators": {
+        "title": "Administrar Emuladores",
+        "button": "Instalar",
+        "description": "Instala Emuladores uno por uno"
+      },
+      "saveSync": {
+        "title": "SyncGuardado",
+        "button": "Instalar",
+        "description": "Sincroniza tus juegos guardados"
+      }
+    },
+    "AspectRatio3DPage": {
+      "title": "Configura la Relación de Aspecto para Juegos Clásicos 3D"
+    },
+    "AspectRatioDolphinPage": {
+      "title": "Configura la Relación de Aspecto para juegos de GameCube"
+    },
+    "AspectRatioSegaPage": {
+      "title": "Configura la Relación de Aspecto para Sistemas Sega Clásicos"
+    },
+    "AspectRatioSNESPage": {
+      "title": "Configura la Relación de Aspecto para Nintendo Clásico"
+    },
+    "AutoSavePage": { "title": "Configura Auto Guardado" },
+    "ChangeLogPage": { "title": "Cambios más recientes" },
+    "CHDToolPage": { "title": "Herramienta de Compresión EmuDeck" },
+    "CheckBiosPage": { "title": "Verificador de archivos BIOS" },
+    "CheckUpdatePage": {
+      "title": "EmuDeck se está cargando...",
+      "backend": "Construyendo el backend de EmuDeck y ejecutando autodiagnósticos en segundo plano...",
+      "checking": {
+        "title": "Comprobando actualizaciones...",
+        "description": "Por favor espera mientras comprobamos si hay una nueva versión disponible..."
+      },
+      "updating": {
+        "title": "¡Actualizando!",
+        "description": "EmuDeck se reiniciará tan pronto como termine la actualización. Aguanta un poco."
+      },
+      "found": {
+        "title": "¡Actualización encontrada!",
+        "description": "¿Quieres actualizar? <br /> <strong>Esta actualización no modificará tus juegos ni ajustes</strong> <br /> Por favor ve a Administrar Emuladores para aplicar todas las nuevas configuraciones.",
+        "changelog": "Ver Registro de Cambios"
+      },
+      "error": {
+        "title": "Ups",
+        "description": "Parece haber un problema descargando el backend. Por favor reinicia EmuDeck después de comprobar que tu red funciona"
+      }
+    },
+    "CloudSyncConfigPage": {
+      "title": "SyncNube - Selecciona tu proveedor",
+      "title2": "BackupNube - Selecciona tu proveedor"
+    },
+    "CloudSyncPage": { "title": "Guardados en la Nube" },
+    "ConfirmationPage": { "title": "Aquí está lo que EmuDeck hará" },
+    "ControllerLayoutPage": {
+      "title": "Configura la Distribución del Controlador"
+    },
+    "CopyGamesPage": { "title": "" },
+    "DeviceSelectorPage": { "title": "Selecciona tu dispositivo" },
+    "EarlyAccessPage": {
+      "title": "Ayúdanos apoyando a EmuDeck",
+      "description": "Dona en Patreon y ayúdanos a crecer y mejorar! Como miembro de nuestra comunidad obtendrás apoyo individual y acceso anticipado a nuestras últimas características, algunas de ellas exclusivas para patrocinadores",
+      "eaTier": {
+        "description": "Obtén acceso a las últimas características y aplicaciones antes que nadie, esto incluye apoyo exclusivo y nuevas características para SteamOS, Windows, MacOS y Android en el futuro.",
+        "list": "<li>- Acceso anticipado</li><li>- Apoyo General</li><li>- SyncNube ( Sincroniza tus juegos guardados entre Mac, Windows o Linux )</li><li>- Comunidad privada de Discord</li>"
+      },
+      "fanTier": {
+        "description": "Realmente amas lo que hago, y te lo agradezco! Esta contribución ayudará a EmuDeck a comprar nuevos dispositivos y establecer optimizaciones personalizadas para otros sistemas.",
+        "list": "<li>- Las mismas características que Acceso Anticipado y</li><li>- Derechos de voto, vamos a dar forma al futuro de EmuDeck juntos</li>"
+      }
+    },
+    "EmuDeckyPage": { "title": "Configura EmuDecky" },
+    "EmuGuidePage": { "title": "" },
+    "EmulatorConfigResolutionPage": { "title": "Resolución del Emulador" },
+    "EmulatorConfigurationPage": {
+      "title": "Configuraciones de Emuladores y Herramientas"
+    },
+    "EmulatorResolutionPage": { "title": "Resolución del Emulador" },
+    "EmulatorsDetailPage": { "title": "" },
+    "EmulatorSelectorPage": {
+      "title": "Emuladores y herramientas para {{device}}"
+    },
+    "EndPage": {
+      "title": "Estamos completando tu instalación...",
+      "titleFinish": "¡Instalación completa!",
+      "titleAlly": "Configuración del controlador Asus Rog Ally",
+      "titleWin32": "Configuración del controlador"
+    },
+    "ErrorPage": { "title": "" },
+    "ESDEThemePage": { "title": "Tema Predeterminado de EmulationStation-DE" },
+    "FinishPage": { "title": "¿Qué queda?" },
+    "FrontendSelectorPage": { "title": "Frontends para {{device}}" },
+    "GameModePage": { "title": "Modo de Juego" },
+    "GyroDSUPage": { "title": "Configura SteamDeckGyroDSU" },
+    "HelpPage": { "title": "" },
+    "HotkeysPage": { "title": "Teclas Rápidas de Emulación" },
+    "ManageEmulatorsPage": { "title": "" },
+    "MigrationPage": { "title": "Migra tu instalación" },
+    "ParserSelectorPage": { "title": "Analizadores para Steam Rom Manager" },
+    "PatroenLoginPage": { "title": "Iniciar sesión en Patreon" },
+    "PegasusThemeChoicePage": { "title": "Tema Predeterminado de Pegasus" },
+    "PegasusThemePage": { "title": "Tema Predeterminado de Pegasus" },
+    "PowerControlsPage": { "title": "Configura los Controles de Energía" },
+    "PowerToolsPage": { "title": "Configura las Herramientas de Energía" },
+    "QuickSettingsPage": { "title": "" },
+    "RAAchievementsConfigPage": { "title": "Configura RetroAchievements" },
+    "RAAchievementsPage": { "title": "Configura RetroAchievements" },
+    "RABezelsPage": { "title": "Configura los Marcos de Juego" },
+    "RomStoragePage": { "title": "Selecciona tu Directorio ROM" },
+    "Shaders2DPage": {
+      "title": "Configura Shader CRT para Juegos Clásicos 2D"
+    },
+    "Shaders3DPage": {
+      "title": "Configura Shader CRT para Juegos Clásicos 3D"
+    },
+    "ShadersHandheldsPage": {
+      "title": "Configura Shader LCD para Sistemas Portátiles"
+    },
+    "StoreFrontPage": { "title": "Tienda EmuDeck" },
+    "UninstallPage": { "title": "Desinstalar EmuDeck" },
+    "UpdateEmusPage": { "title": "Actualiza tus Emuladores y Herramientas" },
+    "WelcomePage": {
+      "title": "Bienvenido a EmuDeck para {{systemName}}",
+      "description": "Selecciona cómo quieres configurar tu dispositivo",
+      "errorModal": {
+        "title": "Error al detectar tu Sistema Operativo",
+        "description": "<p>Haz clic en el botón Cerrar para intentarlo de nuevo</p><p>Si el problema persiste, por favor contáctanos en Discord: https://discord.com/invite/b9F7GpXtFP</p>"
+      }
+    },
+    "AndroidEmulatorSelector": { "description": "" },
+    "AndroidEnd": { "description": "" },
+    "AndroidFinish": { "description": "" },
+    "AndroidFrontendSelector": { "description": "" },
+    "AndroidOwnAPK": { "description": "" },
+    "AndroidRABezels": { "description": "" },
+    "AndroidRomStorage": { "description": "" },
+    "AndroidSetup": { "description": "" },
+    "AndroidWelcome": { "description": "" },
+    "AspectRatio3D": { "description": "" },
+    "AspectRatioDolphin": { "description": "" },
+    "AspectRatioSega": { "description": "" },
+    "AspectRatioSNES": { "description": "" },
+    "AutoSave": { "description": "" },
+    "ChangeLog": { "description": "" },
+    "CHDTool": { "description": "" },
+    "CheckBios": { "description": "" },
+    "CheckDependencies": { "description": "" },
+    "CheckUpdate": { "description": "" },
+    "CloudSyncConfig": { "description": "" },
+    "CloudSync": { "description": "" },
+    "Confirmation": { "description": "" },
+    "ControllerLayout": { "description": "" },
+    "CopyGames": { "description": "" },
+    "DeviceSelector": { "description": "" },
+    "EarlyAccess": { "description": "" },
+    "EmuDecky": { "description": "" },
+    "EmuGuide": { "description": "" },
+    "EmulatorConfigResolution": { "description": "" },
+    "EmulatorConfiguration": { "description": "" },
+    "EmulatorResolution": { "description": "" },
+    "EmulatorsDetail": { "description": "" },
+    "EmulatorSelector": { "description": "" },
+    "End": { "description": "" },
+    "Error": { "description": "" },
+    "ESDETheme": { "description": "" },
+    "Finish": { "description": "" },
+    "FrontendSelector": { "description": "" },
+    "GameMode": { "description": "" },
+    "GyroDSU": { "description": "" },
+    "Help": { "description": "" },
+    "Hot": { "description": "" },
+    "ManageEmulators": { "description": "" },
+    "Migration": { "description": "" },
+    "ParserSelector": { "description": "" },
+    "PatroenLogin": { "description": "" },
+    "PegasusThemeChoice": { "description": "" },
+    "PegasusTheme": { "description": "" },
+    "PowerControls": { "description": "" },
+    "PowerTools": { "description": "" },
+    "QuickSettings": { "description": "" },
+    "RAAchievementsConfig": { "description": "" },
+    "RAAchievements": { "description": "" },
+    "RABezels": { "description": "" },
+    "RemotePlayWhatever": { "description": "" },
+    "RomStorage": { "description": "" },
+    "Shaders2D": { "description": "" },
+    "Shaders3D": { "description": "" },
+    "ShadersHandhelds": { "description": "" },
+    "StoreFront": { "description": "" },
+    "Uninstall": { "description": "" },
+    "UpdateEmus": { "description": "" },
+    "VideoGuide": { "description": "" },
+    "Welcome": { "description": "" }
   }
 }
