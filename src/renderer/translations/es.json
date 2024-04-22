@@ -213,7 +213,6 @@
     "GyroDSUPage": { "title": "Configura SteamDeckGyroDSU" },
     "HelpPage": { "title": "" },
     "HotkeysPage": { "title": "Teclas Rápidas de Emulación" },
-    "ManageEmulatorsPage": { "title": "" },
     "MigrationPage": { "title": "Migra tu instalación" },
     "ParserSelectorPage": { "title": "Analizadores para Steam Rom Manager" },
     "PatroenLoginPage": { "title": "Iniciar sesión en Patreon" },
