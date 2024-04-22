@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
@@ -24,6 +25,7 @@ const branchFile = require('data/branch.json');
 const { branch } = branchFile;
 
 function PatreonLoginPage() {
+const { t, i18n } = useTranslation();
   //
   // i18
   //
@@ -36,15 +38,26 @@ function PatreonLoginPage() {
     patreonClicked: false,
     status: null,
     accessAllowed: false,
-    patreonToken: null,
+    patreonTokenTemp: null,
     errorMessage: undefined,
   });
-  const { patreonClicked, status, accessAllowed, patreonToken, errorMessage } =
-    statePage;
+  const {
+    patreonClicked,
+    status,
+    accessAllowed,
+    patreonTokenTemp,
+    errorMessage,
+  } = statePage;
 
   const { state, setState } = useContext(GlobalContext);
 
-  const { installEmus, overwriteConfigEmus, achievements, shaders } = state;
+  const {
+    installEmus,
+    overwriteConfigEmus,
+    achievements,
+    shader,
+    patreonToken,
+  } = state;
 
   //
   // Web services
@@ -74,7 +87,7 @@ function PatreonLoginPage() {
 
     setStatePage({
       ...statePage,
-      patreonToken: patronTokenValue,
+      patreonTokenTemp: patronTokenValue,
     });
   };
 
@@ -95,7 +108,7 @@ function PatreonLoginPage() {
     }
 
     if (!tokenArg) {
-      token = patreonToken;
+      token = patreonTokenTemp;
     } else {
       token = tokenArg;
     }
@@ -127,7 +140,7 @@ function PatreonLoginPage() {
         if (patreonJson.status === true) {
           setStatePage({
             ...statePage,
-            patreonToken: patreonJson.new_token,
+            patreonTokenTemp: patreonJson.new_token,
             accessAllowed: true,
           });
         }
@@ -155,8 +168,19 @@ function PatreonLoginPage() {
 
   useEffect(() => {
     if (accessAllowed === true) {
-      localStorage.setItem('patreon_token', patreonToken);
-      navigate('/check-updates');
+      localStorage.setItem('patreon_token', patreonTokenTemp);
+      const partial = patreonTokenTemp.split('|||');
+      const splitToken = partial[1];
+
+      ipcChannel.sendMessage('emudeck', [
+        `storePatreonToken|||storePatreonToken ${splitToken}`,
+      ]);
+      ipcChannel.once('storePatreonToken', (message) => {
+        setState({
+          ...state,
+          patreonToken: splitToken,
+        });
+      });
     } else if (accessAllowed === 'cancel') {
       const updateOrLogin = confirm(
         'Please log back in to Patreon to keep EmuDeck updated. Press OK to log in again or Cancel to continue with no updates'
@@ -209,9 +233,10 @@ function PatreonLoginPage() {
       }
     }
   }, [accessAllowed]);
-
   useEffect(() => {
-    window.reload;
+    if (patreonToken !== null) {
+      navigate('/check-updates');
+    }
   }, [patreonToken]);
 
   useEffect(() => {
@@ -244,7 +269,7 @@ function PatreonLoginPage() {
                 type="link"
                 target="_blank"
                 href="https://token.emudeck.com/"
-                aria="Next"
+                aria={t('general.next')}
                 onClick={() => patreonShowInput()}
               >
                 Login with Patreon
@@ -254,7 +279,7 @@ function PatreonLoginPage() {
                 type="link"
                 target="_blank"
                 href="https://patreon.com/"
-                aria="Next"
+                aria={t('general.next')}
               >
                 Change Patreon Account
               </BtnSimple>
@@ -267,14 +292,14 @@ function PatreonLoginPage() {
                 type="token"
                 name="token"
                 id="token"
-                value={patreonToken}
+                value={patreonTokenTemp}
                 onChange={patreonSetToken}
               />
-              {patreonToken !== null && (
+              {patreonTokenTemp !== null && (
                 <BtnSimple
                   css="btn-simple--3"
                   type="button"
-                  aria="Next"
+                  aria={t('general.next')}
                   onClick={() => patreonCheckToken()}
                 >
                   {status === null && 'Check Token'}

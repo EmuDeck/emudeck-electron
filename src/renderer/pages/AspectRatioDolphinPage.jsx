@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import AspectRatioDolphin from 'components/organisms/Wrappers/AspectRatioDolphin';
 
 function AspectRatioDolphinPage() {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { ar, overwriteConfigEmus } = state;
   const [statePage] = useState({
@@ -27,13 +29,10 @@ function AspectRatioDolphinPage() {
     });
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Configure Aspect Ratio for GameCube games" />
+        <Header title={t('AspectRatioDolphinPage.title')} />
         <AspectRatioDolphin data={data} onClick={arSet} />
         <Footer
           next={

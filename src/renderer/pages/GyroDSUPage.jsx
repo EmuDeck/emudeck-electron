@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -9,6 +10,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import GyroDSU from 'components/organisms/Wrappers/GyroDSU';
 
 function GyroDSUPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,

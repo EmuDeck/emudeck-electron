@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Shaders3D from 'components/organisms/Wrappers/Shaders3D';
 
 function Shaders3DPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { shaders } = state;
   const [statePage] = useState({
@@ -27,11 +29,8 @@ function Shaders3DPage() {
     });
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Configure CRT Shader for Classic 3D Games" />
         <Shaders3D

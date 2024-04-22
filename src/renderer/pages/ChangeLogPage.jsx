@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -24,6 +25,7 @@ import img14 from 'assets/emulators/grid/bigpemu.png';
 import img15 from 'assets/emulators/grid/model.png';
 
 function ChangeLogPage() {
+  const { t, i18n } = useTranslation();
   const { state } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -123,7 +125,7 @@ function ChangeLogPage() {
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Latest changes" />
+        <Header title={t('ChangeLogPage.title')} />
         <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
           <div className="container--grid">
             <div data-col-sm="4">

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import RAAchievements from 'components/organisms/Wrappers/RAAchievements';
 
 function RAAchievementsPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { achievements } = state;
   const [statePage] = useState({
@@ -37,11 +39,8 @@ function RAAchievementsPage() {
     });
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Configure RetroAchievements" />
         <RAAchievements

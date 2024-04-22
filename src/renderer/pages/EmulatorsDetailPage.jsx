@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
@@ -40,6 +41,7 @@ import {
 const emuData = require('data/emuData.json');
 
 function EmulatorsDetailPage() {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);

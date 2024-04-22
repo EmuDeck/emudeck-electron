@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import AutoSave from 'components/organisms/Wrappers/AutoSave';
 
 function AutoSavePage() {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const [statePage] = useState({
     disabledNext: false,
@@ -23,13 +25,10 @@ function AutoSavePage() {
     });
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Configure Auto Save" />
+        <Header title={t('AutoSavePage.title')} />
         <AutoSave data={data} onClick={autoSaveSet} />
         <Footer
           next="ra-achievements"

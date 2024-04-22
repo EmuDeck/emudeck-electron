@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import CheckBios from 'components/organisms/Wrappers/CheckBios';
 
 function CheckBiosPage() {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
 
   const [statePage, setStatePage] = useState({
@@ -85,13 +87,10 @@ function CheckBiosPage() {
     checkBios('checkDSBios');
   }, []);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Bios files checker" />
+        <Header title={t('CheckBiosPage.title')} />
         <CheckBios
           checkBiosAgain={checkBiosAgain}
           ps1Bios={ps1Bios}

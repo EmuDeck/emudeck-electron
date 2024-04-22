@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
@@ -21,6 +22,7 @@ import RomStorage from 'components/organisms/Wrappers/RomStorage';
 //
 
 function RomStoragePage() {
+const { t, i18n } = useTranslation();
   //
   // i18
   //
@@ -308,7 +310,7 @@ function RomStoragePage() {
       />
       <Footer
         next="device-selector"
-        nextText="Next"
+        nextText={t('general.next')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

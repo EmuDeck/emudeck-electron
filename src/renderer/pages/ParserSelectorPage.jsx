@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -64,6 +65,7 @@ const images = {
 };
 
 function ParserSelectorPage() {
+  const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);

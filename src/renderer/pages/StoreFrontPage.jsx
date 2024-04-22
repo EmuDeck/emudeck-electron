@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +10,7 @@ import StoreFront from 'components/organisms/Wrappers/StoreFront';
 import { BtnSimple } from 'getbasecore/Atoms';
 
 function StoreFrontPage() {
+const { t, i18n } = useTranslation();
   const { state } = useContext(GlobalContext);
   const { bezels } = state;
   const [statePage, setStatePage] = useState({
@@ -26,11 +28,9 @@ function StoreFrontPage() {
     }
   }, [state]);
 
-
   return (
-    <div >
-      
-      <div style={{ height: '100vh' }} >
+    <div>
+      <div style={{ height: '100vh' }}>
         <Wrapper>
           <Header title="EmuDeck Store" />
           <StoreFront

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +10,7 @@ import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import EmulatorResolution from 'components/organisms/Wrappers/EmulatorResolution';
 
 function EmulatorConfigResolutionPage() {
+const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { resolutions, system } = state;

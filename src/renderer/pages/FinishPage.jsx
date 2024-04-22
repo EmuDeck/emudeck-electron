@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -9,6 +10,7 @@ import { GlobalContext } from 'context/globalContext';
 import { yoshiMario, yoshi } from 'components/utils/images/gifs';
 
 function FinishPage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { system, second } = state;
   const navigate = useNavigate();

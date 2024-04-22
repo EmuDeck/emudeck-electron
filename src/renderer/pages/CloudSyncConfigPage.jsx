@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { BtnSimple } from 'getbasecore/Atoms';
@@ -12,6 +13,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import PatreonLogin from 'components/organisms/PatreonLogin/PatreonLogin';
 
 function CloudSyncPageConfig() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const json = JSON.stringify(state);
   const { cloudSync, cloudSyncType, system, mode } = state;

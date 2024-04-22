@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import { BtnSimple } from 'getbasecore/Atoms';
 import { GlobalContext } from 'context/globalContext';
 
 function Hotkeys() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { system, second } = state;
   const navigate = useNavigate();

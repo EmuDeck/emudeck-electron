@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import { useFetchCond } from 'hooks/useFetchCond';
 import ESDETheme from 'components/organisms/Wrappers/ESDETheme';
 
 function ESDEThemePage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { mode, system, installFrontends } = state;
   const [statePage, setStatePage] = useState({
@@ -44,17 +46,14 @@ function ESDEThemePage() {
     return 'emulator-resolution';
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper aside={false}>
         <Header title="EmulationStation-DE Default Theme" />
         <ESDETheme themes={themes} onClick={themeSet} />
         <Footer
           next={nextPage()}
-          nextText="Next"
+          nextText={t('general.next')}
           disabledNext={disabledNext}
           disabledBack={disabledBack}
         />

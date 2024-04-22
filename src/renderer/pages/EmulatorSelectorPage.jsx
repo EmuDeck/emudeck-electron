@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -66,6 +67,7 @@ const images = {
 };
 
 function EmulatorSelectorPage() {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { device, installEmus, emulatorAlternative, overwriteConfigEmus } =
     state;
@@ -997,7 +999,12 @@ function EmulatorSelectorPage() {
     <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title={`Emulators and tools for ${device}`} />
-        <EmulatorSelector data={data} onClick={toggleEmus} images={images} />
+        <EmulatorSelector
+          installEmus={installEmus}
+          data={data}
+          onClick={toggleEmus}
+          images={images}
+        />
         <Footer
           next="emulator-configuration"
           disabledNext={disabledNext}

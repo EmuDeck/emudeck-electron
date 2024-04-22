@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -11,6 +12,7 @@ import { BtnSimple } from 'getbasecore/Atoms';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 
 function GameModePage() {
+const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { type } = useParams();

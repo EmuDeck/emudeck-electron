@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -13,6 +14,7 @@ import gitLogo from 'assets/git-logo.png';
 import steamLogo from 'assets/steam-logo.png';
 
 function CheckDependenciesPage() {
+const { t, i18n } = useTranslation();
   const [stateGIT, setStateGIT] = useState({
     statusGIT: null,
   });

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -9,6 +10,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Migration from 'components/organisms/Wrappers/Migration';
 
 function MigrationPage() {
+const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { storage, storagePath } = state;
@@ -194,11 +196,8 @@ function MigrationPage() {
     localStorage.setItem('settings_emudeck', json);
   }, [state]);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Migrate your installation" />
         <Migration

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useRef, useEffect } from 'react';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
@@ -7,6 +8,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import UpdateEmus from 'components/organisms/Wrappers/UpdateEmus';
 
 function UpdateEmusPage() {
+const { t, i18n } = useTranslation();
   const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -28,11 +30,8 @@ function UpdateEmusPage() {
     ]);
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Update your Emulators & Tools" />
         <UpdateEmus

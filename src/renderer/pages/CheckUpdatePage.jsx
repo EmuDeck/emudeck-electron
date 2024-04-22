@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -18,6 +19,7 @@ const branchFile = require('data/branch.json');
 const { branch } = branchFile;
 
 function CheckUpdatePage() {
+  const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState, setStateCurrentConfigs } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
@@ -30,12 +32,8 @@ function CheckUpdatePage() {
     dom: undefined,
     modal: {
       active: true,
-      header: <span className="h4">Checking for updates...</span>,
-      body: (
-        <p>
-          Please stand by while we check if there is a new version available...
-        </p>
-      ),
+      header: <span className="h4">{t('CheckUpdatePage.checking.title')}</span>,
+      body: <p>{t('CheckUpdatePage.checking.description')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs emumodal--loading',
     },
@@ -114,11 +112,14 @@ function CheckUpdatePage() {
             if (message[0] === 'updating') {
               const modalData = {
                 active: true,
-                header: <span className="h4">🎉 Updating! 🎉</span>,
+                header: (
+                  <span className="h4">
+                    🎉 {t('CheckUpdatePage.updating.title')} 🎉
+                  </span>
+                ),
                 body: (
                   <p className="h5">
-                    EmuDeck will restart as soon as it finishes the update. Hold
-                    on tight.
+                    {t('CheckUpdatePage.updating.description')}
                   </p>
                 ),
                 footer: (
@@ -138,13 +139,12 @@ function CheckUpdatePage() {
         if (message[0] === 'updating') {
           modalData = {
             active: true,
-            header: <span className="h4">🎉 Updating! 🎉</span>,
-            body: (
-              <p className="h5">
-                EmuDeck will restart as soon as it finishes the update. Hold on
-                tight.
-              </p>
+            header: (
+              <span className="h4">
+                🎉 {t('CheckUpdatePage.updating.title')} 🎉
+              </span>
             ),
+            body: <p className="h5">{t('CheckUpdatePage.updating.title')}</p>,
             footer: <ProgressBar css="progress--success" infinite max="100" />,
             css: 'emumodal--xs emumodal--loading',
           };
@@ -153,15 +153,18 @@ function CheckUpdatePage() {
         if (message[0] === 'update-available') {
           modalData = {
             active: true,
-            header: <span className="h4">🎉 Update found! 🎉</span>,
+            header: (
+              <span className="h4">
+                🎉{t('CheckUpdatePage.found.title')} 🎉
+              </span>
+            ),
             body: (
-              <p className="lead">
-                Do you want to update? <br />
-                <strong>This update won't modify your games or settings</strong>
-                <br />
-                Please go to Manage Emulators to apply all the new
-                configurations.
-              </p>
+              <p
+                className="lead"
+                dangerouslySetInnerHTML={{
+                  __html: t('CheckUpdatePage.found.description'),
+                }}
+              />
             ),
             footer: (
               <div>
@@ -172,16 +175,16 @@ function CheckUpdatePage() {
                   style={{ marginBottom: 0 }}
                   onClick={() => doUpdate()}
                 >
-                  Yes
+                  {t('general.yes')}
                 </BtnSimple>
                 <BtnSimple
                   css="btn-simple--2"
                   type="link"
-                  aria="See Changelog"
+                  aria={t('CheckUpdatePage.found.changelog')}
                   target="_blank"
                   href="https://emudeck.github.io/blog/"
                 >
-                  See Changelog
+                  {t('CheckUpdatePage.found.changelog')}
                 </BtnSimple>
                 <BtnSimple
                   css="btn-simple--3"
@@ -190,7 +193,7 @@ function CheckUpdatePage() {
                   style={{ marginBottom: 0 }}
                   onClick={() => cancelUpdate()}
                 >
-                  No
+                  {t('general.no')}
                 </BtnSimple>
               </div>
             ),
@@ -242,6 +245,7 @@ function CheckUpdatePage() {
         const shadersStored = settingsStorage.shaders;
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
         const achievementsStored = settingsStorage.achievements;
+        delete settingsStorage.patreonToken; // We  prevent the token to be overwritten;
         delete settingsStorage.installEmus.esde;
         delete settingsStorage.installEmus.pegasus;
         delete settingsStorage.installEmus.primehacks;
@@ -250,6 +254,7 @@ function CheckUpdatePage() {
         delete settingsStorage.overwriteConfigEmus.primehacks;
         delete settingsStorage.installEmus.ares;
         delete settingsStorage.overwriteConfigEmus.ares;
+        delete settingsStorage.android;
         const installEmusStored = settingsStorage.installEmus;
         const installFrontendsStored = settingsStorage.installFrontends;
 
@@ -368,6 +373,7 @@ function CheckUpdatePage() {
                 systemNameValue = 'Linux';
                 break;
             }
+
             setState({
               ...state,
               ...settingsStorage,
@@ -462,12 +468,7 @@ function CheckUpdatePage() {
 
       const modalDataGit = {
         active: true,
-        header: (
-          <span className="h4">
-            Building EmuDeck backend and running autodiagnostics in the
-            background...
-          </span>
-        ),
+        header: <span className="h4">{t('CheckUpdatePage.backend')}</span>,
         body: '',
         footer: <ProgressBar css="progress--success" infinite max="100" />,
         css: 'emumodal--xs emumodal--loading',
@@ -494,13 +495,10 @@ function CheckUpdatePage() {
         } else {
           const modalData = {
             active: true,
-            header: <span className="h4">Ooopsie 😞</span>,
-            body: (
-              <p>
-                There seems to be an issue downloading the backend. Please
-                restart EmuDeck after testing your network is working
-              </p>
+            header: (
+              <span className="h4">{t('CheckUpdatePage.error.title')} 😞</span>
             ),
+            body: <p>{t('CheckUpdatePage.error.description')}</p>,
             footer: <span></span>,
             css: 'emumodal--xs',
           };
@@ -533,7 +531,7 @@ function CheckUpdatePage() {
     <div style={{ height: '100vh' }}>
       <Wrapper css="wrapper__full" aside={false}>
         <Kamek />
-        <Header title="EmuDeck is loading..." />
+        <Header title={t('CheckUpdatePage.title')} />
         <EmuModal modal={modal} />
       </Wrapper>
     </div>

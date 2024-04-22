@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -9,6 +10,7 @@ import EmuGuide from 'components/organisms/Wrappers/EmuGuide';
 const emuData = require('data/emuData.json');
 
 function EmuGuidePage() {
+const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { installEmus, mode } = state;
   const { ryujinx } = installEmus;
@@ -269,11 +271,8 @@ function EmuGuidePage() {
     }
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title={emuData[emulatorSelected].name} />
         <EmuGuide

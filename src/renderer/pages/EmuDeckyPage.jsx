@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -9,6 +10,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import EmuDecky from 'components/organisms/Wrappers/EmuDecky';
 
 function EmuDeckyPage() {
+const { t, i18n } = useTranslation();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -150,11 +152,8 @@ function EmuDeckyPage() {
     });
   }, []);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Configure EmuDecky" />
         <EmuDecky

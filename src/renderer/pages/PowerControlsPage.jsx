@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useRef } from 'react';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
@@ -8,6 +9,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import PowerTools from 'components/organisms/Wrappers/PowerTools';
 
 function PowerToolsPage() {
+const { t, i18n } = useTranslation();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -151,11 +153,8 @@ function PowerToolsPage() {
     });
   }, []);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
+    <div style={{ height: '100vh' }}>
       <Wrapper>
         <Header title="Configure PowerControls" />
         <PowerTools
