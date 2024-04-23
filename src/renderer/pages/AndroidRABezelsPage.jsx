@@ -9,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import RABezels from 'components/organisms/Wrappers/RABezels';
 
 const AndroidRABezelsPage = () => {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { android } = state;
   const { bezels } = android;
