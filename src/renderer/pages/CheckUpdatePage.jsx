@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -19,7 +18,6 @@ const branchFile = require('data/branch.json');
 const { branch } = branchFile;
 
 function CheckUpdatePage() {
-  const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState, setStateCurrentConfigs } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
@@ -32,8 +30,12 @@ function CheckUpdatePage() {
     dom: undefined,
     modal: {
       active: true,
-      header: <span className="h4">{t('CheckUpdatePage.checking.title')}</span>,
-      body: <p>{t('CheckUpdatePage.checking.description')}</p>,
+      header: <span className="h4">Checking for updates...</span>,
+      body: (
+        <p>
+          Please stand by while we check if there is a new version available...
+        </p>
+      ),
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs emumodal--loading',
     },
@@ -105,46 +107,17 @@ function CheckUpdatePage() {
         // We clear the timeout
         clearTimeout(updateTimeOut);
 
-        const doUpdate = () => {
-          ipcChannel.sendMessage('update-start');
-
-          ipcChannel.once('update-check-out', (message) => {
-            if (message[0] === 'updating') {
-              const modalData = {
-                active: true,
-                header: (
-                  <span className="h4">
-                    🎉 {t('CheckUpdatePage.updating.title')} 🎉
-                  </span>
-                ),
-                body: (
-                  <p className="h5">
-                    {t('CheckUpdatePage.updating.description')}
-                  </p>
-                ),
-                footer: (
-                  <ProgressBar css="progress--success" infinite max="100" />
-                ),
-                css: 'emumodal--xs emumodal--loading',
-              };
-              setStatePage({
-                ...statePage,
-                modal: modalData,
-              });
-            }
-          });
-        };
-
         let modalData;
         if (message[0] === 'updating') {
           modalData = {
             active: true,
-            header: (
-              <span className="h4">
-                🎉 {t('CheckUpdatePage.updating.title')} 🎉
-              </span>
+            header: <span className="h4">🎉 Updating! 🎉</span>,
+            body: (
+              <p className="h5">
+                EmuDeck will restart as soon as it finishes the update. Hold on
+                tight.
+              </p>
             ),
-            body: <p className="h5">{t('CheckUpdatePage.updating.title')}</p>,
             footer: <ProgressBar css="progress--success" infinite max="100" />,
             css: 'emumodal--xs emumodal--loading',
           };
@@ -153,18 +126,15 @@ function CheckUpdatePage() {
         if (message[0] === 'update-available') {
           modalData = {
             active: true,
-            header: (
-              <span className="h4">
-                🎉{t('CheckUpdatePage.found.title')} 🎉
-              </span>
-            ),
+            header: <span className="h4">🎉 Update found! 🎉</span>,
             body: (
-              <p
-                className="lead"
-                dangerouslySetInnerHTML={{
-                  __html: t('CheckUpdatePage.found.description'),
-                }}
-              />
+              <p className="lead">
+                Do you want to update? <br />
+                <strong>This update won't modify your games or settings</strong>
+                <br />
+                Please go to Manage Emulators to apply all the new
+                configurations.
+              </p>
             ),
             footer: (
               <div>
@@ -175,16 +145,16 @@ function CheckUpdatePage() {
                   style={{ marginBottom: 0 }}
                   onClick={() => doUpdate()}
                 >
-                  {t('general.yes')}
+                  Yes
                 </BtnSimple>
                 <BtnSimple
                   css="btn-simple--2"
                   type="link"
-                  aria={t('CheckUpdatePage.found.changelog')}
+                  aria="See Changelog"
                   target="_blank"
                   href="https://emudeck.github.io/blog/"
                 >
-                  {t('CheckUpdatePage.found.changelog')}
+                  See Changelog
                 </BtnSimple>
                 <BtnSimple
                   css="btn-simple--3"
@@ -193,7 +163,7 @@ function CheckUpdatePage() {
                   style={{ marginBottom: 0 }}
                   onClick={() => cancelUpdate()}
                 >
-                  {t('general.no')}
+                  No
                 </BtnSimple>
               </div>
             ),
@@ -220,6 +190,31 @@ function CheckUpdatePage() {
       });
     }
 
+    const doUpdate = () => {
+      ipcChannel.sendMessage('update-start');
+
+      ipcChannel.once('update-check-out', (message) => {
+        if (message[0] === 'updating') {
+          const modalData = {
+            active: true,
+            header: <span className="h4">🎉 Updating! 🎉</span>,
+            body: (
+              <p className="h5">
+                EmuDeck will restart as soon as it finishes the update. Hold on
+                tight.
+              </p>
+            ),
+            footer: <ProgressBar css="progress--success" infinite max="100" />,
+            css: 'emumodal--xs emumodal--loading',
+          };
+          setStatePage({
+            ...statePage,
+            modal: modalData,
+          });
+        }
+      });
+    };
+
     const cancelUpdate = () => {
       updateFiles();
       setStatePage({
@@ -245,7 +240,6 @@ function CheckUpdatePage() {
         const shadersStored = settingsStorage.shaders;
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
         const achievementsStored = settingsStorage.achievements;
-        delete settingsStorage.patreonToken; // We  prevent the token to be overwritten;
         delete settingsStorage.installEmus.esde;
         delete settingsStorage.installEmus.pegasus;
         delete settingsStorage.installEmus.primehacks;
@@ -254,7 +248,6 @@ function CheckUpdatePage() {
         delete settingsStorage.overwriteConfigEmus.primehacks;
         delete settingsStorage.installEmus.ares;
         delete settingsStorage.overwriteConfigEmus.ares;
-        delete settingsStorage.android;
         const installEmusStored = settingsStorage.installEmus;
         const installFrontendsStored = settingsStorage.installFrontends;
 
@@ -373,7 +366,6 @@ function CheckUpdatePage() {
                 systemNameValue = 'Linux';
                 break;
             }
-
             setState({
               ...state,
               ...settingsStorage,
@@ -452,6 +444,24 @@ function CheckUpdatePage() {
         });
       }
     };
+
+    // ipcChannel.sendMessage('clean-log');
+
+    //  setTimeout(() => {
+
+    // ipcChannel.sendMessage('update-check');
+
+    // ipcChannel.once('update-check-out', (message) => {
+    //
+    //
+    //   setStatePage({
+    //     ...statePage,
+    //     update: message[0],
+    //     data: message[1],
+    //   });
+    // });
+
+    //  }, 500);
   }, []);
 
   useEffect(() => {
@@ -468,60 +478,152 @@ function CheckUpdatePage() {
 
       const modalDataGit = {
         active: true,
-        header: <span className="h4">{t('CheckUpdatePage.backend')}</span>,
-        body: '',
-        footer: <ProgressBar css="progress--success" infinite max="100" />,
+        header: (
+          <span className="h4">
+            Building EmuDeck backend and running autodiagnostics in the
+            background...
+          </span>
+        ),
+        body: <ProgressBar css="progress--success" infinite max="100" />,
+        footer: (
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria="Show log"
+            disabled={false}
+            style={{ marginBottom: 0 }}
+            onClick={() => showLog(system)}
+          >
+            See more details
+          </BtnSimple>
+        ),
         css: 'emumodal--xs emumodal--loading',
       };
 
-      setStatePage({
-        ...statePage,
-        modal: modalDataGit,
+      // setStatePage({
+      //   ...statePage,
+      //   modal: modalDataGit,
+      // });
+
+      ipcChannel.sendMessage('check-git');
+      ipcChannel.once('check-git', (error, stdout, stderr) => {
+        // alert('checking git');
+        const cloneStatusCheck = stdout.replace('\n', '');
+        let cloneStatusCheckValue;
+
+        if (cloneStatusCheck.includes('true')) {
+          cloneStatusCheckValue = true;
+        } else {
+          cloneStatusCheckValue = false;
+        }
+
+        setStatePage({
+          ...statePage,
+          cloned: cloneStatusCheckValue,
+          modal: modalDataGit,
+        });
       });
     }
   }, [update, system]);
 
-  // We clone / pull
   useEffect(() => {
-    if (navigator.onLine) {
-      ipcChannel.sendMessage('git-magic', branch);
-      ipcChannel.once('git-magic', (status) => {
-        if (status === 'success') {
-          setStatePage({
-            ...statePage,
-            downloadComplete: true,
-            modal: false,
+    // settings here
+    if (cloned === false) {
+      // alert('cloneFalse');
+      if (navigator.onLine) {
+        ipcChannel.sendMessage(`clone`, branch);
+        cloneTimeOut = setTimeout(() => {
+          ipcChannel.sendMessage('check-git-status', branch);
+          ipcChannel.once('check-git-status', (error) => {
+            if (error.includes('not a git directory')) {
+              // alert('There seems to be an issue, please restart EmuDeck');
+              const modalData = {
+                active: true,
+                header: <span className="h4">Ooops 😞</span>,
+                body: (
+                  <p>
+                    There seems to be an issue building the backend. Please
+                    restart EmuDeck if this screen doesn't dissapear in about 5
+                    seconds
+                  </p>
+                ),
+                css: 'emumodal--xs',
+              };
+              setStatePage({ ...statePageRef.current, modal: modalData });
+            } else {
+              setStatePage({ ...statePageRef.current, downloadComplete: true });
+            }
           });
-        } else {
-          const modalData = {
-            active: true,
-            header: (
-              <span className="h4">{t('CheckUpdatePage.error.title')} 😞</span>
-            ),
-            body: <p>{t('CheckUpdatePage.error.description')}</p>,
-            footer: <span></span>,
-            css: 'emumodal--xs',
-          };
+        }, 60000);
+        ipcChannel.once('clone', (error, cloneStatusClone) => {
+          if (cloneStatusClone.includes('true')) {
+            clearTimeout(cloneTimeOut);
+            setStatePage({ ...statePage, downloadComplete: true });
+            console.log({ downloadComplete });
+          }
+        });
+      } else {
+        const modalData = {
+          active: true,
+          header: <span className="h4">Ooops 😞</span>,
+          body: <p>You need to be connected to the internet.</p>,
+          css: 'emumodal--xs emumodal--loading',
+        };
+        setStatePage({
+          ...statePage,
+          modal: modalData,
+        });
+      }
+    } else if (cloned === true) {
+      // alert('cloned true');
+      if (navigator.onLine) {
+        // alert(branch);
 
-          setStatePage({
-            ...statePage,
-            modal: modalData,
+        console.log(`GIT PULL ${branch}`);
+        ipcChannel.sendMessage('pull', branch);
+        pullTimeOut = setTimeout(() => {
+          ipcChannel.sendMessage('check-git-status', branch);
+          ipcChannel.once('check-git-status', (error) => {
+            console.log({ error });
+            if (error.includes('Your branch is up to date')) {
+              setStatePage({ ...statePageRef.current, downloadComplete: true });
+            } else {
+              const modalData = {
+                active: true,
+                header: <span className="h4">Ooops 😞</span>,
+                body: (
+                  <p>
+                    There's been an issue building the backend, please restart
+                    EmuDeck if this screen doesn't dissapear in about 5 seconds.
+                  </p>
+                ),
+                footer: '',
+                css: 'emumodal--xs',
+              };
+              setStatePage({
+                ...statePageRef.current,
+                modal: modalData,
+              });
+            }
           });
-        }
-      });
-    } else {
-      alert(
-        "Internet not detected. EmuDeck will run in Offline Mode, you can upload your settings but you can't use Steam Rom Manager"
-      );
-      setStatePage({
-        ...statePage,
-        downloadComplete: true,
-        modal: false,
-      });
+        }, 20000);
+        ipcChannel.once('pull', (error, stdout, stderr) => {
+          console.log('GIT PULL response');
+          console.log({ error, stdout, stderr });
+
+          updateTimeOut = setTimeout(() => {
+            clearTimeout(pullTimeOut);
+            setStatePage({ ...statePageRef.current, downloadComplete: true });
+          }, 1000);
+        });
+      } else {
+        setStatePage({ ...statePage, downloadComplete: true });
+      }
     }
-  }, []);
+  }, [cloned]);
 
   useEffect(() => {
+    console.log({ downloadComplete });
     if (downloadComplete === true) {
       navigate('/welcome');
     }
@@ -531,7 +633,7 @@ function CheckUpdatePage() {
     <div style={{ height: '100vh' }}>
       <Wrapper css="wrapper__full" aside={false}>
         <Kamek />
-        <Header title={t('CheckUpdatePage.title')} />
+        <Header title="EmuDeck is loading..." />
         <EmuModal modal={modal} />
       </Wrapper>
     </div>
