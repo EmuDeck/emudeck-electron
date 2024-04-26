@@ -13,11 +13,15 @@
       "yes": "No",
       "month": "month",
       "join": "Join",
+      "login": "Login",
       "copyGames": "Copy games",
       "install": "Install",
       "uninstall": "Uninstall",
       "close": "Close",
-      "moreInfo": "More Info"
+      "moreInfo": "More Info",
+      "sudo": "EmuDeck has detected you already have set a sudo password, type it below.",
+      "loading": "Loading",
+      "save": "Save"
     },
     "footer": {
       "exit": "Exit To Gaming Mode"
@@ -65,7 +69,7 @@
     },
     "QuickSettingsPage": {
       "title": "Configure your Settings",
-      "description": "",
+      "description": "Select an option to automatically apply it to your system. You do not need to do an EmuDeck Custom Update to apply these settings.",
       "notifBezels": "Bezels updated!",
       "notifSNESRatio": "SNES Aspect Ratio updated!",
       "notifCloudSync": "CloudSync Status updated!",
@@ -101,7 +105,7 @@
 
     "AndroidRABezelsPage": {
       "title": "Configure game bezels",
-      "description": ""
+      "description": "Use EmuDeck's pre-configured bezels to hide the vertical black bars on 8 bit and 16 bit games."
     },
     "AndroidRomStoragePage": {
       "title": "Select the ROM Storage for your Android Device",
@@ -261,25 +265,41 @@
       "title": "Parsers for Steam Rom Manager",
       "description": ""
     },
-    "PatroenLoginPage": { "title": "Login into Patreon", "description": "" },
+    "PatroenLoginPage": {
+      "title": "Login into Patreon",
+      "description": "Please login to patreon in order to access this early access release.",
+      "login": "Login with Patreon ",
+      "change": "Change Patreon Account",
+      "check": "Check Token",
+      "checking": "Checking token..."
+    },
     "PegasusThemeChoicePage": {
       "title": "Pegasus Default Theme",
-      "description": ""
+      "description": "Select your default theme.",
+      "modalInstallingTitle": "Installing theme",
+      "modalInstallingDesc": "Please wait...",
+      "modalInstalledTitle": "Theme installed",
+      "modalInstalledDesc": "Next time you open Pegasus this will be the default theme."
     },
-    "PegasusThemePage": { "title": "Pegasus Default Theme", "description": "" },
+    "PegasusThemePage": {
+      "title": "Pegasus Default Theme",
+      "description": "Select your default theme."
+    },
     "PowerControlsPage": {
       "title": "Configure PowerControls",
-      "description": ""
+      "description": "PowerControls is a plugin that allows you to tweak your CPU & GPU to for maximum performance on more demanding emulators as well as controlling TDP in compatible devices. Installing PowerControls on this menu will also install Decky Loader, a plugin manager"
     },
-    "PowerToolsPage": { "title": "Configure PowerTools", "description": "" },
-    "QuickSettingsPage": { "title": "", "description": "" },
+    "PowerToolsPage": {
+      "title": "Configure PowerTools",
+      "description": "PowerControls is a plugin that allows you to tweak your CPU & GPU to for maximum performance on more demanding emulators as well as controlling TDP in compatible devices. Installing PowerControls on this menu will also install Decky Loader, a plugin manager."
+    },
     "RAAchievementsConfigPage": {
       "title": "Configure RetroAchievements",
-      "description": ""
+      "description": "RetroAchievements.org is a community led effort to collaborate and create custom-made achievements in emulated classic games. Enter your account information to set up RetroAchievements for Duckstation, PCSX2, PPSSPP, and RetroArch."
     },
     "RAAchievementsPage": {
       "title": "Configure RetroAchievements",
-      "description": ""
+      "description": "RetroAchievements.org is a community led effort to collaborate and create custom-made achievements in emulated classic games. Enter your account information to set up RetroAchievements for Duckstation, PCSX2, PPSSPP, and RetroArch."
     },
     "RABezelsPage": { "title": "Configure game bezels", "description": "" },
     "RomStoragePage": {
@@ -370,7 +390,17 @@
     "PowerTools": { "description": "" },
     "QuickSettings": { "description": "" },
     "RAAchievementsConfig": { "description": "" },
-    "RAAchievements": { "description": "" },
+    "RAAchievements": {
+      "modalWrongPassTitle": "Wrong username or password",
+      "modalWrongPassDesc": "If your password contains special characters like _ or ' you need to change it on retroachievements.org",
+      "modalSuccessTitle": "Wrong username or password",
+      "modalSuccessDesc": "If your password contains special characters like _ or ' you need to change it on retroachievements.org",
+      "modalErrorTitle": "Error!",
+      "modalErrorDesc": "The user & password are correct but EmuDeck could not set the configuration.",
+      "register": "If you do not have an account, register now:",
+      "success": "You are successfully connected to RetroAchievements!",
+      "reset": "Reset Login"
+    },
     "RABezels": { "description": "" },
     "RemotePlayWhatever": { "description": "" },
     "RomStorage": { "description": "" },
