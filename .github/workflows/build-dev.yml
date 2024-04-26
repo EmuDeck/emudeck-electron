@@ -47,6 +47,12 @@ jobs:
           #sed -i "s|EmuDeck|EmuDeck-dev|g" "./release/app/package.json"
           #sed -i 's|"productName": "EmuDeck"|"productName": "EmuDeck-dev"|g' "./package.json"
 
+      - name: Install Wine
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt update
+          sudo apt install -y wine64 wine32
+
       - name: Publish releases
         env:
           # These values are used for auto updates signing
@@ -61,7 +67,7 @@ jobs:
         run: |
           npm run postinstall
           npm run build
-          npm exec electron-builder -- --publish never --linux --x64 && npm exec electron-builder -- --publish never --win --x64
+          npm exec electron-builder -- --publish always --linux --x64 && npm exec electron-builder -- --publish always --win --x64
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
