@@ -25,7 +25,7 @@ const branchFile = require('data/branch.json');
 const { branch } = branchFile;
 
 function PatreonLoginPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   //
   // i18
   //
@@ -271,8 +271,9 @@ const { t, i18n } = useTranslation();
                 href="https://token.emudeck.com/"
                 aria={t('general.next')}
                 onClick={() => patreonShowInput()}
+                disabled={accessAllowed}
               >
-                Login with Patreon
+                Login with Patreon {accessAllowed && '- Loading'}
               </BtnSimple>
               <BtnSimple
                 css="btn-simple--3"
