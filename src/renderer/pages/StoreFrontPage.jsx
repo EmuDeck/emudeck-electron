@@ -29,29 +29,25 @@ function StoreFrontPage() {
   }, [state]);
 
   return (
-    <div>
-      <div style={{ height: '100vh' }}>
-        <Wrapper>
-          <Header title={t('StoreFrontPage.title')} />
-          <StoreFront
-            data={data}
-            disabledNext={disabledNext}
-            disabledBack={disabledBack}
-          />
-          <footer className="footer">
-            <BtnSimple
-              css="btn-simple--1"
-              type="button"
-              aria="Go Back"
-              disabled={false}
-              onClick={() => navigate(-1)}
-            >
-              {t('general.back')}
-            </BtnSimple>
-          </footer>
-        </Wrapper>
-      </div>
-    </div>
+    <Wrapper>
+      <Header title={t('StoreFrontPage.title')} />
+      <StoreFront
+        data={data}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <footer className="footer">
+        <BtnSimple
+          css="btn-simple--1"
+          type="button"
+          aria="Go Back"
+          disabled={false}
+          onClick={() => navigate(-1)}
+        >
+          {t('general.back')}
+        </BtnSimple>
+      </footer>
+    </Wrapper>
   );
 }
 

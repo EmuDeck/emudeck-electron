@@ -25,22 +25,20 @@ function UninstallPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('UninstallPage.title')} />
-        <p className="lead">{t('UninstallPage.description')}</p>
-        <Uninstall
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-          onClick={uninstall}
-        />
-        <Footer
-          next={false}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('UninstallPage.title')} />
+      <p className="lead">{t('UninstallPage.description')}</p>
+      <Uninstall
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClick={uninstall}
+      />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

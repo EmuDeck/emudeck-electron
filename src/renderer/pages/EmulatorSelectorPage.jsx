@@ -996,23 +996,21 @@ function EmulatorSelectorPage() {
   }, [installEmus]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={`Emulators and tools for ${device}`} />
-        <EmulatorSelector
-          installEmus={installEmus}
-          data={data}
-          onClick={toggleEmus}
-          images={images}
-        />
-        <Footer
-          next="emulator-configuration"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={`Emulators and tools for ${device}`} />
+      <EmulatorSelector
+        installEmus={installEmus}
+        data={data}
+        onClick={toggleEmus}
+        images={images}
+      />
+      <Footer
+        next="emulator-configuration"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

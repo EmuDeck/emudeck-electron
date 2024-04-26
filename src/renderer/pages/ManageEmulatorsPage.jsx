@@ -360,149 +360,139 @@ function ManageEmulatorsPage() {
   }, [modal]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('ManageEmulatorsPage.title')} />
-        <p className="lead">{t('ManageEmulatorsPage.description')}</p>
-        <Main>
-          {updates && (
-            <>
-              <div className="container--grid">
-                {Object.keys(updates).length > 0 && (
-                  <div data-col-md="6">
-                    <CardSettings
-                      icon={iconGear}
-                      css="is-highlighted"
-                      btnCSS="btn-simple--1"
-                      iconSize="md"
-                      title={t('ManageEmulatorsPage.updateConfigs.title')}
-                      description={t(
-                        'ManageEmulatorsPage.updateConfigs.description'
-                      )}
-                      button={t('ManageEmulatorsPage.updateConfigs.button')}
-                      onClick={() => resetEmus()}
-                    />
-                  </div>
-                )}
-                {system !== 'win32' && system !== 'darwin' && (
-                  <div data-col-md="6">
-                    <CardSettings
-                      icon={iconPackage}
-                      css="is-highlighted"
-                      btnCSS="btn-simple--1"
-                      iconSize="md"
-                      button={t('ManageEmulatorsPage.updateEmus.button')}
-                      title={t('ManageEmulatorsPage.updateEmus.title')}
-                      description={t(
-                        'ManageEmulatorsPage.updateEmus.description'
-                      )}
-                      onClick={() => navigate(`/update-emulators`)}
-                    />
-                  </div>
-                )}
-              </div>
-              <hr />
-              <div className="container--grid">
-                {installEmusArray.map((item) => {
-                  const img = images[item.id];
-                  const picture = imagesGrid[item.id];
-                  const updateNotif = updates[item.id];
-                  if (system === 'win32') {
-                    if (item.id === 'rmg') {
-                      return;
-                    }
-                  }
-
-                  if (item.id === 'ares') {
+    <Wrapper>
+      <Header title={t('ManageEmulatorsPage.title')} />
+      <p className="lead">{t('ManageEmulatorsPage.description')}</p>
+      <Main>
+        {updates && (
+          <>
+            <div className="container--grid">
+              {Object.keys(updates).length > 0 && (
+                <div data-col-md="6">
+                  <CardSettings
+                    icon={iconGear}
+                    css="is-highlighted"
+                    btnCSS="btn-simple--1"
+                    iconSize="md"
+                    title={t('ManageEmulatorsPage.updateConfigs.title')}
+                    description={t(
+                      'ManageEmulatorsPage.updateConfigs.description'
+                    )}
+                    button={t('ManageEmulatorsPage.updateConfigs.button')}
+                    onClick={() => resetEmus()}
+                  />
+                </div>
+              )}
+              {system !== 'win32' && system !== 'darwin' && (
+                <div data-col-md="6">
+                  <CardSettings
+                    icon={iconPackage}
+                    css="is-highlighted"
+                    btnCSS="btn-simple--1"
+                    iconSize="md"
+                    button={t('ManageEmulatorsPage.updateEmus.button')}
+                    title={t('ManageEmulatorsPage.updateEmus.title')}
+                    description={t(
+                      'ManageEmulatorsPage.updateEmus.description'
+                    )}
+                    onClick={() => navigate(`/update-emulators`)}
+                  />
+                </div>
+              )}
+            </div>
+            <hr />
+            <div className="container--grid">
+              {installEmusArray.map((item) => {
+                const img = images[item.id];
+                const picture = imagesGrid[item.id];
+                const updateNotif = updates[item.id];
+                if (system === 'win32') {
+                  if (item.id === 'rmg') {
                     return;
                   }
+                }
 
-                  if (system === 'darwin') {
-                    if (item.id !== 'ra' && item.id !== 'srm') {
-                      return;
-                    }
-                  }
-                  if (system === 'win32') {
-                    if (item.id === 'model2') {
-                      return;
-                    }
-                    if (item.id === 'supermodel') {
-                      return;
-                    }
-                    if (item.id === 'bigpemu') {
-                      return;
-                    }
-                  }
-                  return (
-                    <div key={item.id} data-col-md="4">
-                      <CardSettings
-                        icon={img}
-                        picture={picture}
-                        css="is-nothighlighted"
-                        btnCSS={
-                          item.status === true
-                            ? 'btn-simple--5'
-                            : 'btn-simple--2'
-                        }
-                        iconSize="sm"
-                        title={`${item.name}`}
-                        button="Manage"
-                        onClick={() => navigate(`/emulators-detail/${item.id}`)}
-                        notification={
-                          item.status === true
-                            ? updateNotif != undefined
-                            : false
-                        }
-                      />
-                    </div>
-                  );
-                })}
-                {installFrontendsArray.map((item) => {
-                  const img = images[item.id];
-                  const picture = imagesGrid[item.id];
-                  const updateNotif = updates[item.id];
+                if (item.id === 'ares') {
+                  return;
+                }
 
-                  if (item.id === 'steam') {
+                if (system === 'darwin') {
+                  if (item.id !== 'ra' && item.id !== 'srm') {
                     return;
                   }
+                }
+                if (system === 'win32') {
+                  if (item.id === 'model2') {
+                    return;
+                  }
+                  if (item.id === 'supermodel') {
+                    return;
+                  }
+                  if (item.id === 'bigpemu') {
+                    return;
+                  }
+                }
+                return (
+                  <div key={item.id} data-col-md="4">
+                    <CardSettings
+                      icon={img}
+                      picture={picture}
+                      css="is-nothighlighted"
+                      btnCSS={
+                        item.status === true ? 'btn-simple--5' : 'btn-simple--2'
+                      }
+                      iconSize="sm"
+                      title={`${item.name}`}
+                      button="Manage"
+                      onClick={() => navigate(`/emulators-detail/${item.id}`)}
+                      notification={
+                        item.status === true ? updateNotif != undefined : false
+                      }
+                    />
+                  </div>
+                );
+              })}
+              {installFrontendsArray.map((item) => {
+                const img = images[item.id];
+                const picture = imagesGrid[item.id];
+                const updateNotif = updates[item.id];
 
-                  return (
-                    <div key={item.id} data-col-md="4">
-                      <CardSettings
-                        icon={img}
-                        picture={picture}
-                        css="is-highlighted"
-                        btnCSS={
-                          item.status === true
-                            ? 'btn-simple--5'
-                            : 'btn-simple--2'
-                        }
-                        iconSize="sm"
-                        title={`${item.name}`}
-                        button="Manage"
-                        onClick={() => navigate(`/emulators-detail/${item.id}`)}
-                        notification={
-                          item.status === true
-                            ? updateNotif != undefined
-                            : false
-                        }
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          )}
-        </Main>
-        <Footer
-          next={false}
-          back={false}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+                if (item.id === 'steam') {
+                  return;
+                }
+
+                return (
+                  <div key={item.id} data-col-md="4">
+                    <CardSettings
+                      icon={img}
+                      picture={picture}
+                      css="is-highlighted"
+                      btnCSS={
+                        item.status === true ? 'btn-simple--5' : 'btn-simple--2'
+                      }
+                      iconSize="sm"
+                      title={`${item.name}`}
+                      button="Manage"
+                      onClick={() => navigate(`/emulators-detail/${item.id}`)}
+                      notification={
+                        item.status === true ? updateNotif != undefined : false
+                      }
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
+      </Main>
+      <Footer
+        next={false}
+        back={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

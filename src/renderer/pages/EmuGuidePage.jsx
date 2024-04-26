@@ -10,7 +10,7 @@ import EmuGuide from 'components/organisms/Wrappers/EmuGuide';
 const emuData = require('data/emuData.json');
 
 function EmuGuidePage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { installEmus, mode } = state;
   const { ryujinx } = installEmus;
@@ -272,36 +272,34 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={emuData[emulatorSelected].name} />
-        <EmuGuide
-          mode={mode}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-          emuData={emuData[emulatorSelected]}
-          ps1={ps1Bios}
-          ps2={ps2Bios}
-          nswitch={switchBios}
-          segacd={segaCDBios}
-          saturn={saturnBios}
-          dreamcast={dreamcastBios}
-          nds={DSBios}
-          onChange={selectEmu}
-          onClick={resetEmu}
-          onClickInstall={installEmu}
-          onClickUninstall={uninstallEmu}
-          showNotification={showNotification}
-          textNotification={textNotification}
-          installEmus={installEmus[emulatorSelected]}
-        />
-        <Footer
-          next={false}
-          disableInstallButton={!!disableInstallButton}
-          disableResetButton={!!disableResetButton}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={emuData[emulatorSelected].name} />
+      <EmuGuide
+        mode={mode}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        emuData={emuData[emulatorSelected]}
+        ps1={ps1Bios}
+        ps2={ps2Bios}
+        nswitch={switchBios}
+        segacd={segaCDBios}
+        saturn={saturnBios}
+        dreamcast={dreamcastBios}
+        nds={DSBios}
+        onChange={selectEmu}
+        onClick={resetEmu}
+        onClickInstall={installEmu}
+        onClickUninstall={uninstallEmu}
+        showNotification={showNotification}
+        textNotification={textNotification}
+        installEmus={installEmus[emulatorSelected]}
+      />
+      <Footer
+        next={false}
+        disableInstallButton={!!disableInstallButton}
+        disableResetButton={!!disableResetButton}
+      />
+    </Wrapper>
   );
 }
 

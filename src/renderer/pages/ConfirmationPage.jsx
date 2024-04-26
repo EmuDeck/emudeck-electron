@@ -28,18 +28,16 @@ function ConfirmationPage() {
   }, [state]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('ConfirmationPage.title')} />
-        <Confirmation data={data} />
-        <Footer
-          next="end"
-          nextText="Finish"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('ConfirmationPage.title')} />
+      <Confirmation data={data} />
+      <Footer
+        next="end"
+        nextText="Finish"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

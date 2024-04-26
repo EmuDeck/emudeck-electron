@@ -30,18 +30,16 @@ function AspectRatio3DPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('AspectRatio3DPage.title')} />
+    <Wrapper>
+      <Header title={t('AspectRatio3DPage.title')} />
 
-        <AspectRatio3D data={data} onClick={arSet} />
-        <Footer
-          next="aspect-ratio-dolphin"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+      <AspectRatio3D data={data} onClick={arSet} />
+      <Footer
+        next="aspect-ratio-dolphin"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

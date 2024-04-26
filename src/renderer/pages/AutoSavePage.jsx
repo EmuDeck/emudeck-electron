@@ -26,17 +26,15 @@ function AutoSavePage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('AutoSavePage.title')} />
-        <AutoSave data={data} onClick={autoSaveSet} />
-        <Footer
-          next="ra-achievements"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('AutoSavePage.title')} />
+      <AutoSave data={data} onClick={autoSaveSet} />
+      <Footer
+        next="ra-achievements"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

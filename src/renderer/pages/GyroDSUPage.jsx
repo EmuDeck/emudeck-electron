@@ -10,7 +10,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import GyroDSU from 'components/organisms/Wrappers/GyroDSU';
 
 function GyroDSUPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -92,19 +92,17 @@ const { t, i18n } = useTranslation();
   }, []);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Configure SteamDeckGyroDSU" />
-        <GyroDSU installClick={installGyro} passValidates={pass1 === pass2} />
-        <Footer
-          next={false}
-          nextText={sudoPass ? 'Continue' : 'Skip'}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title="Configure SteamDeckGyroDSU" />
+      <GyroDSU installClick={installGyro} passValidates={pass1 === pass2} />
+      <Footer
+        next={false}
+        nextText={sudoPass ? 'Continue' : 'Skip'}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

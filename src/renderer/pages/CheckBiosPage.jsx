@@ -88,27 +88,25 @@ function CheckBiosPage() {
   }, []);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('CheckBiosPage.title')} />
-        <CheckBios
-          checkBiosAgain={checkBiosAgain}
-          ps1Bios={ps1Bios}
-          ps2Bios={ps2Bios}
-          switchBios={switchBios}
-          segaCDBios={segaCDBios}
-          saturnBios={saturnBios}
-          dreamcastBios={dreamcastBios}
-          DSBios={DSBios}
-          showNotification={showNotification}
-        />
-        <Footer
-          next={false}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('CheckBiosPage.title')} />
+      <CheckBios
+        checkBiosAgain={checkBiosAgain}
+        ps1Bios={ps1Bios}
+        ps2Bios={ps2Bios}
+        switchBios={switchBios}
+        segaCDBios={segaCDBios}
+        saturnBios={saturnBios}
+        dreamcastBios={dreamcastBios}
+        DSBios={DSBios}
+        showNotification={showNotification}
+      />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

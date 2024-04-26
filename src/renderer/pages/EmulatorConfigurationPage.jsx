@@ -67,7 +67,7 @@ const images = {
 };
 
 function EmulatorConfigurationPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { overwriteConfigEmus } = state;
 
@@ -108,21 +108,15 @@ const { t, i18n } = useTranslation();
   }
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Emulator and Tools Configurations" />
-        <EmulatorConfiguration
-          data={data}
-          onClick={toggleEmus}
-          images={images}
-        />
-        <Footer
-          next={nextPage}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title="Emulator and Tools Configurations" />
+      <EmulatorConfiguration data={data} onClick={toggleEmus} images={images} />
+      <Footer
+        next={nextPage}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

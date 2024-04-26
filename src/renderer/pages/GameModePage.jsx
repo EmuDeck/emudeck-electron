@@ -12,7 +12,7 @@ import { BtnSimple } from 'getbasecore/Atoms';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 
 function GameModePage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { type } = useParams();
@@ -82,16 +82,14 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <PatreonLogin>
-          <Header title="Boot Mode" />
-          <GameMode onClick={gameModeSet} disableButton={disableButton} />
-        </PatreonLogin>
-        <Footer />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <PatreonLogin>
+        <Header title="Boot Mode" />
+        <GameMode onClick={gameModeSet} disableButton={disableButton} />
+      </PatreonLogin>
+      <Footer />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

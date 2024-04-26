@@ -30,23 +30,21 @@ function Shaders2DPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('Shaders2DPage.title')} />
-        <p className="lead">{t('Shaders2DPage.description')}</p>
-        <Shaders2D
-          data={data}
-          onClick={shaderSet}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <Footer
-          next="shaders-3d-classic"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('Shaders2DPage.title')} />
+      <p className="lead">{t('Shaders2DPage.description')}</p>
+      <Shaders2D
+        data={data}
+        onClick={shaderSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <Footer
+        next="shaders-3d-classic"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

@@ -13,7 +13,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import PatreonLogin from 'components/organisms/PatreonLogin/PatreonLogin';
 
 function CloudSyncPageConfig() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const json = JSON.stringify(state);
   const { cloudSync, cloudSyncType, system, mode } = state;
@@ -379,47 +379,45 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        {cloudSyncType === 'Sync' && (
-          <PatreonLogin>
-            <Header title="Cloud Sync - Select your provider" />
-            <CloudSyncConfig
-              onClick={cloudSyncSet}
-              onClickInstall={installRclone}
-              onClickUninstall={uninstallRclone}
-              onClickCheckHealth={checkHealth}
-              disableButton={disableButton}
-              showLoginButton={showLoginButton}
-            />
+    <Wrapper>
+      {cloudSyncType === 'Sync' && (
+        <PatreonLogin>
+          <Header title="Cloud Sync - Select your provider" />
+          <CloudSyncConfig
+            onClick={cloudSyncSet}
+            onClickInstall={installRclone}
+            onClickUninstall={uninstallRclone}
+            onClickCheckHealth={checkHealth}
+            disableButton={disableButton}
+            showLoginButton={showLoginButton}
+          />
 
-            <EmuModal modal={modal} />
-          </PatreonLogin>
-        )}
+          <EmuModal modal={modal} />
+        </PatreonLogin>
+      )}
 
-        {cloudSyncType === 'Save' && (
-          <>
-            <Header title="Cloud Backup - Select your provider" />
-            <CloudSyncConfig
-              onClick={cloudSyncSet}
-              onClickInstall={installRclone}
-              onClickUninstall={uninstallRclone}
-              onClickCheckHealth={checkHealth}
-              disableButton={disableButton}
-              showLoginButton={showLoginButton}
-            />
+      {cloudSyncType === 'Save' && (
+        <>
+          <Header title="Cloud Backup - Select your provider" />
+          <CloudSyncConfig
+            onClick={cloudSyncSet}
+            onClickInstall={installRclone}
+            onClickUninstall={uninstallRclone}
+            onClickCheckHealth={checkHealth}
+            disableButton={disableButton}
+            showLoginButton={showLoginButton}
+          />
 
-            <EmuModal modal={modal} />
-          </>
-        )}
-        <Footer
-          next={nextButtonStatus()}
-          nextText="Copy games"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+          <EmuModal modal={modal} />
+        </>
+      )}
+      <Footer
+        next={nextButtonStatus()}
+        nextText="Copy games"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

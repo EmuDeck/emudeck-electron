@@ -69,23 +69,21 @@ function AndroidFrontendSelectorPage() {
   const emuModified = '';
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('AndroidFrontendSelectorPage.title')} />
-        <FrontendSelector
-          installFrontends={installFrontends}
-          lastSelected={lastSelected}
-          onClick={toggleEmus}
-          images={images}
-        />
-        <Footer
-          next="android-own-apk"
-          disabledNext={false}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('AndroidFrontendSelectorPage.title')} />
+      <FrontendSelector
+        installFrontends={installFrontends}
+        lastSelected={lastSelected}
+        onClick={toggleEmus}
+        images={images}
+      />
+      <Footer
+        next="android-own-apk"
+        disabledNext={false}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

@@ -30,23 +30,21 @@ function ShadersHandheldsPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('ShadersHandheldsPage.title')} />
-        <p className="lead">{t('ShadersHandheldsPage.description')}</p>
-        <ShadersHandhelds
-          data={data}
-          onClick={shaderSet}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <Footer
-          next="shaders-classic"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('ShadersHandheldsPage.title')} />
+      <p className="lead">{t('ShadersHandheldsPage.description')}</p>
+      <ShadersHandhelds
+        data={data}
+        onClick={shaderSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <Footer
+        next="shaders-classic"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

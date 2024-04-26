@@ -11,7 +11,7 @@ import Sonic from 'components/organisms/Sonic/Sonic';
 import End from 'components/organisms/Wrappers/End';
 
 function EndPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
@@ -203,60 +203,58 @@ const { t, i18n } = useTranslation();
   }
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper css="wrapper__full" aside={false}>
-        {disabledNext === true && (
-          <Header title="We are completing your installation..." />
+    <Wrapper css="wrapper__full" aside={false}>
+      {disabledNext === true && (
+        <Header title="We are completing your installation..." />
+      )}
+      {disabledNext === false && step === undefined && system !== 'win32' && (
+        <Header title="Installation complete!" />
+      )}
+
+      {disabledNext === false &&
+        step === undefined &&
+        device === 'Asus Rog Ally' && (
+          <Header title="Asus Rog Ally Controller configuration" />
         )}
-        {disabledNext === false && step === undefined && system !== 'win32' && (
-          <Header title="Installation complete!" />
-        )}
 
-        {disabledNext === false &&
-          step === undefined &&
-          device === 'Asus Rog Ally' && (
-            <Header title="Asus Rog Ally Controller configuration" />
-          )}
+      {disabledNext === false &&
+        step === undefined &&
+        device !== 'Asus Rog Ally' &&
+        system === 'win32' && <Header title="Controller configuration" />}
 
-        {disabledNext === false &&
-          step === undefined &&
-          device !== 'Asus Rog Ally' &&
-          system === 'win32' && <Header title="Controller configuration" />}
-
-        <End
-          onClick={openSRM}
-          data={data}
-          step={step}
-          message={message}
-          percentage={percentage}
-          disabledNext={disabledNext}
-        />
-        <footer className="footer">
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Go Next"
-            disabled={disabledNext && 'true'}
-            onClick={() => navigate(nextPage)}
+      <End
+        onClick={openSRM}
+        data={data}
+        step={step}
+        message={message}
+        percentage={percentage}
+        disabledNext={disabledNext}
+      />
+      <footer className="footer">
+        <BtnSimple
+          css="btn-simple--1"
+          type="button"
+          aria="Go Next"
+          disabled={disabledNext && 'true'}
+          onClick={() => navigate(nextPage)}
+        >
+          Next
+          <svg
+            className="rightarrow"
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            Next
-            <svg
-              className="rightarrow"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="currentColor"
-                d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
-              />
-            </svg>
-          </BtnSimple>
-        </footer>
-      </Wrapper>
-    </div>
+            <path
+              fill="currentColor"
+              d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
+            />
+          </svg>
+        </BtnSimple>
+      </footer>
+    </Wrapper>
   );
 }
 

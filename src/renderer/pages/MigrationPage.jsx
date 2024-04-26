@@ -10,7 +10,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Migration from 'components/organisms/Wrappers/Migration';
 
 function MigrationPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { storage, storagePath } = state;
@@ -197,29 +197,27 @@ const { t, i18n } = useTranslation();
   }, [state]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Migrate your installation" />
-        <Migration
-          sdCardValid={sdCardValid}
-          reloadSDcard={checkSDValid}
-          sdCardName={sdCardName}
-          onClick={storageSet}
-          onClickStart={startMigration}
-          storage={storage}
-          storageDestination={storageDestination}
-          storagePath={storagePath}
-          storagePathDestination={storagePathDestination}
-          statusMigration={statusMigration}
-        />
-        <Footer
-          next={false}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title="Migrate your installation" />
+      <Migration
+        sdCardValid={sdCardValid}
+        reloadSDcard={checkSDValid}
+        sdCardName={sdCardName}
+        onClick={storageSet}
+        onClickStart={startMigration}
+        storage={storage}
+        storageDestination={storageDestination}
+        storagePath={storagePath}
+        storagePathDestination={storagePathDestination}
+        statusMigration={statusMigration}
+      />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

@@ -1171,31 +1171,30 @@ function ParserSelectorPage() {
   // localStorage.setItem('settings_emudeck', json);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Parsers for Steam Rom Manager" />
-        <ParserSelector data={data} onClick={toggleEmus} images={images} />
-        <footer className="footer">
-          <BtnSimple
-            css="btn-simple--2"
-            type="button"
-            onClick={() => restoreParsers(true)}
-            aria="Go Back"
-          >
-            Back
-          </BtnSimple>
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Disabled"
-            onClick={() => saveParsers()}
-          >
-            Save Parsers
-          </BtnSimple>
-        </footer>
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('ParserSelectorPage.title')} />
+      <p className="lead">{t('ParserSelectorPage.description')}</p>
+      <ParserSelector data={data} onClick={toggleEmus} images={images} />
+      <footer className="footer">
+        <BtnSimple
+          css="btn-simple--2"
+          type="button"
+          onClick={() => restoreParsers(true)}
+          aria={t('general.back')}
+        >
+          {t('general.back')}
+        </BtnSimple>
+        <BtnSimple
+          css="btn-simple--1"
+          type="button"
+          aria={t('general.save')}
+          onClick={() => saveParsers()}
+        >
+          {t('general.save')}
+        </BtnSimple>
+      </footer>
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

@@ -10,7 +10,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import RemotePlayWhatever from 'components/organisms/Wrappers/RemotePlayWhatever';
 
 function RemotePlayWhateverPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -55,22 +55,20 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Multiplayer with  RemotePlayWhatever - Beta" />
-        <RemotePlayWhatever
-          showNotification={showNotification}
-          notificationText={notificationText}
-          onClick={installRPW}
-        />
-        <Footer
-          next={false}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title="Multiplayer with  RemotePlayWhatever - Beta" />
+      <RemotePlayWhatever
+        showNotification={showNotification}
+        notificationText={notificationText}
+        onClick={installRPW}
+      />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

@@ -31,23 +31,21 @@ function UpdateEmusPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('UpdateEmusPage.title')} />
-        <p className="lead">{t('UpdateEmusPage.description')}</p>
-        <UpdateEmus
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-          onClickFlatpak={updateFlatpak}
-          onClickAppImage={updateAppImage}
-        />
-        <Footer
-          next={false}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('UpdateEmusPage.title')} />
+      <p className="lead">{t('UpdateEmusPage.description')}</p>
+      <UpdateEmus
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClickFlatpak={updateFlatpak}
+        onClickAppImage={updateAppImage}
+      />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

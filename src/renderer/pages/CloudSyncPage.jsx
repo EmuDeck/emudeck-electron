@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import CloudSync from 'components/organisms/Wrappers/CloudSync';
 
 function CloudSyncPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { type } = useParams();
   const { cloudSyncType, mode } = state;
@@ -37,23 +37,21 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Cloud Saves" />
-        <CloudSync
-          onClick={cloudSyncSet}
-          disableButton={disableButton}
-          showNone={type !== 'welcome'}
-        />
+    <Wrapper>
+      <Header title="Cloud Saves" />
+      <CloudSync
+        onClick={cloudSyncSet}
+        disableButton={disableButton}
+        showNone={type !== 'welcome'}
+      />
 
-        <Footer
-          next={nextButtonStatus()}
-          nextText={cloudSyncType === 'none' ? 'Copy Games' : 'Next'}
-          disabledNext={disabledNext}
-          disabledBack={type !== 'welcome'}
-        />
-      </Wrapper>
-    </div>
+      <Footer
+        next={nextButtonStatus()}
+        nextText={cloudSyncType === 'none' ? 'Copy Games' : 'Next'}
+        disabledNext={disabledNext}
+        disabledBack={type !== 'welcome'}
+      />
+    </Wrapper>
   );
 }
 

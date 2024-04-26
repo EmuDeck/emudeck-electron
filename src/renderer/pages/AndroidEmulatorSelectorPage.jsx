@@ -154,24 +154,22 @@ function AndroidEmulatorSelectorPage() {
   let emuModified = '';
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('AndroidEmulatorSelectorPage.title')} />
-        <p className="lead">{t('AndroidEmulatorSelectorPage.description')}</p>
-        <EmulatorSelector
-          installEmus={installEmus}
-          data={data}
-          onClick={toggleEmus}
-          images={images}
-        />
-        <Footer
-          next="android-RA-bezels"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('AndroidEmulatorSelectorPage.title')} />
+      <p className="lead">{t('AndroidEmulatorSelectorPage.description')}</p>
+      <EmulatorSelector
+        installEmus={installEmus}
+        data={data}
+        onClick={toggleEmus}
+        images={images}
+      />
+      <Footer
+        next="android-RA-bezels"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 
