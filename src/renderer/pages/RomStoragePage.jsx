@@ -22,7 +22,7 @@ import RomStorage from 'components/organisms/Wrappers/RomStorage';
 //
 
 function RomStoragePage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   //
   // i18
   //
@@ -118,7 +118,7 @@ const { t, i18n } = useTranslation();
               const modalData = {
                 active: true,
                 header: <span className="h4">Ooops 😞</span>,
-                body: <p>There was an error detecting your storage...</p>,
+                body: <p>t('RomStoragePage.modalErrorDetecting')</p>,
                 css: 'emumodal--xs',
               };
               setStatePage({ ...statePage, modal: modalData });
@@ -127,9 +127,7 @@ const { t, i18n } = useTranslation();
             const modalData = {
               active: true,
               header: <span className="h4">Ooops 😞</span>,
-              body: (
-                <p>Non writable directory selected, please choose another.</p>
-              ),
+              body: <p>t('RomStoragePage.modalErrorWritable')</p>,
               css: 'emumodal--xs',
             };
             setStatePage({
@@ -208,7 +206,7 @@ const { t, i18n } = useTranslation();
         const modalData = {
           active: true,
           header: <span className="h4">Ooops 😞</span>,
-          body: <p>There was an error, please restart EmuDeck...</p>,
+          body: <p>t('RomStoragePage.modalError')</p>,
           css: 'emumodal--xs',
         };
         setStatePage({
@@ -294,7 +292,8 @@ const { t, i18n } = useTranslation();
   //
   return (
     <Wrapper>
-      <Header title="Select your ROM Directory " />
+      <Header title={t('RomStoragePage.title')} />
+      <p className="lead">{t('RomStoragePage.description')}</p>
       <RomStorage
         status={status}
         sdCardValid={sdCardValid}

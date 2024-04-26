@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Shaders3D from 'components/organisms/Wrappers/Shaders3D';
 
 function Shaders3DPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { shaders } = state;
   const [statePage] = useState({
@@ -32,7 +32,8 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Configure CRT Shader for Classic 3D Games" />
+        <Header title={t('Shaders3DPage.title')} />
+        <p className="lead">{t('Shaders3DPage.description')}</p>
         <Shaders3D
           data={data}
           onClick={shaderSet}

@@ -13,7 +13,14 @@
       "yes": "No",
       "month": "month",
       "join": "Join",
-      "copyGames": "Copy games"
+      "copyGames": "Copy games",
+      "install": "Install",
+      "uninstall": "Uninstall",
+      "close": "Close",
+      "moreInfo": "More Info"
+    },
+    "footer": {
+      "exit": "Exit To Gaming Mode"
     },
     "aside": {
       "quickSettings": "Quick Settings",
@@ -58,6 +65,7 @@
     },
     "QuickSettingsPage": {
       "title": "Configure your Settings",
+      "description": "",
       "notifBezels": "Bezels updated!",
       "notifSNESRatio": "SNES Aspect Ratio updated!",
       "notifCloudSync": "CloudSync Status updated!",
@@ -72,9 +80,12 @@
     },
     "AndroidEmulatorSelectorPage": {
       "title": "Emulators and tools for Android",
+      "description": "These are the emulators EmuDeck installs to your system. Selected emulators will be installed and updated to the latest version. De-selected emulators will not be installed or updated."
+    },
+    "AndroidEndPage": {
+      "title": "Preparing your Android device...",
       "description": ""
     },
-    "AndroidEndPage": { "title": "Preparing your Android device..." },
     "AndroidFinishPage": {
       "title": "EmuDeck Android Installed!",
       "description": "If everything went well, you should see your Frontend on your Android device.<br/>If you don't, please reinstall EmuDeck."
@@ -88,9 +99,13 @@
       "description": "Do you have another emulator or do you want to install ESDE?<br/>Put all your APK in your downloads folder and EmuDeck will install them<br/><strong>Please don't use pirated APKs</strong>"
     },
 
-    "AndroidRABezelsPage": { "title": "Configure game bezels" },
+    "AndroidRABezelsPage": {
+      "title": "Configure game bezels",
+      "description": ""
+    },
     "AndroidRomStoragePage": {
       "title": "Select the ROM Storage for your Android Device",
+      "description": "",
       "warning": {
         "title": "Make sure your Android device is:",
         "line1": "- Connected using a USB with data transfer capabilities",
@@ -130,21 +145,25 @@
       }
     },
     "AspectRatio3DPage": {
-      "title": "Configure Aspect Ratio for Classic 3D Games"
+      "title": "Configure Aspect Ratio for Classic 3D Games",
+      "description": ""
     },
     "AspectRatioDolphinPage": {
-      "title": "Configure Aspect Ratio for GameCube games"
+      "title": "Configure Aspect Ratio for GameCube games",
+      "description": ""
     },
     "AspectRatioSegaPage": {
-      "title": "Configure Aspect Ratio for Classic Sega Systems"
+      "title": "Configure Aspect Ratio for Classic Sega Systems",
+      "description": ""
     },
     "AspectRatioSNESPage": {
-      "title": "Configure Aspect Ratio for Classic Nintendo"
+      "title": "Configure Aspect Ratio for Classic Nintendo",
+      "description": ""
     },
-    "AutoSavePage": { "title": "Configure Auto Save" },
-    "ChangeLogPage": { "title": "Latest changes" },
-    "CHDToolPage": { "title": "EmuDeck Compression Tool" },
-    "CheckBiosPage": { "title": "Bios files checker" },
+    "AutoSavePage": { "title": "Configure Auto Save", "description": "" },
+    "ChangeLogPage": { "title": "Latest changes", "description": "" },
+    "CHDToolPage": { "title": "EmuDeck Compression Tool", "description": "" },
+    "CheckBiosPage": { "title": "Bios files checker", "description": "" },
     "CheckUpdatePage": {
       "title": "EmuDeck is loading...",
       "backend": "Building EmuDeck backend and running autodiagnostics in the background...",
@@ -168,13 +187,20 @@
     },
     "CloudSyncConfigPage": {
       "title": "Cloud Sync - Select your provider",
-      "title2": "Cloud Backup - Select your provider"
+      "title2": "Cloud Backup - Select your provider",
+      "description": ""
     },
-    "CloudSyncPage": { "title": "Cloud Saves" },
-    "ConfirmationPage": { "title": "Here is what EmuDeck will do" },
-    "ControllerLayoutPage": { "title": "Configure Controller Layout" },
-    "CopyGamesPage": { "title": "" },
-    "DeviceSelectorPage": { "title": "Select your device" },
+    "CloudSyncPage": { "title": "Cloud Saves", "description": "" },
+    "ConfirmationPage": {
+      "title": "Here is what EmuDeck will do",
+      "description": ""
+    },
+    "ControllerLayoutPage": {
+      "title": "Configure Controller Layout",
+      "description": ""
+    },
+    "CopyGamesPage": { "title": "", "description": "" },
+    "DeviceSelectorPage": { "title": "Select your device", "description": "" },
     "EarlyAccessPage": {
       "title": "Help us by supporting EmuDeck",
       "description": "Donate on Patreon and help us grow and improve! As a member of our community you'll get 1 on 1 individual support and early access to our latest features, some of them exclusive for patrons only",
@@ -187,49 +213,103 @@
         "list": "<li>- Same features as Early Access and</li><li>- Voting rights, let's shape the future of EmuDeck together</li>"
       }
     },
-    "EmuDeckyPage": { "title": "Configure EmuDecky" },
-    "EmuGuidePage": { "title": "" },
-    "EmulatorConfigResolutionPage": { "title": "Emulator Resolution" },
-    "EmulatorConfigurationPage": {
-      "title": "Emulator and Tools Configurations"
+    "EmuDeckyPage": { "title": "Configure EmuDecky", "description": "" },
+    "EmuGuidePage": { "title": "", "description": "" },
+    "EmulatorConfigResolutionPage": {
+      "title": "Emulator Resolution",
+      "description": ""
     },
-    "EmulatorResolutionPage": { "title": "Emulator Resolution" },
-    "EmulatorsDetailPage": { "title": "" },
-    "EmulatorSelectorPage": { "title": "Emulators and tools for {{device}}" },
+    "EmulatorConfigurationPage": {
+      "title": "Emulator and Tools Configurations",
+      "description": ""
+    },
+    "EmulatorResolutionPage": {
+      "title": "Emulator Resolution",
+      "description": ""
+    },
+    "EmulatorsDetailPage": { "title": "", "description": "" },
+    "EmulatorSelectorPage": {
+      "title": "Emulators and tools for {{device}}",
+      "description": ""
+    },
     "EndPage": {
       "title": "We are completing your installation...",
+      "description": "",
       "titleFinish": "Installation complete!",
       "titleAlly": "Asus Rog Ally Controller configuration",
       "titleWin32": "Controller configuration"
     },
     "ErrorPage": { "title": "" },
-    "ESDEThemePage": { "title": "EmulationStation-DE Default Theme" },
-    "FinishPage": { "title": "What's left?" },
-    "FrontendSelectorPage": { "title": "Frontends for {{device}}" },
-    "GameModePage": { "title": "Boot Mode" },
-    "GyroDSUPage": { "title": "Configure SteamDeckGyroDSU" },
-    "HelpPage": { "title": "" },
-    "HotkeysPage": { "title": "Emulation Hotkeys" },
-    "MigrationPage": { "title": "Migrate your installation" },
-    "ParserSelectorPage": { "title": "Parsers for Steam Rom Manager" },
-    "PatroenLoginPage": { "title": "Login into Patreon" },
-    "PegasusThemeChoicePage": { "title": "Pegasus Default Theme" },
-    "PegasusThemePage": { "title": "Pegasus Default Theme" },
-    "PowerControlsPage": { "title": "Configure PowerControls" },
-    "PowerToolsPage": { "title": "Configure PowerTools" },
-    "QuickSettingsPage": { "title": "" },
-    "RAAchievementsConfigPage": { "title": "Configure RetroAchievements" },
-    "RAAchievementsPage": { "title": "Configure RetroAchievements" },
-    "RABezelsPage": { "title": "Configure game bezels" },
-    "RomStoragePage": { "title": "Select your ROM Directory" },
-    "Shaders2DPage": { "title": "Configure CRT Shader for Classic 2D Games" },
-    "Shaders3DPage": { "title": "Configure CRT Shader for Classic 3D Games" },
+    "ESDEThemePage": {
+      "title": "EmulationStation-DE Default Theme",
+      "description": ""
+    },
+    "FinishPage": { "title": "What's left?", "description": "" },
+    "FrontendSelectorPage": {
+      "title": "Frontends for {{device}}",
+      "description": ""
+    },
+    "GameModePage": { "title": "Boot Mode", "description": "" },
+    "GyroDSUPage": { "title": "Configure SteamDeckGyroDSU", "description": "" },
+    "HelpPage": { "title": "", "description": "" },
+    "HotkeysPage": { "title": "Emulation Hotkeys", "description": "" },
+    "MigrationPage": {
+      "title": "Migrate your installation",
+      "description": ""
+    },
+    "ParserSelectorPage": {
+      "title": "Parsers for Steam Rom Manager",
+      "description": ""
+    },
+    "PatroenLoginPage": { "title": "Login into Patreon", "description": "" },
+    "PegasusThemeChoicePage": {
+      "title": "Pegasus Default Theme",
+      "description": ""
+    },
+    "PegasusThemePage": { "title": "Pegasus Default Theme", "description": "" },
+    "PowerControlsPage": {
+      "title": "Configure PowerControls",
+      "description": ""
+    },
+    "PowerToolsPage": { "title": "Configure PowerTools", "description": "" },
+    "QuickSettingsPage": { "title": "", "description": "" },
+    "RAAchievementsConfigPage": {
+      "title": "Configure RetroAchievements",
+      "description": ""
+    },
+    "RAAchievementsPage": {
+      "title": "Configure RetroAchievements",
+      "description": ""
+    },
+    "RABezelsPage": { "title": "Configure game bezels", "description": "" },
+    "RomStoragePage": {
+      "title": "Select your ROM Directory",
+      "description": "Your ROM directory will be squared away within an Emulation folder in your selected directory.",
+      "modalErrorDetecting": "There was an error detecting your storage...",
+      "modalErrorWritable": "There was an error detecting your storage...",
+      "modalError": "There was an error, please restart EmuDeck..."
+    },
+    "Shaders2DPage": {
+      "title": "Configure CRT Shader for Classic 2D Games",
+      "description": "The CRT Shader gives your classic systems a faux retro CRT vibe."
+    },
+    "Shaders3DPage": {
+      "title": "Configure CRT Shader for Classic 3D Games",
+      "description": "The CRT Shader gives your classic systems a faux retro CRT vibe."
+    },
     "ShadersHandheldsPage": {
-      "title": "Configure LCD Shader for Handheld Systems"
+      "title": "Configure LCD Shader for Handheld Systems",
+      "description": "The LCD Shader simulates the old LCD Matrix screens of handheld systems."
     },
     "StoreFrontPage": { "title": "EmuDeck Store" },
-    "UninstallPage": { "title": "Uninstall EmuDeck" },
-    "UpdateEmusPage": { "title": "Update your Emulators & Tools" },
+    "UninstallPage": {
+      "title": "Uninstall EmuDeck",
+      "description": "The EmuDeck Uninstallation utility should only be used if you are intending on removing EmuDeck from your system. If you are having issues, run a Custom Reset, troubleshoot the specific tool or emulator, or visit EmuDeck Discord or Reddit for additional support."
+    },
+    "UpdateEmusPage": {
+      "title": "Update your Emulators & Tools",
+      "description": "Emulators and tools can be installed a multitude of ways. EmuDeck installs some emulators and tools as Flatpaks from the Discover Store. Others are downloaded for you directly from the developer's website as AppImages or Binaries. A few are Windows Executables, downloaded and run through Proton."
+    },
     "WelcomePage": {
       "title": "Welcome to EmuDeck for {{systemName}}",
       "description": "Select how you want to set up your device",
@@ -297,9 +377,18 @@
     "Shaders2D": { "description": "" },
     "Shaders3D": { "description": "" },
     "ShadersHandhelds": { "description": "" },
-    "StoreFront": { "description": "" },
+    "StoreFront": {
+      "alertInstalled": "Game Installed.\nGo back to EmulationStation to play it",
+      "alertError": "There was an error installing the game",
+      "alertUninstall": "Game Uninstalled",
+      "featured": "Featured HomeBrew games"
+    },
     "Uninstall": { "description": "" },
-    "UpdateEmus": { "description": "" },
+    "UpdateEmus": {
+      "title": "Select which batch you want to update:",
+      "btn1": "Update Flatpaks",
+      "btn2": "Update AppImages, Binaries, and Windows Executables"
+    },
     "VideoGuide": { "description": "" },
     "Welcome": { "description": "" }
   }

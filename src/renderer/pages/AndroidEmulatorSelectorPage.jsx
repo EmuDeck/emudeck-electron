@@ -69,7 +69,7 @@ const images = {
 };
 
 function AndroidEmulatorSelectorPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { device, android, emulatorAlternative, overwriteConfigEmus } = state;
 
@@ -156,7 +156,8 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title={`Emulators and tools for Android`} />
+        <Header title={t('AndroidEmulatorSelectorPage.title')} />
+        <p className="lead">{t('AndroidEmulatorSelectorPage.description')}</p>
         <EmulatorSelector
           installEmus={installEmus}
           data={data}

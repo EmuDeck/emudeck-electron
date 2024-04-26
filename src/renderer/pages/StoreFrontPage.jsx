@@ -10,7 +10,7 @@ import StoreFront from 'components/organisms/Wrappers/StoreFront';
 import { BtnSimple } from 'getbasecore/Atoms';
 
 function StoreFrontPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state } = useContext(GlobalContext);
   const { bezels } = state;
   const [statePage, setStatePage] = useState({
@@ -32,7 +32,7 @@ const { t, i18n } = useTranslation();
     <div>
       <div style={{ height: '100vh' }}>
         <Wrapper>
-          <Header title="EmuDeck Store" />
+          <Header title={t('StoreFrontPage.title')} />
           <StoreFront
             data={data}
             disabledNext={disabledNext}
@@ -46,7 +46,7 @@ const { t, i18n } = useTranslation();
               disabled={false}
               onClick={() => navigate(-1)}
             >
-              Go Back
+              {t('general.back')}
             </BtnSimple>
           </footer>
         </Wrapper>

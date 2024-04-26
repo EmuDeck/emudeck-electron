@@ -8,7 +8,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Uninstall from 'components/organisms/Wrappers/Uninstall';
 
 function UninstallPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -27,7 +27,8 @@ const { t, i18n } = useTranslation();
   return (
     <div style={{ height: '100vh' }}>
       <Wrapper>
-        <Header title="Uninstall EmuDeck" />
+        <Header title={t('UninstallPage.title')} />
+        <p className="lead">{t('UninstallPage.description')}</p>
         <Uninstall
           disabledNext={disabledNext}
           disabledBack={disabledBack}
