@@ -1,0 +1,171 @@
+{
+  "translation": {
+    "general": {
+      "success": "Erfolg",
+      "error": "Fehler",
+      "launching": "Starten",
+      "continue": "Weiter",
+      "back": "Zurück",
+      "next": "Weiter",
+      "finish": "Fertigstellen",
+      "skip": "Überspringen",
+      "pressContinue": "Drücken Sie Weiter, wenn Sie fertig sind",
+      "yes": "Ja",
+      "no": "Nein",
+      "month": "Monat",
+      "join": "Beitreten",
+      "login": "Anmelden",
+      "copyGames": "Spiele kopieren",
+      "install": "Installieren",
+      "uninstall": "Deinstallieren",
+      "close": "Schließen",
+      "moreInfo": "Mehr Info",
+      "sudo": "EmuDeck hat erkannt, dass Sie bereits ein sudo-Passwort festgelegt haben. Bitte geben Sie es unten ein.",
+      "loading": "Wird geladen",
+      "save": "Speichern",
+      "both": "Beide"
+    },
+    "footer": {
+      "exit": "Spielmodus beenden"
+    },
+    "aside": {
+      "quickSettings": "Schnelleinstellungen",
+      "manageEmulators": "Emulatoren verwalten",
+      "importGames": "Spiele importieren und BIOS",
+      "quickReset": "Schnell zurücksetzen",
+      "customReset": "Benutzerdefiniertes Zurücksetzen",
+      "screenResolution": "Bildschirmauflösung",
+      "retroAchievements": "Retro-Erfolge",
+      "biosChecker": "BIOS-Prüfer",
+      "cloudSaves": "Cloud-Speicherung",
+      "migrateInstalation": "Installation migrieren",
+      "gyro": "Gyroskop",
+      "earlyAccess": "Frühzeitiger Zugriff",
+      "logFiles": "Log-Dateien abrufen",
+      "changelog": "Änderungsprotokoll",
+      "cloudServices": "Cloud-Dienste",
+      "uninstall": "Deinstallieren",
+      "logsSuccess": "Wir haben eine Zip-Datei mit allen Ihren Protokollen erstellt",
+      "logsError": "Beim Abrufen Ihrer Protokolle ist ein Problem aufgetreten. Holen Sie sie manuell aus dem Emudeck-Ordner in Ihrem Benutzerordner ab.",
+      "bootMode": "Spielmodus",
+      "pegasusTheme": "Pegasus-Thema",
+      "featured": "Vorgestellt",
+      "otherSettings": "Andere Einstellungen",
+      "exclusiveTools": "Exklusive EmuDeck-Tools",
+      "thirdParty": "Tools von Drittanbietern",
+      "other": "Andere Dinge"
+    },
+    "ManageEmulatorsPage": {
+      "title": "Verwalten Sie Ihre Emulatoren",
+      "description": "Auf dieser Seite können Sie Ihre Einstellungen aktualisieren oder neue Emulatoren installieren. Ein orangefarbenes Benachrichtigungssymbol bedeutet, dass Sie ein Einstellungsupdate für den entsprechenden Emulator haben.",
+      "updateConfigs": {
+        "title": "Alle Einstellungen aktualisieren",
+        "description": "Aktualisieren Sie alle Ihre Einstellungen auf einmal. Neue Einstellungen können Fixes oder Leistungsverbesserungen enthalten. Dies überschreibt alle globalen Emulatoreinstellungen, die Sie geändert haben. Spieleinstellungen bleiben erhalten.",
+        "button": "Aktualisieren"
+      },
+      "updateEmus": {
+        "title": "Ihre Emulatoren aktualisieren",
+        "description": "Aktualisieren Sie Ihre Emulatoren direkt über EmuDeck.",
+        "button": "Aktualisieren"
+      },
+      "modalResetTitle": "Emulator-Einstellungen zurücksetzen",
+      "modalResetDesc": "Bitte warten Sie, während wir alle Emulator-Einstellungen zurücksetzen",
+      "modalResetingTitle": "Einstellungen von {{code}} zurücksetzen",
+      "modalResetingDesc": "Bitte warten Sie, während wir die Einstellungen von {{code}} zurücksetzen",
+      "modalUpdatedTitle": "{{name}}-Einstellungen aktualisiert!",
+      "modalUpdatedDesc": "Die Einstellungen für {{name}} wurden mit unseren neuesten Verbesserungen, Optimierungen und Fehlerkorrekturen aktualisiert!",
+      "modalFailedTitle": "Fehler beim Zurücksetzen der {{name}}-Einstellungen",
+      "modalFailedDesc": "Beim Versuch, die Einstellungen für {{name}} zurückzusetzen, ist ein Problem aufgetreten."
+    },
+    "QuickSettingsPage": {
+      "title": "Konfigurieren Sie Ihre Einstellungen",
+      "description": "Wählen Sie eine Option aus, um sie automatisch auf Ihrem System anzuwenden. Sie müssen kein benutzerdefiniertes EmuDeck-Update durchführen, um diese Einstellungen anzuwenden.",
+      "notifBezels": "Blenden aktualisiert!",
+      "notifSNESRatio": "SNES-Verhältnis aktualisiert!",
+      "notifCloudSync": "CloudSync-Status aktualisiert!",
+      "nofif3DAR": "3D-Verhältnis aktualisiert!",
+      "nofifDolphinAR": "Dolphin-Verhältnis aktualisiert!",
+      "nofifCRTShader": "CRT-Shader aktualisiert!",
+      "nofif3DCRTShader": "CRT-3D-Shader aktualisiert!",
+      "nofifLCDShader": "LCD-Shader aktualisiert!",
+      "nofifAutosave": "Automatisches Speichern aktualisiert!",
+      "nofifController": "Controller-Design aktualisiert!",
+      "nofifBoot": "Startmodus aktualisiert, bitte starten Sie Ihr Gerät neu!"
+    },
+    "AndroidEmulatorSelectorPage": {
+      "title": "Emulatoren und Tools für Android",
+      "description": "Hier sind die Emulatoren, die EmuDeck auf Ihrem System installiert. Die ausgewählten Emulatoren werden installiert und auf die neueste Version aktualisiert. Nicht ausgewählte Emulatoren werden weder installiert noch aktualisiert."
+    },
+    "AndroidEndPage": {
+      "title": "Vorbereitung Ihres Android-Geräts...",
+      "description": ""
+    },
+    "AndroidFinishPage": {
+      "title": "EmuDeck Android installiert!",
+      "description": "Wenn alles gut gegangen ist, sollten Sie Ihr Interface auf Ihrem Android-Gerät sehen.<br/>Wenn nicht, installieren Sie EmuDeck bitte erneut."
+    },
+    "AndroidFrontendSelectorPage": {
+      "title": "Wählen Sie ein EmuDeck-Spielinterface aus",
+      "description": "Wählen Sie ein oder mehrere Frontends aus, um Ihre Spiele zu starten."
+    },
+    "AndroidPermissionsPage": {
+      "title": "Android-Berechtigungen",
+      "description": "Stellen Sie sicher, dass Sie alle erforderlichen Berechtigungen auf Ihrem Android-Gerät erteilt haben. Andernfalls funktioniert EmuDeck möglicherweise nicht ordnungsgemäß."
+    },
+    "EmuDeckStartPage": {
+      "title": "EmuDeck auf Android",
+      "description": "Willkommen zur Installation von EmuDeck auf Ihrem Android-Gerät! Dieser Prozess führt Sie durch die Konfiguration Ihres Systems."
+    },
+    "EmulatorFrontendSelectorPage": {
+      "title": "Wählen Sie ein EmuDeck-Spielinterface aus",
+      "description": "Wählen Sie aus diesen Frontends aus, um Ihre Spiele zu starten. Sie können mehrere auswählen."
+    },
+    "EmulatorListPage": {
+      "title": "Kompatible Emulatoren",
+      "description": "Hier sind die mit EmuDeck kompatiblen Emulatoren. Sie können so viele auswählen, wie Sie möchten, um sie zu installieren."
+    },
+    "EmulatorThemesPage": {
+      "title": "Wählen Sie ein Thema für {{name}} aus",
+      "description": "Wählen Sie ein Thema für {{name}} aus. Dies ändert das Benutzeroberflächendesign, wirkt sich jedoch nicht auf die Leistung des Emulators aus.",
+      "default": "Standardthema"
+    },
+    "GamingReadyPage": {
+      "title": "Ihr System ist spielbereit!",
+      "description": "Drücken Sie auf \"Spielmodus beenden\" in der Fußzeile, um zu Ihrem normalen System zurückzukehren."
+    },
+    "ImportGamesPage": {
+      "title": "Spiele und BIOS importieren",
+      "description": "Hier können Sie Ihre Spiele und BIOS importieren. Die meisten Dateien werden automatisch erkannt, aber Sie können manuell konfigurieren, welche nicht erkannt werden.",
+      "searchPlaceholder": "Suchen auf Ihrem Gerät...",
+      "upload": "Dateien hochladen",
+      "search": "Suchen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "dragDrop": "Dateien hier ablegen",
+      "searchResults": "Suchergebnisse",
+      "uploading": "Dateien werden hochgeladen...",
+      "noFilesFound": "Keine Dateien gefunden",
+      "noResultsFound": "Keine Ergebnisse gefunden"
+    },
+    "InstallationProgressPage": {
+      "title": "Installationsfortschritt",
+      "description": "Installieren von {{appName}} {{version}}. Bitte warten...",
+      "failTitle": "Fehler bei der Installation",
+      "failDesc": "Beim Versuch, {{appName}} {{version}} zu installieren, ist ein Problem aufgetreten. Bitte versuchen Sie es später erneut.",
+      "successTitle": "{{appName}} {{version}} installiert",
+      "successDesc": "{{appName}} {{version}} wurde erfolgreich auf Ihrem System installiert.",
+      "successComplete": "Installation abgeschlossen!"
+    },
+    "NoInternetPage": {
+      "title": "Keine Internetverbindung",
+      "description": "Es konnte keine Verbindung zum Server hergestellt werden. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
+    },
+    "WelcomePage": {
+      "title": "Willkommen bei EmuDeck!",
+      "description": "Vielen Dank, dass Sie sich für EmuDeck für Ihre Emulationsbedürfnisse entschieden haben. Dieser Einrichtungsprozess führt Sie durch die Installation und die initiale Konfiguration, damit Sie in kürzester Zeit spielen können."
+    }
+  }
+}

@@ -240,7 +240,6 @@
       }
     },
     "EmuDeckyPage": { "title": "Configure EmuDecky", "description": "" },
-    "EmuGuidePage": { "title": "", "description": "" },
     "EmulatorConfigResolutionPage": {
       "title": "Emulator Resolution",
       "description": ""
@@ -293,7 +292,6 @@
       "title": "Configure SteamDeckGyroDSU",
       "description": "SteamDeckGyroDSU is a plugin that allows you to use your Steam Deck Gyroscope in Cemu (Wii U), Citra (3DS), Dolphin (Gamecube and Wii), Ryujinx (Nintendo Switch), and Yuzu (Nintendo Switch) games."
     },
-    "HelpPage": { "title": "", "description": "" },
     "HotkeysPage": {
       "title": "Emulation Hotkeys",
       "description": "Most of the emulators share a series of hotkeys to make them easier to use."
@@ -303,8 +301,7 @@
       "description": "This utility will move your EmuDeck installation, with your ROMs intact, to the selected destination as well as update your Steam Library paths."
     },
     "ParserSelectorPage": {
-      "title": "Parsers for Steam Rom Manager",
-      "description": ""
+      "title": "Parsers for Steam Rom Manager"
     },
     "PatroenLoginPage": {
       "title": "Login into Patreon",
@@ -379,22 +376,6 @@
         "description": "<p>Click on the Close button to try again</p><p>If the issue persists, please contact us on Discord: https://discord.com/invite/b9F7GpXtFP</p>"
       }
     },
-    "AndroidEmulatorSelector": { "description": "" },
-    "AndroidEnd": { "description": "" },
-    "AndroidFinish": { "description": "" },
-    "AndroidFrontendSelector": { "description": "" },
-    "AndroidOwnAPK": { "description": "" },
-    "AndroidRABezels": { "description": "" },
-    "AndroidRomStorage": { "description": "" },
-    "AndroidSetup": { "description": "" },
-    "AndroidWelcome": { "description": "" },
-    "AspectRatio3D": { "description": "" },
-    "AspectRatioDolphin": { "description": "" },
-    "AspectRatioSega": { "description": "" },
-    "AspectRatioSNES": { "description": "" },
-    "AutoSave": { "description": "" },
-    "ChangeLog": { "description": "" },
-    "CHDTool": { "description": "" },
     "CheckBios": {
       "detected": "- Detected",
       "missing": " - Missing",
@@ -407,35 +388,16 @@
       "cheat": "Cheat Sheet",
       "tip6": " You can use this link as a handy guide for how your BIOS should be named."
     },
-    "CheckDependencies": { "description": "" },
-    "CheckUpdate": { "description": "" },
-    "CloudSyncConfig": { "description": "" },
     "CloudSync": {
       "sync": "Sync",
       "backup": "Backup",
       "syncDesc": "Sync between EmuDeck installations - <strong> Patrons only</strong>",
       "backupDesc": "Backup your games to the cloud"
     },
-    "Confirmation": { "description": "" },
     "ControllerLayout": {
       "option1": "Position Match",
       "option2": "Controller Layout Match"
     },
-    "CopyGames": { "description": "" },
-    "DeviceSelector": { "description": "" },
-    "EarlyAccess": { "description": "" },
-    "EmuDecky": { "description": "" },
-    "EmuGuide": { "description": "" },
-    "EmulatorConfigResolution": { "description": "" },
-    "EmulatorConfiguration": { "description": "" },
-    "EmulatorResolution": { "description": "" },
-    "EmulatorsDetail": { "description": "" },
-    "EmulatorSelector": { "description": "" },
-    "End": { "description": "" },
-    "Error": { "description": "" },
-    "ESDETheme": { "description": "" },
-    "Finish": { "description": "" },
-    "FrontendSelector": { "description": "" },
     "GameMode": {
       "steam": {
         "title": "SteamUI",
@@ -446,9 +408,6 @@
         "description": "Boot to the Windows Desktop like any Windows PC"
       }
     },
-    "GyroDSU": { "description": "" },
-    "Help": { "description": "" },
-    "Hot": { "description": "" },
     "ManageEmulators": { "description": "" },
     "Migration": {
       "current": "Current Installation:",
@@ -460,14 +419,6 @@
       "start": "Start Migration",
       "migrating": "Migrating..."
     },
-    "ParserSelector": { "description": "" },
-    "PatroenLogin": { "description": "" },
-    "PegasusThemeChoice": { "description": "" },
-    "PegasusTheme": { "description": "" },
-    "PowerControls": { "description": "" },
-    "PowerTools": { "description": "" },
-    "QuickSettings": { "description": "" },
-    "RAAchievementsConfig": { "description": "" },
     "RAAchievements": {
       "modalWrongPassTitle": "Wrong username or password",
       "modalWrongPassDesc": "If your password contains special characters like _ or ' you need to change it on retroachievements.org",
@@ -479,25 +430,16 @@
       "success": "You are successfully connected to RetroAchievements!",
       "reset": "Reset Login"
     },
-    "RABezels": { "description": "" },
-    "RemotePlayWhatever": { "description": "" },
-    "RomStorage": { "description": "" },
-    "Shaders2D": { "description": "" },
-    "Shaders3D": { "description": "" },
-    "ShadersHandhelds": { "description": "" },
     "StoreFront": {
       "alertInstalled": "Game Installed.\nGo back to EmulationStation to play it",
       "alertError": "There was an error installing the game",
       "alertUninstall": "Game Uninstalled",
       "featured": "Featured HomeBrew games"
     },
-    "Uninstall": { "description": "" },
     "UpdateEmus": {
       "title": "Select which batch you want to update:",
       "btn1": "Update Flatpaks",
       "btn2": "Update AppImages, Binaries, and Windows Executables"
-    },
-    "VideoGuide": { "description": "" },
-    "Welcome": { "description": "" }
+    }
   }
 }
