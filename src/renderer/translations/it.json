@@ -11,7 +11,6 @@
       "skip": "Salta",
       "pressContinue": "Premi Continua quando hai finito",
       "yes": "Sì",
-      "no": "No",
       "month": "mese",
       "join": "Unisciti",
       "login": "Accesso",
@@ -23,7 +22,8 @@
       "sudo": "EmuDeck ha rilevato che hai già impostato una password sudo, inseriscila di seguito.",
       "loading": "Caricamento",
       "save": "Salva",
-      "both": "Entrambi"
+      "both": "Entrambi",
+      "no": "No"
     },
     "footer": {
       "exit": "Esci dalla modalità di gioco"
@@ -177,7 +177,10 @@
       "title": "Configura il salvataggio automatico",
       "description": ""
     },
-    "ChangeLogPage": { "title": "Ultimi cambiamenti", "description": "" },
+    "ChangeLogPage": {
+      "title": "Ultimi cambiamenti",
+      "description": ""
+    },
     "CHDToolPage": {
       "title": "Strumento di compressione EmuDeck",
       "description": "Lo Strumento di compressione è uno script che esamina determinate cartelle ROM e comprime i giochi fino al 70% delle dimensioni originali utilizzando formati CHD, RVZ, 3DS Trimmato, XISO e 7Zip."
@@ -224,7 +227,10 @@
       "title": "Configura il layout del controller",
       "description": "Vuoi impostare il tuo controller in modo che i pulsanti corrispondano alla posizione dei controller originali (A è mappato su B) o vuoi utilizzare il layout del controller (A è mappato su A)"
     },
-    "CopyGamesPage": { "title": "", "description": "" },
+    "CopyGamesPage": {
+      "title": "",
+      "description": ""
+    },
     "DeviceSelectorPage": {
       "title": "Seleziona il tuo dispositivo",
       "description": "EmuDeck personalizza l'installazione per hardware diversi. Ogni dispositivo avrà la propria configurazione, emulatori e cornici preconfigurate."
@@ -241,7 +247,10 @@
         "list": "<li>- Le stesse funzionalità di Accesso Anticipato e</li><li>- Diritti di voto, plasmiamo insieme il futuro di EmuDeck</li>"
       }
     },
-    "EmuDeckyPage": { "title": "Configura EmuDecky", "description": "" },
+    "EmuDeckyPage": {
+      "title": "Configura EmuDecky",
+      "description": ""
+    },
     "EmulatorConfigResolutionPage": {
       "title": "Risoluzione dell'emulatore",
       "description": ""
@@ -254,7 +263,10 @@
       "title": "Risoluzione dell'emulatore",
       "description": "Seleziona la risoluzione che desideri utilizzare per i tuoi emulatori. Tieni presente che una risoluzione più alta richiederà un computer più veloce."
     },
-    "EmulatorsDetailPage": { "title": "", "description": "" },
+    "EmulatorsDetailPage": {
+      "title": "",
+      "description": ""
+    },
     "EmulatorSelectorPage": {
       "title": "Emulatori e strumenti per {{device}}",
       "standaloneRA": "RetroArch o Emulatore autonomo?"
@@ -265,7 +277,9 @@
       "titleAlly": "Configurazione del controller Asus Rog Ally",
       "titleWin32": "Configurazione del controller"
     },
-    "ErrorPage": { "title": "" },
+    "ErrorPage": {
+      "title": ""
+    },
     "ESDEThemePage": {
       "title": "Tema predefinito di EmulationStation-DE",
       "description": "Seleziona il tuo tema predefinito."
@@ -364,7 +378,9 @@
       "title": "Configura lo shader LCD per sistemi portatili",
       "description": "Lo shader LCD simula i vecchi schermi LCD Matrix dei sistemi portatili."
     },
-    "StoreFrontPage": { "title": "Negozio EmuDeck" },
+    "StoreFrontPage": {
+      "title": "Negozio EmuDeck"
+    },
     "UninstallPage": {
       "title": "Disinstalla EmuDeck",
       "description": "L'utilità di disinstallazione di EmuDeck dovrebbe essere utilizzata solo se hai intenzione di rimuovere EmuDeck dal tuo sistema. Se stai riscontrando problemi, esegui un ripristino personalizzato, risolvi i problemi specifici dello strumento o dell'emulatore o visita EmuDeck Discord o Reddit per ulteriore supporto."
@@ -413,7 +429,9 @@
         "description": "Avvia il Desktop di Windows come qualsiasi PC Windows"
       }
     },
-    "ManageEmulators": { "description": "" },
+    "ManageEmulators": {
+      "description": ""
+    },
     "Migration": {
       "current": "Installazione corrente:",
       "errorDetected": "Non rilevato",

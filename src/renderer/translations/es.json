@@ -11,7 +11,6 @@
       "skip": "Saltar",
       "pressContinue": "Presiona Continuar cuando lo hayas hecho",
       "yes": "Sí",
-      "no": "No",
       "month": "mes",
       "join": "Unirse",
       "login": "Iniciar sesión",
@@ -23,9 +22,9 @@
       "sudo": "EmuDeck ha detectado que ya has establecido una contraseña de sudo, ingrésala a continuación.",
       "loading": "Cargando",
       "save": "Guardar",
-      "both": "Ambos"
+      "both": "Ambos",
+      "no": "No"
     },
-
     "footer": {
       "exit": "Salir a Gaming Mode"
     },
@@ -50,11 +49,12 @@
       "logsError": "Hubo un problema al obtener tus registros, por favor recógelos manualmente desde la carpeta emudeck en tu carpeta de usuario.",
       "bootMode": "Modo de Juego",
       "pegasusTheme": "Tema Pegasus",
-      "featured": "Destacados",
+      "featured:": "Featured",
       "otherSettings": "Otras Configuraciones",
       "exclusiveTools": "Herramientas exclusivas de EmuDeck",
       "thirdParty": "Herramientas de Terceros",
-      "other": "Otras Cosas"
+      "other": "Otras Cosas",
+      "featured": "Destacados"
     },
     "ManageEmulatorsPage": {
       "title": "Gestiona tus Emuladores",
@@ -178,7 +178,10 @@
       "title": "Configurar Guardado Automático",
       "description": ""
     },
-    "ChangeLogPage": { "title": "Últimos cambios", "description": "" },
+    "ChangeLogPage": {
+      "title": "Últimos cambios",
+      "description": ""
+    },
     "CHDToolPage": {
       "title": "Herramienta de Compresión EmuDeck",
       "description": "La Herramienta de Compresión es un script que busca en ciertas carpetas de ROM y comprime juegos hasta en un 70% de su tamaño de archivo original utilizando los formatos CHD, RVZ, Trimmed 3DS, XISO y 7Zip."
@@ -208,7 +211,6 @@
         "description": "Parece que hay un problema al descargar el backend. Por favor, reinicia EmuDeck después de comprobar que tu red funciona correctamente."
       }
     },
-
     "CloudSyncConfigPage": {
       "title": "Sincronización en la Nube - Selecciona tu proveedor",
       "title2": "Copia de Seguridad en la Nube - Selecciona tu proveedor",
@@ -226,7 +228,10 @@
       "title": "Configurar Diseño del Controlador",
       "description": "¿Quieres que tu controlador esté configurado para que los botones coincidan con la posición de los controladores originales (A se mapea a B) o quieres usar el diseño de tu controlador (A se mapea a A)?"
     },
-    "CopyGamesPage": { "title": "", "description": "" },
+    "CopyGamesPage": {
+      "title": "",
+      "description": ""
+    },
     "DeviceSelectorPage": {
       "title": "Selecciona tu dispositivo",
       "description": "EmuDeck adapta la instalación para hardware diferente. Cada dispositivo tendrá su propia configuración, emuladores y biseles preconfigurados."
@@ -243,7 +248,10 @@
         "list": "<li>- Las mismas características que Early Access y</li><li>- Derechos de voto, ¡formemos juntos el futuro de EmuDeck!</li>"
       }
     },
-    "EmuDeckyPage": { "title": "Configurar EmuDecky", "description": "" },
+    "EmuDeckyPage": {
+      "title": "Configurar EmuDecky",
+      "description": ""
+    },
     "EmulatorConfigResolutionPage": {
       "title": "Resolución del Emulador",
       "description": ""
@@ -256,7 +264,10 @@
       "title": "Resolución del Emulador",
       "description": "Selecciona la resolución que deseas usar para tus emuladores. Ten en cuenta que una resolución más alta requerirá una computadora más rápida."
     },
-    "EmulatorsDetailPage": { "title": "", "description": "" },
+    "EmulatorsDetailPage": {
+      "title": "",
+      "description": ""
+    },
     "EmulatorSelectorPage": {
       "title": "Emuladores y herramientas para {{device}}",
       "standaloneRA": "¿RetroArch o Emulador Independiente?"
@@ -267,7 +278,9 @@
       "titleAlly": "Configuración de Controlador Asus Rog Ally",
       "titleWin32": "Configuración de Controlador"
     },
-    "ErrorPage": { "title": "" },
+    "ErrorPage": {
+      "title": ""
+    },
     "ESDEThemePage": {
       "title": "Tema Predeterminado de EmulationStation-DE",
       "description": "Selecciona tu tema predeterminado."
@@ -366,7 +379,9 @@
       "title": "Configurar Shader LCD para Sistemas Portátiles",
       "description": "El Shader LCD simula las antiguas pantallas LCD de matriz de sistemas portátiles."
     },
-    "StoreFrontPage": { "title": "Tienda de EmuDeck" },
+    "StoreFrontPage": {
+      "title": "Tienda de EmuDeck"
+    },
     "UninstallPage": {
       "title": "Desinstalar EmuDeck",
       "description": "La utilidad de desinstalación de EmuDeck solo debe usarse si tienes la intención de eliminar EmuDeck de tu sistema. Si tienes problemas, ejecuta un Restablecimiento Personalizado, soluciona problemas específicos de herramientas o emuladores, o visita el Discord o Reddit de EmuDeck para obtener soporte adicional."
@@ -415,7 +430,9 @@
         "description": "Inicia en el Escritorio de Windows como cualquier PC con Windows"
       }
     },
-    "ManageEmulators": { "description": "" },
+    "ManageEmulators": {
+      "description": ""
+    },
     "Migration": {
       "current": "Instalación Actual:",
       "errorDetected": "No detectado",
