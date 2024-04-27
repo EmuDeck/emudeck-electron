@@ -48,7 +48,8 @@ function ESDEThemePage() {
 
   return (
     <Wrapper aside={false}>
-      <Header title="EmulationStation-DE Default Theme" />
+      <Header title={t('ESDEThemePage.title')} />
+      <p className="lead">{t('ESDEThemePage.description')}</p>
       <ESDETheme themes={themes} onClick={themeSet} />
       <Footer
         next={nextPage()}

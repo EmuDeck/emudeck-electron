@@ -34,7 +34,8 @@ const AndroidRABezelsPage = () => {
 
   return (
     <Wrapper>
-      <Header title={t('AndroidRABezelsPage.title')} />
+      <Header title={t('RABezelsPage.title')} />
+      <p className="lead">{t('RABezelsPage.description')}</p>
       <RABezels bezels={bezels} onClick={bezelsSet} />
       <Footer
         next="android-frontend-selector"

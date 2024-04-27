@@ -237,7 +237,8 @@ function FrontendSelectorPage() {
 
   return (
     <Wrapper>
-      <Header title={`Frontends for ${device}`} />
+      <Header title={t('FrontendSelectorPage.title', { device: device })} />
+      <p className="lead">{t('FrontendSelectorPage.description')}</p>
       <FrontendSelector
         installFrontends={installFrontends}
         lastSelected={lastSelected}

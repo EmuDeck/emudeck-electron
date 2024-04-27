@@ -41,25 +41,21 @@ function GameModePage() {
     if (status) {
       modalData = {
         active: true,
-        header: <span className="h4">Game Mode enabled</span>,
-        body: (
-          <p>
-            Restart your device to go into Game Mode, Exit Steam to go back to
-            your Desktop
-          </p>
+        header: (
+          <span className="h4">{t('GameModePage.modalGameEnabledTitle')}</span>
         ),
+        body: <p>{t('GameModePage.modalGameEnabledDesc')}</p>,
         css: 'emumodal--sm',
       };
     } else {
       modalData = {
         active: true,
-        header: <span className="h4">Desktop Mode enabled</span>,
-        body: (
-          <p>
-            Next time you restart your device you'll go directly into Desktop
-            Mode
-          </p>
+        header: (
+          <span className="h4">
+            {t('GameModePage.modalDesktopEnabledTitle')}
+          </span>
         ),
+        body: <p>{t('GameModePage.modalDesktopEnabledDesc')}</p>,
         css: 'emumodal--sm',
       };
     }
@@ -84,7 +80,8 @@ function GameModePage() {
   return (
     <Wrapper>
       <PatreonLogin>
-        <Header title="Boot Mode" />
+        <Header title={t('GameModePage.title')} />
+        <p className="lead">{t('GameModePage.description')}.</p>
         <GameMode onClick={gameModeSet} disableButton={disableButton} />
       </PatreonLogin>
       <Footer />

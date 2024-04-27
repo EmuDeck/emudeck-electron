@@ -55,7 +55,7 @@ function EmulatorConfigResolutionPage() {
 
   return (
     <Wrapper>
-      <Header title="Emulator Resolution" />
+      <Header title={t('EmulatorResolutionPage.title')} />
       <EmulatorResolution onClick={setResolution} />
       <footer className="footer">
         <BtnSimple
@@ -64,7 +64,7 @@ function EmulatorConfigResolutionPage() {
           aria="Disabled"
           onClick={() => saveResolutions()}
         >
-          Save settings
+          {t('general.save')}
         </BtnSimple>
       </footer>
       <EmuModal modal={modal} />

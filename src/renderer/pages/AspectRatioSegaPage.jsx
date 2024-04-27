@@ -32,6 +32,7 @@ function AspectRatioSegaPage() {
   return (
     <Wrapper>
       <Header title={t('AspectRatioSegaPage.title')} />
+      <p className="lead">{t('AspectRatioSegaPage.description')}</p>
       <AspectRatioSega
         data={data}
         onClick={arSet}

@@ -7,6 +7,7 @@
       "continue": "Continue",
       "back": "Back",
       "next": "Next",
+      "finish": "Finish",
       "skip": "Skip",
       "pressContinue": "Press Continue when you've done it",
       "yes": "Yes",
@@ -21,7 +22,8 @@
       "moreInfo": "More Info",
       "sudo": "EmuDeck has detected you already have set a sudo password, type it below.",
       "loading": "Loading",
-      "save": "Save"
+      "save": "Save",
+      "both": "Both"
     },
     "footer": {
       "exit": "Exit To Gaming Mode"
@@ -65,7 +67,15 @@
         "title": "Update your Emulators",
         "description": "Update your emulators right from EmuDeck",
         "button": "Update"
-      }
+      },
+      "modalResetTitle": "Resetting Emulators configuration",
+      "modalResetDesc": "Please wait while we reset all the Emulators configuration",
+      "modalResetingTitle": "Resetting {{code}} configuration",
+      "modalResetingDesc": "Please wait while we reset {{code}} configuration",
+      "modalUpdatedTitle": "{{name}} configuration updated!",
+      "modalUpdatedDesc": "{{name}} configuration was updated with our latest improvements, optimizations and bug fixes!",
+      "modalFailedTitle": "{{name}} configuration reset failed",
+      "modalFailedDesc": "There was an issue trying to reset {{name}} configuration"
     },
     "QuickSettingsPage": {
       "title": "Configure your Settings",
@@ -150,24 +160,30 @@
     },
     "AspectRatio3DPage": {
       "title": "Configure Aspect Ratio for Classic 3D Games",
-      "description": ""
+      "description": "Select the aspect ratio for the Dreamcast and Nintendo 64 Systems."
     },
     "AspectRatioDolphinPage": {
       "title": "Configure Aspect Ratio for GameCube games",
-      "description": ""
+      "description": "Select the aspect ratio for Gamecube games. You can change this setting in game anytime by pressing Start + DPad Right."
     },
     "AspectRatioSegaPage": {
       "title": "Configure Aspect Ratio for Classic Sega Systems",
-      "description": ""
+      "description": "Select the aspect ratio for the Classic Sega Systems."
     },
     "AspectRatioSNESPage": {
       "title": "Configure Aspect Ratio for Classic Nintendo",
-      "description": ""
+      "description": "Select the aspect ratio for the Super Nintendo and NES."
     },
     "AutoSavePage": { "title": "Configure Auto Save", "description": "" },
     "ChangeLogPage": { "title": "Latest changes", "description": "" },
-    "CHDToolPage": { "title": "EmuDeck Compression Tool", "description": "" },
-    "CheckBiosPage": { "title": "Bios files checker", "description": "" },
+    "CHDToolPage": {
+      "title": "EmuDeck Compression Tool",
+      "description": "The Compression Tool is a script that looks through certain ROM folders and compresses games by up to 70% of their original file size using CHD, RVZ, Trimmed 3DS, XISO, and 7Zip formats."
+    },
+    "CheckBiosPage": {
+      "title": "Bios files checker",
+      "description": "Some games will not load properly without BIOS files in place. Place your BIOS in Emulation/bios and use this BIOS Checker to ensure that you have the correct BIOS for your system."
+    },
     "CheckUpdatePage": {
       "title": "EmuDeck is loading...",
       "backend": "Building EmuDeck backend and running autodiagnostics in the background...",
@@ -194,17 +210,23 @@
       "title2": "Cloud Backup - Select your provider",
       "description": ""
     },
-    "CloudSyncPage": { "title": "Cloud Saves", "description": "" },
+    "CloudSyncPage": {
+      "title": "Cloud Saves",
+      "description": "Select your preferred type of cloud saving."
+    },
     "ConfirmationPage": {
       "title": "Here is what EmuDeck will do",
       "description": ""
     },
     "ControllerLayoutPage": {
       "title": "Configure Controller Layout",
-      "description": ""
+      "description": "Do you want your controller set so the buttons match the position of the original controllers ( A is mapped to B ) or do you want to use your controller's layout ( A is mapped to A )"
     },
     "CopyGamesPage": { "title": "", "description": "" },
-    "DeviceSelectorPage": { "title": "Select your device", "description": "" },
+    "DeviceSelectorPage": {
+      "title": "Select your device",
+      "description": "EmuDeck tailors the install for different hardware. Each device will have its own configuration, emulators and pre-configured bezels."
+    },
     "EarlyAccessPage": {
       "title": "Help us by supporting EmuDeck",
       "description": "Donate on Patreon and help us grow and improve! As a member of our community you'll get 1 on 1 individual support and early access to our latest features, some of them exclusive for patrons only",
@@ -225,20 +247,19 @@
     },
     "EmulatorConfigurationPage": {
       "title": "Emulator and Tools Configurations",
-      "description": ""
+      "description": "EmuDeck will optimize and configure emulators during this install. Selected emulators will have their configurations reset and updated to EmuDeck defaults. De-selected emulators will not be touched and EmuDeck will respect your configurations (Not Recommended)."
     },
     "EmulatorResolutionPage": {
       "title": "Emulator Resolution",
-      "description": ""
+      "description": "Select the resolution you would like to use for your emulators. Keep in mind that a higher resolution will require a faster computer."
     },
     "EmulatorsDetailPage": { "title": "", "description": "" },
     "EmulatorSelectorPage": {
       "title": "Emulators and tools for {{device}}",
-      "description": ""
+      "standaloneRA": "RetroArch or Standalone Emulator?"
     },
     "EndPage": {
       "title": "We are completing your installation...",
-      "description": "",
       "titleFinish": "Installation complete!",
       "titleAlly": "Asus Rog Ally Controller configuration",
       "titleWin32": "Controller configuration"
@@ -246,20 +267,40 @@
     "ErrorPage": { "title": "" },
     "ESDEThemePage": {
       "title": "EmulationStation-DE Default Theme",
-      "description": ""
+      "description": "Select your default theme."
     },
-    "FinishPage": { "title": "What's left?", "description": "" },
+    "FinishPage": {
+      "title": "What's left?",
+      "line1": "Now that you have placed your files in their proper place and selected a front-end, you may be asking yourself, what’s left?",
+      "line2": "You can simply go back to Game Mode and get to retro-gaming!",
+      "line3": "However, EmuDeck contains a large suite of features for you to check out. You may want to use the 'Compression Tool' to compress your ROMs to save on space, or use the 'Cloud Services' tool to add your favorite streaming services to your preferred front-end.",
+      "line4": "There’s plenty to check out and explore in the application, but for now, your onboarding is complete,",
+      "line5": "the EmuDeck developers sincerely hope you enjoy your experience"
+    },
     "FrontendSelectorPage": {
       "title": "Frontends for {{device}}",
-      "description": ""
+      "description": "Select which frontends you would like to use to launch your games. You may select more than one."
     },
-    "GameModePage": { "title": "Boot Mode", "description": "" },
-    "GyroDSUPage": { "title": "Configure SteamDeckGyroDSU", "description": "" },
+    "GameModePage": {
+      "title": "Boot Mode",
+      "description": "Select how you want to boot your device.",
+      "modalGameEnabledTitle": "Game Mode enabled",
+      "modalGameEnabledDesc": "Restart your device to go into Game Mode, Exit Steam to go back to your Desktop",
+      "modalDesktopEnabledTitle": "Desktop Mode enabled",
+      "modalDesktopEnabledDesc": "Next time you restart your device you'll go directly into Desktop Mode"
+    },
+    "GyroDSUPage": {
+      "title": "Configure SteamDeckGyroDSU",
+      "description": "SteamDeckGyroDSU is a plugin that allows you to use your Steam Deck Gyroscope in Cemu (Wii U), Citra (3DS), Dolphin (Gamecube and Wii), Ryujinx (Nintendo Switch), and Yuzu (Nintendo Switch) games."
+    },
     "HelpPage": { "title": "", "description": "" },
-    "HotkeysPage": { "title": "Emulation Hotkeys", "description": "" },
+    "HotkeysPage": {
+      "title": "Emulation Hotkeys",
+      "description": "Most of the emulators share a series of hotkeys to make them easier to use."
+    },
     "MigrationPage": {
       "title": "Migrate your installation",
-      "description": ""
+      "description": "This utility will move your EmuDeck installation, with your ROMs intact, to the selected destination as well as update your Steam Library paths."
     },
     "ParserSelectorPage": {
       "title": "Parsers for Steam Rom Manager",
@@ -306,7 +347,7 @@
       "title": "Select your ROM Directory",
       "description": "Your ROM directory will be squared away within an Emulation folder in your selected directory.",
       "modalErrorDetecting": "There was an error detecting your storage...",
-      "modalErrorWritable": "There was an error detecting your storage...",
+      "modalErrorWritable": "Non writable directory selected, please choose another...",
       "modalError": "There was an error, please restart EmuDeck..."
     },
     "Shaders2DPage": {
@@ -354,13 +395,32 @@
     "AutoSave": { "description": "" },
     "ChangeLog": { "description": "" },
     "CHDTool": { "description": "" },
-    "CheckBios": { "description": "" },
+    "CheckBios": {
+      "detected": "- Detected",
+      "missing": " - Missing",
+      "sarching": "...searching...",
+      "tip1": "Tip 1: Not all systems require additional BIOS files. Listed here are the more common systems.",
+      "tip2": "Tip 2: Make sure you have the correct BIOS for your ROM region. Your ROMs may come from the United States, Japan, Europe, etc.",
+      "tip3": "Tip 3: Casing matters. Even if your BIOS are detected, your BIOS must be lowercase for Playstation 1 and Playstation 2.",
+      "tip4": "Tip 4: Your BIOS files must be placed in Emulation/bios. Do not make sub-folders for BIOS files. For the Nintendo Switch, use our pre-created folders.",
+      "tip5": "Tip 5: For systems not listed here, check this link.",
+      "cheat": "Cheat Sheet",
+      "tip6": " You can use this link as a handy guide for how your BIOS should be named."
+    },
     "CheckDependencies": { "description": "" },
     "CheckUpdate": { "description": "" },
     "CloudSyncConfig": { "description": "" },
-    "CloudSync": { "description": "" },
+    "CloudSync": {
+      "sync": "Sync",
+      "backup": "Backup",
+      "syncDesc": "Sync between EmuDeck installations - <strong> Patrons only</strong>",
+      "backupDesc": "Backup your games to the cloud"
+    },
     "Confirmation": { "description": "" },
-    "ControllerLayout": { "description": "" },
+    "ControllerLayout": {
+      "option1": "Position Match",
+      "option2": "Controller Layout Match"
+    },
     "CopyGames": { "description": "" },
     "DeviceSelector": { "description": "" },
     "EarlyAccess": { "description": "" },
@@ -376,12 +436,30 @@
     "ESDETheme": { "description": "" },
     "Finish": { "description": "" },
     "FrontendSelector": { "description": "" },
-    "GameMode": { "description": "" },
+    "GameMode": {
+      "steam": {
+        "title": "SteamUI",
+        "description": "Mimic the Steam Deck experience by booting directly into SteamUI."
+      },
+      "windows": {
+        "title": "Windows Desktop",
+        "description": "Boot to the Windows Desktop like any Windows PC"
+      }
+    },
     "GyroDSU": { "description": "" },
     "Help": { "description": "" },
     "Hot": { "description": "" },
     "ManageEmulators": { "description": "" },
-    "Migration": { "description": "" },
+    "Migration": {
+      "current": "Current Installation:",
+      "errorDetected": "Not detected",
+      "custom": "Custom Directory",
+      "destination": "Pick your Destination:",
+      "sdCard": "SD Card",
+      "internalStorage": "Internal Storage",
+      "start": "Start Migration",
+      "migrating": "Migrating..."
+    },
     "ParserSelector": { "description": "" },
     "PatroenLogin": { "description": "" },
     "PegasusThemeChoice": { "description": "" },

@@ -952,7 +952,9 @@ function EmulatorSelectorPage() {
       function launchModal() {
         modalData = {
           ...modalData,
-          header: <span className="h4">RetroArch or Standalone Emulator?</span>,
+          header: (
+            <span className="h4">t('EmulatorSelectorPage.standaloneRA')</span>
+          ),
           css: 'emumodal--sm',
           footer: (
             <>
@@ -984,7 +986,7 @@ function EmulatorSelectorPage() {
                 aria="Go Back"
                 onClick={() => setAlternativeEmulator(system, 'both', 'both')}
               >
-                Both
+                {t('general.both')}
               </BtnSimple>
             </>
           ),
@@ -997,7 +999,7 @@ function EmulatorSelectorPage() {
 
   return (
     <Wrapper>
-      <Header title={`Emulators and tools for ${device}`} />
+      <Header title={t('EmulatorSelectorPage.title', { device: device })} />
       <EmulatorSelector
         installEmus={installEmus}
         data={data}

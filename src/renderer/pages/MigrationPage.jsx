@@ -76,9 +76,7 @@ function MigrationPage() {
             const modalData = {
               active: true,
               header: <span className="h4">Ooops 😞</span>,
-              body: (
-                <p>Non writable directory selected, please choose another.</p>
-              ),
+              body: <p>{t('RomStoragePage.modalErrorWritable')}</p>,
               css: 'emumodal--xs',
             };
             setStatePage({
@@ -198,7 +196,8 @@ function MigrationPage() {
 
   return (
     <Wrapper>
-      <Header title="Migrate your installation" />
+      <Header title={t('MigrationPage.title')} />
+      <p className="lead">{t('MigrationPage.description')}</p>
       <Migration
         sdCardValid={sdCardValid}
         reloadSDcard={checkSDValid}

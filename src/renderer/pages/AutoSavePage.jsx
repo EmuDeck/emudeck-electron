@@ -28,6 +28,10 @@ function AutoSavePage() {
   return (
     <Wrapper>
       <Header title={t('AutoSavePage.title')} />
+      <p className="lead">
+        If enabled, your game state will be saved on exit and automatically
+        loaded when opened again when using RetroArch.
+      </p>
       <AutoSave data={data} onClick={autoSaveSet} />
       <Footer
         next="ra-achievements"

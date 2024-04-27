@@ -38,7 +38,8 @@ function CloudSyncPage() {
 
   return (
     <Wrapper>
-      <Header title="Cloud Saves" />
+      <Header title={t('CloudSyncPage.title')} />
+      <p className="lead">{t('CloudSyncPage.description')}</p>
       <CloudSync
         onClick={cloudSyncSet}
         disableButton={disableButton}
@@ -47,7 +48,7 @@ function CloudSyncPage() {
 
       <Footer
         next={nextButtonStatus()}
-        nextText={cloudSyncType === 'none' ? 'Copy Games' : 'Next'}
+        nextText={t('general.next')}
         disabledNext={disabledNext}
         disabledBack={type !== 'welcome'}
       />

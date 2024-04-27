@@ -181,8 +181,10 @@ function ManageEmulatorsPage() {
   const resetEmus = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Resetting Emulators configuration</span>,
-      body: <p>Please wait while we reset all the Emulators configuration</p>,
+      header: (
+        <span className="h4">{t('ManageEmulatorsPage.modalResetTitle')}</span>
+      ),
+      body: <p>{t('ManageEmulatorsPage.modalResetDesc')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -226,8 +228,14 @@ function ManageEmulatorsPage() {
 
         const modalData = {
           active: true,
-          header: <span className="h4">Resetting {code}'s configuration</span>,
-          body: <p>Please wait while we reset {code}'s configuration</p>,
+          header: (
+            <span className="h4">
+              {t('ManageEmulatorsPage.modalResetingTitle', { code: code })}
+            </span>
+          ),
+          body: (
+            <p>{t('ManageEmulatorsPage.modalResetingDesc', { code: code })}</p>
+          ),
           footer: <ProgressBar css="progress--success" infinite max="100" />,
           css: 'emumodal--xs',
         };
@@ -249,12 +257,13 @@ function ManageEmulatorsPage() {
             const modalData = {
               active: true,
               header: (
-                <span className="h4">{name}'s configuration updated!</span>
+                <span className="h4">
+                  {t('ManageEmulatorsPage.modalUpdatedTitle', { name: name })}
+                </span>
               ),
               body: (
                 <p>
-                  {name}'s configuration was updated with our latest
-                  improvements, optimizations and bug fixes!
+                  {t('ManageEmulatorsPage.modalUpdatedDesc', { name: name })}
                 </p>
               ),
               footer: '',
@@ -274,10 +283,14 @@ function ManageEmulatorsPage() {
             const modalData = {
               active: true,
               header: (
-                <span className="h4">{name} configuration reset failed</span>
+                <span className="h4">
+                  {t('ManageEmulatorsPage.modalFailedTitle', { name: name })}
+                </span>
               ),
               body: (
-                <p>There was an issue trying to reset {name} configuration</p>
+                <p>
+                  {t('ManageEmulatorsPage.modalFailedDesc', { name: name })}
+                </p>
               ),
               css: 'emumodal--xs',
             };

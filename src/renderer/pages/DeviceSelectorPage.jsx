@@ -154,6 +154,7 @@ function DeviceSelectorPage() {
   return (
     <Wrapper>
       <Header title={t('DeviceSelectorPage.title')} />
+      <p className="lead">{t('DeviceSelectorPage.description')}</p>
       <DeviceSelector data={data} onClick={deviceSet}>
         {system === 'darwin' && (
           <Card
@@ -280,7 +281,7 @@ function DeviceSelectorPage() {
       </DeviceSelector>
       <Footer
         next={mode === 'easy' ? 'end' : 'emulator-selector'}
-        nextText={mode === 'easy' ? 'Finish' : 'Next'}
+        nextText={mode === 'easy' ? t('general.finish') : t('general.next')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

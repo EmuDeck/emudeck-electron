@@ -33,7 +33,7 @@ function ConfirmationPage() {
       <Confirmation data={data} />
       <Footer
         next="end"
-        nextText="Finish"
+        nextText={t('general.finish')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

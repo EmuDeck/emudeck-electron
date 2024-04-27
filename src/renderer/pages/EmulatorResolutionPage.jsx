@@ -30,7 +30,8 @@ function EmulatorResolutionPage() {
 
   return (
     <Wrapper>
-      <Header title="Emulator Resolution" />
+      <Header title={t('EmulatorResolutionPage.title')} />
+      <p className="lead">{t('EmulatorResolutionPage.description')}</p>
       <EmulatorResolution onClick={setResolution} />
       <Footer next="confirmation" nextText={t('general.next')} />
     </Wrapper>

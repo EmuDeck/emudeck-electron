@@ -95,9 +95,6 @@ function EndPage() {
               We will close Steam if its running and then Steam Rom Manager will
               open, this could take a few seconds, please wait.
             </p>
-            <strong>
-              Desktop controls will temporarily revert to touch/trackpad/L2/R2.
-            </strong>
           </>
         ),
         footer: <ProgressBar css="progress--success" infinite max="100" />,
@@ -204,23 +201,19 @@ function EndPage() {
 
   return (
     <Wrapper css="wrapper__full" aside={false}>
-      {disabledNext === true && (
-        <Header title="We are completing your installation..." />
-      )}
+      {disabledNext === true && <Header title={t('EndPage.title')} />}
       {disabledNext === false && step === undefined && system !== 'win32' && (
-        <Header title="Installation complete!" />
+        <Header title={t('EndPage.titleFinish')} />
       )}
 
       {disabledNext === false &&
         step === undefined &&
-        device === 'Asus Rog Ally' && (
-          <Header title="Asus Rog Ally Controller configuration" />
-        )}
+        device === 'Asus Rog Ally' && <Header title={t('EndPage.titleAlly')} />}
 
       {disabledNext === false &&
         step === undefined &&
         device !== 'Asus Rog Ally' &&
-        system === 'win32' && <Header title="Controller configuration" />}
+        system === 'win32' && <Header title={t('EndPage.titleWin32')} />}
 
       <End
         onClick={openSRM}
@@ -238,7 +231,7 @@ function EndPage() {
           disabled={disabledNext && 'true'}
           onClick={() => navigate(nextPage)}
         >
-          Next
+          {t(general.next)}
           <svg
             className="rightarrow"
             width="32"

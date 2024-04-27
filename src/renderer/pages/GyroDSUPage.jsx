@@ -93,11 +93,12 @@ function GyroDSUPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure SteamDeckGyroDSU" />
+      <Header title={t('GyroDSUPage.title')} />
+      <p className="lead">{t('GyroDSUPage.description')}</p>
       <GyroDSU installClick={installGyro} passValidates={pass1 === pass2} />
       <Footer
         next={false}
-        nextText={sudoPass ? 'Continue' : 'Skip'}
+        nextText={sudoPass ? t('general.continue') : t('general.skip')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

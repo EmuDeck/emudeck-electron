@@ -29,6 +29,7 @@ function CHDToolPage() {
   return (
     <Wrapper>
       <Header title={t('CHDToolPage.title')} />
+      <p className="lead">{t('CHDToolPage.description')}</p>
       <CHDTool onClick={runCHD} />
       <Footer
         next={false}

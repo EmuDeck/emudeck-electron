@@ -90,6 +90,7 @@ function CheckBiosPage() {
   return (
     <Wrapper>
       <Header title={t('CheckBiosPage.title')} />
+      <p className="lead">{t('CheckBiosPage.description')}</p>
       <CheckBios
         checkBiosAgain={checkBiosAgain}
         ps1Bios={ps1Bios}

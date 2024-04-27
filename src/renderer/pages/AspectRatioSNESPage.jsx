@@ -32,6 +32,7 @@ function AspectRatioSNESPage() {
   return (
     <Wrapper>
       <Header title={t('AspectRatioSNESPage.title')} />
+      <p className="lead">{t('AspectRatioSNESPage.description')}</p>
       <AspectRatioSNES data={data} onClick={arSet} />
       <Footer
         next="aspect-ratio-3d"

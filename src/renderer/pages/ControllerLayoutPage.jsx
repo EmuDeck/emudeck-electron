@@ -35,6 +35,7 @@ function ControllerLayoutPage() {
   return (
     <Wrapper>
       <Header title={t('ControllerLayoutPage.title')} />
+      <p className="lead">{t('ControllerLayoutPage.description')}</p>
       <ControllerLayout onClick={controllerLayoutSet} />
       <Footer
         next="frontend-selector"

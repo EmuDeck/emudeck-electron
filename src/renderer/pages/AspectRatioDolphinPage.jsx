@@ -32,6 +32,7 @@ function AspectRatioDolphinPage() {
   return (
     <Wrapper>
       <Header title={t('AspectRatioDolphinPage.title')} />
+      <p className="lead">{t('AspectRatioDolphinPage.description')}</p>
       <AspectRatioDolphin data={data} onClick={arSet} />
       <Footer
         next={

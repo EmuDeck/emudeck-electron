@@ -32,7 +32,7 @@ function AspectRatio3DPage() {
   return (
     <Wrapper>
       <Header title={t('AspectRatio3DPage.title')} />
-
+      <p className="lead">{t('AspectRatio3DPage.description')}</p>
       <AspectRatio3D data={data} onClick={arSet} />
       <Footer
         next="aspect-ratio-dolphin"
