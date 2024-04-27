@@ -171,7 +171,7 @@ const createWindow = async () => {
   const { screen } = require('electron');
   const primaryDisplay = screen.getPrimaryDisplay();
   const { height } = primaryDisplay.workAreaSize;
-  const screenHeight = height < 701 ? 600 : 720;
+  const screenHeight = height < 701 ? 600 : 740;
   const isFullscreen = false;
   // const os = require('os');
 
