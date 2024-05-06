@@ -112,7 +112,7 @@ function AndroidSetupPage() {
             </div>
             <div data-col-sm="10">
               <p className="lead">
-                {t('AndroidSetupPage.configs.yuzu.title', { storage: storage })}
+                {t('AndroidSetupPage.configs.yuzu', { storage: storage })}
               </p>
               <p className="lead">
                 <strong>{t('general.pressContinue')}</strong>
@@ -127,7 +127,7 @@ function AndroidSetupPage() {
             </div>
             <div data-col-sm="10">
               <p className="lead">
-                {t('AndroidSetupPage.configs.ppsspp.title', {
+                {t('AndroidSetupPage.configs.ppsspp', {
                   storage: storage,
                 })}
               </p>
@@ -144,7 +144,7 @@ function AndroidSetupPage() {
             </div>
             <div data-col-sm="10">
               <p className="lead">
-                {t('AndroidSetupPage.configs.nethersx2.title', {
+                {t('AndroidSetupPage.configs.nethersx2', {
                   storage: storage,
                 })}
               </p>
