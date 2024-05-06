@@ -29,6 +29,7 @@
       "exit": "Spielmodus beenden"
     },
     "aside": {
+      "android": "Android",
       "quickSettings": "Schnelleinstellungen",
       "manageEmulators": "Emulatoren verwalten",
       "importGames": "Spiele importieren und BIOS",

@@ -29,6 +29,7 @@
       "exit": "Sortir au mode jeu"
     },
     "aside": {
+      "android": "Android",
       "quickSettings": "Réglages rapides",
       "manageEmulators": "Gérer les émulateurs",
       "importGames": "Importer des jeux et BIOS",
