@@ -231,7 +231,7 @@ function EndPage() {
           disabled={disabledNext && 'true'}
           onClick={() => navigate(nextPage)}
         >
-          {t(general.next)}
+          Next
           <svg
             className="rightarrow"
             width="32"

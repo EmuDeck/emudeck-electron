@@ -10,8 +10,8 @@ import Confirmation from 'components/organisms/Wrappers/Confirmation';
 
 function ConfirmationPage() {
   const { t, i18n } = useTranslation();
-  const { state } = useContext(GlobalContext);
-  const { bezels } = state;
+  const { state, setState } = useContext(GlobalContext);
+  const { bezels, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
