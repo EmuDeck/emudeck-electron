@@ -218,7 +218,6 @@ const createWindow = async () => {
       width: 1280,
       // width: 1280,
       height: screenHeight,
-      titleBarStyle: 'hidden',
       trafficLightPosition: { x: 8, y: 8 },
       icon: getAssetPath('icon.png'),
       resizable: true,

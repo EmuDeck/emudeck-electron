@@ -430,7 +430,7 @@ function ManageEmulatorsPage() {
                 }
 
                 if (system === 'darwin') {
-                  if (item.id !== 'ra' && item.id !== 'srm') {
+                  if (item.id !== 'ra') {
                     return;
                   }
                 }
@@ -472,6 +472,12 @@ function ManageEmulatorsPage() {
 
                 if (item.id === 'steam') {
                   return;
+                }
+
+                if (system === 'darwin') {
+                  if (item.id !== 'esde') {
+                    return;
+                  }
                 }
 
                 return (

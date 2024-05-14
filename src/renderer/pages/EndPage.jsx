@@ -181,6 +181,10 @@ function EndPage() {
         ipcChannel.sendMessage('bash-nolog', [
           `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/setup.ps1`,
         ]);
+      } else if (system === 'darwin') {
+        ipcChannel.sendMessage('bash-nolog', [
+          `finish|||osascript -e 'tell application "Terminal" to do script "bash ~/.config/EmuDeck/backend/setup.sh" activate'`,
+        ]);
       } else {
         ipcChannel.sendMessage('bash-nolog', [
           `finish|||bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
