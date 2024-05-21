@@ -257,7 +257,7 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "EmuDeck",
+      "owner": "Zachareee",
       "repo": "emudeck-electron"
     }
   },
