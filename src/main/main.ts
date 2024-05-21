@@ -21,6 +21,7 @@ import fakeOSFile from '../data/local-fake-os.json';
 
 const { fakeOS } = fakeOSFile;
 const { shouldUseDarkColors } = nativeTheme;
+const EMUDECKWE = "https://github.com/Zachareee/emudeck-we.git"
 const os = require('os');
 const fs = require('fs');
 const lsbRelease = require('lsb-release');
@@ -375,7 +376,7 @@ ipcMain.on('emudeck', async (event, command) => {
     let bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout master && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
 
     if (os.platform().includes('win32')) {
-      bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:USERPROFILE/EmuDeck/logs/pull.log";  git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
+      bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:USERPROFILE/EmuDeck/logs/pull.log";  git clone --no-single-branch --depth=1 ${EMUDECKWE} ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout master && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
     }
 
     return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
@@ -683,7 +684,7 @@ ipcMain.on('git-magic', async (event, branch) => {
   let repo = 'https://github.com/dragoonDorise/EmuDeck.git';
   let dir = path.join(app.getPath('appData'), '/EmuDeck/backend');
   if (os.platform().includes('win32')) {
-    repo = 'https://github.com/EmuDeck/emudeck-we.git';
+    repo = EMUDECKWE;
     dir = path.join(app.getPath('appData'), '/EmuDeck/backend');
   } else {
     dir = path.join(os.homedir(), '.config/EmuDeck/backend');
