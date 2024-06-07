@@ -172,6 +172,27 @@
       "9": ["Pause", "Left Trackpad"]
     }
   },
+  "lime3ds": {
+    "id": "lime3ds",
+    "name": "Lime3DS",
+    "code": "Lime3DS",
+    "description": "Lime3DS is an open-source, easy-to-use Nintendo 3DS emulator, forked from Citra. Lime3DS has many features, such as firmware emulation, amiibo loading, and partial support for homebrew applications.",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "Nintendo 3DS",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "R5 (Longpress)"],
+      "2": ["FullScreen", "L4"],
+      "3": ["Swap Screens", "R4"],
+      "4": ["Toggle Layout", "L5"],
+      "5": ["Toggle Layout", "L5"],
+      "6": ["Save State", "Left Trackpad"],
+      "7": ["Load State", "Left Trackpad"],
+      "8": ["Fast Forward", "Left Trackpad"],
+      "9": ["Pause", "Left Trackpad"]
+    }
+  },
   "pcsx2": {
     "id": "pcsx2",
     "name": "PCSX2QT",
