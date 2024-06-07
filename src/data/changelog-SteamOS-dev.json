@@ -22,5 +22,11 @@
     "type": "STEAMOS",
     "description": "We've added preliminary support for spanish, french and italian",
     "image": "true"
+  },
+  {
+    "title": "Lime3DS",
+    "type": "STEAMOS",
+    "description": "We've added the new 3DS emulator, Lime3DS. Installing it will migrate your saves from Citra to Lime3DS, don't forget to update your SRM entries",
+    "image": "true"
   }
 ]
