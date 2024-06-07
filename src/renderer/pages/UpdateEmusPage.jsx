@@ -8,7 +8,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import UpdateEmus from 'components/organisms/Wrappers/UpdateEmus';
 
 function UpdateEmusPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -31,22 +31,21 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Update your Emulators & Tools" />
-        <UpdateEmus
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-          onClickFlatpak={updateFlatpak}
-          onClickAppImage={updateAppImage}
-        />
-        <Footer
-          next={false}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('UpdateEmusPage.title')} />
+      <p className="lead">{t('UpdateEmusPage.description')}</p>
+      <UpdateEmus
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+        onClickFlatpak={updateFlatpak}
+        onClickAppImage={updateAppImage}
+      />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

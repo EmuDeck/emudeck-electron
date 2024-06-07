@@ -10,8 +10,8 @@ import Confirmation from 'components/organisms/Wrappers/Confirmation';
 
 function ConfirmationPage() {
   const { t, i18n } = useTranslation();
-  const { state } = useContext(GlobalContext);
-  const { bezels } = state;
+  const { state, setState } = useContext(GlobalContext);
+  const { bezels, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -28,18 +28,16 @@ function ConfirmationPage() {
   }, [state]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('ConfirmationPage.title')} />
-        <Confirmation data={data} />
-        <Footer
-          next="end"
-          nextText="Finish"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('ConfirmationPage.title')} />
+      <Confirmation data={data} />
+      <Footer
+        next="end"
+        nextText={t('general.finish')}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

@@ -9,7 +9,7 @@ import { useFetchCond } from 'hooks/useFetchCond';
 import ESDETheme from 'components/organisms/Wrappers/ESDETheme';
 
 function ESDEThemePage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { mode, system, installFrontends } = state;
   const [statePage, setStatePage] = useState({
@@ -47,18 +47,17 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper aside={false}>
-        <Header title="EmulationStation-DE Default Theme" />
-        <ESDETheme themes={themes} onClick={themeSet} />
-        <Footer
-          next={nextPage()}
-          nextText={t('general.next')}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper aside={false}>
+      <Header title={t('ESDEThemePage.title')} />
+      <p className="lead">{t('ESDEThemePage.description')}</p>
+      <ESDETheme themes={themes} onClick={themeSet} />
+      <Footer
+        next={nextPage()}
+        nextText={t('general.next')}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

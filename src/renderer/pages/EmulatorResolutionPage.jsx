@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import EmulatorResolution from 'components/organisms/Wrappers/EmulatorResolution';
 
 function EmulatorResolutionPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { resolutions, system } = state;
 
@@ -29,13 +29,12 @@ const { t, i18n } = useTranslation();
   const { dom } = statePage;
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Emulator Resolution" />
-        <EmulatorResolution onClick={setResolution} />
-        <Footer next="confirmation" nextText={t('general.next')} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('EmulatorResolutionPage.title')} />
+      <p className="lead">{t('EmulatorResolutionPage.description')}</p>
+      <EmulatorResolution onClick={setResolution} />
+      <Footer next="confirmation" nextText={t('general.next')} />
+    </Wrapper>
   );
 }
 

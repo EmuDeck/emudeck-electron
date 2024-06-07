@@ -1108,44 +1108,42 @@ function EmulatorsDetailPage() {
   }, [emulatorAlternative]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={emuData[emulatorSelected].name} />
+    <Wrapper>
+      <Header title={emuData[emulatorSelected].name} />
 
-        {updates && (
-          <EmuDetail
-            mode={mode}
-            disabledNext={disabledNext}
-            disabledBack={disabledBack}
-            emuData={emuData[emulatorSelected]}
-            updateAvailable={updates[emulator] !== undefined}
-            ps1={ps1Bios}
-            ps2={ps2Bios}
-            nswitch={switchBios}
-            segacd={segaCDBios}
-            saturn={saturnBios}
-            dreamcast={dreamcastBios}
-            nds={DSBios}
-            onChange={selectEmu}
-            onClick={resetEmu}
-            onClickCustomParser={showCustom}
-            onClickOptionalParser={installOptional}
-            onClickInstall={installEmu}
-            onClickReInstall={reInstallEmu}
-            onClickHotkeys={showHotkeys}
-            onClickControls={showControls}
-            onClickUninstall={uninstallEmu}
-            onClickMigrate={onClickMigrate}
-            onClickParsers={parserSeletor}
-            onClickRemoveParsers={removeParsers}
-            installEmus={installEmus[emulatorSelected]}
-            yuzuEAaskToken={yuzuEAaskToken}
-          />
-        )}
-        <Footer next={false} />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+      {updates && (
+        <EmuDetail
+          mode={mode}
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+          emuData={emuData[emulatorSelected]}
+          updateAvailable={updates[emulator] !== undefined}
+          ps1={ps1Bios}
+          ps2={ps2Bios}
+          nswitch={switchBios}
+          segacd={segaCDBios}
+          saturn={saturnBios}
+          dreamcast={dreamcastBios}
+          nds={DSBios}
+          onChange={selectEmu}
+          onClick={resetEmu}
+          onClickCustomParser={showCustom}
+          onClickOptionalParser={installOptional}
+          onClickInstall={installEmu}
+          onClickReInstall={reInstallEmu}
+          onClickHotkeys={showHotkeys}
+          onClickControls={showControls}
+          onClickUninstall={uninstallEmu}
+          onClickMigrate={onClickMigrate}
+          onClickParsers={parserSeletor}
+          onClickRemoveParsers={removeParsers}
+          installEmus={installEmus[emulatorSelected]}
+          yuzuEAaskToken={yuzuEAaskToken}
+        />
+      )}
+      <Footer next={false} />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

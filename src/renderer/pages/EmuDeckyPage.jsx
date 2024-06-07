@@ -10,7 +10,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import EmuDecky from 'components/organisms/Wrappers/EmuDecky';
 
 function EmuDeckyPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -153,28 +153,26 @@ const { t, i18n } = useTranslation();
   }, []);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Configure EmuDecky" />
-        <EmuDecky
-          installClick={installEmuDecky}
-          sudoPass={sudoPass}
-          onChange={setSudoPass}
-          onChangeSetPass={setPassword}
-          onChangeCheckPass={checkPassword}
-          onClick={createSudo}
-          hasSudo={hasSudo}
-          passValidates={pass1 === pass2}
-        />
-        <Footer
-          next={false}
-          nextText={sudoPass ? 'Continue' : 'Skip'}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title="Configure EmuDecky" />
+      <EmuDecky
+        installClick={installEmuDecky}
+        sudoPass={sudoPass}
+        onChange={setSudoPass}
+        onChangeSetPass={setPassword}
+        onChangeCheckPass={checkPassword}
+        onClick={createSudo}
+        hasSudo={hasSudo}
+        passValidates={pass1 === pass2}
+      />
+      <Footer
+        next={false}
+        nextText={sudoPass ? 'Continue' : 'Skip'}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

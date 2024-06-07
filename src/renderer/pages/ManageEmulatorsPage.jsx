@@ -19,6 +19,7 @@ import {
   imgppsspp,
   imgduckstation,
   imgcitra,
+  imglime3ds,
   imgpcsx2,
   imgrpcs3,
   imgyuzu,
@@ -40,6 +41,7 @@ import {
   xemuGrid,
   cemuGrid,
   citraGrid,
+  lime3dsGrid,
   dolphinGrid,
   duckstationGrid,
   mameGrid,
@@ -63,10 +65,29 @@ import {
   esdeGrid,
   srmGrid,
   pegasusGrid,
-  aresGrid,
 } from 'components/utils/images/images';
 
-import { iconGear, iconPackage } from 'components/utils/images/icons';
+import {
+  iconSuccess,
+  iconCloud,
+  iconCompress,
+  iconGear,
+  iconList,
+  iconMigrate,
+  iconPlugin,
+  iconPrize,
+  iconUninstall,
+  iconQuick,
+  iconCustom,
+  iconDoc,
+  iconJoystick,
+  iconPackage,
+  iconDisk,
+  iconHelp,
+  iconScreen,
+  iconGear,
+  iconPackage,
+} from 'components/utils/images/icons';
 
 const images = {
   ra: imgra,
@@ -76,6 +97,7 @@ const images = {
   ppsspp: imgppsspp,
   duckstation: imgduckstation,
   citra: imgcitra,
+  lime3ds: imglime3ds,
   pcsx2: imgpcsx2,
   rpcs3: imgrpcs3,
   yuzu: imgyuzu,
@@ -97,10 +119,10 @@ const images = {
 };
 
 const imagesGrid = {
-  ares: aresGrid,
   xemu: xemuGrid,
   cemu: cemuGrid,
   citra: citraGrid,
+  lime3ds: lime3dsGrid,
   dolphin: dolphinGrid,
   duckstation: duckstationGrid,
   flycast: flycastGrid,
@@ -163,8 +185,10 @@ function ManageEmulatorsPage() {
   const resetEmus = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Resetting Emulators configuration</span>,
-      body: <p>Please wait while we reset all the Emulators configuration</p>,
+      header: (
+        <span className="h4">{t('ManageEmulatorsPage.modalResetTitle')}</span>
+      ),
+      body: <p>{t('ManageEmulatorsPage.modalResetDesc')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -184,15 +208,22 @@ function ManageEmulatorsPage() {
         const { version } = item;
 
         if (system === 'win32') {
-          if (
-            item.id === 'ares' ||
-            item.id === 'bigpemu' ||
-            item.id === 'model2' ||
-            item.id === 'rmg' ||
-            item.id === 'supermodel'
-          ) {
+          if (item.id === 'rmg') {
             return;
           }
+          if (item.id === 'model2') {
+            return;
+          }
+          if (item.id === 'supermodel') {
+            return;
+          }
+          if (item.id === 'bigpemu') {
+            return;
+          }
+        }
+
+        if (item.id === 'ares') {
+          return;
         }
         console.log(installEmus[item.id].status);
         if (!installEmus[item.id].status) {
@@ -201,8 +232,14 @@ function ManageEmulatorsPage() {
 
         const modalData = {
           active: true,
-          header: <span className="h4">Resetting {code}'s configuration</span>,
-          body: <p>Please wait while we reset {code}'s configuration</p>,
+          header: (
+            <span className="h4">
+              {t('ManageEmulatorsPage.modalResetingTitle', { code: code })}
+            </span>
+          ),
+          body: (
+            <p>{t('ManageEmulatorsPage.modalResetingDesc', { code: code })}</p>
+          ),
           footer: <ProgressBar css="progress--success" infinite max="100" />,
           css: 'emumodal--xs',
         };
@@ -224,12 +261,13 @@ function ManageEmulatorsPage() {
             const modalData = {
               active: true,
               header: (
-                <span className="h4">{name}'s configuration updated!</span>
+                <span className="h4">
+                  {t('ManageEmulatorsPage.modalUpdatedTitle', { name: name })}
+                </span>
               ),
               body: (
                 <p>
-                  {name}'s configuration was updated with our latest
-                  improvements, optimizations and bug fixes!
+                  {t('ManageEmulatorsPage.modalUpdatedDesc', { name: name })}
                 </p>
               ),
               footer: '',
@@ -249,10 +287,14 @@ function ManageEmulatorsPage() {
             const modalData = {
               active: true,
               header: (
-                <span className="h4">{name} configuration reset failed</span>
+                <span className="h4">
+                  {t('ManageEmulatorsPage.modalFailedTitle', { name: name })}
+                </span>
               ),
               body: (
-                <p>There was an issue trying to reset {name} configuration</p>
+                <p>
+                  {t('ManageEmulatorsPage.modalFailedDesc', { name: name })}
+                </p>
               ),
               css: 'emumodal--xs',
             };
@@ -335,141 +377,145 @@ function ManageEmulatorsPage() {
   }, [modal]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('ManageEmulatorsPage.title')} />
-        <p className="lead">{t('ManageEmulatorsPage.description')}</p>
-        <Main>
-          {updates && (
-            <>
-              <div className="container--grid">
-                {Object.keys(updates).length > 0 && (
-                  <div data-col-md="6">
-                    <CardSettings
-                      icon={iconGear}
-                      css="is-highlighted"
-                      btnCSS="btn-simple--1"
-                      iconSize="md"
-                      title={t('ManageEmulatorsPage.updateConfigs.title')}
-                      description={t(
-                        'ManageEmulatorsPage.updateConfigs.description'
-                      )}
-                      button={t('ManageEmulatorsPage.updateConfigs.button')}
-                      onClick={() => resetEmus()}
-                    />
-                  </div>
-                )}
-                {system !== 'win32' && system !== 'darwin' && (
-                  <div data-col-md="6">
-                    <CardSettings
-                      icon={iconPackage}
-                      css="is-highlighted"
-                      btnCSS="btn-simple--1"
-                      iconSize="md"
-                      button={t('ManageEmulatorsPage.updateEmus.button')}
-                      title={t('ManageEmulatorsPage.updateEmus.title')}
-                      description={t(
-                        'ManageEmulatorsPage.updateEmus.description'
-                      )}
-                      onClick={() => navigate(`/update-emulators`)}
-                    />
-                  </div>
-                )}
-              </div>
-              <hr />
-              <div className="container--grid">
-                {installEmusArray.map((item) => {
-                  const img = images[item.id];
-                  const picture = imagesGrid[item.id];
-                  const updateNotif = updates[item.id];
-                  if (system === 'win32') {
-                    if (
-                      item.id === 'ares' ||
-                      item.id === 'bigpemu' ||
-                      item.id === 'model2' ||
-                      item.id === 'rmg' ||
-                      item.id === 'supermodel'
-                    ) {
-                      return;
-                    }
-                  }
-
-                  if (system === 'darwin') {
-                    if (item.id !== 'ra' && item.id !== 'srm') {
-                      return;
-                    }
-                  }
-
-                  return (
-                    <div key={item.id} data-col-md="4">
-                      <CardSettings
-                        icon={img}
-                        picture={picture}
-                        css="is-nothighlighted"
-                        btnCSS={
-                          item.status === true
-                            ? 'btn-simple--5'
-                            : 'btn-simple--2'
-                        }
-                        iconSize="sm"
-                        title={`${item.name}`}
-                        button="Manage"
-                        onClick={() => navigate(`/emulators-detail/${item.id}`)}
-                        notification={
-                          item.status === true
-                            ? updateNotif != undefined
-                            : false
-                        }
-                      />
-                    </div>
-                  );
-                })}
-                {installFrontendsArray.map((item) => {
-                  const img = images[item.id];
-                  const picture = imagesGrid[item.id];
-                  const updateNotif = updates[item.id];
-
-                  if (item.id === 'steam') {
+    <Wrapper>
+      <Header title={t('ManageEmulatorsPage.title')} />
+      <p className="lead">{t('ManageEmulatorsPage.description')}</p>
+      <Main>
+        {updates && (
+          <>
+            <div className="container--grid">
+              {Object.keys(updates).length > 0 && (
+                <div data-col-md="6">
+                  <CardSettings
+                    icon={iconGear}
+                    css="is-highlighted"
+                    btnCSS="btn-simple--1"
+                    iconSize="md"
+                    title={t('ManageEmulatorsPage.updateConfigs.title')}
+                    description={t(
+                      'ManageEmulatorsPage.updateConfigs.description'
+                    )}
+                    button={t('ManageEmulatorsPage.updateConfigs.button')}
+                    onClick={() => resetEmus()}
+                  />
+                </div>
+              )}
+              {system !== 'win32' && system !== 'darwin' && (
+                <div data-col-md="6">
+                  <CardSettings
+                    icon={iconPackage}
+                    css="is-highlighted"
+                    btnCSS="btn-simple--1"
+                    iconSize="md"
+                    button={t('ManageEmulatorsPage.updateEmus.button')}
+                    title={t('ManageEmulatorsPage.updateEmus.title')}
+                    description={t(
+                      'ManageEmulatorsPage.updateEmus.description'
+                    )}
+                    onClick={() => navigate(`/update-emulators`)}
+                  />
+                </div>
+              )}
+            </div>
+            <hr />
+            <div className="container--grid">
+              {installEmusArray.map((item) => {
+                const img = images[item.id];
+                const picture = imagesGrid[item.id];
+                const updateNotif = updates[item.id];
+                if (system === 'win32') {
+                  if (item.id === 'rmg') {
                     return;
                   }
+                }
 
-                  return (
-                    <div key={item.id} data-col-md="4">
-                      <CardSettings
-                        icon={img}
-                        picture={picture}
-                        css="is-highlighted"
-                        btnCSS={
-                          item.status === true
-                            ? 'btn-simple--5'
-                            : 'btn-simple--2'
-                        }
-                        iconSize="sm"
-                        title={`${item.name}`}
-                        button="Manage"
-                        onClick={() => navigate(`/emulators-detail/${item.id}`)}
-                        notification={
-                          item.status === true
-                            ? updateNotif != undefined
-                            : false
-                        }
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          )}
-        </Main>
-        <Footer
-          next={false}
-          back={false}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+                if (item.id === 'ares') {
+                  return;
+                }
+
+                if (system === 'darwin') {
+                  if (item.id !== 'ra') {
+                    return;
+                  }
+                }
+                if (system === 'win32') {
+                  if (item.id === 'model2') {
+                    return;
+                  }
+                  if (item.id === 'supermodel') {
+                    return;
+                  }
+                  if (item.id === 'bigpemu') {
+                    return;
+                  }
+                }
+                return (
+                  <div key={item.id} data-col-md="4">
+                    <CardSettings
+                      icon={img}
+                      picture={picture}
+                      css="is-nothighlighted"
+                      btnCSS={
+                        item.status === true ? 'btn-simple--5' : 'btn-simple--2'
+                      }
+                      iconSize="sm"
+                      title={`${item.name}`}
+                      button="Manage"
+                      onClick={() => navigate(`/emulators-detail/${item.id}`)}
+                      notification={
+                        item.status === true ? updateNotif != undefined : false
+                      }
+                    />
+                  </div>
+                );
+              })}
+              {installFrontendsArray.map((item) => {
+                const img = images[item.id];
+                const picture = imagesGrid[item.id];
+                const updateNotif = updates[item.id];
+
+                if (item.id === 'steam') {
+                  return;
+                }
+
+                if (system === 'darwin') {
+                  if (item.id !== 'esde') {
+                    return;
+                  }
+                }
+
+                return (
+                  <div key={item.id} data-col-md="4">
+                    <CardSettings
+                      icon={img}
+                      picture={picture}
+                      css="is-highlighted"
+                      btnCSS={
+                        item.status === true ? 'btn-simple--5' : 'btn-simple--2'
+                      }
+                      iconSize="sm"
+                      title={`${item.name}`}
+                      button="Manage"
+                      onClick={() => navigate(`/emulators-detail/${item.id}`)}
+                      notification={
+                        item.status === true ? updateNotif != undefined : false
+                      }
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
+      </Main>
+      <Footer
+        next={false}
+        back={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

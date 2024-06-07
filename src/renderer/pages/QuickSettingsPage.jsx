@@ -321,28 +321,27 @@ function QuickSettingsPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('QuickSettingsPage.title')} />
-        <Settings
-          showNotification={showNotification}
-          notificationText={notificationText}
-          onClickCloudSync={onClickCloudSync}
-          onClickBezel={onClickBezel}
-          onClickSega={onClickSega}
-          onClickSNES={onClickSNES}
-          onClick3D={onClick3D}
-          onClickGC={onClickGC}
-          onClickCRT={onClickCRT}
-          onClickCRT3D={onClickCRT3D}
-          onClickLCD={onClickLCD}
-          onClickAutoSave={autoSaveSet}
-          onClickControllerLayoutSet={controllerLayoutSet}
-          onClickBoot={onClickBoot}
-        />
-        <Footer disabledNext disabledBack={disabledBack} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('QuickSettingsPage.title')} />
+      <p className="lead">{t('QuickSettingsPage.description')}</p>
+      <Settings
+        showNotification={showNotification}
+        notificationText={notificationText}
+        onClickCloudSync={onClickCloudSync}
+        onClickBezel={onClickBezel}
+        onClickSega={onClickSega}
+        onClickSNES={onClickSNES}
+        onClick3D={onClick3D}
+        onClickGC={onClickGC}
+        onClickCRT={onClickCRT}
+        onClickCRT3D={onClickCRT3D}
+        onClickLCD={onClickLCD}
+        onClickAutoSave={autoSaveSet}
+        onClickControllerLayoutSet={controllerLayoutSet}
+        onClickBoot={onClickBoot}
+      />
+      <Footer disabledNext disabledBack={disabledBack} />
+    </Wrapper>
   );
 }
 

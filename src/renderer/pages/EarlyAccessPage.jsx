@@ -22,7 +22,7 @@ function EarlyAccessPage() {
                 alt="Keep up the Work"
               />
               <span className="h4">Early Access</span>
-              <span className="h5">3€/month</span>
+              <span className="h5">3€/{t('general.month')}</span>
               <BtnSimple
                 css="btn-simple--2"
                 type="link"
@@ -48,7 +48,7 @@ function EarlyAccessPage() {
                 alt="Keep up the Work"
               />
               <span className="h4">EmuDeck Fan</span>
-              <span className="h5">10€/month</span>
+              <span className="h5">10€/{t('general.month')}</span>
               <BtnSimple
                 css="btn-simple--2"
                 type="link"
@@ -56,7 +56,7 @@ function EarlyAccessPage() {
                 href="https://www.patreon.com/checkout/dragoonDorise?rid=8681416"
                 aria={t('general.next')}
               >
-                Join
+                {t('general.join')}
               </BtnSimple>
               <p>{t('EarlyAccessPage.fanTier.description')}</p>
               <ul

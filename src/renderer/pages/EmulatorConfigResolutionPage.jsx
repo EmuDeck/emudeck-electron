@@ -10,7 +10,7 @@ import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import EmulatorResolution from 'components/organisms/Wrappers/EmulatorResolution';
 
 function EmulatorConfigResolutionPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { resolutions, system } = state;
@@ -35,7 +35,7 @@ const { t, i18n } = useTranslation();
     localStorage.setItem('settings_emudeck', json);
 
     ipcChannel.sendMessage('emudeck', [
-      `setResolutions|||setSetting dolphinResolution ${state.resolutions.dolphin}; setSetting duckstationResolution ${state.resolutions.duckstation}; setSetting pcsx2Resolution ${state.resolutions.pcsx2}; setSetting yuzuResolution ${state.resolutions.yuzu}; setSetting ppssppResolution ${state.resolutions.ppsspp}; setSetting rpcs3Resolution ${state.resolutions.rpcs3}; setSetting ryujinxResolution ${state.resolutions.yuzu}; setSetting xemuResolution ${state.resolutions.xemu}; setSetting xeniaResolution ${state.resolutions.xenia}; setSetting citraResolution ${state.resolutions.citra}; setResolutions`,
+      `setResolutions|||setSetting dolphinResolution ${state.resolutions.dolphin}; setSetting duckstationResolution ${state.resolutions.duckstation}; setSetting pcsx2Resolution ${state.resolutions.pcsx2}; setSetting yuzuResolution ${state.resolutions.yuzu}; setSetting ppssppResolution ${state.resolutions.ppsspp}; setSetting rpcs3Resolution ${state.resolutions.rpcs3}; setSetting ryujinxResolution ${state.resolutions.yuzu}; setSetting xemuResolution ${state.resolutions.xemu}; setSetting xeniaResolution ${state.resolutions.xenia}; setSetting citraResolution ${state.resolutions.citra}; setSetting lime3dsResolution ${state.resolutions.lime3ds};  setResolutions`,
     ]);
 
     ipcChannel.once('setResolutions', (message) => {
@@ -54,23 +54,21 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Emulator Resolution" />
-        <EmulatorResolution onClick={setResolution} />
-        <footer className="footer">
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Disabled"
-            onClick={() => saveResolutions()}
-          >
-            Save settings
-          </BtnSimple>
-        </footer>
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('EmulatorResolutionPage.title')} />
+      <EmulatorResolution onClick={setResolution} />
+      <footer className="footer">
+        <BtnSimple
+          css="btn-simple--1"
+          type="button"
+          aria="Disabled"
+          onClick={() => saveResolutions()}
+        >
+          {t('general.save')}
+        </BtnSimple>
+      </footer>
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

@@ -30,21 +30,20 @@ function AspectRatioDolphinPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('AspectRatioDolphinPage.title')} />
-        <AspectRatioDolphin data={data} onClick={arSet} />
-        <Footer
-          next={
-            overwriteConfigEmus.ra.status === true
-              ? 'shaders-handhelds'
-              : 'controller-layout'
-          }
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('AspectRatioDolphinPage.title')} />
+      <p className="lead">{t('AspectRatioDolphinPage.description')}</p>
+      <AspectRatioDolphin data={data} onClick={arSet} />
+      <Footer
+        next={
+          overwriteConfigEmus.ra.status === true
+            ? 'shaders-handhelds'
+            : 'controller-layout'
+        }
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

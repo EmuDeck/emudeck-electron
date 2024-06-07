@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Shaders2D from 'components/organisms/Wrappers/Shaders2D';
 
 function Shaders2DPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { shaders } = state;
   const [statePage] = useState({
@@ -30,22 +30,21 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Configure CRT Shader for Classic 2D Games" />
-        <Shaders2D
-          data={data}
-          onClick={shaderSet}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <Footer
-          next="shaders-3d-classic"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('Shaders2DPage.title')} />
+      <p className="lead">{t('Shaders2DPage.description')}</p>
+      <Shaders2D
+        data={data}
+        onClick={shaderSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <Footer
+        next="shaders-3d-classic"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

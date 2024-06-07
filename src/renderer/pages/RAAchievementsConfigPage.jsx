@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import RAAchievements from 'components/organisms/Wrappers/RAAchievements';
 
 function RAAchievementsConfigPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { achievements } = state;
@@ -54,19 +54,18 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Configure RetroAchievements" />
-        <RAAchievements
-          data={data}
-          disabledBack
-          onChange={setAchievements}
-          onToggle={setAchievementsHardCore}
-          modalDataConfig={modalDataConfig}
-        />
-        <Footer disabledNext={disabledNext} disabledBack={disabledBack} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('RAAchievementsConfigPage.title')} />
+      <p className="lead">{t('RAAchievementsConfigPage.description')}</p>
+      <RAAchievements
+        data={data}
+        disabledBack
+        onChange={setAchievements}
+        onToggle={setAchievementsHardCore}
+        modalDataConfig={modalDataConfig}
+      />
+      <Footer disabledNext={disabledNext} disabledBack={disabledBack} />
+    </Wrapper>
   );
 }
 

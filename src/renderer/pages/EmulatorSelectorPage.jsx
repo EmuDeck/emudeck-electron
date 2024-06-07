@@ -16,6 +16,7 @@ import {
   imgppsspp,
   imgduckstation,
   imgcitra,
+  imglime3ds,
   imgpcsx2,
   imgrpcs3,
   imgyuzu,
@@ -45,6 +46,7 @@ const images = {
   ppsspp: imgppsspp,
   duckstation: imgduckstation,
   citra: imgcitra,
+  lime3ds: imglime3ds,
   pcsx2: imgpcsx2,
   rpcs3: imgrpcs3,
   yuzu: imgyuzu,
@@ -952,7 +954,9 @@ function EmulatorSelectorPage() {
       function launchModal() {
         modalData = {
           ...modalData,
-          header: <span className="h4">RetroArch or Standalone Emulator?</span>,
+          header: (
+            <span className="h4">t('EmulatorSelectorPage.standaloneRA')</span>
+          ),
           css: 'emumodal--sm',
           footer: (
             <>
@@ -984,7 +988,7 @@ function EmulatorSelectorPage() {
                 aria="Go Back"
                 onClick={() => setAlternativeEmulator(system, 'both', 'both')}
               >
-                Both
+                {t('general.both')}
               </BtnSimple>
             </>
           ),
@@ -996,23 +1000,21 @@ function EmulatorSelectorPage() {
   }, [installEmus]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={`Emulators and tools for ${device}`} />
-        <EmulatorSelector
-          installEmus={installEmus}
-          data={data}
-          onClick={toggleEmus}
-          images={images}
-        />
-        <Footer
-          next="emulator-configuration"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('EmulatorSelectorPage.title', { device: device })} />
+      <EmulatorSelector
+        installEmus={installEmus}
+        data={data}
+        onClick={toggleEmus}
+        images={images}
+      />
+      <Footer
+        next="emulator-configuration"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

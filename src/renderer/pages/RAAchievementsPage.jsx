@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import RAAchievements from 'components/organisms/Wrappers/RAAchievements';
 
 function RAAchievementsPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { achievements } = state;
   const [statePage] = useState({
@@ -40,21 +40,20 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Configure RetroAchievements" />
-        <RAAchievements
-          onChange={setAchievements}
-          onToggle={setAchievementsHardCore}
-        />
-        <Footer
-          next="ra-bezels"
-          nextText={achievements.token ? 'Continue' : 'Skip'}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('RAAchievementsPage.title')} />
+      <p className="lead">{t('RAAchievementsPage.description')}</p>
+      <RAAchievements
+        onChange={setAchievements}
+        onToggle={setAchievementsHardCore}
+      />
+      <Footer
+        next="ra-bezels"
+        nextText={achievements.token ? t('general.next') : t('general.skip')}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

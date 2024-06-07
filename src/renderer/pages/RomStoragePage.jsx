@@ -22,7 +22,7 @@ import RomStorage from 'components/organisms/Wrappers/RomStorage';
 //
 
 function RomStoragePage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   //
   // i18
   //
@@ -118,7 +118,7 @@ const { t, i18n } = useTranslation();
               const modalData = {
                 active: true,
                 header: <span className="h4">Ooops 😞</span>,
-                body: <p>There was an error detecting your storage...</p>,
+                body: <p>t('RomStoragePage.modalErrorDetecting')</p>,
                 css: 'emumodal--xs',
               };
               setStatePage({ ...statePage, modal: modalData });
@@ -127,9 +127,7 @@ const { t, i18n } = useTranslation();
             const modalData = {
               active: true,
               header: <span className="h4">Ooops 😞</span>,
-              body: (
-                <p>Non writable directory selected, please choose another.</p>
-              ),
+              body: <p>t('RomStoragePage.modalErrorWritable')</p>,
               css: 'emumodal--xs',
             };
             setStatePage({
@@ -208,7 +206,7 @@ const { t, i18n } = useTranslation();
         const modalData = {
           active: true,
           header: <span className="h4">Ooops 😞</span>,
-          body: <p>There was an error, please restart EmuDeck...</p>,
+          body: <p>t('RomStoragePage.modalError')</p>,
           css: 'emumodal--xs',
         };
         setStatePage({
@@ -253,6 +251,206 @@ const { t, i18n } = useTranslation();
   //
   // UseEffects
   //
+
+  useEffect(() => {
+    if (system === 'darwin') {
+      setState({
+        ...state,
+        installEmus: {
+          ra: {
+            id: 'ra',
+            status: true,
+            installed: undefined,
+            name: 'RetroArch',
+          },
+          dolphin: {
+            id: 'dolphin',
+            status: false,
+            installed: undefined,
+            name: 'Dolphin',
+          },
+          primehack: {
+            id: 'primehack',
+            status: false,
+            installed: undefined,
+            name: 'Primehack',
+          },
+          ppsspp: {
+            id: 'ppsspp',
+            status: false,
+            installed: undefined,
+            name: 'PPSSPP',
+          },
+          duckstation: {
+            id: 'duckstation',
+            status: false,
+            installed: undefined,
+            name: 'DuckStation',
+          },
+          melonds: {
+            id: 'melonds',
+            status: false,
+            installed: undefined,
+            name: 'melonDS',
+          },
+          citra: {
+            id: 'citra',
+            status: false,
+            installed: undefined,
+            name: 'Citra',
+          },
+          lime3ds: {
+            id: 'lime3ds',
+            status: false,
+            installed: undefined,
+            name: 'Lime3ds',
+          },
+          pcsx2: {
+            id: 'pcsx2',
+            status: false,
+            installed: undefined,
+            name: 'PCSX2',
+          },
+          rpcs3: {
+            id: 'rpcs3',
+            status: false,
+            installed: undefined,
+            name: 'RPCS3',
+          },
+          yuzu: {
+            id: 'yuzu',
+            status: false,
+            installed: undefined,
+            name: 'Yuzu',
+          },
+          ryujinx: {
+            id: 'ryujinx',
+            status: false,
+            installed: undefined,
+            name: 'Ryujinx',
+          },
+          xemu: {
+            id: 'xemu',
+            status: false,
+            installed: undefined,
+            name: 'Xemu',
+          },
+          cemu: {
+            id: 'cemu',
+            status: false,
+            installed: undefined,
+            name: 'Cemu',
+          },
+          srm: {
+            id: 'srm',
+            status: true,
+            installed: undefined,
+            name: 'Steam Rom Manager',
+          },
+          rmg: {
+            id: 'rmg',
+            status: false,
+            installed: undefined,
+            name: "Rosalie's Mupen Gui",
+          },
+          mame: { id: 'mame', status: false, name: 'MAME' },
+          vita3k: {
+            id: 'vita3k',
+            status: false,
+            installed: undefined,
+            name: 'Vita3K',
+          },
+          flycast: {
+            id: 'flycast',
+            status: false,
+            installed: undefined,
+            name: 'Flycast',
+          },
+          scummvm: {
+            id: 'scummvm',
+            status: false,
+            installed: undefined,
+            name: 'ScummVM',
+          },
+          xenia: {
+            id: 'xenia',
+            status: false,
+            installed: false,
+            name: 'Xenia',
+          },
+          mgba: {
+            id: 'mgba',
+            status: false,
+            installed: undefined,
+            name: 'mGBA',
+          },
+          ares: {
+            id: 'ares',
+            status: false,
+            installed: undefined,
+            name: 'ares',
+          },
+          supermodel: {
+            id: 'supermodel',
+            status: false,
+            installed: undefined,
+            name: 'Supermodel',
+          },
+          model2: {
+            id: 'model2',
+            status: false,
+            installed: undefined,
+            name: 'Model2',
+          },
+          bigpemu: {
+            id: 'bigpemu',
+            status: false,
+            installed: undefined,
+            name: 'BigPEmu',
+          },
+        },
+        overwriteConfigEmus: {
+          ra: { id: 'ra', status: true, name: 'RetroArch' },
+          dolphin: { id: 'dolphin', status: false, name: 'Dolphin' },
+          primehack: { id: 'primehack', status: false, name: 'Primehack' },
+          ppsspp: { id: 'ppsspp', status: false, name: 'PPSSPP' },
+          duckstation: {
+            id: 'duckstation',
+            status: false,
+            name: 'DuckStation',
+          },
+          melonds: { id: 'melonds', status: false, name: 'melonDS' },
+          citra: { id: 'citra', status: false, name: 'Citra' },
+          lime3ds: { id: 'lime3ds', status: false, name: 'Lime3DS' },
+          pcsx2: { id: 'pcsx2', status: false, name: 'PCSX2' },
+          rpcs3: { id: 'rpcs3', status: false, name: 'RPCS3' },
+          yuzu: { id: 'yuzu', status: false, name: 'Yuzu' },
+          ryujinx: { id: 'ryujinx', status: false, name: 'Ryujinx' },
+          xemu: { id: 'xemu', status: false, name: 'Xemu' },
+          xenia: { id: 'xenia', status: false, name: 'Xenia' },
+          cemu: { id: 'cemu', status: false, name: 'Cemu' },
+          srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
+          esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
+          pegasus: { id: 'pegasus', status: false, name: 'Pegasus' },
+          rmg: { id: 'rmg', status: false, name: "Rosalie's Mupen Gui" },
+          mame: { id: 'mame', status: false, name: 'MAME' },
+          vita3k: { id: 'vita3k', status: false, name: 'Vita3K' },
+          flycast: { id: 'flycast', status: false, name: 'Flycast' },
+          scummvm: { id: 'scummvm', status: false, name: 'ScummVM' },
+          mgba: { id: 'mgba', status: false, name: 'mGBA' },
+          ares: { id: 'ares', status: false, name: 'ares' },
+          supermodel: { id: 'supermodel', status: false, name: 'Supermodel' },
+          model2: { id: 'model2', status: false, name: 'Model2' },
+          bigpemu: {
+            id: 'bigpemu',
+            status: false,
+            name: 'BigPEmu',
+          },
+        },
+      });
+    }
+  }, []);
+
   // Do we have a valid SD Card?
   useEffect(() => {
     if (navigator.onLine === false) {
@@ -294,7 +492,8 @@ const { t, i18n } = useTranslation();
   //
   return (
     <Wrapper>
-      <Header title="Select your ROM Directory " />
+      <Header title={t('RomStoragePage.title')} />
+      <p className="lead">{t('RomStoragePage.description')}</p>
       <RomStorage
         status={status}
         sdCardValid={sdCardValid}

@@ -236,27 +236,26 @@ function FrontendSelectorPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={`Frontends for ${device}`} />
-        <FrontendSelector
-          installFrontends={installFrontends}
-          lastSelected={lastSelected}
-          onClick={toggleEmus}
-          images={images}
-        />
-        <Footer
-          next={nextPage()}
-          disabledNext={
-            !installFrontends.esde.status &&
-            !installFrontends.pegasus.status &&
-            !installFrontends.steam.status
-          }
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('FrontendSelectorPage.title', { device: device })} />
+      <p className="lead">{t('FrontendSelectorPage.description')}</p>
+      <FrontendSelector
+        installFrontends={installFrontends}
+        lastSelected={lastSelected}
+        onClick={toggleEmus}
+        images={images}
+      />
+      <Footer
+        next={nextPage()}
+        disabledNext={
+          !installFrontends.esde.status &&
+          !installFrontends.pegasus.status &&
+          !installFrontends.steam.status
+        }
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 
