@@ -16,6 +16,7 @@ import {
   imgppsspp,
   imgduckstation,
   imgcitra,
+  imglime3ds,
   imgpcsx2,
   imgrpcs3,
   imgyuzu,
@@ -46,6 +47,7 @@ const images = {
   ppsspp: imgppsspp,
   duckstation: imgduckstation,
   citra: imgcitra,
+  lime3ds: imglime3ds,
   pcsx2: imgpcsx2,
   rpcs3: imgrpcs3,
   rmg: imgrmg,
@@ -69,9 +71,9 @@ const images = {
 };
 
 function EmulatorConfigurationPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
-  const { overwriteConfigEmus } = state;
+  const { overwriteConfigEmus, second } = state;
 
   const [statePage] = useState({
     disabledNext: false,
@@ -110,21 +112,17 @@ const { t, i18n } = useTranslation();
   }
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Emulator and Tools Configurations" />
-        <EmulatorConfiguration
-          data={data}
-          onClick={toggleEmus}
-          images={images}
-        />
-        <Footer
-          next={nextPage}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('EmulatorConfigurationPage.title')} />
+
+      <p className="lead">{t('EmulatorConfigurationPage.description')}</p>
+      <EmulatorConfiguration data={data} onClick={toggleEmus} images={images} />
+      <Footer
+        next={nextPage}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

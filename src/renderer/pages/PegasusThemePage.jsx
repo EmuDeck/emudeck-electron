@@ -9,7 +9,7 @@ import { useFetchCond } from 'hooks/useFetchCond';
 import PegasusTheme from 'components/organisms/Wrappers/PegasusTheme';
 
 function PegasusThemePage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { system, mode, installFrontends } = state;
   const [statePage, setStatePage] = useState({
@@ -44,18 +44,17 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper aside={false}>
-        <Header title="Pegasus Default Theme" />
-        <PegasusTheme themes={themes} onClick={themeSet} />
-        <Footer
-          next={nextPage()}
-          nextText={t('general.next')}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper aside={false}>
+      <Header title={t('PegasusThemePage.title')} />
+      <p className="lead">{t('PegasusThemePage.description')}</p>
+      <PegasusTheme themes={themes} onClick={themeSet} />
+      <Footer
+        next={nextPage()}
+        nextText={t('general.next')}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

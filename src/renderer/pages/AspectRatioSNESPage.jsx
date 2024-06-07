@@ -30,17 +30,16 @@ function AspectRatioSNESPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('AspectRatioSNESPage.title')} />
-        <AspectRatioSNES data={data} onClick={arSet} />
-        <Footer
-          next="aspect-ratio-3d"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('AspectRatioSNESPage.title')} />
+      <p className="lead">{t('AspectRatioSNESPage.description')}</p>
+      <AspectRatioSNES data={data} onClick={arSet} />
+      <Footer
+        next="aspect-ratio-3d"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

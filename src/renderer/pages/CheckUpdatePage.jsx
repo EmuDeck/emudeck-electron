@@ -630,13 +630,11 @@ function CheckUpdatePage() {
   }, [downloadComplete]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper css="wrapper__full" aside={false}>
-        <Kamek />
-        <Header title="EmuDeck is loading..." />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper css="wrapper__full" aside={false}>
+      <Kamek />
+      <Header title="EmuDeck is loading..." />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

@@ -1,0 +1,469 @@
+{
+  "translation": {
+    "general": {
+      "success": "Successo",
+      "error": "Errore",
+      "launching": "Avvio",
+      "continue": "Continua",
+      "back": "Indietro",
+      "next": "Avanti",
+      "finish": "Fine",
+      "skip": "Salta",
+      "pressContinue": "Premi Continua quando hai finito",
+      "yes": "Sì",
+      "month": "mese",
+      "join": "Unisciti",
+      "login": "Accesso",
+      "copyGames": "Copia giochi",
+      "install": "Installa",
+      "uninstall": "Disinstalla",
+      "close": "Chiudi",
+      "moreInfo": "Maggiori informazioni",
+      "sudo": "EmuDeck ha rilevato che hai già impostato una password sudo, inseriscila di seguito.",
+      "loading": "Caricamento",
+      "save": "Salva",
+      "both": "Entrambi",
+      "no": "No"
+    },
+    "footer": {
+      "exit": "Esci dalla modalità di gioco"
+    },
+    "aside": {
+      "android": "Android",
+      "quickSettings": "Impostazioni rapide",
+      "manageEmulators": "Gestisci emulatori",
+      "importGames": "Importa giochi e BIOS",
+      "quickReset": "Ripristino rapido",
+      "customReset": "Ripristino personalizzato",
+      "screenResolution": "Risoluzione dello schermo",
+      "retroAchievements": "Retro Achievements",
+      "biosChecker": "Controllo BIOS",
+      "cloudSaves": "Salvataggi cloud",
+      "migrateInstalation": "Migrazione dell'installazione",
+      "gyro": "Giroscopio",
+      "earlyAccess": "Ottieni l'accesso anticipato",
+      "logFiles": "Ottieni file di registro",
+      "changelog": "Registro delle modifiche",
+      "cloudServices": "Servizi cloud",
+      "uninstall": "Disinstalla",
+      "logsSuccess": "Abbiamo creato un file Zip con tutti i tuoi log",
+      "logsError": "Si è verificato un problema nel recuperare i tuoi log, raccoglili manualmente dalla cartella emudeck nella tua cartella utente.",
+      "bootMode": "Modalità di gioco",
+      "pegasusTheme": "Tema Pegasus",
+      "featured:": "In primo piano",
+      "otherSettings": "Altre impostazioni",
+      "exclusiveTools": "Strumenti esclusivi EmuDeck",
+      "thirdParty": "Strumenti di terze parti",
+      "other": "Altro"
+    },
+    "ManageEmulatorsPage": {
+      "title": "Gestisci i tuoi emulatori",
+      "description": "In questa pagina, puoi aggiornare le tue configurazioni o installare nuovi emulatori. Una notifica arancione significa che hai un aggiornamento della configurazione pronto per l'emulatore rispettivo.",
+      "updateConfigs": {
+        "title": "Aggiorna tutte le configurazioni",
+        "description": "Aggiorna tutte le tue configurazioni in una volta. Le nuove configurazioni potrebbero contenere correzioni di bug o miglioramenti delle prestazioni. Questo sovrascriverà qualsiasi impostazione globale dell'emulatore che hai modificato. Le impostazioni per gioco verranno mantenute",
+        "button": "Aggiorna"
+      },
+      "updateEmus": {
+        "title": "Aggiorna i tuoi emulatori",
+        "description": "Aggiorna i tuoi emulatori direttamente da EmuDeck",
+        "button": "Aggiorna"
+      },
+      "modalResetTitle": "Ripristino della configurazione degli emulatori",
+      "modalResetDesc": "Attendere il ripristino di tutte le configurazioni degli emulatori",
+      "modalResetingTitle": "Ripristino della configurazione di {{code}}",
+      "modalResetingDesc": "Attendere il ripristino della configurazione di {{code}}",
+      "modalUpdatedTitle": "Configurazione di {{name}} aggiornata!",
+      "modalUpdatedDesc": "La configurazione di {{name}} è stata aggiornata con i nostri ultimi miglioramenti, ottimizzazioni e correzioni di bug!",
+      "modalFailedTitle": "Ripristino della configurazione di {{name}} non riuscito",
+      "modalFailedDesc": "Si è verificato un problema nel tentativo di ripristinare la configurazione di {{name}}"
+    },
+    "QuickSettingsPage": {
+      "title": "Configura le tue impostazioni",
+      "description": "Seleziona un'opzione per applicarla automaticamente al tuo sistema. Non è necessario eseguire un aggiornamento personalizzato di EmuDeck per applicare queste impostazioni.",
+      "notifBezels": "Bezels aggiornati!",
+      "notifSNESRatio": "Rapporto d'aspetto SNES aggiornato!",
+      "notifCloudSync": "Stato di CloudSync aggiornato!",
+      "nofif3DAR": "Rapporto d'aspetto 3D aggiornato!",
+      "nofifDolphinAR": "Rapporto d'aspetto Dolphin aggiornato!",
+      "nofifCRTShader": "Shader CRT aggiornato!",
+      "nofif3DCRTShader": "Shader CRT 3D aggiornato!",
+      "nofifLCDShader": "Shader LCD aggiornato!",
+      "nofifAutosave": "AutoSave aggiornato!",
+      "nofifController": "Layout del controller aggiornato!",
+      "nofifBoot": "Modalità di avvio aggiornata, riavvia il tuo dispositivo!"
+    },
+    "AndroidEmulatorSelectorPage": {
+      "title": "Emulatori e strumenti per Android",
+      "description": "Questi sono gli emulatori che EmuDeck installa sul tuo sistema Android. Gli emulatori selezionati verranno installati e aggiornati all'ultima versione. Gli emulatori deselezionati non verranno installati o aggiornati."
+    },
+    "AndroidEndPage": {
+      "title": "Preparazione del tuo dispositivo Android...",
+      "description": ""
+    },
+    "AndroidFinishPage": {
+      "title": "EmuDeck Android Installato!",
+      "description": "Se tutto è andato bene, dovresti vedere il tuo Frontend sul tuo dispositivo Android.<br/>Se non lo vedi, reinstalla EmuDeck per favore."
+    },
+    "AndroidFrontendSelectorPage": {
+      "title": "Frontend per Android",
+      "description": "Seleziona quali front-end desideri utilizzare per avviare i tuoi giochi. Puoi selezionarne più di uno."
+    },
+    "AndroidOwnAPKPage": {
+      "title": "Porta il tuo APK",
+      "description": "Hai un altro emulatore o vuoi installare ESDE?<br/>Metti tutti i tuoi APK nella tua cartella di download e EmuDeck li installerà<br/><strong>Per favore, non utilizzare APK piratati</strong>"
+    },
+    "AndroidRABezelsPage": {
+      "title": "Configura le cornici di gioco",
+      "description": "Utilizza le cornici preconfigurate di EmuDeck per nascondere le barre nere verticali nei giochi a 8 e 16 bit."
+    },
+    "AndroidRomStoragePage": {
+      "title": "Seleziona lo spazio di archiviazione ROM per il tuo dispositivo Android",
+      "description": "",
+      "warning": {
+        "title": "Assicurati che il tuo dispositivo Android sia:",
+        "line1": "- Connesso tramite un cavo USB con capacità di trasferimento dati",
+        "line2": "- Il modo sviluppatore e il debug USB sono abilitati",
+        "line3": "- Hai accettato tutte le richieste nel tuo dispositivo",
+        "line4": "- Hai selezionato il Trasferimento file quando richiesto dal dispositivo",
+        "title2": "Come abilitare la modalità sviluppatore"
+      }
+    },
+    "AndroidSetupPage": {
+      "configs": {
+        "yuzu": "Vai al tuo dispositivo e clicca su Inizia e completa la configurazione sul tuo dispositivo. Le tue Chiavi dovrebbero essere in {{storage}}/Emulation/bios/yuzu/keys.",
+        "ppsspp": "Vai al tuo dispositivo e crea la cartella PSP in {{storage}}/Emulation/saves/. Premi Continua quando hai finito.",
+        "nethersx2": "Vai al tuo dispositivo e imposta i tuoi BIOS. I tuoi BIOS dovrebbero essere in {storage}/Emulation/bios/",
+        "ra1": "Vai al tuo dispositivo, vai su Carica core, Scarica core e installa tutti i core di cui hai bisogno.",
+        "ra2": "Ogni core è utilizzato per sistemi diversi, questi sono quelli necessari per i sistemi più comuni:",
+        "ra3": "mgba (GameBoy Advance), genesis_plus_gx (Genesis, MasterSystem), snex9x (Super Nintendo), melonds (Nintendo DS), mame2003_plus (MAME), mesen (NES), gambatte (GameBoy), mupen64plus_next (Nintendo 64), swanstation (Playstation 1)",
+        "ra4": "Quindi vai su Impostazioni, Directory. Imposta il tuo Sistema/Bios su {{storage}}/Emulation/bios. Imposta i file di salvataggio su {{storage}}/Emulation/saves/RetroArch/saves e gli Stati di Salvataggio su {{storage}}/Emulation/saves/RetroArch/states"
+      }
+    },
+    "AndroidWelcomePage": {
+      "description": "Questa build di accesso anticipato ti consente di installare diversi emulatori e configurazioni sul tuo dispositivo Android",
+      "quickInstall": {
+        "title": "Installa su Android",
+        "button": "Installa",
+        "description": "Guida che installerà i tuoi Emulatori, copierà la tua cartella bios attuale e ti guiderà attraverso la configurazione del tuo dispositivo Android"
+      },
+      "manageEmulators": {
+        "title": "Gestisci emulatori",
+        "button": "Installa",
+        "description": "Installa gli emulatori uno per uno"
+      },
+      "saveSync": {
+        "title": "Sincronizzazione dei salvataggi",
+        "button": "Installa",
+        "description": "Sincronizza i tuoi giochi salvati"
+      }
+    },
+    "AspectRatio3DPage": {
+      "title": "Configura il rapporto d'aspetto per i giochi classici in 3D",
+      "description": "Seleziona il rapporto d'aspetto per i sistemi Dreamcast e Nintendo 64."
+    },
+    "AspectRatioDolphinPage": {
+      "title": "Configura il rapporto d'aspetto per i giochi GameCube",
+      "description": "Seleziona il rapporto d'aspetto per i giochi Gamecube. Puoi cambiare questa impostazione in qualsiasi momento nel gioco premendo Start + DPad Destra."
+    },
+    "AspectRatioSegaPage": {
+      "title": "Configura il rapporto d'aspetto per i sistemi classici Sega",
+      "description": "Seleziona il rapporto d'aspetto per i sistemi classici Sega."
+    },
+    "AspectRatioSNESPage": {
+      "title": "Configura il rapporto d'aspetto per i classici Nintendo",
+      "description": "Seleziona il rapporto d'aspetto per il Super Nintendo e il NES."
+    },
+    "AutoSavePage": {
+      "title": "Configura il salvataggio automatico",
+      "description": ""
+    },
+    "ChangeLogPage": {
+      "title": "Ultimi cambiamenti",
+      "description": ""
+    },
+    "CHDToolPage": {
+      "title": "Strumento di compressione EmuDeck",
+      "description": "Lo Strumento di compressione è uno script che esamina determinate cartelle ROM e comprime i giochi fino al 70% delle dimensioni originali utilizzando formati CHD, RVZ, 3DS Trimmato, XISO e 7Zip."
+    },
+    "CheckBiosPage": {
+      "title": "Controllo dei file BIOS",
+      "description": "Alcuni giochi non si avvieranno correttamente senza i file BIOS. Posiziona i tuoi BIOS in Emulation/bios e utilizza questo Controllo BIOS per assicurarti di avere il BIOS corretto per il tuo sistema."
+    },
+    "CheckUpdatePage": {
+      "title": "EmuDeck sta caricando...",
+      "backend": "Costruzione del backend di EmuDeck ed esecuzione di autodiagnostica in background...",
+      "checking": {
+        "title": "Controllo degli aggiornamenti...",
+        "description": "Attendere mentre controlliamo se è disponibile una nuova versione..."
+      },
+      "updating": {
+        "title": "Aggiornamento!",
+        "description": "EmuDeck si riavvierà non appena sarà completato l'aggiornamento. Mantieni la calma."
+      },
+      "found": {
+        "title": "Aggiornamento trovato!",
+        "description": "Vuoi aggiornare? <br /> <strong>Questo aggiornamento non modificherà i tuoi giochi o le impostazioni</strong> <br /> Vai a Gestione degli Emulatori per applicare tutte le nuove configurazioni.",
+        "changelog": "Vedi Changelog"
+      },
+      "error": {
+        "title": "Ops",
+        "description": "Sembra esserci un problema nel scaricare il backend. Si prega di riavviare EmuDeck dopo aver verificato che la tua rete funzioni correttamente"
+      }
+    },
+    "CloudSyncConfigPage": {
+      "title": "Sincronizzazione cloud - Seleziona il tuo provider",
+      "title2": "Backup cloud - Seleziona il tuo provider",
+      "description": ""
+    },
+    "CloudSyncPage": {
+      "title": "Salvataggio cloud",
+      "description": "Seleziona il tuo tipo preferito di salvataggio cloud."
+    },
+    "ConfirmationPage": {
+      "title": "Ecco cosa farà EmuDeck",
+      "description": ""
+    },
+    "ControllerLayoutPage": {
+      "title": "Configura il layout del controller",
+      "description": "Vuoi impostare il tuo controller in modo che i pulsanti corrispondano alla posizione dei controller originali (A è mappato su B) o vuoi utilizzare il layout del controller (A è mappato su A)"
+    },
+    "CopyGamesPage": {
+      "title": "",
+      "description": ""
+    },
+    "DeviceSelectorPage": {
+      "title": "Seleziona il tuo dispositivo",
+      "description": "EmuDeck personalizza l'installazione per hardware diversi. Ogni dispositivo avrà la propria configurazione, emulatori e cornici preconfigurate."
+    },
+    "EarlyAccessPage": {
+      "title": "Aiutaci sostenendo EmuDeck",
+      "description": "Fai una donazione su Patreon e aiutaci a crescere e migliorare! Come membro della nostra comunità avrai supporto individuale 1 su 1 e accesso anticipato alle nostre ultime funzionalità, alcune delle quali esclusive solo per i sostenitori",
+      "eaTier": {
+        "description": "Ottieni accesso alle ultime funzionalità e app prima di tutti, questo include supporto esclusivo e nuove funzionalità per SteamOS, Windows, MacOS e Android in futuro.",
+        "list": "<li>- Accesso anticipato</li><li>- Supporto generale</li><li>- CloudSync (sincronizza i tuoi giochi salvati su Mac, Windows o Linux)</li><li>- Comunità Discord privata</li>"
+      },
+      "fanTier": {
+        "description": "Ti piace veramente quello che faccio, e ti ringrazio per questo! Questo contributo aiuterà EmuDeck ad acquistare nuovi dispositivi e impostare ottimizzazioni personalizzate per altri sistemi.",
+        "list": "<li>- Le stesse funzionalità di Accesso Anticipato e</li><li>- Diritti di voto, plasmiamo insieme il futuro di EmuDeck</li>"
+      }
+    },
+    "EmuDeckyPage": {
+      "title": "Configura EmuDecky",
+      "description": ""
+    },
+    "EmulatorConfigResolutionPage": {
+      "title": "Risoluzione dell'emulatore",
+      "description": ""
+    },
+    "EmulatorConfigurationPage": {
+      "title": "Configurazioni dell'emulatore e degli strumenti",
+      "description": "EmuDeck ottimizzerà e configurerà gli emulatori durante questa installazione. Gli emulatori selezionati avranno le loro configurazioni ripristinate e aggiornate ai valori predefiniti di EmuDeck. Gli emulatori deselezionati non verranno toccati e EmuDeck rispetterà le tue configurazioni (non consigliato)."
+    },
+    "EmulatorResolutionPage": {
+      "title": "Risoluzione dell'emulatore",
+      "description": "Seleziona la risoluzione che desideri utilizzare per i tuoi emulatori. Tieni presente che una risoluzione più alta richiederà un computer più veloce."
+    },
+    "EmulatorsDetailPage": {
+      "title": "",
+      "description": ""
+    },
+    "EmulatorSelectorPage": {
+      "title": "Emulatori e strumenti per {{device}}",
+      "standaloneRA": "RetroArch o Emulatore autonomo?"
+    },
+    "EndPage": {
+      "title": "Stiamo completando la tua installazione...",
+      "titleFinish": "Installazione completata!",
+      "titleAlly": "Configurazione del controller Asus Rog Ally",
+      "titleWin32": "Configurazione del controller"
+    },
+    "ErrorPage": {
+      "title": ""
+    },
+    "ESDEThemePage": {
+      "title": "Tema predefinito di EmulationStation-DE",
+      "description": "Seleziona il tuo tema predefinito."
+    },
+    "FinishPage": {
+      "title": "Cosa resta?",
+      "line1": "Ora che hai posizionato i tuoi file nel posto giusto e selezionato un frontend, potresti chiederti, cosa resta?",
+      "line2": "Puoi semplicemente tornare alla Modalità Giochi e dedicarti al retrogaming!",
+      "line3": "Tuttavia, EmuDeck contiene una vasta gamma di funzionalità da esplorare. Potresti voler utilizzare lo 'Strumento di compressione' per comprimere le tue ROM e risparmiare spazio, o utilizzare lo 'Strumento di Servizi Cloud' per aggiungere i tuoi servizi di streaming preferiti al frontend prescelto.",
+      "line4": "C'è molto da esplorare e scoprire nell'applicazione, ma per ora il tuo onboarding è completo,",
+      "line5": "gli sviluppatori di EmuDeck sperano sinceramente che tu possa goderti la tua esperienza"
+    },
+    "FrontendSelectorPage": {
+      "title": "Frontend per {{device}}",
+      "description": "Seleziona quali front-end desideri utilizzare per avviare i tuoi giochi. Puoi selezionarne più di uno."
+    },
+    "GameModePage": {
+      "title": "Modalità di avvio",
+      "description": "Seleziona come desideri avviare il tuo dispositivo.",
+      "modalGameEnabledTitle": "Modalità gioco abilitata",
+      "modalGameEnabledDesc": "Riavvia il tuo dispositivo per entrare in Modalità Gioco, Esci da Steam per tornare al tuo Desktop",
+      "modalDesktopEnabledTitle": "Modalità Desktop abilitata",
+      "modalDesktopEnabledDesc": "La prossima volta che riavvierai il tuo dispositivo, entrerai direttamente nella Modalità Desktop"
+    },
+    "GyroDSUPage": {
+      "title": "Configura SteamDeckGyroDSU",
+      "description": "SteamDeckGyroDSU è un plugin che ti consente di utilizzare il giroscopio di Steam Deck nei giochi Cemu (Wii U), Citra (3DS), Dolphin (Gamecube e Wii), Ryujinx (Nintendo Switch) e Yuzu (Nintendo Switch)."
+    },
+    "HotkeysPage": {
+      "title": "Tasti rapidi di emulazione",
+      "description": "La maggior parte degli emulatori condivide una serie di tasti rapidi per renderli più facili da usare."
+    },
+    "MigrationPage": {
+      "title": "Migra la tua installazione",
+      "description": "Questo utilità sposterà la tua installazione di EmuDeck, con le tue ROM intatte, nella destinazione selezionata e aggiornerà anche i percorsi della tua Libreria Steam."
+    },
+    "ParserSelectorPage": {
+      "title": "Parser per Steam Rom Manager"
+    },
+    "PatroenLoginPage": {
+      "title": "Accedi a Patreon",
+      "description": "Effettua il login su Patreon per accedere a questa versione di accesso anticipato.",
+      "login": "Accedi con Patreon ",
+      "change": "Cambia account Patreon",
+      "check": "Controlla il token",
+      "checking": "Controllo del token in corso..."
+    },
+    "PegasusThemeChoicePage": {
+      "title": "Tema predefinito di Pegasus",
+      "description": "Seleziona il tuo tema predefinito.",
+      "modalInstallingTitle": "Installazione del tema",
+      "modalInstallingDesc": "Attendere prego...",
+      "modalInstalledTitle": "Tema installato",
+      "modalInstalledDesc": "La prossima volta che apri Pegasus, questo sarà il tema predefinito."
+    },
+    "PegasusThemePage": {
+      "title": "Tema predefinito di Pegasus",
+      "description": "Seleziona il tuo tema predefinito."
+    },
+    "PowerControlsPage": {
+      "title": "Configura PowerControls",
+      "description": "PowerControls è un plugin che ti consente di ottimizzare la tua CPU e GPU per massime prestazioni su emulatori più esigenti e di controllare il TDP nei dispositivi compatibili. L'installazione di PowerControls da questo menu installerà anche Decky Loader, un gestore di plugin."
+    },
+    "PowerToolsPage": {
+      "title": "Configura PowerTools",
+      "description": "PowerControls è un plugin che ti consente di ottimizzare la tua CPU e GPU per massime prestazioni su emulatori più esigenti e di controllare il TDP nei dispositivi compatibili. L'installazione di PowerControls da questo menu installerà anche Decky Loader, un gestore di plugin."
+    },
+    "RAAchievementsConfigPage": {
+      "title": "Configura RetroAchievements",
+      "description": "RetroAchievements.org è un'iniziativa della community finalizzata a collaborare e creare obiettivi personalizzati in giochi classici emulati. Inserisci le informazioni del tuo account per configurare i RetroAchievements per Duckstation, PCSX2, PPSSPP e RetroArch."
+    },
+    "RAAchievementsPage": {
+      "title": "Configura RetroAchievements",
+      "description": "RetroAchievements.org è un'iniziativa della community finalizzata a collaborare e creare obiettivi personalizzati in giochi classici emulati. Inserisci le informazioni del tuo account per configurare i RetroAchievements per Duckstation, PCSX2, PPSSPP e RetroArch."
+    },
+    "RABezelsPage": {
+      "title": "Configura cornici di gioco",
+      "description": ""
+    },
+    "RomStoragePage": {
+      "title": "Seleziona la directory delle ROM",
+      "description": "La tua directory delle ROM sarà sistemata all'interno di una cartella di Emulazione nella directory selezionata.",
+      "modalErrorDetecting": "Si è verificato un errore durante il rilevamento del tuo archivio...",
+      "modalErrorWritable": "Directory non scrivibile selezionata, si prega di sceglierne un'altra...",
+      "modalError": "Si è verificato un errore, si prega di riavviare EmuDeck..."
+    },
+    "Shaders2DPage": {
+      "title": "Configura lo shader CRT per giochi classici 2D",
+      "description": "Lo shader CRT dà ai tuoi sistemi classici un finto vibe retro CRT."
+    },
+    "Shaders3DPage": {
+      "title": "Configura lo shader CRT per giochi classici 3D",
+      "description": "Lo shader CRT dà ai tuoi sistemi classici un finto vibe retro CRT."
+    },
+    "ShadersHandheldsPage": {
+      "title": "Configura lo shader LCD per sistemi portatili",
+      "description": "Lo shader LCD simula i vecchi schermi LCD Matrix dei sistemi portatili."
+    },
+    "StoreFrontPage": {
+      "title": "Negozio EmuDeck"
+    },
+    "UninstallPage": {
+      "title": "Disinstalla EmuDeck",
+      "description": "L'utilità di disinstallazione di EmuDeck dovrebbe essere utilizzata solo se hai intenzione di rimuovere EmuDeck dal tuo sistema. Se stai riscontrando problemi, esegui un ripristino personalizzato, risolvi i problemi specifici dello strumento o dell'emulatore o visita EmuDeck Discord o Reddit per ulteriore supporto."
+    },
+    "UpdateEmusPage": {
+      "title": "Aggiorna i tuoi emulatori e strumenti",
+      "description": "Gli emulatori e gli strumenti possono essere installati in molti modi. EmuDeck installa alcuni emulatori e strumenti come Flatpaks dal Discover Store. Altri vengono scaricati direttamente dal sito web dello sviluppatore come AppImages o Binaries. Alcuni sono Eseguibili Windows, scaricati ed eseguiti tramite Proton."
+    },
+    "WelcomePage": {
+      "title": "Benvenuto in EmuDeck per {{systemName}}",
+      "description": "Seleziona come desideri configurare il tuo dispositivo",
+      "errorModal": {
+        "title": "Errore nel rilevamento del tuo sistema operativo",
+        "description": "<p>Fai clic sul pulsante Chiudi per riprovare</p><p>Se il problema persiste, contattaci su Discord: https://discord.com/invite/b9F7GpXtFP</p>"
+      }
+    },
+    "CheckBios": {
+      "detected": "- Rilevato",
+      "missing": " - Mancante",
+      "sarching": "...ricerca...",
+      "tip1": "Consiglio 1: Non tutti i sistemi richiedono file BIOS aggiuntivi. Qui elencati ci sono i sistemi più comuni.",
+      "tip2": "Consiglio 2: Assicurati di avere il BIOS corretto per la regione della tua ROM. Le tue ROM potrebbero provenire dagli Stati Uniti, dal Giappone, dall'Europa, ecc.",
+      "tip3": "Consiglio 3: La distinzione tra maiuscole e minuscole conta. Anche se i tuoi BIOS vengono rilevati, i tuoi BIOS devono essere in minuscolo per PlayStation 1 e PlayStation 2.",
+      "tip4": "Consiglio 4: I tuoi file BIOS devono essere posizionati in Emulation/bios. Non creare sottocartelle per i file BIOS. Per il Nintendo Switch, utilizza le cartelle pre-create.",
+      "tip5": "Consiglio 5: Per i sistemi non elencati qui, controlla questo link.",
+      "cheat": "Foglio degli imbrogli",
+      "tip6": "Puoi utilizzare questo link come guida pratica per come dovrebbero essere nominati i tuoi BIOS."
+    },
+    "CloudSync": {
+      "sync": "Sincronizza",
+      "backup": "Backup",
+      "syncDesc": "Sincronizzazione tra installazioni di EmuDeck - <strong>Solo per i Patrons</strong>",
+      "backupDesc": "Backup dei tuoi giochi sul cloud"
+    },
+    "ControllerLayout": {
+      "option1": "Abbinamento di posizione",
+      "option2": "Abbinamento del layout del controller"
+    },
+    "GameMode": {
+      "steam": {
+        "title": "Interfaccia utente di Steam",
+        "description": "Mimare l'esperienza di Steam Deck avviando direttamente l'interfaccia utente di Steam."
+      },
+      "windows": {
+        "title": "Desktop Windows",
+        "description": "Avvia il Desktop di Windows come qualsiasi PC Windows"
+      }
+    },
+    "ManageEmulators": {
+      "description": ""
+    },
+    "Migration": {
+      "current": "Installazione corrente:",
+      "errorDetected": "Non rilevato",
+      "custom": "Directory personalizzata",
+      "destination": "Scegli la tua destinazione:",
+      "sdCard": "Scheda SD",
+      "internalStorage": "Memoria interna",
+      "start": "Inizia la migrazione",
+      "migrating": "Migrazione..."
+    },
+    "RAAchievements": {
+      "modalWrongPassTitle": "Nome utente o password errati",
+      "modalWrongPassDesc": "Se la tua password contiene caratteri speciali come _ o ', devi cambiarla su retroachievements.org",
+      "modalSuccessTitle": "Nome utente o password errati",
+      "modalSuccessDesc": "Se la tua password contiene caratteri speciali come _ o ', devi cambiarla su retroachievements.org",
+      "modalErrorTitle": "Errore!",
+      "modalErrorDesc": "L'utente e la password sono corretti ma EmuDeck non è riuscito a impostare la configurazione.",
+      "register": "Se non hai un account, registrati ora:",
+      "success": "Sei connesso con successo a RetroAchievements!",
+      "reset": "Reimposta accesso"
+    },
+    "StoreFront": {
+      "alertInstalled": "Gioco installato.\nTorna a EmulationStation per giocarci",
+      "alertError": "Si è verificato un errore durante l'installazione del gioco",
+      "alertUninstall": "Gioco disinstallato",
+      "featured": "Giochi HomeBrew in primo piano"
+    },
+    "UpdateEmus": {
+      "title": "Seleziona quale gruppo vuoi aggiornare:",
+      "btn1": "Aggiorna Flatpaks",
+      "btn2": "Aggiorna AppImages, Binaries e Eseguibili Windows"
+    }
+  }
+}

@@ -18,6 +18,7 @@ import {
   imgppsspp,
   imgduckstation,
   imgcitra,
+  imglime3ds,
   imgpcsx2,
   imgrpcs3,
   imgyuzu,
@@ -45,6 +46,7 @@ const images = {
   ppsspp: imgppsspp,
   duckstation: imgduckstation,
   citra: imgcitra,
+  lime3ds: imglime3ds,
   pcsx2: imgpcsx2,
   rpcs3: imgrpcs3,
   yuzu: imgyuzu,
@@ -1094,7 +1096,7 @@ function ParserSelectorPage() {
 
     if (system === 'win32') {
       ipcChannel.sendMessage('emudeck', [
-        `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuDreamcast ${state.emulatorAlternative.dreamcast}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPrimeHack ${installEmus.primehack.status}; setSetting doInstallRPCS3 ${installEmus.rpcs3.status}; setSetting doInstallCitra ${installEmus.citra.status}; setSetting doInstallDolphin ${installEmus.dolphin.status}; setSetting doInstallPPSSPP ${installEmus.ppsspp.status}; setSetting doInstallXemu ${installEmus.xemu.status}; setSetting doInstallCemu ${installEmus.cemu.status}; setSetting doInstallXenia ${installEmus.xenia.status}; setSetting doInstallScummVM ${installEmus.scummvm.status}; setSetting doInstallRMG ${installEmus.rmg.status}; setSetting doInstallmelonDS ${installEmus.melonds.status}; setSetting doInstallVita3K ${installEmus.vita3k.status}; setSetting doInstallFlycast ${installEmus.flycast.status}; setSetting doInstallMGBA ${installEmus.mgba.status}; setSetting doInstallMAME ${installEmus.mame.status}; setSetting doInstallYuzu ${installEmus.yuzu.status}; setSetting doInstallRyujinx ${installEmus.ryujinx.status}; setSetting doInstallPCSX2QT ${installEmus.pcsx2.status}; setSetting doInstallDuck ${installEmus.duckstation.status}; echo "true"`,
+        `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuDreamcast ${state.emulatorAlternative.dreamcast}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPrimeHack ${installEmus.primehack.status}; setSetting doInstallRPCS3 ${installEmus.rpcs3.status}; setSetting doInstallCitra ${installEmus.citra.status}; setSetting doInstallLime3ds${installEmus.lime3ds.status}; setSetting doInstallDolphin ${installEmus.dolphin.status}; setSetting doInstallPPSSPP ${installEmus.ppsspp.status}; setSetting doInstallXemu ${installEmus.xemu.status}; setSetting doInstallCemu ${installEmus.cemu.status}; setSetting doInstallXenia ${installEmus.xenia.status}; setSetting doInstallScummVM ${installEmus.scummvm.status}; setSetting doInstallRMG ${installEmus.rmg.status}; setSetting doInstallmelonDS ${installEmus.melonds.status}; setSetting doInstallVita3K ${installEmus.vita3k.status}; setSetting doInstallFlycast ${installEmus.flycast.status}; setSetting doInstallMGBA ${installEmus.mgba.status}; setSetting doInstallMAME ${installEmus.mame.status}; setSetting doInstallYuzu ${installEmus.yuzu.status}; setSetting doInstallRyujinx ${installEmus.ryujinx.status}; setSetting doInstallPCSX2QT ${installEmus.pcsx2.status}; setSetting doInstallDuck ${installEmus.duckstation.status}; echo "true"`,
       ]);
       ipcChannel.once(`parsersUpdatePrev`, (message) => {
         ipcChannel.sendMessage('emudeck', [
@@ -1103,7 +1105,7 @@ function ParserSelectorPage() {
       });
     } else {
       ipcChannel.sendMessage('emudeck', [
-        `parsersUpdate|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuDreamcast ${state.emulatorAlternative.dreamcast} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} >/dev/null && setSetting doInstallPrimeHack ${installEmus.primehack.status} >/dev/null && setSetting doInstallRPCS3 ${installEmus.rpcs3.status} >/dev/null && setSetting doInstallCitra ${installEmus.citra.status} >/dev/null && setSetting doInstallDolphin ${installEmus.dolphin.status} >/dev/null && setSetting doInstallPPSSPP ${installEmus.ppsspp.status} >/dev/null && setSetting doInstallXemu ${installEmus.xemu.status} >/dev/null && setSetting doInstallCemu ${installEmus.cemu.status} >/dev/null && setSetting doInstallXenia ${installEmus.xenia.status} >/dev/null && setSetting doInstallScummVM ${installEmus.scummvm.status} >/dev/null && setSetting doInstallRMG ${installEmus.rmg.status} >/dev/null && setSetting doInstallmelonDS ${installEmus.melonds.status} >/dev/null && setSetting doInstallVita3K ${installEmus.vita3k.status} >/dev/null && setSetting doInstallFlycast ${installEmus.flycast.status} >/dev/null && setSetting doInstallMGBA ${installEmus.mgba.status} >/dev/null && setSetting doInstallMAME ${installEmus.mame.status} >/dev/null && setSetting doInstallYuzu ${installEmus.yuzu.status} >/dev/null && setSetting doInstallRyujinx ${installEmus.ryujinx.status} >/dev/null && setSetting doInstallPCSX2QT ${installEmus.pcsx2.status} >/dev/null && setSetting doInstallDuck ${installEmus.duckstation.status} >/dev/null) >/dev/null && . ~/.config/EmuDeck/backend/functions/all.sh && SRM_init`,
+        `parsersUpdate|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuDreamcast ${state.emulatorAlternative.dreamcast} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} >/dev/null && setSetting doInstallPrimeHack ${installEmus.primehack.status} >/dev/null && setSetting doInstallRPCS3 ${installEmus.rpcs3.status} >/dev/null && setSetting doInstallCitra ${installEmus.citra.status} >/dev/null && setSetting doInstallLime3ds ${installEmus.lime3ds.status} >/dev/null && setSetting doInstallDolphin ${installEmus.dolphin.status} >/dev/null && setSetting doInstallPPSSPP ${installEmus.ppsspp.status} >/dev/null && setSetting doInstallXemu ${installEmus.xemu.status} >/dev/null && setSetting doInstallCemu ${installEmus.cemu.status} >/dev/null && setSetting doInstallXenia ${installEmus.xenia.status} >/dev/null && setSetting doInstallScummVM ${installEmus.scummvm.status} >/dev/null && setSetting doInstallRMG ${installEmus.rmg.status} >/dev/null && setSetting doInstallmelonDS ${installEmus.melonds.status} >/dev/null && setSetting doInstallVita3K ${installEmus.vita3k.status} >/dev/null && setSetting doInstallFlycast ${installEmus.flycast.status} >/dev/null && setSetting doInstallMGBA ${installEmus.mgba.status} >/dev/null && setSetting doInstallMAME ${installEmus.mame.status} >/dev/null && setSetting doInstallYuzu ${installEmus.yuzu.status} >/dev/null && setSetting doInstallRyujinx ${installEmus.ryujinx.status} >/dev/null && setSetting doInstallPCSX2QT ${installEmus.pcsx2.status} >/dev/null && setSetting doInstallDuck ${installEmus.duckstation.status} >/dev/null) >/dev/null && . ~/.config/EmuDeck/backend/functions/all.sh && SRM_init`,
       ]);
     }
 
@@ -1148,11 +1150,11 @@ function ParserSelectorPage() {
       console.log({ installEmus });
       if (system === 'win32') {
         ipcChannel.sendMessage('emudeck', [
-          `installupdate|||setSetting doInstallPrimeHack ${installEmus.primehack.status} ; setSetting doInstallRPCS3 ${installEmus.rpcs3.status} ; setSetting doInstallCitra ${installEmus.citra.status} ; setSetting doInstallDolphin ${installEmus.dolphin.status} ; setSetting doInstallPPSSPP ${installEmus.ppsspp.status} ; setSetting doInstallXemu ${installEmus.xemu.status} ; setSetting doInstallCemu ${installEmus.cemu.status} ; setSetting doInstallXenia ${installEmus.xenia.status} ; setSetting doInstallScummVM ${installEmus.scummvm.status} ; setSetting doInstallRMG ${installEmus.rmg.status} ; setSetting doInstallmelonDS ${installEmus.melonds.status} ; setSetting doInstallVita3K ${installEmus.vita3k.status} ; setSetting doInstallFlycast ${installEmus.flycast.status} ; setSetting doInstallMGBA ${installEmus.mgba.status} ; setSetting doInstallMAME ${installEmus.mame.status} ; setSetting doInstallYuzu ${installEmus.yuzu.status} ; setSetting doInstallRyujinx ${installEmus.ryujinx.status} ; setSetting doInstallPCSX2QT ${installEmus.pcsx2.status}`,
+          `installupdate|||setSetting doInstallPrimeHack ${installEmus.primehack.status} ; setSetting doInstallRPCS3 ${installEmus.rpcs3.status} ; setSetting doInstallCitra ${installEmus.citra.status} ;setSetting doInstallLime3ds ${installEmus.lime3ds.status} ; setSetting doInstallDolphin ${installEmus.dolphin.status} ; setSetting doInstallPPSSPP ${installEmus.ppsspp.status} ; setSetting doInstallXemu ${installEmus.xemu.status} ; setSetting doInstallCemu ${installEmus.cemu.status} ; setSetting doInstallXenia ${installEmus.xenia.status} ; setSetting doInstallScummVM ${installEmus.scummvm.status} ; setSetting doInstallRMG ${installEmus.rmg.status} ; setSetting doInstallmelonDS ${installEmus.melonds.status} ; setSetting doInstallVita3K ${installEmus.vita3k.status} ; setSetting doInstallFlycast ${installEmus.flycast.status} ; setSetting doInstallMGBA ${installEmus.mgba.status} ; setSetting doInstallMAME ${installEmus.mame.status} ; setSetting doInstallYuzu ${installEmus.yuzu.status} ; setSetting doInstallRyujinx ${installEmus.ryujinx.status} ; setSetting doInstallPCSX2QT ${installEmus.pcsx2.status}`,
         ]);
       } else {
         ipcChannel.sendMessage('emudeck', [
-          `installupdate|||setSetting doInstallPrimeHack ${installEmus.primehack.status} >/dev/null && setSetting doInstallRPCS3 ${installEmus.rpcs3.status} >/dev/null && setSetting doInstallCitra ${installEmus.citra.status} >/dev/null && setSetting doInstallDolphin ${installEmus.dolphin.status} && setSetting doInstallPPSSPP ${installEmus.ppsspp.status} >/dev/null && setSetting doInstallXemu ${installEmus.xemu.status} >/dev/null && setSetting doInstallCemu ${installEmus.cemu.status} >/dev/null && setSetting doInstallXenia ${installEmus.xenia.status} >/dev/null && setSetting doInstallScummVM ${installEmus.scummvm.status} >/dev/null && setSetting doInstallRMG ${installEmus.rmg.status} >/dev/null && setSetting doInstallmelonDS ${installEmus.melonds.status} >/dev/null && setSetting doInstallVita3K ${installEmus.vita3k.status} >/dev/null && setSetting doInstallFlycast ${installEmus.flycast.status} >/dev/null && setSetting doInstallMGBA ${installEmus.mgba.status} >/dev/null && setSetting doInstallMAME ${installEmus.mame.status} >/dev/null && setSetting doInstallYuzu ${installEmus.yuzu.status} >/dev/null && setSetting doInstallRyujinx ${installEmus.ryujinx.status} >/dev/null && setSetting doInstallPCSX2QT ${installEmus.pcsx2.status} >/dev/null`,
+          `installupdate|||setSetting doInstallPrimeHack ${installEmus.primehack.status} >/dev/null && setSetting doInstallRPCS3 ${installEmus.rpcs3.status} >/dev/null && setSetting doInstallCitra ${installEmus.citra.status} >/dev/null && setSetting doInstallLime3ds ${installEmus.lime3ds.status} >/dev/null && setSetting doInstallDolphin ${installEmus.dolphin.status} && setSetting doInstallPPSSPP ${installEmus.ppsspp.status} >/dev/null && setSetting doInstallXemu ${installEmus.xemu.status} >/dev/null && setSetting doInstallCemu ${installEmus.cemu.status} >/dev/null && setSetting doInstallXenia ${installEmus.xenia.status} >/dev/null && setSetting doInstallScummVM ${installEmus.scummvm.status} >/dev/null && setSetting doInstallRMG ${installEmus.rmg.status} >/dev/null && setSetting doInstallmelonDS ${installEmus.melonds.status} >/dev/null && setSetting doInstallVita3K ${installEmus.vita3k.status} >/dev/null && setSetting doInstallFlycast ${installEmus.flycast.status} >/dev/null && setSetting doInstallMGBA ${installEmus.mgba.status} >/dev/null && setSetting doInstallMAME ${installEmus.mame.status} >/dev/null && setSetting doInstallYuzu ${installEmus.yuzu.status} >/dev/null && setSetting doInstallRyujinx ${installEmus.ryujinx.status} >/dev/null && setSetting doInstallPCSX2QT ${installEmus.pcsx2.status} >/dev/null`,
         ]);
       }
       ipcChannel.once(`installupdate`, (message) => {
@@ -1171,31 +1173,30 @@ function ParserSelectorPage() {
   // localStorage.setItem('settings_emudeck', json);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Parsers for Steam Rom Manager" />
-        <ParserSelector data={data} onClick={toggleEmus} images={images} />
-        <footer className="footer">
-          <BtnSimple
-            css="btn-simple--2"
-            type="button"
-            onClick={() => restoreParsers(true)}
-            aria="Go Back"
-          >
-            Back
-          </BtnSimple>
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Disabled"
-            onClick={() => saveParsers()}
-          >
-            Save Parsers
-          </BtnSimple>
-        </footer>
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('ParserSelectorPage.title')} />
+      <p className="lead">{t('ParserSelectorPage.description')}</p>
+      <ParserSelector data={data} onClick={toggleEmus} images={images} />
+      <footer className="footer">
+        <BtnSimple
+          css="btn-simple--2"
+          type="button"
+          onClick={() => restoreParsers(true)}
+          aria={t('general.back')}
+        >
+          {t('general.back')}
+        </BtnSimple>
+        <BtnSimple
+          css="btn-simple--1"
+          type="button"
+          aria={t('general.save')}
+          onClick={() => saveParsers()}
+        >
+          {t('general.save')}
+        </BtnSimple>
+      </footer>
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

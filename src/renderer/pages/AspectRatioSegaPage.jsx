@@ -30,22 +30,21 @@ function AspectRatioSegaPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('AspectRatioSegaPage.title')} />
-        <AspectRatioSega
-          data={data}
-          onClick={arSet}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <Footer
-          next="aspect-ratio-snes"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('AspectRatioSegaPage.title')} />
+      <p className="lead">{t('AspectRatioSegaPage.description')}</p>
+      <AspectRatioSega
+        data={data}
+        onClick={arSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <Footer
+        next="aspect-ratio-snes"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

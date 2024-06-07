@@ -386,273 +386,271 @@ function CopyGamesPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper aside={second === true}>
-        {mode === 'auto' && statusCopyGames === null && (
-          <>
-            <Header title="Use a USB Drive to transfer your games" />
+    <Wrapper aside={second === true}>
+      {mode === 'auto' && statusCopyGames === null && (
+        <>
+          <Header title="Use a USB Drive to transfer your games" />
 
-            <CopyGamesAuto
-              onClick={storageSet}
-              onClickStart={startCreateStructureOnUSB}
-              onClickCopyGames={startCopyGames}
-              storagUSB={storageUSB}
-              storageUSBPath={storageUSBPath}
-              statusCopyGames={system === 'win32' ? true : statusCopyGames}
-              statusCreateStructure={statusCreateStructure}
-              installFrontends={installFrontends}
+          <CopyGamesAuto
+            onClick={storageSet}
+            onClickStart={startCreateStructureOnUSB}
+            onClickCopyGames={startCopyGames}
+            storagUSB={storageUSB}
+            storageUSBPath={storageUSBPath}
+            statusCopyGames={system === 'win32' ? true : statusCopyGames}
+            statusCreateStructure={statusCreateStructure}
+            installFrontends={installFrontends}
+          />
+        </>
+      )}
+
+      {mode === 'manual' && statusCopyGames === null && (
+        <>
+          <Header title="Manual Copy" />
+          <p className="lead">
+            Once you have collected your files, click the “Open Emulation
+            Folder” button below
+          </p>
+          <div>
+            <BtnSimple
+              css="btn-simple--1"
+              type="button"
+              aria="Go Next"
+              onClick={() => openEmulationFolder()}
+            >
+              Open Emulation Folder
+            </BtnSimple>
+          </div>
+        </>
+      )}
+
+      {mode === 'manual' && statusCopyGames === 'manual' && (
+        <>
+          <Header title="Waiting for Manual Copy" />
+          <p className="lead">
+            Once you have copied your files please click on the "Next" button
+          </p>
+        </>
+      )}
+
+      {mode === undefined && (
+        <>
+          <Header title="Let's copy your games" />
+          <p className="lead">
+            First, you will need to gather your ROMs and BIOS. These are
+            copyright and EmuDeck will not provide these for legal reasons.
+          </p>
+          {system !== 'win32' && (
+            <SelectorMenu
+              imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
+              options={[
+                [
+                  () => selectMode('manual'),
+                  mode === 'manual' ? 'is-selected' : '',
+                  'Manual copy',
+                  'You will need to copy your games manually',
+                  true,
+                ],
+                [
+                  () => selectMode('auto'),
+                  mode === 'auto' ? 'is-selected' : '',
+                  'Automatic import',
+                  "You'll need a different computer to create a USB Drive",
+                  true,
+                ],
+              ]}
             />
-          </>
-        )}
+          )}
+          {system === 'win32' && (
+            <SelectorMenu
+              imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
+              options={[
+                [
+                  () => selectMode('manual'),
+                  mode === 'manual' ? 'is-selected' : '',
+                  'Manual copy',
+                  'You will need to copy your games manually',
+                  true,
+                ],
+              ]}
+            />
+          )}
+        </>
+      )}
 
-        {mode === 'manual' && statusCopyGames === null && (
-          <>
-            <Header title="Manual Copy" />
-            <p className="lead">
-              Once you have collected your files, click the “Open Emulation
-              Folder” button below
-            </p>
-            <div>
-              <BtnSimple
-                css="btn-simple--1"
-                type="button"
-                aria="Go Next"
-                onClick={() => openEmulationFolder()}
-              >
-                Open Emulation Folder
-              </BtnSimple>
-            </div>
-          </>
-        )}
-
-        {mode === 'manual' && statusCopyGames === 'manual' && (
-          <>
-            <Header title="Waiting for Manual Copy" />
-            <p className="lead">
-              Once you have copied your files please click on the "Next" button
-            </p>
-          </>
-        )}
-
-        {mode === undefined && (
-          <>
-            <Header title="Let's copy your games" />
-            <p className="lead">
-              First, you will need to gather your ROMs and BIOS. These are
-              copyright and EmuDeck will not provide these for legal reasons.
-            </p>
-            {system !== 'win32' && (
-              <SelectorMenu
-                imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
-                options={[
-                  [
-                    () => selectMode('manual'),
-                    mode === 'manual' ? 'is-selected' : '',
-                    'Manual copy',
-                    'You will need to copy your games manually',
-                    true,
-                  ],
-                  [
-                    () => selectMode('auto'),
-                    mode === 'auto' ? 'is-selected' : '',
-                    'Automatic import',
-                    "You'll need a different computer to create a USB Drive",
-                    true,
-                  ],
-                ]}
-              />
-            )}
-            {system === 'win32' && (
-              <SelectorMenu
-                imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
-                options={[
-                  [
-                    () => selectMode('manual'),
-                    mode === 'manual' ? 'is-selected' : '',
-                    'Manual copy',
-                    'You will need to copy your games manually',
-                    true,
-                  ],
-                ]}
-              />
-            )}
-          </>
-        )}
-
-        {statusCopyGames === true && (
-          <>
-            <Header title="Let's test those BIOS" />
-            <p className="lead">
-              Some games will not load properly without BIOS files in place.
-              Place your BIOS in Emulation/bios and use this BIOS Checker to
-              ensure that you have the correct BIOS for your system.
-            </p>
-            <Main>
-              <div className="container--grid">
-                <div data-col-sm="6">
-                  {Object.entries(stateBios).map((item, index) => {
-                    if (item[0] === 'key') {
-                      return;
-                    }
-                    return (
-                      <Alert
-                        key={item[0]}
-                        css={`alert--mini ${
-                          item[1] === true ? 'alert--success' : 'alert--danger'
-                        }`}
-                      >
-                        {item[1] === true && (
-                          <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
-                        )}
-                        {item[1] === false && (
-                          <Img src={iconDanger} css="icon icon--xs" alt="OK" />
-                        )}
-                        {item[0]} BIOS
-                      </Alert>
-                    );
-                  })}
-                </div>
-                <div data-col-sm="6">
-                  <Alert css="alert--info">
-                    <ul className="list">
-                      <li>
-                        Tip 1: Not all systems require additional BIOS files.
-                        Listed here are the more common systems.
-                      </li>
-                      <li>
-                        Tip 2: Make sure you have the correct BIOS for your ROM
-                        region. Your ROMs may come from the United States,
-                        Japan, Europe, etc.
-                      </li>
-                      <li>
-                        Tip 3: Casing matters. Even if your BIOS are detected,
-                        your BIOS must be lowercase for Playstation 1 and
-                        Playstation 2.
-                      </li>
-                      <li>
-                        Tip 4: Your BIOS files must be placed in Emulation/bios.
-                        Do not make sub-folders for BIOS files. For the Nintendo
-                        Switch, use our pre-created folders.
-                      </li>
-                    </ul>
-                  </Alert>
-                </div>
+      {statusCopyGames === true && (
+        <>
+          <Header title="Let's test those BIOS" />
+          <p className="lead">
+            Some games will not load properly without BIOS files in place. Place
+            your BIOS in Emulation/bios and use this BIOS Checker to ensure that
+            you have the correct BIOS for your system.
+          </p>
+          <Main>
+            <div className="container--grid">
+              <div data-col-sm="6">
+                {Object.entries(stateBios).map((item, index) => {
+                  if (item[0] === 'key') {
+                    return;
+                  }
+                  return (
+                    <Alert
+                      key={item[0]}
+                      css={`alert--mini ${
+                        item[1] === true ? 'alert--success' : 'alert--danger'
+                      }`}
+                    >
+                      {item[1] === true && (
+                        <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
+                      )}
+                      {item[1] === false && (
+                        <Img src={iconDanger} css="icon icon--xs" alt="OK" />
+                      )}
+                      {item[0]} BIOS
+                    </Alert>
+                  );
+                })}
               </div>
-            </Main>
-          </>
-        )}
+              <div data-col-sm="6">
+                <Alert css="alert--info">
+                  <ul className="list">
+                    <li>
+                      Tip 1: Not all systems require additional BIOS files.
+                      Listed here are the more common systems.
+                    </li>
+                    <li>
+                      Tip 2: Make sure you have the correct BIOS for your ROM
+                      region. Your ROMs may come from the United States, Japan,
+                      Europe, etc.
+                    </li>
+                    <li>
+                      Tip 3: Casing matters. Even if your BIOS are detected,
+                      your BIOS must be lowercase for Playstation 1 and
+                      Playstation 2.
+                    </li>
+                    <li>
+                      Tip 4: Your BIOS files must be placed in Emulation/bios.
+                      Do not make sub-folders for BIOS files. For the Nintendo
+                      Switch, use our pre-created folders.
+                    </li>
+                  </ul>
+                </Alert>
+              </div>
+            </div>
+          </Main>
+        </>
+      )}
 
-        {statusCopyGames === 'final' && (
-          <>
-            <Header title="How would you like to launch your games?" />
+      {statusCopyGames === 'final' && (
+        <>
+          <Header title="How would you like to launch your games?" />
 
-            <Main>
-              {frontend === undefined && (
-                <SelectorMenu
-                  imgs={[[imgSTEAM, frontend === undefined ? '' : 'is-hidden']]}
-                  options={[
-                    [
-                      () => selectFrontend('steam'),
-                      frontend === 'steam' ? 'is-selected' : '',
-                      'Steam Library',
-                      'Recommended for small libraries',
-                      true,
-                    ],
-                    [
-                      () => selectFrontend('esde'),
-                      frontend === 'esde' ? 'is-selected' : '',
-                      `Emulation Station DE ${
-                        state.mode === 'easy' ? ' ' : 'or Pegasus'
-                      } `,
-                      'Recommended for huge libraries',
-                      true,
-                    ],
-                  ]}
-                />
-              )}
-              {frontend === 'steam' && (
-                <>
-                  <p className="lead">
-                    Steam ROM Manager or SRM is a tool that will add your Games,
-                    Emulators and other launchers like EmulationStationDE or
-                    Pegasus to your Steam Library so you can launch them in Game
-                    Mode
-                  </p>
+          <Main>
+            {frontend === undefined && (
+              <SelectorMenu
+                imgs={[[imgSTEAM, frontend === undefined ? '' : 'is-hidden']]}
+                options={[
+                  [
+                    () => selectFrontend('steam'),
+                    frontend === 'steam' ? 'is-selected' : '',
+                    'Steam Library',
+                    'Recommended for small libraries',
+                    true,
+                  ],
+                  [
+                    () => selectFrontend('esde'),
+                    frontend === 'esde' ? 'is-selected' : '',
+                    `Emulation Station DE ${
+                      state.mode === 'easy' ? ' ' : 'or Pegasus'
+                    } `,
+                    'Recommended for huge libraries',
+                    true,
+                  ],
+                ]}
+              />
+            )}
+            {frontend === 'steam' && (
+              <>
+                <p className="lead">
+                  Steam ROM Manager or SRM is a tool that will add your Games,
+                  Emulators and other launchers like EmulationStationDE or
+                  Pegasus to your Steam Library so you can launch them in Game
+                  Mode
+                </p>
 
-                  <Iframe src="https://www.youtube-nocookie.com/embed/BsqWFHPp5UU?autoplay=1&playlist=BsqWFHPp5UU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
-                </>
-              )}
-              {frontend === 'esde' && (
-                <>
-                  <p className="lead">
-                    You need to launch Steam ROM Manager to add EmulatioStation
-                    DE to your Steam Library. Make sure to disable all parsers
-                    except the one for EmulationStation DE.
-                  </p>
+                <Iframe src="https://www.youtube-nocookie.com/embed/BsqWFHPp5UU?autoplay=1&playlist=BsqWFHPp5UU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+              </>
+            )}
+            {frontend === 'esde' && (
+              <>
+                <p className="lead">
+                  You need to launch Steam ROM Manager to add EmulatioStation DE
+                  to your Steam Library. Make sure to disable all parsers except
+                  the one for EmulationStation DE.
+                </p>
 
-                  <Iframe src="https://www.youtube-nocookie.com/embed/7a4dMb9NLRs?autoplay=1&playlist=7a4dMb9NLRs&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
-                </>
-              )}
-            </Main>
-          </>
-        )}
-        <footer className="footer">
-          {statusCopyGames === true ||
-            (statusCopyGames === 'final' && second && (
-              <BtnSimple
-                css="btn-simple--2"
-                type="button"
-                aria="Go Next"
-                onClick={() => navigate('/hotkeys')}
-              >
-                Skip
-              </BtnSimple>
-            ))}
-          {statusCopyGames === 'final' && frontend && (
-            <BtnSimple
-              css="btn-simple--1"
-              type="button"
-              aria="Go Next"
-              onClick={() => openSRM()}
-            >
-              Launch Steam ROM Manager
-            </BtnSimple>
-          )}
-          {statusCopyGames === true && (
-            <BtnSimple
-              css="btn-simple--1"
-              type="button"
-              aria="Go Next"
-              onClick={() => finishAddingGames()}
-            >
-              Next
-            </BtnSimple>
-          )}
-          {statusCopyGames === 'manual' && (
-            <BtnSimple
-              css="btn-simple--1"
-              type="button"
-              aria="Go Next"
-              onClick={() => skipAddingGames()}
-            >
-              Next
-            </BtnSimple>
-          )}
-
-          {second && statusCopyGames === null && (
+                <Iframe src="https://www.youtube-nocookie.com/embed/7a4dMb9NLRs?autoplay=1&playlist=7a4dMb9NLRs&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+              </>
+            )}
+          </Main>
+        </>
+      )}
+      <footer className="footer">
+        {statusCopyGames === true ||
+          (statusCopyGames === 'final' && second && (
             <BtnSimple
               css="btn-simple--2"
               type="button"
-              aria="Go Back"
-              onClick={() => navigate('/emulators')}
+              aria="Go Next"
+              onClick={() => navigate('/hotkeys')}
             >
-              Skip for now
+              Skip
             </BtnSimple>
-          )}
-        </footer>
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+          ))}
+        {statusCopyGames === 'final' && frontend && (
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria="Go Next"
+            onClick={() => openSRM()}
+          >
+            Launch Steam ROM Manager
+          </BtnSimple>
+        )}
+        {statusCopyGames === true && (
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria="Go Next"
+            onClick={() => finishAddingGames()}
+          >
+            Next
+          </BtnSimple>
+        )}
+        {statusCopyGames === 'manual' && (
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria="Go Next"
+            onClick={() => skipAddingGames()}
+          >
+            Next
+          </BtnSimple>
+        )}
+
+        {second && statusCopyGames === null && (
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            aria="Go Back"
+            onClick={() => navigate('/emulators')}
+          >
+            Skip for now
+          </BtnSimple>
+        )}
+      </footer>
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

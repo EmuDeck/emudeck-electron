@@ -8,7 +8,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import VideoGuide from 'components/organisms/Wrappers/VideoGuide';
 
 function VideoGuidePage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -25,17 +25,15 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Emulation Showcase" />
-        <VideoGuide onClick={changeMinute} minute={minute} />
-        <Footer
-          next={false}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title="Emulation Showcase" />
+      <VideoGuide onClick={changeMinute} minute={minute} />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

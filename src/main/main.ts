@@ -171,7 +171,7 @@ const createWindow = async () => {
   const { screen } = require('electron');
   const primaryDisplay = screen.getPrimaryDisplay();
   const { height } = primaryDisplay.workAreaSize;
-  const screenHeight = height < 701 ? 600 : 720;
+  const screenHeight = height < 701 ? 600 : 740;
   const isFullscreen = false;
   // const os = require('os');
 
@@ -205,12 +205,6 @@ const createWindow = async () => {
       resizable: true,
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
       autoHideMenuBar: true,
-      titleBarStyle: 'hidden',
-      titleBarOverlay: {
-        color: shouldUseDarkColors ? '#FFFFFF00' : '#FFFFFF00',
-        symbolColor: shouldUseDarkColors ? '#FFFFFF' : '#444',
-        height: 30,
-      },
       webPreferences: {
         preload: app.isPackaged
           ? path.join(__dirname, 'preload.js')
@@ -225,8 +219,7 @@ const createWindow = async () => {
       width: 1280,
       // width: 1280,
       height: screenHeight,
-      titleBarStyle: 'hidden',
-      trafficLightPosition: { x: 20, y: 20 },
+      trafficLightPosition: { x: 8, y: 8 },
       icon: getAssetPath('icon.png'),
       resizable: true,
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
@@ -245,7 +238,6 @@ const createWindow = async () => {
       width: 1280,
       // width: 1280,
       height: screenHeight,
-      titleBarStyle: 'hidden',
       icon: getAssetPath('icon.png'),
       resizable: true,
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,

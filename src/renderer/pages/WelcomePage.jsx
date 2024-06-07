@@ -144,33 +144,29 @@ function WelcomePage() {
   }, [mode]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper aside={second === true}>
-        {second === false && (
-          <>
-            <Header
-              title={t('WelcomePage.title', { systemName: systemName })}
-            />
-            <p className="lead">{t('WelcomePage.description')}:</p>
-          </>
-        )}
+    <Wrapper aside={second === true}>
+      {second === false && (
+        <>
+          <Header title={t('WelcomePage.title', { systemName: systemName })} />
+          <p className="lead">{t('WelcomePage.description')}:</p>
+        </>
+      )}
 
-        {systemName !== 'ERROR' && second === false && (
-          <Welcome onClick={selectMode} />
-        )}
+      {systemName !== 'ERROR' && second === false && (
+        <Welcome onClick={selectMode} />
+      )}
 
-        {second === false && systemName !== 'ERROR' && (
-          <Footer
-            back={false}
-            next="rom-storage"
-            exit={gamemode}
-            disabledNext={second ? false : disabledNext}
-            disabledBack={second ? false : disabledBack}
-          />
-        )}
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+      {second === false && systemName !== 'ERROR' && (
+        <Footer
+          back={false}
+          next="rom-storage"
+          exit={gamemode}
+          disabledNext={second ? false : disabledNext}
+          disabledBack={second ? false : disabledBack}
+        />
+      )}
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

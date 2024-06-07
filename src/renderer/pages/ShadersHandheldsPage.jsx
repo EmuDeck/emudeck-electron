@@ -9,7 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import ShadersHandhelds from 'components/organisms/Wrappers/ShadersHandhelds';
 
 function ShadersHandheldsPage() {
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { shaders } = state;
   const [statePage] = useState({
@@ -30,22 +30,21 @@ const { t, i18n } = useTranslation();
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Configure LCD Shader for Handheld Systems" />
-        <ShadersHandhelds
-          data={data}
-          onClick={shaderSet}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <Footer
-          next="shaders-classic"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('ShadersHandheldsPage.title')} />
+      <p className="lead">{t('ShadersHandheldsPage.description')}</p>
+      <ShadersHandhelds
+        data={data}
+        onClick={shaderSet}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <Footer
+        next="shaders-classic"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

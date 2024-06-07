@@ -26,17 +26,19 @@ function AutoSavePage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('AutoSavePage.title')} />
-        <AutoSave data={data} onClick={autoSaveSet} />
-        <Footer
-          next="ra-achievements"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('AutoSavePage.title')} />
+      <p className="lead">
+        If enabled, your game state will be saved on exit and automatically
+        loaded when opened again when using RetroArch.
+      </p>
+      <AutoSave data={data} onClick={autoSaveSet} />
+      <Footer
+        next="ra-achievements"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

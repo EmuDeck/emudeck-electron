@@ -34,17 +34,16 @@ const AndroidRABezelsPage = () => {
   }, [state]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('AndroidRABezelsPage.title')} />
-        <RABezels bezels={bezels} onClick={bezelsSet} />
-        <Footer
-          next="android-frontend-selector"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('RABezelsPage.title')} />
+      <p className="lead">{t('RABezelsPage.description')}</p>
+      <RABezels bezels={bezels} onClick={bezelsSet} />
+      <Footer
+        next="android-frontend-selector"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

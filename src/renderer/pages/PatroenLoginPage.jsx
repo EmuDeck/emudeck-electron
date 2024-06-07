@@ -250,68 +250,64 @@ function PatreonLoginPage() {
   //
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Login into Patreon" />
-        <Main>
-          {errorMessage === undefined && (
-            <p className="lead">
-              Please login to patreon in order to access this early access
-              release.
-            </p>
-          )}
-          {!!errorMessage && <p className="lead">{errorMessage}</p>}
+    <Wrapper>
+      <Header title={t('PatroenLoginPage.title')} />
+      <Main>
+        {errorMessage === undefined && (
+          <p className="lead">{t('PatroenLoginPage.description')}</p>
+        )}
+        {!!errorMessage && <p className="lead">{errorMessage}</p>}
 
-          {!patreonClicked && (
-            <>
+        {!patreonClicked && (
+          <>
+            <BtnSimple
+              css="btn-simple--3"
+              type="link"
+              target="_blank"
+              href="https://token.emudeck.com/"
+              aria={t('PatroenLoginPage.login')}
+              onClick={() => patreonShowInput()}
+              disabled={accessAllowed}
+            >
+              {t('PatroenLoginPage.login')}{' '}
+              {accessAllowed && `- ${t('general.loading')}`}
+            </BtnSimple>
+            <BtnSimple
+              css="btn-simple--3"
+              type="link"
+              target="_blank"
+              href="https://patreon.com/"
+              aria={t('PatroenLoginPage.change')}
+            >
+              {t('PatroenLoginPage.change')}
+            </BtnSimple>
+          </>
+        )}
+        {patreonClicked && (
+          <div className="form">
+            <FormInputSimple
+              label="Token"
+              type="token"
+              name="token"
+              id="token"
+              value={patreonTokenTemp}
+              onChange={patreonSetToken}
+            />
+            {patreonTokenTemp !== null && (
               <BtnSimple
                 css="btn-simple--3"
-                type="link"
-                target="_blank"
-                href="https://token.emudeck.com/"
+                type="button"
                 aria={t('general.next')}
-                onClick={() => patreonShowInput()}
-                disabled={accessAllowed}
+                onClick={() => patreonCheckToken()}
               >
-                Login with Patreon {accessAllowed && '- Loading'}
+                {status === null && t('PatroenLoginPage.check')}
+                {status === 'checking' && t('PatroenLoginPage.checking')}
               </BtnSimple>
-              <BtnSimple
-                css="btn-simple--3"
-                type="link"
-                target="_blank"
-                href="https://patreon.com/"
-                aria={t('general.next')}
-              >
-                Change Patreon Account
-              </BtnSimple>
-            </>
-          )}
-          {patreonClicked && (
-            <div className="form">
-              <FormInputSimple
-                label="Token"
-                type="token"
-                name="token"
-                id="token"
-                value={patreonTokenTemp}
-                onChange={patreonSetToken}
-              />
-              {patreonTokenTemp !== null && (
-                <BtnSimple
-                  css="btn-simple--3"
-                  type="button"
-                  aria={t('general.next')}
-                  onClick={() => patreonCheckToken()}
-                >
-                  {status === null && 'Check Token'}
-                  {status === 'checking' && 'Checking token...'}
-                </BtnSimple>
-              )}
-            </div>
-          )}
-        </Main>
-      </Wrapper>
-    </div>
+            )}
+          </div>
+        )}
+      </Main>
+    </Wrapper>
   );
 }
 

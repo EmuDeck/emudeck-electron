@@ -1,8 +1,26 @@
 [
   {
-    "title": "Bug fixes",
+    "title": "Unified UI",
     "type": "STEAMOS",
-    "description": "Several bug fixes",
-    "image": "false"
+    "description": "We are working on a new UI, first step is having the same for all platforms",
+    "image": "true"
+  },
+  {
+    "title": "EmuDeck for Android",
+    "type": "STEAMOS",
+    "description": "Now you can install your favourites emulators on Android",
+    "image": "true"
+  },
+  {
+    "title": "Remove Steam Rom Manager Cache",
+    "type": "STEAMOS",
+    "description": "Added a new button in Manage Emulators to clear SRM entries",
+    "image": "true"
+  },
+  {
+    "title": "Multilanguage",
+    "type": "STEAMOS",
+    "description": "We've added preliminary support for spanish, french and italian",
+    "image": "true"
   }
 ]

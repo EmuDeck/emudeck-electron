@@ -51,6 +51,7 @@ function DeviceSelectorPage() {
       cemu: '720P',
       xenia: '720P',
       citra: '1080P',
+      lime3ds: '1080P',
       vita3k: '1080P',
       flycast: '1080P',
       melonds: '1080P',
@@ -68,6 +69,7 @@ function DeviceSelectorPage() {
       cemu: '720P',
       xenia: '720P',
       citra: '720P',
+      lime3ds: '720P',
       vita3k: '720P',
       flycast: '720P',
       melonds: '720P',
@@ -85,6 +87,7 @@ function DeviceSelectorPage() {
       cemu: '1080P',
       xenia: '1080P',
       citra: '1080P',
+      lime3ds: '1080P',
       vita3k: '1080P',
       flycast: '1080P',
       melonds: '1080P',
@@ -152,141 +155,140 @@ function DeviceSelectorPage() {
   }, []);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={t('DeviceSelectorPage.title')} />
-        <DeviceSelector data={data} onClick={deviceSet}>
-          {system === 'darwin' && (
+    <Wrapper>
+      <Header title={t('DeviceSelectorPage.title')} />
+      <p className="lead">{t('DeviceSelectorPage.description')}</p>
+      <DeviceSelector data={data} onClick={deviceSet}>
+        {system === 'darwin' && (
+          <Card
+            css={device === 'Mac' && 'is-selected'}
+            onClick={() => deviceSet('Mac')}
+          >
+            <img src={imgmac} width="100" alt="Background" />
+            <span className="h6">Mac</span>
+          </Card>
+        )}
+        {system !== 'win32' && system !== 'darwin' && (
+          <>
             <Card
-              css={device === 'Mac' && 'is-selected'}
-              onClick={() => deviceSet('Mac')}
+              css={device === 'Steam Deck' && 'is-selected'}
+              onClick={() => deviceSet('Steam Deck')}
             >
-              <img src={imgmac} width="100" alt="Background" />
-              <span className="h6">Mac</span>
+              <img src={imgDeck} width="100" alt="Background" />
+              <span className="h6">Steam Deck</span>
             </Card>
-          )}
-          {system !== 'win32' && system !== 'darwin' && (
-            <>
-              <Card
-                css={device === 'Steam Deck' && 'is-selected'}
-                onClick={() => deviceSet('Steam Deck')}
-              >
-                <img src={imgDeck} width="100" alt="Background" />
-                <span className="h6">Steam Deck</span>
-              </Card>
-              <Card
-                css={device === 'Anbernic Win600' && 'is-selected'}
-                onClick={() => deviceSet('Anbernic Win600')}
-              >
-                <img src={imgWin600} width="100" alt="Background" />
-                <span className="h6">Anbernic WIN600</span>
-              </Card>
-              {system !== 'win32' &&
-                system !== 'darwin' &&
-                system !== 'SteamOS' && (
-                  <>
-                    <Card
-                      css={device === 'Linux PC' && 'is-selected'}
-                      onClick={() => deviceSet('Linux PC')}
-                    >
-                      <img src={imglinux} width="100" alt="Background" />
-                      <span className="h6">Linux PC</span>
-                    </Card>
+            <Card
+              css={device === 'Anbernic Win600' && 'is-selected'}
+              onClick={() => deviceSet('Anbernic Win600')}
+            >
+              <img src={imgWin600} width="100" alt="Background" />
+              <span className="h6">Anbernic WIN600</span>
+            </Card>
+            {system !== 'win32' &&
+              system !== 'darwin' &&
+              system !== 'SteamOS' && (
+                <>
+                  <Card
+                    css={device === 'Linux PC' && 'is-selected'}
+                    onClick={() => deviceSet('Linux PC')}
+                  >
+                    <img src={imglinux} width="100" alt="Background" />
+                    <span className="h6">Linux PC</span>
+                  </Card>
 
-                    <Card
-                      css={device === 'chimeraos' && 'is-selected'}
-                      onClick={() => deviceSet('chimeraos')}
-                    >
-                      <img src={imgchimeraOS} width="100" alt="Background" />
-                      <span className="h6">chimeraos</span>
-                    </Card>
-                  </>
-                )}
-            </>
-          )}
-          {system === 'win32' && (
-            <>
-              <Card
-                css={device === 'Steam Deck' && 'is-selected'}
-                onClick={() => deviceSet('Steam Deck')}
-              >
-                <img src={imgDeck} width="100" alt="Background" />
-                <span className="h6">Steam Deck</span>
-              </Card>
-              <Card
-                css={device === 'Anbernic Win600' && 'is-selected'}
-                onClick={() => deviceSet('Anbernic Win600')}
-              >
-                <img src={imgWin600} width="100" alt="Background" />
-                <span className="h6">Anbernic WIN600</span>
-              </Card>
-              <Card
-                css={device === 'Asus Rog Ally' && 'is-selected'}
-                onClick={() => deviceSet('Asus Rog Ally')}
-              >
-                <img src={imgally} width="100" alt="Background" />
-                <span className="h6">Asus Rog Ally</span>
-              </Card>
-              <Card
-                css={device === 'AOKZOE PRO1' && 'is-selected'}
-                onClick={() => deviceSet('AOKZOE PRO1')}
-              >
-                <img src={imgaokzoepro} width="100" alt="Background" />
-                <span className="h6">AOKZOE PRO1</span>
-              </Card>
-              <Card
-                css={device === 'AYA Neo Geek' && 'is-selected'}
-                onClick={() => deviceSet('AYA Neo Geek')}
-              >
-                <img src={imgayaneogeek} width="100" alt="Background" />
-                <span className="h6">AYA Neo Geek</span>
-              </Card>
-              <Card
-                css={device === 'AYA Neo 2' && 'is-selected'}
-                onClick={() => deviceSet('AYA Neo 2')}
-              >
-                <img src={imgayaneo2} width="100" alt="Background" />
-                <span className="h6">AYA Neo 2</span>
-              </Card>
-              <Card
-                css={device === 'AYA Neo Kun' && 'is-selected'}
-                onClick={() => deviceSet('AYA Neo Kun')}
-              >
-                <img src={imgayaneokun} width="100" alt="Background" />
-                <span className="h6">AYA Neo Kun</span>
-              </Card>
-              <Card
-                css={device === 'Lenovo Legion Go' && 'is-selected'}
-                onClick={() => deviceSet('Lenovo Legion Go')}
-              >
-                <img src={imglegiongo} width="100" alt="Background" />
-                <span className="h6">Lenovo Legion Go</span>
-              </Card>
-              <Card
-                css={device === 'Windows PC' && 'is-selected'}
-                onClick={() => deviceSet('Windows PC')}
-              >
-                <img src={imgwindows} width="100" alt="Background" />
-                <span className="h6">Windows PC</span>
-              </Card>
-              <Card
-                css={device === 'Windows Handlheld' && 'is-selected'}
-                onClick={() => deviceSet('Windows Handlheld')}
-              >
-                <img src={imgwindows} width="100" alt="Background" />
-                <span className="h6">Windows Handlheld</span>
-              </Card>
-            </>
-          )}
-        </DeviceSelector>
-        <Footer
-          next={mode === 'easy' ? 'end' : 'emulator-selector'}
-          nextText={mode === 'easy' ? 'Finish' : 'Next'}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+                  <Card
+                    css={device === 'chimeraos' && 'is-selected'}
+                    onClick={() => deviceSet('chimeraos')}
+                  >
+                    <img src={imgchimeraOS} width="100" alt="Background" />
+                    <span className="h6">chimeraos</span>
+                  </Card>
+                </>
+              )}
+          </>
+        )}
+        {system === 'win32' && (
+          <>
+            <Card
+              css={device === 'Steam Deck' && 'is-selected'}
+              onClick={() => deviceSet('Steam Deck')}
+            >
+              <img src={imgDeck} width="100" alt="Background" />
+              <span className="h6">Steam Deck</span>
+            </Card>
+            <Card
+              css={device === 'Anbernic Win600' && 'is-selected'}
+              onClick={() => deviceSet('Anbernic Win600')}
+            >
+              <img src={imgWin600} width="100" alt="Background" />
+              <span className="h6">Anbernic WIN600</span>
+            </Card>
+            <Card
+              css={device === 'Asus Rog Ally' && 'is-selected'}
+              onClick={() => deviceSet('Asus Rog Ally')}
+            >
+              <img src={imgally} width="100" alt="Background" />
+              <span className="h6">Asus Rog Ally</span>
+            </Card>
+            <Card
+              css={device === 'AOKZOE PRO1' && 'is-selected'}
+              onClick={() => deviceSet('AOKZOE PRO1')}
+            >
+              <img src={imgaokzoepro} width="100" alt="Background" />
+              <span className="h6">AOKZOE PRO1</span>
+            </Card>
+            <Card
+              css={device === 'AYA Neo Geek' && 'is-selected'}
+              onClick={() => deviceSet('AYA Neo Geek')}
+            >
+              <img src={imgayaneogeek} width="100" alt="Background" />
+              <span className="h6">AYA Neo Geek</span>
+            </Card>
+            <Card
+              css={device === 'AYA Neo 2' && 'is-selected'}
+              onClick={() => deviceSet('AYA Neo 2')}
+            >
+              <img src={imgayaneo2} width="100" alt="Background" />
+              <span className="h6">AYA Neo 2</span>
+            </Card>
+            <Card
+              css={device === 'AYA Neo Kun' && 'is-selected'}
+              onClick={() => deviceSet('AYA Neo Kun')}
+            >
+              <img src={imgayaneokun} width="100" alt="Background" />
+              <span className="h6">AYA Neo Kun</span>
+            </Card>
+            <Card
+              css={device === 'Lenovo Legion Go' && 'is-selected'}
+              onClick={() => deviceSet('Lenovo Legion Go')}
+            >
+              <img src={imglegiongo} width="100" alt="Background" />
+              <span className="h6">Lenovo Legion Go</span>
+            </Card>
+            <Card
+              css={device === 'Windows PC' && 'is-selected'}
+              onClick={() => deviceSet('Windows PC')}
+            >
+              <img src={imgwindows} width="100" alt="Background" />
+              <span className="h6">Windows PC</span>
+            </Card>
+            <Card
+              css={device === 'Windows Handlheld' && 'is-selected'}
+              onClick={() => deviceSet('Windows Handlheld')}
+            >
+              <img src={imgwindows} width="100" alt="Background" />
+              <span className="h6">Windows Handlheld</span>
+            </Card>
+          </>
+        )}
+      </DeviceSelector>
+      <Footer
+        next={mode === 'easy' ? 'end' : 'emulator-selector'}
+        nextText={mode === 'easy' ? t('general.finish') : t('general.next')}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 
