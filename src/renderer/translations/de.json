@@ -397,7 +397,10 @@
       "errorModal": {
         "title": "Error detecting your Operating System",
         "description": "<p>Click on the Close button to try again</p><p>If the issue persists, please contact us on Discord: https://discord.com/invite/b9F7GpXtFP</p>"
-      }
+      },
+      "easy": "Dieser Modus installiert und konfiguriert Ihr Gerät automatisch mit unseren empfohlenen Einstellungen, damit Sie sofort mit dem Spielen beginnen können. Empfohlen, wenn Sie neu in der Emulation sind.",
+      "custom": "Dieser Modus ermöglicht es Ihnen, die EmuDeck-Installation anzupassen. Konfigurieren Sie Seitenverhältnisse, Rahmen, Filter, RetroAchievements, Emulatoren, Frontends und mehr. Empfohlen für fortgeschrittene Benutzer.",
+      "android": "Installieren Sie EmuDeck (Beta) auf Ihrem Android-Gerät."
     },
     "CheckBios": {
       "detected": "- Detected",

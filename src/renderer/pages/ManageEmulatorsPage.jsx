@@ -8,6 +8,7 @@ import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Main from 'components/organisms/Main/Main';
 import CardSettings from 'components/molecules/CardSettings/CardSettings';
+import Card from 'components/molecules/Card/Card';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 
@@ -29,44 +30,18 @@ import {
   imgmame,
   imgvita3k,
   imgflycast,
-  imgFrontPegasus,
   imgxenia,
   imgsrm,
   imgrmg,
   imgscummvm,
-  imgsupermodel,
   imgFrontESDE,
   imgmelonds,
   imgmgba,
-  xemuGrid,
-  cemuGrid,
-  citraGrid,
-  lime3dsGrid,
-  dolphinGrid,
-  duckstationGrid,
-  mameGrid,
-  rmgGrid,
-  supermodelGrid,
-  model2Grid,
-  bigpemuGrid,
-  flycastGrid,
-  melondsGrid,
-  mgbaGrid,
-  pcsx2Grid,
-  ppssppGrid,
-  primehackGrid,
-  raGrid,
-  rpcs3Grid,
-  ryujinxGrid,
-  scummvmGrid,
-  vita3kGrid,
-  xeniaGrid,
-  yuzuGrid,
-  esdeGrid,
-  srmGrid,
-  pegasusGrid,
+  imgsupermodel,
+  imgmodel2,
+  imgbigpemu,
+  imgFrontPegasus,
 } from 'components/utils/images/images';
-
 import {
   iconSuccess,
   iconCloud,
@@ -85,8 +60,8 @@ import {
   iconDisk,
   iconHelp,
   iconScreen,
-  iconGear,
   iconPackage,
+  iconUpdate,
 } from 'components/utils/images/icons';
 
 const images = {
@@ -109,43 +84,15 @@ const images = {
   vita3k: imgvita3k,
   flycast: imgflycast,
   scummvm: imgscummvm,
-  supermodel: imgsupermodel,
   esde: imgFrontESDE,
   rmg: imgrmg,
   mgba: imgmgba,
   xenia: imgxenia,
   srm: imgsrm,
+  supermodel: imgsupermodel,
+  model2: imgmodel2,
+  bigpemu: imgbigpemu,
   pegasus: imgFrontPegasus,
-};
-
-const imagesGrid = {
-  xemu: xemuGrid,
-  cemu: cemuGrid,
-  citra: citraGrid,
-  lime3ds: lime3dsGrid,
-  dolphin: dolphinGrid,
-  duckstation: duckstationGrid,
-  flycast: flycastGrid,
-  mame: mameGrid,
-  rmg: rmgGrid,
-  supermodel: supermodelGrid,
-  model2: model2Grid,
-  melonds: melondsGrid,
-  mgba: mgbaGrid,
-  pcsx2: pcsx2Grid,
-  ppsspp: ppssppGrid,
-  primehack: primehackGrid,
-  ra: raGrid,
-  rpcs3: rpcs3Grid,
-  ryujinx: ryujinxGrid,
-  scummvm: scummvmGrid,
-  vita3k: vita3kGrid,
-  xenia: xeniaGrid,
-  yuzu: yuzuGrid,
-  esde: esdeGrid,
-  srm: srmGrid,
-  pegasus: pegasusGrid,
-  bigpemu: bigpemuGrid,
 };
 
 function ManageEmulatorsPage() {
@@ -387,7 +334,7 @@ function ManageEmulatorsPage() {
               {Object.keys(updates).length > 0 && (
                 <div data-col-md="6">
                   <CardSettings
-                    icon={iconGear}
+                    icon={iconUpdate}
                     css="is-highlighted"
                     btnCSS="btn-simple--1"
                     iconSize="md"
@@ -418,10 +365,9 @@ function ManageEmulatorsPage() {
               )}
             </div>
             <hr />
-            <div className="container--grid">
+            <div className="cards cards--medium">
               {installEmusArray.map((item) => {
                 const img = images[item.id];
-                const picture = imagesGrid[item.id];
                 const updateNotif = updates[item.id];
                 if (system === 'win32') {
                   if (item.id === 'rmg') {
@@ -450,28 +396,37 @@ function ManageEmulatorsPage() {
                   }
                 }
                 return (
-                  <div key={item.id} data-col-md="4">
-                    <CardSettings
-                      icon={img}
-                      picture={picture}
-                      css="is-nothighlighted"
-                      btnCSS={
-                        item.status === true ? 'btn-simple--5' : 'btn-simple--2'
-                      }
-                      iconSize="sm"
-                      title={`${item.name}`}
-                      button="Manage"
-                      onClick={() => navigate(`/emulators-detail/${item.id}`)}
-                      notification={
-                        item.status === true ? updateNotif != undefined : false
-                      }
-                    />
-                  </div>
+                  <Card
+                    css={item.status === true && 'is-selected'}
+                    key={item.id}
+                    onClick={() => navigate(`/emulators-detail/${item.id}`)}
+                  >
+                    <img src={img} alt={item.name} />
+                    <span className="h6">{item.name}</span>
+                    <small className="small">{item.platforms}</small>
+                    {updateNotif && (
+                      <small className="card__update">
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 14 14"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M13.7506 6.8753C13.7506 10.6298 10.6365 13.7506 6.8753 13.7506C3.12085 13.7506 0 10.6298 0 6.8753C0 3.11411 3.11411 0 6.86856 0C10.6298 0 13.7506 3.11411 13.7506 6.8753ZM6.12037 9.66586C6.12037 10.0636 6.47087 10.3871 6.8753 10.3871C7.27975 10.3871 7.63025 10.0703 7.63025 9.66586C7.63025 9.26146 7.28644 8.93788 6.8753 8.93788C6.46413 8.93788 6.12037 9.26815 6.12037 9.66586ZM6.23495 3.90275L6.32258 7.57634C6.32932 7.93353 6.52479 8.129 6.8753 8.129C7.21231 8.129 7.40779 7.9403 7.41455 7.57634L7.5089 3.90948C7.51567 3.55224 7.2393 3.28936 6.86856 3.28936C6.4911 3.28936 6.22822 3.5455 6.23495 3.90275Z"
+                            fill="#FF9B26"
+                            fill-opacity="0.85"
+                          />
+                        </svg>
+                        Update Available
+                      </small>
+                    )}
+                  </Card>
                 );
               })}
               {installFrontendsArray.map((item) => {
                 const img = images[item.id];
-                const picture = imagesGrid[item.id];
                 const updateNotif = updates[item.id];
 
                 if (item.id === 'steam') {
@@ -485,23 +440,15 @@ function ManageEmulatorsPage() {
                 }
 
                 return (
-                  <div key={item.id} data-col-md="4">
-                    <CardSettings
-                      icon={img}
-                      picture={picture}
-                      css="is-highlighted"
-                      btnCSS={
-                        item.status === true ? 'btn-simple--5' : 'btn-simple--2'
-                      }
-                      iconSize="sm"
-                      title={`${item.name}`}
-                      button="Manage"
-                      onClick={() => navigate(`/emulators-detail/${item.id}`)}
-                      notification={
-                        item.status === true ? updateNotif != undefined : false
-                      }
-                    />
-                  </div>
+                  <Card
+                    css={item.status === true && 'is-selected'}
+                    key={item.id}
+                    onClick={() => navigate(`/emulators-detail/${item.id}`)}
+                  >
+                    <img src={img} alt={item.name} />
+                    <span className="h6">{item.name}</span>
+                    <small className="small">{item.platforms}</small>
+                  </Card>
                 );
               })}
             </div>

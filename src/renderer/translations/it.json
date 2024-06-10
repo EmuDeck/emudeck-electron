@@ -396,7 +396,10 @@
       "errorModal": {
         "title": "Errore nel rilevamento del tuo sistema operativo",
         "description": "<p>Fai clic sul pulsante Chiudi per riprovare</p><p>Se il problema persiste, contattaci su Discord: https://discord.com/invite/b9F7GpXtFP</p>"
-      }
+      },
+      "easy": "Questa modalità installa e configura automaticamente il tuo dispositivo con le nostre impostazioni consigliate in modo che tu possa iniziare a giocare subito. Consigliato se sei nuovo all'emulazione.",
+      "custom": "Questa modalità ti consente di personalizzare l'installazione di EmuDeck. Configura i rapporti d'aspetto, le cornici, i filtri, i RetroAchievements, gli emulatori, le interfacce e altro ancora. Consigliato per utenti esperti.",
+      "android": "Installa EmuDeck (beta) sul tuo dispositivo Android."
     },
     "CheckBios": {
       "detected": "- Rilevato",

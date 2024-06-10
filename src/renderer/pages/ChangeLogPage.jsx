@@ -156,7 +156,11 @@ function ChangeLogPage() {
           <div data-col-sm="8">
             {log.map((item, i) => {
               return (
-                <div tabIndex="0" key={i}>
+                <div
+                  className="cards cards--big cards--log"
+                  tabIndex="0"
+                  key={i}
+                >
                   {current === i && (
                     <Card
                       onClick={() => activeItem(i)}
