@@ -275,7 +275,7 @@ function AndroidRomStoragePage() {
     <Wrapper>
       <PatreonLogin>
         <Header title={t('AndroidRomStoragePage.title')} />
-        {isConnected === 'false' && (
+        {isConnected !== 'false' && (
           <Main>
             <div className="container container--grid">
               <div data-col-sm="5">

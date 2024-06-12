@@ -162,10 +162,15 @@ export default function App() {
           status: true,
           name: 'PPSSPP',
         },
-        citrammj: {
-          id: 'citrammj',
+        // citrammj: {
+        //   id: 'citrammj',
+        //   status: true,
+        //   name: 'CitraMMJ',
+        // },
+        lime3ds: {
+          id: 'lime3ds',
           status: true,
-          name: 'CitraMMJ',
+          name: 'Lime3DS',
         },
         nethersx2: {
           id: 'nethersx2',
@@ -204,11 +209,11 @@ export default function App() {
           status: true,
           name: 'PPSSPP',
         },
-        citra: {
-          id: 'citra',
-          status: true,
-          name: 'Citra',
-        },
+        // citra: {
+        //   id: 'citra',
+        //   status: true,
+        //   name: 'Citra',
+        // },
         lime3ds: {
           id: 'lime3ds',
           status: true,
