@@ -28,8 +28,9 @@ import ESDEThemePage from 'pages/ESDEThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
 import PowerControlsPage from 'pages/PowerControlsPage';
 import EmuDeckyPage from 'pages/EmuDeckyPage';
+import DeckyRomLauncherPage from 'pages/DeckyRomLauncherPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
-import CheckDependenciesPage from 'pages/CheckDependenciesPage';
+
 import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
 import HelpPage from 'pages/HelpPage';
@@ -508,6 +509,12 @@ export default function App() {
         name: 'EmulationStation-DE',
         desc: 'Add this launcher to your Steam Library. Recommended for big colections',
       },
+      deckyromlauncher: {
+        id: 'deckyromlauncher',
+        status: true,
+        name: 'Rom Library',
+        desc: 'A separate Rom Library that does not interfiere with your Games Library. All games and artwork are detected automatically.',
+      },
       pegasus: {
         id: 'pegasus',
         status: true,
@@ -666,6 +673,12 @@ export default function App() {
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
           <Route exact path="/power-controls" element={<PowerControlsPage />} />
           <Route exact path="/decky-controls" element={<EmuDeckyPage />} />
+          <Route
+            exact
+            path="/decky-rom-launcher"
+            element={<DeckyRomLauncherPage />}
+          />
+
           <Route exact path="/help" element={<HelpPage />} />
           <Route exact path="/early-access" element={<EarlyAccessPage />} />
 

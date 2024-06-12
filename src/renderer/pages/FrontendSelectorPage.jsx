@@ -12,12 +12,14 @@ import {
   themesPegasusGameOS,
   rbsimple2,
   imgSTEAM,
+  imgDeckyRomLauncher,
 } from 'components/utils/images/images';
 
 const images = {
   esde: rbsimple2,
   pegasus: themesPegasusGameOS,
   steam: imgSTEAM,
+  deckyromlauncher: imgDeckyRomLauncher,
 };
 
 function FrontendSelectorPage() {
