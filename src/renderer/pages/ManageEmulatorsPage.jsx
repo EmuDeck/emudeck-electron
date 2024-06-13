@@ -432,6 +432,9 @@ function ManageEmulatorsPage() {
                 if (item.id === 'steam') {
                   return;
                 }
+                if (item.id === 'deckyromlauncher') {
+                  return;
+                }
 
                 if (system === 'darwin') {
                   if (item.id !== 'esde') {
