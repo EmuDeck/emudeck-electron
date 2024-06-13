@@ -29,6 +29,7 @@ import PowerToolsPage from 'pages/PowerToolsPage';
 import PowerControlsPage from 'pages/PowerControlsPage';
 import EmuDeckyPage from 'pages/EmuDeckyPage';
 import DeckyRomLauncherPage from 'pages/DeckyRomLauncherPage';
+import DeckyRomLauncherInstallPage from 'pages/DeckyRomLauncherInstallPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
 
 import CHDToolPage from 'pages/CHDToolPage';
@@ -677,6 +678,11 @@ export default function App() {
             exact
             path="/decky-rom-launcher"
             element={<DeckyRomLauncherPage />}
+          />
+          <Route
+            exact
+            path="/decky-rom-launcher-install"
+            element={<DeckyRomLauncherInstallPage />}
           />
 
           <Route exact path="/help" element={<HelpPage />} />

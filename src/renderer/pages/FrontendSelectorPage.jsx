@@ -215,6 +215,9 @@ function FrontendSelectorPage() {
   }, [installFrontends]);
 
   const nextPage = () => {
+    if (installFrontends.deckyromlauncher.status) {
+      return 'decky-rom-launcher-install';
+    }
     if (installFrontends.pegasus.status && installFrontends.esde.status) {
       return 'esde-theme';
     }
@@ -252,7 +255,8 @@ function FrontendSelectorPage() {
         disabledNext={
           !installFrontends.esde.status &&
           !installFrontends.pegasus.status &&
-          !installFrontends.steam.status
+          !installFrontends.steam.status &&
+          !installFrontends.deckyromlauncher.status
         }
         disabledBack={disabledBack}
       />
