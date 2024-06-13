@@ -7,7 +7,9 @@
     "description": "",
     "special_configuration": "Custom textures for the NES and N64 using EmuDeck's pre-created folder: Emulation/hdpacks",
     "bios": ["ps1", "segacd", "saturn", "nds", "dreamcast"],
-    "systems": "Retro Game Systems, including but not limited to, Nintendo 64, Saturn and Dreamcast",
+    "systems": [
+      "Retro Game Systems, including but not limited to, Nintendo 64, Saturn and Dreamcast"
+    ],
     "hotkeys": {
       "0": ["Action", "Keys"],
       "1": ["Menu", "L3+R3"],

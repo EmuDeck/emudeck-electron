@@ -28,8 +28,10 @@ import ESDEThemePage from 'pages/ESDEThemePage';
 import PowerToolsPage from 'pages/PowerToolsPage';
 import PowerControlsPage from 'pages/PowerControlsPage';
 import EmuDeckyPage from 'pages/EmuDeckyPage';
+import DeckyRomLauncherPage from 'pages/DeckyRomLauncherPage';
+import DeckyRomLauncherInstallPage from 'pages/DeckyRomLauncherInstallPage';
 import CheckBiosPage from 'pages/CheckBiosPage';
-import CheckDependenciesPage from 'pages/CheckDependenciesPage';
+
 import CHDToolPage from 'pages/CHDToolPage';
 import GyroDSUPage from 'pages/GyroDSUPage';
 import HelpPage from 'pages/HelpPage';
@@ -162,10 +164,15 @@ export default function App() {
           status: true,
           name: 'PPSSPP',
         },
-        citrammj: {
-          id: 'citrammj',
+        // citrammj: {
+        //   id: 'citrammj',
+        //   status: true,
+        //   name: 'CitraMMJ',
+        // },
+        lime3ds: {
+          id: 'lime3ds',
           status: true,
-          name: 'CitraMMJ',
+          name: 'Lime3DS',
         },
         nethersx2: {
           id: 'nethersx2',
@@ -204,11 +211,11 @@ export default function App() {
           status: true,
           name: 'PPSSPP',
         },
-        citra: {
-          id: 'citra',
-          status: true,
-          name: 'Citra',
-        },
+        // citra: {
+        //   id: 'citra',
+        //   status: true,
+        //   name: 'Citra',
+        // },
         lime3ds: {
           id: 'lime3ds',
           status: true,
@@ -280,60 +287,104 @@ export default function App() {
     themePegasus: ['https://github.com/PlayingKarrde/gameOS.git', 'gameOS'],
     homebrewGames: false,
     installEmus: {
-      ra: { id: 'ra', status: true, installed: undefined, name: 'RetroArch' },
+      ra: {
+        id: 'ra',
+        status: true,
+        installed: undefined,
+        name: 'RetroArch',
+        platforms: 'Retro systems',
+      },
       dolphin: {
         id: 'dolphin',
         status: true,
         installed: undefined,
         name: 'Dolphin',
+        platforms: 'GameCube & Wii',
       },
       primehack: {
         id: 'primehack',
         status: true,
         installed: undefined,
         name: 'Primehack',
+        platforms: 'Metroid Prime',
       },
       ppsspp: {
         id: 'ppsspp',
         status: true,
         installed: undefined,
         name: 'PPSSPP',
+        platforms: 'Sony PSP',
       },
       duckstation: {
         id: 'duckstation',
         status: true,
         installed: undefined,
         name: 'DuckStation',
+        platforms: 'Playstation',
       },
       melonds: {
         id: 'melonds',
         status: true,
         installed: undefined,
         name: 'melonDS',
+        platforms: 'Nintendo DS',
       },
       citra: {
         id: 'citra',
         status: false,
         installed: undefined,
         name: 'Citra',
+        platforms: 'Nintendo 3DS',
       },
       lime3ds: {
         id: 'lime3ds',
         status: true,
         installed: undefined,
         name: 'Lime3DS',
+        platforms: 'Nintendo 3DS',
       },
-      pcsx2: { id: 'pcsx2', status: true, installed: undefined, name: 'PCSX2' },
-      rpcs3: { id: 'rpcs3', status: true, installed: undefined, name: 'RPCS3' },
-      yuzu: { id: 'yuzu', status: false, installed: undefined, name: 'Yuzu' },
+      pcsx2: {
+        id: 'pcsx2',
+        status: true,
+        installed: undefined,
+        name: 'PCSX2',
+        platforms: 'Playstation 2',
+      },
+      rpcs3: {
+        id: 'rpcs3',
+        status: true,
+        installed: undefined,
+        name: 'RPCS3',
+        platforms: 'Playstation 3',
+      },
+      yuzu: {
+        id: 'yuzu',
+        status: false,
+        installed: undefined,
+        name: 'Yuzu',
+        platforms: 'Nintendo Switch',
+      },
       ryujinx: {
         id: 'ryujinx',
         status: true,
         installed: undefined,
         name: 'Ryujinx',
+        platforms: 'Nintendo Switch',
       },
-      xemu: { id: 'xemu', status: true, installed: undefined, name: 'Xemu' },
-      cemu: { id: 'cemu', status: true, installed: undefined, name: 'Cemu' },
+      xemu: {
+        id: 'xemu',
+        status: true,
+        installed: undefined,
+        name: 'Xemu',
+        platforms: 'Xbox',
+      },
+      cemu: {
+        id: 'cemu',
+        status: true,
+        installed: undefined,
+        name: 'Cemu',
+        platforms: 'Nintendo WiiU',
+      },
       srm: {
         id: 'srm',
         status: true,
@@ -345,51 +396,76 @@ export default function App() {
         status: false,
         installed: undefined,
         name: "Rosalie's Mupen Gui",
+        platforms: 'Nintendo 64',
       },
-      mame: { id: 'mame', status: false, name: 'MAME' },
+      mame: {
+        id: 'mame',
+        status: false,
+        name: 'MAME',
+        platforms: 'Arcade',
+      },
       vita3k: {
         id: 'vita3k',
         status: true,
         installed: undefined,
         name: 'Vita3K',
+        platforms: 'PS Vita',
       },
       flycast: {
         id: 'flycast',
         status: false,
         installed: undefined,
         name: 'Flycast',
+        platforms: 'Dreamcast',
       },
       scummvm: {
         id: 'scummvm',
         status: true,
         installed: undefined,
         name: 'ScummVM',
+        platforms: 'DOS Games',
       },
       xenia: {
         id: 'xenia',
         status: true,
         installed: false,
         name: 'Xenia',
+        platforms: 'Xbox 360',
       },
-      mgba: { id: 'mgba', status: false, installed: undefined, name: 'mGBA' },
-      ares: { id: 'ares', status: false, installed: undefined, name: 'ares' },
+      mgba: {
+        id: 'mgba',
+        status: false,
+        installed: undefined,
+        name: 'mGBA',
+        platforms: 'GameBoy Advance',
+      },
+      ares: {
+        id: 'ares',
+        status: false,
+        installed: undefined,
+        name: 'ares',
+        platforms: 'Retro Systems',
+      },
       supermodel: {
         id: 'supermodel',
         status: true,
         installed: undefined,
         name: 'Supermodel',
+        platforms: 'Arcade',
       },
       model2: {
         id: 'model2',
         status: true,
         installed: undefined,
         name: 'Model2',
+        platforms: 'Arcade',
       },
       bigpemu: {
         id: 'bigpemu',
         status: false,
         installed: undefined,
         name: 'BigPEmu',
+        platforms: 'Jaguar',
       },
     },
     overwriteConfigEmus: {
@@ -432,7 +508,13 @@ export default function App() {
         status: true,
         installed: undefined,
         name: 'EmulationStation-DE',
-        desc: 'Add this launhcer to your Steam Library. Recommended for big colections',
+        desc: 'Add this launcher to your Steam Library. Recommended for big colections',
+      },
+      deckyromlauncher: {
+        id: 'deckyromlauncher',
+        status: true,
+        name: 'Rom Library',
+        desc: 'A separate Rom Library that does not interfiere with your Games Library. All games and artwork are detected automatically.',
       },
       pegasus: {
         id: 'pegasus',
@@ -592,6 +674,17 @@ export default function App() {
           <Route exact path="/power-tools" element={<PowerToolsPage />} />
           <Route exact path="/power-controls" element={<PowerControlsPage />} />
           <Route exact path="/decky-controls" element={<EmuDeckyPage />} />
+          <Route
+            exact
+            path="/decky-rom-launcher"
+            element={<DeckyRomLauncherPage />}
+          />
+          <Route
+            exact
+            path="/decky-rom-launcher-install"
+            element={<DeckyRomLauncherInstallPage />}
+          />
+
           <Route exact path="/help" element={<HelpPage />} />
           <Route exact path="/early-access" element={<EarlyAccessPage />} />
 

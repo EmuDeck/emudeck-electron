@@ -396,7 +396,10 @@
       "errorModal": {
         "title": "Erreur de détection de votre système d'exploitation",
         "description": "<p>Cliquez sur le bouton Fermer pour réessayer</p><p>Si le problème persiste, veuillez nous contacter sur Discord : https://discord.com/invite/b9F7GpXtFP</p>"
-      }
+      },
+      "easy": "Ce mode installe et configure automatiquement votre appareil avec nos paramètres recommandés pour que vous puissiez commencer à jouer immédiatement. Recommandé si vous êtes nouveau dans l'émulation.",
+      "custom": "Ce mode vous permet de personnaliser l'installation de EmuDeck. Configurez les rapports d'aspect, les bordures, les filtres, les RetroAchievements, les émulateurs, les interfaces et plus encore. Recommandé pour les utilisateurs avancés.",
+      "android": "Installez EmuDeck (beta) sur votre appareil Android."
     },
     "CheckBios": {
       "detected": "- Détecté",
