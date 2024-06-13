@@ -955,13 +955,13 @@ function EmulatorSelectorPage() {
         modalData = {
           ...modalData,
           header: (
-            <span className="h4">t('EmulatorSelectorPage.standaloneRA')</span>
+            <span className="h4">{t('EmulatorSelectorPage.standaloneRA')}</span>
           ),
           css: 'emumodal--sm',
           footer: (
             <>
               <BtnSimple
-                css="btn-simple--1"
+                css="btn-simple--2"
                 type="button"
                 aria={emuOption1}
                 onClick={() =>
@@ -972,7 +972,7 @@ function EmulatorSelectorPage() {
                 {emuOption1}
               </BtnSimple>
               <BtnSimple
-                css="btn-simple--2"
+                css="btn-simple--1"
                 type="button"
                 aria={emuOption2}
                 onClick={() =>
@@ -983,7 +983,7 @@ function EmulatorSelectorPage() {
                 {emuOption2}
               </BtnSimple>
               <BtnSimple
-                css="btn-simple--3"
+                css="btn-simple--2"
                 type="button"
                 aria="Go Back"
                 onClick={() => setAlternativeEmulator(system, 'both', 'both')}

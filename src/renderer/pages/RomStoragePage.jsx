@@ -118,7 +118,7 @@ function RomStoragePage() {
               const modalData = {
                 active: true,
                 header: <span className="h4">Ooops 😞</span>,
-                body: <p>t('RomStoragePage.modalErrorDetecting')</p>,
+                body: <p>{t('RomStoragePage.modalErrorDetecting')}</p>,
                 css: 'emumodal--xs',
               };
               setStatePage({ ...statePage, modal: modalData });
@@ -127,7 +127,7 @@ function RomStoragePage() {
             const modalData = {
               active: true,
               header: <span className="h4">Ooops 😞</span>,
-              body: <p>t('RomStoragePage.modalErrorWritable')</p>,
+              body: <p>{t('RomStoragePage.modalErrorWritable')}</p>,
               css: 'emumodal--xs',
             };
             setStatePage({
@@ -206,7 +206,7 @@ function RomStoragePage() {
         const modalData = {
           active: true,
           header: <span className="h4">Ooops 😞</span>,
-          body: <p>t('RomStoragePage.modalError')</p>,
+          body: <p>{t('RomStoragePage.modalError')}</p>,
           css: 'emumodal--xs',
         };
         setStatePage({
@@ -512,6 +512,7 @@ function RomStoragePage() {
         nextText={t('general.next')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
+        comments="If you need to change your ROM directory later, you can use the exclusive <strong>EmuDeck Migration Tool.</strong>"
       />
       <EmuModal modal={modal} />
     </Wrapper>

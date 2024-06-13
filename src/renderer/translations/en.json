@@ -340,7 +340,10 @@
       "title": "Configure RetroAchievements",
       "description": "RetroAchievements.org is a community led effort to collaborate and create custom-made achievements in emulated classic games. Enter your account information to set up RetroAchievements for Duckstation, PCSX2, PPSSPP, and RetroArch."
     },
-    "RABezelsPage": { "title": "Configure game bezels", "description": "" },
+    "RABezelsPage": {
+      "title": "Configure game bezels",
+      "description": "Use EmuDeck's pre-configured bezels to hide the vertical black bars on 8 bit and 16 bit games."
+    },
     "RomStoragePage": {
       "title": "Select your ROM Directory",
       "description": "Your ROM directory will be squared away within an Emulation folder in your selected directory.",
@@ -375,7 +378,10 @@
       "errorModal": {
         "title": "Error detecting your Operating System",
         "description": "<p>Click on the Close button to try again</p><p>If the issue persists, please contact us on Discord: https://discord.com/invite/b9F7GpXtFP</p>"
-      }
+      },
+      "easy": "This mode automatically installs and configures your device with our recommended settings so you can start playing right away. Recommended if you are new to emulation.",
+      "custom": "This mode allows you to customize your EmuDeck install. Configure Aspect Ratios, Bezels, Filters, RetroAchievements,Emulators, Frontends, and more. Recommended for advanced users.",
+      "android": "Install EmuDeck ( beta ) on your Android device."
     },
     "CheckBios": {
       "detected": "- Detected",

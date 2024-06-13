@@ -7,11 +7,11 @@ import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Card from 'components/molecules/Card/Card';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog';
-import img0 from 'assets/changelog/banner_windows.png';
-import img1 from 'assets/changelog/banner_pegasus.png';
-import img2 from 'assets/changelog/banner_frontends.png';
-import img3 from 'assets/changelog/banner_theme_selector.png';
-import img4 from 'assets/changelog/banner_srm.png';
+import img0 from 'assets/changelog/banner_unified_ui.png';
+import img1 from 'assets/changelog/banner_android.png';
+import img2 from 'assets/changelog/banner_srm.png';
+import img3 from 'assets/changelog/banner_multilanguage.jpg';
+import img4 from 'assets/changelog/banner_lime3ds.png';
 import img5 from 'assets/changelog/banner_gui.png';
 import img6 from 'assets/changelog/banner_resolution.png';
 import img7 from 'assets/changelog/banner_flycast.png';
@@ -156,7 +156,11 @@ function ChangeLogPage() {
           <div data-col-sm="8">
             {log.map((item, i) => {
               return (
-                <div tabIndex="0" key={i}>
+                <div
+                  className="cards cards--big cards--log"
+                  tabIndex="0"
+                  key={i}
+                >
                   {current === i && (
                     <Card
                       onClick={() => activeItem(i)}
