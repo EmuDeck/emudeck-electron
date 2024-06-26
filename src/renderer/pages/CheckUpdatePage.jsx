@@ -249,7 +249,6 @@ function CheckUpdatePage() {
         delete settingsStorage.overwriteConfigEmus.primehacks;
         delete settingsStorage.installEmus.ares;
         delete settingsStorage.overwriteConfigEmus.ares;
-        delete settingsStorage.android.installEmus.citra;
         delete settingsStorage.android.installEmus.citrammj;
         delete settingsStorage.android.overwriteConfigEmus.citra;
         delete settingsStorage.android.overwriteConfigEmus.citrammj;
@@ -259,7 +258,6 @@ function CheckUpdatePage() {
         if (system === 'darwin') {
           delete settingsStorage.installEmus.ares;
           delete settingsStorage.installEmus.cemu;
-          delete settingsStorage.installEmus.citra;
           delete settingsStorage.installEmus.dolphin;
           delete settingsStorage.installEmus.duckstation;
           delete settingsStorage.installEmus.flycast;
