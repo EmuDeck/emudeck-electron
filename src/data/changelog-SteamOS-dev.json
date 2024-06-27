@@ -2,7 +2,7 @@
   {
     "title": "Unified UI",
     "type": "STEAMOS",
-    "description": "We are working on a new UI, first step is having the same for all platforms",
+    "description": "Brand New UI!",
     "image": "true"
   },
   {
@@ -26,7 +26,19 @@
   {
     "title": "Lime3DS",
     "type": "STEAMOS",
-    "description": "We've added the new 3DS emulator, Lime3DS. Installing it will migrate your saves from Citra to Lime3DS, don't forget to update your SRM entries",
+    "description": "We've added the new 3DS emulator, Lime3DS.",
+    "image": "true"
+  },
+  {
+    "title": "Citra",
+    "type": "STEAMOS",
+    "description": "We've also added PabloMK7's Citra fork, Lime3DS. This should work like good old Citra so there's nothing you have to change",
+    "image": "true"
+  },
+  {
+    "title": "EmuDecky",
+    "type": "STEAMOS",
+    "description": "Now you can update your emulators from Gaming Mode",
     "image": "true"
   }
 ]
