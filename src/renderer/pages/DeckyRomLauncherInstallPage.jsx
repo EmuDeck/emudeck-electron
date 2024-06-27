@@ -18,7 +18,7 @@ function DeckyRomLauncherInstallPage() {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: 'Decky!',
+    sudoPass: 'EmuDecky!',
     modal: false,
     pass1: 'a',
     pass2: 'b',
@@ -46,7 +46,7 @@ function DeckyRomLauncherInstallPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: 'Decky!',
+        sudoPass: 'EmuDecky!',
       });
     }
   };
@@ -101,7 +101,7 @@ function DeckyRomLauncherInstallPage() {
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('emudeck', [
-      `DeckyRomLibrary|||Plugins_installPluginLoader "${escapedPass}" && Plugins_installDeckyRomLibrary "${escapedPass}" && echo true`,
+      `DeckyRomLibrary|||Plugins_installDeckyRomLibrary "${escapedPass}" && echo true`,
     ]);
 
     ipcChannel.once('DeckyRomLibrary', (status) => {
