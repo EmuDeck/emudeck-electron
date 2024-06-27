@@ -16,7 +16,7 @@ function EmuDeckyPage() {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: 'Decky!',
+    sudoPass: 'EmuDecky!',
     modal: false,
     pass1: 'a',
     pass2: 'b',
@@ -44,7 +44,7 @@ function EmuDeckyPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: 'Decky!',
+        sudoPass: 'EmuDecky!',
       });
     }
   };
@@ -99,12 +99,13 @@ function EmuDeckyPage() {
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('emudeck', [
-      `EmuDecky|||Plugins_installPluginLoader "${escapedPass}" && Plugins_installEmuDecky "${escapedPass}" && echo true`,
+      `EmuDecky|||Plugins_installEmuDecky "${escapedPass}" || echo true`,
     ]);
 
     ipcChannel.once('EmuDecky', (status) => {
       const { stdout } = status;
       let modalData;
+      console.log({ status });
       if (stdout.includes('true')) {
         modalData = {
           active: true,

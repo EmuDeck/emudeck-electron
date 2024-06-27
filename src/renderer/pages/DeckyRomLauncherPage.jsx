@@ -11,12 +11,16 @@ import DeckyRomLauncher from 'components/organisms/Wrappers/DeckyRomLauncher';
 
 function DeckyRomLauncherPage() {
   const { t, i18n } = useTranslation();
+
+  const { state, setState } = useContext(GlobalContext);
+  const { system } = state;
+
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: 'Decky!',
+    sudoPass: 'EmuDecky!',
     modal: false,
     pass1: 'a',
     pass2: 'b',
@@ -44,7 +48,7 @@ function DeckyRomLauncherPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: 'Decky!',
+        sudoPass: 'EmuDecky!',
       });
     }
   };
@@ -99,7 +103,7 @@ function DeckyRomLauncherPage() {
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('emudeck', [
-      `DeckyRomLibrary|||Plugins_installPluginLoader "${escapedPass}" && Plugins_installDeckyRomLibrary "${escapedPass}" && echo true`,
+      `DeckyRomLibrary|||Plugins_installDeckyRomLibrary "${escapedPass}" && echo true`,
     ]);
 
     ipcChannel.once('DeckyRomLibrary', (status) => {
