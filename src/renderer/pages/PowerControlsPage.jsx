@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import Header from 'components/organisms/Header/Header';
@@ -10,12 +11,16 @@ import PowerControls from 'components/organisms/Wrappers/PowerControls';
 
 function PowerControlsPage() {
   const { t, i18n } = useTranslation();
+
+  const { state, setState } = useContext(GlobalContext);
+  const { system } = state;
+
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: 'Decky!',
+    sudoPass: 'EmuDecky!',
     disableButton: false,
     pass1: 'a',
     pass2: 'b',
@@ -44,7 +49,7 @@ function PowerControlsPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: system === 'chimeraos' ? 'gamer' : 'Decky!',
+        sudoPass: system === 'chimeraos' ? 'gamer' : 'EmuDecky!',
       });
     }
   };
@@ -100,7 +105,7 @@ function PowerControlsPage() {
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
 
     ipcChannel.sendMessage('emudeck', [
-      `powerControls|||Plugins_installPluginLoader ${escapedPass} && Plugins_installPowerControls ${escapedPass} && echo true`,
+      `powerControls|||Plugins_installPowerControls ${escapedPass} && echo true`,
     ]);
 
     ipcChannel.once('powerControls', (status) => {

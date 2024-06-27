@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useState, useRef } from 'react';
+import { GlobalContext } from 'context/globalContext';
+import React, { useEffect, useState, useContext } from 'react';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import Header from 'components/organisms/Header/Header';
@@ -10,12 +11,16 @@ import PowerTools from 'components/organisms/Wrappers/PowerTools';
 
 function PowerToolsPage() {
   const { t, i18n } = useTranslation();
+
+  const { state, setState } = useContext(GlobalContext);
+  const { system } = state;
+
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: 'Decky!',
+    sudoPass: 'EmuDecky!',
     disableButton: false,
     pass1: 'a',
     pass2: 'b',
@@ -44,7 +49,7 @@ function PowerToolsPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: system === 'chimeraos' ? 'gamer' : 'Decky!',
+        sudoPass: system === 'chimeraos' ? 'gamer' : 'EmuDecky!',
       });
     }
   };
@@ -100,7 +105,7 @@ function PowerToolsPage() {
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
 
     ipcChannel.sendMessage('emudeck', [
-      `powerTools|||Plugins_installPluginLoader ${escapedPass} && Plugins_installPowerTools ${escapedPass} && echo true`,
+      `powerTools|||Plugins_installPowerTools ${escapedPass} && echo true`,
     ]);
 
     ipcChannel.once('powerTools', (status) => {
