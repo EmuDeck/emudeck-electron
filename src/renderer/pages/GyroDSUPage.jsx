@@ -17,7 +17,7 @@ function GyroDSUPage() {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: 'EmuDecky!',
+    sudoPass: 'Decky!',
     pass1: 'a',
     pass2: 'b',
     modal: false,
