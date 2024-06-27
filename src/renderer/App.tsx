@@ -143,7 +143,7 @@ export default function App() {
     cloudSync: undefined,
     cloudSyncType: 'Sync',
     cloudSyncStatus: false,
-    sudoPass: 'EmuDecky!',
+    sudoPass: 'Decky!',
     language: 'en',
     android: {
       bezels: true,
