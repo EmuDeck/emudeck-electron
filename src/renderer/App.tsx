@@ -440,19 +440,19 @@ export default function App() {
         name: 'Vita3K',
         platforms: 'PS Vita',
       },
-      xenia: {
-        id: 'xenia',
-        status: true,
-        installed: false,
-        name: 'Xenia',
-        platforms: 'Xbox 360',
-      },
       xemu: {
         id: 'xemu',
         status: true,
         installed: undefined,
         name: 'Xemu',
         platforms: 'Xbox',
+      },
+      xenia: {
+        id: 'xenia',
+        status: true,
+        installed: false,
+        name: 'Xenia',
+        platforms: 'Xbox 360',
       },
       yuzu: {
         id: 'yuzu',

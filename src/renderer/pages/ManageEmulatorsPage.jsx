@@ -375,6 +375,10 @@ function ManageEmulatorsPage() {
                   }
                 }
 
+                if (item.id === 'srm') {
+                  return;
+                }
+
                 if (item.id === 'ares') {
                   return;
                 }
@@ -425,6 +429,10 @@ function ManageEmulatorsPage() {
                   </Card>
                 );
               })}
+            </div>
+            <hr />
+            <span class="h2">Manage your Tools & Frontends</span>
+            <div className="cards cards--medium">
               {installFrontendsArray.map((item) => {
                 const img = images[item.id];
                 const updateNotif = updates[item.id];
@@ -451,6 +459,43 @@ function ManageEmulatorsPage() {
                     <img src={img} alt={item.name} />
                     <span className="h6">{item.name}</span>
                     <small className="small">{item.platforms}</small>
+                  </Card>
+                );
+              })}
+              {installEmusArray.map((item) => {
+                const img = images[item.id];
+                const updateNotif = updates[item.id];
+                if (item.id !== 'srm') {
+                  return;
+                }
+
+                return (
+                  <Card
+                    css={item.status === true && 'is-selected'}
+                    key={item.id}
+                    onClick={() => navigate(`/emulators-detail/${item.id}`)}
+                  >
+                    <img src={img} alt={item.name} />
+                    <span className="h6">{item.name}</span>
+                    <small className="small">{item.platforms}</small>
+                    {updateNotif && (
+                      <small className="card__update">
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 14 14"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M13.7506 6.8753C13.7506 10.6298 10.6365 13.7506 6.8753 13.7506C3.12085 13.7506 0 10.6298 0 6.8753C0 3.11411 3.11411 0 6.86856 0C10.6298 0 13.7506 3.11411 13.7506 6.8753ZM6.12037 9.66586C6.12037 10.0636 6.47087 10.3871 6.8753 10.3871C7.27975 10.3871 7.63025 10.0703 7.63025 9.66586C7.63025 9.26146 7.28644 8.93788 6.8753 8.93788C6.46413 8.93788 6.12037 9.26815 6.12037 9.66586ZM6.23495 3.90275L6.32258 7.57634C6.32932 7.93353 6.52479 8.129 6.8753 8.129C7.21231 8.129 7.40779 7.9403 7.41455 7.57634L7.5089 3.90948C7.51567 3.55224 7.2393 3.28936 6.86856 3.28936C6.4911 3.28936 6.22822 3.5455 6.23495 3.90275Z"
+                            fill="#FF9B26"
+                            fill-opacity="0.85"
+                          />
+                        </svg>
+                        Update Available
+                      </small>
+                    )}
                   </Card>
                 );
               })}
