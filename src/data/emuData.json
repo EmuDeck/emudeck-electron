@@ -154,11 +154,11 @@
   },
   "citra": {
     "id": "citra",
-    "name": "Citra",
+    "name": "PabloMK7's Citra",
     "code": "Citra",
 
-    "description": "Citra was a Nintendo 3DS emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install. Emudeck does not download nor can it guarantee support if you run into any issues.",
-    "special_configuration": "If you already have your citra-qt.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/citra folder. ",
+    "description": "PabloMK7's Citra is a Nintendo 3DS emulator, forked from the previous Citra project.",
+    "special_configuration": "",
     "bios": [],
     "systems": "Nintendo 3DS",
     "hotkeys": {
