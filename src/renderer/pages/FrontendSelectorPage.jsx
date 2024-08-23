@@ -25,7 +25,7 @@ const images = {
 function FrontendSelectorPage() {
   const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
-  const { device, installFrontends, mode, system } = state;
+  const { device, installFrontends, mode, system, branch } = state;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -215,7 +215,7 @@ function FrontendSelectorPage() {
   }, [installFrontends]);
 
   const nextPage = () => {
-    if (installFrontends.deckyromlauncher.status) {
+    if (installFrontends.deckyromlauncher.status && branch != 'main') {
       return 'decky-rom-launcher-install';
     }
     if (installFrontends.pegasus.status && installFrontends.esde.status) {

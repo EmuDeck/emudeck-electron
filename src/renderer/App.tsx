@@ -543,7 +543,7 @@ export default function App() {
       multiemulator: 'ra',
       dreamcast: 'multiemulator',
     },
-    controllerLayout: 'bayx',
+    controllerLayout: 'baxy',
     revertParsers: false,
     resolutions: {
       dolphin: '720P',
