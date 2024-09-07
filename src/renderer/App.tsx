@@ -520,8 +520,8 @@ export default function App() {
       deckyromlauncher: {
         id: 'deckyromlauncher',
         status: true,
-        name: 'Rom Library',
-        desc: 'A separate Rom Library that does not interfiere with your Games Library. All games and artwork are detected automatically.',
+        name: 'Retro Library',
+        desc: 'A separate Retro Library that does not interfiere with your Games Library. All games and artwork are detected automatically.',
       },
 
       steam: {
@@ -543,7 +543,7 @@ export default function App() {
       multiemulator: 'ra',
       dreamcast: 'multiemulator',
     },
-    controllerLayout: 'bayx',
+    controllerLayout: 'baxy',
     revertParsers: false,
     resolutions: {
       dolphin: '720P',

@@ -21,7 +21,11 @@ function FinishPage() {
 
   return (
     <Wrapper aside={second === true}>
-      <Header title={`${t('FinishPage.title')}<img src=${yoshi} alt="" />`} />
+      <Header
+        title={`${t(
+          'FinishPage.title'
+        )}<img src=${yoshi} style="width:30px" alt="" />`}
+      />
       <Main>
         <p className="lead">
           {t('FinishPage.line1')}
