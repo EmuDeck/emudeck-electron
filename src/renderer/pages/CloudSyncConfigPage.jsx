@@ -159,6 +159,7 @@ function CloudSyncPageConfig() {
     ipcChannel.sendMessage('emudeck', [`cloudSyncHealth|||cloudSyncHealth`]);
 
     ipcChannel.once('cloudSyncHealth', (message) => {
+      console.log({ message });
       const { stdout } = message;
       let modalData;
       if (stdout.includes('true')) {

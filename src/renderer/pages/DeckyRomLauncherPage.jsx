@@ -91,7 +91,7 @@ function DeckyRomLauncherPage() {
   const installDeckyRomLauncher = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing Rom Library</span>,
+      header: <span className="h4">Installing Retro Library</span>,
       body: <p>Please wait while we install the plugin</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
@@ -113,7 +113,7 @@ function DeckyRomLauncherPage() {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,
-          body: <p>Rom Library Installed</p>,
+          body: <p>Retro Library Installed</p>,
           css: 'emumodal--xs',
         };
 
@@ -158,7 +158,7 @@ function DeckyRomLauncherPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure Rom Library" />
+      <Header title="Configure Retro Library" />
       <DeckyRomLauncher
         installClick={installDeckyRomLauncher}
         sudoPass={sudoPass}
