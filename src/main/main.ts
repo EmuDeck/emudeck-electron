@@ -686,9 +686,13 @@ ipcMain.on('check-git', async (event) => {
 
 ipcMain.on('clone', async (event, branch) => {
   const branchGIT = branch;
-  let repo = 'https://github.com/dragoonDorise/EmuDeck.git';
+  let repo;
   if (os.platform().includes('win32')) {
     repo = 'https://github.com/EmuDeck/emudeck-we.git';
+  } else if (os.platform().includes('darwin')) {
+    repo = 'https://github.com/EmuDeck/emudeck-darwin.git';
+  } else {
+    repo = 'https://github.com/dragoonDorise/EmuDeck.git';
   }
 
   const backChannel = 'clone';
