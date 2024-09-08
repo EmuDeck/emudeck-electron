@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -9,6 +10,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import RemotePlayWhatever from 'components/organisms/Wrappers/RemotePlayWhatever';
 
 function RemotePlayWhateverPage() {
+  const { t, i18n } = useTranslation();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -52,26 +54,21 @@ function RemotePlayWhateverPage() {
     });
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
-      <Wrapper>
-        <Header title="Multiplayer with  RemotePlayWhatever - Beta" />
-        <RemotePlayWhatever
-          showNotification={showNotification}
-          notificationText={notificationText}
-          onClick={installRPW}
-        />
-        <Footer
-          next={false}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title="Multiplayer with  RemotePlayWhatever - Beta" />
+      <RemotePlayWhatever
+        showNotification={showNotification}
+        notificationText={notificationText}
+        onClick={installRPW}
+      />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

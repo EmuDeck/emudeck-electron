@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -61,6 +62,7 @@ import {
 } from 'components/utils/images/images';
 
 function AndroidSetupPage() {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({});
@@ -110,12 +112,10 @@ function AndroidSetupPage() {
             </div>
             <div data-col-sm="10">
               <p className="lead">
-                Go to your device, and click on Get Started and finish setup on
-                your device. Your Keys should be in {storage}
-                /Emulation/bios/yuzu/keys.
+                {t('AndroidSetupPage.configs.yuzu', { storage: storage })}
               </p>
               <p className="lead">
-                <strong>Press Continue when you've done it</strong>
+                <strong>{t('general.pressContinue')}</strong>
               </p>
             </div>
           </div>
@@ -127,11 +127,12 @@ function AndroidSetupPage() {
             </div>
             <div data-col-sm="10">
               <p className="lead">
-                Go to your device and create the PSP folder in {storage}
-                /Emulation/saves/. Press Continue when you've done it.
+                {t('AndroidSetupPage.configs.ppsspp', {
+                  storage: storage,
+                })}
               </p>
               <p className="lead">
-                <strong>Press Continue when you've done it</strong>
+                <strong>{t('general.pressContinue')}</strong>
               </p>
             </div>
           </div>
@@ -143,12 +144,12 @@ function AndroidSetupPage() {
             </div>
             <div data-col-sm="10">
               <p className="lead">
-                Go to your device and setup your bios. Your bios should be in{' '}
-                {storage}
-                /Emulation/bios/yuzu/keys.
+                {t('AndroidSetupPage.configs.nethersx2', {
+                  storage: storage,
+                })}
               </p>
               <p className="lead">
-                <strong>Press Continue when you've done it</strong>
+                <strong>{t('general.pressContinue')}</strong>
               </p>
             </div>
           </div>
@@ -159,30 +160,20 @@ function AndroidSetupPage() {
               <img src={imgra} alt="RetroArch" />
             </div>
             <div data-col-sm="10">
-              <p className="lead">
-                Go to your device, go to Load Core, Download Core and install
-                all the cores you need.
-              </p>
+              <p className="lead">{t('AndroidSetupPage.configs.ra1')}</p>
 
               <p className="lead">
-                Each core is used for a different systems, these are the ones
-                needed for the most common systems:{' '}
-                <strong>
-                  mgba (GameBoy Advance), genesis_plus_gx(Genesis,
-                  MasterSystem), snex9x(Super Nintendo), melonds (Nintendo DS),
-                  mame2003_plus (MAME), mesen (NES), gambatte (GameBoy),
-                  mupen64plus_next(Nintendo 64), swanstation (Playstation 1)
-                </strong>
+                {t('AndroidSetupPage.configs.ra2')}
+                <strong>{t('AndroidSetupPage.configs.ra3')}</strong>
               </p>
               <p className="lead" />
               <p className="lead">
-                Then go to Settings, Directory. Set your System/Bios to
-                {storage}/Emulation/bios. Set Save Files to
-                {storage}/Emulation/saves/RetroArch/saves and Save States to{' '}
-                {storage}/Emulation/saves/RetroArch/states
+                {t('AndroidSetupPage.configs.ra4', {
+                  storage: storage,
+                })}
               </p>
               <p className="lead">
-                <strong>Press Continue when you've done it</strong>
+                <strong>{t('general.pressContinue')}</strong>
               </p>
             </div>
           </div>

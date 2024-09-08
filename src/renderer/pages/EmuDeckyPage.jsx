@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -9,6 +10,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import EmuDecky from 'components/organisms/Wrappers/EmuDecky';
 
 function EmuDeckyPage() {
+  const { t, i18n } = useTranslation();
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -97,12 +99,13 @@ function EmuDeckyPage() {
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('emudeck', [
-      `EmuDecky|||Plugins_installPluginLoader "${escapedPass}" && Plugins_installEmuDecky "${escapedPass}" && echo true`,
+      `EmuDecky|||Plugins_installEmuDecky "${escapedPass}" || echo true`,
     ]);
 
     ipcChannel.once('EmuDecky', (status) => {
       const { stdout } = status;
       let modalData;
+      console.log({ status });
       if (stdout.includes('true')) {
         modalData = {
           active: true,
@@ -150,32 +153,27 @@ function EmuDeckyPage() {
     });
   }, []);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
-      <Wrapper>
-        <Header title="Configure EmuDecky" />
-        <EmuDecky
-          installClick={installEmuDecky}
-          sudoPass={sudoPass}
-          onChange={setSudoPass}
-          onChangeSetPass={setPassword}
-          onChangeCheckPass={checkPassword}
-          onClick={createSudo}
-          hasSudo={hasSudo}
-          passValidates={pass1 === pass2}
-        />
-        <Footer
-          next={false}
-          nextText={sudoPass ? 'Continue' : 'Skip'}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title="Configure EmuDecky" />
+      <EmuDecky
+        installClick={installEmuDecky}
+        sudoPass={sudoPass}
+        onChange={setSudoPass}
+        onChangeSetPass={setPassword}
+        onChangeCheckPass={checkPassword}
+        onClick={createSudo}
+        hasSudo={hasSudo}
+        passValidates={pass1 === pass2}
+      />
+      <Footer
+        next={false}
+        nextText={sudoPass ? 'Continue' : 'Skip'}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

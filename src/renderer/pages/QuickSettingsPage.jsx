@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -7,7 +8,8 @@ import Footer from 'components/organisms/Footer/Footer';
 
 import Settings from 'components/organisms/Wrappers/Settings';
 
-function SettingsPage() {
+function QuickSettingsPage() {
+  const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { ar, shaders, bezels } = state;
@@ -52,7 +54,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`bezels|||${functionBezel}`]);
     ipcChannel.once('bezels', () => {
-      notificationShow('🎉 Bezels updated!');
+      notificationShow(`🎉 ${t('QuickSettingsPage.notifBezels')}`);
     });
   };
   const onClickCloudSync = (cloudStatus) => {
@@ -65,7 +67,7 @@ function SettingsPage() {
       `cloudSync|||cloud_sync_toggle ${cloudStatus}`,
     ]);
     ipcChannel.once('cloudSync', () => {
-      notificationShow('🎉 CloudSync Status updated!');
+      notificationShow(`🎉 ${t('QuickSettingsPage.notifCloudSync')}`);
     });
   };
   const onClickSega = (arStatus) => {
@@ -83,7 +85,7 @@ function SettingsPage() {
           'sega32|||RetroArch_mastersystem_ar32 && RetroArch_genesis_ar32  && RetroArch_segacd_ar32 && RetroArch_sega32x_ar32',
         ]);
         ipcChannel.once('sega32', () => {
-          notificationShow('🎉 Sega Aspect Ratio updated!');
+          notificationShow(`🎉 ${t('QuickSettingsPage.nofisSegaAR')}`);
         });
         break;
       default: // 43
@@ -91,7 +93,7 @@ function SettingsPage() {
           'sega43|||RetroArch_mastersystem_ar43 && RetroArch_genesis_ar43  && RetroArch_segacd_ar43 && RetroArch_sega32x_ar43',
         ]);
         ipcChannel.once('sega43', () => {
-          notificationShow('🎉 Sega Aspect Ratio updated!');
+          notificationShow(`🎉 ${t('QuickSettingsPage.nofisSegaAR')}`);
         });
         if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
@@ -115,7 +117,7 @@ function SettingsPage() {
           'snes87|||RetroArch_snes_ar87 && RetroArch_nes_ar87',
         ]);
         ipcChannel.once('snes87', () => {
-          notificationShow('🎉 SNES Aspect Ratio updated!');
+          notificationShow(`🎉 ${t('QuickSettingsPage.notifSNESRatio')}`);
         });
         if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
@@ -128,7 +130,7 @@ function SettingsPage() {
           'snes32|||RetroArch_snes_ar32 && RetroArch_nes_ar32',
         ]);
         ipcChannel.once('snes32', () => {
-          notificationShow('🎉 SNES Aspect Ratio updated!');
+          notificationShow(`🎉 ${t('QuickSettingsPage.notifSNESRatio')}`);
         });
         break;
       default: // 43
@@ -136,7 +138,7 @@ function SettingsPage() {
           'snes43|||RetroArch_snes_ar43 && RetroArch_nes_ar43',
         ]);
         ipcChannel.once('snes43', () => {
-          notificationShow('🎉 SNES Aspect Ratio updated!');
+          notificationShow(`🎉 ${t('QuickSettingsPage.notifSNESRatio')}`);
         });
         if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
@@ -160,7 +162,7 @@ function SettingsPage() {
           '3d169|||RetroArch_Beetle_PSX_HW_wideScreenOn && DuckStation_wideScreenOn && RetroArch_Flycast_wideScreenOn && Xemu_wideScreenOn && RetroArch_dreamcast_bezelOff && RetroArch_psx_bezelOff',
         ]);
         ipcChannel.once('3d169', () => {
-          notificationShow('🎉 3D Aspect Ratio updated!');
+          notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
         });
         break;
       default: // 43
@@ -168,14 +170,14 @@ function SettingsPage() {
           '3d43|||RetroArch_Flycast_wideScreenOff && RetroArch_Beetle_PSX_HW_wideScreenOff && DuckStation_wideScreenOff && Xemu_wideScreenOff',
         ]);
         ipcChannel.once('3d43', () => {
-          notificationShow('🎉 3D Aspect Ratio updated!');
+          notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
         });
         if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [
             '3d43Bezels|||RetroArch_dreamcast_bezelOn && RetroArch_psx_bezelOn',
           ]);
           ipcChannel.once('3d43Bezels', () => {
-            notificationShow('🎉 3D Aspect Ratio updated!');
+            notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
           });
         }
         break;
@@ -192,12 +194,12 @@ function SettingsPage() {
     if (arStatus === '169') {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOn']);
       ipcChannel.once('dolphin', () => {
-        notificationShow('🎉 Dolphin Aspect Ratio updated!');
+        notificationShow(`🎉 ${t('QuickSettingsPage.nofifDolphinAR')}`);
       });
     } else {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOff']);
       ipcChannel.once('dolphin', () => {
-        notificationShow('🎉 Dolphin Aspect Ratio updated!');
+        notificationShow(`🎉 ${t('QuickSettingsPage.nofifDolphinAR')}`);
       });
     }
   };
@@ -218,7 +220,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`CRT|||${functionCRT}`]);
     ipcChannel.once('CRT', () => {
-      notificationShow('🎉 CRT Shader updated!');
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofifCRTShader')}`);
     });
   };
   const onClickCRT3D = (arStatus) => {
@@ -238,7 +240,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`CRT3D|||${functionCRT3D}`]);
     ipcChannel.once('CRT3D', () => {
-      notificationShow('🎉 3D CRT Shader updated!');
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DCRTShader')}`);
     });
   };
   const onClickLCD = (arStatus) => {
@@ -257,7 +259,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`LCD|||${functionLCD}`]);
     ipcChannel.once('LCD', () => {
-      notificationShow('🎉 LCD Shader updated!');
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofifLCDShader')}`);
     });
   };
 
@@ -274,7 +276,7 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`autoSave|||${functionAutoSave}`]);
     ipcChannel.once('autoSave', () => {
-      notificationShow('🎉 AutoSave updated!');
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofifAutosave')}`);
     });
   };
 
@@ -293,30 +295,13 @@ function SettingsPage() {
       `controllerLayout|||${functionAutoSave}`,
     ]);
     ipcChannel.once('controllerLayout', () => {
-      notificationShow('🎉 Controller Layout updated!');
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofifController')}`);
     });
   };
 
   useEffect(() => {
     localStorage.setItem('settings_emudeck', json);
   }, [state]);
-
-  const HomeBrew = (status) => {
-    setState({
-      ...state,
-      homebrewGames: status,
-    });
-
-    let functionHomebrewGames;
-    status === true
-      ? (functionHomebrewGames = 'emuDeckInstallHomebrewGames')
-      : (functionHomebrewGames = 'emuDeckUninstallHomebrewGames');
-
-    ipcChannel.sendMessage('emudeck', [`autoSave|||${functionHomebrewGames}`]);
-    ipcChannel.once('autoSave', () => {
-      notificationShow('🎉 HomeBrew Games updated!');
-    });
-  };
 
   const onClickBoot = (status) => {
     setState({
@@ -331,35 +316,33 @@ function SettingsPage() {
 
     ipcChannel.sendMessage('emudeck', [`bootMode|||${functionBootMode}`]);
     ipcChannel.once('bootMode', () => {
-      notificationShow('🎉 BootMode updated, please restart your device!');
+      notificationShow(`🎉 ${t('QuickSettingsPage.nofifBoot')}`);
     });
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Configure your Settings" />
-        <Settings
-          showNotification={showNotification}
-          notificationText={notificationText}
-          onClickCloudSync={onClickCloudSync}
-          onClickBezel={onClickBezel}
-          onClickSega={onClickSega}
-          onClickSNES={onClickSNES}
-          onClick3D={onClick3D}
-          onClickGC={onClickGC}
-          onClickCRT={onClickCRT}
-          onClickCRT3D={onClickCRT3D}
-          onClickLCD={onClickLCD}
-          onClickAutoSave={autoSaveSet}
-          onClickControllerLayoutSet={controllerLayoutSet}
-          onClickHomeBrew={HomeBrew}
-          onClickBoot={onClickBoot}
-        />
-        <Footer disabledNext disabledBack={disabledBack} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('QuickSettingsPage.title')} />
+      <p className="lead">{t('QuickSettingsPage.description')}</p>
+      <Settings
+        showNotification={showNotification}
+        notificationText={notificationText}
+        onClickCloudSync={onClickCloudSync}
+        onClickBezel={onClickBezel}
+        onClickSega={onClickSega}
+        onClickSNES={onClickSNES}
+        onClick3D={onClick3D}
+        onClickGC={onClickGC}
+        onClickCRT={onClickCRT}
+        onClickCRT3D={onClickCRT3D}
+        onClickLCD={onClickLCD}
+        onClickAutoSave={autoSaveSet}
+        onClickControllerLayoutSet={controllerLayoutSet}
+        onClickBoot={onClickBoot}
+      />
+      <Footer disabledNext disabledBack={disabledBack} />
+    </Wrapper>
   );
 }
 
-export default SettingsPage;
+export default QuickSettingsPage;

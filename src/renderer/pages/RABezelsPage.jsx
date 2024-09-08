@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import RABezels from 'components/organisms/Wrappers/RABezels';
 
 const RABezelsPage = () => {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { bezels } = state;
   const [statePage, setStatePage] = useState({
@@ -29,21 +31,17 @@ const RABezelsPage = () => {
     }
   }, [state]);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
-      <Wrapper>
-        <Header title="Configure game bezels" />
-        <RABezels onClick={bezelsSet} />
-        <Footer
-          next="aspect-ratio-sega"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('RABezelsPage.title')} />
+      <p className="lead">{t('RABezelsPage.description')}</p>
+      <RABezels bezels={bezels} onClick={bezelsSet} />
+      <Footer
+        next="aspect-ratio-sega"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 };
 

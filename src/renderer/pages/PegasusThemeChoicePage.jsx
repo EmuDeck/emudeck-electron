@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useFetchCond } from 'hooks/useFetchCond';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +13,7 @@ import { BtnSimple } from 'getbasecore/Atoms';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 
 function PegasusThemeChoicePage() {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
@@ -41,8 +43,12 @@ function PegasusThemeChoicePage() {
   const installTheme = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing theme</span>,
-      body: <p>Please wait...</p>,
+      header: (
+        <span className="h4">
+          {t('PegasusThemeChoicePage.modalInstallingTitle')}
+        </span>
+      ),
+      body: <p>{t('PegasusThemeChoicePage.modalInstallingDesc')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -55,8 +61,12 @@ function PegasusThemeChoicePage() {
     ipcChannel.once('pegasus_applyTheme', () => {
       const modalData = {
         active: true,
-        header: <span className="h4">Theme installed</span>,
-        body: <p>Next time you open Pegasus this will be the default theme.</p>,
+        header: (
+          <span className="h4">
+            {t('PegasusThemeChoicePage.modalInstalledTitle')}
+          </span>
+        ),
+        body: <p>{t('PegasusThemeChoicePage.modalInstalledDesc')}</p>,
         css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
@@ -64,31 +74,30 @@ function PegasusThemeChoicePage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper aside={false}>
-        <Header title="Pegasus Default Theme" />
-        <PegasusThemeChoice themes={themes} onClick={themeSet} />
-        <footer className="footer">
-          <BtnSimple
-            css="btn-simple--2"
-            type="button"
-            aria="Install Theme"
-            onClick={() => navigate(-1)}
-          >
-            Back
-          </BtnSimple>
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Install Theme"
-            onClick={() => installTheme()}
-          >
-            Install Theme
-          </BtnSimple>
-        </footer>
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper aside={false}>
+      <Header title={t('PegasusThemeChoicePage.title')} />
+      <p className="lead">{t('PegasusThemeChoicePage.description')}</p>
+      <PegasusThemeChoice themes={themes} onClick={themeSet} />
+      <footer className="footer">
+        <BtnSimple
+          css="btn-simple--2"
+          type="button"
+          aria={t('general.back')}
+          onClick={() => navigate(-1)}
+        >
+          {t('general.back')}
+        </BtnSimple>
+        <BtnSimple
+          css="btn-simple--1"
+          type="button"
+          aria={t('general.install')}
+          onClick={() => installTheme()}
+        >
+          {t('general.install')}
+        </BtnSimple>
+      </footer>
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

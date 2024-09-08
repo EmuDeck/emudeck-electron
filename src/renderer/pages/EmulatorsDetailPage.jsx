@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
@@ -40,6 +41,7 @@ import {
 const emuData = require('data/emuData.json');
 
 function EmulatorsDetailPage() {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState, stateCurrentConfigs, setStateCurrentConfigs } =
     useContext(GlobalContext);
@@ -1106,44 +1108,42 @@ function EmulatorsDetailPage() {
   }, [emulatorAlternative]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={emuData[emulatorSelected].name} />
+    <Wrapper>
+      <Header title={emuData[emulatorSelected].name} />
 
-        {updates && (
-          <EmuDetail
-            mode={mode}
-            disabledNext={disabledNext}
-            disabledBack={disabledBack}
-            emuData={emuData[emulatorSelected]}
-            updateAvailable={updates[emulator] !== undefined}
-            ps1={ps1Bios}
-            ps2={ps2Bios}
-            nswitch={switchBios}
-            segacd={segaCDBios}
-            saturn={saturnBios}
-            dreamcast={dreamcastBios}
-            nds={DSBios}
-            onChange={selectEmu}
-            onClick={resetEmu}
-            onClickCustomParser={showCustom}
-            onClickOptionalParser={installOptional}
-            onClickInstall={installEmu}
-            onClickReInstall={reInstallEmu}
-            onClickHotkeys={showHotkeys}
-            onClickControls={showControls}
-            onClickUninstall={uninstallEmu}
-            onClickMigrate={onClickMigrate}
-            onClickParsers={parserSeletor}
-            onClickRemoveParsers={removeParsers}
-            installEmus={installEmus[emulatorSelected]}
-            yuzuEAaskToken={yuzuEAaskToken}
-          />
-        )}
-        <Footer next={false} />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+      {updates && (
+        <EmuDetail
+          mode={mode}
+          disabledNext={disabledNext}
+          disabledBack={disabledBack}
+          emuData={emuData[emulatorSelected]}
+          updateAvailable={updates[emulator] !== undefined}
+          ps1={ps1Bios}
+          ps2={ps2Bios}
+          nswitch={switchBios}
+          segacd={segaCDBios}
+          saturn={saturnBios}
+          dreamcast={dreamcastBios}
+          nds={DSBios}
+          onChange={selectEmu}
+          onClick={resetEmu}
+          onClickCustomParser={showCustom}
+          onClickOptionalParser={installOptional}
+          onClickInstall={installEmu}
+          onClickReInstall={reInstallEmu}
+          onClickHotkeys={showHotkeys}
+          onClickControls={showControls}
+          onClickUninstall={uninstallEmu}
+          onClickMigrate={onClickMigrate}
+          onClickParsers={parserSeletor}
+          onClickRemoveParsers={removeParsers}
+          installEmus={installEmus[emulatorSelected]}
+          yuzuEAaskToken={yuzuEAaskToken}
+        />
+      )}
+      <Footer next={false} />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 
