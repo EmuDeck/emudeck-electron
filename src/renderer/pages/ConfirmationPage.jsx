@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,8 +9,9 @@ import Footer from 'components/organisms/Footer/Footer';
 import Confirmation from 'components/organisms/Wrappers/Confirmation';
 
 function ConfirmationPage() {
-  const { state } = useContext(GlobalContext);
-  const { bezels } = state;
+  const { t, i18n } = useTranslation();
+  const { state, setState } = useContext(GlobalContext);
+  const { bezels, system } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -25,22 +27,17 @@ function ConfirmationPage() {
     }
   }, [state]);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
-      <Wrapper>
-        <Header title="Here is what EmuDeck will do" />
-        <Confirmation data={data} />
-        <Footer
-          next="end"
-          nextText="Finish"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('ConfirmationPage.title')} />
+      <Confirmation data={data} />
+      <Footer
+        next="end"
+        nextText={t('general.finish')}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

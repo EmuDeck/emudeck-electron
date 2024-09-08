@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import RAAchievements from 'components/organisms/Wrappers/RAAchievements';
 
 function RAAchievementsConfigPage() {
+  const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { achievements } = state;
@@ -52,19 +54,18 @@ function RAAchievementsConfigPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Configure RetroAchievements" />
-        <RAAchievements
-          data={data}
-          disabledBack
-          onChange={setAchievements}
-          onToggle={setAchievementsHardCore}
-          modalDataConfig={modalDataConfig}
-        />
-        <Footer disabledNext={disabledNext} disabledBack={disabledBack} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('RAAchievementsConfigPage.title')} />
+      <p className="lead">{t('RAAchievementsConfigPage.description')}</p>
+      <RAAchievements
+        data={data}
+        disabledBack
+        onChange={setAchievements}
+        onToggle={setAchievementsHardCore}
+        modalDataConfig={modalDataConfig}
+      />
+      <Footer disabledNext={disabledNext} disabledBack={disabledBack} />
+    </Wrapper>
   );
 }
 

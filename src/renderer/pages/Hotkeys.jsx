@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import { BtnSimple } from 'getbasecore/Atoms';
 import { GlobalContext } from 'context/globalContext';
 
 function Hotkeys() {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { system, second } = state;
   const navigate = useNavigate();
@@ -19,11 +21,8 @@ function Hotkeys() {
 
   return (
     <Wrapper aside={second === true}>
-      <Header title="Emulation Hotkeys" />
-      <p className="lead">
-        Most of the emulators share a series of hotkeys to make them easier to
-        use.
-      </p>
+      <Header title={t('HotkeysPage.title')} />
+      <p className="lead">{t('HotkeysPage.description')}</p>
       <Main>
         <div className="container--grid">
           <div data-col-sm="9">
@@ -36,12 +35,12 @@ function Hotkeys() {
         <BtnSimple
           css="btn-simple--1"
           type="button"
-          aria="Go Next"
+          aria={t('general.finish')}
           onClick={() => {
             setState({ ...state, second: true });
           }}
         >
-          Finish
+          {t('general.finish')}
         </BtnSimple>
       </footer>
     </Wrapper>

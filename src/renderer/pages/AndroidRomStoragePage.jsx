@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
@@ -23,6 +25,7 @@ import PatreonLogin from 'components/organisms/PatreonLogin/PatreonLogin';
 //
 
 function AndroidRomStoragePage() {
+  const { t, i18n } = useTranslation();
   //
   // i18
   //
@@ -271,32 +274,24 @@ function AndroidRomStoragePage() {
   return (
     <Wrapper>
       <PatreonLogin>
-        <Header title="Select the ROM Storage for your Android Device" />
-        <p className="lead">
-          Your ROM directory will be squared away within an Emulation folder in
-          your selected directory.
-        </p>
-
+        <Header title={t('AndroidRomStoragePage.title')} />
         {isConnected === 'false' && (
           <Main>
             <div className="container container--grid">
               <div data-col-sm="5">
-                <p className="h5">Make sure your Android device is:</p>
+                <p className="h5">{t('AndroidRomStoragePage.warning.title')}</p>
                 <ul className="list">
-                  <li>
-                    - Connected using a USB with data transfer capabilities
-                  </li>
-                  <li>- Developer & USB Debugging is enabled</li>
-                  <li>- You've accepted all the prompts in your device</li>
-                  <li>
-                    - You've selected <strong>File Transfer</strong> when asked
-                    by the device
-                  </li>
+                  <li>{t('AndroidRomStoragePage.warning.line1')}</li>
+                  <li>{t('AndroidRomStoragePage.warning.line2')}</li>
+                  <li>{t('AndroidRomStoragePage.warning.line3')}</li>
+                  <li>{t('AndroidRomStoragePage.warning.line4')}</li>
                 </ul>
               </div>
               <div data-col-sm="4">
                 <div style={{ height: 'calc(100vh - 190px)' }}>
-                  <span className="h5">How to enable Developer mode</span>
+                  <span className="h5">
+                    {t('AndroidRomStoragePage.warning.title2')}
+                  </span>
                   <Iframe src="https://www.youtube-nocookie.com/embed/p7DDuq56suU?autoplay=1&playlist=p7DDuq56suU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
                 </div>
               </div>
@@ -320,10 +315,9 @@ function AndroidRomStoragePage() {
         )}
         {storage !== '' && (
           <Footer
-            next="android-end"
-            nextText="Next"
+            next="android-emulator-selector"
+            nextText={t('general.next')}
             disabledNext={disabledNext}
-            disabledBack
           />
         )}
         <EmuModal modal={modal} />

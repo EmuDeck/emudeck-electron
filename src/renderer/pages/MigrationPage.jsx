@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -9,6 +10,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import Migration from 'components/organisms/Wrappers/Migration';
 
 function MigrationPage() {
+  const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
   const { storage, storagePath } = state;
@@ -74,9 +76,7 @@ function MigrationPage() {
             const modalData = {
               active: true,
               header: <span className="h4">Ooops 😞</span>,
-              body: (
-                <p>Non writable directory selected, please choose another.</p>
-              ),
+              body: <p>{t('RomStoragePage.modalErrorWritable')}</p>,
               css: 'emumodal--xs',
             };
             setStatePage({
@@ -194,33 +194,29 @@ function MigrationPage() {
     localStorage.setItem('settings_emudeck', json);
   }, [state]);
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
-      <Wrapper>
-        <Header title="Migrate your installation" />
-        <Migration
-          sdCardValid={sdCardValid}
-          reloadSDcard={checkSDValid}
-          sdCardName={sdCardName}
-          onClick={storageSet}
-          onClickStart={startMigration}
-          storage={storage}
-          storageDestination={storageDestination}
-          storagePath={storagePath}
-          storagePathDestination={storagePathDestination}
-          statusMigration={statusMigration}
-        />
-        <Footer
-          next={false}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('MigrationPage.title')} />
+      <p className="lead">{t('MigrationPage.description')}</p>
+      <Migration
+        sdCardValid={sdCardValid}
+        reloadSDcard={checkSDValid}
+        sdCardName={sdCardName}
+        onClick={storageSet}
+        onClickStart={startMigration}
+        storage={storage}
+        storageDestination={storageDestination}
+        storagePath={storagePath}
+        storagePathDestination={storagePathDestination}
+        statusMigration={statusMigration}
+      />
+      <Footer
+        next={false}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

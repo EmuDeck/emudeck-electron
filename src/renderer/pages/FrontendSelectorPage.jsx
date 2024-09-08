@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -11,17 +12,20 @@ import {
   themesPegasusGameOS,
   rbsimple2,
   imgSTEAM,
+  imgDeckyRomLauncher,
 } from 'components/utils/images/images';
 
 const images = {
   esde: rbsimple2,
   pegasus: themesPegasusGameOS,
   steam: imgSTEAM,
+  deckyromlauncher: imgDeckyRomLauncher,
 };
 
 function FrontendSelectorPage() {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
-  const { device, installFrontends, mode, system } = state;
+  const { device, installFrontends, mode, system, branch } = state;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -211,6 +215,9 @@ function FrontendSelectorPage() {
   }, [installFrontends]);
 
   const nextPage = () => {
+    if (installFrontends.deckyromlauncher.status && branch != 'main') {
+      return 'decky-rom-launcher-install';
+    }
     if (installFrontends.pegasus.status && installFrontends.esde.status) {
       return 'esde-theme';
     }
@@ -234,26 +241,27 @@ function FrontendSelectorPage() {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title={`Frontends for ${device}`} />
-        <FrontendSelector
-          lastSelected={lastSelected}
-          onClick={toggleEmus}
-          images={images}
-        />
-        <Footer
-          next={nextPage()}
-          disabledNext={
-            !installFrontends.esde.status &&
-            !installFrontends.pegasus.status &&
-            !installFrontends.steam.status
-          }
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('FrontendSelectorPage.title', { device: device })} />
+      <p className="lead">{t('FrontendSelectorPage.description')}</p>
+      <FrontendSelector
+        installFrontends={installFrontends}
+        lastSelected={lastSelected}
+        onClick={toggleEmus}
+        images={images}
+      />
+      <Footer
+        next={nextPage()}
+        disabledNext={
+          !installFrontends.esde.status &&
+          !installFrontends.pegasus.status &&
+          !installFrontends.steam.status &&
+          !installFrontends.deckyromlauncher.status
+        }
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 
