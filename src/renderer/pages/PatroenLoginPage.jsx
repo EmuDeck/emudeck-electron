@@ -57,6 +57,7 @@ function PatreonLoginPage() {
     achievements,
     shader,
     patreonToken,
+    patreonStatus,
   } = state;
 
   //
@@ -118,6 +119,7 @@ function PatreonLoginPage() {
       .then((data) => {
         const patreonJson = data;
 
+        console.log({ patreonJson });
         if (patreonJson.error) {
           setStatePage({
             ...statePage,
@@ -143,6 +145,45 @@ function PatreonLoginPage() {
             patreonTokenTemp: patreonJson.new_token,
             accessAllowed: true,
           });
+        } else {
+          const settingsStorage = JSON.parse(
+            localStorage.getItem('settings_emudeck')
+          );
+          const shadersStored = settingsStorage.shaders;
+          const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
+          const achievementsStored = settingsStorage.achievements;
+
+          delete settingsStorage.installEmus.primehacks;
+          delete settingsStorage.installEmus.cemunative;
+          delete settingsStorage.overwriteConfigEmus.primehacks;
+          const installEmusStored = settingsStorage.installEmus;
+
+          // Theres probably a better way to do this...
+
+          ipcChannel.sendMessage('version');
+
+          ipcChannel.once('version-out', (version) => {
+            ipcChannel.sendMessage('system-info-in');
+            ipcChannel.once('system-info-out', (platform) => {
+              console.log({
+                system: platform,
+                version: version[0],
+                gamemode: version[1],
+              });
+              alert(
+                "No patreon detected, you can use EmuDeck but you won't get new updates"
+              );
+              setState({
+                ...state,
+                patreonStatus: null,
+                //...settingsStorage,
+                system: platform,
+                // version: version[0],
+                second: true,
+                branch: 'early',
+              });
+            });
+          });
         }
       })
       .catch((error) => {
@@ -157,6 +198,12 @@ function PatreonLoginPage() {
   //
   // UseEffects
   //
+  useEffect(() => {
+    if (patreonStatus === null) {
+      //navigate('/emulators');
+      console.log({ patreonStatus });
+    }
+  }, [patreonStatus]);
   useEffect(() => {
     const patreonTokenLS = localStorage.getItem('patreon_token');
     if (!branch.includes('early')) {
@@ -212,6 +259,7 @@ function PatreonLoginPage() {
             });
             setState({
               ...state,
+              patreonStatus: true,
               ...settingsStorage,
               installEmus: { ...installEmus, ...installEmusStored },
               overwriteConfigEmus: {
@@ -269,7 +317,7 @@ function PatreonLoginPage() {
               onClick={() => patreonShowInput()}
               disabled={accessAllowed}
             >
-              {t('PatroenLoginPage.login')}{' '}
+              {accessAllowed || t('PatroenLoginPage.login')}{' '}
               {accessAllowed && `- ${t('general.loading')}`}
             </BtnSimple>
             <BtnSimple
