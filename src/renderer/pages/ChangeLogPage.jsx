@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -6,13 +7,13 @@ import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Card from 'components/molecules/Card/Card';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog';
-import img0 from 'assets/changelog/banner_windows.png';
-import img1 from 'assets/changelog/banner_pegasus.png';
-import img2 from 'assets/changelog/banner_frontends.png';
-import img3 from 'assets/changelog/banner_theme_selector.png';
-import img4 from 'assets/changelog/banner_srm.png';
-import img5 from 'assets/changelog/banner_gui.png';
-import img6 from 'assets/changelog/banner_resolution.png';
+import img0 from 'assets/changelog/banner_gui.png';
+import img00 from 'assets/changelog/banner_android.png';
+import img1 from 'assets/changelog/banner_srm.png';
+import img2 from 'assets/changelog/banner_multilanguage.jpg';
+import img3 from 'assets/changelog/banner_lime3ds.jpg';
+import img4 from 'assets/emulators/grid/citra.png';
+import img5 from 'assets/changelog/banner_decky.png';
 import img7 from 'assets/changelog/banner_flycast.png';
 import img8 from 'assets/changelog/banner_early.png';
 import img9 from 'assets/changelog/banner_linux.png';
@@ -24,6 +25,7 @@ import img14 from 'assets/emulators/grid/bigpemu.png';
 import img15 from 'assets/emulators/grid/model.png';
 
 function ChangeLogPage() {
+  const { t, i18n } = useTranslation();
   const { state } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -121,77 +123,79 @@ function ChangeLogPage() {
   }, []);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Latest changes" />
-        <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
-          <div className="container--grid">
-            <div data-col-sm="4">
-              <div
-                className="changelog-scroll"
-                style={{
-                  height: '62vh',
-                  overflow: 'auto',
-                  overflowX: 'hidden',
-                  paddingRight: '20px',
-                }}
-              >
-                <ul>
-                  {log.map((item, i) => {
-                    return (
-                      <li tabIndex="0" key={i}>
-                        <Card
-                          css={current === i && 'is-selected'}
-                          onClick={() => activeItem(i)}
-                        >
-                          <span className="h5">{item.title}</span>
-                        </Card>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </div>
-            <div data-col-sm="8">
-              {log.map((item, i) => {
-                return (
-                  <div tabIndex="0" key={i}>
-                    {current === i && (
+    <Wrapper>
+      <Header title={t('ChangeLogPage.title')} />
+      <ChangeLog disabledNext={disabledNext} disabledBack={disabledBack}>
+        <div className="container--grid">
+          <div data-col-sm="4">
+            <div
+              className="changelog-scroll"
+              style={{
+                height: '62vh',
+                overflow: 'auto',
+                overflowX: 'hidden',
+                paddingRight: '20px',
+              }}
+            >
+              <ul>
+                {log.map((item, i) => {
+                  return (
+                    <li tabIndex="0" key={i}>
                       <Card
-                        onClick={() => activeItem(i)}
                         css={current === i && 'is-selected'}
+                        onClick={() => activeItem(i)}
                       >
-                        {item.image === 'true' && (
-                          <div
-                            style={{
-                              maxHeight: 280,
-                              overflow: 'hidden',
-                              marginBottom: 10,
-                              borderRadius: 10,
-                            }}
-                          >
-                            <img src={img} alt="Image" />
-                          </div>
-                        )}
-                        <p
-                          dangerouslySetInnerHTML={{ __html: item.description }}
-                        />
+                        <span className="h5">{item.title}</span>
                       </Card>
-                    )}
-                  </div>
-                );
-              })}
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </div>
-        </ChangeLog>
-        <Footer
-          next={false}
-          backText="Back"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+          <div data-col-sm="8">
+            {log.map((item, i) => {
+              return (
+                <div
+                  className="cards cards--big cards--log"
+                  tabIndex="0"
+                  key={i}
+                >
+                  {current === i && (
+                    <Card
+                      onClick={() => activeItem(i)}
+                      css={current === i && 'is-selected'}
+                    >
+                      {item.image === 'true' && (
+                        <div
+                          style={{
+                            maxHeight: 280,
+                            overflow: 'hidden',
+                            marginBottom: 10,
+                            borderRadius: 10,
+                          }}
+                        >
+                          <img src={img} alt="Image" />
+                        </div>
+                      )}
+                      <p
+                        dangerouslySetInnerHTML={{ __html: item.description }}
+                      />
+                    </Card>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </ChangeLog>
+      <Footer
+        next={false}
+        backText="Back"
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

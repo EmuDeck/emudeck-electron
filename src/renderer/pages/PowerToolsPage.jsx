@@ -1,4 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { GlobalContext } from 'context/globalContext';
+import React, { useEffect, useState, useContext } from 'react';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import Header from 'components/organisms/Header/Header';
@@ -8,6 +10,11 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import PowerTools from 'components/organisms/Wrappers/PowerTools';
 
 function PowerToolsPage() {
+  const { t, i18n } = useTranslation();
+
+  const { state, setState } = useContext(GlobalContext);
+  const { system } = state;
+
   const [statePage, setStatePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -98,7 +105,7 @@ function PowerToolsPage() {
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
 
     ipcChannel.sendMessage('emudeck', [
-      `powerTools|||Plugins_installPluginLoader ${escapedPass} && Plugins_installPowerTools ${escapedPass} && echo true`,
+      `powerTools|||Plugins_installPowerTools ${escapedPass} && echo true`,
     ]);
 
     ipcChannel.once('powerTools', (status) => {
@@ -152,28 +159,27 @@ function PowerToolsPage() {
   }, []);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Configure PowerTools" />
-        <PowerTools
-          installClick={installPowerTools}
-          sudoPass={sudoPass}
-          onChange={setSudoPass}
-          onChangeSetPass={setPassword}
-          onChangeCheckPass={checkPassword}
-          onClick={createSudo}
-          hasSudo={hasSudo}
-          passValidates={pass1 === pass2}
-        />
-        <Footer
-          next={false}
-          nextText={sudoPass ? 'Continue' : 'Skip'}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('PowerToolsPage.title')} />
+      <p className="lead">{t('PowerToolsPage.description')}</p>
+      <PowerTools
+        installClick={installPowerTools}
+        sudoPass={sudoPass}
+        onChange={setSudoPass}
+        onChangeSetPass={setPassword}
+        onChangeCheckPass={checkPassword}
+        onClick={createSudo}
+        hasSudo={hasSudo}
+        passValidates={pass1 === pass2}
+      />
+      <Footer
+        next={false}
+        nextText={sudoPass ? t('general.next') : t('general.skip')}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

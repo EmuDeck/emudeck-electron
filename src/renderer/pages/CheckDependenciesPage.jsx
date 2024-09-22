@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -13,6 +14,7 @@ import gitLogo from 'assets/git-logo.png';
 import steamLogo from 'assets/steam-logo.png';
 
 function CheckDependenciesPage() {
+  const { t, i18n } = useTranslation();
   const [stateGIT, setStateGIT] = useState({
     statusGIT: null,
   });
@@ -149,68 +151,66 @@ function CheckDependenciesPage() {
   }, [statusGIT, status7Zip]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper aside={false}>
-        {statusGIT === undefined ||
-          (statusSteam === undefined && (
-            <Header title="Checking dependencies..." />
-          ))}
+    <Wrapper aside={false}>
+      {statusGIT === undefined ||
+        (statusSteam === undefined && (
+          <Header title="Checking dependencies..." />
+        ))}
 
-        {!statusGIT ||
-          (!statusSteam && (
-            <>
-              <Header title="Missing dependencies..." />
-              <p className="lead">
-                Please install the following programs, EmuDeck needs them to
-                work. After that, restart EmuDeck, if the problem persists
-                restart your device.
-              </p>
-            </>
-          ))}
+      {!statusGIT ||
+        (!statusSteam && (
+          <>
+            <Header title="Missing dependencies..." />
+            <p className="lead">
+              Please install the following programs, EmuDeck needs them to work.
+              After that, restart EmuDeck, if the problem persists restart your
+              device.
+            </p>
+          </>
+        ))}
 
-        <div className="container--grid">
-          {statusGIT !== true && (
-            <div data-col-sm="2">
-              <Card css="is-selected">
-                <img src={gitLogo} alt="GIT" />
-                <a
-                  className="btn-simple btn-simple--1 btn-simple--xs"
-                  href="https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe"
-                  rel="noreferrer"
-                  onClick={() =>
-                    showModal(
-                      'https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe'
-                    )
-                  }
-                >
-                  Download GIT
-                </a>
-              </Card>
-            </div>
-          )}
-          {statusSteam !== true && (
-            <div data-col-sm="2">
-              <Card css="is-selected">
-                <img src={steamLogo} alt="Steam" />
-                <a
-                  className="btn-simple btn-simple--1 btn-simple--xs"
-                  href="https://cdn.akamai.steamstatic.com/client/installer/SteamSetup.exe"
-                  rel="noreferrer"
-                  onClick={() =>
-                    showModal(
-                      'https://cdn.akamai.steamstatic.com/client/installer/SteamSetup.exe'
-                    )
-                  }
-                >
-                  Install Steam
-                </a>
-              </Card>
-            </div>
-          )}
-        </div>
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+      <div className="container--grid">
+        {statusGIT !== true && (
+          <div data-col-sm="2">
+            <Card css="is-selected">
+              <img src={gitLogo} alt="GIT" />
+              <a
+                className="btn-simple btn-simple--1 btn-simple--xs"
+                href="https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe"
+                rel="noreferrer"
+                onClick={() =>
+                  showModal(
+                    'https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe'
+                  )
+                }
+              >
+                Download GIT
+              </a>
+            </Card>
+          </div>
+        )}
+        {statusSteam !== true && (
+          <div data-col-sm="2">
+            <Card css="is-selected">
+              <img src={steamLogo} alt="Steam" />
+              <a
+                className="btn-simple btn-simple--1 btn-simple--xs"
+                href="https://cdn.akamai.steamstatic.com/client/installer/SteamSetup.exe"
+                rel="noreferrer"
+                onClick={() =>
+                  showModal(
+                    'https://cdn.akamai.steamstatic.com/client/installer/SteamSetup.exe'
+                  )
+                }
+              >
+                Install Steam
+              </a>
+            </Card>
+          </div>
+        )}
+      </div>
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

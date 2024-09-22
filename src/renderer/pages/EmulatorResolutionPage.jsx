@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import Footer from 'components/organisms/Footer/Footer';
 import EmulatorResolution from 'components/organisms/Wrappers/EmulatorResolution';
 
 function EmulatorResolutionPage() {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { resolutions, system } = state;
 
@@ -26,17 +28,13 @@ function EmulatorResolutionPage() {
   });
   const { dom } = statePage;
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
-      <Wrapper>
-        <Header title="Emulator Resolution" />
-        <EmulatorResolution onClick={setResolution} />
-        <Footer next="confirmation" nextText="Next" />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('EmulatorResolutionPage.title')} />
+      <p className="lead">{t('EmulatorResolutionPage.description')}</p>
+      <EmulatorResolution onClick={setResolution} />
+      <Footer next="confirmation" nextText={t('general.next')} />
+    </Wrapper>
   );
 }
 

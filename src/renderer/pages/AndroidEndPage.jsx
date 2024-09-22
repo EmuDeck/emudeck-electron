@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
@@ -38,6 +40,7 @@ import {
 } from 'components/utils/images/images';
 
 function AndroidEndPage() {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
@@ -132,9 +135,9 @@ function AndroidEndPage() {
         <Main>
           <EmuModal
             modalActiveValue={disabledNext === true}
-            modalHeaderValue={
-              <span className="h4">Preparing your Android device...</span>
-            }
+            modalHeaderValue=<span className="h4">
+              {t('AndroidEndPage.title')}
+            </span>
             modalBodyValue={<p>{message}...</p>}
             modalFooterValue=""
             modalCSSValue="emumodal--xs"

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -8,6 +9,7 @@ import { useFetchCond } from 'hooks/useFetchCond';
 import PegasusTheme from 'components/organisms/Wrappers/PegasusTheme';
 
 function PegasusThemePage() {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { system, mode, installFrontends } = state;
   const [statePage, setStatePage] = useState({
@@ -41,22 +43,18 @@ function PegasusThemePage() {
     return 'emulator-resolution';
   };
 
-
-
   return (
-    <div style={{ height: '100vh' }} >
-      
-      <Wrapper aside={false}>
-        <Header title="Pegasus Default Theme" />
-        <PegasusTheme themes={themes} onClick={themeSet} />
-        <Footer
-          next={nextPage()}
-          nextText="Next"
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-      </Wrapper>
-    </div>
+    <Wrapper aside={false}>
+      <Header title={t('PegasusThemePage.title')} />
+      <p className="lead">{t('PegasusThemePage.description')}</p>
+      <PegasusTheme themes={themes} onClick={themeSet} />
+      <Footer
+        next={nextPage()}
+        nextText={t('general.next')}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+    </Wrapper>
   );
 }
 

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -9,6 +10,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import GyroDSU from 'components/organisms/Wrappers/GyroDSU';
 
 function GyroDSUPage() {
+  const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -90,19 +92,18 @@ function GyroDSUPage() {
   }, []);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper>
-        <Header title="Configure SteamDeckGyroDSU" />
-        <GyroDSU installClick={installGyro} passValidates={pass1 === pass2} />
-        <Footer
-          next={false}
-          nextText={sudoPass ? 'Continue' : 'Skip'}
-          disabledNext={disabledNext}
-          disabledBack={disabledBack}
-        />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header title={t('GyroDSUPage.title')} />
+      <p className="lead">{t('GyroDSUPage.description')}</p>
+      <GyroDSU installClick={installGyro} passValidates={pass1 === pass2} />
+      <Footer
+        next={false}
+        nextText={sudoPass ? t('general.continue') : t('general.skip')}
+        disabledNext={disabledNext}
+        disabledBack={disabledBack}
+      />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

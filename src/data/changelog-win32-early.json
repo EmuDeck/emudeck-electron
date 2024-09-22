@@ -1,14 +1,33 @@
 [
   {
-    "title": "Bug fixes",
+    "title": "Unified UI",
     "type": "STEAMOS",
-    "description": "Several bug fixes",
-    "image": "false"
+    "description": "Brand New UI!",
+    "image": "true"
+  },
+
+  {
+    "title": "Remove Steam Rom Manager Cache",
+    "type": "STEAMOS",
+    "description": "Added a new button in Manage Emulators to clear SRM entries",
+    "image": "true"
   },
   {
-    "title": "Android",
+    "title": "Multilanguage",
     "type": "STEAMOS",
-    "description": "Beta release for setting up your android devices",
-    "image": "false"
+    "description": "We've added preliminary support for spanish, french and italian",
+    "image": "true"
+  },
+  {
+    "title": "Lime3DS",
+    "type": "STEAMOS",
+    "description": "We've added the new 3DS emulator, Lime3DS.",
+    "image": "true"
+  },
+  {
+    "title": "Citra",
+    "type": "STEAMOS",
+    "description": "We've also added PabloMK7's Citra fork, Lime3DS. This should work like good old Citra so there's nothing you have to change",
+    "image": "true"
   }
 ]

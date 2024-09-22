@@ -55,6 +55,7 @@ function CheckUpdatePage() {
     system,
     second,
     installEmus,
+    android,
     installFrontends,
     overwriteConfigEmus,
     shaders,
@@ -106,33 +107,6 @@ function CheckUpdatePage() {
       ipcChannel.once('update-check-out', (message) => {
         // We clear the timeout
         clearTimeout(updateTimeOut);
-
-        const doUpdate = () => {
-          ipcChannel.sendMessage('update-start');
-
-          ipcChannel.once('update-check-out', (message) => {
-            if (message[0] === 'updating') {
-              const modalData = {
-                active: true,
-                header: <span className="h4">🎉 Updating! 🎉</span>,
-                body: (
-                  <p className="h5">
-                    EmuDeck will restart as soon as it finishes the update. Hold
-                    on tight.
-                  </p>
-                ),
-                footer: (
-                  <ProgressBar css="progress--success" infinite max="100" />
-                ),
-                css: 'emumodal--xs emumodal--loading',
-              };
-              setStatePage({
-                ...statePage,
-                modal: modalData,
-              });
-            }
-          });
-        };
 
         let modalData;
         if (message[0] === 'updating') {
@@ -217,6 +191,31 @@ function CheckUpdatePage() {
       });
     }
 
+    const doUpdate = () => {
+      ipcChannel.sendMessage('update-start');
+
+      ipcChannel.once('update-check-out', (message) => {
+        if (message[0] === 'updating') {
+          const modalData = {
+            active: true,
+            header: <span className="h4">🎉 Updating! 🎉</span>,
+            body: (
+              <p className="h5">
+                EmuDeck will restart as soon as it finishes the update. Hold on
+                tight.
+              </p>
+            ),
+            footer: <ProgressBar css="progress--success" infinite max="100" />,
+            css: 'emumodal--xs emumodal--loading',
+          };
+          setStatePage({
+            ...statePage,
+            modal: modalData,
+          });
+        }
+      });
+    };
+
     const cancelUpdate = () => {
       updateFiles();
       setStatePage({
@@ -250,13 +249,15 @@ function CheckUpdatePage() {
         delete settingsStorage.overwriteConfigEmus.primehacks;
         delete settingsStorage.installEmus.ares;
         delete settingsStorage.overwriteConfigEmus.ares;
+        delete settingsStorage.android.installEmus.citrammj;
+        delete settingsStorage.android.overwriteConfigEmus.citra;
+        delete settingsStorage.android.overwriteConfigEmus.citrammj;
         const installEmusStored = settingsStorage.installEmus;
         const installFrontendsStored = settingsStorage.installFrontends;
 
         if (system === 'darwin') {
           delete settingsStorage.installEmus.ares;
           delete settingsStorage.installEmus.cemu;
-          delete settingsStorage.installEmus.citra;
           delete settingsStorage.installEmus.dolphin;
           delete settingsStorage.installEmus.duckstation;
           delete settingsStorage.installEmus.flycast;
@@ -371,10 +372,10 @@ function CheckUpdatePage() {
             setState({
               ...state,
               ...settingsStorage,
+              android: { ...android },
               installEmus: { ...installEmus, ...installEmusStored },
               installFrontends: {
                 ...installFrontends,
-                ...installFrontendsStored,
               },
               overwriteConfigEmus: {
                 ...overwriteConfigEmus,
@@ -446,6 +447,24 @@ function CheckUpdatePage() {
         });
       }
     };
+
+    // ipcChannel.sendMessage('clean-log');
+
+    //  setTimeout(() => {
+
+    // ipcChannel.sendMessage('update-check');
+
+    // ipcChannel.once('update-check-out', (message) => {
+    //
+    //
+    //   setStatePage({
+    //     ...statePage,
+    //     update: message[0],
+    //     data: message[1],
+    //   });
+    // });
+
+    //  }, 500);
   }, []);
 
   useEffect(() => {
@@ -484,69 +503,141 @@ function CheckUpdatePage() {
         css: 'emumodal--xs emumodal--loading',
       };
 
-      setStatePage({
-        ...statePage,
-        modal: modalDataGit,
+      // setStatePage({
+      //   ...statePage,
+      //   modal: modalDataGit,
+      // });
+
+      ipcChannel.sendMessage('check-git');
+      ipcChannel.once('check-git', (error, stdout, stderr) => {
+        // alert('checking git');
+        const cloneStatusCheck = stdout.replace('\n', '');
+        let cloneStatusCheckValue;
+
+        if (cloneStatusCheck.includes('true')) {
+          cloneStatusCheckValue = true;
+        } else {
+          cloneStatusCheckValue = false;
+        }
+
+        setStatePage({
+          ...statePage,
+          cloned: cloneStatusCheckValue,
+          modal: modalDataGit,
+        });
       });
     }
   }, [update, system]);
 
-  // We clone / pull
   useEffect(() => {
-    if (navigator.onLine) {
-      ipcChannel.sendMessage('git-magic', branch);
-      ipcChannel.once('git-magic', (status) => {
-        if (status === 'success') {
-          setStatePage({
-            ...statePage,
-            downloadComplete: true,
-            modal: false,
+    // settings here
+    if (cloned === false) {
+      // alert('cloneFalse');
+      if (navigator.onLine) {
+        ipcChannel.sendMessage(`clone`, branch);
+        cloneTimeOut = setTimeout(() => {
+          ipcChannel.sendMessage('check-git-status', branch);
+          ipcChannel.once('check-git-status', (error) => {
+            if (error.includes('not a git directory')) {
+              // alert('There seems to be an issue, please restart EmuDeck');
+              const modalData = {
+                active: true,
+                header: <span className="h4">Ooops 😞</span>,
+                body: (
+                  <p>
+                    There seems to be an issue building the backend. Please
+                    restart EmuDeck if this screen doesn't dissapear in about 5
+                    seconds
+                  </p>
+                ),
+                css: 'emumodal--xs',
+              };
+              setStatePage({ ...statePageRef.current, modal: modalData });
+            } else {
+              setStatePage({ ...statePageRef.current, downloadComplete: true });
+            }
           });
-        } else {
-          const modalData = {
-            active: true,
-            header: <span className="h4">Ooops 😞</span>,
-            body: (
-              <p>
-                There seems to be an issue downloading the backend. Please
-                restart EmuDeck after testing your network is working
-              </p>
-            ),
-            css: 'emumodal--xs',
-          };
+        }, 60000);
+        ipcChannel.once('clone', (error, cloneStatusClone) => {
+          if (cloneStatusClone.includes('true')) {
+            clearTimeout(cloneTimeOut);
+            setStatePage({ ...statePage, downloadComplete: true });
+            console.log({ downloadComplete });
+          }
+        });
+      } else {
+        const modalData = {
+          active: true,
+          header: <span className="h4">Ooops 😞</span>,
+          body: <p>You need to be connected to the internet.</p>,
+          css: 'emumodal--xs emumodal--loading',
+        };
+        setStatePage({
+          ...statePage,
+          modal: modalData,
+        });
+      }
+    } else if (cloned === true) {
+      // alert('cloned true');
+      if (navigator.onLine) {
+        // alert(branch);
 
-          setStatePage({
-            ...statePage,
-            modal: modalData,
+        console.log(`GIT PULL ${branch}`);
+        ipcChannel.sendMessage('pull', branch);
+        pullTimeOut = setTimeout(() => {
+          ipcChannel.sendMessage('check-git-status', branch);
+          ipcChannel.once('check-git-status', (error) => {
+            console.log({ error });
+            if (error.includes('Your branch is up to date')) {
+              setStatePage({ ...statePageRef.current, downloadComplete: true });
+            } else {
+              const modalData = {
+                active: true,
+                header: <span className="h4">Ooops 😞</span>,
+                body: (
+                  <p>
+                    There's been an issue building the backend, please restart
+                    EmuDeck if this screen doesn't dissapear in about 5 seconds.
+                  </p>
+                ),
+                footer: '',
+                css: 'emumodal--xs',
+              };
+              setStatePage({
+                ...statePageRef.current,
+                modal: modalData,
+              });
+            }
           });
-        }
-      });
-    } else {
-      alert(
-        "Internet not detected. EmuDeck will run in Offline Mode, you can upload your settings but you can't use Steam Rom Manager"
-      );
-      setStatePage({
-        ...statePage,
-        downloadComplete: true,
-        modal: false,
-      });
+        }, 20000);
+        ipcChannel.once('pull', (error, stdout, stderr) => {
+          console.log('GIT PULL response');
+          console.log({ error, stdout, stderr });
+
+          updateTimeOut = setTimeout(() => {
+            clearTimeout(pullTimeOut);
+            setStatePage({ ...statePageRef.current, downloadComplete: true });
+          }, 1000);
+        });
+      } else {
+        setStatePage({ ...statePage, downloadComplete: true });
+      }
     }
-  }, []);
+  }, [cloned]);
 
   useEffect(() => {
+    console.log({ downloadComplete });
     if (downloadComplete === true) {
       navigate('/welcome');
     }
   }, [downloadComplete]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Wrapper css="wrapper__full" aside={false}>
-        <Kamek />
-        <Header title="EmuDeck is loading..." />
-        <EmuModal modal={modal} />
-      </Wrapper>
-    </div>
+    <Wrapper css="wrapper__full" aside={false}>
+      <Kamek />
+      <Header title="EmuDeck is loading..." />
+      <EmuModal modal={modal} />
+    </Wrapper>
   );
 }
 

@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +31,7 @@ import {
 import androidGif from 'assets/gifs/android.gif';
 
 function AndroidFinishPage() {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({});
@@ -47,20 +50,10 @@ function AndroidFinishPage() {
   return (
     <Wrapper aside>
       <Main>
-        <Header title="EmuDeck Android Installed!" />
+        <Header title={t('AndroidFinishPage.title')} />
         <div className="container--grid">
           <div data-col-sm="6">
-            {' '}
-            <p className="lead">
-              If everything went well, you should see Pegasus Frontend on your
-              Android device.
-            </p>
-            <p className="lead">
-              If you dont, please reinstall EmuDeck on your device.
-            </p>
-          </div>
-          <div data-col-sm="6">
-            <img src={androidGif} alt="Android" />
+            <p className="lead">{t('AndroidFinishPage.description')}</p>
           </div>
         </div>
       </Main>
