@@ -14,7 +14,7 @@ function EarlyAccessPage() {
       <p className="lead">{t('EarlyAccessPage.description')}</p>
       <Main>
         <div className="container--grid">
-          <div data-col-sm="2" />
+          <div data-col-sm="2"></div>
           <div data-col-sm="4">
             <Card css="is-selected card--image">
               <img
@@ -31,6 +31,16 @@ function EarlyAccessPage() {
                 aria={t('general.next')}
               >
                 {t('general.join')}
+              </BtnSimple>
+              <span></span>
+              <BtnSimple
+                css="btn-simple--2"
+                type="link"
+                target="_blank"
+                href="https://www.patreon.com/posts/early-access-70000718"
+                aria={t('general.next')}
+              >
+                {t('general.install')}
               </BtnSimple>
               <p>{t('EarlyAccessPage.eaTier.description')}</p>
               <ul
@@ -58,6 +68,16 @@ function EarlyAccessPage() {
               >
                 {t('general.join')}
               </BtnSimple>
+              <span></span>
+              <BtnSimple
+                css="btn-simple--2"
+                type="link"
+                target="_blank"
+                href="https://www.patreon.com/posts/early-access-70000718"
+                aria={t('general.next')}
+              >
+                {t('general.install')}
+              </BtnSimple>
               <p>{t('EarlyAccessPage.fanTier.description')}</p>
               <ul
                 className="list"
@@ -67,7 +87,6 @@ function EarlyAccessPage() {
               />
             </Card>
           </div>
-          <div data-col-sm="2" />
         </div>
       </Main>
       <Footer nextText="Exit" next="emulators" />
