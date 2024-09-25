@@ -16,6 +16,8 @@ import Main from 'components/organisms/Main/Main';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import { useNavigate } from 'react-router-dom';
 import { BtnSimple } from 'getbasecore/Atoms';
+import Card from 'components/molecules/Card/Card';
+import { useFetchCond } from 'hooks/useFetchCond';
 
 // import { useTranslation } from 'react-i18next';
 import Welcome from 'components/organisms/Wrappers/Welcome';
@@ -55,10 +57,32 @@ function WelcomePage() {
     data: '',
     modal: undefined,
     dom: undefined,
+    news: undefined,
+    game_of_the_month: undefined,
   });
-  const { disabledNext, disabledBack, updates, modal, dom } = statePage;
+  const {
+    disabledNext,
+    disabledBack,
+    updates,
+    modal,
+    dom,
+    news,
+    game_of_the_month,
+  } = statePage;
 
   const navigate = useNavigate();
+
+  const newsWS = useFetchCond('https://token.emudeck.com/news.php');
+  useEffect(() => {
+    newsWS.post({}).then((data) => {
+      setStatePage({
+        ...statePage,
+        news: data[0].news,
+        game_of_the_month: data[0].game_of_the_month,
+      });
+    });
+  }, []);
+
   const selectMode = (value) => {
     if (value === 'android') {
       navigate('/android-welcome');
@@ -124,13 +148,6 @@ function WelcomePage() {
         localStorage.setItem('ogStateAlternative', '');
         localStorage.setItem('ogStateEmus', '');
       }
-
-      if (second === true && mode === 'expert') {
-        navigate('/emulators');
-      }
-      if (second === true && mode === 'easy') {
-        navigate('/emulators');
-      }
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -166,6 +183,55 @@ function WelcomePage() {
         />
       )}
       <EmuModal modal={modal} />
+
+      {second && (
+        <>
+          <Header title="EmuDeck News" />
+          <Main>
+            <div className="cards cards--maxi">
+              {news &&
+                news.map((item) => {
+                  return (
+                    <Card css="is-selected">
+                      <a target="blank" href={item.link}>
+                        <span class="h5">{item.title}</span>
+                        <p>{item.desc}</p>
+                        <img src={item.img} />
+                      </a>
+                    </Card>
+                  );
+                })}
+            </div>
+            <span class="h2">
+              Games of the month by{' '}
+              <a
+                href="https://retrohandhelds.gg"
+                target="blank"
+                style={{ display: 'inline' }}
+              >
+                <img
+                  src="https://retrohandhelds.gg/wp-content/uploads/2023/08/rh_logo_white.svg"
+                  alt="RG logo"
+                  style={{ width: 40 }}
+                />
+              </a>
+            </span>
+            <div className="cards cards--maxi">
+              {game_of_the_month &&
+                game_of_the_month.map((item) => {
+                  return (
+                    <Card css="is-selected">
+                      <a target="blank" href={item.link}>
+                        <span class="h5">{item.title}</span>
+                        <img src={item.img} />
+                      </a>
+                    </Card>
+                  );
+                })}
+            </div>
+          </Main>
+        </>
+      )}
     </Wrapper>
   );
 }
