@@ -226,7 +226,7 @@
     },
     "ControllerLayoutPage": {
       "title": "Configura il layout del controller",
-      "description": "Vuoi impostare il tuo controller in modo che i pulsanti corrispondano alla posizione dei controller originali (A è mappato su B) o vuoi utilizzare il layout del controller (A è mappato su A)"
+      "description": "Vuoi impostare il tuo controller in modo che i pulsanti corrispondano alla posizione dei controller originali (A è mappato su B) o vuoi utilizzare il layout del controller (A è mappato su A). Questo cambierà anche i controlli del Gameboy, impostando X come B e A come A."
     },
     "CopyGamesPage": {
       "title": "",

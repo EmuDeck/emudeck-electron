@@ -221,7 +221,7 @@
     },
     "ControllerLayoutPage": {
       "title": "Configure Controller Layout",
-      "description": "Do you want your controller set so the buttons match the position of the original controllers ( A is mapped to B ) or do you want to use your controller's layout ( A is mapped to A )"
+      "description": "Do you want your controller set so the buttons match the position of the original controllers ( A is mapped to B ) or do you want to use your controller's layout ( A is mapped to A ). This will also change Gameboy controls, setting X as B and A as A"
     },
     "CopyGamesPage": { "title": "", "description": "" },
     "DeviceSelectorPage": {
