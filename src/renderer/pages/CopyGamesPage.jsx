@@ -442,7 +442,7 @@ function CopyGamesPage() {
           <Header title="Let's copy your games" />
           <p className="lead">
             First, you will need to gather your ROMs and BIOS. These are
-            copyright and EmuDeck will not provide these for legal reasons.
+            copyrighted and EmuDeck will not provide these for legal reasons.
           </p>
           <SelectorMenu
             imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
