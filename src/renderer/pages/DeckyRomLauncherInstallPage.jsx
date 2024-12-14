@@ -18,7 +18,7 @@ function DeckyRomLauncherInstallPage() {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: 'Decky!',
+    sudoPass: 'EmuDecky!',
     modal: false,
     pass1: 'a',
     pass2: 'b',
@@ -46,7 +46,7 @@ function DeckyRomLauncherInstallPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: 'Decky!',
+        sudoPass: 'EmuDecky!',
       });
     }
   };
