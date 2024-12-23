@@ -143,7 +143,7 @@ export default function App() {
     cloudSync: undefined,
     cloudSyncType: 'Sync',
     cloudSyncStatus: false,
-    sudoPass: 'EmuDecky!',
+    sudoPass: 'Decky!',
     language: 'en',
     android: {
       bezels: true,
@@ -467,13 +467,6 @@ export default function App() {
         installed: undefined,
         name: 'Steam Rom Manager',
       },
-      shadps4: {
-        id: 'shadps4',
-        status: false,
-        installed: undefined,
-        name: 'ShadPS4',
-        platforms: 'Playstation 4',
-      },
     },
     overwriteConfigEmus: {
       ares: { id: 'ares', status: false, name: 'ares' },
@@ -508,7 +501,6 @@ export default function App() {
       esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
       pegasus: { id: 'pegasus', status: true, name: 'Pegasus' },
       srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
-      shadps4: { id: 'shadps4', status: false, name: 'ShadPS4' },
     },
     installFrontends: {
       esde: {
@@ -527,7 +519,7 @@ export default function App() {
       },
       deckyromlauncher: {
         id: 'deckyromlauncher',
-        status: false,
+        status: true,
         name: 'Retro Library',
         desc: 'A separate Retro Library that does not interfiere with your Games Library. All games and artwork are detected automatically.',
       },

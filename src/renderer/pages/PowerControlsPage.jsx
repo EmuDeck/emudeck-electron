@@ -20,7 +20,7 @@ function PowerControlsPage() {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: 'EmuDecky!',
+    sudoPass: 'Decky!',
     disableButton: false,
     pass1: 'a',
     pass2: 'b',
@@ -49,7 +49,7 @@ function PowerControlsPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: system === 'chimeraos' ? 'gamer' : 'EmuDecky!',
+        sudoPass: system === 'chimeraos' ? 'gamer' : 'Decky!',
       });
     }
   };

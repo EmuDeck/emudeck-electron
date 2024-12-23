@@ -220,12 +220,9 @@ function CloudSyncPageConfig() {
 
     let cloudFunction;
     cloudFunction = 'cloud_sync_install_and_config ';
-    let patreonToken = localStorage.getItem('patreon_token');
-
-    patreonToken = patreonToken.replaceAll('|', '-');
 
     ipcChannel.sendMessage('emudeck', [
-      `cloud_saves|||${cloudFunction} ${cloudSync} ${patreonToken}`,
+      `cloud_saves|||${cloudFunction} ${cloudSync}`,
     ]);
 
     ipcChannel.once('cloud_saves', (message) => {
@@ -387,10 +384,6 @@ function CloudSyncPageConfig() {
       {cloudSyncType === 'Sync' && (
         <PatreonLogin>
           <Header title="Cloud Sync - Select your provider" />
-          <p className="lead">
-            Automatically sync or backup your saves and saved states to the
-            cloud.
-          </p>
           <CloudSyncConfig
             onClick={cloudSyncSet}
             onClickInstall={installRclone}
@@ -407,10 +400,6 @@ function CloudSyncPageConfig() {
       {cloudSyncType === 'Save' && (
         <>
           <Header title="Cloud Backup - Select your provider" />
-          <p className="lead">
-            Automatically sync or backup your saves and saved states to the
-            cloud.
-          </p>
           <CloudSyncConfig
             onClick={cloudSyncSet}
             onClickInstall={installRclone}

@@ -79,9 +79,9 @@ function RomStoragePage() {
       ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
-        let stdout = message.stdout.replace('\n', '');
+        const stdout = message.stdout.replace('\n', '');
 
-        const storagePath = stdout.replaceAll('\\', '/');
+        const storagePath = stdout;
 
         setStatePage({
           ...statePage,
@@ -499,7 +499,7 @@ function RomStoragePage() {
         sdCardValid={sdCardValid}
         showSDCard={system !== 'win32'}
         showInternal={system !== 'win32'}
-        showCustom={true}
+        showCustom={!!(system !== 'win32' && system !== 'darwin')}
         hddrives={system === 'win32' ? hddrives : false}
         reloadSDcard={checkSDValid}
         sdCardName={sdCardName}

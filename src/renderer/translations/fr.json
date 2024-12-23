@@ -226,7 +226,7 @@
     },
     "ControllerLayoutPage": {
       "title": "Configurer la disposition du contrôleur",
-      "description": "Voulez-vous que votre contrôleur soit configuré de manière à ce que les boutons correspondent à la position des contrôleurs d'origine (A est mappé sur B) ou voulez-vous utiliser la disposition de votre contrôleur (A est mappé sur A). Cela changera également les contrôles de la Gameboy, en définissant X comme B et A comme A."
+      "description": "Voulez-vous que votre contrôleur soit configuré de manière à ce que les boutons correspondent à la position des contrôleurs d'origine (A est mappé sur B) ou voulez-vous utiliser la disposition de votre contrôleur (A est mappé sur A)"
     },
     "CopyGamesPage": {
       "title": "",
