@@ -18,12 +18,12 @@ function CHDToolPage() {
 
   const { disabledNext, disabledBack, dom } = statePage;
 
+  const { state, setState } = useContext(GlobalContext);
+  const { system } = state;
   const ipcChannel = window.electron.ipcRenderer;
 
   const runCHD = (data) => {
-    ipcChannel.sendMessage('bash-nolog', [
-      `konsole -e "/bin/bash $HOME/.config/EmuDeck/backend/tools/chdconv/chddeck.sh"`,
-    ]);
+    ipcChannel.sendMessage('emudeck', 'startCompressor');
   };
 
   return (

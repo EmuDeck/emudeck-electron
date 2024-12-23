@@ -227,7 +227,7 @@
     },
     "ControllerLayoutPage": {
       "title": "Configurar Diseño del Controlador",
-      "description": "¿Quieres que tu controlador esté configurado para que los botones coincidan con la posición de los controladores originales (A se mapea a B) o quieres usar el diseño de tu controlador (A se mapea a A)?"
+      "description": "¿Quieres que tu controlador esté configurado para que los botones coincidan con la posición de los controladores originales (A se mapea a B) o quieres usar el diseño de tu controlador (A se mapea a A)?.Ésto tambien cambiara los botones para Gameboy, siendo X = B y A = A"
     },
     "CopyGamesPage": {
       "title": "",

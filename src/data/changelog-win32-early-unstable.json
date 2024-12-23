@@ -1,33 +1,20 @@
 [
   {
-    "title": "Unified UI",
+    "title": "Migration Tool",
     "type": "STEAMOS",
-    "description": "Brand New UI!",
-    "image": "true"
-  },
-
-  {
-    "title": "Remove Steam Rom Manager Cache",
-    "type": "STEAMOS",
-    "description": "Added a new button in Manage Emulators to clear SRM entries",
-    "image": "true"
+    "description": "Now you can migrate your installation from SD card to internal or viceversa",
+    "image": "false"
   },
   {
-    "title": "Multilanguage",
+    "title": "EmuDeck Compressor",
     "type": "STEAMOS",
-    "description": "We've added preliminary support for spanish, french and italian",
-    "image": "true"
+    "description": "Compress all your ISO games with up to 70% lossless compression",
+    "image": "false"
   },
   {
-    "title": "Lime3DS",
+    "title": "Automatic game copy",
     "type": "STEAMOS",
-    "description": "We've added the new 3DS emulator, Lime3DS.",
-    "image": "true"
-  },
-  {
-    "title": "Citra",
-    "type": "STEAMOS",
-    "description": "We've also added PabloMK7's Citra fork. This should work like good old Citra so there's nothing you have to change",
-    "image": "true"
+    "description": "Automatically copy your games to EmuDeck using an USB Drive",
+    "image": "false"
   }
 ]

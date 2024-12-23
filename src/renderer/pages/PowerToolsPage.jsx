@@ -20,7 +20,7 @@ function PowerToolsPage() {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: 'Decky!',
+    sudoPass: 'EmuDecky!',
     disableButton: false,
     pass1: 'a',
     pass2: 'b',
@@ -49,7 +49,7 @@ function PowerToolsPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: system === 'chimeraos' ? 'gamer' : 'Decky!',
+        sudoPass: system === 'chimeraos' ? 'gamer' : 'EmuDecky!',
       });
     }
   };

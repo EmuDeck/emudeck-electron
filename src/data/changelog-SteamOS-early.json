@@ -1,39 +1,8 @@
 [
   {
-    "title": "Unified UI",
+    "title": "ShadPS4",
     "type": "STEAMOS",
-    "description": "Brand New UI!",
-    "image": "true"
-  },
-
-  {
-    "title": "Remove Steam Rom Manager Cache",
-    "type": "STEAMOS",
-    "description": "Added a new button in Manage Emulators to clear SRM entries",
-    "image": "true"
-  },
-  {
-    "title": "Multilanguage",
-    "type": "STEAMOS",
-    "description": "We've added preliminary support for spanish, french and italian",
-    "image": "true"
-  },
-  {
-    "title": "Lime3DS",
-    "type": "STEAMOS",
-    "description": "We've added the new 3DS emulator, Lime3DS.",
-    "image": "true"
-  },
-  {
-    "title": "Citra",
-    "type": "STEAMOS",
-    "description": "We've also added PabloMK7's Citra fork. This should work like good old Citra so there's nothing you have to change",
-    "image": "true"
-  },
-  {
-    "title": "EmuDecky",
-    "type": "STEAMOS",
-    "description": "Now you can update your emulators from Gaming Mode and start / join local co op for Retroarch with just one click",
+    "description": "Now you can emulate PS4 games! Check the compatibility list on https://shadps4.net",
     "image": "true"
   }
 ]
