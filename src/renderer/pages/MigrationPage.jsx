@@ -13,7 +13,7 @@ function MigrationPage() {
   const { t, i18n } = useTranslation();
   const ipcChannel = window.electron.ipcRenderer;
   const { state, setState } = useContext(GlobalContext);
-  const { storage, storagePath, system } = state;
+  const { storage, storagePath } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: storage === null,
     disabledBack: false,
@@ -25,7 +25,6 @@ function MigrationPage() {
     storagePathDestination: undefined,
     modal: undefined,
     dom: undefined,
-    hddrives: [],
   });
   const {
     disabledNext,
@@ -38,7 +37,6 @@ function MigrationPage() {
     storageDestination,
     modal,
     dom,
-    hddrives,
   } = statePage;
 
   const storageSet = (storageName) => {
@@ -131,44 +129,9 @@ function MigrationPage() {
     });
   };
 
-  const getHDdrives = () => {
-    ipcChannel.sendMessage('emudeck', ['getLocations|||getLocations']);
-
-    ipcChannel.once('getLocations', (message) => {
-      const hdrives = message.stdout;
-
-      const hdrivesCleanup = hdrives.replace(/(\r\n|\r|\n)/g, '');
-      const jsonDrives = JSON.parse(hdrivesCleanup);
-
-      setStatePage({
-        ...statePage,
-        modal: false,
-        hddrives: jsonDrives,
-      });
-      console.log({ statePage });
-    });
-  };
-
   // Do we have a valid SD Card?
   useEffect(() => {
-    if (navigator.onLine === false) {
-      navigate('/error');
-      return;
-    }
-
-    if (system !== 'win32') {
-      checkSDValid();
-    } else if (system === 'win32') {
-      const modalData = {
-        active: true,
-        header: <span className="h4">Collecting Drives Names</span>,
-        body: <p>This will take a few seconds. Please wait...</p>,
-        css: 'emumodal--xs',
-      };
-      setStatePage({ ...statePage, modal: modalData });
-      // We get the drives
-      getHDdrives();
-    }
+    checkSDValid();
   }, []);
 
   // We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation
@@ -242,9 +205,6 @@ function MigrationPage() {
         onClick={storageSet}
         onClickStart={startMigration}
         storage={storage}
-        showSDCard={system !== 'win32'}
-        showInternal={system !== 'win32'}
-        hddrives={system === 'win32' ? hddrives : false}
         storageDestination={storageDestination}
         storagePath={storagePath}
         storagePathDestination={storagePathDestination}

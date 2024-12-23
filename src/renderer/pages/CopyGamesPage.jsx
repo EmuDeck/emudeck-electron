@@ -174,7 +174,7 @@ function CopyGamesPage() {
 
   const startCopyGames = () => {
     ipcChannel.sendMessage('emudeck', [
-      `CopyGames|||CopyGames '${storageUSBPath}/EmuDeck'`,
+      `CopyGames|||CopyGames '${storageUSBPath}'`,
     ]);
 
     ipcChannel.once('CopyGames', (message) => {
@@ -192,7 +192,7 @@ function CopyGamesPage() {
       statusCreateStructure: 'waiting',
     });
     ipcChannel.sendMessage('emudeck', [
-      `CreateStructureUSB|||CreateStructureUSB '${storageUSBPath}/EmuDeck'`,
+      `CreateStructureUSB|||CreateStructureUSB '${storageUSBPath}'`,
     ]);
 
     ipcChannel.once('CreateStructureUSB', (message) => {
@@ -223,10 +223,6 @@ function CopyGamesPage() {
                 Don't create any aditional folder or subfolder, if a system
                 doesn't have its own folder, just copy the bios file in the roms
                 folder.
-              </p>
-              <p class="lead">
-                Eject your USB Drive, insert it into another computer and copy
-                your games and bios on the respective folders
               </p>
             </>
           ),
@@ -401,7 +397,7 @@ function CopyGamesPage() {
             onClickCopyGames={startCopyGames}
             storagUSB={storageUSB}
             storageUSBPath={storageUSBPath}
-            statusCopyGames={statusCopyGames}
+            statusCopyGames={system === 'win32' ? true : statusCopyGames}
             statusCreateStructure={statusCreateStructure}
             installFrontends={installFrontends}
           />
@@ -442,27 +438,43 @@ function CopyGamesPage() {
           <Header title="Let's copy your games" />
           <p className="lead">
             First, you will need to gather your ROMs and BIOS. These are
-            copyrighted and EmuDeck will not provide these for legal reasons.
+            copyright and EmuDeck will not provide these for legal reasons.
           </p>
-          <SelectorMenu
-            imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
-            options={[
-              [
-                () => selectMode('manual'),
-                mode === 'manual' ? 'is-selected' : '',
-                'Manual copy',
-                'You will need to copy your games manually',
-                true,
-              ],
-              [
-                () => selectMode('auto'),
-                mode === 'auto' ? 'is-selected' : '',
-                'Automatic import',
-                "You'll need a different computer to create a USB Drive",
-                true,
-              ],
-            ]}
-          />
+          {system !== 'win32' && (
+            <SelectorMenu
+              imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
+              options={[
+                [
+                  () => selectMode('manual'),
+                  mode === 'manual' ? 'is-selected' : '',
+                  'Manual copy',
+                  'You will need to copy your games manually',
+                  true,
+                ],
+                [
+                  () => selectMode('auto'),
+                  mode === 'auto' ? 'is-selected' : '',
+                  'Automatic import',
+                  "You'll need a different computer to create a USB Drive",
+                  true,
+                ],
+              ]}
+            />
+          )}
+          {system === 'win32' && (
+            <SelectorMenu
+              imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
+              options={[
+                [
+                  () => selectMode('manual'),
+                  mode === 'manual' ? 'is-selected' : '',
+                  'Manual copy',
+                  'You will need to copy your games manually',
+                  true,
+                ],
+              ]}
+            />
+          )}
         </>
       )}
 

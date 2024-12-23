@@ -41,7 +41,6 @@ import {
   imgmodel2,
   imgbigpemu,
   imgFrontPegasus,
-  imgshadps4,
 } from 'components/utils/images/images';
 import {
   iconSuccess,
@@ -94,7 +93,6 @@ const images = {
   model2: imgmodel2,
   bigpemu: imgbigpemu,
   pegasus: imgFrontPegasus,
-  shadps4: imgshadps4,
 };
 
 function ManageEmulatorsPage() {
@@ -167,9 +165,6 @@ function ManageEmulatorsPage() {
             return;
           }
           if (item.id === 'bigpemu') {
-            return;
-          }
-          if (item.id === 'shadps4') {
             return;
           }
         }
@@ -403,11 +398,7 @@ function ManageEmulatorsPage() {
                   if (item.id === 'bigpemu') {
                     return;
                   }
-                  if (item.id === 'shadps4') {
-                    return;
-                  }
                 }
-
                 return (
                   <Card
                     css={item.status === true && 'is-selected'}

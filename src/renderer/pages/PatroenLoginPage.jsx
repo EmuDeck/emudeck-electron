@@ -318,7 +318,7 @@ function PatreonLoginPage() {
               disabled={accessAllowed}
             >
               {accessAllowed || t('PatroenLoginPage.login')}{' '}
-              {accessAllowed && `${t('general.loading')}`}
+              {accessAllowed && `- ${t('general.loading')}`}
             </BtnSimple>
             <BtnSimple
               css="btn-simple--3"
@@ -328,15 +328,6 @@ function PatreonLoginPage() {
               aria={t('PatroenLoginPage.change')}
             >
               {t('PatroenLoginPage.change')}
-            </BtnSimple>
-            <BtnSimple
-              css="btn-simple--1"
-              type="button"
-              aria={t('PatroenLoginPage.login')}
-              onClick={() => patreonShowInput()}
-              disabled={accessAllowed}
-            >
-              Login using license
             </BtnSimple>
           </>
         )}

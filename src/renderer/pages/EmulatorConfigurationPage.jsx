@@ -37,7 +37,6 @@ import {
   imgFrontPegasus,
   imgmelonds,
   imgmgba,
-  imgshadps4,
 } from 'components/utils/images/images';
 
 const images = {
@@ -69,7 +68,6 @@ const images = {
   mgba: imgmgba,
   xenia: imgxenia,
   pegasus: imgFrontPegasus,
-  shadps4: imgshadps4,
 };
 
 function EmulatorConfigurationPage() {
