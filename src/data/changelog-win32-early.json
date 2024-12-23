@@ -1,33 +1,26 @@
 [
   {
-    "title": "Unified UI",
+    "title": "ShadPS4",
     "type": "STEAMOS",
-    "description": "Brand New UI!",
-    "image": "true"
-  },
-
-  {
-    "title": "Remove Steam Rom Manager Cache",
-    "type": "STEAMOS",
-    "description": "Added a new button in Manage Emulators to clear SRM entries",
+    "description": "Now you can emulate PS4 games! Check the compatibility list on https://shadps4.net",
     "image": "true"
   },
   {
-    "title": "Multilanguage",
+    "title": "Migration Tool",
     "type": "STEAMOS",
-    "description": "We've added preliminary support for spanish, french and italian",
+    "description": "Now you can migrate your installation from SD card to internal or viceversa",
     "image": "true"
   },
   {
-    "title": "Lime3DS",
+    "title": "EmuDeck Compressor",
     "type": "STEAMOS",
-    "description": "We've added the new 3DS emulator, Lime3DS.",
+    "description": "Compress all your ISO games with up to 70% lossless compression",
     "image": "true"
   },
   {
-    "title": "Citra",
+    "title": "Automatic game copy",
     "type": "STEAMOS",
-    "description": "We've also added PabloMK7's Citra fork, Lime3DS. This should work like good old Citra so there's nothing you have to change",
+    "description": "Automatically copy your games to EmuDeck using an USB Drive",
     "image": "true"
   }
 ]
