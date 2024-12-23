@@ -1,26 +1,20 @@
 [
   {
-    "title": "ShadPS4",
-    "type": "STEAMOS",
-    "description": "Now you can emulate PS4 games! Check the compatibility list on https://shadps4.net",
-    "image": "true"
-  },
-  {
     "title": "Migration Tool",
     "type": "STEAMOS",
     "description": "Now you can migrate your installation from SD card to internal or viceversa",
-    "image": "true"
+    "image": "false"
   },
   {
     "title": "EmuDeck Compressor",
     "type": "STEAMOS",
     "description": "Compress all your ISO games with up to 70% lossless compression",
-    "image": "true"
+    "image": "false"
   },
   {
     "title": "Automatic game copy",
     "type": "STEAMOS",
     "description": "Automatically copy your games to EmuDeck using an USB Drive",
-    "image": "true"
+    "image": "false"
   }
 ]
