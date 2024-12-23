@@ -508,14 +508,14 @@ export default function App() {
         status: true,
         installed: undefined,
         name: 'EmulationStation-DE',
-        desc: 'Add this launcher to your Steam Library. Recommended for big colections',
+        desc: 'Add this launcher to your Steam Library. Recommended for big collections',
       },
       pegasus: {
         id: 'pegasus',
         status: true,
         installed: undefined,
         name: 'Pegasus',
-        desc: 'Add this launcher to your Steam Library. Recommended for big colections. You need to run EmulationStation parsers to show artwork in Pegasus Themes',
+        desc: 'Add this launcher to your Steam Library. Recommended for big collections. You need to run EmulationStation parsers to show artwork in Pegasus Themes',
       },
       deckyromlauncher: {
         id: 'deckyromlauncher',
