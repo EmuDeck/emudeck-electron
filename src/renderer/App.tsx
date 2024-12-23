@@ -519,7 +519,7 @@ export default function App() {
       },
       deckyromlauncher: {
         id: 'deckyromlauncher',
-        status: true,
+        status: false,
         name: 'Retro Library',
         desc: 'A separate Retro Library that does not interfiere with your Games Library. All games and artwork are detected automatically.',
       },
