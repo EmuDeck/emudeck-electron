@@ -36,6 +36,7 @@ import {
   imgsupermodel,
   imgmodel2,
   imgbigpemu,
+  imgshadps4,
 } from 'components/utils/images/images';
 
 const images = {
@@ -66,6 +67,7 @@ const images = {
   supermodel: imgsupermodel,
   model2: imgmodel2,
   bigpemu: imgbigpemu,
+  shadps4: imgshadps4,
 };
 
 function EmulatorSelectorPage() {
@@ -147,6 +149,20 @@ function EmulatorSelectorPage() {
           body: (
             <p>
               Xenia is an experimental Emulator, don't expect a lot of games to
+              work.
+            </p>
+          ),
+        };
+        // setStatePage({ ...statePage, modal: modalData });
+      }
+
+      if (emulatorProp === 'shadps4') {
+        modalData = {
+          active: true,
+          header: <span className="h4">ShadPS4 Emulator - Disclaimer</span>,
+          body: (
+            <p>
+              ShadPS4 is an experimental Emulator, don't expect a lot of games to
               work.
             </p>
           ),

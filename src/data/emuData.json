@@ -447,5 +447,16 @@
     "bios": [],
     "systems": "Atari Jaguar",
     "hotkeys": {}
+  },
+  "shadps4": {
+    "id": "shadps4",
+    "name": "ShadPS4",
+    "code": "ShadPS4",
+    "wiki": "",
+    "description": "shadPS4 is an early PlayStation 4 emulator for Windows, Linux and macOS written in C++.",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "PlayStation 4",
+    "hotkeys": {}
   }
 }
