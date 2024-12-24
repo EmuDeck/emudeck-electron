@@ -426,6 +426,13 @@ export default function App() {
         name: 'ScummVM',
         platforms: 'DOS Games',
       },
+      shadps4: {
+        id: 'shadps4',
+        status: false,
+        installed: undefined,
+        name: 'ShadPS4',
+        platforms: 'Playstation 4',
+      },
       supermodel: {
         id: 'supermodel',
         status: true,
@@ -493,6 +500,11 @@ export default function App() {
       rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
       ryujinx: { id: 'ryujinx', status: false, name: 'Ryujinx' },
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
+      shadps4: {
+        id: 'shadps4',
+        status: false,
+        name: 'ShadPS4',
+      },
       supermodel: { id: 'supermodel', status: true, name: 'Supermodel' },
       vita3k: { id: 'vita3k', status: true, name: 'Vita3K' },
       xenia: { id: 'xenia', status: true, name: 'Xenia' },
