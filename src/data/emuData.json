@@ -447,5 +447,16 @@
     "bios": [],
     "systems": "Atari Jaguar",
     "hotkeys": {}
+  },
+  "shadps4": {
+    "id": "shadps4",
+    "name": "ShadPS4",
+    "code": "ShadPS4",
+    "wiki": "",
+    "description": "ShadPS4 is an early experimental open-source emulator for the PlayStation 4 (PS4).",
+    "special_configuration": "",
+    "bios": [],
+    "systems": "Playstation 4",
+    "hotkeys": {}
   }
 }
