@@ -186,24 +186,6 @@ function CloudSyncPageConfig() {
   };
 
   const installRclone = () => {
-    // OLD TOKEN upload, not needed for now
-    // if (
-    //   confirm(
-    //     'Press OK if you already have CloudSync installed on another EmuDeck installation and you want to sync that installation to this one, if not, press Cancel'
-    //   ) === true
-    // ) {
-    //   ipcChannel.sendMessage('emudeck', [
-    //     `cloud_sync_install_and_config_with_code|||cloud_sync_install_and_config_with_code ${cloudSync}`,
-    //   ]);
-    //   ipcChannel.once('cloud_sync_install_and_config_with_code', (message) => {
-    //     // No versioning found, what to do?
-    //
-    //     alert(
-    //       `All Done, every time you load a game your Game states and Saved games will be synced to ${cloudSync}`
-    //     );
-    //   });
-    // } else {
-
     const modalData = {
       active: true,
       header: <span className="h4">Installing Cloud{cloudSyncType}</span>,
@@ -220,9 +202,12 @@ function CloudSyncPageConfig() {
 
     let cloudFunction;
     cloudFunction = 'cloud_sync_install_and_config ';
+    let patreonToken = localStorage.getItem('patreon_token');
 
+    patreonToken = patreonToken.replaceAll('|', '-');
+    console.log(`cloud_saves|||${cloudFunction} ${cloudSync} ${patreonToken}`);
     ipcChannel.sendMessage('emudeck', [
-      `cloud_saves|||${cloudFunction} ${cloudSync}`,
+      `cloud_saves|||${cloudFunction} ${cloudSync} ${patreonToken}`,
     ]);
 
     ipcChannel.once('cloud_saves', (message) => {
