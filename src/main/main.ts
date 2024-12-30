@@ -24,13 +24,13 @@ const { shouldUseDarkColors } = nativeTheme;
 const os = require('os');
 const fs = require('fs');
 const lsbRelease = require('lsb-release');
-
+const appDataPath = app.getPath('userData');
 const homeUser = os.homedir();
 let allPath;
 if (os.platform().includes('win32')) {
-  allPath = `${homeUser}/AppData/Roaming/EmuDeck/backend/functions/all.ps1`;
+  allPath = `${appDataPath}/backend/functions/all.ps1`;
 } else {
-  allPath = `${homeUser}/.config/EmuDeck/backend/functions/all.sh`;
+  allPath = `${appDataPath}/backend/functions/all.sh`;
 }
 let startCommand;
 let finishCommand;
@@ -48,9 +48,9 @@ export default class AppUpdater {
   }
 }
 
-fs.exists(`${os.homedir()}/emudeck/logs/emudeckApp.log`, (exists: any) => {
+fs.exists(`${appDataPath}/logs/emudeckApp.log`, (exists: any) => {
   if (exists) {
-    fs.unlinkSync(`${os.homedir()}/emudeck/logs/emudeckApp.log`);
+    fs.unlinkSync(`${appDataPath}/logs/emudeckApp.log`);
   }
 });
 
@@ -74,11 +74,10 @@ const logCommand = (
   const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
   const yyyy = today.getFullYear();
   const date = `${mm}/${dd}/${yyyy}`;
-  const homedir = os.homedir();
 
-  let logFile = `${homedir}/emudeck/logs/emudeckApp.log`;
+  let logFile = `${appDataPath}/logs/emudeckApp.log`;
   if (os.platform().includes('win32')) {
-    logFile = `${homedir}\\emudeck\\logs\\emudeckApp.log`;
+    logFile = `${appDataPath}\\logs\\emudeckApp.log`;
   }
 
   const bashCommandString = bashCommand ? bashCommand.toString() : '';
@@ -522,10 +521,7 @@ ipcMain.on('update-check', async (event) => {
         event.reply('update-check-out', ['up-to-date', updateInfo]);
         logCommand(`${JSON.stringify(updateInfo)}`);
       } else {
-        exec(
-          `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/logs/EmudeckUpdate.log`,
-          shellType
-        );
+        exec(`echo "[$(date)] UPDATE: UPDATING!"`, shellType);
         logCommand('UPDATE: UPDATING!');
 
         event.reply('update-check-out', ['update-available', updateInfo]);
@@ -592,10 +588,7 @@ ipcMain.on('update-start', async (event) => {
         event.reply('update-check-out', ['up-to-date', updateInfo]);
         logCommand(`${JSON.stringify(updateInfo)}`);
       } else {
-        exec(
-          `echo "[$(date)] UPDATE: UPDATING!" >> $HOME/emudeck/logs/EmudeckUpdate.log`,
-          shellType
-        );
+        exec(`echo "[$(date)] UPDATE: UPDATING!"`, shellType);
         logCommand('UPDATE: UPDATING!');
 
         event.reply('update-check-out', ['updating', updateInfo]);
@@ -673,7 +666,7 @@ ipcMain.on('version', async (event: any) => {
 //
 ipcMain.on('check-git', async (event) => {
   const backChannel = 'check-git';
-  let bashCommand = `mkdir -p $HOME/emudeck/ && cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree`;
+  let bashCommand = `cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree`;
 
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git rev-parse --is-inside-work-tree`;
@@ -768,7 +761,7 @@ ipcMain.on('isGameMode', async (event) => {
 
 // Other
 ipcMain.on('clean-log', async () => {
-  exec(`echo "[$(date)] App Installed" > $HOME/emudeck/logs/EmudeckApp.log`, {
+  exec(`echo "[$(date)] App Installed"`, {
     shell: '/bin/bash',
   });
 });
@@ -824,9 +817,9 @@ ipcMain.on('saveSettings', async (event, command) => {
 
   const homedir = require('os').homedir();
 
-  let settingsFile = `${homedir}/.config/EmuDeck/settings.json`;
+  let settingsFile = `${appDataPath}/settings.json`;
   if (os.platform().includes('win32')) {
-    settingsFile = `${homedir}/AppData/Roaming/EmuDeck/settings.json`;
+    settingsFile = `${appDataPath}/settings.json`;
   }
 
   fs.writeFile(settingsFile, jsonContent, 'utf8', function (err: any) {
@@ -842,7 +835,7 @@ ipcMain.on('check-versions', async (event) => {
   const backChannel = 'check-versions';
   let jsonPath = `${userHomeDir}/.config/EmuDeck/backend/versions.json`;
   if (os.platform().includes('win32')) {
-    jsonPath = `${userHomeDir}/AppData/Roaming/EmuDeck/backend/versions.json`;
+    jsonPath = `${appDataPath}/backend/versions.json`;
   }
   try {
     const data = fs.readFileSync(jsonPath);
@@ -886,7 +879,7 @@ ipcMain.on('get-store-featured', async (event) => {
   let jsonPath;
 
   if (os.platform().includes('win32')) {
-    jsonPath = `${userHomeDir}/AppData/Roaming/EmuDeck/backend/store/featured.json`;
+    jsonPath = `${appDataPath}/backend/store/featured.json`;
   } else {
     jsonPath = `${userHomeDir}/.config/EmuDeck/backend/store/featured.json`;
   }
@@ -907,9 +900,9 @@ ipcMain.on('get-store', async (event) => {
 
   const buildJsonStore = async () => {
     // GB HomebrewGames
-    let dir = `${os.homedir()}/emudeck/store/`;
+    let dir = `${appDataPath}/store/`;
     if (os.platform().includes('win32')) {
-      dir = `${os.homedir()}/AppData/Roaming/EmuDeck/store/`;
+      dir = `${appDataPath}/store/`;
     }
 
     let jsonArray: any = [];
@@ -935,9 +928,9 @@ ipcMain.on('get-store', async (event) => {
         resolve(storeJson);
       });
     }).then(async (storeJson: any) => {
-      let dir = `${os.homedir()}/emudeck/feeds/`;
+      let dir = `${appDataPath}/feeds/`;
       if (os.platform().includes('win32')) {
-        dir = `${os.homedir()}/AppData/Roaming/EmuDeck/feeds/`;
+        dir = `${appDataPath}/feeds/`;
       }
       let jsonArray: any = [];
 
@@ -974,9 +967,9 @@ ipcMain.on('get-store', async (event) => {
           resolve(fullJson);
         });
       }).then((fullJson: any) => {
-        let file = `${os.homedir()}/emudeck/store/store.json`;
+        let file = `${appDataPath}/store/store.json`;
         if (os.platform().includes('win32')) {
-          file = `${os.homedir()}/AppData/Roaming/EmuDeck/store/store.json`;
+          file = `${appDataPath}/store/store.json`;
         }
 
         fs.writeFileSync(file, JSON.stringify(fullJson));
@@ -986,9 +979,9 @@ ipcMain.on('get-store', async (event) => {
 
   buildJsonStore()
     .then(() => {
-      let jsonPath = `${userHomeDir}/emudeck/store/store.json`;
+      let jsonPath = `${appDataPath}/store/store.json`;
       if (os.platform().includes('win32')) {
-        jsonPath = `${os.homedir()}/AppData/Roaming/EmuDeck/store/store.json`;
+        jsonPath = `${appDataPath}/store/store.json`;
       }
       const data = fs.readFileSync(jsonPath);
       const json = JSON.parse(data);
@@ -1005,11 +998,11 @@ ipcMain.on('build-store', async (event) => {
     // GB HomebrewGames
     let dir: any;
     if (os.platform().includes('win32')) {
-      dir = `${os.homedir()}/AppData/Roaming/EmuDeck/backend/store/${system}/`;
+      dir = `${appDataPath}/backend/store/${system}/`;
     } else {
-      dir = `${os.homedir()}/.config/EmuDeck/backend/store/${system}/`;
+      dir = `${appDataPath}/backend/store/${system}/`;
     }
-    const dirStore = `${os.homedir()}/emudeck/store`;
+    const dirStore = `${appDataPath}/store`;
 
     if (!fs.existsSync(dirStore)) {
       fs.mkdirSync(dirStore);
@@ -1039,9 +1032,9 @@ ipcMain.on('build-store', async (event) => {
         };
         resolve(storeJson);
       }).then((storeJson: any) => {
-        let file = `${os.homedir()}/emudeck/store/${system}.json`;
+        let file = `${appDataPath}/store/${system}.json`;
         if (os.platform().includes('win32')) {
-          file = `${os.homedir()}/AppData/Roaming/EmuDeck/store/${system}.json`;
+          file = `${appDataPath}/store/${system}.json`;
         }
 
         fs.writeFileSync(file, JSON.stringify(storeJson));
@@ -1168,7 +1161,7 @@ ipcMain.on('validate-7Zip', async (event) => {
   const homeUser = os.homedir();
   const path1 = `${programFilesPath}/7-zip`;
   const path2 = `${programFilesPath} (x86)/7-zip`;
-  const path3 = `${homeUser}/AppData/Roaming/EmuDeck/backend/wintools/7z.exe`;
+  const path3 = `${appDataPath}/backend/wintools/7z.exe`;
   if (fs.existsSync(path1)) {
     event.reply(backChannel, {
       stdout: true,
@@ -1292,7 +1285,7 @@ ipcMain.on('run-app', async (event, appPath) => {
     // externalApp = spawn('xdg-open', [appPathFixed]);
   }
 
-  fs.writeFileSync(`${os.homedir()}/emudeck/logs/run-app.log`, appPathFixed);
+  fs.writeFileSync(`${appDataPath}/logs/run-app.log`, appPathFixed);
 
   externalApp.on('error', (err: any) => {
     event.reply('run-app', err);
