@@ -698,7 +698,7 @@ ipcMain.on('clone', async (event, branch) => {
   const backChannel = 'clone';
   let bashCommand;
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:USERPROFILE/EmuDeck/logs"  -ErrorAction SilentlyContinue; Start-Transcript "$env:USERPROFILE/EmuDeck/logs/git.log"; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:APPDATA/EmuDeck/logs"  -ErrorAction SilentlyContinue; Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true`;
   } else {
     bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && mkdir -p ~/emudeck/logs && git clone --no-single-branch --depth=1 ${repo} ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branchGIT} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
   }
@@ -714,7 +714,7 @@ ipcMain.on('pull', async (event, branch) => {
   let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:USERPROFILE/EmuDeck/logs/git.log"; git reset --hard ; git clean -fd ; git checkout ${branchGIT} ; git pull --allow-unrelated-histories -X theirs;cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit; Stop-Transcript; "}`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git reset --hard ; git clean -fd ; git checkout ${branchGIT} ; git pull --allow-unrelated-histories -X theirs;cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit; Stop-Transcript; "}`;
   }
 
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
@@ -907,7 +907,11 @@ ipcMain.on('get-store', async (event) => {
 
   const buildJsonStore = async () => {
     // GB HomebrewGames
-    const dir = `${os.homedir()}/emudeck/store/`;
+    let dir = `${os.homedir()}/emudeck/store/`;
+    if (os.platform().includes('win32')) {
+      dir = `${os.homedir()}/AppData/Roaming/EmuDeck/store/`;
+    }
+
     let jsonArray: any = [];
 
     await new Promise((resolve: any, reject: any) => {
@@ -931,7 +935,10 @@ ipcMain.on('get-store', async (event) => {
         resolve(storeJson);
       });
     }).then(async (storeJson: any) => {
-      const dir = `${os.homedir()}/emudeck/feeds/`;
+      let dir = `${os.homedir()}/emudeck/feeds/`;
+      if (os.platform().includes('win32')) {
+        dir = `${os.homedir()}/AppData/Roaming/EmuDeck/feeds/`;
+      }
       let jsonArray: any = [];
 
       await new Promise((resolve: any, reject: any) => {
@@ -967,17 +974,22 @@ ipcMain.on('get-store', async (event) => {
           resolve(fullJson);
         });
       }).then((fullJson: any) => {
-        fs.writeFileSync(
-          `${os.homedir()}/emudeck/store/store.json`,
-          JSON.stringify(fullJson)
-        );
+        let file = `${os.homedir()}/emudeck/store/store.json`;
+        if (os.platform().includes('win32')) {
+          file = `${os.homedir()}/AppData/Roaming/EmuDeck/store/store.json`;
+        }
+
+        fs.writeFileSync(file, JSON.stringify(fullJson));
       });
     });
   };
 
   buildJsonStore()
     .then(() => {
-      const jsonPath = `${userHomeDir}/emudeck/store/store.json`;
+      let jsonPath = `${userHomeDir}/emudeck/store/store.json`;
+      if (os.platform().includes('win32')) {
+        jsonPath = `${os.homedir()}/AppData/Roaming/EmuDeck/store/store.json`;
+      }
       const data = fs.readFileSync(jsonPath);
       const json = JSON.parse(data);
       event.reply(backChannel, json);
@@ -1027,10 +1039,12 @@ ipcMain.on('build-store', async (event) => {
         };
         resolve(storeJson);
       }).then((storeJson: any) => {
-        fs.writeFileSync(
-          `${os.homedir()}/emudeck/store/${system}.json`,
-          JSON.stringify(storeJson)
-        );
+        let file = `${os.homedir()}/emudeck/store/${system}.json`;
+        if (os.platform().includes('win32')) {
+          file = `${os.homedir()}/AppData/Roaming/EmuDeck/store/${system}.json`;
+        }
+
+        fs.writeFileSync(file, JSON.stringify(storeJson));
       });
     });
     // buildJsonStore();
