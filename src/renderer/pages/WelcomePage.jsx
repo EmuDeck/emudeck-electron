@@ -192,8 +192,8 @@ function WelcomePage() {
               {news &&
                 news.map((item) => {
                   return (
-                    <Card css="is-selected">
-                      <a target="blank" href={item.link}>
+                    <Card key={item.link} css="is-selected">
+                      <a target={item.target} href={item.link}>
                         <span class="h5">{item.title}</span>
                         <p>{item.desc}</p>
                         <img src={item.img} />
