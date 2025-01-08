@@ -90,6 +90,230 @@ function CheckUpdatePage() {
     }
   };
 
+  const updateFiles = () => {
+    // Get latest settings versions in storage
+    const currentVersions = JSON.parse(
+      localStorage.getItem('current_versions')
+    );
+    if (currentVersions) {
+      setStateCurrentConfigs({ ...currentVersions });
+    }
+
+    const settingsStorage = JSON.parse(
+      localStorage.getItem('settings_emudeck')
+    );
+
+    if (settingsStorage) {
+      const shadersStored = settingsStorage.shaders;
+      const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
+      const achievementsStored = settingsStorage.achievements;
+      delete settingsStorage.installEmus.esde;
+      delete settingsStorage.installEmus.pegasus;
+      delete settingsStorage.installEmus.primehacks;
+      delete settingsStorage.installEmus.melonDS;
+      delete settingsStorage.installEmus.cemunative;
+      delete settingsStorage.overwriteConfigEmus.primehacks;
+      delete settingsStorage.installEmus.ares;
+      delete settingsStorage.overwriteConfigEmus.ares;
+      delete settingsStorage.android.installEmus.citrammj;
+      delete settingsStorage.android.overwriteConfigEmus.citra;
+      delete settingsStorage.android.overwriteConfigEmus.citrammj;
+      const installEmusStored = settingsStorage.installEmus;
+      const installFrontendsStored = settingsStorage.installFrontends;
+
+      if (system === 'darwin') {
+        delete settingsStorage.installEmus.ares;
+        delete settingsStorage.installEmus.cemu;
+        delete settingsStorage.installEmus.dolphin;
+        delete settingsStorage.installEmus.duckstation;
+        delete settingsStorage.installEmus.flycast;
+        delete settingsStorage.installEmus.mame;
+        delete settingsStorage.installEmus.melonds;
+        delete settingsStorage.installEmus.mgba;
+        delete settingsStorage.installEmus.pcsx2;
+        delete settingsStorage.installEmus.ppsspp;
+        delete settingsStorage.installEmus.primehack;
+        delete settingsStorage.installEmus.rmg;
+        delete settingsStorage.installEmus.rpcs3;
+        delete settingsStorage.installEmus.ryujinx;
+        delete settingsStorage.installEmus.scummvm;
+        delete settingsStorage.installEmus.vita3k;
+        delete settingsStorage.installEmus.xemu;
+        delete settingsStorage.installEmus.xenia;
+        delete settingsStorage.installEmus.yuzu;
+
+        delete settingsStorage.overwriteConfigEmus.ares;
+        delete settingsStorage.overwriteConfigEmus.cemu;
+        delete settingsStorage.overwriteConfigEmus.citra;
+        delete settingsStorage.overwriteConfigEmus.dolphin;
+        delete settingsStorage.overwriteConfigEmus.duckstation;
+        delete settingsStorage.overwriteConfigEmus.flycast;
+        delete settingsStorage.overwriteConfigEmus.mame;
+        delete settingsStorage.overwriteConfigEmus.melonds;
+        delete settingsStorage.overwriteConfigEmus.mgba;
+        delete settingsStorage.overwriteConfigEmus.pcsx2;
+        delete settingsStorage.overwriteConfigEmus.ppsspp;
+        delete settingsStorage.overwriteConfigEmus.primehack;
+        delete settingsStorage.overwriteConfigEmus.rmg;
+        delete settingsStorage.overwriteConfigEmus.rpcs3;
+        delete settingsStorage.overwriteConfigEmus.ryujinx;
+        delete settingsStorage.overwriteConfigEmus.scummvm;
+        delete settingsStorage.overwriteConfigEmus.vita3k;
+        delete settingsStorage.overwriteConfigEmus.xemu;
+        delete settingsStorage.overwriteConfigEmus.xenia;
+        delete settingsStorage.overwriteConfigEmus.yuzu;
+      }
+
+      if (!settingsStorage.overwriteConfigEmus.esde) {
+        settingsStorage.overwriteConfigEmus.esde = {
+          esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
+        };
+      }
+
+      if (
+        settingsStorage.emulatorAlternative &&
+        settingsStorage.emulatorAlternative.nds === 'melonDS'
+      ) {
+        delete settingsStorage.emulatorAlternative.nds;
+        settingsStorage.emulatorAlternative.nds = 'melonds';
+      }
+
+      if (settingsStorage.themeESDE === 'EPICNOIR') {
+        delete settingsStorage.themeESDE;
+        settingsStorage.themeESDE = [
+          'https://github.com/anthonycaccese/epic-noir-revisited-es-de.git',
+          'epic-noir-revisited-es-de',
+        ];
+      }
+
+      if (settingsStorage.themePegasus === 'gameOS') {
+        delete settingsStorage.themePegasus;
+        settingsStorage.themePegasus = [
+          'https://github.com/PlayingKarrde/gameOS.git',
+          'gameOS',
+        ];
+      }
+      // Theres probably a better way to do this...
+
+      ipcChannel.sendMessage('version');
+
+      ipcChannel.once('version-out', (version) => {
+        ipcChannel.sendMessage('system-info-in');
+        ipcChannel.once('system-info-out', (platform) => {
+          console.log({
+            system: platform,
+            version: version[0],
+            gamemode: version[1],
+          });
+          let systemNameValue;
+          switch (platform) {
+            case 'darwin':
+              systemNameValue = '\uF8FF';
+              break;
+            case 'win32':
+              systemNameValue = 'Windows';
+              break;
+            case 'SteamOS':
+              systemNameValue = 'SteamOS';
+              break;
+            case 'ChimeraOS':
+              systemNameValue = 'ChimeraOS';
+              break;
+            case 'chimeraOS':
+              systemNameValue = 'ChimeraOS';
+              break;
+            case '':
+              systemNameValue = 'ERROR';
+              break;
+            case null:
+              systemNameValue = 'ERROR';
+              break;
+            case undefined:
+              systemNameValue = 'ERROR';
+              break;
+            default:
+              systemNameValue = 'Linux';
+              break;
+          }
+          setState({
+            ...state,
+            ...settingsStorage,
+            android: { ...android },
+            installEmus: { ...installEmus, ...installEmusStored },
+            installFrontends: {
+              ...installFrontends,
+            },
+            overwriteConfigEmus: {
+              ...overwriteConfigEmus,
+              ...overwriteConfigEmusStored,
+            },
+            achievements: {
+              ...achievements,
+              ...achievementsStored,
+            },
+            shaders: { ...shaders, ...shadersStored },
+            system: platform,
+            systemName: systemNameValue,
+            version: version[0],
+            gamemode: version[1],
+            branch,
+          });
+        });
+      });
+    } else {
+      ipcChannel.sendMessage('version');
+      ipcChannel.once('version-out', (version) => {
+        ipcChannel.sendMessage('system-info-in');
+        ipcChannel.once('system-info-out', (platform) => {
+          console.log({
+            system: platform,
+            version: version[0],
+            gamemode: version[1],
+            branch,
+          });
+          let systemNameValue;
+          switch (platform) {
+            case 'darwin':
+              systemNameValue = '\uF8FF';
+              break;
+            case 'win32':
+              systemNameValue = 'Windows';
+              break;
+            case 'SteamOS':
+              systemNameValue = 'SteamOS';
+              break;
+            case 'ChimeraOS':
+              systemNameValue = 'ChimeraOS';
+              break;
+            case 'chimeraOS':
+              systemNameValue = 'ChimeraOS';
+              break;
+            case '':
+              systemNameValue = 'ERROR';
+              break;
+            case null:
+              systemNameValue = 'ERROR';
+              break;
+            case undefined:
+              systemNameValue = 'ERROR';
+              break;
+            default:
+              systemNameValue = 'Linux';
+              break;
+          }
+          setState({
+            ...state,
+            system: platform,
+            systemName: systemNameValue,
+            version: version[0],
+            gamemode: version[1],
+            branch,
+          });
+        });
+      });
+    }
+  };
+
   useEffect(() => {
     // Update timeout + Force clone check
 
@@ -184,6 +408,7 @@ function CheckUpdatePage() {
         }
       });
     } else {
+      updateFiles();
       clearTimeout(updateTimeOut);
       setStatePage({
         ...statePage,
@@ -222,230 +447,6 @@ function CheckUpdatePage() {
         ...statePage,
         update: 'up-to-date',
       });
-    };
-
-    const updateFiles = () => {
-      // Get latest settings versions in storage
-      const currentVersions = JSON.parse(
-        localStorage.getItem('current_versions')
-      );
-      if (currentVersions) {
-        setStateCurrentConfigs({ ...currentVersions });
-      }
-
-      const settingsStorage = JSON.parse(
-        localStorage.getItem('settings_emudeck')
-      );
-
-      if (settingsStorage) {
-        const shadersStored = settingsStorage.shaders;
-        const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
-        const achievementsStored = settingsStorage.achievements;
-        delete settingsStorage.installEmus.esde;
-        delete settingsStorage.installEmus.pegasus;
-        delete settingsStorage.installEmus.primehacks;
-        delete settingsStorage.installEmus.melonDS;
-        delete settingsStorage.installEmus.cemunative;
-        delete settingsStorage.overwriteConfigEmus.primehacks;
-        delete settingsStorage.installEmus.ares;
-        delete settingsStorage.overwriteConfigEmus.ares;
-        delete settingsStorage.android.installEmus.citrammj;
-        delete settingsStorage.android.overwriteConfigEmus.citra;
-        delete settingsStorage.android.overwriteConfigEmus.citrammj;
-        const installEmusStored = settingsStorage.installEmus;
-        const installFrontendsStored = settingsStorage.installFrontends;
-
-        if (system === 'darwin') {
-          delete settingsStorage.installEmus.ares;
-          delete settingsStorage.installEmus.cemu;
-          delete settingsStorage.installEmus.dolphin;
-          delete settingsStorage.installEmus.duckstation;
-          delete settingsStorage.installEmus.flycast;
-          delete settingsStorage.installEmus.mame;
-          delete settingsStorage.installEmus.melonds;
-          delete settingsStorage.installEmus.mgba;
-          delete settingsStorage.installEmus.pcsx2;
-          delete settingsStorage.installEmus.ppsspp;
-          delete settingsStorage.installEmus.primehack;
-          delete settingsStorage.installEmus.rmg;
-          delete settingsStorage.installEmus.rpcs3;
-          delete settingsStorage.installEmus.ryujinx;
-          delete settingsStorage.installEmus.scummvm;
-          delete settingsStorage.installEmus.vita3k;
-          delete settingsStorage.installEmus.xemu;
-          delete settingsStorage.installEmus.xenia;
-          delete settingsStorage.installEmus.yuzu;
-
-          delete settingsStorage.overwriteConfigEmus.ares;
-          delete settingsStorage.overwriteConfigEmus.cemu;
-          delete settingsStorage.overwriteConfigEmus.citra;
-          delete settingsStorage.overwriteConfigEmus.dolphin;
-          delete settingsStorage.overwriteConfigEmus.duckstation;
-          delete settingsStorage.overwriteConfigEmus.flycast;
-          delete settingsStorage.overwriteConfigEmus.mame;
-          delete settingsStorage.overwriteConfigEmus.melonds;
-          delete settingsStorage.overwriteConfigEmus.mgba;
-          delete settingsStorage.overwriteConfigEmus.pcsx2;
-          delete settingsStorage.overwriteConfigEmus.ppsspp;
-          delete settingsStorage.overwriteConfigEmus.primehack;
-          delete settingsStorage.overwriteConfigEmus.rmg;
-          delete settingsStorage.overwriteConfigEmus.rpcs3;
-          delete settingsStorage.overwriteConfigEmus.ryujinx;
-          delete settingsStorage.overwriteConfigEmus.scummvm;
-          delete settingsStorage.overwriteConfigEmus.vita3k;
-          delete settingsStorage.overwriteConfigEmus.xemu;
-          delete settingsStorage.overwriteConfigEmus.xenia;
-          delete settingsStorage.overwriteConfigEmus.yuzu;
-        }
-
-        if (!settingsStorage.overwriteConfigEmus.esde) {
-          settingsStorage.overwriteConfigEmus.esde = {
-            esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
-          };
-        }
-
-        if (
-          settingsStorage.emulatorAlternative &&
-          settingsStorage.emulatorAlternative.nds === 'melonDS'
-        ) {
-          delete settingsStorage.emulatorAlternative.nds;
-          settingsStorage.emulatorAlternative.nds = 'melonds';
-        }
-
-        if (settingsStorage.themeESDE === 'EPICNOIR') {
-          delete settingsStorage.themeESDE;
-          settingsStorage.themeESDE = [
-            'https://github.com/anthonycaccese/epic-noir-revisited-es-de.git',
-            'epic-noir-revisited-es-de',
-          ];
-        }
-
-        if (settingsStorage.themePegasus === 'gameOS') {
-          delete settingsStorage.themePegasus;
-          settingsStorage.themePegasus = [
-            'https://github.com/PlayingKarrde/gameOS.git',
-            'gameOS',
-          ];
-        }
-        // Theres probably a better way to do this...
-
-        ipcChannel.sendMessage('version');
-
-        ipcChannel.once('version-out', (version) => {
-          ipcChannel.sendMessage('system-info-in');
-          ipcChannel.once('system-info-out', (platform) => {
-            console.log({
-              system: platform,
-              version: version[0],
-              gamemode: version[1],
-            });
-            let systemNameValue;
-            switch (platform) {
-              case 'darwin':
-                systemNameValue = '\uF8FF';
-                break;
-              case 'win32':
-                systemNameValue = 'Windows';
-                break;
-              case 'SteamOS':
-                systemNameValue = 'SteamOS';
-                break;
-              case 'ChimeraOS':
-                systemNameValue = 'ChimeraOS';
-                break;
-              case 'chimeraOS':
-                systemNameValue = 'ChimeraOS';
-                break;
-              case '':
-                systemNameValue = 'ERROR';
-                break;
-              case null:
-                systemNameValue = 'ERROR';
-                break;
-              case undefined:
-                systemNameValue = 'ERROR';
-                break;
-              default:
-                systemNameValue = 'Linux';
-                break;
-            }
-            setState({
-              ...state,
-              ...settingsStorage,
-              android: { ...android },
-              installEmus: { ...installEmus, ...installEmusStored },
-              installFrontends: {
-                ...installFrontends,
-              },
-              overwriteConfigEmus: {
-                ...overwriteConfigEmus,
-                ...overwriteConfigEmusStored,
-              },
-              achievements: {
-                ...achievements,
-                ...achievementsStored,
-              },
-              shaders: { ...shaders, ...shadersStored },
-              system: platform,
-              systemName: systemNameValue,
-              version: version[0],
-              gamemode: version[1],
-              branch,
-            });
-          });
-        });
-      } else {
-        ipcChannel.sendMessage('version');
-        ipcChannel.once('version-out', (version) => {
-          ipcChannel.sendMessage('system-info-in');
-          ipcChannel.once('system-info-out', (platform) => {
-            console.log({
-              system: platform,
-              version: version[0],
-              gamemode: version[1],
-              branch,
-            });
-            let systemNameValue;
-            switch (platform) {
-              case 'darwin':
-                systemNameValue = '\uF8FF';
-                break;
-              case 'win32':
-                systemNameValue = 'Windows';
-                break;
-              case 'SteamOS':
-                systemNameValue = 'SteamOS';
-                break;
-              case 'ChimeraOS':
-                systemNameValue = 'ChimeraOS';
-                break;
-              case 'chimeraOS':
-                systemNameValue = 'ChimeraOS';
-                break;
-              case '':
-                systemNameValue = 'ERROR';
-                break;
-              case null:
-                systemNameValue = 'ERROR';
-                break;
-              case undefined:
-                systemNameValue = 'ERROR';
-                break;
-              default:
-                systemNameValue = 'Linux';
-                break;
-            }
-            setState({
-              ...state,
-              system: platform,
-              systemName: systemNameValue,
-              version: version[0],
-              gamemode: version[1],
-              branch,
-            });
-          });
-        });
-      }
     };
 
     // ipcChannel.sendMessage('clean-log');
@@ -628,7 +629,11 @@ function CheckUpdatePage() {
   useEffect(() => {
     console.log({ downloadComplete });
     if (downloadComplete === true) {
-      navigate('/welcome');
+      if (navigator.onLine) {
+        navigate('/welcome');
+      } else {
+        navigate('/settings');
+      }
     }
   }, [downloadComplete]);
 
