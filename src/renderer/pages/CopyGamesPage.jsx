@@ -543,53 +543,27 @@ function CopyGamesPage() {
 
       {statusCopyGames === 'final' && (
         <>
-          <Header title="How would you like to launch your games?" />
+          <Header title="How to launch your games?" />
 
           <Main>
-            {frontend === undefined && (
-              <SelectorMenu
-                imgs={[[imgSTEAM, frontend === undefined ? '' : 'is-hidden']]}
-                options={[
-                  [
-                    () => selectFrontend('steam'),
-                    frontend === 'steam' ? 'is-selected' : '',
-                    'Steam Library',
-                    'Recommended for small libraries',
-                    true,
-                  ],
-                  [
-                    () => selectFrontend('esde'),
-                    frontend === 'esde' ? 'is-selected' : '',
-                    `Emulation Station DE ${
-                      state.mode === 'easy' ? ' ' : 'or Pegasus'
-                    } `,
-                    'Recommended for huge libraries',
-                    true,
-                  ],
-                ]}
-              />
-            )}
-            {frontend === 'steam' && (
+            {installFrontends.steam.status && (
               <>
                 <p className="lead">
                   Steam ROM Manager or SRM is a tool that will add your Games,
-                  Emulators and other launchers like EmulationStationDE or
-                  Pegasus to your Steam Library so you can launch them in Game
+                  Emulators to your Steam Library so you can launch them in Game
                   Mode
                 </p>
 
                 <Iframe src="https://www.youtube-nocookie.com/embed/BsqWFHPp5UU?autoplay=1&playlist=BsqWFHPp5UU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
               </>
             )}
-            {frontend === 'esde' && (
+            {installFrontends.esde.status && (
               <>
                 <p className="lead">
-                  You need to launch Steam ROM Manager to add EmulatioStation DE
-                  to your Steam Library. Make sure to disable all parsers except
-                  the one for EmulationStation DE.
+                  We've added EmulationStation DE (ES-DE) to your Steam Library.
+                  Finish the installation and then go back to gaming mode, look
+                  for ES-DE in the Non Steam Games tab
                 </p>
-
-                <Iframe src="https://www.youtube-nocookie.com/embed/7a4dMb9NLRs?autoplay=1&playlist=7a4dMb9NLRs&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
               </>
             )}
           </Main>
@@ -607,7 +581,7 @@ function CopyGamesPage() {
               Skip
             </BtnSimple>
           ))}
-        {statusCopyGames === 'final' && frontend && (
+        {statusCopyGames === 'final' && installFrontends.steam.status && (
           <BtnSimple
             css="btn-simple--1"
             type="button"
@@ -617,6 +591,27 @@ function CopyGamesPage() {
             Launch Steam ROM Manager
           </BtnSimple>
         )}
+        {statusCopyGames === 'final' && installFrontends.esde.status && (
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            aria="Go Next"
+            onClick={() => navigate('/hotkeys')}
+          >
+            Next
+          </BtnSimple>
+        )}
+        {statusCopyGames === 'final' &&
+          installFrontends.deckyromlauncher.status && (
+            <BtnSimple
+              css="btn-simple--2"
+              type="button"
+              aria="Go Next"
+              onClick={() => navigate('/hotkeys')}
+            >
+              Next
+            </BtnSimple>
+          )}
         {statusCopyGames === true && (
           <BtnSimple
             css="btn-simple--1"
