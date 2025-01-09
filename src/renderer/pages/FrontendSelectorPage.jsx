@@ -1,266 +1,283 @@
 import { useTranslation } from 'react-i18next';
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import { GlobalContext } from 'context/globalContext';
-import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
-import EmuModal from 'components/molecules/EmuModal/EmuModal';
-import FrontendSelector from 'components/organisms/Wrappers/FrontendSelector';
-import { BtnSimple } from 'getbasecore/Atoms';
+import Main from 'components/organisms/Main/Main';
+import { Img } from 'getbasecore/Atoms';
+
+import { iconSuccess, iconDanger } from 'components/utils/images/icons';
 import {
-  themesPegasusGameOS,
-  rbsimple2,
+  imgESDE,
   imgSTEAM,
   imgDeckyRomLauncher,
 } from 'components/utils/images/images';
 
-const images = {
-  esde: rbsimple2,
-  pegasus: themesPegasusGameOS,
-  steam: imgSTEAM,
-  deckyromlauncher: imgDeckyRomLauncher,
-};
-
 function FrontendSelectorPage() {
   const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
-  const { device, installFrontends, mode, system, branch } = state;
 
-  const [statePage, setStatePage] = useState({
-    disabledNext: false,
-    disabledBack: false,
-    data: '',
-    modal: false,
-    lastSelected: undefined,
-    dom: undefined,
-  });
-  const { disabledNext, disabledBack, modal, lastSelected, dom } = statePage;
+  const { installFrontends, branch } = state;
+  const { steam, deckyromlauncher, esde } = installFrontends;
 
-  const closeModal = () => {
-    setStatePage({ ...statePage, modal: false });
-  };
-
-  const setAlternativeFrontend = (frontendToEnable, frontendToDisable) => {
-    if (frontendToEnable !== 'both') {
-      setState({
-        ...state,
-        installFrontends: {
-          ...installFrontends,
-          [frontendToEnable]: {
-            ...installFrontends[frontendToEnable],
-            status: true,
-          },
-          [frontendToDisable]: {
-            ...installFrontends[frontendToDisable],
-            status: false,
-          },
-        },
-      });
-    }
-
-    closeModal();
-  };
-
-  let modalData = {};
-  const toggleEmus = (frontendProp) => {
-    console.log(installFrontends[frontendProp]);
-
-    const { status } = installFrontends[frontendProp];
-    const enable = !status;
-    const systemsValue = {};
-    const systemsOption = {};
-
-    // Enabling
-    if (enable) {
-      console.log('enable');
-    } else {
-      if (frontendProp === 'steam') {
-        const modalData = {
-          active: true,
-          header: <span className="h4">You still need Steam</span>,
-          css: 'emumodal--sm',
-          body: (
-            <p>
-              Remember that even if you don't want to add your games to your
-              Steam Library, you still need to run Steam Rom Manager at the end
-              on the installation to add the other Frontends to Steam and you
-              have to launch them from there so things like CloudSync and
-              controllers hotkeys work.
-            </p>
-          ),
-        };
-        setStatePage({
-          ...statePage,
-          modal: modalData,
-          lastSelected: frontendProp,
-        });
-      }
-
-      console.log('disable');
-    }
-
+  const enableESDE = () => {
     setState({
       ...state,
       installFrontends: {
         ...installFrontends,
-        [frontendProp]: {
-          ...installFrontends[frontendProp],
-          status: !status,
+        steam: {
+          ...steam,
+          status: false,
+        },
+        deckyromlauncher: {
+          ...deckyromlauncher,
+          status: false,
+        },
+        esde: {
+          ...esde,
+          status: true,
         },
       },
     });
   };
 
-  const [previousState, setPreviousState] = useState(installFrontends);
-  const [changedKeys, setChangedKeys] = useState({});
-  const emuModified = '';
-  useEffect(() => {
-    let emuOption1;
-    let emuOption2;
-    let emuID1;
-    let emuID2;
-    let system;
-    let multifrontendName;
-    let multifrontendID;
+  const enableRL = () => {
+    setState({
+      ...state,
+      installFrontends: {
+        ...installFrontends,
+        steam: {
+          ...steam,
+          status: false,
+        },
+        deckyromlauncher: {
+          ...deckyromlauncher,
+          status: true,
+        },
+        esde: {
+          ...esde,
+          status: false,
+        },
+      },
+    });
+  };
 
-    const keys = Object.keys(previousState);
-    const changed = {};
-
-    for (const key of keys) {
-      if (previousState[key] !== installFrontends[key]) {
-        changed[key] = installFrontends[key];
-      }
-    }
-
-    setChangedKeys(changed);
-
-    setPreviousState(installFrontends);
-
-    if (installFrontends.pegasus.status && installFrontends.esde.status) {
-      if (lastSelected === 'pegasus' || lastSelected === 'esde') {
-        emuOption1 = 'Pegasus';
-        emuOption2 = 'Emulation Station DE';
-        emuID1 = 'pegasus';
-        emuID2 = 'esde';
-        system = 'pegasus';
-        modalData = {
-          active: true,
-          body: (
-            <>
-              <p>You've selected two frontends that are similar</p>
-              <div className="h5">
-                <strong>Pegasus</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>Lorem Ipsum</li>
-              </ol>
-              <div className="h5">
-                <strong>Emulation Station</strong> has these pros:
-              </div>
-              <ol className="list">
-                <li>Lorem Ipsum</li>
-              </ol>
-              <p>
-                We will only add the parser according to your selection so you
-                don't end up with duplicates in your library.
-              </p>
-            </>
-          ),
-        };
-        const myTimeout = setTimeout(launchModal, 500);
-      }
-    }
-
-    function launchModal() {
-      return;
-      modalData = {
-        ...modalData,
-        header: <span className="h4">Conflicting Frontends</span>,
-        css: 'emumodal--sm',
-        footer: (
-          <>
-            <BtnSimple
-              css="btn-simple--1"
-              type="button"
-              aria={emuOption1}
-              onClick={() => setAlternativeFrontend(emuID1, emuID2)}
-              disabled={false}
-            >
-              {emuOption1}
-            </BtnSimple>
-            <BtnSimple
-              css="btn-simple--2"
-              type="button"
-              aria={emuOption2}
-              onClick={() => setAlternativeFrontend(emuID2, emuID1)}
-              disabled={false}
-            >
-              {emuOption2}
-            </BtnSimple>
-            <BtnSimple
-              css="btn-simple--3"
-              type="button"
-              aria="Go Back"
-              onClick={() => setAlternativeFrontend('both')}
-            >
-              Both
-            </BtnSimple>
-          </>
-        ),
-      };
-
-      setStatePage({ ...statePage, modal: modalData });
-    }
-  }, [installFrontends]);
+  const enableSRM = () => {
+    setState({
+      ...state,
+      installFrontends: {
+        ...installFrontends,
+        steam: {
+          ...steam,
+          status: true,
+        },
+        deckyromlauncher: {
+          ...deckyromlauncher,
+          status: false,
+        },
+        esde: {
+          ...esde,
+          status: false,
+        },
+      },
+    });
+  };
 
   const nextPage = () => {
-    if (installFrontends.deckyromlauncher.status && branch != 'main') {
-      return 'decky-rom-launcher-install';
-    }
-    if (installFrontends.pegasus.status && installFrontends.esde.status) {
-      return 'esde-theme';
-    }
     if (installFrontends.esde.status) {
       return 'esde-theme';
     }
-    if (installFrontends.pegasus.status) {
-      return 'pegasus-theme';
-    }
-    if (installFrontends.steam.status) {
-      return 'confirmation';
-    }
 
-    // if (system !== 'SteamOS') {
-    //   return 'emulator-resolution';
-    // }
-    // if (mode === 'easy') {
-    //   return 'end';
-    // }
-    // return 'confirmation';
+    return 'confirmation';
   };
 
   return (
-    <Wrapper>
-      <Header title={t('FrontendSelectorPage.title', { device: device })} />
-      <p className="lead">{t('FrontendSelectorPage.description')}</p>
-      <FrontendSelector
-        installFrontends={installFrontends}
-        lastSelected={lastSelected}
-        onClick={toggleEmus}
-        images={images}
-      />
+    <Wrapper css="wrapper__full">
+      <Header title="Pick your level of integration" />
+      <p class="lead">
+        EmuDeck can integrate into your systems in different levels
+      </p>
+      <Main>
+        <div className="selector-menu ">
+          <div className="selector-menu__text">
+            <div className="selector-menu__options selector-menu__options--full">
+              <ul>
+                <li className="">
+                  <button
+                    type="button"
+                    className={`card ${esde.status ? 'is-selected' : ''}`}
+                    onClick={() => enableESDE()}
+                  >
+                    <svg
+                      className="card__selected"
+                      width={20}
+                      height={20}
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19.9219 9.96094C19.9219 15.4004 15.4102 19.9219 9.96094 19.9219C4.52148 19.9219 0 15.4004 0 9.96094C0 4.51172 4.51172 0 9.95117 0C15.4004 0 19.9219 4.51172 19.9219 9.96094ZM12.998 6.08398L8.82812 12.7832L6.8457 10.2246C6.60156 9.90234 6.38672 9.81445 6.10352 9.81445C5.66406 9.81445 5.32227 10.1758 5.32227 10.6152C5.32227 10.8398 5.41016 11.0547 5.55664 11.25L8.00781 14.2578C8.26172 14.5996 8.53516 14.7363 8.86719 14.7363C9.19922 14.7363 9.48242 14.5801 9.6875 14.2578L14.2773 7.03125C14.3945 6.82617 14.5215 6.60156 14.5215 6.38672C14.5215 5.92773 14.1211 5.63477 13.6914 5.63477C13.4375 5.63477 13.1836 5.79102 12.998 6.08398Z"
+                        fill="#E7D8FF"
+                      />
+                    </svg>
+                    <span className="h4">Low</span>
+                    <p>EmulationStation (ES-DE)</p>
+                  </button>
+                </li>
+                <li className="">
+                  <button
+                    type="button"
+                    className={`card ${
+                      deckyromlauncher.status ? 'is-selected' : ''
+                    }`}
+                    onClick={() => enableRL()}
+                  >
+                    <svg
+                      className="card__selected"
+                      width={20}
+                      height={20}
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19.9219 9.96094C19.9219 15.4004 15.4102 19.9219 9.96094 19.9219C4.52148 19.9219 0 15.4004 0 9.96094C0 4.51172 4.51172 0 9.95117 0C15.4004 0 19.9219 4.51172 19.9219 9.96094ZM12.998 6.08398L8.82812 12.7832L6.8457 10.2246C6.60156 9.90234 6.38672 9.81445 6.10352 9.81445C5.66406 9.81445 5.32227 10.1758 5.32227 10.6152C5.32227 10.8398 5.41016 11.0547 5.55664 11.25L8.00781 14.2578C8.26172 14.5996 8.53516 14.7363 8.86719 14.7363C9.19922 14.7363 9.48242 14.5801 9.6875 14.2578L14.2773 7.03125C14.3945 6.82617 14.5215 6.60156 14.5215 6.38672C14.5215 5.92773 14.1211 5.63477 13.6914 5.63477C13.4375 5.63477 13.1836 5.79102 12.998 6.08398Z"
+                        fill="#E7D8FF"
+                      />
+                    </svg>
+                    <span className="h4">Medium</span>
+                    <p>Retro Library</p>
+                  </button>
+                </li>
+                <li className="">
+                  <button
+                    type="button"
+                    className={`card ${steam.status ? 'is-selected' : ''}`}
+                    onClick={() => enableSRM()}
+                  >
+                    <svg
+                      className="card__selected"
+                      width={20}
+                      height={20}
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19.9219 9.96094C19.9219 15.4004 15.4102 19.9219 9.96094 19.9219C4.52148 19.9219 0 15.4004 0 9.96094C0 4.51172 4.51172 0 9.95117 0C15.4004 0 19.9219 4.51172 19.9219 9.96094ZM12.998 6.08398L8.82812 12.7832L6.8457 10.2246C6.60156 9.90234 6.38672 9.81445 6.10352 9.81445C5.66406 9.81445 5.32227 10.1758 5.32227 10.6152C5.32227 10.8398 5.41016 11.0547 5.55664 11.25L8.00781 14.2578C8.26172 14.5996 8.53516 14.7363 8.86719 14.7363C9.19922 14.7363 9.48242 14.5801 9.6875 14.2578L14.2773 7.03125C14.3945 6.82617 14.5215 6.60156 14.5215 6.38672C14.5215 5.92773 14.1211 5.63477 13.6914 5.63477C13.4375 5.63477 13.1836 5.79102 12.998 6.08398Z"
+                        fill="#E7D8FF"
+                      />
+                    </svg>
+                    <span className="h4">Highest</span>
+                    <p>Steam Rom Manager</p>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            {esde.status && (
+              <div className="selector-menu__details">
+                <p className="lead">Description</p>
+                <p>
+                  EmulationStation will be added as a non Steam Game so you can
+                  launch all your games from one single app
+                </p>
+                <p className="lead">Features</p>
+                <ul>
+                  <li>
+                    <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
+                    Plenty of Themes
+                  </li>
+                  <li>
+                    <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
+                    Doesn't clutter your library
+                  </li>
+                  <li>
+                    <Img src={iconDanger} css="icon icon--xs" alt="OK" />
+                    Manual artwork parsing
+                  </li>
+                  <li>
+                    <Img src={iconDanger} css="icon icon--xs" alt="OK" />
+                    Games not integrated with Steam
+                  </li>
+                </ul>
+              </div>
+            )}
+            {deckyromlauncher.status && (
+              <div className="selector-menu__details">
+                <p className="lead">Description</p>
+                <p>
+                  RetroLibrary and Decky loader will be installed, you can
+                  access Retro Library from your Steam Menu
+                </p>
+                <p className="lead">Features</p>
+                <ul>
+                  <li>
+                    <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
+                    Doesn't clutter your library
+                  </li>
+                  <li>
+                    <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
+                    Automatic artwork parsing
+                  </li>
+                  <li>
+                    <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
+                    Most recently played games will appear in your home
+                  </li>
+                  <li>
+                    <Img src={iconDanger} css="icon icon--xs" alt="OK" />
+                    Small number of Themes to chose from
+                  </li>
+                </ul>
+              </div>
+            )}
+            {steam.status && (
+              <div className="selector-menu__details">
+                <p className="lead">Description</p>
+                <p>
+                  Steam Rom Manager will be installed so you can add your games
+                  in Steam just like if they were Steam Games
+                </p>
+                <p className="lead">Features</p>
+                <ul>
+                  <li>
+                    <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
+                    Games tightly integrated with your Steam Library
+                  </li>
+                  <li>
+                    <Img src={iconDanger} css="icon icon--xs" alt="OK" />
+                    Can clutter your library if you have a lot of games
+                  </li>
+                  <li>
+                    <Img src={iconDanger} css="icon icon--xs" alt="OK" />
+                    Desktop mode needed to add more games
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+
+          <div className="selector-menu__img">
+            {esde.status && <img src={imgESDE} alt="imgDeckyRomLauncher" />}
+            {deckyromlauncher.status && (
+              <img src={imgDeckyRomLauncher} alt="imgDeckyRomLauncher" />
+            )}
+            {steam.status && <img src={imgSTEAM} alt="imgDeckyRomLauncher" />}
+          </div>
+        </div>
+      </Main>
       <Footer
         next={nextPage()}
         disabledNext={
           !installFrontends.esde.status &&
-          !installFrontends.pegasus.status &&
           !installFrontends.steam.status &&
           !installFrontends.deckyromlauncher.status
         }
-        disabledBack={disabledBack}
+        disabledBack={false}
       />
-      <EmuModal modal={modal} />
     </Wrapper>
   );
 }

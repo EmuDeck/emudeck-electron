@@ -517,14 +517,14 @@ export default function App() {
     installFrontends: {
       esde: {
         id: 'esde',
-        status: true,
+        status: false,
         installed: undefined,
         name: 'EmulationStation-DE',
         desc: 'Add this launcher to your Steam Library. Recommended for big collections',
       },
       pegasus: {
         id: 'pegasus',
-        status: true,
+        status: false,
         installed: undefined,
         name: 'Pegasus',
         desc: 'Add this launcher to your Steam Library. Recommended for big collections. You need to run EmulationStation parsers to show artwork in Pegasus Themes',
@@ -535,10 +535,9 @@ export default function App() {
         name: 'Retro Library',
         desc: 'A separate Retro Library that does not interfiere with your Games Library. All games and artwork are detected automatically.',
       },
-
       steam: {
         id: 'steam',
-        status: true,
+        status: false,
         installed: undefined,
         name: 'Steam Library',
         desc: 'Integrate your games inside your Steam Library. Recommended for curated collections',
