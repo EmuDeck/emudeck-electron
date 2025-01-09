@@ -564,6 +564,17 @@ function CopyGamesPage() {
                   Finish the installation and then go back to gaming mode, look
                   for ES-DE in the Non Steam Games tab
                 </p>
+                <Iframe src="https://www.youtube-nocookie.com/embed/twNE8i3aI0g?autoplay=1&playlist=twNE8i3aI0g&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+              </>
+            )}
+            {installFrontends.deckyromlauncher.status && (
+              <>
+                <p className="lead">
+                  We've added EmulationStation DE (ES-DE) to your Steam Library.
+                  Finish the installation and then go back to gaming mode, look
+                  for ES-DE in the Non Steam Games tab
+                </p>
+                <Iframe src="https://www.youtube-nocookie.com/embed/aVZuoIfIdkU?autoplay=1&playlist=aVZuoIfIdkU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
               </>
             )}
           </Main>

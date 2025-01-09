@@ -504,7 +504,15 @@ function EmulatorsDetailPage() {
           });
           // We set the emu as install = yes
 
-          if (emulator === 'esde' || emulator === 'pegasus') {
+          if (
+            emulator === 'esde' ||
+            emulator === 'pegasus' ||
+            emulator === 'srm'
+          ) {
+            if (emulator === 'srm') {
+              emulator = 'steam';
+            }
+
             setState({
               ...state,
               installFrontends: {

@@ -242,6 +242,7 @@ function CheckUpdatePage() {
             installEmus: { ...installEmus, ...installEmusStored },
             installFrontends: {
               ...installFrontends,
+              ...installFrontendsStored,
             },
             overwriteConfigEmus: {
               ...overwriteConfigEmus,

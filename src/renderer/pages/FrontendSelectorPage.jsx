@@ -7,15 +7,9 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Main from 'components/organisms/Main/Main';
-import { Img } from 'getbasecore/Atoms';
+import { Img, Iframe } from 'getbasecore/Atoms';
 
 import { iconSuccess, iconDanger } from 'components/utils/images/icons';
-import {
-  imgESDE,
-  imgSTEAM,
-  imgDeckyRomLauncher,
-} from 'components/utils/images/images';
-
 function FrontendSelectorPage() {
   const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
@@ -260,12 +254,16 @@ function FrontendSelectorPage() {
             )}
           </div>
 
-          <div className="selector-menu__img">
-            {esde.status && <img src={imgESDE} alt="imgDeckyRomLauncher" />}
-            {deckyromlauncher.status && (
-              <img src={imgDeckyRomLauncher} alt="imgDeckyRomLauncher" />
+          <div className="selector-menu__img" style={{ flex: '1' }}>
+            {esde.status && (
+              <Iframe src="https://www.youtube-nocookie.com/embed/twNE8i3aI0g?autoplay=1&playlist=twNE8i3aI0g&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
             )}
-            {steam.status && <img src={imgSTEAM} alt="imgDeckyRomLauncher" />}
+            {deckyromlauncher.status && (
+              <Iframe src="https://www.youtube-nocookie.com/embed/aVZuoIfIdkU?autoplay=1&playlist=aVZuoIfIdkU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+            )}
+            {steam.status && (
+              <Iframe src="https://www.youtube-nocookie.com/embed/BsqWFHPp5UU?autoplay=1&playlist=BsqWFHPp5UU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+            )}
           </div>
         </div>
       </Main>
