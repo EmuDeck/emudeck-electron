@@ -116,6 +116,7 @@ export default function App() {
     xenia: { id: 'xenia', code: 'Xenia', version: 0 },
     mgba: { id: 'mgba', code: 'mGBA', version: 0 },
     ares: { id: 'ares', code: 'ares', version: 0 },
+    shadps4: { id: 'shadps4', code: 'ShadPS4', version: 0 },
   });
 
   const [state, setState] = useState({
@@ -470,7 +471,7 @@ export default function App() {
       },
       srm: {
         id: 'srm',
-        status: true,
+        status: false,
         installed: undefined,
         name: 'Steam Rom Manager',
       },
