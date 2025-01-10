@@ -72,7 +72,9 @@ function WelcomePage() {
 
   const navigate = useNavigate();
 
-  const newsWS = useFetchCond('https://token.emudeck.com/news.php');
+  const newsWS = useFetchCond(
+    `https://token.emudeck.com/news.php?branch=${branch}`
+  );
   useEffect(() => {
     newsWS.post({}).then((data) => {
       setStatePage({
