@@ -1,8 +1,14 @@
 [
   {
-    "title": "ShadPS4",
+    "title": "Integration Selector",
     "type": "STEAMOS",
-    "description": "New Emulator for PlayStation 4. This a experimental emulator so don't expect it to emulate a lot of games yet",
+    "description": "Now you can pick how you want to integrate EmuDeck into your system when installing it, using ESDE, Retro Library (Also installs Decky Loader) or Steam Rom Manager.",
     "image": "true"
+  },
+  {
+    "title": "Add To Steam",
+    "type": "STEAMOS",
+    "description": "You no longer need SRM to add ESDE or Pegasus to your Steam Library, just install any of them and restart Steam.",
+    "image": "false"
   }
 ]

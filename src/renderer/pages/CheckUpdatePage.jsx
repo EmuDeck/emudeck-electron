@@ -77,7 +77,7 @@ function CheckUpdatePage() {
   const showLog = (system) => {
     if (system === 'win32') {
       ipcChannel.sendMessage('bash-nolog', [
-        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/logs/git.log -Tail 100 -Wait }"`,
+        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:APPDATA/emudeck/logs/git.log -Tail 100 -Wait }"`,
       ]);
     } else if (system === 'darwin') {
       ipcChannel.sendMessage('bash-nolog', [
@@ -118,8 +118,9 @@ function CheckUpdatePage() {
       delete settingsStorage.android.installEmus.citrammj;
       delete settingsStorage.android.overwriteConfigEmus.citra;
       delete settingsStorage.android.overwriteConfigEmus.citrammj;
+      delete settingsStorage.installFrontends;
       const installEmusStored = settingsStorage.installEmus;
-      const installFrontendsStored = settingsStorage.installFrontends;
+      // const installFrontendsStored = settingsStorage.installFrontends;
 
       if (system === 'darwin') {
         delete settingsStorage.installEmus.ares;
@@ -240,10 +241,6 @@ function CheckUpdatePage() {
             ...settingsStorage,
             android: { ...android },
             installEmus: { ...installEmus, ...installEmusStored },
-            installFrontends: {
-              ...installFrontends,
-              ...installFrontendsStored,
-            },
             overwriteConfigEmus: {
               ...overwriteConfigEmus,
               ...overwriteConfigEmusStored,
