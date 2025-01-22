@@ -581,49 +581,45 @@ function CopyGamesPage() {
             </Main>
           )}
 
-          {system == 'win32' &&
-            mode ==
-              'easy'(
-                <Main>
-                  {installFrontends.esde.status && (
-                    <>
-                      <p className="lead">
-                        We've added EmulationStation DE (ES-DE) to your Steam
-                        Library. Finish the installation and then go back to
-                        gaming mode, look for ES-DE in the Non Steam Games tab
-                      </p>
-                      <Iframe src="https://www.youtube-nocookie.com/embed/twNE8i3aI0g?autoplay=1&playlist=twNE8i3aI0g&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
-                    </>
-                  )}
-                </Main>
+          {system == 'win32' && mode == 'easy' && (
+            <Main>
+              {installFrontends.esde.status && (
+                <>
+                  <p className="lead">
+                    We've added EmulationStation DE (ES-DE) to your Steam
+                    Library. Finish the installation and then go back to gaming
+                    mode, look for ES-DE in the Non Steam Games tab
+                  </p>
+                  <Iframe src="https://www.youtube-nocookie.com/embed/twNE8i3aI0g?autoplay=1&playlist=twNE8i3aI0g&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+                </>
               )}
-          {system == 'win32' &&
-            mode !=
-              'easy'(
-                <Main>
-                  {installFrontends.steam.status && (
-                    <>
-                      <p className="lead">
-                        Steam ROM Manager or SRM is a tool that will add your
-                        Games, Emulators to your Steam Library so you can launch
-                        them in Game Mode
-                      </p>
+            </Main>
+          )}
+          {system == 'win32' && mode != 'easy' && (
+            <Main>
+              {installFrontends.steam.status && (
+                <>
+                  <p className="lead">
+                    Steam ROM Manager or SRM is a tool that will add your Games,
+                    Emulators to your Steam Library so you can launch them in
+                    Game Mode
+                  </p>
 
-                      <Iframe src="https://www.youtube-nocookie.com/embed/BsqWFHPp5UU?autoplay=1&playlist=BsqWFHPp5UU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
-                    </>
-                  )}
-                  {installFrontends.esde.status && (
-                    <>
-                      <p className="lead">
-                        We've added EmulationStation DE (ES-DE) to your Steam
-                        Library. Finish the installation and then go back to
-                        gaming mode, look for ES-DE in the Non Steam Games tab
-                      </p>
-                      <Iframe src="https://www.youtube-nocookie.com/embed/twNE8i3aI0g?autoplay=1&playlist=twNE8i3aI0g&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
-                    </>
-                  )}
-                </Main>
+                  <Iframe src="https://www.youtube-nocookie.com/embed/BsqWFHPp5UU?autoplay=1&playlist=BsqWFHPp5UU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+                </>
               )}
+              {installFrontends.esde.status && (
+                <>
+                  <p className="lead">
+                    We've added EmulationStation DE (ES-DE) to your Steam
+                    Library. Finish the installation and then go back to gaming
+                    mode, look for ES-DE in the Non Steam Games tab
+                  </p>
+                  <Iframe src="https://www.youtube-nocookie.com/embed/twNE8i3aI0g?autoplay=1&playlist=twNE8i3aI0g&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+                </>
+              )}
+            </Main>
+          )}
         </>
       )}
       <footer className="footer">
