@@ -326,7 +326,8 @@
       "login": "Se connecter avec Patreon",
       "change": "Changer de compte Patreon",
       "check": "Vérifier le jeton",
-      "checking": "Vérification du jeton..."
+      "checking": "Vérification du jeton...",
+      "license": "Login with License"
     },
     "PegasusThemeChoicePage": {
       "title": "Thème par défaut de Pegasus",
