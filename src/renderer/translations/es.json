@@ -327,7 +327,8 @@
       "login": "Iniciar sesión con Patreon",
       "change": "Cambiar cuenta de Patreon",
       "check": "Comprobar token",
-      "checking": "Comprobando token..."
+      "checking": "Comprobando token...",
+      "license": "Login with License"
     },
     "PegasusThemeChoicePage": {
       "title": "Tema Predeterminado de Pegasus",
