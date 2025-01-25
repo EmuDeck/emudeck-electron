@@ -388,12 +388,6 @@ function ManageEmulatorsPage() {
                   if (item.id === 'model2') {
                     return;
                   }
-                  if (item.id === 'supermodel') {
-                    return;
-                  }
-                  if (item.id === 'bigpemu') {
-                    return;
-                  }
                 }
                 return (
                   <Card
