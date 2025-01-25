@@ -437,9 +437,9 @@ ipcMain.on('getMSG', async (event) => {
   let bashCommand;
 
   if (os.platform().includes('win32')) {
-    bashCommand = `more %USERPROFILE%\\AppData\\Roaming\\EmuDeck\\msg.log`;
+    bashCommand = `more %USERPROFILE%\\AppData\\Roaming\\EmuDeck\\logs\\msg.log`;
   } else {
-    bashCommand = `cat "$HOME/emudeck/logs/msg.log"`;
+    bashCommand = `cat "$HOME/.config/EmuDeck/logs/msg.log"`;
   }
 
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
