@@ -147,12 +147,7 @@ function EndPage() {
   // Reading messages from backend
   useEffect(() => {
     const interval = setInterval(() => {
-      if (system === 'win32') {
-        readMSG();
-      } else {
-        readMSG();
-      }
-
+      readMSG();
       if (message.includes('100')) {
         clearInterval(interval);
       }
@@ -166,13 +161,6 @@ function EndPage() {
     const json = JSON.stringify(state);
 
     localStorage.setItem('settings_emudeck', json);
-
-    // ipcChannel.sendMessage('bash-nolog', [
-    //   `echo ${state.achievements.token} > "%userprofile%/AppData/Roaming/EmuDeck/.rat"`,
-    // ]);
-    // ipcChannel.sendMessage('bash-nolog', [
-    //   `echo ${state.achievements.user} > "%userprofile%/AppData/Roaming/EmuDeck/.rau"`,
-    // ]);
 
     ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
     ipcChannel.once('saveSettings', () => {
