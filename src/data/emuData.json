@@ -257,7 +257,7 @@
 
     "description": "Emudeck does not download this emulator nor can it guarantee support if you run into any issues.",
     "special_configuration": " If you already have your citron.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/AppData/Roaming/EmuDeck/Emulators/citron/ folder. Firmware: Place keys and firmware place in: Emulation/bios/citron.",
-    "bios": ["nswitch"],
+    "bios": ["cswitch"],
     "systems": "Nintendo Switch",
     "hotkeys": {
       "0": ["Action", "Keys"],
@@ -277,7 +277,7 @@
 
     "description": "Ryujinx is a Nintendo Switch emulator, originally developed by gdkchan. Ryujinx can promise excellent accuracy for your favorite Nintendo Switch games.",
     "special_configuration": "Firmware: Install firmware through the Ryujinx GUI. Place keys in: Emulation/bios/ryujinx/keys.",
-    "bios": [],
+    "bios": ["rswitch"],
     "systems": "Nintendo Switch",
     "hotkeys": {
       "0": ["Action", "Keys"],
