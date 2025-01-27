@@ -250,6 +250,26 @@
       "7": ["Filter", "START+DPAD ⬅️"]
     }
   },
+  "citron": {
+    "id": "citron",
+    "name": "Citron",
+    "code": "citron",
+
+    "description": "Emudeck does not download this emulator nor can it guarantee support if you run into any issues.",
+    "special_configuration": " If you already have your citron.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/AppData/Roaming/EmuDeck/Emulators/citron/ folder. Firmware: Place keys and firmware place in: Emulation/bios/citron.",
+    "bios": ["nswitch"],
+    "systems": "Nintendo Switch",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "SELECT+START"],
+      "2": ["Fast Forward", "SELECT+R2"],
+      "3": ["Pause", "SELECT+A"],
+      "4": ["Menu", "SELECT+R3"],
+      "5": ["Docked Mode", "START+DPAD ⬆️"],
+      "6": ["GPU Accuracy", "START+DPAD ⬇️"],
+      "7": ["Filter", "START+DPAD ⬅️"]
+    }
+  },
   "ryujinx": {
     "id": "ryujinx",
     "name": "Ryujinx",

@@ -304,6 +304,9 @@ function EmulatorsDetailPage() {
       case 'yuzu':
         img = yuzuControls;
         break;
+      case 'citron':
+        img = yuzuControls;
+        break;
       case 'ryujinx':
         img = ryujinxControls;
         break;
@@ -393,6 +396,9 @@ function EmulatorsDetailPage() {
         img = rpcs3Hotkeys;
         break;
       case 'yuzu':
+        img = yuzuHotkeys;
+        break;
+      case 'citron':
         img = yuzuHotkeys;
         break;
       case 'ryujinx':
@@ -995,6 +1001,10 @@ function EmulatorsDetailPage() {
       case 'yuzu':
         checkBios('checkYuzuBios');
         break;
+      case 'citron':
+        checkBios('checkYuzuBios');
+        break;
+
       default:
     }
 
