@@ -90,7 +90,7 @@ function FrontendSelectorPage() {
 
   //Forced RL on non windows
   useEffect(() => {
-    if (system != 'win32') {
+    if (system != 'win32' && branch != 'main') {
       enableRL();
     } else {
       enableESDE();
@@ -132,7 +132,7 @@ function FrontendSelectorPage() {
                   </button>
                 </li>
 
-                {system !== 'win32' && (
+                {system !== 'win32' && branch != 'main' && (
                   <li className="">
                     <button
                       type="button"

@@ -86,10 +86,29 @@ function WelcomePage() {
   }, []);
 
   const selectMode = (value) => {
+    console.log({ value });
     if (value === 'android') {
       navigate('/android-welcome');
     } else {
-      setState({ ...state, mode: value });
+      if (value === 'easy' && second === false && system == 'win32') {
+        console.log('esde default');
+        setState({
+          ...state,
+          installFrontends: {
+            ...state.installFrontends,
+            esde: { ...state.installFrontends.esde, status: true },
+            deckyromlauncher: {
+              ...state.installFrontends.deckyromlauncher,
+              status: false,
+            },
+          },
+          mode: value,
+        });
+      } else {
+        console.log('only state');
+        setState({ ...state, mode: value });
+      }
+
       if (second) {
         navigate('/rom-storage');
       }

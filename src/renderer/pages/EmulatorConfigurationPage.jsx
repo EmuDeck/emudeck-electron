@@ -20,6 +20,7 @@ import {
   imgpcsx2,
   imgrpcs3,
   imgyuzu,
+  imgcitron,
   imgryujinx,
   imgcemu,
   imgxemu,
@@ -37,7 +38,7 @@ import {
   imgFrontPegasus,
   imgmelonds,
   imgmgba,
-  imgshadps4
+  imgshadps4,
 } from 'components/utils/images/images';
 
 const images = {
@@ -54,6 +55,7 @@ const images = {
   rmg: imgrmg,
   melonds: imgmelonds,
   yuzu: imgyuzu,
+  citron: imgcitron,
   ryujinx: imgryujinx,
   cemu: imgcemu,
   xemu: imgxemu,
@@ -69,7 +71,7 @@ const images = {
   mgba: imgmgba,
   xenia: imgxenia,
   pegasus: imgFrontPegasus,
-  shadps4:imgshadps4
+  shadps4: imgshadps4,
 };
 
 function EmulatorConfigurationPage() {

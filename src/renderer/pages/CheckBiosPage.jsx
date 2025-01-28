@@ -23,6 +23,8 @@ function CheckBiosPage() {
   const [ps1Bios, setps1Bios] = useState(null);
   const [ps2Bios, setps2Bios] = useState(null);
   const [switchBios, setSwitchBios] = useState(null);
+  const [citronBios, setCitronBios] = useState(null);
+  const [ryujinxBios, setRyujinxBios] = useState(null);
   const [segaCDBios, setSegaCDBios] = useState(null);
   const [saturnBios, setSaturnBios] = useState(null);
   const [dreamcastBios, setDreamcastBios] = useState(null);
@@ -51,6 +53,12 @@ function CheckBiosPage() {
         case 'checkYuzuBios':
           setSwitchBios(biosStatus);
           break;
+        case 'checkRyujinxBios':
+          setRyujinxBios(biosStatus);
+          break;
+        case 'checkCitronBios':
+          setCitronBios(biosStatus);
+          break;
         case 'checkSegaCDBios':
           setSegaCDBios(biosStatus);
           break;
@@ -71,6 +79,8 @@ function CheckBiosPage() {
     checkBios('checkPS1BIOS');
     checkBios('checkPS2BIOS');
     checkBios('checkYuzuBios');
+    checkBios('checkRyujinxBios');
+    checkBios('checkCitronBios');
     checkBios('checkSegaCDBios');
     checkBios('checkSaturnBios');
     checkBios('checkDreamcastBios');
@@ -81,6 +91,8 @@ function CheckBiosPage() {
     checkBios('checkPS1BIOS');
     checkBios('checkPS2BIOS');
     checkBios('checkYuzuBios');
+    checkBios('checkRyujinxBios');
+    checkBios('checkCitronBios');
     checkBios('checkSegaCDBios');
     checkBios('checkSaturnBios');
     checkBios('checkDreamcastBios');
@@ -96,6 +108,8 @@ function CheckBiosPage() {
         ps1Bios={ps1Bios}
         ps2Bios={ps2Bios}
         switchBios={switchBios}
+        ryujinxBios={ryujinxBios}
+        citronBios={citronBios}
         segaCDBios={segaCDBios}
         saturnBios={saturnBios}
         dreamcastBios={dreamcastBios}

@@ -7,13 +7,13 @@ import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Card from 'components/molecules/Card/Card';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog';
+
 import img0 from 'assets/changelog/banner_integration.png';
-import img00 from 'assets/changelog/banner_android.png';
-import img1 from 'assets/changelog/banner_srm.png';
-import img2 from 'assets/changelog/banner_multilanguage.jpg';
-import img3 from 'assets/changelog/banner_lime3ds.jpg';
+import img1 from 'assets/changelog/banner_ESDE.jpg';
+import img2 from 'assets/changelog/banner_bios.png';
+import img3 from 'assets/changelog/banner_citron.png';
 import img4 from 'assets/emulators/grid/citra.png';
-import img5 from 'assets/changelog/banner_decky.png';
+import img5 from 'assets/changelog/banner_supermodel.png';
 import img7 from 'assets/changelog/banner_flycast.png';
 import img8 from 'assets/changelog/banner_early.png';
 import img9 from 'assets/changelog/banner_linux.png';
@@ -115,7 +115,7 @@ function ChangeLogPage() {
         break;
     }
 
-    const changeLogData = require(`data/changelog-${systemName}-${branch}.json`);
+    const changeLogData = require(`data/changelog-${systemName}.json`);
     setStatePage({
       ...statePage,
       log: changeLogData,

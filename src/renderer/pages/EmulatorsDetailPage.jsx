@@ -80,6 +80,8 @@ function EmulatorsDetailPage() {
   const [ps1Bios, setps1Bios] = useState(null);
   const [ps2Bios, setps2Bios] = useState(null);
   const [switchBios, setSwitchBios] = useState(null);
+  const [citronBios, setCitronBios] = useState(null);
+  const [ryujinxBios, setRyujinxBios] = useState(null);
   const [segaCDBios, setSegaCDBios] = useState(null);
   const [saturnBios, setSaturnBios] = useState(null);
   const [dreamcastBios, setDreamcastBios] = useState(null);
@@ -252,6 +254,13 @@ function EmulatorsDetailPage() {
         case 'checkYuzuBios':
           setSwitchBios(biosStatus);
           break;
+        case 'checkRyujinxBios':
+          setRyujinxBios(biosStatus);
+          break;
+        case 'checkCitronBios':
+          setCitronBios(biosStatus);
+          break;
+
         case 'checkSegaCDBios':
           setSegaCDBios(biosStatus);
           break;
@@ -302,6 +311,9 @@ function EmulatorsDetailPage() {
         img = rpcs3Controls;
         break;
       case 'yuzu':
+        img = yuzuControls;
+        break;
+      case 'citron':
         img = yuzuControls;
         break;
       case 'ryujinx':
@@ -393,6 +405,9 @@ function EmulatorsDetailPage() {
         img = rpcs3Hotkeys;
         break;
       case 'yuzu':
+        img = yuzuHotkeys;
+        break;
+      case 'citron':
         img = yuzuHotkeys;
         break;
       case 'ryujinx':
@@ -977,7 +992,6 @@ function EmulatorsDetailPage() {
     switch (emulator) {
       case 'ra':
         checkBios('checkPS1BIOS');
-        checkBios('checkYuzuBios');
         checkBios('checkSegaCDBios');
         checkBios('checkSaturnBios');
         checkBios('checkDSBios');
@@ -995,6 +1009,13 @@ function EmulatorsDetailPage() {
       case 'yuzu':
         checkBios('checkYuzuBios');
         break;
+      case 'citron':
+        checkBios('checkCitronBios');
+        break;
+      case 'ryujinx':
+        checkBios('checkRyujinxBios');
+        break;
+
       default:
     }
 
@@ -1129,6 +1150,8 @@ function EmulatorsDetailPage() {
           ps1={ps1Bios}
           ps2={ps2Bios}
           nswitch={switchBios}
+          rswitch={ryujinxBios}
+          cswitch={citronBios}
           segacd={segaCDBios}
           saturn={saturnBios}
           dreamcast={dreamcastBios}

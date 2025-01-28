@@ -24,6 +24,7 @@ import {
   imgpcsx2,
   imgrpcs3,
   imgyuzu,
+  imgcitron,
   imgryujinx,
   imgcemu,
   imgxemu,
@@ -41,7 +42,7 @@ import {
   imgmodel2,
   imgbigpemu,
   imgFrontPegasus,
-  imgshadps4
+  imgshadps4,
 } from 'components/utils/images/images';
 import {
   iconSuccess,
@@ -77,6 +78,7 @@ const images = {
   pcsx2: imgpcsx2,
   rpcs3: imgrpcs3,
   yuzu: imgyuzu,
+  citron: imgcitron,
   melonds: imgmelonds,
   ryujinx: imgryujinx,
   cemu: imgcemu,
@@ -94,7 +96,7 @@ const images = {
   model2: imgmodel2,
   bigpemu: imgbigpemu,
   pegasus: imgFrontPegasus,
-  shadps4: imgshadps4
+  shadps4: imgshadps4,
 };
 
 function ManageEmulatorsPage() {
@@ -161,12 +163,6 @@ function ManageEmulatorsPage() {
             return;
           }
           if (item.id === 'model2') {
-            return;
-          }
-          if (item.id === 'supermodel') {
-            return;
-          }
-          if (item.id === 'bigpemu') {
             return;
           }
         }
@@ -392,12 +388,6 @@ function ManageEmulatorsPage() {
                 }
                 if (system === 'win32') {
                   if (item.id === 'model2') {
-                    return;
-                  }
-                  if (item.id === 'supermodel') {
-                    return;
-                  }
-                  if (item.id === 'bigpemu') {
                     return;
                   }
                 }

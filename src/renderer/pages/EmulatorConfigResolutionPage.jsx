@@ -35,7 +35,7 @@ function EmulatorConfigResolutionPage() {
     localStorage.setItem('settings_emudeck', json);
 
     ipcChannel.sendMessage('emudeck', [
-      `setResolutions|||setSetting dolphinResolution ${state.resolutions.dolphin}; setSetting duckstationResolution ${state.resolutions.duckstation}; setSetting pcsx2Resolution ${state.resolutions.pcsx2}; setSetting yuzuResolution ${state.resolutions.yuzu}; setSetting ppssppResolution ${state.resolutions.ppsspp}; setSetting rpcs3Resolution ${state.resolutions.rpcs3}; setSetting ryujinxResolution ${state.resolutions.yuzu}; setSetting xemuResolution ${state.resolutions.xemu}; setSetting xeniaResolution ${state.resolutions.xenia}; setSetting citraResolution ${state.resolutions.citra}; setSetting lime3dsResolution ${state.resolutions.lime3ds};  setResolutions`,
+      `setResolutions|||setSetting dolphinResolution ${state.resolutions.dolphin}; setSetting duckstationResolution ${state.resolutions.duckstation}; setSetting pcsx2Resolution ${state.resolutions.pcsx2}; setSetting yuzuResolution ${state.resolutions.yuzu}; setSetting citronResolution ${state.resolutions.citron}; setSetting ppssppResolution ${state.resolutions.ppsspp}; setSetting rpcs3Resolution ${state.resolutions.rpcs3}; setSetting ryujinxResolution ${state.resolutions.yuzu}; setSetting xemuResolution ${state.resolutions.xemu}; setSetting xeniaResolution ${state.resolutions.xenia}; setSetting citraResolution ${state.resolutions.citra}; setSetting lime3dsResolution ${state.resolutions.lime3ds};  setResolutions`,
     ]);
 
     ipcChannel.once('setResolutions', (message) => {

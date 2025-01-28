@@ -81,11 +81,11 @@ function CheckUpdatePage() {
       ]);
     } else if (system === 'darwin') {
       ipcChannel.sendMessage('bash-nolog', [
-        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/emudeck/logs/git.log"'`,
+        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/.config/EmuDeck/logs/git.log"'`,
       ]);
     } else {
       ipcChannel.sendMessage('bash-nolog', [
-        `konsole -e tail -f "$HOME/emudeck/logs/git.log"`,
+        `konsole -e tail -f "$HOME/.config/EmuDeck/logs/git.log"`,
       ]);
     }
   };
@@ -142,6 +142,7 @@ function CheckUpdatePage() {
         delete settingsStorage.installEmus.xemu;
         delete settingsStorage.installEmus.xenia;
         delete settingsStorage.installEmus.yuzu;
+        delete settingsStorage.installEmus.citron;
 
         delete settingsStorage.overwriteConfigEmus.ares;
         delete settingsStorage.overwriteConfigEmus.cemu;
@@ -163,6 +164,7 @@ function CheckUpdatePage() {
         delete settingsStorage.overwriteConfigEmus.xemu;
         delete settingsStorage.overwriteConfigEmus.xenia;
         delete settingsStorage.overwriteConfigEmus.yuzu;
+        delete settingsStorage.overwriteConfigEmus.citron;
       }
 
       if (!settingsStorage.overwriteConfigEmus.esde) {
