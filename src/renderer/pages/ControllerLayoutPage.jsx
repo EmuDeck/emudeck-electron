@@ -28,7 +28,7 @@ function ControllerLayoutPage() {
 
   useEffect(() => {
     if (system === 'win32') {
-      navigate('/frontend-selector');
+      navigate('/confirmation');
     }
   }, []);
 
@@ -38,7 +38,7 @@ function ControllerLayoutPage() {
       <p className="lead">{t('ControllerLayoutPage.description')}</p>
       <ControllerLayout onClick={controllerLayoutSet} />
       <Footer
-        next="frontend-selector"
+        next="confirmation"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

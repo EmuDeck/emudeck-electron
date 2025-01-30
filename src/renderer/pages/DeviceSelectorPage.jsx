@@ -286,8 +286,8 @@ function DeviceSelectorPage() {
         )}
       </DeviceSelector>
       <Footer
-        next={mode === 'easy' ? 'end' : 'emulator-selector'}
-        nextText={mode === 'easy' ? t('general.finish') : t('general.next')}
+        next="frontend-selector"
+        nextText={t('general.next')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

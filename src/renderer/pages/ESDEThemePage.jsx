@@ -34,16 +34,10 @@ function ESDEThemePage() {
   }, []);
 
   const nextPage = () => {
-    if (installFrontends.pegasus.status === true) {
-      return 'pegasus-theme';
-    }
-    if (system === 'SteamOS') {
-      return 'confirmation';
-    }
     if (mode === 'easy') {
       return 'end';
     }
-    return 'emulator-resolution';
+    return 'emulator-selector';
   };
 
   return (
