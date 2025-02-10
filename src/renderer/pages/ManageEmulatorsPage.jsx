@@ -162,9 +162,6 @@ function ManageEmulatorsPage() {
           if (item.id === 'rmg') {
             return;
           }
-          if (item.id === 'model2') {
-            return;
-          }
         }
 
         if (item.id === 'ares') {
@@ -383,11 +380,6 @@ function ManageEmulatorsPage() {
 
                 if (system === 'darwin') {
                   if (item.id !== 'ra') {
-                    return;
-                  }
-                }
-                if (system === 'win32') {
-                  if (item.id === 'model2') {
                     return;
                   }
                 }
