@@ -24,7 +24,12 @@ const { shouldUseDarkColors } = nativeTheme;
 const os = require('os');
 const fs = require('fs');
 const lsbRelease = require('lsb-release');
-const appDataPath = app.getPath('userData');
+let appDataPath = app.getPath('userData');
+
+if (os.platform().includes('darwin')) {
+  appDataPath = `${os.homedir()}/.config/EmuDeck`
+}
+
 const homeUser = os.homedir();
 let allPath;
 if (os.platform().includes('win32')) {
