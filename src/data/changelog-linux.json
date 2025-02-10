@@ -30,8 +30,8 @@
     "image": "false"
   },
   {
-    "title": "Steam Rom Manager Dynamic & Custom parsers",
-    "description": "In order to prevent duplicates, parsers for optional emulators will be installed only when said emulator is installed. We've also the option to add custom parsers that won't be deleted when resetting SRM settings",
+    "title": "Steam Rom Manager Dynamic Parsers",
+    "description": "In order to prevent duplicates, parsers for optional emulators will be installed only when said emulator is installed.",
     "image": "false"
   }
 ]

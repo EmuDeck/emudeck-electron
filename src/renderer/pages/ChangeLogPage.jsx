@@ -14,6 +14,7 @@ import img2 from 'assets/changelog/banner_bios.png';
 import img3 from 'assets/changelog/banner_citron.png';
 import img4 from 'assets/emulators/grid/citra.png';
 import img5 from 'assets/changelog/banner_supermodel.png';
+import img6 from 'assets/changelog/banner_supermodel.png';
 import img7 from 'assets/changelog/banner_flycast.png';
 import img8 from 'assets/changelog/banner_early.png';
 import img9 from 'assets/changelog/banner_linux.png';
