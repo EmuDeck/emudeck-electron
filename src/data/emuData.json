@@ -253,7 +253,7 @@
   "citron": {
     "id": "citron",
     "name": "Citron",
-    "code": "citron",
+    "code": "Citron",
 
     "description": "Emudeck does not download this emulator nor can it guarantee support if you run into any issues.",
     "special_configuration": " If you already have your citron.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/AppData/Roaming/EmuDeck/Emulators/citron/ folder. Firmware: Place keys and firmware place in: Emulation/bios/citron.",

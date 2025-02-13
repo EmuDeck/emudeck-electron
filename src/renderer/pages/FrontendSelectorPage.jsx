@@ -14,7 +14,7 @@ function FrontendSelectorPage() {
   const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
 
-  const { installFrontends, branch, system } = state;
+  const { installFrontends, branch, system, mode } = state;
   const { steam, deckyromlauncher, esde } = installFrontends;
 
   const enableESDE = () => {
@@ -84,7 +84,9 @@ function FrontendSelectorPage() {
     if (installFrontends.esde.status) {
       return 'esde-theme';
     }
-
+    if (mode === 'easy') {
+      return 'end';
+    }
     return 'confirmation';
   };
 
@@ -101,7 +103,7 @@ function FrontendSelectorPage() {
     <Wrapper css="wrapper__full">
       <Header title="Pick your level of integration" />
       <p class="lead">
-        EmuDeck can integrate into your systems in different levels
+        EmuDeck can integrate into your system in different levels
       </p>
       <Main>
         <div className="selector-menu ">
@@ -285,6 +287,11 @@ function FrontendSelectorPage() {
           !installFrontends.esde.status &&
           !installFrontends.steam.status &&
           !installFrontends.deckyromlauncher.status
+        }
+        nextText={
+          mode === 'easy' && !installFrontends.esde.status
+            ? t('general.finish')
+            : t('general.next')
         }
         disabledBack={false}
       />

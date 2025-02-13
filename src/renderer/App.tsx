@@ -442,7 +442,7 @@ export default function App() {
       },
       shadps4: {
         id: 'shadps4',
-        status: false,
+        status: true,
         installed: undefined,
         name: 'ShadPS4',
         platforms: 'Playstation 4',
