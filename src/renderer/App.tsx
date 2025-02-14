@@ -102,6 +102,7 @@ export default function App() {
     pcsx2: { id: 'pcsx2', code: 'PCSX2QT', version: 0 },
     rpcs3: { id: 'rpcs3', code: 'RPCS3', version: 0 },
     yuzu: { id: 'yuzu', code: 'Yuzu', version: 0 },
+    citron: { id: 'citron', code: 'Citron', version: 0 },
     ryujinx: { id: 'ryujinx', code: 'Ryujinx', version: 0 },
     xemu: { id: 'xemu', code: 'Xemu', version: 0 },
     cemu: { id: 'cemu', code: 'Cemu', version: 0 },
@@ -116,6 +117,7 @@ export default function App() {
     xenia: { id: 'xenia', code: 'Xenia', version: 0 },
     mgba: { id: 'mgba', code: 'mGBA', version: 0 },
     ares: { id: 'ares', code: 'ares', version: 0 },
+    shadps4: { id: 'shadps4', code: 'ShadPS4', version: 0 },
   });
 
   const [state, setState] = useState({
@@ -231,6 +233,11 @@ export default function App() {
           status: false,
           name: 'Yuzu',
         },
+        citron: {
+          id: 'citron',
+          status: false,
+          name: 'Citron',
+        },
         pegasus: {
           id: 'pegasus',
           status: true,
@@ -314,6 +321,13 @@ export default function App() {
         installed: undefined,
         name: 'Citra',
         platforms: 'Nintendo 3DS',
+      },
+      citron: {
+        id: 'citron',
+        status: false,
+        installed: undefined,
+        name: 'Citron',
+        platforms: 'Nintendo Switch',
       },
       dolphin: {
         id: 'dolphin',
@@ -428,7 +442,7 @@ export default function App() {
       },
       shadps4: {
         id: 'shadps4',
-        status: false,
+        status: true,
         installed: undefined,
         name: 'ShadPS4',
         platforms: 'Playstation 4',
@@ -470,7 +484,7 @@ export default function App() {
       },
       srm: {
         id: 'srm',
-        status: true,
+        status: false,
         installed: undefined,
         name: 'Steam Rom Manager',
       },
@@ -510,21 +524,22 @@ export default function App() {
       xenia: { id: 'xenia', status: true, name: 'Xenia' },
       xemu: { id: 'xemu', status: true, name: 'Xemu' },
       yuzu: { id: 'yuzu', status: false, name: 'Yuzu' },
+      citron: { id: 'citron', status: false, name: 'Citron' },
       esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
       pegasus: { id: 'pegasus', status: true, name: 'Pegasus' },
-      srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
+      srm: { id: 'srm', status: false, name: 'Steam Rom Manager' },
     },
     installFrontends: {
       esde: {
         id: 'esde',
-        status: true,
+        status: false,
         installed: undefined,
         name: 'EmulationStation-DE',
         desc: 'Add this launcher to your Steam Library. Recommended for big collections',
       },
       pegasus: {
         id: 'pegasus',
-        status: true,
+        status: false,
         installed: undefined,
         name: 'Pegasus',
         desc: 'Add this launcher to your Steam Library. Recommended for big collections. You need to run EmulationStation parsers to show artwork in Pegasus Themes',
@@ -535,10 +550,9 @@ export default function App() {
         name: 'Retro Library',
         desc: 'A separate Retro Library that does not interfiere with your Games Library. All games and artwork are detected automatically.',
       },
-
       steam: {
         id: 'steam',
-        status: true,
+        status: false,
         installed: undefined,
         name: 'Steam Library',
         desc: 'Integrate your games inside your Steam Library. Recommended for curated collections',
@@ -562,6 +576,7 @@ export default function App() {
       duckstation: '720P',
       pcsx2: '720P',
       yuzu: '720P',
+      citron: '720P',
       ppsspp: '720P',
       rpcs3: '720P',
       ryujinx: '720P',

@@ -72,7 +72,7 @@ function PatreonLoginPage() {
   //
   // Functions
   //
-  const patreonShowInput = () => {
+  const patreonShowInput = (openBrowser = true) => {
     setStatePage({
       ...statePage,
       patreonClicked: true,
@@ -328,6 +328,16 @@ function PatreonLoginPage() {
               aria={t('PatroenLoginPage.change')}
             >
               {t('PatroenLoginPage.change')}
+            </BtnSimple>
+            <BtnSimple
+              css="btn-simple--2"
+              type="button"
+              aria={t('PatroenLoginPage.login')}
+              onClick={() => patreonShowInput(false)}
+              disabled={accessAllowed}
+            >
+              {accessAllowed || t('PatroenLoginPage.license')}{' '}
+              {accessAllowed && `- ${t('general.loading')}`}
             </BtnSimple>
           </>
         )}

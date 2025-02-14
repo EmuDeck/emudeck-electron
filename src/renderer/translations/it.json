@@ -326,7 +326,8 @@
       "login": "Accedi con Patreon ",
       "change": "Cambia account Patreon",
       "check": "Controlla il token",
-      "checking": "Controllo del token in corso..."
+      "checking": "Controllo del token in corso...",
+      "license": "Login with License"
     },
     "PegasusThemeChoicePage": {
       "title": "Tema predefinito di Pegasus",

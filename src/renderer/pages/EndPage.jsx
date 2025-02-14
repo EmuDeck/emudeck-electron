@@ -43,7 +43,6 @@ function EndPage() {
 
   const { message, percentage } = msg;
 
-  const settingsFile = '~/emudeck/settings.sh';
   const readMSG = () => {
     ipcChannel.sendMessage('getMSG', []);
     ipcChannel.on('getMSG', (messageInput) => {
@@ -127,15 +126,15 @@ function EndPage() {
   const showLog = () => {
     if (system === 'win32') {
       ipcChannel.sendMessage('bash-nolog', [
-        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:USERPROFILE/emudeck/logs/emudeckSetup.log -Tail 100 -Wait }"`,
+        `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:APPDATA/emudeck/logs/emudeckSetup.log -Tail 100 -Wait }"`,
       ]);
     } else if (system === 'darwin') {
       ipcChannel.sendMessage('bash-nolog', [
-        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/emudeck/logs/emudeckSetup.log"'`,
+        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/.config/EmuDeck/logs/emudeckSetup.log"'`,
       ]);
     } else {
       ipcChannel.sendMessage('bash-nolog', [
-        `konsole -e tail -f "$HOME/emudeck/logs/emudeckSetup.log"`,
+        `konsole -e tail -f "$HOME/.config/EmuDeck/logs/emudeckSetup.log"`,
       ]);
     }
   };
@@ -148,12 +147,7 @@ function EndPage() {
   // Reading messages from backend
   useEffect(() => {
     const interval = setInterval(() => {
-      if (system === 'win32') {
-        readMSG();
-      } else {
-        readMSG();
-      }
-
+      readMSG();
       if (message.includes('100')) {
         clearInterval(interval);
       }
@@ -167,13 +161,6 @@ function EndPage() {
     const json = JSON.stringify(state);
 
     localStorage.setItem('settings_emudeck', json);
-
-    // ipcChannel.sendMessage('bash-nolog', [
-    //   `echo ${state.achievements.token} > "%userprofile%/AppData/Roaming/EmuDeck/.rat"`,
-    // ]);
-    // ipcChannel.sendMessage('bash-nolog', [
-    //   `echo ${state.achievements.user} > "%userprofile%/AppData/Roaming/EmuDeck/.rau"`,
-    // ]);
 
     ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
     ipcChannel.once('saveSettings', () => {

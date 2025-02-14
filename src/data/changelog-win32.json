@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Integration selection",
+    "description": "Now you can select how do you want EmuDeck to integrate into your system, from a low level using ESDE to a Highest level using Steam Rom Manager by incorporating your games directly into Steam.<br/><br/>We've also added a video explaining how to run your games at the end of the installation depending of the level of integration selected",
+    "image": "true"
+  },
+  {
+    "title": "Automatic ESDE ➡️ Steam",
+    "description": "SteamRomManager is no longer needed to add ESDE or Pegasus to your Steam library, simply by installing ESDE it will be added automatically for you",
+    "image": "true"
+  },
+  {
+    "title": "Bios Checker",
+    "description": "We've revamped the tool so it takes into account the different Switch emulators",
+    "image": "true"
+  },
+  {
+    "title": "BYO Citron Support",
+    "description": "Bring Your Own Citron is now available, just place the citron.appImage in your Applications folder and apply configs for SRM and ESDE from Manage Emulators. We won't install the emulator, every user must provide its own copy",
+    "image": "true"
+  },
+  {
+    "title": "New Emulators location",
+    "description": "We are migrating all emulators to your AppData/Roaming/EmuDeck folder to cleanup your user folder. If after the migration some emulators don't work, a Custom Reset should reinstall them. <br/><br/>The emulation folder is untouched so your games and saves are fine",
+    "image": "false"
+  },
+  {
+    "title": "New Emulators",
+    "description": "We've added the following missing emulators: Model 2, Supermodel(Model 3) and BigPemu",
+    "image": "true"
+  },
+  {
+    "title": "New Help Manual",
+    "description": "Having issues with EmuDeck? We've revamped our Wiki to make it more accesible. check it out at manual.emudeck.com",
+    "image": "false"
+  }
+]

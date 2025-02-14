@@ -44,6 +44,7 @@ function DeviceSelectorPage() {
       duckstation: '1080P',
       pcsx2: '1080P',
       yuzu: '720P',
+      citron: '720P',
       ppsspp: '1080P',
       rpcs3: '720P',
       ryujinx: '720P',
@@ -62,6 +63,7 @@ function DeviceSelectorPage() {
       duckstation: '720P',
       pcsx2: '720P',
       yuzu: '720P',
+      citron: '720P',
       ppsspp: '720P',
       rpcs3: '720P',
       ryujinx: '720P',
@@ -80,6 +82,7 @@ function DeviceSelectorPage() {
       duckstation: '1080P',
       pcsx2: '1080P',
       yuzu: '1080P',
+      citron: '720P',
       ppsspp: '1080P',
       rpcs3: '1080P',
       ryujinx: '1080P',
@@ -283,8 +286,8 @@ function DeviceSelectorPage() {
         )}
       </DeviceSelector>
       <Footer
-        next={mode === 'easy' ? 'end' : 'emulator-selector'}
-        nextText={mode === 'easy' ? t('general.finish') : t('general.next')}
+        next="frontend-selector"
+        nextText={t('general.next')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

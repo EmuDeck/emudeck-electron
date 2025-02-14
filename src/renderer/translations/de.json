@@ -327,7 +327,8 @@
       "login": "Login with Patreon ",
       "change": "Change Patreon Account",
       "check": "Check Token",
-      "checking": "Checking token..."
+      "checking": "Checking token...",
+      "license": "Login with License"
     },
     "PegasusThemeChoicePage": {
       "title": "Pegasus Default Theme",

@@ -1,0 +1,36 @@
+[
+  {
+    "title": "Integration selection",
+    "description": "Now you can select how do you want EmuDeck to integrate into your system, from a low level using ESDE to a Highest level using Steam Rom Manager by incorporating your games directly into Steam.<br/><br/>We've also added a video explaining how to run your games at the end of the installation depending of the level of integration selected",
+    "image": "true"
+  },
+  {
+    "title": "Automatic ESDE ➡️ Steam",
+    "description": "SteamRomManager is no longer needed to add ESDE or Pegasus to your Steam library, simply by installing ESDE it will be added automatically for you",
+    "image": "true"
+  },
+  {
+    "title": "Bios Checker",
+    "description": "We've revamped the tool so it takes into account the different Switch emulators",
+    "image": "true"
+  },
+  {
+    "title": "BYO Citron Support",
+    "description": "Bring Your Own Citron is now available, just place the citron.appImage in your Applications folder and apply configs for SRM and ESDE from Manage Emulators. We won't install the emulator, every user must provide its own copy",
+    "image": "true"
+  },
+  {
+    "title": "New EmuDeck settings location",
+    "description": "We are migrating your home/emudeck folder to .config/EmuDeck folder to declutter your user folder. This won't affect any emulator, games or saves and it's 100% automatically done when launching this release",
+    "image": "false"
+  },
+  {
+    "title": "New Help Manual",
+    "description": "Having issues with EmuDeck? We've revamped our Wiki to make it more accesible. check it out at manual.emudeck.com",
+    "image": "false"
+  },  {
+    "title": "Steam Rom Manager Dynamic Parsers",
+    "description": "In order to prevent duplicates, parsers for optional emulators will be installed only when said emulator is installed.",
+    "image": "false"
+  }
+]

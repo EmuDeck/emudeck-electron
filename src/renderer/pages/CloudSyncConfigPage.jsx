@@ -207,7 +207,6 @@ function CloudSyncPageConfig() {
     if (patreonToken) {
       patreonToken = patreonToken.replaceAll('|', '-');
     }
-
     console.log(`cloud_saves|||${cloudFunction} ${cloudSync} ${patreonToken}`);
     ipcChannel.sendMessage('emudeck', [
       `cloud_saves|||${cloudFunction} ${cloudSync} ${patreonToken}`,

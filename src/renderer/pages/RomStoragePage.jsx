@@ -323,6 +323,12 @@ function RomStoragePage() {
             installed: undefined,
             name: 'Yuzu',
           },
+          citron: {
+            id: 'citron',
+            status: false,
+            installed: undefined,
+            name: 'Citron',
+          },
           ryujinx: {
             id: 'ryujinx',
             status: false,
