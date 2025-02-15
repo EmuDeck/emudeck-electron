@@ -20,7 +20,7 @@ function DeckyRomLauncherPage() {
     disabledBack: false,
     data: '',
     hasSudo: false,
-    sudoPass: 'Decky!',
+    sudoPass: '',
     modal: false,
     pass1: 'a',
     pass2: 'b',
@@ -48,7 +48,7 @@ function DeckyRomLauncherPage() {
     } else {
       setStatePage({
         ...statePage,
-        sudoPass: 'Decky!',
+        sudoPass: '',
       });
     }
   };
