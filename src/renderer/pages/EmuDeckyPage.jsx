@@ -99,7 +99,7 @@ function EmuDeckyPage() {
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
     ipcChannel.sendMessage('emudeck', [
-      `EmuDecky|||Plugins_installEmuDecky "${escapedPass}" || echo true`,
+      `EmuDecky|||Plugins_installEmuDecky "${escapedPass}" && echo true`,
     ]);
 
     ipcChannel.once('EmuDecky', (status) => {
