@@ -87,7 +87,7 @@ function FrontendSelectorPage() {
     if (mode === 'easy') {
       return 'end';
     }
-    return 'confirmation';
+    return 'emulator-selector';
   };
 
   //Forced RL on non windows
