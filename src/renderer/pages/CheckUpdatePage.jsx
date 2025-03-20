@@ -109,10 +109,14 @@ function CheckUpdatePage() {
       const achievementsStored = settingsStorage.achievements;
       delete settingsStorage.installEmus.esde;
       delete settingsStorage.installEmus.pegasus;
+      delete settingsStorage.installEmus.citra;
+      delete settingsStorage.installEmus.lime3ds;
       delete settingsStorage.installEmus.primehacks;
       delete settingsStorage.installEmus.melonDS;
       delete settingsStorage.installEmus.cemunative;
       delete settingsStorage.overwriteConfigEmus.primehacks;
+      delete settingsStorage.overwriteConfigEmus.citra;
+      delete settingsStorage.overwriteConfigEmus.lime3ds;
       delete settingsStorage.installEmus.ares;
       delete settingsStorage.overwriteConfigEmus.ares;
       delete settingsStorage.android.installEmus.citrammj;

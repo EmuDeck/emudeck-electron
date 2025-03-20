@@ -20,6 +20,11 @@
     "image": "true"
   },
   {
+    "title": "Azahar",
+    "description": "This new emulator is a combination of both Citra and Lime3DS, replacing both of them.",
+    "image": "true"
+  },
+  {
     "title": "New EmuDeck settings location",
     "description": "We are migrating your home/emudeck folder to .config/EmuDeck folder to declutter your user folder. This won't affect any emulator, games or saves and it's 100% automatically done when launching this release",
     "image": "false"
@@ -28,7 +33,8 @@
     "title": "New Help Manual",
     "description": "Having issues with EmuDeck? We've revamped our Wiki to make it more accesible. check it out at manual.emudeck.com",
     "image": "false"
-  },  {
+  },
+  {
     "title": "Steam Rom Manager Dynamic Parsers",
     "description": "In order to prevent duplicates, parsers for optional emulators will be installed only when said emulator is installed.",
     "image": "false"

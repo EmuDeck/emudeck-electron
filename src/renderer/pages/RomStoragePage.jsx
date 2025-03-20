@@ -293,17 +293,11 @@ function RomStoragePage() {
             installed: undefined,
             name: 'melonDS',
           },
-          citra: {
-            id: 'citra',
+          azahar: {
+            id: 'azahar',
             status: false,
             installed: undefined,
-            name: 'Citra',
-          },
-          lime3ds: {
-            id: 'lime3ds',
-            status: false,
-            installed: undefined,
-            name: 'Lime3ds',
+            name: 'Azahar3DS',
           },
           pcsx2: {
             id: 'pcsx2',
@@ -426,8 +420,7 @@ function RomStoragePage() {
             name: 'DuckStation',
           },
           melonds: { id: 'melonds', status: false, name: 'melonDS' },
-          citra: { id: 'citra', status: false, name: 'Citra' },
-          lime3ds: { id: 'lime3ds', status: false, name: 'Lime3DS' },
+          azahar: { id: 'azahar', status: false, name: 'Azahar' },
           pcsx2: { id: 'pcsx2', status: false, name: 'PCSX2' },
           rpcs3: { id: 'rpcs3', status: false, name: 'RPCS3' },
           yuzu: { id: 'yuzu', status: false, name: 'Yuzu' },
