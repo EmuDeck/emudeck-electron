@@ -297,7 +297,7 @@ function RomStoragePage() {
             id: 'azahar',
             status: false,
             installed: undefined,
-            name: 'Azahar3DS',
+            name: 'Azahar',
           },
           pcsx2: {
             id: 'pcsx2',
