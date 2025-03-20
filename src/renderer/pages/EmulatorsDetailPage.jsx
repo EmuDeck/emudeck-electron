@@ -301,7 +301,7 @@ function EmulatorsDetailPage() {
       case 'melonds':
         img = melondsControls;
         break;
-      case 'citra':
+      case 'azahar':
         img = citraControls;
         break;
       case 'pcsx2':
@@ -395,7 +395,7 @@ function EmulatorsDetailPage() {
       case 'melonds':
         img = melondsHotkeys;
         break;
-      case 'citra':
+      case 'azahar':
         img = citraHotkeys;
         break;
       case 'pcsx2':

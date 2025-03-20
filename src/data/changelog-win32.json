@@ -20,6 +20,11 @@
     "image": "true"
   },
   {
+    "title": "Azahar",
+    "description": "This new emulator is a combination of both Citra and Lime3DS, replacing both of them.",
+    "image": "true"
+  },
+  {
     "title": "New Emulators location",
     "description": "We are migrating all emulators to your AppData/Roaming/EmuDeck folder to cleanup your user folder. If after the migration some emulators don't work, a Custom Reset should reinstall them. <br/><br/>The emulation folder is untouched so your games and saves are fine",
     "image": "false"

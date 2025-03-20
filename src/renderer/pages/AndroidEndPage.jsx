@@ -17,7 +17,6 @@ import {
   imgprimehack,
   imgppsspp,
   imgduckstation,
-  imgcitra,
   imgpcsx2,
   imgrpcs3,
   imgyuzu,

@@ -97,8 +97,7 @@ export default function App() {
     ppsspp: { id: 'ppsspp', code: 'PPSSPP', version: 0 },
     duckstation: { id: 'duckstation', code: 'Duckstation', version: 0 },
     melonds: { id: 'melonds', code: 'melonDS', version: 0 },
-    citra: { id: 'citra', code: 'Citra', version: 0 },
-    lime3ds: { id: 'lime3ds', code: 'Lime3DS', version: 0 },
+    azahar: { id: 'azahar', code: 'Azahar', version: 0 },
     pcsx2: { id: 'pcsx2', code: 'PCSX2QT', version: 0 },
     rpcs3: { id: 'rpcs3', code: 'RPCS3', version: 0 },
     yuzu: { id: 'yuzu', code: 'Yuzu', version: 0 },
@@ -166,15 +165,10 @@ export default function App() {
           status: true,
           name: 'PPSSPP',
         },
-        // citrammj: {
-        //   id: 'citrammj',
-        //   status: true,
-        //   name: 'CitraMMJ',
-        // },
-        lime3ds: {
-          id: 'lime3ds',
+        azahar: {
+          id: 'azahar',
           status: true,
-          name: 'Lime3DS',
+          name: 'Azahar',
         },
         nethersx2: {
           id: 'nethersx2',
@@ -213,15 +207,10 @@ export default function App() {
           status: true,
           name: 'PPSSPP',
         },
-        // citra: {
-        //   id: 'citra',
-        //   status: true,
-        //   name: 'Citra',
-        // },
-        lime3ds: {
-          id: 'lime3ds',
+        azahar: {
+          id: 'azahar',
           status: true,
-          name: 'Lime3DS',
+          name: 'Azahar',
         },
         aethersx2: {
           id: 'pcsx2',
@@ -315,13 +304,6 @@ export default function App() {
         name: 'Cemu',
         platforms: 'Nintendo WiiU',
       },
-      citra: {
-        id: 'citra',
-        status: true,
-        installed: undefined,
-        name: 'Citra',
-        platforms: 'Nintendo 3DS',
-      },
       citron: {
         id: 'citron',
         status: false,
@@ -350,11 +332,11 @@ export default function App() {
         name: 'Flycast',
         platforms: 'Dreamcast',
       },
-      lime3ds: {
-        id: 'lime3ds',
+      azahar: {
+        id: 'azahar',
         status: false,
         installed: undefined,
-        name: 'Lime3DS',
+        name: 'Azahar',
         platforms: 'Nintendo 3DS',
       },
       mame: {
@@ -497,11 +479,10 @@ export default function App() {
         name: 'BigPEmu',
       },
       cemu: { id: 'cemu', status: true, name: 'Cemu' },
-      citra: { id: 'citra', status: true, name: 'Citra' },
       dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
       duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
       flycast: { id: 'flycast', status: false, name: 'Flycast' },
-      lime3ds: { id: 'lime3ds', status: false, name: 'Lime3DS' },
+      azahar: { id: 'azahar', status: false, name: 'Azahar' },
       mame: { id: 'mame', status: false, name: 'MAME' },
       melonds: { id: 'melonds', status: true, name: 'melonDS' },
       mgba: { id: 'mgba', status: false, name: 'mGBA' },
@@ -583,8 +564,7 @@ export default function App() {
       xemu: '720P',
       cemu: '720P',
       xenia: '720P',
-      citra: '720P',
-      lime3ds: '720P',
+      azahar: '720P',
       vita3k: '720P',
       flycast: '720P',
       melonds: '720P',

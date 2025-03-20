@@ -12,7 +12,7 @@ import img0 from 'assets/changelog/banner_integration.png';
 import img1 from 'assets/changelog/banner_ESDE.jpg';
 import img2 from 'assets/changelog/banner_bios.png';
 import img3 from 'assets/changelog/banner_citron.png';
-import img4 from 'assets/emulators/grid/citra.png';
+import img4 from 'assets/changelog/banner_azahar.png';
 import img5 from 'assets/changelog/banner_supermodel.png';
 import img6 from 'assets/changelog/banner_supermodel.png';
 import img7 from 'assets/changelog/banner_flycast.png';
