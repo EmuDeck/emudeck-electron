@@ -334,7 +334,7 @@ export default function App() {
       },
       azahar: {
         id: 'azahar',
-        status: false,
+        status: true,
         installed: undefined,
         name: 'Azahar',
         platforms: 'Nintendo 3DS',
@@ -482,7 +482,7 @@ export default function App() {
       dolphin: { id: 'dolphin', status: true, name: 'Dolphin' },
       duckstation: { id: 'duckstation', status: true, name: 'DuckStation' },
       flycast: { id: 'flycast', status: false, name: 'Flycast' },
-      azahar: { id: 'azahar', status: false, name: 'Azahar' },
+      azahar: { id: 'azahar', status: true, name: 'Azahar' },
       mame: { id: 'mame', status: false, name: 'MAME' },
       melonds: { id: 'melonds', status: true, name: 'melonDS' },
       mgba: { id: 'mgba', status: false, name: 'mGBA' },
