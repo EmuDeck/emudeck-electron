@@ -493,11 +493,11 @@ export default function App() {
       ra: { id: 'ra', status: true, name: 'RetroArch' },
       rmg: { id: 'rmg', status: false, name: "Rosalie's Mupen Gui" },
       rpcs3: { id: 'rpcs3', status: true, name: 'RPCS3' },
-      ryujinx: { id: 'ryujinx', status: false, name: 'Ryujinx' },
+      ryujinx: { id: 'ryujinx', status: true, name: 'Ryujinx' },
       scummvm: { id: 'scummvm', status: true, name: 'ScummVM' },
       shadps4: {
         id: 'shadps4',
-        status: false,
+        status: true,
         name: 'ShadPS4',
       },
       supermodel: { id: 'supermodel', status: true, name: 'Supermodel' },
