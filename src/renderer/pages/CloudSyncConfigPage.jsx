@@ -242,7 +242,7 @@ function CloudSyncPageConfig() {
       const { stdout } = message;
       console.log({ stdout });
       let modalData;
-      if (stdout.includes('true')) {
+      if (stdout.includes('true_cs')) {
         // checkHealth();
         modalData = {
           active: true,
