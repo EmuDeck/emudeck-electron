@@ -7,10 +7,17 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
+import Main from 'components/organisms/Main/Main';
 import { useParams } from 'react-router-dom';
 import CloudSyncConfig from 'components/organisms/Wrappers/CloudSyncConfig';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import PatreonLogin from 'components/organisms/PatreonLogin/PatreonLogin';
+import { Img } from 'getbasecore/Atoms';
+import {
+  iconSuccess,
+  iconDanger,
+  iconQuestion,
+} from 'components/utils/images/icons';
 
 function CloudSyncPageConfig() {
   const { t, i18n } = useTranslation();
@@ -24,6 +31,7 @@ function CloudSyncPageConfig() {
     disableButton: false,
     showLoginButton: false,
     modal: undefined,
+    showHealth: false,
     dom: undefined,
   });
   const {
@@ -32,8 +40,19 @@ function CloudSyncPageConfig() {
     disableButton,
     showLoginButton,
     modal,
-    dom,
+    showHealth,
   } = statePage;
+
+  // Health state checks
+  const [stateBin, setStateBin] = useState(undefined);
+  const [stateCfg, setStateCfg] = useState(undefined);
+  const [stateServiceCreated, setStateServiceCreated] = useState(undefined);
+  const [stateCheckServiceStarts, setStateCheckServiceStarts] =
+    useState(undefined);
+  const [stateUpload, setStateUpload] = useState(undefined);
+  const [stateIsFileUploaded, setStateIsFileUploaded] = useState(undefined);
+  const [stateDownload, setStateDownload] = useState(undefined);
+  const [stateIsFileDownloaded, setStateIsFileDownloaded] = useState(undefined);
 
   const ipcChannel = window.electron.ipcRenderer;
 
@@ -144,45 +163,52 @@ function CloudSyncPageConfig() {
     });
   };
 
-  const checkHealth = () => {
-    const modalData = {
-      active: true,
-      header: <span className="h4">Testing CloudSync</span>,
-      body: <p>Please wait a few minutes while we test your configuration.</p>,
-      footer: <ProgressBar css="progress--success" infinite max="100" />,
-      css: 'emumodal--sm',
-    };
-    setStatePage({
-      ...statePage,
-      modal: modalData,
-    });
-    ipcChannel.sendMessage('emudeck', [`cloudSyncHealth|||cloudSyncHealth`]);
-
-    ipcChannel.once('cloudSyncHealth', (message) => {
-      console.log({ message });
-      const { stdout } = message;
-      let modalData;
-      if (stdout.includes('true')) {
-        modalData = {
-          active: true,
-          header: <span className="h4">Success!</span>,
-          body: <div dangerouslySetInnerHTML={{ __html: stdout }} />,
-          css: 'emumodal--sm',
-        };
-      } else {
-        console.log({ stdout });
-        modalData = {
-          active: true,
-          header: <span className="h4">CloudSync failure</span>,
-          body: <div dangerouslySetInnerHTML={{ __html: stdout }} />,
-          css: 'emumodal--sm',
-        };
-      }
-      setStatePage({
-        ...statePage,
-        modal: modalData,
+  const sendHealthCheck = (command) => {
+    return new Promise((resolve) => {
+      ipcChannel.sendMessage('emudeck', [`${command}|||${command}`]);
+      ipcChannel.once(command, (message) => {
+        resolve(message.stdout.includes('false') ? false : true);
       });
     });
+  };
+
+  const checkHealth = async () => {
+    setStatePage((prev) => ({
+      ...prev,
+      showHealth: true,
+    }));
+
+    const binOk = await sendHealthCheck('cloud_sync_health_checkBin');
+    setStateBin(binOk);
+
+    const cfgOk = await sendHealthCheck('cloud_sync_health_checkCfg');
+    setStateCfg(cfgOk);
+
+    const serviceCreatedOk = await sendHealthCheck(
+      'cloud_sync_health_checkServiceCreated'
+    );
+    setStateServiceCreated(serviceCreatedOk);
+
+    const serviceStartsOk = await sendHealthCheck(
+      'cloud_sync_health_checkServiceStarts'
+    );
+    setStateCheckServiceStarts(serviceStartsOk);
+
+    const uploadOk = await sendHealthCheck('cloud_sync_health_upload');
+    setStateUpload(uploadOk);
+
+    const uploadedOk = await sendHealthCheck(
+      'cloud_sync_health_isFileUploaded'
+    );
+    setStateIsFileUploaded(uploadedOk);
+
+    const downloadOk = await sendHealthCheck('cloud_sync_health_download');
+    setStateDownload(downloadOk);
+
+    const downloadedOk = await sendHealthCheck(
+      'cloud_sync_health_isFileDownloaded'
+    );
+    setStateIsFileDownloaded(downloadedOk);
   };
 
   const installRclone = () => {
@@ -366,19 +392,114 @@ function CloudSyncPageConfig() {
     return 'copy-games';
   };
 
+  const iconMap = {
+    undefined: iconQuestion,
+    false: iconDanger,
+    true: iconSuccess,
+  };
+
   return (
     <Wrapper>
       {cloudSyncType === 'Sync' && (
         <PatreonLogin>
-          <Header title="Cloud Sync - Select your provider" />
-          <CloudSyncConfig
-            onClick={cloudSyncSet}
-            onClickInstall={installRclone}
-            onClickUninstall={uninstallRclone}
-            onClickCheckHealth={checkHealth}
-            disableButton={disableButton}
-            showLoginButton={showLoginButton}
-          />
+          {!showHealth && (
+            <>
+              <Header title="Cloud Sync - Select your provider" />
+
+              <CloudSyncConfig
+                onClick={cloudSyncSet}
+                onClickInstall={installRclone}
+                onClickUninstall={uninstallRclone}
+                onClickCheckHealth={checkHealth}
+                disableButton={disableButton}
+                showLoginButton={showLoginButton}
+              />
+            </>
+          )}
+
+          {showHealth && (
+            <>
+              <Header title="Cloud Sync - Testing Health" />
+              <Main>
+                <div className="container--grid">
+                  <div data-col-sm="6">
+                    <ul className="list list--customization other">
+                      <li>
+                        Does the Rclone executable exists?{' '}
+                        <div className="list--customization__pill">
+                          <Img
+                            src={iconMap[stateBin]}
+                            css="icon icon--xs"
+                            alt="OK"
+                          />
+                        </div>
+                      </li>
+                      <li>
+                        Does the service exist?{' '}
+                        <div className="list--customization__pill">
+                          <Img
+                            src={iconMap[stateServiceCreated]}
+                            css="icon icon--xs"
+                            alt="OK"
+                          />
+                        </div>
+                      </li>
+                      <li>
+                        Does the service start?{' '}
+                        <div className="list--customization__pill">
+                          <Img
+                            src={iconMap[stateCheckServiceStarts]}
+                            css="icon icon--xs"
+                            alt="OK"
+                          />
+                        </div>
+                      </li>
+                      <li>
+                        Did the test upload work?{' '}
+                        <div className="list--customization__pill">
+                          <Img
+                            src={iconMap[stateUpload]}
+                            css="icon icon--xs"
+                            alt="OK"
+                          />
+                        </div>
+                      </li>
+                      <li>
+                        Is the test file uploaded?{' '}
+                        <div className="list--customization__pill">
+                          <Img
+                            src={iconMap[stateIsFileUploaded]}
+                            css="icon icon--xs"
+                            alt="OK"
+                          />
+                        </div>
+                      </li>
+                      <li>
+                        Did the test download work?{' '}
+                        <div className="list--customization__pill">
+                          <Img
+                            src={iconMap[stateDownload]}
+                            css="icon icon--xs"
+                            alt="OK"
+                          />
+                        </div>
+                      </li>
+                      <li>
+                        Is the test file downloaded?{' '}
+                        <div className="list--customization__pill">
+                          <Img
+                            src={iconMap[stateIsFileDownloaded]}
+                            css="icon icon--xs"
+                            alt="OK"
+                          />
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </Main>
+            </>
+          )}
 
           <EmuModal modal={modal} />
         </PatreonLogin>
@@ -386,15 +507,20 @@ function CloudSyncPageConfig() {
 
       {cloudSyncType === 'Save' && (
         <>
-          <Header title="Cloud Backup - Select your provider" />
-          <CloudSyncConfig
-            onClick={cloudSyncSet}
-            onClickInstall={installRclone}
-            onClickUninstall={uninstallRclone}
-            onClickCheckHealth={checkHealth}
-            disableButton={disableButton}
-            showLoginButton={showLoginButton}
-          />
+          {!showHealth && (
+            <>
+              <Header title="Cloud Backup - Select your provider" />
+
+              <CloudSyncConfig
+                onClick={cloudSyncSet}
+                onClickInstall={installRclone}
+                onClickUninstall={uninstallRclone}
+                onClickCheckHealth={checkHealth}
+                disableButton={disableButton}
+                showLoginButton={showLoginButton}
+              />
+            </>
+          )}
 
           <EmuModal modal={modal} />
         </>
