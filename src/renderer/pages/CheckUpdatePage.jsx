@@ -146,6 +146,7 @@ function CheckUpdatePage() {
         delete settingsStorage.installEmus.xemu;
         delete settingsStorage.installEmus.xenia;
         delete settingsStorage.installEmus.yuzu;
+        delete settingsStorage.installEmus.eden;
         delete settingsStorage.installEmus.citron;
 
         delete settingsStorage.overwriteConfigEmus.ares;
