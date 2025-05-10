@@ -102,7 +102,7 @@ function FrontendSelectorPage() {
   return (
     <Wrapper css="wrapper__full">
       <Header title="Pick your level of integration" />
-      <p class="lead">
+      <p className="lead">
         EmuDeck can integrate into your system in different levels
       </p>
       <Main>

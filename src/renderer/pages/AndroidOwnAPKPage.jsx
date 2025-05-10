@@ -10,7 +10,7 @@ function AndroidOwnAPKPage() {
       <Header title={t('AndroidOwnAPKPage.title')} />
       <main>
         <p
-          class="lead"
+          className="lead"
           dangerouslySetInnerHTML={{
             __html: t('AndroidOwnAPKPage.description'),
           }}
