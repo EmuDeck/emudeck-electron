@@ -34,7 +34,7 @@ function EmulatorConfigResolutionPage() {
     const json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
 
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       `setResolutions|||setSetting dolphinResolution ${state.resolutions.dolphin}; setSetting duckstationResolution ${state.resolutions.duckstation}; setSetting pcsx2Resolution ${state.resolutions.pcsx2}; setSetting yuzuResolution ${state.resolutions.yuzu}; setSetting citronResolution ${state.resolutions.citron}; setSetting edenResolution ${state.resolutions.yuzu}; setSetting ppssppResolution ${state.resolutions.ppsspp}; setSetting rpcs3Resolution ${state.resolutions.rpcs3}; setSetting ryujinxResolution ${state.resolutions.yuzu}; setSetting xemuResolution ${state.resolutions.xemu}; setSetting xeniaResolution ${state.resolutions.xenia}; setSetting azaharResolution ${state.resolutions.azahar};  setResolutions`,
     ]);
 

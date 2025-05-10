@@ -80,7 +80,7 @@ function AndroidRomStoragePage() {
     }
 
     if (storageName === 'Custom') {
-      ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
+      ipcChannel.sendMessage('emudeck-legacy', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
         const stdout = message.stdout.replace('\n', '');
@@ -102,7 +102,7 @@ function AndroidRomStoragePage() {
         });
         // is it valid?
 
-        ipcChannel.sendMessage('emudeck', [
+        ipcChannel.sendMessage('emudeck-legacy', [
           `testLocation|||testLocationValid "custom" "${stdout}"`,
         ]);
 
@@ -201,7 +201,7 @@ function AndroidRomStoragePage() {
 
   // We heck if it's formated in a valid file system. Only Linux
   const getAndroidDrives = () => {
-    ipcChannel.sendMessage('emudeck', ['Android_ADB_init|||Android_ADB_init']);
+    ipcChannel.sendMessage('emudeck-legacy', ['Android_ADB_init|||Android_ADB_init']);
 
     ipcChannel.once('Android_ADB_init', (message) => {
       console.log({ message });

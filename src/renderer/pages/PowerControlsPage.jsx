@@ -55,7 +55,7 @@ function PowerControlsPage() {
   };
 
   const createSudo = () => {
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-legacy', [
       `echo '${pass1}' > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
     const modalData = {
@@ -104,7 +104,7 @@ function PowerControlsPage() {
 
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
 
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       `powerControls|||Plugins_installPowerControls ${escapedPass} && echo true`,
     ]);
 
@@ -143,7 +143,7 @@ function PowerControlsPage() {
   //
 
   useEffect(() => {
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-legacy', [
       'checkPWD|||passwd -S $(whoami) | awk -F " " "{print $2}" & exit',
     ]);
 

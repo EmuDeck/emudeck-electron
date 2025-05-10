@@ -107,7 +107,7 @@ function EmulatorsDetailPage() {
   };
 
   const removeParsers = () => {
-    ipcChannel.sendMessage('emudeck', [`SRM_deleteCache|||SRM_deleteCache`]);
+    ipcChannel.sendMessage('emudeck-legacy', [`SRM_deleteCache|||SRM_deleteCache`]);
   };
 
   const yuzuEAaskToken = () => {
@@ -179,7 +179,7 @@ function EmulatorsDetailPage() {
       css: 'emumodal--xs',
     });
 
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       `YuzuEA_addToken|||YuzuEA_addToken "${yuzuEAtoken}"`,
     ]);
     let modalHeader;
@@ -237,7 +237,7 @@ function EmulatorsDetailPage() {
   };
 
   const checkBios = (biosCommand) => {
-    ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
+    ipcChannel.sendMessage('emudeck-legacy', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
       status = status.stdout;
 
@@ -496,13 +496,13 @@ function EmulatorsDetailPage() {
       ...statePage,
       modal: modalData,
     });
-    ipcChannel.sendMessage('emudeck', [`${code}_install|||${code}_install`]);
+    ipcChannel.sendMessage('emudeck-legacy', [`${code}_install|||${code}_install`]);
 
     ipcChannel.once(`${code}_install`, (message) => {
       let status = message.stdout;
       status.replace('\n', '');
       // Lets check if it did install
-      ipcChannel.sendMessage('emudeck', [
+      ipcChannel.sendMessage('emudeck-legacy', [
         `${code}_IsInstalled|||${code}_IsInstalled`,
       ]);
 
@@ -596,7 +596,7 @@ function EmulatorsDetailPage() {
       modal: modalData,
     });
 
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       `${code}_install|||${code}_install && ${code}_init`,
     ]);
 
@@ -604,7 +604,7 @@ function EmulatorsDetailPage() {
       let status = message.stdout;
       status.replace('\n', '');
       // Lets check if it did install
-      ipcChannel.sendMessage('emudeck', [
+      ipcChannel.sendMessage('emudeck-legacy', [
         `${code}_IsInstalled|||${code}_IsInstalled`,
       ]);
 
@@ -702,11 +702,11 @@ function EmulatorsDetailPage() {
     });
 
     if (alternative) {
-      ipcChannel.sendMessage('emudeck', [
+      ipcChannel.sendMessage('emudeck-legacy', [
         `${code}_uninstall|||${code}_uninstall_alt`,
       ]);
     } else {
-      ipcChannel.sendMessage('emudeck', [
+      ipcChannel.sendMessage('emudeck-legacy', [
         `${code}_uninstall|||${code}_uninstall`,
       ]);
     }
@@ -716,7 +716,7 @@ function EmulatorsDetailPage() {
 
       status = status.replace('\n', '');
       // Lets check if it did install
-      ipcChannel.sendMessage('emudeck', [
+      ipcChannel.sendMessage('emudeck-legacy', [
         `${code}_IsInstalled|||${code}_IsInstalled`,
       ]);
 
@@ -800,11 +800,11 @@ function EmulatorsDetailPage() {
     });
 
     if (system === 'win32') {
-      ipcChannel.sendMessage('emudeck', [
+      ipcChannel.sendMessage('emudeck-legacy', [
         `${code}_resetConfig|||${code}_resetConfig;${code}_setupSaves`,
       ]);
     } else {
-      ipcChannel.sendMessage('emudeck', [
+      ipcChannel.sendMessage('emudeck-legacy', [
         `${code}_resetConfig|||${code}_resetConfig`,
       ]);
     }
@@ -911,7 +911,7 @@ function EmulatorsDetailPage() {
     } else {
       bashCommand = `mkdir -p "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; gnome-open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; kde-open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"`;
     }
-    ipcChannel.sendMessage('emudeck', [`openCustomFolder|||${bashCommand}`]);
+    ipcChannel.sendMessage('emudeck-legacy', [`openCustomFolder|||${bashCommand}`]);
   };
 
   const installOptional = () => {
@@ -935,7 +935,7 @@ function EmulatorsDetailPage() {
       ...statePage,
       modal: modalData,
     });
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       `API_optional_parsers|||API_optional_parsers`,
     ]);
 
@@ -958,7 +958,7 @@ function EmulatorsDetailPage() {
       css: 'emumodal--xs',
     });
 
-    ipcChannel.sendMessage('emudeck', [`${code}_migrate|||${code}_migrate`]);
+    ipcChannel.sendMessage('emudeck-legacy', [`${code}_migrate|||${code}_migrate`]);
 
     ipcChannel.once(`${code}_migrate`, (message) => {
       const stdout = message.message;
@@ -1099,17 +1099,17 @@ function EmulatorsDetailPage() {
 
     if (!sameObject) {
       if (system === 'win32') {
-        ipcChannel.sendMessage('emudeck', [
+        ipcChannel.sendMessage('emudeck-legacy', [
           `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status};setSetting doInstallmelonDS ${state.installEmus.melonds.status};setSetting doInstallDuck ${state.installEmus.duckstation.status};;setSetting doInstallFlycast ${state.installEmus.dreamcast.status}`,
         ]);
       } else {
-        ipcChannel.sendMessage('emudeck', [
+        ipcChannel.sendMessage('emudeck-legacy', [
           `parsersUpdatePrev|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} && setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame.status} >/dev/null && setSetting doInstallmelonDS ${state.installEmus.melonds.status} >/dev/null && setSetting doInstallDuck ${state.installEmus.duckstation.status} >/dev/null && setSetting doInstallFlycast ${state.installEmus.flycast.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame} >/dev/null && setSetting doInstallRMG ${state.installEmus.rmg.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status}} >/dev/null) >/dev/null`,
         ]);
       }
 
       ipcChannel.once(`parsersUpdatePrev`, () => {
-        ipcChannel.sendMessage('emudeck', [`parsersUpdate|||SRM_init`]);
+        ipcChannel.sendMessage('emudeck-legacy', [`parsersUpdate|||SRM_init`]);
       });
 
       ipcChannel.once(`parsersUpdate`, (message) => {

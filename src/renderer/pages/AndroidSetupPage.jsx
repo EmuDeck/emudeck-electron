@@ -72,7 +72,7 @@ function AndroidSetupPage() {
   const { emulator } = useParams();
 
   useEffect(() => {
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       `Android_${emulator}_setup|||Android_${emulator}_setup`,
     ]);
 

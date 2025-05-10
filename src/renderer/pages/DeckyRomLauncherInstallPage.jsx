@@ -52,7 +52,7 @@ function DeckyRomLauncherInstallPage() {
   };
 
   const createSudo = () => {
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-legacy', [
       `echo '${pass1}' > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
 
@@ -100,7 +100,7 @@ function DeckyRomLauncherInstallPage() {
       modal: modalData,
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       `DeckyRomLibrary|||Plugins_installDeckyRomLibrary "${escapedPass}" && echo true`,
     ]);
 
@@ -138,7 +138,7 @@ function DeckyRomLauncherInstallPage() {
   //
 
   useEffect(() => {
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-legacy', [
       'checkPWD|||passwd -S $(whoami) | awk -F " " "{print $2}" & exit',
     ]);
 

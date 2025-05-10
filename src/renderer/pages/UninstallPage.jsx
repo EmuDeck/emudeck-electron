@@ -19,7 +19,7 @@ function UninstallPage() {
   const ipcChannel = window.electron.ipcRenderer;
 
   const uninstall = () => {
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-legacy', [
       'bash ~/.config/EmuDeck/backend/uninstall.sh',
     ]);
   };

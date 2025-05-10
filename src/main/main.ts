@@ -306,9 +306,9 @@ const createWindow = async () => {
 //
 
 //
-// Backend function invokers
+// Old bash / powershell Backend function invokers
 //
-ipcMain.on('bash', async (event, command) => {
+ipcMain.on('bash-legacy', async (event, command) => {
   let backChannel: any;
   let bashCommand: any;
 
@@ -329,8 +329,7 @@ ipcMain.on('bash', async (event, command) => {
     event.reply(backChannel, stdout);
   });
 });
-
-ipcMain.on('bash-nolog', async (event, command) => {
+ipcMain.on('bash-nolog-legacy', async (event, command) => {
   let backChannel: any;
   let bashCommand: any;
 
@@ -350,8 +349,7 @@ ipcMain.on('bash-nolog', async (event, command) => {
     event.reply(backChannel, stdout);
   });
 });
-
-ipcMain.on('emudeck', async (event, command) => {
+ipcMain.on('emudeck-legacy', async (event, command) => {
   let backChannel: any;
   let bashCommand: any;
 
@@ -406,8 +404,7 @@ ipcMain.on('emudeck', async (event, command) => {
     });
   });
 });
-
-ipcMain.on('emudeck-nolog', async (event, command) => {
+ipcMain.on('emudeck-nolog-legacy', async (event, command) => {
   let backChannel: any;
   let bashCommand: any;
 

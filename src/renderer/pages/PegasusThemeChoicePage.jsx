@@ -55,7 +55,7 @@ function PegasusThemeChoicePage() {
     setStatePage({ ...statePage, modal: modalData });
     console.log(`pegasus_applyTheme|||pegasus_applyTheme ${themePegasus[0]}`);
 
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       `pegasus_applyTheme|||pegasus_applyTheme ${themePegasus[0]}`,
     ]);
     ipcChannel.once('pegasus_applyTheme', () => {

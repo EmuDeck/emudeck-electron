@@ -219,7 +219,7 @@ function PatreonLoginPage() {
       const partial = patreonTokenTemp.split('|||');
       const splitToken = partial[1];
 
-      ipcChannel.sendMessage('emudeck', [
+      ipcChannel.sendMessage('emudeck-legacy', [
         `storePatreonToken|||storePatreonToken ${splitToken}`,
       ]);
       ipcChannel.once('storePatreonToken', (message) => {

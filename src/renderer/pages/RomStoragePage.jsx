@@ -76,7 +76,7 @@ function RomStoragePage() {
     }
 
     if (storageName === 'Custom') {
-      ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
+      ipcChannel.sendMessage('emudeck-legacy', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
         const stdout = message.stdout.replace('\n', '');
@@ -95,7 +95,7 @@ function RomStoragePage() {
         });
         // is it valid?
 
-        ipcChannel.sendMessage('emudeck', [
+        ipcChannel.sendMessage('emudeck-legacy', [
           `testLocation|||testLocationValid "custom" "${stdout}"`,
         ]);
 
@@ -179,7 +179,7 @@ function RomStoragePage() {
   };
   // We get the SD Card name. Only Linux
   const getSDName = () => {
-    ipcChannel.sendMessage('emudeck', ['SDCardName|||getSDPath']);
+    ipcChannel.sendMessage('emudeck-legacy', ['SDCardName|||getSDPath']);
     ipcChannel.once('SDCardName', (message) => {
       let stdout = message.stdout.replace('\n', '');
       if (stdout === '') {
@@ -197,7 +197,7 @@ function RomStoragePage() {
   };
   // We heck if it's formated in a valid file system. Only Linux
   const checkSDValid = () => {
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
     ]);
 
@@ -231,7 +231,7 @@ function RomStoragePage() {
   };
   // In windows we search for all drives
   const getHDdrives = () => {
-    ipcChannel.sendMessage('emudeck', ['getLocations|||getLocations']);
+    ipcChannel.sendMessage('emudeck-legacy', ['getLocations|||getLocations']);
 
     ipcChannel.once('getLocations', (message) => {
       const hdrives = message.stdout;

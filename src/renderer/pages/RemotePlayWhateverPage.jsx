@@ -35,7 +35,7 @@ function RemotePlayWhateverPage() {
       modal: modalData,
     });
 
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       'RemotePlayWhatever|||RemotePlayWhatever_install',
     ]);
 

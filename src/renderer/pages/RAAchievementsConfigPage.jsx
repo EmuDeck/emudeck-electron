@@ -41,11 +41,11 @@ function RAAchievementsConfigPage() {
       achievements: { ...achievements, hardcore: !achievements.hardcore },
     });
     if (!achievements.hardcore) {
-      ipcChannel.sendMessage('emudeck', [
+      ipcChannel.sendMessage('emudeck-legacy', [
         `setHardcore|||RetroArch_retroAchievementsHardCoreOn`,
       ]);
     } else {
-      ipcChannel.sendMessage('emudeck', [
+      ipcChannel.sendMessage('emudeck-legacy', [
         `setHardcore|||RetroArch_retroAchievementsHardCoreOff`,
       ]);
     }

@@ -60,7 +60,7 @@ function GameModePage() {
       };
     }
 
-    ipcChannel.sendMessage('emudeck', [`bootMode|||${functionBootMode}`]);
+    ipcChannel.sendMessage('emudeck-legacy', [`bootMode|||${functionBootMode}`]);
     ipcChannel.once('bootMode', () => {
       setStatePage({ ...statePage, modal: modalData });
     });

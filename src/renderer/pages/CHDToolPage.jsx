@@ -24,11 +24,11 @@ function CHDToolPage() {
 
   const runCHD = (data) => {
     if (system == 'win32') {
-      ipcChannel.sendMessage('bash-nolog', [
+      ipcChannel.sendMessage('bash-nolog-legacy', [
         `powershell -ExecutionPolicy Bypass -NoExit . $env:APPDATA\EmuDeck\backend\tools\chdconv\chddeck.ps1"`,
       ]);
     } else {
-      ipcChannel.sendMessage('bash-nolog', [
+      ipcChannel.sendMessage('bash-nolog-legacy', [
         `konsole -e "/bin/bash $HOME/.config/EmuDeck/backend/tools/chdconv/chddeck.sh"`,
       ]);
     }

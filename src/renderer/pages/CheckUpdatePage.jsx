@@ -68,7 +68,7 @@ function CheckUpdatePage() {
   // Darwin terminal permissions
   useEffect(() => {
     if (system === 'darwin' && second === false) {
-      ipcChannel.sendMessage('bash-nolog', [
+      ipcChannel.sendMessage('bash-nolog-legacy', [
         `osascript -e 'tell app "Terminal" to do script "pwd && exit"'`,
       ]);
     }
@@ -76,15 +76,15 @@ function CheckUpdatePage() {
 
   const showLog = (system) => {
     if (system === 'win32') {
-      ipcChannel.sendMessage('bash-nolog', [
+      ipcChannel.sendMessage('bash-nolog-legacy', [
         `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:APPDATA/emudeck/logs/git.log -Tail 100 -Wait }"`,
       ]);
     } else if (system === 'darwin') {
-      ipcChannel.sendMessage('bash-nolog', [
+      ipcChannel.sendMessage('bash-nolog-legacy', [
         `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/.config/EmuDeck/logs/git.log"'`,
       ]);
     } else {
-      ipcChannel.sendMessage('bash-nolog', [
+      ipcChannel.sendMessage('bash-nolog-legacy', [
         `konsole -e tail -f "$HOME/.config/EmuDeck/logs/git.log"`,
       ]);
     }

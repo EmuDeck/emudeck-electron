@@ -84,7 +84,7 @@ function CopyGamesPage() {
         break;
     }
 
-    ipcChannel.sendMessage('emudeck', [`checkBios|||${biosToCheck}`]);
+    ipcChannel.sendMessage('emudeck-legacy', [`checkBios|||${biosToCheck}`]);
 
     ipcChannel.once('checkBios', (message) => {
       const { stdout } = message;
@@ -117,7 +117,7 @@ function CopyGamesPage() {
     }
 
     if (storageName === 'Custom') {
-      ipcChannel.sendMessage('emudeck', ['customLocation|||customLocation']);
+      ipcChannel.sendMessage('emudeck-legacy', ['customLocation|||customLocation']);
 
       ipcChannel.once('customLocation', (message) => {
         const pathUSB = message.stdout.replace('\n', '');
@@ -130,7 +130,7 @@ function CopyGamesPage() {
         });
         // is it valid?
 
-        ipcChannel.sendMessage('emudeck', [
+        ipcChannel.sendMessage('emudeck-legacy', [
           `testLocation|||sleep 1 && testLocationValidRelaxed "custom" "${pathUSB}"`,
         ]);
 
@@ -173,7 +173,7 @@ function CopyGamesPage() {
   };
 
   const startCopyGames = () => {
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       `CopyGames|||CopyGames '${storageUSBPath}'`,
     ]);
 
@@ -191,7 +191,7 @@ function CopyGamesPage() {
       ...statePage,
       statusCreateStructure: 'waiting',
     });
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       `CreateStructureUSB|||CreateStructureUSB '${storageUSBPath}'`,
     ]);
 

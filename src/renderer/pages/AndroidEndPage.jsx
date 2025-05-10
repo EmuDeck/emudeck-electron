@@ -113,11 +113,11 @@ function AndroidEndPage() {
     ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
     ipcChannel.once('saveSettings', () => {
       if (system === 'win32') {
-        ipcChannel.sendMessage('bash-nolog', [
+        ipcChannel.sendMessage('bash-nolog-legacy', [
           `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/android/setup.ps1`,
         ]);
       } else {
-        ipcChannel.sendMessage('bash-nolog', [
+        ipcChannel.sendMessage('bash-nolog-legacy', [
           `finish|||bash ~/.config/EmuDeck/backend/android/setup.sh ${branch} false`,
         ]);
       }

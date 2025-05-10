@@ -125,15 +125,15 @@ function EndPage() {
 
   const showLog = () => {
     if (system === 'win32') {
-      ipcChannel.sendMessage('bash-nolog', [
+      ipcChannel.sendMessage('bash-nolog-legacy', [
         `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:APPDATA/emudeck/logs/emudeckSetup.log -Tail 100 -Wait }"`,
       ]);
     } else if (system === 'darwin') {
-      ipcChannel.sendMessage('bash-nolog', [
+      ipcChannel.sendMessage('bash-nolog-legacy', [
         `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/.config/EmuDeck/logs/emudeckSetup.log"'`,
       ]);
     } else {
-      ipcChannel.sendMessage('bash-nolog', [
+      ipcChannel.sendMessage('bash-nolog-legacy', [
         `konsole -e tail -f "$HOME/.config/EmuDeck/logs/emudeckSetup.log"`,
       ]);
     }
@@ -165,15 +165,15 @@ function EndPage() {
     ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
     ipcChannel.once('saveSettings', () => {
       if (system === 'win32') {
-        ipcChannel.sendMessage('bash-nolog', [
+        ipcChannel.sendMessage('bash-nolog-legacy', [
           `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/setup.ps1`,
         ]);
       } else if (system === 'darwin') {
-        ipcChannel.sendMessage('bash-nolog', [
+        ipcChannel.sendMessage('bash-nolog-legacy', [
           `finish|||osascript -e 'tell application "Terminal" to do script "bash ~/.config/EmuDeck/backend/setup.sh" activate'`,
         ]);
       } else {
-        ipcChannel.sendMessage('bash-nolog', [
+        ipcChannel.sendMessage('bash-nolog-legacy', [
           `finish|||bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
         ]);
       }

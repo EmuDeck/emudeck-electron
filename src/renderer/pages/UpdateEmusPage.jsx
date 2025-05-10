@@ -19,13 +19,13 @@ function UpdateEmusPage() {
   const ipcChannel = window.electron.ipcRenderer;
 
   const updateFlatpak = () => {
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-legacy', [
       'bash ~/.config/EmuDeck/backend/tools/flatpakupdate/flatpakupdate.sh',
     ]);
   };
 
   const updateAppImage = () => {
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-legacy', [
       'bash ~/.config/EmuDeck/backend/tools/binupdate/binupdate.sh',
     ]);
   };

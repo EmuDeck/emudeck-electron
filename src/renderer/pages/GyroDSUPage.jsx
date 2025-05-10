@@ -38,7 +38,7 @@ function GyroDSUPage() {
 
   const installGyro = (data) => {
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-legacy', [
       `Gyro|||konsole -e  sh -c '. ~/.config/EmuDeck/backend/functions/all.sh && Plugins_installSteamDeckGyroDSU "${escapedPass}" && echo "" && read -n 1 -s -r -p "Press any key to exit" && exit 0'`,
     ]);
 
@@ -77,7 +77,7 @@ function GyroDSUPage() {
   };
 
   useEffect(() => {
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-legacy', [
       'checkPWD|||passwd -S $(whoami) | awk -F " " "{print $2}" & exit',
     ]);
 

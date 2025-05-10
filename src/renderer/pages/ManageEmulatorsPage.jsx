@@ -191,7 +191,7 @@ function ManageEmulatorsPage() {
           modal: modalData,
         });
 
-        ipcChannel.sendMessage('emudeck', [
+        ipcChannel.sendMessage('emudeck-legacy', [
           `${code}_resetConfig|||sleep ${i} && ${code}_resetConfig`,
         ]);
 

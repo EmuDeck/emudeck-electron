@@ -50,7 +50,7 @@ function EmuDeckyPage() {
   };
 
   const createSudo = () => {
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-legacy', [
       `echo '${pass1}' > test && cat test >> test1 && cat test >> test1 && passwd deck < test1 && rm test test1`,
     ]);
 
@@ -98,7 +98,7 @@ function EmuDeckyPage() {
       modal: modalData,
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
-    ipcChannel.sendMessage('emudeck', [
+    ipcChannel.sendMessage('emudeck-legacy', [
       `EmuDecky|||Plugins_installEmuDecky "${escapedPass}" && echo true`,
     ]);
 
@@ -137,7 +137,7 @@ function EmuDeckyPage() {
   //
 
   useEffect(() => {
-    ipcChannel.sendMessage('bash', [
+    ipcChannel.sendMessage('bash-legacy', [
       'checkPWD|||passwd -S $(whoami) | awk -F " " "{print $2}" & exit',
     ]);
 

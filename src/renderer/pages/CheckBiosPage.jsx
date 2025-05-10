@@ -36,7 +36,7 @@ function CheckBiosPage() {
   const ipcChannel = window.electron.ipcRenderer;
 
   const checkBios = (biosCommand) => {
-    ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
+    ipcChannel.sendMessage('emudeck-legacy', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
       status = status.stdout;
 
