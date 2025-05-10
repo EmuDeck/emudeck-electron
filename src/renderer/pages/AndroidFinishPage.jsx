@@ -42,7 +42,7 @@ function AndroidFinishPage() {
   const ipcChannel = window.electron.ipcRenderer;
 
   useEffect(() => {
-    ipcChannel.sendMessage('emudeck-legacy', [
+    ipcChannel.sendMessage('bash', [
       `launchPegasus|||adb shell am start -n org.pegasus_frontend.android/.MainActivity`,
     ]);
   }, []);

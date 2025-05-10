@@ -1116,7 +1116,7 @@ function ParserSelectorPage() {
       status.replace('\n', '');
       console.log({ message });
       let modalData;
-      if (status.includes('true')) {
+      if (/true|OK/.test(status)) {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,

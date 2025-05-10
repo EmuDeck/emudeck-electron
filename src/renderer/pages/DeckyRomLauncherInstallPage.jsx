@@ -100,14 +100,14 @@ function DeckyRomLauncherInstallPage() {
       modal: modalData,
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `DeckyRomLibrary|||Plugins_installDeckyRomLibrary "${escapedPass}" && echo true`,
+    ipcChannel.sendMessage('emudeck', [
+      `DeckyRomLibrary|||plugins_install_decky_rom_library ${escapedPass}`,
     ]);
 
     ipcChannel.once('DeckyRomLibrary', (status) => {
       const { stdout } = status;
       let modalData;
-      if (stdout.includes('true')) {
+      if (/true|OK/.test(stdout)) {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,

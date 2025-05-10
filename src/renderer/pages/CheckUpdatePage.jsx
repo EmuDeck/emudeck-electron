@@ -520,7 +520,7 @@ function CheckUpdatePage() {
         const cloneStatusCheck = stdout.replace('\n', '');
         let cloneStatusCheckValue;
 
-        if (cloneStatusCheck.includes('true')) {
+        if (/true|OK/.test(cloneStatusCheck)) {
           cloneStatusCheckValue = true;
         } else {
           cloneStatusCheckValue = false;
@@ -565,7 +565,7 @@ function CheckUpdatePage() {
           });
         }, 60000);
         ipcChannel.once('clone', (error, cloneStatusClone) => {
-          if (cloneStatusClone.includes('true')) {
+          if (/true|OK/.test(cloneStatusClone)) {
             clearTimeout(cloneTimeOut);
             setStatePage({ ...statePage, downloadComplete: true });
             console.log({ downloadComplete });
@@ -618,7 +618,6 @@ function CheckUpdatePage() {
         }, 20000);
         ipcChannel.once('pull', (error, stdout, stderr) => {
           console.log('GIT PULL response');
-          console.log({ error, stdout, stderr });
 
           updateTimeOut = setTimeout(() => {
             clearTimeout(pullTimeOut);

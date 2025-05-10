@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
-
+import { invokeIpc } from 'common';
 //
 // components
 //
@@ -218,11 +218,7 @@ function PatreonLoginPage() {
       localStorage.setItem('patreon_token', patreonTokenTemp);
       const partial = patreonTokenTemp.split('|||');
       const splitToken = partial[1];
-
-      ipcChannel.sendMessage('emudeck-legacy', [
-        `storePatreonToken|||storePatreonToken ${splitToken}`,
-      ]);
-      ipcChannel.once('storePatreonToken', (message) => {
+      invokeIpc(`store_patreon_token ${splitToken}`).then((e) => {
         setState({
           ...state,
           patreonToken: splitToken,

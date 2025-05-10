@@ -112,7 +112,7 @@ function PowerControlsPage() {
       const { stdout } = status;
 
       let modalData;
-      if (stdout.includes('true')) {
+      if (/true|OK/.test(stdout)) {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,

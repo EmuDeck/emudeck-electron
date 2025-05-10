@@ -2,7 +2,7 @@
   "ra": {
     "id": "ra",
     "name": "RetroArch",
-    "code": "RetroArch",
+    "code": "retroarch",
 
     "description": "",
     "special_configuration": "Custom textures for the NES and N64 using EmuDeck's pre-created folder: Emulation/hdpacks",
@@ -38,7 +38,7 @@
   "cemu": {
     "id": "cemu",
     "name": "Cemu",
-    "code": "Cemu",
+    "code": "cemu",
 
     "description": "Cemu is a Nintendo Wii U emulator, developed by Exzap and Petergov. That's right, you can emulate Breath of the Wild on the Steam Deck with Cemu.",
     "special_configuration": "BIOS: No additional BIOS are required, keys are required for encrypted ROMs. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys. Place your Wii U ROMs here: Emulation/roms/wiiu/roms.",
@@ -67,7 +67,7 @@
   "dolphin": {
     "id": "dolphin",
     "name": "Dolphin",
-    "code": "Dolphin",
+    "code": "dolphin",
 
     "description": "Dolphin is a Nintendo Gamecube and Wii emulator, developed by the Dolphin Emulator Project. Re-live your Wii Sports days on the go with this emulator.",
     "special_configuration": "BIOS: No additional BIOS are required.",
@@ -88,7 +88,7 @@
   "primehack": {
     "id": "primehack",
     "name": "Primehack",
-    "code": "Primehack",
+    "code": "primehack",
 
     "description": "Primehack is a fork of Dolphin, intended to modernize the Metroid Prime trilogy, developed by shiiion. Modern FPS controls for the Metroid Prime Trilogy? You got it.",
     "special_configuration": "BIOS: No additional BIOS are required. Only Metroid Prime Trilogy (Wii) is configured at this time.",
@@ -109,7 +109,7 @@
   "ppsspp": {
     "id": "ppsspp",
     "name": "PPSSPP",
-    "code": "PPSSPP",
+    "code": "ppsspp",
 
     "description": "PPSSPP is a Sony PSP emulator, originally developed by Henrik Rydgård. Portable games on the go, again.",
     "special_configuration": "BIOS: No additional BIOS are required.",
@@ -127,7 +127,7 @@
   "duckstation": {
     "id": "duckstation",
     "name": "DuckStation",
-    "code": "DuckStation",
+    "code": "duckstation",
 
     "description": "DuckStation is a Sony PlayStation 1 emulator, developed primarily by stenzek.",
     "special_configuration": "BIOS: BIOS are required, ROMs do need region specific BIOS.",
@@ -141,7 +141,7 @@
   "melonds": {
     "id": "melonds",
     "name": "melonDS",
-    "code": "melonDS",
+    "code": "melonds",
 
     "description": "melonDS is a Nintendo DS Emulator, originally developed by Arisotura. Close the lid when you're finished playing.",
     "special_configuration": "BIOS: BIOS are optional. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys.",
@@ -155,7 +155,7 @@
   "azahar": {
     "id": "azahar",
     "name": "Azahar",
-    "code": "Azahar",
+    "code": "azahar",
     "description": "Azahar is an open-source, easy-to-use Nintendo 3DS emulator, forked from Citra. Azahar has many features, such as firmware emulation, amiibo loading, and partial support for homebrew applications.",
     "special_configuration": "",
     "bios": [],
@@ -176,7 +176,7 @@
   "pcsx2": {
     "id": "pcsx2",
     "name": "PCSX2QT",
-    "code": "PCSX2QT",
+    "code": "pcsx2qt",
 
     "description": "PCSX2 is a Sony Playstation 2 emulator, developed by the PCSX2 team. JRPGs galore.",
     "special_configuration": "BIOS: BIOS are required, ROMs do not need region specific BIOS.",
@@ -197,7 +197,7 @@
   "rpcs3": {
     "id": "rpcs3",
     "name": "RPCS3",
-    "code": "RPCS3",
+    "code": "rpcs3",
 
     "description": "RPCS3 is a Sony PlayStation 3 emulator, originally developed by DH, Hykem, and AlexAltea. That's right, the Steam Deck can emulate PS3 too.",
     "special_configuration": "Firmware: Install firmware through the RPCS3 GUI. Follow RPSC3's Quickstart Guide: <a className='link' target='_blank' href='https://rpcs3.net/quickstart'>here</a>. You will need to tweak settings for most games. Check RPCS3's Wiki for specific setting recommendations.",
@@ -211,7 +211,7 @@
   "yuzu": {
     "id": "yuzu",
     "name": "Yuzu",
-    "code": "Yuzu",
+    "code": "yuzu",
 
     "description": "Yuzu was a Nintendo Switch emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install. Emudeck does not download nor can it guarantee support if you run into any issues.",
     "special_configuration": " If you already have your yuzu.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/yuzu/yuzu-windows-msvc folder. Firmware: Place keys and firmware place in: Emulation/bios/yuzu.",
@@ -231,7 +231,7 @@
   "eden": {
     "id": "eden",
     "name": "Eden",
-    "code": "Eden",
+    "code": "eden",
 
     "description": "Eden is a Nintendo Switch emulator. Emudeck does not download nor can it guarantee support if you run into any issues.",
     "special_configuration": "If you already have your eden.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/eden/ folder. Firmware: Place keys and firmware place in: Emulation/bios/eden.",
@@ -251,7 +251,7 @@
   "citron": {
     "id": "citron",
     "name": "Citron",
-    "code": "Citron",
+    "code": "citron",
 
     "description": "Emudeck does not download this emulator nor can it guarantee support if you run into any issues.",
     "special_configuration": " If you already have your citron.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/AppData/Roaming/EmuDeck/Emulators/citron/ folder. Firmware: Place keys and firmware place in: Emulation/bios/citron.",
@@ -271,7 +271,7 @@
   "ryujinx": {
     "id": "ryujinx",
     "name": "Ryujinx",
-    "code": "Ryujinx",
+    "code": "ryujinx",
 
     "description": "Ryujinx is a Nintendo Switch emulator, originally developed by gdkchan. Ryujinx can promise excellent accuracy for your favorite Nintendo Switch games.",
     "special_configuration": "Firmware: Install firmware through the Ryujinx GUI. Place keys in: Emulation/bios/ryujinx/keys.",
@@ -285,7 +285,7 @@
   "xemu": {
     "id": "xemu",
     "name": "Xemu",
-    "code": "Xemu",
+    "code": "xemu",
 
     "description": "Xemu is a Microsoft Xbox emulator, originally developed by Matt Borgerson. Master Chief: I think we're just getting started. ",
     "special_configuration": "BIOS: BIOS are required: mcpx_1.0.bin and modified retail BIOS, Complex_4627v1.03.bin.",
@@ -296,7 +296,7 @@
   "rmg": {
     "id": "rmg",
     "name": "Rosalie's Mupen GUI",
-    "code": "RMG",
+    "code": "rmg",
 
     "description": "Rosalie's Mupen GUI is a mupen64plus GUI, with a clean interface and a slew of features. Don't forget to blow on the cartridge.",
     "special_configuration": "BIOS: N64DD games require BIOS.",
@@ -314,7 +314,7 @@
   "mame": {
     "id": "mame",
     "name": "MAME",
-    "code": "MAME",
+    "code": "mame",
 
     "description": "MAME is a Multiple Arcade Machine Emulator, originally developed by Nicola Salmoria. Invite a friend over, and re-live the arcade days over a match of 1943 or Bubble Bobble.",
     "special_configuration": "BIOS: BIOS are required for some MAME ROMs. Ideally use ROMS that are the same version as MAME's version. MAME often releases improved versions of ROMS to improve compatibility. EmuDeck currently supports the current versions:<br/>MAME (Standalone) and MAME (Current), MAME 2010, MAME 2003, as RetroArch Cores.",
@@ -331,7 +331,7 @@
   "vita3k": {
     "id": "vita3k",
     "name": "Vita3K",
-    "code": "Vita3K",
+    "code": "vita3k",
 
     "description": "Vita3K is a Sony Playstation Vita emulator, developed by the Vita3K team. No memory card needed.",
     "special_configuration": "Firmware: Install firmware through the Vita3K GUI. Follow Vita3K's instructions in the GUI. You will need to tweak settings for most games. Many are still not playable. Check Vita3K's compatibility list <strong><a href='https://vita3k.org/compatibility.html' target='_blank'>here</a></strong>.",
@@ -345,7 +345,7 @@
   "flycast": {
     "id": "flycast",
     "name": "Flycast",
-    "code": "Flycast",
+    "code": "flycast",
 
     "description": "Flycast is a multi-platform Sega Dreamcast, Atomiswave, NAOMI, and NAOMI 2",
     "special_configuration": "",
@@ -359,7 +359,7 @@
   "scummvm": {
     "id": "scummvm",
     "name": "ScummVM",
-    "code": "ScummVM",
+    "code": "scummvm",
 
     "description": "ScummVM is a program which allows you to run certain classic graphical adventure and role-playing games. It supports an extensive library of over 325 adventure games, including classic titles from iconic studios such as LucasArts, Sierra On-Line, Revolution Software, Cyan, Inc. and Westwood Studios",
     "special_configuration": "BIOS: No additional BIOS are required. Read the wiki, <a className='link' target='_blank' href='https://emudeck.github.io/emulators/steamos/scummvm/#how-to-configure-scummvm-to-work-with-emulationstation-de-and-steam-rom-manager'>here</a>, for guides on how to configure ScummVM for Steam ROM Manager and ES-DE.",
@@ -373,7 +373,7 @@
   "xenia": {
     "id": "xenia",
     "name": "Xenia",
-    "code": "Xenia",
+    "code": "xenia",
 
     "description": "Xenia is a Microsoft Xbox 360 emulator, originally developed by benvanik. Relive your Xbox Live Arcade Days.",
     "special_configuration": "BIOS: No additional BIOS are required. Xenia is still in an experimental state, some games may not run or perform well.",
@@ -387,7 +387,7 @@
   "mgba": {
     "id": "mgba",
     "name": "mGBA",
-    "code": "mGBA",
+    "code": "mgba",
 
     "description": "mGBA is a GameBoy, Gameboy Color, and Gameboy Advance emulator, originally developed by endrift. No link cable included.",
     "special_configuration": "BIOS: No additional BIOS are required. Hotkeys: EmuDeck's Steam Input profile is required for hotkeys.",
@@ -401,7 +401,7 @@
   "srm": {
     "id": "srm",
     "name": "Steam ROM Manager",
-    "code": "SRM",
+    "code": "srm",
 
     "description": "Add your ROMS and emulators to your Steam Library.",
     "special_configuration": "Steam ROM Manager is pre-configured by EmuDeck. Each parser generally corresponds to an emulator or tool. Enable your preferred parsers, generate and save an app list, and start playing right away in Game Mode<br/>Parsers are created dynamically based in your selection when installing EmuDeck.",
@@ -411,7 +411,7 @@
   "esde": {
     "id": "esde",
     "name": "ES-DE",
-    "code": "ESDE",
+    "code": "esde",
     "description": "ES-DE is a frontend application for browsing and launching games from your multi-platform game collection.",
     "special_configuration": "",
     "bios": [],
@@ -436,7 +436,7 @@
   "model2": {
     "id": "model2",
     "name": "Model2",
-    "code": "Model2",
+    "code": "model2",
     "wiki": "",
     "description": "The Model 2 Emulator is a closed-source Sega Model 2 emulator written by Miguel Ãngel Horna, otherwise popularly known by his nick \"ElSemi\".",
     "special_configuration": "",
@@ -447,7 +447,7 @@
   "supermodel": {
     "id": "supermodel",
     "name": "Supermodel",
-    "code": "Supermodel",
+    "code": "supermodel",
     "wiki": "",
     "description": "Supermodel is an open-source Sega Model 3 emulator with good compatibility. The aim of the Supermodel project is to develop an emulator that is both accurate and playable.",
     "special_configuration": "",
@@ -458,7 +458,7 @@
   "bigpemu": {
     "id": "bigpemu",
     "name": "BigPEmu",
-    "code": "BigPEmu",
+    "code": "bigpemu",
     "wiki": "",
     "description": "BigPEmu is a closed-source Atari Jaguar emulator. It was originally developed for use in the game compilation Atari 50, and later made available for free separately",
     "special_configuration": "",
@@ -469,7 +469,7 @@
   "shadps4": {
     "id": "shadps4",
     "name": "ShadPS4",
-    "code": "ShadPS4",
+    "code": "shadps4",
     "wiki": "",
     "description": "ShadPS4 is an early experimental open-source emulator for the PlayStation 4 (PS4).",
     "special_configuration": "",

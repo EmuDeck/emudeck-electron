@@ -35,8 +35,8 @@ function GameModePage() {
 
     let functionBootMode;
     status === true
-      ? (functionBootMode = 'game_mode_enable')
-      : (functionBootMode = 'game_mode_disable');
+      ? (functionBootMode = 'win_game_mode_enable')
+      : (functionBootMode = 'win_game_mode_disable');
     let modalData;
     if (status) {
       modalData = {
@@ -60,7 +60,7 @@ function GameModePage() {
       };
     }
 
-    ipcChannel.sendMessage('emudeck-legacy', [`bootMode|||${functionBootMode}`]);
+    ipcChannel.sendMessage('emudeck', [`bootMode|||${functionBootMode}`]);
     ipcChannel.once('bootMode', () => {
       setStatePage({ ...statePage, modal: modalData });
     });

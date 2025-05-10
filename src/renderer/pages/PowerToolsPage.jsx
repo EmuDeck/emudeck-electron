@@ -104,15 +104,15 @@ function PowerToolsPage() {
 
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
 
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `powerTools|||Plugins_installPowerTools ${escapedPass} && echo true`,
+    ipcChannel.sendMessage('emudeck', [
+      `powerTools|||plugins_install_powertools ${escapedPass}`,
     ]);
 
     ipcChannel.once('powerTools', (status) => {
       const { stdout } = status;
 
       let modalData;
-      if (stdout.includes('true')) {
+      if (/true|OK/.test(stdout)) {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,

@@ -191,15 +191,17 @@ function ManageEmulatorsPage() {
           modal: modalData,
         });
 
-        ipcChannel.sendMessage('emudeck-legacy', [
-          `${code}_resetConfig|||sleep ${i} && ${code}_resetConfig`,
+        ipcChannel.sendMessage('emudeck', [
+          `${code.toLowerCase()}_init|||${code.toLowerCase()}_init`,
         ]);
 
-        ipcChannel.once(`${code}_resetConfig`, (message) => {
+        console.log(`${code.toLowerCase()}_init|||${code.toLowerCase()}_init`);
+
+        ipcChannel.once(`${code.toLowerCase()}_init`, (message) => {
           let status = message.stdout;
           status = status.replace('\n', '');
 
-          if (status.includes('true')) {
+          if (/true|OK/.test(status)) {
             const modalData = {
               active: true,
               header: (

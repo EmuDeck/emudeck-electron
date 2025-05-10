@@ -34,22 +34,15 @@ function EmulatorConfigResolutionPage() {
     const json = JSON.stringify(state);
     localStorage.setItem('settings_emudeck', json);
 
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `setResolutions|||setSetting dolphinResolution ${state.resolutions.dolphin}; setSetting duckstationResolution ${state.resolutions.duckstation}; setSetting pcsx2Resolution ${state.resolutions.pcsx2}; setSetting yuzuResolution ${state.resolutions.yuzu}; setSetting citronResolution ${state.resolutions.citron}; setSetting edenResolution ${state.resolutions.yuzu}; setSetting ppssppResolution ${state.resolutions.ppsspp}; setSetting rpcs3Resolution ${state.resolutions.rpcs3}; setSetting ryujinxResolution ${state.resolutions.yuzu}; setSetting xemuResolution ${state.resolutions.xemu}; setSetting xeniaResolution ${state.resolutions.xenia}; setSetting azaharResolution ${state.resolutions.azahar};  setResolutions`,
-    ]);
-
-    ipcChannel.once('setResolutions', (message) => {
-      console.log({ message });
-      const modalData = {
-        active: true,
-        header: <span className="h4">Settings saved!</span>,
-        css: 'emumodal--sm',
-        body: <p>Your emulators now have the new resolutions you set.</p>,
-      };
-      setStatePage({
-        ...statePage,
-        modal: modalData,
-      });
+    const modalData = {
+      active: true,
+      header: <span className="h4">Settings saved!</span>,
+      css: 'emumodal--sm',
+      body: <p>Your emulators now have the new resolutions you set.</p>,
+    };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
     });
   };
 

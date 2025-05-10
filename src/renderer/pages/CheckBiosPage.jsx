@@ -36,43 +36,43 @@ function CheckBiosPage() {
   const ipcChannel = window.electron.ipcRenderer;
 
   const checkBios = (biosCommand) => {
-    ipcChannel.sendMessage('emudeck-legacy', [`${biosCommand}|||${biosCommand}`]);
+    ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
       status = status.stdout;
 
       status = status.replace('\n', '');
       let biosStatus;
-      status.includes('true') ? (biosStatus = true) : (biosStatus = false);
+      /true|OK/.test(status) ? (biosStatus = true) : (biosStatus = false);
 
       switch (biosCommand) {
-        case 'checkPS1BIOS':
+        case 'check_psx_bios':
           setps1Bios(biosStatus);
           break;
-        case 'checkPS2BIOS':
+        case 'check_ps2_bios':
           setps2Bios(biosStatus);
           break;
-        case 'checkYuzuBios':
+        case 'check_yuzu_bios':
           setSwitchBios(biosStatus);
           break;
-        case 'checkEdenBios':
+        case 'check_eden_bios':
           setEdenBios(biosStatus);
           break;
-        case 'checkRyujinxBios':
+        case 'check_ryujinx_bios':
           setRyujinxBios(biosStatus);
           break;
-        case 'checkCitronBios':
+        case 'check_citron_bios':
           setCitronBios(biosStatus);
           break;
-        case 'checkSegaCDBios':
+        case 'check_segacd_bios':
           setSegaCDBios(biosStatus);
           break;
-        case 'checkSaturnBios':
+        case 'check_saturn_bios':
           setSaturnBios(biosStatus);
           break;
-        case 'checkDreamcastBios':
+        case 'check_dreamcast_bios':
           setDreamcastBios(biosStatus);
           break;
-        case 'checkDSBios':
+        case 'check_ds_bios':
           setDSBios(biosStatus);
           break;
       }
@@ -80,27 +80,27 @@ function CheckBiosPage() {
   };
 
   const checkBiosAgain = () => {
-    checkBios('checkPS1BIOS');
-    checkBios('checkPS2BIOS');
-    checkBios('checkYuzuBios');
-    checkBios('checkRyujinxBios');
-    checkBios('checkCitronBios');
-    checkBios('checkSegaCDBios');
-    checkBios('checkSaturnBios');
-    checkBios('checkDreamcastBios');
-    checkBios('checkDSBios');
+    checkBios('check_PS1_bios');
+    checkBios('check_PS2_bios');
+    checkBios('check_Yuzu_bios');
+    checkBios('check_Ryujinx_bios');
+    checkBios('check_Citron_bios');
+    checkBios('check_SegaCD_bios');
+    checkBios('check_Saturn_bios');
+    checkBios('check_Dreamcast_bios');
+    checkBios('check_DS_bios');
   };
 
   useEffect(() => {
-    checkBios('checkPS1BIOS');
-    checkBios('checkPS2BIOS');
-    checkBios('checkYuzuBios');
-    checkBios('checkRyujinxBios');
-    checkBios('checkCitronBios');
-    checkBios('checkSegaCDBios');
-    checkBios('checkSaturnBios');
-    checkBios('checkDreamcastBios');
-    checkBios('checkDSBios');
+    checkBios('check_PS1_bios');
+    checkBios('check_PS2_bios');
+    checkBios('check_Yuzu_bios');
+    checkBios('check_Ryujinx_bios');
+    checkBios('check_Citron_bios');
+    checkBios('check_SegaCD_bios');
+    checkBios('check_Saturn_bios');
+    checkBios('check_Dreamcast_bios');
+    checkBios('check_DS_bios');
   }, []);
 
   return (

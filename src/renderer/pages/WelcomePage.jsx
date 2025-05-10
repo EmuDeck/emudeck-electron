@@ -202,7 +202,7 @@ function WelcomePage() {
       {second && (
         <>
           <Header title="EmuDeck News" />
-          <Main>
+          <Main css="news">
             <div className="cards cards--maxi">
               {news &&
                 news.map((item) => {

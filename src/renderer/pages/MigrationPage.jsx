@@ -46,7 +46,9 @@ function MigrationPage() {
     }
 
     if (storageName === 'Custom') {
-      ipcChannel.sendMessage('emudeck-legacy', ['customLocation|||customLocation']);
+      ipcChannel.sendMessage('emudeck-legacy', [
+        'customLocation|||customLocation',
+      ]);
 
       ipcChannel.once('customLocation', (message) => {
         const stdout = message.stdout.replace('\n', '');
@@ -110,7 +112,7 @@ function MigrationPage() {
 
   const checkSDValid = () => {
     ipcChannel.sendMessage('emudeck-legacy', [
-      'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
+      `SDCardValid|||testLocationValid "SD" "${getSDPath}"`,
     ]);
 
     ipcChannel.once('SDCardValid', (message) => {

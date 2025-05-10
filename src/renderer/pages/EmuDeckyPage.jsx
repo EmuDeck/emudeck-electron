@@ -98,15 +98,15 @@ function EmuDeckyPage() {
       modal: modalData,
     });
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `EmuDecky|||Plugins_installEmuDecky "${escapedPass}" && echo true`,
+    ipcChannel.sendMessage('emudeck', [
+      `DeckyRomLibrary|||plugins_install_emudecky ${escapedPass}`,
     ]);
 
     ipcChannel.once('EmuDecky', (status) => {
       const { stdout } = status;
       let modalData;
       console.log({ status });
-      if (stdout.includes('true')) {
+      if (/true|OK/.test(stdout)) {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,

@@ -47,7 +47,6 @@ import ChangeLogPage from 'pages/ChangeLogPage';
 import QuickSettingsPage from 'pages/QuickSettingsPage';
 import UninstallPage from 'pages/UninstallPage';
 
-import RemotePlayWhateverPage from 'pages/RemotePlayWhateverPage';
 import VideoGuidePage from 'pages/VideoGuidePage';
 import MigrationPage from 'pages/MigrationPage';
 import CopyGamesPage from 'pages/CopyGamesPage';
@@ -728,11 +727,6 @@ export default function App() {
           </Route>
 
           <Route exact path="/uninstall" element={<UninstallPage />} />
-          <Route
-            exact
-            path="/remote-play-whatever"
-            element={<RemotePlayWhateverPage />}
-          />
 
           <Route exact path="/video-guide" element={<VideoGuidePage />} />
           <Route exact path="/migration" element={<MigrationPage />} />

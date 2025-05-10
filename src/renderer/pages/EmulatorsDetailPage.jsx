@@ -107,7 +107,9 @@ function EmulatorsDetailPage() {
   };
 
   const removeParsers = () => {
-    ipcChannel.sendMessage('emudeck-legacy', [`SRM_deleteCache|||SRM_deleteCache`]);
+    ipcChannel.sendMessage('emudeck-legacy', [
+      `SRM_deleteCache|||SRM_deleteCache`,
+    ]);
   };
 
   const yuzuEAaskToken = () => {
@@ -201,7 +203,7 @@ function EmulatorsDetailPage() {
           modalBody =
             'There was an issue installing Yuzu Early Access, please try again.';
           break;
-        case response.includes('true'):
+        case /true|OK/.test(response):
           modalHeader = <span className="h4">Yuzu Early Access Success!</span>;
           modalBody = (
             <p>
@@ -237,45 +239,47 @@ function EmulatorsDetailPage() {
   };
 
   const checkBios = (biosCommand) => {
-    ipcChannel.sendMessage('emudeck-legacy', [`${biosCommand}|||${biosCommand}`]);
+    ipcChannel.sendMessage('emudeck-legacy', [
+      `${biosCommand}|||${biosCommand}`,
+    ]);
     ipcChannel.once(`${biosCommand}`, (status) => {
       status = status.stdout;
 
       status = status.replace('\n', '');
       let biosStatus;
-      status.includes('true') ? (biosStatus = true) : (biosStatus = false);
+      /true|OK/.test(status) ? (biosStatus = true) : (biosStatus = false);
 
       switch (biosCommand) {
-        case 'checkPS1BIOS':
+        case 'check_psx_bios':
           setps1Bios(biosStatus);
           break;
-        case 'checkPS2BIOS':
+        case 'check_ps2_bios':
           setps2Bios(biosStatus);
           break;
-        case 'checkEdenBios':
+        case 'check_eden_bios':
           setSwitchBios(biosStatus);
           break;
-        case 'checkYuzuBios':
+        case 'check_yuzu_bios':
           setEdenBios(biosStatus);
           break;
 
-        case 'checkRyujinxBios':
+        case 'check_ryujinx_bios':
           setRyujinxBios(biosStatus);
           break;
-        case 'checkCitronBios':
+        case 'check_citron_bios':
           setCitronBios(biosStatus);
           break;
 
-        case 'checkSegaCDBios':
+        case 'check_segaCD_bios':
           setSegaCDBios(biosStatus);
           break;
-        case 'checkSaturnBios':
+        case 'check_saturn_bios':
           setSaturnBios(biosStatus);
           break;
-        case 'checkDreamcastBios':
+        case 'check_dreamcast_bios':
           setDreamcastBios(biosStatus);
           break;
-        case 'checkDSBios':
+        case 'check_ds_bios':
           setDSBios(biosStatus);
           break;
       }
@@ -496,21 +500,16 @@ function EmulatorsDetailPage() {
       ...statePage,
       modal: modalData,
     });
-    ipcChannel.sendMessage('emudeck-legacy', [`${code}_install|||${code}_install`]);
+    ipcChannel.sendMessage('emudeck', [`${code}_install|||${code}_install`]);
 
     ipcChannel.once(`${code}_install`, (message) => {
-      let status = message.stdout;
-      status.replace('\n', '');
-      // Lets check if it did install
-      ipcChannel.sendMessage('emudeck-legacy', [
-        `${code}_IsInstalled|||${code}_IsInstalled`,
-      ]);
+      ipcChannel.sendMessage('emudeck', [`${code}_init|||${code}_init`]);
 
-      ipcChannel.once(`${code}_IsInstalled`, (message) => {
+      ipcChannel.once(`${code}_init`, (message) => {
         status = message.stdout;
         status.replace('\n', '');
-
-        if (status.includes('true')) {
+        console.log({ message });
+        if (/true|OK/.test(status)) {
           const modalData = {
             active: true,
             header: <span className="h4">{code} success!</span>,
@@ -596,24 +595,22 @@ function EmulatorsDetailPage() {
       modal: modalData,
     });
 
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `${code}_install|||${code}_install && ${code}_init`,
-    ]);
+    ipcChannel.sendMessage('emudeck', [`${code}_install|||${code}_install`]);
+
+    console.log(`${code}_install|||${code}_install`);
 
     ipcChannel.once(`${code}_install`, (message) => {
       let status = message.stdout;
       status.replace('\n', '');
       // Lets check if it did install
-      ipcChannel.sendMessage('emudeck-legacy', [
-        `${code}_IsInstalled|||${code}_IsInstalled`,
+      ipcChannel.sendMessage('emudeck', [
+        `${code}_is_installed|||${code}_is_installed`,
       ]);
-
-      ipcChannel.once(`${code}_IsInstalled`, (message) => {
+      ipcChannel.once(`${code}_is_installed`, (message) => {
         console.log({ message });
         status = message.stdout;
         status.replace('\n', '');
-
-        if (status.includes('true')) {
+        if (/true|OK/.test(status)) {
           const modalData = {
             active: true,
             header: <span className="h4">{code} installed!</span>,
@@ -706,7 +703,7 @@ function EmulatorsDetailPage() {
         `${code}_uninstall|||${code}_uninstall_alt`,
       ]);
     } else {
-      ipcChannel.sendMessage('emudeck-legacy', [
+      ipcChannel.sendMessage('emudeck', [
         `${code}_uninstall|||${code}_uninstall`,
       ]);
     }
@@ -716,11 +713,11 @@ function EmulatorsDetailPage() {
 
       status = status.replace('\n', '');
       // Lets check if it did install
-      ipcChannel.sendMessage('emudeck-legacy', [
-        `${code}_IsInstalled|||${code}_IsInstalled`,
+      ipcChannel.sendMessage('emudeck', [
+        `${code}_is_installed|||${code}_is_installed`,
       ]);
 
-      ipcChannel.once(`${code}_IsInstalled`, (status) => {
+      ipcChannel.once(`${code}_is_installed`, (status) => {
         status = status.stdout;
         status = status.replace('\n', '');
 
@@ -799,22 +796,14 @@ function EmulatorsDetailPage() {
       modal: modalData,
     });
 
-    if (system === 'win32') {
-      ipcChannel.sendMessage('emudeck-legacy', [
-        `${code}_resetConfig|||${code}_resetConfig;${code}_setupSaves`,
-      ]);
-    } else {
-      ipcChannel.sendMessage('emudeck-legacy', [
-        `${code}_resetConfig|||${code}_resetConfig`,
-      ]);
-    }
+    ipcChannel.sendMessage('emudeck', [`${code}_init|||${code}_init`]);
 
-    ipcChannel.once(`${code}_resetConfig`, (status) => {
+    ipcChannel.once(`${code}_init`, (status) => {
       status = status.stdout;
-
+      console.log(status);
       status = status.replace('\n', '');
 
-      if (status.includes('true')) {
+      if (/true|OK/.test(status)) {
         const modalData = {
           active: true,
           header: <span className="h4">{name}'s configuration updated!</span>,
@@ -911,7 +900,9 @@ function EmulatorsDetailPage() {
     } else {
       bashCommand = `mkdir -p "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; gnome-open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; kde-open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"`;
     }
-    ipcChannel.sendMessage('emudeck-legacy', [`openCustomFolder|||${bashCommand}`]);
+    ipcChannel.sendMessage('emudeck-legacy', [
+      `openCustomFolder|||${bashCommand}`,
+    ]);
   };
 
   const installOptional = () => {
@@ -958,14 +949,16 @@ function EmulatorsDetailPage() {
       css: 'emumodal--xs',
     });
 
-    ipcChannel.sendMessage('emudeck-legacy', [`${code}_migrate|||${code}_migrate`]);
+    ipcChannel.sendMessage('emudeck-legacy', [
+      `${code}_migrate|||${code}_migrate`,
+    ]);
 
     ipcChannel.once(`${code}_migrate`, (message) => {
       const stdout = message.message;
 
       const response = stdout.replaceAll('\n', '');
       let modalData;
-      if (response.includes('true')) {
+      if (/true|OK/.test(response)) {
         modalData = {
           active: true,
           header: <span className="h4">{code} success!</span>,
@@ -1002,32 +995,32 @@ function EmulatorsDetailPage() {
     // Check for bios
     switch (emulator) {
       case 'ra':
-        checkBios('checkPS1BIOS');
-        checkBios('checkSegaCDBios');
-        checkBios('checkSaturnBios');
-        checkBios('checkDSBios');
-        checkBios('checkDreamcastBios');
+        checkBios('check_PS1_bios');
+        checkBios('check_SegaCD_bios');
+        checkBios('check_Saturn_bios');
+        checkBios('check_DS_bios');
+        checkBios('check_Dreamcast_bios');
         break;
       case 'duckstation':
-        checkBios('checkPS1BIOS');
+        checkBios('check_PS1_bios');
         break;
       case 'melonds':
-        checkBios('checkDSBios');
+        checkBios('check_DS_bios');
         break;
       case 'pcsx2':
-        checkBios('checkPS2BIOS');
+        checkBios('check_PS2_bios');
         break;
       case 'yuzu':
-        checkBios('checkYuzuBios');
+        checkBios('check_Yuzu_bios');
         break;
       case 'eden':
-        checkBios('checkYuzuBios');
+        checkBios('check_Yuzu_bios');
         break;
       case 'citron':
-        checkBios('checkEdenBios');
+        checkBios('check_Eden_bios');
         break;
       case 'ryujinx':
-        checkBios('checkRyujinxBios');
+        checkBios('check_Ryujinx_bios');
         break;
 
       default:
@@ -1117,7 +1110,7 @@ function EmulatorsDetailPage() {
         status.replace('\n', '');
         console.log({ message });
         let modalData;
-        if (status.includes('true')) {
+        if (/true|OK/.test(status)) {
           modalData = {
             active: true,
             header: <span className="h4">Success!</span>,

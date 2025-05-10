@@ -60,31 +60,31 @@ function CopyGamesPage() {
     let biosToCheck;
     switch (bios) {
       case 'PlayStation1':
-        biosToCheck = 'checkPS1BIOS';
+        biosToCheck = 'check_psx_bios';
         break;
       case 'PlayStation2':
-        biosToCheck = 'checkPS2BIOS';
+        biosToCheck = 'check_ps2_bios';
         break;
       case 'Switch':
-        biosToCheck = 'checkYuzuBios';
+        biosToCheck = 'check_yuzu_bios';
         break;
       case 'SegaCD':
-        biosToCheck = 'checkSegaCDBios';
+        biosToCheck = 'check_segacd_bios';
         break;
       case 'Saturn':
-        biosToCheck = 'checkSaturnBios';
+        biosToCheck = 'check_saturn_bios';
         break;
       case 'Dreamcast':
-        biosToCheck = 'checkDreamcastBios';
+        biosToCheck = 'check_dreamcast_bios';
         break;
       case 'NintendoDS':
-        biosToCheck = 'checkDSBios';
+        biosToCheck = 'check_ds_bios';
         break;
       default:
         break;
     }
 
-    ipcChannel.sendMessage('emudeck-legacy', [`checkBios|||${biosToCheck}`]);
+    ipcChannel.sendMessage('emudeck', [`checkBios|||${biosToCheck}`]);
 
     ipcChannel.once('checkBios', (message) => {
       const { stdout } = message;
@@ -117,7 +117,9 @@ function CopyGamesPage() {
     }
 
     if (storageName === 'Custom') {
-      ipcChannel.sendMessage('emudeck-legacy', ['customLocation|||customLocation']);
+      ipcChannel.sendMessage('emudeck-legacy', [
+        'customLocation|||customLocation',
+      ]);
 
       ipcChannel.once('customLocation', (message) => {
         const pathUSB = message.stdout.replace('\n', '');
@@ -199,9 +201,9 @@ function CopyGamesPage() {
       const stdout = message.stdout.replace('\n', '');
       console.log({ stdout });
       let status;
-      stdout.includes('true') ? (status = true) : (status = false);
+      /true|OK/.test(stdout) ? (status = true) : (status = false);
       let modalData;
-      if (stdout.includes('true')) {
+      if (/true|OK/.test(stdout)) {
         status = true;
         modalData = {
           active: true,

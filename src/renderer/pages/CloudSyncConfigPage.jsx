@@ -115,7 +115,9 @@ function CloudSyncPageConfig() {
     };
     setStatePage({ ...statePage, modal: modalData });
 
-    ipcChannel.sendMessage('emudeck-legacy', [`uploadAll|||cloud_sync_uploadEmuAll`]);
+    ipcChannel.sendMessage('emudeck', [
+      `uploadAll|||cloud_sync_upload_emu_all`,
+    ]);
 
     ipcChannel.once('uploadAll', (message) => {
       const modalData = {
@@ -143,8 +145,8 @@ function CloudSyncPageConfig() {
     };
     setStatePage({ ...statePage, modal: modalData });
 
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `downloadAll|||cloud_sync_downloadEmuAll`,
+    ipcChannel.sendMessage('emudeck', [
+      `downloadAll|||cloud_sync_download_emu_all`,
     ]);
 
     ipcChannel.once('downloadAll', (message) => {
@@ -165,7 +167,7 @@ function CloudSyncPageConfig() {
 
   const sendHealthCheck = (command) => {
     return new Promise((resolve) => {
-      ipcChannel.sendMessage('emudeck-legacy', [`${command}|||${command}`]);
+      ipcChannel.sendMessage('emudeck', [`${command}|||${command}`]);
       ipcChannel.once(command, (message) => {
         resolve(message.stdout.includes('false') ? false : true);
       });
@@ -234,7 +236,7 @@ function CloudSyncPageConfig() {
       patreonToken = patreonToken.replaceAll('|', '-');
     }
     console.log(`cloud_saves|||${cloudFunction} ${cloudSync} ${patreonToken}`);
-    ipcChannel.sendMessage('emudeck-legacy', [
+    ipcChannel.sendMessage('emudeck', [
       `cloud_saves|||${cloudFunction} ${cloudSync} ${patreonToken}`,
     ]);
 
@@ -331,7 +333,7 @@ function CloudSyncPageConfig() {
       ...statePage,
       disableButton: true,
     });
-    ipcChannel.sendMessage('emudeck-legacy', [
+    ipcChannel.sendMessage('emudeck', [
       `cloud_sync_uninstall|||cloud_sync_uninstall`,
     ]);
     ipcChannel.once('cloud_sync_uninstall', (message) => {
@@ -357,8 +359,11 @@ function CloudSyncPageConfig() {
 
   useEffect(() => {
     if (cloudSync !== '' || cloudSync !== undefined) {
-      ipcChannel.sendMessage('emudeck-legacy', [
-        `save-setting|||setSetting rclone_provider ${cloudSync} && setSetting cloud_sync_provider ${cloudSync} `,
+      ipcChannel.sendMessage('emudeck', [
+        `save-setting|||set_setting rclone_provider ${cloudSync}`,
+      ]);
+      ipcChannel.sendMessage('emudeck', [
+        `save-setting|||set_setting cloud_sync_provider ${cloudSync} `,
       ]);
       localStorage.setItem('settings_emudeck', json);
     }

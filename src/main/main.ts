@@ -34,12 +34,13 @@ if (os.platform().includes('darwin')) {
 }
 
 const homeUser = os.homedir();
-let allPath;
+let allPathLegacy;
 if (os.platform().includes('win32')) {
-  allPath = `${appDataPath}/backend/functions/all.ps1`;
+  allPathLegacy = `${appDataPath}/backend/functions/all.ps1`;
 } else {
-  allPath = `${appDataPath}/backend/functions/all.sh`;
+  allPathLegacy = `${appDataPath}/backend/functions/all.sh`;
 }
+let allPath = `${appDataPath}/backend/api.py`;
 let startCommand;
 let finishCommand;
 if (os.platform().includes('win32')) {
@@ -365,7 +366,7 @@ ipcMain.on('emudeck-legacy', async (event, command) => {
   }
 
   // Lets detect if the repo was cloned properly
-  if (fs.existsSync(allPath)) {
+  if (fs.existsSync(allPathLegacy)) {
     // file exists
   } else {
     event.reply(backChannel, 'nogit');
@@ -373,9 +374,9 @@ ipcMain.on('emudeck-legacy', async (event, command) => {
     if (os.platform().includes('win32')) {
       bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:USERPROFILE/EmuDeck/logs/pull.log"; git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchOG} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && Stop-Transcript; && CLS && echo true`;
     } else if (os.platform().includes('darwin')) {
-      bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git config --global http.lowSpeedLimit 1000 && git config --global http.lowSpeedTime 60 && git config --global http.postBuffer 524288000 && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branchOG} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
+      bashCommand = `rm -rf ${appDataPath}/backend && mkdir -p ${appDataPath}/backend && git config --global http.lowSpeedLimit 1000 && git config --global http.lowSpeedTime 60 && git config --global http.postBuffer 524288000 && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ${appDataPath}/backend/ && cd ${appDataPath}/backend && git checkout ${branchOG} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
     } else {
-      bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git config --global http.lowSpeedLimit 1000 && git config --global http.lowSpeedTime 60 && git config --global http.postBuffer 524288000 && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branchOG} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
+      bashCommand = `rm -rf ${appDataPath}/backend && mkdir -p ${appDataPath}/backend && git config --global http.lowSpeedLimit 1000 && git config --global http.lowSpeedTime 60 && git config --global http.postBuffer 524288000 && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ${appDataPath}/backend/ && cd ${appDataPath}/backend && git checkout ${branchOG} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
     }
 
     return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
@@ -391,7 +392,7 @@ ipcMain.on('emudeck-legacy', async (event, command) => {
     bashCommand = bashCommand.replaceAll('&&', ';');
     preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
   } else {
-    preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
+    preCommand = `. ${appDataPath}/backend/functions/all.sh && ${bashCommand}`;
   }
 
   return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
@@ -424,7 +425,7 @@ ipcMain.on('emudeck-nolog-legacy', async (event, command) => {
   if (os.platform().includes('win32')) {
     preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
   } else {
-    preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
+    preCommand = `. ${appDataPath}/backend/functions/all.sh && ${bashCommand}`;
   }
 
   return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
@@ -436,6 +437,51 @@ ipcMain.on('emudeck-nolog-legacy', async (event, command) => {
     });
   });
 });
+
+/*
+
+  Python Backend
+
+*/
+ipcMain.on('emudeck', async (event, command) => {
+  let backChannel: any;
+  let bashCommand: any;
+
+  if (command[0].includes('|||')) {
+    const tempCommand = command[0].split('|||');
+    // eslint-disable-next-line
+    backChannel = tempCommand[0];
+    // eslint-disable-next-line
+    bashCommand = tempCommand[1];
+  } else {
+    backChannel = 'emudeck';
+    bashCommand = command;
+  }
+
+  let preCommand;
+
+  if (os.platform().includes('win32')) {
+    preCommand = `python ${appDataPath}/backend/api.py ${bashCommand}`;
+  } else {
+    preCommand = `python3 ${appDataPath}/backend/api.py ${bashCommand}`;
+  }
+
+  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+    // event.reply('console', { backChannel });
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, {
+      stdout,
+      stderr,
+      error,
+    });
+  });
+});
+
+/*
+
+  Rest...
+
+ */
 
 ipcMain.on('getMSG', async (event) => {
   const backChannel = 'getMSG';
@@ -671,7 +717,7 @@ ipcMain.on('version', async (event: any) => {
 //
 ipcMain.on('check-git', async (event) => {
   const backChannel = 'check-git';
-  let bashCommand = `cd ~/.config/EmuDeck/backend/ && git rev-parse --is-inside-work-tree`;
+  let bashCommand = `cd ${appDataPath}/backend/ && git rev-parse --is-inside-work-tree`;
 
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git rev-parse --is-inside-work-tree`;
@@ -698,7 +744,7 @@ ipcMain.on('clone', async (event, branch) => {
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:APPDATA/EmuDeck/logs"  -ErrorAction SilentlyContinue; Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend  && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && Stop-Transcript && echo true `;
   } else {
-    bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && mkdir -p ~/emudeck/logs && git config --global http.lowSpeedLimit 1000 && git config --global http.lowSpeedTime 60 && git config --global http.postBuffer 524288000 && git clone --no-single-branch --depth=1 ${repo} ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branchGIT} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
+    bashCommand = `rm -rf ${appDataPath}/backend && mkdir -p ${appDataPath}/backend && mkdir -p ~/emudeck/logs && git config --global http.lowSpeedLimit 1000 && git config --global http.lowSpeedTime 60 && git config --global http.postBuffer 524288000 && git clone --no-single-branch --depth=1 ${repo} ${appDataPath}/backend/ && cd ${appDataPath}/backend && git checkout ${branchGIT} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
   }
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
@@ -709,11 +755,18 @@ ipcMain.on('clone', async (event, branch) => {
 ipcMain.on('pull', async (event, branch) => {
   const branchGIT = branch;
   const backChannel = 'pull';
-  let bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
+  let preCommand = `cd ${appDataPath}/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
 
+  preCommand = `cd ${appDataPath}/backend && git checkout ${branchGIT} && git pull`;
+
+  let bashCommand: any;
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git reset --hard ; git clean -fd ; git checkout ${branchGIT} ; git pull --allow-unrelated-histories -X theirs;cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit; Stop-Transcript; "}`;
+    bashCommand = `${preCommand} ; python ${appDataPath}/backend/api.py "app_init"`;
+  } else {
+    bashCommand = `${preCommand} ; python3 ${appDataPath}/backend/api.py "app_init"`;
   }
+
+  console.log(bashCommand);
 
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
@@ -723,10 +776,10 @@ ipcMain.on('pull', async (event, branch) => {
 
 ipcMain.on('check-git-status', async (event) => {
   const backChannel = 'check-git-status';
-  let bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
+  let bashCommand = `cd ${appDataPath}/backend && git status`;
 
   if (os.platform().includes('darwin')) {
-    bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
+    bashCommand = `cd ${appDataPath}/backend && git status`;
   }
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git status`;
@@ -745,7 +798,7 @@ ipcMain.on('check-git-status', async (event) => {
 //   const bashCommand = `API_pull "${branchGIT}"`;
 //
 //   return exec(
-//     `${startCommand} . ${allPath}; ${bashCommand} ${finishCommand}`,
+//     `${startCommand} . ${allPathLegacy}; ${bashCommand} ${finishCommand}`,
 //     shellType,
 //     (error, stdout, stderr) => {
 //       logCommand(bashCommand, error, stdout, stderr);
@@ -796,7 +849,7 @@ ipcMain.on('setToken', async (event, command) => {
   const backChannel = 'getToken';
   const token = command[0];
   const user = command[1];
-  let bashCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && echo ${token} > "$HOME/.config/EmuDeck/.rat" && echo ${user} > "$HOME/.config/EmuDeck/.rau" && RetroArch_retroAchievementsSetLogin && DuckStation_retroAchievementsSetLogin && PCSX2QT_retroAchievementsSetLogin && echo true`;
+  let bashCommand = `. ${appDataPath}/backend/functions/all.sh && echo ${token} > "$HOME/.config/EmuDeck/.rat" && echo ${user} > "$HOME/.config/EmuDeck/.rau" && RetroArch_retroAchievementsSetLogin && DuckStation_retroAchievementsSetLogin && PCSX2QT_retroAchievementsSetLogin && echo true`;
 
   if (os.platform().includes('win32')) {
     bashCommand = `cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1; . ./JSONtoPS1.ps1; JSONtoPS1; . ./all.ps1; RetroArch_retroAchievementsSetLogin ; DuckStation_retroAchievementsSetLogin ; PCSX2_retroAchievementsSetLogin ; echo true`;
@@ -835,6 +888,22 @@ ipcMain.on('saveSettings', async (event, command) => {
   });
 });
 
+const STATE_FILE = path.join(appDataPath, 'settings.json');
+
+ipcMain.handle('save-state', async (_event, newState) => {
+  try {
+    await fs.promises.writeFile(
+      STATE_FILE,
+      JSON.stringify(newState, null, 2),
+      'utf-8'
+    );
+    return { ok: true };
+  } catch (err) {
+    console.error('Error saving state:', err);
+    return { ok: false, error: err.message };
+  }
+});
+
 ipcMain.on('check-versions', async (event) => {
   const userHomeDir = os.homedir();
   const backChannel = 'check-versions';
@@ -862,7 +931,7 @@ ipcMain.on('check-versions', async (event) => {
 //     bashCommand = bashCommand.replaceAll('&&', ';');
 //     preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
 //   } else {
-//     preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
+//     preCommand = `. ${appDataPath}/backend/functions/all.sh && ${bashCommand}`;
 //   }
 //
 //   return exec(`${preCommand}`, (error, stdout, stderr) => {
@@ -875,250 +944,6 @@ ipcMain.on('check-versions', async (event) => {
 //     });
 //   });
 // });
-
-// Store functions
-
-ipcMain.on('get-store-featured', async (event) => {
-  const userHomeDir = os.homedir();
-  const backChannel = 'get-store-featured';
-  let jsonPath;
-
-  if (os.platform().includes('win32')) {
-    jsonPath = `${appDataPath}/backend/store/featured.json`;
-  } else {
-    jsonPath = `${userHomeDir}/.config/EmuDeck/backend/store/featured.json`;
-  }
-
-  try {
-    const data = fs.readFileSync(jsonPath);
-    const json = JSON.parse(data);
-    event.reply(backChannel, json);
-  } catch (err) {
-    console.error(err);
-  }
-  // });
-});
-
-ipcMain.on('get-store', async (event) => {
-  const userHomeDir = os.homedir();
-  const backChannel = 'get-store';
-
-  const buildJsonStore = async () => {
-    // GB HomebrewGames
-    let dir = `${appDataPath}/store/`;
-    if (os.platform().includes('win32')) {
-      dir = `${appDataPath}/store/`;
-    }
-
-    let jsonArray: any = [];
-
-    await new Promise((resolve: any, reject: any) => {
-      fs.readdir(dir, (err: any, files: any) => {
-        if (err) reject(err);
-        files.forEach((file: any) => {
-          if (file.includes('.json') && !file.includes('store')) {
-            const jsonPath = `${dir}${file}`;
-            try {
-              const data = fs.readFileSync(jsonPath);
-              const json = JSON.parse(data);
-              jsonArray = jsonArray.concat(json);
-            } catch (err) {
-              console.error(err);
-            }
-          }
-        });
-        const storeJson = {
-          data: jsonArray,
-        };
-        resolve(storeJson);
-      });
-    }).then(async (storeJson: any) => {
-      let dir = `${appDataPath}/feeds/`;
-      if (os.platform().includes('win32')) {
-        dir = `${appDataPath}/feeds/`;
-      }
-      let jsonArray: any = [];
-
-      await new Promise((resolve: any, reject: any) => {
-        fs.readdir(dir, (err: any, files: any) => {
-          if (err) reject(err);
-          if (files !== undefined) {
-            files.forEach((file: any) => {
-              if (file.includes('.json') && !file.includes('store')) {
-                const jsonPath = `${dir}${file}`;
-                try {
-                  const data = fs.readFileSync(jsonPath);
-                  const json = JSON.parse(data);
-                  jsonArray = jsonArray.concat(json);
-                } catch (err) {
-                  console.error(err);
-                }
-              }
-            });
-          }
-          const feedsJson = {
-            data: jsonArray,
-          };
-
-          // console.log({ storeJson });
-          // console.log({ jsonArray });
-          const fullJson = {
-            store: storeJson,
-            feeds: feedsJson,
-          };
-
-          console.log({ fullJson });
-
-          resolve(fullJson);
-        });
-      }).then((fullJson: any) => {
-        let file = `${appDataPath}/store/store.json`;
-        if (os.platform().includes('win32')) {
-          file = `${appDataPath}/store/store.json`;
-        }
-
-        fs.writeFileSync(file, JSON.stringify(fullJson));
-      });
-    });
-  };
-
-  buildJsonStore()
-    .then(() => {
-      let jsonPath = `${appDataPath}/store/store.json`;
-      if (os.platform().includes('win32')) {
-        jsonPath = `${appDataPath}/store/store.json`;
-      }
-      const data = fs.readFileSync(jsonPath);
-      const json = JSON.parse(data);
-      event.reply(backChannel, json);
-    })
-    .catch((error) => {
-      // Manejar cualquier error que pueda ocurrir en doUpdate o autoUpdater
-      console.error('Error:', error);
-    });
-});
-
-ipcMain.on('build-store', async (event) => {
-  const buildJson = (system: any, name: any) => {
-    // GB HomebrewGames
-    let dir: any;
-    if (os.platform().includes('win32')) {
-      dir = `${appDataPath}/backend/store/${system}/`;
-    } else {
-      dir = `${appDataPath}/backend/store/${system}/`;
-    }
-    const dirStore = `${appDataPath}/store`;
-
-    if (!fs.existsSync(dirStore)) {
-      fs.mkdirSync(dirStore);
-    }
-
-    let jsonArray: any = [];
-    fs.readdir(dir, (err: any, files: any) => {
-      return new Promise((resolve: any, reject: any) => {
-        if (err) reject(err);
-        files.forEach((file: any) => {
-          if (file.includes('.json')) {
-            const jsonPath = `${dir}${file}`;
-            try {
-              const data = fs.readFileSync(jsonPath);
-              const json = JSON.parse(data);
-              jsonArray = jsonArray.concat(json);
-            } catch (err) {
-              console.error(err);
-            }
-          }
-        });
-        const storeJson = {
-          system: `${system}`,
-          status: 'true',
-          name: `${name}`,
-          games: jsonArray,
-        };
-        resolve(storeJson);
-      }).then((storeJson: any) => {
-        let file = `${appDataPath}/store/${system}.json`;
-        if (os.platform().includes('win32')) {
-          file = `${appDataPath}/store/${system}.json`;
-        }
-
-        fs.writeFileSync(file, JSON.stringify(storeJson));
-      });
-    });
-    // buildJsonStore();
-  };
-
-  buildJson('gb', 'GameBoy');
-  buildJson('gbc', 'GameBoy Color');
-  buildJson('gba', 'GameBoy Advanced');
-  buildJson('genesis', 'Genesis');
-  buildJson('mastersystem', 'Master System');
-  buildJson('nes', 'NES');
-  buildJson('snes', 'Super Nintendo');
-  buildJson('gamegear', 'GameGear');
-  event.reply('build-store', true);
-  // });
-});
-
-ipcMain.on('installGame', async (event, command) => {
-  const backChannel = 'installGame';
-
-  const game = command[0];
-  const system = command[2];
-  // eslint-disable-next-line
-  const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
-
-  // Alternative syntax using RegExp constructor
-  // const regex = new RegExp('([^\\/]+?)(?=\\.\\w+$)|([^\\/]+?)(?=$)', '')
-
-  let gameName = game.match(regex);
-  // eslint-disable-next-line
-  gameName = gameName[0];
-
-  let bashCommand = `emuDeckInstallHomebrewGame '${system}' '${gameName}' '${game}'`;
-  let preCommand;
-  if (os.platform().includes('win32')) {
-    bashCommand = bashCommand.replaceAll('&&', ';');
-    preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
-  } else {
-    preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
-  }
-
-  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, error, stdout, stderr);
-  });
-});
-
-ipcMain.on('unInstallGame', async (event, command) => {
-  const backChannel = 'unInstallGame';
-
-  const game = command[0];
-  const system = command[2];
-  // eslint-disable-next-line
-  const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
-
-  // Alternative syntax using RegExp constructor
-  // const regex = new RegExp('([^\\/]+?)(?=\\.\\w+$)|([^\\/]+?)(?=$)', '')
-
-  let gameName = game.match(regex);
-  // eslint-disable-next-line
-  gameName = gameName[0];
-
-  let bashCommand = `emuDeckUnInstallHomebrewGame '${system}' '${gameName}' '${game}'`;
-  let preCommand;
-  if (os.platform().includes('win32')) {
-    bashCommand = bashCommand.replaceAll('&&', ';');
-    preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
-  } else {
-    preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
-  }
-
-  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, error, stdout, stderr);
-  });
-});
 
 // Dependencies checks
 

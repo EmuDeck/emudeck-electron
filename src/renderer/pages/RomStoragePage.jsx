@@ -76,7 +76,7 @@ function RomStoragePage() {
     }
 
     if (storageName === 'Custom') {
-      ipcChannel.sendMessage('emudeck-legacy', ['customLocation|||customLocation']);
+      ipcChannel.sendMessage('emudeck', ['custom_location|||custom_location']);
 
       ipcChannel.once('customLocation', (message) => {
         const stdout = message.stdout.replace('\n', '');
@@ -95,11 +95,11 @@ function RomStoragePage() {
         });
         // is it valid?
 
-        ipcChannel.sendMessage('emudeck-legacy', [
-          `testLocation|||testLocationValid "custom" "${stdout}"`,
+        ipcChannel.sendMessage('emudeck', [
+          `test_location_valid|||test_location_valid custom ${stdout}`,
         ]);
 
-        ipcChannel.once('testLocation', (messageLocation) => {
+        ipcChannel.once('test_location_valid', (messageLocation) => {
           if (messageLocation) {
             const stdoutLocation = messageLocation.stdout.replace('\n', '');
 
@@ -179,8 +179,8 @@ function RomStoragePage() {
   };
   // We get the SD Card name. Only Linux
   const getSDName = () => {
-    ipcChannel.sendMessage('emudeck-legacy', ['SDCardName|||getSDPath']);
-    ipcChannel.once('SDCardName', (message) => {
+    ipcChannel.sendMessage('emudeck', ['get_sd_path|||get_sd_path']);
+    ipcChannel.once('get_sd_path', (message) => {
       let stdout = message.stdout.replace('\n', '');
       if (stdout === '') {
         stdout = null;
@@ -197,8 +197,8 @@ function RomStoragePage() {
   };
   // We heck if it's formated in a valid file system. Only Linux
   const checkSDValid = () => {
-    ipcChannel.sendMessage('emudeck-legacy', [
-      'SDCardValid|||testLocationValid "SD" "$(getSDPath)"',
+    ipcChannel.sendMessage('emudeck', [
+      `SDCardValid|||test_location_valid SD getSDPath`,
     ]);
 
     ipcChannel.once('SDCardValid', (message) => {
@@ -231,9 +231,9 @@ function RomStoragePage() {
   };
   // In windows we search for all drives
   const getHDdrives = () => {
-    ipcChannel.sendMessage('emudeck-legacy', ['getLocations|||getLocations']);
+    ipcChannel.sendMessage('emudeck', ['get_locations|||get_locations']);
 
-    ipcChannel.once('getLocations', (message) => {
+    ipcChannel.once('get_locations', (message) => {
       const hdrives = message.stdout;
 
       const hdrivesCleanup = hdrives.replace(/(\r\n|\r|\n)/g, '');
