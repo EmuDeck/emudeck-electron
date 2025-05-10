@@ -23,6 +23,7 @@ function CheckBiosPage() {
   const [ps1Bios, setps1Bios] = useState(null);
   const [ps2Bios, setps2Bios] = useState(null);
   const [switchBios, setSwitchBios] = useState(null);
+  const [edenBios, setEdenBios] = useState(null);
   const [citronBios, setCitronBios] = useState(null);
   const [ryujinxBios, setRyujinxBios] = useState(null);
   const [segaCDBios, setSegaCDBios] = useState(null);
@@ -52,6 +53,9 @@ function CheckBiosPage() {
           break;
         case 'checkYuzuBios':
           setSwitchBios(biosStatus);
+          break;
+        case 'checkEdenBios':
+          setEdenBios(biosStatus);
           break;
         case 'checkRyujinxBios':
           setRyujinxBios(biosStatus);

@@ -228,6 +228,26 @@
       "7": ["Filter", "START+DPAD ⬅️"]
     }
   },
+  "eden": {
+    "id": "eden",
+    "name": "Eden",
+    "code": "Eden",
+
+    "description": "Eden is a Nintendo Switch emulator. Emudeck does not download nor can it guarantee support if you run into any issues.",
+    "special_configuration": "If you already have your eden.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/eden/ folder. Firmware: Place keys and firmware place in: Emulation/bios/eden.",
+    "bios": ["eswitch"],
+    "systems": "Nintendo Switch",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Exit", "SELECT+START"],
+      "2": ["Fast Forward", "SELECT+R2"],
+      "3": ["Pause", "SELECT+A"],
+      "4": ["Menu", "SELECT+R3"],
+      "5": ["Docked Mode", "START+DPAD ⬆️"],
+      "6": ["GPU Accuracy", "START+DPAD ⬇️"],
+      "7": ["Filter", "START+DPAD ⬅️"]
+    }
+  },
   "citron": {
     "id": "citron",
     "name": "Citron",

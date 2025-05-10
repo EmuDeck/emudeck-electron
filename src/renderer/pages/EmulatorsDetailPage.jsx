@@ -82,6 +82,7 @@ function EmulatorsDetailPage() {
   const [switchBios, setSwitchBios] = useState(null);
   const [citronBios, setCitronBios] = useState(null);
   const [ryujinxBios, setRyujinxBios] = useState(null);
+  const [edenBios, setEdenBios] = useState(null);
   const [segaCDBios, setSegaCDBios] = useState(null);
   const [saturnBios, setSaturnBios] = useState(null);
   const [dreamcastBios, setDreamcastBios] = useState(null);
@@ -251,9 +252,13 @@ function EmulatorsDetailPage() {
         case 'checkPS2BIOS':
           setps2Bios(biosStatus);
           break;
-        case 'checkYuzuBios':
+        case 'checkEdenBios':
           setSwitchBios(biosStatus);
           break;
+        case 'checkYuzuBios':
+          setEdenBios(biosStatus);
+          break;
+
         case 'checkRyujinxBios':
           setRyujinxBios(biosStatus);
           break;
@@ -311,6 +316,9 @@ function EmulatorsDetailPage() {
         img = rpcs3Controls;
         break;
       case 'yuzu':
+        img = yuzuControls;
+        break;
+      case 'eden':
         img = yuzuControls;
         break;
       case 'citron':
@@ -405,6 +413,9 @@ function EmulatorsDetailPage() {
         img = rpcs3Hotkeys;
         break;
       case 'yuzu':
+        img = yuzuHotkeys;
+        break;
+      case 'eden':
         img = yuzuHotkeys;
         break;
       case 'citron':
@@ -1009,8 +1020,11 @@ function EmulatorsDetailPage() {
       case 'yuzu':
         checkBios('checkYuzuBios');
         break;
+      case 'eden':
+        checkBios('checkYuzuBios');
+        break;
       case 'citron':
-        checkBios('checkCitronBios');
+        checkBios('checkEdenBios');
         break;
       case 'ryujinx':
         checkBios('checkRyujinxBios');
@@ -1149,6 +1163,7 @@ function EmulatorsDetailPage() {
           updateAvailable={updates[emulator] !== undefined}
           ps1={ps1Bios}
           ps2={ps2Bios}
+          eswitch={edenBios}
           nswitch={switchBios}
           rswitch={ryujinxBios}
           cswitch={citronBios}
