@@ -1021,7 +1021,7 @@ function EmulatorsDetailPage() {
         checkBios('checkYuzuBios');
         break;
       case 'eden':
-        checkBios('checkYuzuBios');
+        checkBios('checkEdenBios');
         break;
       case 'citron':
         checkBios('checkEdenBios');
