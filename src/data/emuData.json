@@ -214,7 +214,7 @@
     "code": "Yuzu",
 
     "description": "Yuzu was a Nintendo Switch emulator, it was shutdown after a settlement with Nintendo and it's no longer available to install. Emudeck does not download nor can it guarantee support if you run into any issues.",
-    "special_configuration": " If you already have your yuzu.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/yuzu/yuzu-windows-msvc folder. Firmware: Place keys and firmware place in: Emulation/bios/yuzu.",
+    "special_configuration": " If you already have your yuzu.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your APPDATA/Roaming/EmuDeck/Emulators/yuzu/yuzu-windows-msvc folder. Firmware: Place keys and firmware place in: Emulation/bios/yuzu.",
     "bios": ["nswitch"],
     "systems": "Nintendo Switch",
     "hotkeys": {
@@ -234,7 +234,7 @@
     "code": "Eden",
 
     "description": "Eden is a Nintendo Switch emulator. Emudeck does not download nor can it guarantee support if you run into any issues.",
-    "special_configuration": "If you already have your eden.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your USERFOLDER/EmuDeck/EmulationStation-DE/Emulators/eden/ folder. Firmware: Place keys and firmware place in: Emulation/bios/eden.",
+    "special_configuration": "If you already have your Eden.AppImage in the /home/deck/Applications folder it will keep working. Same if you are on windows and you have it on your APPDATA/Roaming/EmuDeck/Emulators/eden-windows-msvc/ folder. Firmware: Place keys and firmware place in: Emulation/bios/eden.",
     "bios": ["eswitch"],
     "systems": "Nintendo Switch",
     "hotkeys": {
