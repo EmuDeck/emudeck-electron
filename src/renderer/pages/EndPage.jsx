@@ -3,12 +3,79 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
-
+import Main from 'components/organisms/Main/Main';
+import Card from 'components/molecules/Card/Card';
 import Header from 'components/organisms/Header/Header';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import { BtnSimple } from 'getbasecore/Atoms';
 import Sonic from 'components/organisms/Sonic/Sonic';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import End from 'components/organisms/Wrappers/End';
+import { invokeIpc } from 'common';
+
+import {
+  imgra,
+  imgares,
+  imgdolphin,
+  imgprimehack,
+  imgppsspp,
+  imgduckstation,
+  imgazahar,
+  imgpcsx2,
+  imgrpcs3,
+  imgyuzu,
+  imgeden,
+  imgcitron,
+  imgryujinx,
+  imgcemu,
+  imgxemu,
+  imgmame,
+  imgvita3k,
+  imgflycast,
+  imgxenia,
+  imgsrm,
+  imgrmg,
+  imgscummvm,
+  imgFrontESDE,
+  imgmelonds,
+  imgmgba,
+  imgsupermodel,
+  imgmodel2,
+  imgbigpemu,
+  imgshadps4,
+} from 'components/utils/images/images';
+
+const images = {
+  ra: imgra,
+  ares: imgares,
+  dolphin: imgdolphin,
+  primehack: imgprimehack,
+  ppsspp: imgppsspp,
+  duckstation: imgduckstation,
+  azahar: imgazahar,
+  pcsx2: imgpcsx2,
+  rpcs3: imgrpcs3,
+  yuzu: imgyuzu,
+  eden: imgeden,
+  citron: imgcitron,
+  melonds: imgmelonds,
+  ryujinx: imgryujinx,
+  cemu: imgcemu,
+  xemu: imgxemu,
+  mame: imgmame,
+  vita3k: imgvita3k,
+  flycast: imgflycast,
+  scummvm: imgscummvm,
+  esde: imgFrontESDE,
+  rmg: imgrmg,
+  mgba: imgmgba,
+  xenia: imgxenia,
+  srm: imgsrm,
+  supermodel: imgsupermodel,
+  model2: imgmodel2,
+  bigpemu: imgbigpemu,
+  shadps4: imgshadps4,
+};
 
 function EndPage() {
   const { t, i18n } = useTranslation();
@@ -21,6 +88,9 @@ function EndPage() {
     step: undefined,
     dom: undefined,
   });
+  const [emusPending, setEmusPending] = useState(undefined);
+  const [frontsPending, setFrontsPending] = useState(undefined);
+  const [configsPending, setConfigsPending] = useState(undefined);
 
   const { disabledNext, data, step, dom } = statePage;
   const {
@@ -34,6 +104,8 @@ function EndPage() {
     installFrontends,
     overwriteConfigEmus,
   } = state;
+  const installEmusArray = Object.values(installEmus);
+
   const ipcChannel = window.electron.ipcRenderer;
 
   const [msg, setMsg] = useState({
@@ -156,33 +228,63 @@ function EndPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Running the installer
   useEffect(() => {
-    const json = JSON.stringify(state);
-
-    localStorage.setItem('settings_emudeck', json);
-
-    ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
-    ipcChannel.once('saveSettings', () => {
-      if (system === 'win32') {
-        ipcChannel.sendMessage('bash-nolog-legacy', [
-          `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/setup.ps1`,
-        ]);
-      } else if (system === 'darwin') {
-        ipcChannel.sendMessage('bash-nolog-legacy', [
-          `finish|||osascript -e 'tell application "Terminal" to do script "bash ~/.config/EmuDeck/backend/setup.sh" activate'`,
-        ]);
-      } else {
-        ipcChannel.sendMessage('bash-nolog-legacy', [
-          `finish|||bash ~/.config/EmuDeck/backend/setup.sh ${branch} false`,
-        ]);
-      }
-
-      ipcChannel.once('finish', () => {
-        setStatePage({ ...statePage, disabledNext: false });
-      });
-    });
+    setEmusPending(Object.values(installEmus));
+    setConfigsPending(Object.values(overwriteConfigEmus));
   }, []);
+
+  useEffect(() => {
+    if (emusPending) {
+      if (emusPending.length > 0) {
+        const emus = emusPending.filter((e) => e.status);
+        console.log(emus[0].id);
+        const id = emus[0].id;
+        if (id) {
+          invokeIpc(`${id}_install`).then((e) => {
+            //Do we have to reset its config?
+            if (configsPending.length > 0) {
+              const configs = configsPending.filter((e) => e.status);
+              console.log(configs[0].id);
+              const idConfig = configs[0].id;
+              if (idConfig) {
+                invokeIpc(`${idConfig}_init`).then((e) => {
+                  setEmusPending(emus.slice(1));
+                  setConfigsPending(emus.slice(1));
+                });
+              }
+            } else {
+              setEmusPending(emus.slice(1));
+            }
+          });
+        }
+      } else {
+        setFrontsPending(Object.values(installFrontends));
+      }
+    }
+  }, [emusPending]);
+
+  useEffect(() => {
+    console.log({ emusPending, frontsPending, configsPending });
+  }, [emusPending, frontsPending, configsPending]);
+
+  useEffect(() => {
+    if (frontsPending && frontsPending.length > 1) {
+      const frontsPendingFiltered = frontsPending.filter((e) => e.status);
+      console.log({ frontsPendingFiltered });
+      const id = frontsPendingFiltered[0].id;
+      if (id) {
+        invokeIpc(`${id}_install`).then((e) => {
+          if (overwriteConfigEmus.esde.status) {
+            invokeIpc(`esde_init`).then((e) => {});
+          } else if (overwriteConfigEmus.srm.status) {
+            invokeIpc(`srm_init`).then((e) => {});
+          }
+
+          setStatePage({ ...statePage, disabledNext: false });
+        });
+      }
+    }
+  }, [frontsPending]);
 
   let nextPage = '/copy-games';
 
@@ -196,16 +298,57 @@ function EndPage() {
       {disabledNext === false && step === undefined && system !== 'win32' && (
         <Header title={t('EndPage.titleFinish')} />
       )}
-
       {disabledNext === false &&
         step === undefined &&
         device === 'Asus Rog Ally' && <Header title={t('EndPage.titleAlly')} />}
-
       {disabledNext === false &&
         step === undefined &&
         device !== 'Asus Rog Ally' &&
         system === 'win32' && <Header title={t('EndPage.titleWin32')} />}
+      {disabledNext === true && (
+        <Main>
+          <div className="cards cards--mini">
+            {emusPending &&
+              emusPending
+                .filter((e) => e.status)
+                .map((item) => {
+                  if (item.id === 'srm' || item.id === 'primehacks') {
+                    return;
+                  }
+                  const img = images[item.id];
+                  // eslint-disable-next-line consistent-return
+                  return (
+                    <Card
+                      css={item.installed === true && 'is-selected'}
+                      key={item.id}
+                      onClick={() => onClick(item.id)}
+                    >
+                      <img src={img} alt={item.name} />
+                      <ProgressBar css="progress--success" infinite max="100" />
+                    </Card>
+                  );
+                })}
 
+            {frontsPending &&
+              frontsPending
+                .filter((e) => e.status)
+                .map((item) => {
+                  const img = images[item.id];
+                  // eslint-disable-next-line consistent-return
+                  return (
+                    <Card
+                      css={item.installed === true && 'is-selected'}
+                      key={item.id}
+                      onClick={() => onClick(item.id)}
+                    >
+                      <img src={img} alt={item.name} />
+                      <ProgressBar css="progress--success" infinite max="100" />
+                    </Card>
+                  );
+                })}
+          </div>
+        </Main>
+      )}
       <End
         onClick={openSRM}
         data={data}

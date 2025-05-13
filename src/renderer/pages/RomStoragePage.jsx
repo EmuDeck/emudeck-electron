@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'context/globalContext';
-
+import { invokeIpc } from 'common';
 //
 // Components
 //
@@ -231,10 +231,9 @@ function RomStoragePage() {
   };
   // In windows we search for all drives
   const getHDdrives = () => {
-    ipcChannel.sendMessage('emudeck', ['get_locations|||get_locations']);
-
-    ipcChannel.once('get_locations', (message) => {
-      const hdrives = message.stdout;
+    invokeIpc(`get_locations`).then((message) => {
+      console.log({ message });
+      const hdrives = message;
 
       const hdrivesCleanup = hdrives.replace(/(\r\n|\r|\n)/g, '');
       const jsonDrives = JSON.parse(hdrivesCleanup);
@@ -242,7 +241,7 @@ function RomStoragePage() {
       setStatePage({
         ...statePage,
         modal: false,
-        hddrives: jsonDrives,
+        hddrives: jsonDrives.result,
       });
       console.log({ statePage });
     });

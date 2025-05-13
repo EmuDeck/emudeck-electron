@@ -10,7 +10,7 @@ export const invokeIpc = (args) => {
       if (/true|OK/.test(out)) {
         resolve(out);
       } else if (/false|KO/.test(out)) {
-        alert(`Error: ${args}`);
+        alert(`Error: ${args}: ${stderr.trim()}`);
         reject(out || stderr.trim());
       } else {
         reject(out || stderr.trim());
