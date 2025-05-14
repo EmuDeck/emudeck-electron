@@ -246,6 +246,12 @@ function ManageEmulatorsPage() {
     }, 1000);
   };
 
+  const updateEmus = () =>{
+    ipcChannel.sendMessage('emudeck', [
+      `show_dialog_update_emulators|||show_dialog_update_emulators`,
+    ]);
+  }
+
   useEffect(() => {
     // Clean win32 systems
 
@@ -345,7 +351,7 @@ function ManageEmulatorsPage() {
                   button={t('ManageEmulatorsPage.updateEmus.button')}
                   title={t('ManageEmulatorsPage.updateEmus.title')}
                   description={t('ManageEmulatorsPage.updateEmus.description')}
-                  onClick={() => navigate(`/update-emulators`)}
+                  onClick={() => updateEmus()}
                 />
               </div>
             </div>
