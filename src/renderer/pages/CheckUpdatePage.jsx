@@ -126,52 +126,6 @@ function CheckUpdatePage() {
       const installEmusStored = settingsStorage.installEmus;
       // const installFrontendsStored = settingsStorage.installFrontends;
 
-      if (system === 'darwin') {
-        delete settingsStorage.installEmus.ares;
-        delete settingsStorage.installEmus.cemu;
-        delete settingsStorage.installEmus.dolphin;
-        delete settingsStorage.installEmus.duckstation;
-        delete settingsStorage.installEmus.flycast;
-        delete settingsStorage.installEmus.mame;
-        delete settingsStorage.installEmus.melonds;
-        delete settingsStorage.installEmus.mgba;
-        delete settingsStorage.installEmus.pcsx2;
-        delete settingsStorage.installEmus.ppsspp;
-        delete settingsStorage.installEmus.primehack;
-        delete settingsStorage.installEmus.rmg;
-        delete settingsStorage.installEmus.rpcs3;
-        delete settingsStorage.installEmus.ryujinx;
-        delete settingsStorage.installEmus.scummvm;
-        delete settingsStorage.installEmus.vita3k;
-        delete settingsStorage.installEmus.xemu;
-        delete settingsStorage.installEmus.xenia;
-        delete settingsStorage.installEmus.yuzu;
-        delete settingsStorage.installEmus.eden;
-        delete settingsStorage.installEmus.citron;
-
-        delete settingsStorage.overwriteConfigEmus.ares;
-        delete settingsStorage.overwriteConfigEmus.cemu;
-        delete settingsStorage.overwriteConfigEmus.citra;
-        delete settingsStorage.overwriteConfigEmus.dolphin;
-        delete settingsStorage.overwriteConfigEmus.duckstation;
-        delete settingsStorage.overwriteConfigEmus.flycast;
-        delete settingsStorage.overwriteConfigEmus.mame;
-        delete settingsStorage.overwriteConfigEmus.melonds;
-        delete settingsStorage.overwriteConfigEmus.mgba;
-        delete settingsStorage.overwriteConfigEmus.pcsx2;
-        delete settingsStorage.overwriteConfigEmus.ppsspp;
-        delete settingsStorage.overwriteConfigEmus.primehack;
-        delete settingsStorage.overwriteConfigEmus.rmg;
-        delete settingsStorage.overwriteConfigEmus.rpcs3;
-        delete settingsStorage.overwriteConfigEmus.ryujinx;
-        delete settingsStorage.overwriteConfigEmus.scummvm;
-        delete settingsStorage.overwriteConfigEmus.vita3k;
-        delete settingsStorage.overwriteConfigEmus.xemu;
-        delete settingsStorage.overwriteConfigEmus.xenia;
-        delete settingsStorage.overwriteConfigEmus.yuzu;
-        delete settingsStorage.overwriteConfigEmus.citron;
-      }
-
       if (!settingsStorage.overwriteConfigEmus.esde) {
         settingsStorage.overwriteConfigEmus.esde = {
           esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
@@ -243,6 +197,32 @@ function CheckUpdatePage() {
               systemNameValue = 'Linux';
               break;
           }
+
+          //Cleanup per system
+          function deleteEmu(emu) {
+            delete settingsStorage.installEmus[emu];
+            delete installEmusStored[emu];
+            delete installEmus[emu];
+
+            delete settingsStorage.overwriteConfigEmus[emu];
+            delete overwriteConfigEmusStored[emu];
+            delete overwriteConfigEmus[emu];
+          }
+          deleteEmu('ares');
+          if (platform == 'darwin') {
+            deleteEmu('bigpemu');
+            deleteEmu('xenia');
+            deleteEmu('supermodel');
+            deleteEmu('model2');
+            deleteEmu('mame');
+            deleteEmu('primehack');
+            deleteEmu('rmg');
+          }
+
+          if (platform == 'win32') {
+            deleteEmu('rmg');
+          }
+
           setState({
             ...state,
             ...settingsStorage,

@@ -11,9 +11,9 @@ export const invokeIpc = (args) => {
         resolve(out);
       } else if (/false|KO/.test(out)) {
         alert(`Error: ${args}: ${stderr.trim()}`);
-        reject(out || stderr.trim());
+        resolve(out || stderr.trim());
       } else {
-        reject(out || stderr.trim());
+        resolve(out || stderr.trim());
       }
     });
   });

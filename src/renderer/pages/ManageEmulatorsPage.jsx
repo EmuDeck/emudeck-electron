@@ -158,15 +158,6 @@ function ManageEmulatorsPage() {
         const { id } = item;
         const { version } = item;
 
-        if (system === 'win32') {
-          if (item.id === 'rmg') {
-            return;
-          }
-        }
-
-        if (item.id === 'ares') {
-          return;
-        }
         console.log(installEmus[item.id].status);
         if (!installEmus[item.id].status) {
           return;
@@ -344,47 +335,30 @@ function ManageEmulatorsPage() {
                   />
                 </div>
               )}
-              {system !== 'win32' && system !== 'darwin' && (
-                <div data-col-md="6">
-                  <CardSettings
-                    icon={iconPackage}
-                    css="is-highlighted"
-                    btnCSS="btn-simple--1"
-                    iconSize="md"
-                    button={t('ManageEmulatorsPage.updateEmus.button')}
-                    title={t('ManageEmulatorsPage.updateEmus.title')}
-                    description={t(
-                      'ManageEmulatorsPage.updateEmus.description'
-                    )}
-                    onClick={() => navigate(`/update-emulators`)}
-                  />
-                </div>
-              )}
+
+              <div data-col-md="6">
+                <CardSettings
+                  icon={iconPackage}
+                  css="is-highlighted"
+                  btnCSS="btn-simple--1"
+                  iconSize="md"
+                  button={t('ManageEmulatorsPage.updateEmus.button')}
+                  title={t('ManageEmulatorsPage.updateEmus.title')}
+                  description={t('ManageEmulatorsPage.updateEmus.description')}
+                  onClick={() => navigate(`/update-emulators`)}
+                />
+              </div>
             </div>
             <hr />
             <div className="cards cards--medium">
               {installEmusArray.map((item) => {
                 const img = images[item.id];
                 const updateNotif = updates[item.id];
-                if (system === 'win32') {
-                  if (item.id === 'rmg') {
-                    return;
-                  }
-                }
 
                 if (item.id === 'srm') {
                   return;
                 }
 
-                if (item.id === 'ares') {
-                  return;
-                }
-
-                if (system === 'darwin') {
-                  if (item.id !== 'ra') {
-                    return;
-                  }
-                }
                 return (
                   <Card
                     css={item.status === true && 'is-selected'}
@@ -428,12 +402,6 @@ function ManageEmulatorsPage() {
                 }
                 if (item.id === 'deckyromlauncher') {
                   return;
-                }
-
-                if (system === 'darwin') {
-                  if (item.id !== 'esde') {
-                    return;
-                  }
                 }
 
                 return (
