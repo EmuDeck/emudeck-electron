@@ -93,20 +93,20 @@ function PatreonLoginPage() {
   };
 
   const patreonCheckToken = (tokenArg) => {
-    const settingsStorage = JSON.parse(
-      localStorage.getItem('settings_emudeck')
-    );
+    // const settingsStorage = JSON.parse(
+    //   localStorage.getItem('settings_emudeck')
+    // );
 
     let token;
     let system = 'NA';
     let device = 'NA';
     let installEmus = 'NA';
 
-    if (settingsStorage) {
-      system = settingsStorage.system;
-      device = settingsStorage.device;
-      installEmus = settingsStorage.installEmus;
-    }
+    // if (settingsStorage) {
+    //   system = settingsStorage.system;
+    //   device = settingsStorage.device;
+    //   installEmus = settingsStorage.installEmus;
+    // }
 
     if (!tokenArg) {
       token = patreonTokenTemp;
@@ -146,19 +146,17 @@ function PatreonLoginPage() {
             accessAllowed: true,
           });
         } else {
-          const settingsStorage = JSON.parse(
-            localStorage.getItem('settings_emudeck')
-          );
-          const shadersStored = settingsStorage.shaders;
-          const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
-          const achievementsStored = settingsStorage.achievements;
-
-          delete settingsStorage.installEmus.primehacks;
-          delete settingsStorage.installEmus.cemunative;
-          delete settingsStorage.overwriteConfigEmus.primehacks;
-          const installEmusStored = settingsStorage.installEmus;
-
-          // Theres probably a better way to do this...
+          // const settingsStorage = JSON.parse(
+          //   localStorage.getItem('settings_emudeck')
+          // );
+//           const shadersStored = settingsStorage.shaders;
+//           const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
+//           const achievementsStored = settingsStorage.achievements;
+//
+//           delete settingsStorage.installEmus.primehacks;
+//           delete settingsStorage.installEmus.cemunative;
+//           delete settingsStorage.overwriteConfigEmus.primehacks;
+//           const installEmusStored = settingsStorage.installEmus;
 
           ipcChannel.sendMessage('version');
 
@@ -229,17 +227,17 @@ function PatreonLoginPage() {
         'Please log back in to Patreon to keep EmuDeck updated. Press OK to log in again or Cancel to continue with no updates'
       );
       if (!updateOrLogin) {
-        const settingsStorage = JSON.parse(
-          localStorage.getItem('settings_emudeck')
-        );
-        const shadersStored = settingsStorage.shaders;
-        const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
-        const achievementsStored = settingsStorage.achievements;
-
-        delete settingsStorage.installEmus.primehacks;
-        delete settingsStorage.installEmus.cemunative;
-        delete settingsStorage.overwriteConfigEmus.primehacks;
-        const installEmusStored = settingsStorage.installEmus;
+//         const settingsStorage = JSON.parse(
+//           localStorage.getItem('settings_emudeck')
+//         );
+//         const shadersStored = settingsStorage.shaders;
+//         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
+//         const achievementsStored = settingsStorage.achievements;
+//
+//         delete settingsStorage.installEmus.primehacks;
+//         delete settingsStorage.installEmus.cemunative;
+//         delete settingsStorage.overwriteConfigEmus.primehacks;
+//         const installEmusStored = settingsStorage.installEmus;
 
         // Theres probably a better way to do this...
 
@@ -253,25 +251,25 @@ function PatreonLoginPage() {
               version: version[0],
               gamemode: version[1],
             });
-            setState({
-              ...state,
-              patreonStatus: true,
-              ...settingsStorage,
-              installEmus: { ...installEmus, ...installEmusStored },
-              overwriteConfigEmus: {
-                ...overwriteConfigEmus,
-                ...overwriteConfigEmusStored,
-              },
-              achievements: {
-                ...achievements,
-                ...achievementsStored,
-              },
-              shaders: { ...shaders, ...shadersStored },
-              system: platform,
-              version: version[0],
-              gamemode: version[1],
-              branch,
-            });
+            // setState({
+            //   ...state,
+            //   patreonStatus: true,
+            //   ...settingsStorage,
+            //   installEmus: { ...installEmus, ...installEmusStored },
+            //   overwriteConfigEmus: {
+            //     ...overwriteConfigEmus,
+            //     ...overwriteConfigEmusStored,
+            //   },
+            //   achievements: {
+            //     ...achievements,
+            //     ...achievementsStored,
+            //   },
+            //   shaders: { ...shaders, ...shadersStored },
+            //   system: platform,
+            //   version: version[0],
+            //   gamemode: version[1],
+            //   branch,
+            // });
           });
         });
       }

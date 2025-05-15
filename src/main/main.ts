@@ -32,6 +32,24 @@ let appDataPath = app.getPath('userData');
 if (os.platform().includes('darwin')) {
   appDataPath = `${os.homedir()}/.config/EmuDeck`;
 }
+const settingsPath = path.join(appDataPath, 'settings.json');
+
+let savedSettings: any;
+try {
+  const json = fs.readFileSync(settingsPath, 'utf-8');
+  savedSettings = JSON.parse(json);
+} catch (err) {
+  if (err.code === 'ENOENT') {
+    console.warn(
+      `No existe ${settingsPath}, usando configuración por defecto.`
+    );
+    // aquí puedes dejar savedSettings = {} u otros valores por defecto
+    savedSettings = undefined;
+  } else {
+    // si es otro error (p. ej. JSON mal formado), lo relanzamos
+    throw err;
+  }
+}
 
 const homeUser = os.homedir();
 let allPathLegacy;
@@ -710,6 +728,10 @@ ipcMain.on('version', async (event: any) => {
     app.getVersion(),
     app.commandLine.hasSwitch('no-sandbox'),
   ]);
+});
+
+ipcMain.on('get_settings', async (event: any) => {
+  event.reply('get_settings', savedSettings);
 });
 
 //
