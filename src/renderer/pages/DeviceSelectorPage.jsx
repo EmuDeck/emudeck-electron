@@ -145,7 +145,7 @@ function DeviceSelectorPage() {
       setStatePage({ ...statePage, disabledNext: false });
     }
     const json = JSON.stringify(state);
-    localStorage.setItem('settings_emudeck', json);
+    //localStorage.setItem('settings_emudeck', json);
   }, [state]);
 
   useEffect(() => {

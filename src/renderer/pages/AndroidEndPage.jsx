@@ -108,7 +108,7 @@ function AndroidEndPage() {
   useEffect(() => {
     const json = JSON.stringify(state);
 
-    localStorage.setItem('settings_emudeck', json);
+    //localStorage.setItem('settings_emudeck', json);
 
     ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
     ipcChannel.once('saveSettings', () => {

@@ -193,7 +193,7 @@ function MigrationPage() {
   // We store the changes on localhost in case people want to migrate over and over
   useEffect(() => {
     const json = JSON.stringify(state);
-    localStorage.setItem('settings_emudeck', json);
+    //localStorage.setItem('settings_emudeck', json);
   }, [state]);
 
   return (

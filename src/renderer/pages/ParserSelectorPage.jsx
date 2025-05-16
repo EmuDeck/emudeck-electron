@@ -1172,7 +1172,7 @@ function ParserSelectorPage() {
   }, [revertParsers]);
 
   // const json = JSON.stringify(state);
-  // localStorage.setItem('settings_emudeck', json);
+  // //localStorage.setItem('settings_emudeck', json);
 
   return (
     <Wrapper>

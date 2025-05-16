@@ -32,7 +32,7 @@ function EmulatorConfigResolutionPage() {
 
   const saveResolutions = () => {
     const json = JSON.stringify(state);
-    localStorage.setItem('settings_emudeck', json);
+    //localStorage.setItem('settings_emudeck', json);
 
     const modalData = {
       active: true,

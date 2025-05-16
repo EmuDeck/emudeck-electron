@@ -300,7 +300,7 @@ function QuickSettingsPage() {
   };
 
   useEffect(() => {
-    localStorage.setItem('settings_emudeck', json);
+    //localStorage.setItem('settings_emudeck', json);
   }, [state]);
 
   const onClickBoot = (status) => {

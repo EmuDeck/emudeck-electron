@@ -16,7 +16,7 @@ function FinishPage() {
   const navigate = useNavigate();
   useEffect(() => {
     const json = JSON.stringify(state);
-    localStorage.setItem('settings_emudeck', json);
+    //localStorage.setItem('settings_emudeck', json);
   }, []);
 
   return (

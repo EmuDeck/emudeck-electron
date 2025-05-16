@@ -233,7 +233,7 @@ function EmulatorsDetailPage() {
 
       if (response === 'true') {
         const json = JSON.stringify(state);
-        localStorage.setItem('settings_emudeck', json);
+        //localStorage.setItem('settings_emudeck', json);
       }
     });
   };
@@ -576,7 +576,7 @@ function EmulatorsDetailPage() {
           });
           // We save it on localstorage
           const json = JSON.stringify(state);
-          localStorage.setItem('settings_emudeck', json);
+          //localStorage.setItem('settings_emudeck', json);
         }
       });
     });
@@ -676,7 +676,7 @@ function EmulatorsDetailPage() {
           });
           // We save it on localstorage
           const json = JSON.stringify(state);
-          localStorage.setItem('settings_emudeck', json);
+          //localStorage.setItem('settings_emudeck', json);
         }
       });
     });
@@ -989,7 +989,7 @@ function EmulatorsDetailPage() {
   useEffect(() => {
     // We save it on localstorage
     const json = JSON.stringify(state);
-    localStorage.setItem('settings_emudeck', json);
+    //localStorage.setItem('settings_emudeck', json);
   }, [state]);
   useEffect(() => {
     // Check for bios
