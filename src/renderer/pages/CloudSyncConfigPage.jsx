@@ -244,7 +244,7 @@ function CloudSyncPageConfig() {
       const { stdout } = message;
       console.log({ stdout });
       let modalData;
-      if (stdout.includes('true_cs')) {
+      if (stdout.includes('OK')) {
         // checkHealth();
         modalData = {
           active: true,
@@ -359,13 +359,17 @@ function CloudSyncPageConfig() {
 
   useEffect(() => {
     if (cloudSync !== '' || cloudSync !== undefined) {
-      ipcChannel.sendMessage('emudeck', [
-        `save-setting|||set_setting rclone_provider ${cloudSync}`,
-      ]);
-      ipcChannel.sendMessage('emudeck', [
-        `save-setting|||set_setting cloud_sync_provider ${cloudSync} `,
-      ]);
-      localStorage.setItem('settings_emudeck', json);
+      const patreonToken = localStorage.getItem('patreon_token');
+      const patreonTokenUser = patreonToken.split('|||');
+      // eslint-disable-next-line
+      setState({
+        ...state,
+        cloud_sync_provider: cloudSync,
+        cs_user: `cs${patreonTokenUser[0]}`,
+        cloud_sync_status: true,
+      });
+
+      //localStorage.setItem('settings_emudeck', json);
     }
   }, [cloudSync]);
 
