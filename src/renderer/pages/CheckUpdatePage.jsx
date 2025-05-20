@@ -118,8 +118,8 @@ function CheckUpdatePage() {
         delete settingsStorage.overwriteConfigEmus.primehacks;
         delete settingsStorage.overwriteConfigEmus.citra;
         delete settingsStorage.overwriteConfigEmus.lime3ds;
-        delete settingsStorage.installEmus.ares;
-        delete settingsStorage.overwriteConfigEmus.ares;
+        //delete settingsStorage.installEmus.ares;
+        //delete settingsStorage.overwriteConfigEmus.ares;
         delete settingsStorage.android.installEmus.citrammj;
         delete settingsStorage.android.overwriteConfigEmus.citra;
         delete settingsStorage.android.overwriteConfigEmus.citrammj;
@@ -209,7 +209,7 @@ function CheckUpdatePage() {
               delete overwriteConfigEmusStored[emu];
               delete overwriteConfigEmus[emu];
             }
-            deleteEmu('ares');
+            //deleteEmu('ares');
             if (platform == 'darwin') {
               deleteEmu('bigpemu');
               deleteEmu('xenia');

@@ -246,11 +246,11 @@ function ManageEmulatorsPage() {
     }, 1000);
   };
 
-  const updateEmus = () =>{
+  const updateEmus = () => {
     ipcChannel.sendMessage('emudeck', [
       `show_dialog_update_emulators|||show_dialog_update_emulators`,
     ]);
-  }
+  };
 
   useEffect(() => {
     // Clean win32 systems
@@ -360,6 +360,10 @@ function ManageEmulatorsPage() {
               {installEmusArray.map((item) => {
                 const img = images[item.id];
                 const updateNotif = updates[item.id];
+
+                if (item.id === 'ares') {
+                  return;
+                }
 
                 if (item.id === 'srm') {
                   return;
