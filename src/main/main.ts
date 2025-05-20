@@ -777,9 +777,9 @@ ipcMain.on('clone', async (event, branch) => {
 ipcMain.on('pull', async (event, branch) => {
   const branchGIT = branch;
   const backChannel = 'pull';
-  let preCommand = `cd ${appDataPath}/backend && git fetch && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
+  let preCommand = `cd ${appDataPath}/backend && git fetch origin && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
 
-  preCommand = `cd ${appDataPath}/backend && git fetch && git checkout ${branchGIT} && git pull`;
+  preCommand = `cd ${appDataPath}/backend && git fetch origin && git checkout ${branchGIT} && git pull`;
 
   let bashCommand: any;
   if (os.platform().includes('win32')) {
