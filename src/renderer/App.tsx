@@ -564,6 +564,7 @@ export default function App() {
     },
     controllerLayout: 'baxy',
     revertParsers: false,
+    cloud_sync_provider: undefined,
     resolutions: {
       dolphin: '720P',
       duckstation: '720P',
