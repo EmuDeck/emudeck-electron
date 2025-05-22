@@ -86,10 +86,12 @@ function CloudSyncPageConfig() {
         css: 'emumodal--sm',
       };
     }
-
+    const patreonToken = localStorage.getItem('patreon_token');
+    const patreonTokenUser = patreonToken.split('|||');
     setState({
       ...state,
       cloudSync: item,
+      cs_user: patreonTokenUser,
     });
     setStatePage({
       ...statePage,
