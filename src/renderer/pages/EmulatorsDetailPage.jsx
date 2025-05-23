@@ -487,11 +487,11 @@ function EmulatorsDetailPage() {
     });
   };
 
-  const reInstallEmu = (emulator, code) => {
+  const reInstallEmu = (emulator, code, name) => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing {code}</span>,
-      body: <p>Please wait while we install {code}</p>,
+      header: <span className="h4">Installing {name}</span>,
+      body: <p>Please wait while we install {name}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -544,7 +544,7 @@ function EmulatorsDetailPage() {
                 ...installFrontends,
                 [emulator]: {
                   id: emulator,
-                  name: code,
+                  name: name,
                   status: true,
                 },
               },
@@ -556,7 +556,7 @@ function EmulatorsDetailPage() {
                 ...installEmus,
                 [emulator]: {
                   id: emulator,
-                  name: code,
+                  name: name,
                   status: true,
                 },
               },
@@ -582,11 +582,11 @@ function EmulatorsDetailPage() {
     });
   };
 
-  const installEmu = (emulator, code) => {
+  const installEmu = (emulator, code, name) => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing {code}</span>,
-      body: <p>Please wait while we install {code}</p>,
+      header: <span className="h4">Installing {name}</span>,
+      body: <p>Please wait while we install {name}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -613,10 +613,10 @@ function EmulatorsDetailPage() {
         if (/true|OK/.test(status)) {
           const modalData = {
             active: true,
-            header: <span className="h4">{code} installed!</span>,
+            header: <span className="h4">{name} installed!</span>,
             body: (
               <p>
-                {code} has been installed, now you can play games from {code}{' '}
+                {name} has been installed, now you can play games from {code}{' '}
                 using EmulationStation-DE or adding them to your Steam Library
                 using Steam Rom Manager
               </p>
@@ -635,7 +635,7 @@ function EmulatorsDetailPage() {
               ...installEmus,
               [emulator]: {
                 id: emulator,
-                name: code,
+                name: name,
                 status: true,
               },
             },
@@ -665,7 +665,7 @@ function EmulatorsDetailPage() {
         } else {
           const modalData = {
             active: true,
-            header: <span className="h4">{code} installation failed</span>,
+            header: <span className="h4">{name} installation failed</span>,
             body: <p>There was an issue trying to install {code}</p>,
             css: 'emumodal--xs',
           };
