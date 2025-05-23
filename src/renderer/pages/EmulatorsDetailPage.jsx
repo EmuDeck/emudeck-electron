@@ -503,83 +503,78 @@ function EmulatorsDetailPage() {
     ipcChannel.sendMessage('emudeck', [`${code}_install|||${code}_install`]);
 
     ipcChannel.once(`${code}_install`, (message) => {
+      status = message.stdout;
+      status.replace('\n', '');
       console.log({ message });
-      ipcChannel.sendMessage('emudeck', [`${code}_init|||${code}_init`]);
+      if (/true|OK/.test(status)) {
+        const modalData = {
+          active: true,
+          header: <span className="h4">{name} success!</span>,
+          body: (
+            <p>
+              {name} has been installed, now you can play games from {name}{' '}
+              using EmulationStation-DE or adding them to your Steam Library
+              using Steam Rom Manager
+            </p>
+          ),
+          css: 'emumodal--xs',
+        };
 
-      ipcChannel.once(`${code}_init`, (message) => {
-        status = message.stdout;
-        status.replace('\n', '');
-        console.log({ message });
-        if (/true|OK/.test(status)) {
-          const modalData = {
-            active: true,
-            header: <span className="h4">{name} success!</span>,
-            body: (
-              <p>
-                {name} has been installed, now you can play games from {name}{' '}
-                using EmulationStation-DE or adding them to your Steam Library
-                using Steam Rom Manager
-              </p>
-            ),
-            css: 'emumodal--xs',
-          };
+        setStatePage({
+          ...statePage,
+          modal: modalData,
+        });
+        // We set the emu as install = yes
 
-          setStatePage({
-            ...statePage,
-            modal: modalData,
-          });
-          // We set the emu as install = yes
-
-          if (
-            emulator === 'esde' ||
-            emulator === 'pegasus' ||
-            emulator === 'srm'
-          ) {
-            if (emulator === 'srm') {
-              emulator = 'steam';
-            }
-
-            setState({
-              ...state,
-              installFrontends: {
-                ...installFrontends,
-                [emulator]: {
-                  id: emulator,
-                  name: name,
-                  status: true,
-                },
-              },
-            });
-          } else {
-            setState({
-              ...state,
-              installEmus: {
-                ...installEmus,
-                [emulator]: {
-                  id: emulator,
-                  name: name,
-                  status: true,
-                },
-              },
-            });
+        if (
+          emulator === 'esde' ||
+          emulator === 'pegasus' ||
+          emulator === 'srm'
+        ) {
+          if (emulator === 'srm') {
+            emulator = 'steam';
           }
-        } else {
-          const modalData = {
-            active: true,
-            header: <span className="h4">{name} failed</span>,
-            body: <p>There was an issue trying to install {name}</p>,
-            css: 'emumodal--xs',
-          };
 
-          setStatePage({
-            ...statePage,
-            modal: modalData,
+          setState({
+            ...state,
+            installFrontends: {
+              ...installFrontends,
+              [emulator]: {
+                id: emulator,
+                name: name,
+                status: true,
+              },
+            },
           });
-          // We save it on localstorage
-          const json = JSON.stringify(state);
-          //localStorage.setItem('settings_emudeck', json);
+        } else {
+          setState({
+            ...state,
+            installEmus: {
+              ...installEmus,
+              [emulator]: {
+                id: emulator,
+                name: name,
+                status: true,
+              },
+            },
+          });
         }
-      });
+      } else {
+        const modalData = {
+          active: true,
+          header: <span className="h4">{name} failed</span>,
+          body: <p>There was an issue trying to install {name}</p>,
+          css: 'emumodal--xs',
+        };
+
+        setStatePage({
+          ...statePage,
+          modal: modalData,
+        });
+        // We save it on localstorage
+        const json = JSON.stringify(state);
+        //localStorage.setItem('settings_emudeck', json);
+      }
     });
   };
 
@@ -612,12 +607,14 @@ function EmulatorsDetailPage() {
         status = message.stdout;
         status.replace('\n', '');
         if (/true|OK/.test(status)) {
+          ipcChannel.sendMessage('emudeck', [`${code}_init|||${code}_init`]);
+
           const modalData = {
             active: true,
             header: <span className="h4">{name} installed!</span>,
             body: (
               <p>
-                {name} has been installed, now you can play games from {code}{' '}
+                {name} has been installed, now you can play games from {name}{' '}
                 using EmulationStation-DE or adding them to your Steam Library
                 using Steam Rom Manager
               </p>
@@ -667,7 +664,7 @@ function EmulatorsDetailPage() {
           const modalData = {
             active: true,
             header: <span className="h4">{name} installation failed</span>,
-            body: <p>There was an issue trying to install {code}</p>,
+            body: <p>There was an issue trying to install {name}</p>,
             css: 'emumodal--xs',
           };
 
