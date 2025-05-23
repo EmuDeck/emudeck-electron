@@ -62,6 +62,7 @@ let allPath = `${appDataPath}/backend/api.py`;
 let startCommand;
 let finishCommand;
 if (os.platform().includes('win32')) {
+  allPath = `${appDataPath}\\backend\\api.py`;
   startCommand = 'powershell -ExecutionPolicy Bypass -command "& {';
   finishCommand = '}"';
 }
@@ -384,7 +385,7 @@ ipcMain.on('emudeck-legacy', async (event, command) => {
   }
 
   // Lets detect if the repo was cloned properly
-  if (fs.existsSync(allPathLegacy)) {
+  if (fs.existsSync(allPath)) {
     // file exists
   } else {
     event.reply(backChannel, 'nogit');
@@ -479,7 +480,7 @@ ipcMain.on('emudeck', async (event, command) => {
   let preCommand;
 
   if (os.platform().includes('win32')) {
-    preCommand = `python ${appDataPath}/backend/api.py ${bashCommand}`;
+    preCommand = `python ${appDataPath}\\backend\\api.py ${bashCommand}`;
   } else {
     preCommand = `python3 ${appDataPath}/backend/api.py ${bashCommand}`;
   }
@@ -778,14 +779,15 @@ ipcMain.on('pull', async (event, branch) => {
   const branchGIT = branch;
   const backChannel = 'pull';
   let preCommand = `cd ${appDataPath}/backend && git fetch origin && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
-
-  preCommand = `cd ${appDataPath}/backend && git fetch origin && git checkout ${branchGIT} && git pull`;
+  if (os.platform().includes('win32')) {
+    preCommand = `cd ${appDataPath}\\backend && git fetch origin && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
+  }
 
   let bashCommand: any;
   if (os.platform().includes('win32')) {
-    bashCommand = `${preCommand} ; python ${appDataPath}/backend/api.py "app_init"`;
+    bashCommand = `${preCommand} && python ${appDataPath}\\backend\\api.py "app_init"`;
   } else {
-    bashCommand = `${preCommand} ; python3 ${appDataPath}/backend/api.py "app_init"`;
+    bashCommand = `${preCommand} & python3 ${appDataPath}/backend/api.py "app_init"`;
   }
 
   console.log(bashCommand);
