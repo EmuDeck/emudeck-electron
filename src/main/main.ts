@@ -22,13 +22,13 @@ const { fakeOS } = fakeOSFile;
 
 import branchFile from '../data/branch.json';
 const { branchOG } = branchFile;
-
+const repo = 'https://github.com/dragoonDorise/EmuDeck.git';
 const { shouldUseDarkColors } = nativeTheme;
 const os = require('os');
 const fs = require('fs');
 const lsbRelease = require('lsb-release');
 let appDataPath = app.getPath('userData');
-
+console.log({ appDataPath });
 if (os.platform().includes('darwin')) {
   appDataPath = `${os.homedir()}/.config/EmuDeck`;
 }
@@ -389,7 +389,7 @@ ipcMain.on('emudeck-legacy', async (event, command) => {
     // file exists
   } else {
     event.reply(backChannel, 'nogit');
-    let bashCommand;
+    let bashCommand: any;
     if (os.platform().includes('win32')) {
       bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:USERPROFILE/EmuDeck/logs/pull.log"; git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchOG} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && Stop-Transcript; && CLS && echo true`;
     } else if (os.platform().includes('darwin')) {
@@ -753,17 +753,9 @@ ipcMain.on('check-git', async (event) => {
 
 ipcMain.on('clone', async (event, branch) => {
   const branchGIT = branch;
-  let repo;
-  if (os.platform().includes('win32')) {
-    repo = 'https://github.com/EmuDeck/emudeck-we.git';
-  } else if (os.platform().includes('darwin')) {
-    repo = 'https://github.com/dragoonDorise/EmuDeck.git';
-  } else {
-    repo = 'https://github.com/dragoonDorise/EmuDeck.git';
-  }
 
   const backChannel = 'clone';
-  let bashCommand;
+  let bashCommand: any;
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:APPDATA/EmuDeck/logs"  -ErrorAction SilentlyContinue; Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend  && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && Stop-Transcript && echo true `;
   } else {
@@ -778,9 +770,19 @@ ipcMain.on('clone', async (event, branch) => {
 ipcMain.on('pull', async (event, branch) => {
   const branchGIT = branch;
   const backChannel = 'pull';
-  let preCommand = `cd ${appDataPath}/backend && git fetch origin && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
+  let preCommand: any;
+
+  preCommand = `cd ${appDataPath}/backend && git fetch origin && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
   if (os.platform().includes('win32')) {
     preCommand = `cd ${appDataPath}\\backend && git fetch origin && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
+  }
+
+  //Legacy installs from emudeck-we
+  if (os.platform().includes('win32')) {
+    const path = `${appDataPath}/backend/functions/all.ps1`;
+    if (fs.existsSync(path)) {
+      preCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && rmdir backend /q /s && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:APPDATA/EmuDeck/logs"  -ErrorAction SilentlyContinue; Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && echo true `;
+    }
   }
 
   let bashCommand: any;
