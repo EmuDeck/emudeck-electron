@@ -490,8 +490,8 @@ function EmulatorsDetailPage() {
   const reInstallEmu = (emulator, code, name) => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing {name}</span>,
-      body: <p>Please wait while we install {name}</p>,
+      header: <span className="h4">Updating {name}</span>,
+      body: <p>Please wait while we update {name}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -503,6 +503,7 @@ function EmulatorsDetailPage() {
     ipcChannel.sendMessage('emudeck', [`${code}_install|||${code}_install`]);
 
     ipcChannel.once(`${code}_install`, (message) => {
+      console.log({ message });
       ipcChannel.sendMessage('emudeck', [`${code}_init|||${code}_init`]);
 
       ipcChannel.once(`${code}_init`, (message) => {
@@ -512,10 +513,10 @@ function EmulatorsDetailPage() {
         if (/true|OK/.test(status)) {
           const modalData = {
             active: true,
-            header: <span className="h4">{code} success!</span>,
+            header: <span className="h4">{name} success!</span>,
             body: (
               <p>
-                {code} has been installed, now you can play games from {code}{' '}
+                {name} has been installed, now you can play games from {name}{' '}
                 using EmulationStation-DE or adding them to your Steam Library
                 using Steam Rom Manager
               </p>
@@ -565,8 +566,8 @@ function EmulatorsDetailPage() {
         } else {
           const modalData = {
             active: true,
-            header: <span className="h4">{code} failed</span>,
-            body: <p>There was an issue trying to install {code}</p>,
+            header: <span className="h4">{name} failed</span>,
+            body: <p>There was an issue trying to install {name}</p>,
             css: 'emumodal--xs',
           };
 
