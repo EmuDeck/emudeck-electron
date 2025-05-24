@@ -584,6 +584,7 @@ export default function App() {
       flycast: '720P',
       melonds: '720P',
     },
+    netplay: false,
   });
 
   return (
