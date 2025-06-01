@@ -585,6 +585,7 @@ export default function App() {
       melonds: '720P',
     },
     netplay: false,
+    netplay_cmd: '',
   });
 
   return (
