@@ -181,7 +181,10 @@ function RomStoragePage() {
   const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['get_sd_path|||get_sd_path']);
     ipcChannel.once('get_sd_path', (message) => {
-      let stdout = message.stdout.replace('\n', '');
+
+      const response = JSON.parse(message.stdout);
+
+      let stdout = response.result;
       if (stdout === '') {
         stdout = null;
       }
@@ -197,11 +200,10 @@ function RomStoragePage() {
   };
   // We heck if it's formated in a valid file system. Only Linux
   const checkSDValid = () => {
-    ipcChannel.sendMessage('emudeck', [
-      `SDCardValid|||test_location_valid SD getSDPath`,
-    ]);
+    ipcChannel.sendMessage('emudeck', [`SDCardValid|||test_location_valid SD`]);
 
     ipcChannel.once('SDCardValid', (message) => {
+
       if (message === 'nogit') {
         const modalData = {
           active: true,
