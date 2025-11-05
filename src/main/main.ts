@@ -789,7 +789,7 @@ ipcMain.on('pull', async (event, branch) => {
   if (os.platform().includes('win32')) {
     bashCommand = `${preCommand} && python ${appDataPath}\\backend\\api.py "app_init"`;
   } else {
-    bashCommand = `${preCommand} & python3 ${appDataPath}/backend/api.py "app_init"`;
+    bashCommand = `${preCommand} && python3 ${appDataPath}/backend/api.py "app_init"`;
   }
 
   console.log(bashCommand);
