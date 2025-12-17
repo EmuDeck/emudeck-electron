@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
 
 import CheckUpdatePage from 'pages/CheckUpdatePage';
 import WelcomePage from 'pages/WelcomePage';
@@ -601,127 +600,110 @@ export default function App() {
     >
       <Router>
         <Routes>
-          <Route exact path="/" element={<PatroenLoginPage />} />
-          <Route exact path="/error" element={<ErrorPage />} />
-          <Route exact path="/check-updates" element={<CheckUpdatePage />} />
+          <Route path="/" element={<PatroenLoginPage />} />
+          <Route path="/error" element={<ErrorPage />} />
+          <Route path="/check-updates" element={<CheckUpdatePage />} />
 
-          <Route exact path="/welcome" element={<WelcomePage />} />
+          <Route path="/welcome" element={<WelcomePage />} />
           <Route
-            exact
             path="/device-selector"
             element={<DeviceSelectorPage />}
           />
           <Route
-            exact
             path="/emulator-selector"
             element={<EmulatorSelectorPage />}
           />
           <Route
-            exact
             path="/frontend-selector"
             element={<FrontendSelectorPage />}
           />
           <Route
-            exact
             path="/parser-selector"
             element={<ParserSelectorPage />}
           />
           <Route
-            exact
             path="/emulator-configuration"
             element={<EmulatorConfigurationPage />}
           />
           <Route
-            exact
             path="/emulator-resolution"
             element={<EmulatorResolutionPage />}
           />
           <Route
-            exact
             path="/change-resolution"
             element={<EmulatorConfigResolutionPage />}
           />
-          <Route exact path="/patreon-login" element={<PatroenLoginPage />} />
+          <Route path="/patreon-login" element={<PatroenLoginPage />} />
 
-          <Route exact path="/rom-storage" element={<RomStoragePage />} />
-          <Route exact path="/RA-bezels" element={<RABezelsPage />} />
+          <Route path="/rom-storage" element={<RomStoragePage />} />
+          <Route path="/RA-bezels" element={<RABezelsPage />} />
 
-          <Route exact path="/auto-save" element={<AutoSavePage />} />
+          <Route path="/auto-save" element={<AutoSavePage />} />
           <Route
-            exact
             path="/controller-layout"
             element={<ControllerLayoutPage />}
           />
 
-          <Route exact path="/confirmation" element={<ConfirmationPage />} />
+          <Route path="/confirmation" element={<ConfirmationPage />} />
 
           <Route
-            exact
             path="/RA-achievements"
             element={<RAAchievementsPage />}
           />
 
           <Route
-            exact
             path="/RA-achievements-config"
             element={<RAAchievementsConfigPage />}
           />
 
           <Route
-            exact
             path="/aspect-ratio-sega"
             element={<AspectRatioSegaPage />}
           />
           <Route
-            exact
             path="/aspect-ratio-snes"
             element={<AspectRatioSNESPage />}
           />
           <Route
-            exact
             path="/aspect-ratio-3d"
             element={<AspectRatio3DPage />}
           />
           <Route
-            exact
             path="/aspect-ratio-dolphin"
             element={<AspectRatioDolphinPage />}
           />
           <Route
-            exact
             path="/shaders-handhelds"
             element={<ShadersHandheldsPage />}
           />
-          <Route exact path="/shaders-classic" element={<Shaders2DPage />} />
-          <Route exact path="/shaders-3d-classic" element={<Shaders3DPage />} />
-          <Route exact path="/gyrodsu" element={<GyroDSUPage />} />
-          <Route exact path="/power-tools" element={<PowerToolsPage />} />
-          <Route exact path="/power-controls" element={<PowerControlsPage />} />
-          <Route exact path="/decky-controls" element={<EmuDeckyPage />} />
+          <Route path="/shaders-classic" element={<Shaders2DPage />} />
+          <Route path="/shaders-3d-classic" element={<Shaders3DPage />} />
+          <Route path="/gyrodsu" element={<GyroDSUPage />} />
+          <Route path="/power-tools" element={<PowerToolsPage />} />
+          <Route path="/power-controls" element={<PowerControlsPage />} />
+          <Route path="/decky-controls" element={<EmuDeckyPage />} />
           <Route
-            exact
             path="/decky-rom-launcher"
             element={<DeckyRomLauncherPage />}
           />
           <Route
-            exact
             path="/decky-rom-launcher-install"
             element={<DeckyRomLauncherInstallPage />}
           />
 
-          <Route exact path="/help" element={<HelpPage />} />
-          <Route exact path="/early-access" element={<EarlyAccessPage />} />
+          <Route path="/help" element={<HelpPage />} />
+          <Route path="/early-access" element={<EarlyAccessPage />} />
 
-          <Route exact path="/chd-tool" element={<CHDToolPage />} />
-          <Route exact path="/change-log" element={<ChangeLogPage />} />
-          <Route exact path="/settings" element={<QuickSettingsPage />} />
-          <Route exact path="/check-bios" element={<CheckBiosPage />} />
+          <Route path="/chd-tool" element={<CHDToolPage />} />
+          <Route path="/change-log" element={<ChangeLogPage />} />
+          <Route path="/settings" element={<QuickSettingsPage />} />
+          <Route path="/check-bios" element={<CheckBiosPage />} />
 
-          <Route exact path="/emulators" element={<ManageEmulatorsPage />}>
+          <Route path="/emulators" element={<ManageEmulatorsPage />}>
             <Route path=":emulator" element={<ManageEmulatorsPage />} />
           </Route>
 
-          <Route exact path="/android-setup" element={<AndroidSetupPage />}>
+          <Route path="/android-setup" element={<AndroidSetupPage />}>
             <Route path=":emulator" element={<AndroidSetupPage />} />
           </Route>
 
@@ -730,70 +712,62 @@ export default function App() {
             <Route path="" element={<EmulatorsDetailPage />} />
           </Route>
 
-          <Route exact path="/uninstall" element={<UninstallPage />} />
+          <Route path="/uninstall" element={<UninstallPage />} />
 
-          <Route exact path="/video-guide" element={<VideoGuidePage />} />
-          <Route exact path="/migration" element={<MigrationPage />} />
-          <Route exact path="/copy-games" element={<CopyGamesPage />} />
-          <Route exact path="/update-emulators" element={<UpdateEmusPage />} />
+          <Route path="/video-guide" element={<VideoGuidePage />} />
+          <Route path="/migration" element={<MigrationPage />} />
+          <Route path="/copy-games" element={<CopyGamesPage />} />
+          <Route path="/update-emulators" element={<UpdateEmusPage />} />
 
-          <Route exact path="/cloud-sync" element={<CloudSyncPage />}>
+          <Route path="/cloud-sync" element={<CloudSyncPage />}>
             <Route path=":type" element={<CloudSyncPage />} />
           </Route>
-          <Route exact path="/game-mode" element={<GameModePage />}>
+          <Route path="/game-mode" element={<GameModePage />}>
             <Route path=":type" element={<GameModePage />} />
           </Route>
           <Route
-            exact
             path="/cloud-sync-config"
             element={<CloudSyncConfigPage />}
           >
             <Route path=":type" element={<CloudSyncConfigPage />} />
           </Route>
 
-          <Route exact path="/pegasus-theme" element={<PegasusThemePage />} />
+          <Route path="/pegasus-theme" element={<PegasusThemePage />} />
           <Route
-            exact
             path="/pegasus-theme-choice"
             element={<PegasusThemeChoicePage />}
           />
-          <Route exact path="/esde-theme" element={<ESDEThemePage />} />
-          <Route exact path="/end" element={<EndPage />} />
-          <Route exact path="/hotkeys" element={<Hotkeys />} />
-          <Route exact path="/finish" element={<FinishPage />} />
+          <Route path="/esde-theme" element={<ESDEThemePage />} />
+          <Route path="/end" element={<EndPage />} />
+          <Route path="/hotkeys" element={<Hotkeys />} />
+          <Route path="/finish" element={<FinishPage />} />
 
           <Route
-            exact
             path="/android-welcome"
             element={<AndroidWelcomePage />}
           />
           <Route
-            exact
             path="/android-rom-storage"
             element={<AndroidRomStoragePage />}
           />
           <Route
-            exact
             path="/android-frontend-selector"
             element={<AndroidFrontendSelectorPage />}
           />
           <Route
-            exact
             path="/android-emulator-selector"
             element={<AndroidEmulatorSelectorPage />}
           />
           <Route
-            exact
             path="/android-RA-bezels"
             element={<AndroidRABezelsPage />}
           />
           <Route
-            exact
             path="/android-own-apk"
             element={<AndroidOwnAPKPage />}
           />
-          <Route exact path="/android-end" element={<AndroidEndPage />} />
-          <Route exact path="/android-finish" element={<AndroidFinishPage />} />
+          <Route path="/android-end" element={<AndroidEndPage />} />
+          <Route path="/android-finish" element={<AndroidFinishPage />} />
         </Routes>
       </Router>
     </GlobalContext.Provider>

@@ -233,9 +233,7 @@ const createWindow = async () => {
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
       autoHideMenuBar: true,
       webPreferences: {
-        preload: app.isPackaged
-          ? path.join(__dirname, 'preload.js')
-          : path.join(__dirname, '../../.erb/dll/preload.js'),
+        preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
         contextIsolation: true,
       },
@@ -252,9 +250,7 @@ const createWindow = async () => {
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
       autoHideMenuBar: true,
       webPreferences: {
-        preload: app.isPackaged
-          ? path.join(__dirname, 'preload.js')
-          : path.join(__dirname, '../../.erb/dll/preload.js'),
+        preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
         contextIsolation: true,
       },
@@ -270,9 +266,7 @@ const createWindow = async () => {
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
       autoHideMenuBar: true,
       webPreferences: {
-        preload: app.isPackaged
-          ? path.join(__dirname, 'preload.js')
-          : path.join(__dirname, '../../.erb/dll/preload.js'),
+        preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
         contextIsolation: true,
       },
