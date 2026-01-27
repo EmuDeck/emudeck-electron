@@ -49,6 +49,7 @@
     "test": "jest",
     "build:windows": "npm run build && npm exec electron-builder -- --publish never --win",
     "build:linux": "npm run build && npm exec electron-builder -- --publish never --linux",
+    "build:linux:x64": "npm run build && npm exec electron-builder -- --publish never --linux --x64",
     "build:mac": "npm run build && npm exec electron-builder -- --publish never --mac",
     "build:x64": "npm run build && npm exec electron-builder -- --publish never --linux --x64 && npm exec electron-builder -- --publish never --win --x64"
   },
