@@ -1,12 +1,27 @@
 export const invokeIpc = (args) => {
   return new Promise((resolve, reject) => {
     const ipcChannel = window.electron.ipcRenderer;
-    // 1) enviamos request
-    ipcChannel.sendMessage('emudeck', args);
-    // 2) escuchamos la respuesta
-    ipcChannel.once('emudeck', ({ stdout = '', stderr = '' }) => {
+    ipcChannel.sendMessage("emudeck", args);
+
+    ipcChannel.once("emudeck", ({ stdout = "", stderr = "" }) => {
       const out = stdout.trim();
-      // 3) comprobamos si viene OK/true
+
+      // Parse as JSON
+      try {
+        const parsed = JSON.parse(out);
+        if (parsed.status === "KO") {
+          alert(`Error: ${args}: ${parsed.error}`);
+          resolve(out);
+          return;
+        }
+        if (parsed.status === "OK") {
+          resolve(out);
+          return;
+        }
+      } catch (e) {
+        // Not a json
+      }
+
       if (/true|OK/.test(out)) {
         resolve(out);
       } else if (/false|KO/.test(out)) {
