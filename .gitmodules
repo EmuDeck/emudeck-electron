@@ -1,3 +1,6 @@
 [submodule "src/renderer/components"]
 	path = src/renderer/components
 	url = https://github.com/EmuDeck/emudeck-gui-components.git
+[submodule "fallback-backend"]
+	path = fallback-backend
+	url = https://github.com/dragoonDorise/EmuDeck.git
