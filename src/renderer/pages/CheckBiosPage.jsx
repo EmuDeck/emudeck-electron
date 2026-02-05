@@ -1,12 +1,12 @@
-import { useTranslation } from 'react-i18next';
-import React, { useEffect, useState, useContext, useRef } from 'react';
-import { GlobalContext } from 'context/globalContext';
-import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import { useTranslation } from "react-i18next";
+import React, { useEffect, useState, useContext, useRef } from "react";
+import { GlobalContext } from "context/globalContext";
+import Wrapper from "components/molecules/Wrapper/Wrapper";
 
-import Header from 'components/organisms/Header/Header';
-import Footer from 'components/organisms/Footer/Footer';
-import { useNavigate } from 'react-router-dom';
-import CheckBios from 'components/organisms/Wrappers/CheckBios';
+import Header from "components/organisms/Header/Header";
+import Footer from "components/organisms/Footer/Footer";
+import { useNavigate } from "react-router-dom";
+import CheckBios from "components/organisms/Wrappers/CheckBios";
 
 function CheckBiosPage() {
   const { t, i18n } = useTranslation();
@@ -36,43 +36,44 @@ function CheckBiosPage() {
   const ipcChannel = window.electron.ipcRenderer;
 
   const checkBios = (biosCommand) => {
-    ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
+    ipcChannel.sendMessage("emudeck", [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (status) => {
       status = status.stdout;
 
-      status = status.replace('\n', '');
+      status = status.replace("\n", "");
+
       let biosStatus;
-      /true|OK/.test(status) ? (biosStatus = true) : (biosStatus = false);
+      /True|OK/.test(status) ? (biosStatus = true) : (biosStatus = false);
 
       switch (biosCommand) {
-        case 'check_psx_bios':
+        case "check_psx_bios":
           setps1Bios(biosStatus);
           break;
-        case 'check_ps2_bios':
+        case "check_ps2_bios":
           setps2Bios(biosStatus);
           break;
-        case 'check_yuzu_bios':
+        case "check_yuzu_bios":
           setSwitchBios(biosStatus);
           break;
-        case 'check_eden_bios':
+        case "check_eden_bios":
           setEdenBios(biosStatus);
           break;
-        case 'check_ryujinx_bios':
+        case "check_ryujinx_bios":
           setRyujinxBios(biosStatus);
           break;
-        case 'check_citron_bios':
+        case "check_citron_bios":
           setCitronBios(biosStatus);
           break;
-        case 'check_segacd_bios':
+        case "check_sega_cd_bios":
           setSegaCDBios(biosStatus);
           break;
-        case 'check_saturn_bios':
+        case "check_saturn_bios":
           setSaturnBios(biosStatus);
           break;
-        case 'check_dreamcast_bios':
+        case "check_dreamcast_bios":
           setDreamcastBios(biosStatus);
           break;
-        case 'check_ds_bios':
+        case "check_ds_bios":
           setDSBios(biosStatus);
           break;
       }
@@ -80,33 +81,33 @@ function CheckBiosPage() {
   };
 
   const checkBiosAgain = () => {
-    checkBios('check_PS1_bios');
-    checkBios('check_PS2_bios');
-    checkBios('check_Yuzu_bios');
-    checkBios('check_Ryujinx_bios');
-    checkBios('check_Citron_bios');
-    checkBios('check_SegaCD_bios');
-    checkBios('check_Saturn_bios');
-    checkBios('check_Dreamcast_bios');
-    checkBios('check_DS_bios');
+    checkBios("check_psx_bios");
+    checkBios("check_ps2_bios");
+    checkBios("check_yuzu_bios");
+    checkBios("check_ryujinx_bios");
+    checkBios("check_citron_bios");
+    checkBios("check_sega_cd_bios");
+    checkBios("check_saturn_bios");
+    checkBios("check_dreamcast_bios");
+    checkBios("check_ds_bios");
   };
 
   useEffect(() => {
-    checkBios('check_PS1_bios');
-    checkBios('check_PS2_bios');
-    checkBios('check_Yuzu_bios');
-    checkBios('check_Ryujinx_bios');
-    checkBios('check_Citron_bios');
-    checkBios('check_SegaCD_bios');
-    checkBios('check_Saturn_bios');
-    checkBios('check_Dreamcast_bios');
-    checkBios('check_DS_bios');
+    checkBios("check_psx_bios");
+    checkBios("check_ps2_bios");
+    checkBios("check_yuzu_bios");
+    checkBios("check_ryujinx_bios");
+    checkBios("check_citron_bios");
+    checkBios("check_sega_cd_bios");
+    checkBios("check_saturn_bios");
+    checkBios("check_dreamcast_bios");
+    checkBios("check_ds_bios");
   }, []);
 
   return (
     <Wrapper>
-      <Header title={t('CheckBiosPage.title')} />
-      <p className="lead">{t('CheckBiosPage.description')}</p>
+      <Header title={t("CheckBiosPage.title")} />
+      <p className="lead">{t("CheckBiosPage.description")}</p>
       <CheckBios
         checkBiosAgain={checkBiosAgain}
         ps1Bios={ps1Bios}
@@ -120,11 +121,7 @@ function CheckBiosPage() {
         DSBios={DSBios}
         showNotification={showNotification}
       />
-      <Footer
-        next={false}
-        disabledNext={disabledNext}
-        disabledBack={disabledBack}
-      />
+      <Footer next={false} disabledNext={disabledNext} disabledBack={disabledBack} />
     </Wrapper>
   );
 }

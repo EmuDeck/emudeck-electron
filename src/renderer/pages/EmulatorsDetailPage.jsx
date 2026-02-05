@@ -204,8 +204,9 @@ function EmulatorsDetailPage() {
       status = status.stdout;
 
       status = status.replace("\n", "");
+
       let biosStatus;
-      /true|OK/.test(status) ? (biosStatus = true) : (biosStatus = false);
+      /True|OK/.test(status) ? (biosStatus = true) : (biosStatus = false);
 
       switch (biosCommand) {
         case "check_psx_bios":
@@ -228,7 +229,7 @@ function EmulatorsDetailPage() {
           setCitronBios(biosStatus);
           break;
 
-        case "check_segaCD_bios":
+        case "check_sega_cd_bios":
           setSegaCDBios(biosStatus);
           break;
         case "check_saturn_bios":
@@ -912,32 +913,32 @@ function EmulatorsDetailPage() {
     // Check for bios
     switch (emulator) {
       case "ra":
-        checkBios("check_PS1_bios");
-        checkBios("check_SegaCD_bios");
-        checkBios("check_Saturn_bios");
-        checkBios("check_DS_bios");
-        checkBios("check_Dreamcast_bios");
+        checkBios("check_psx_bios");
+        checkBios("check_sega_cd_bios");
+        checkBios("check_saturn_bios");
+        checkBios("check_ds_bios");
+        checkBios("check_dreamcast_bios");
         break;
       case "duckstation":
-        checkBios("check_PS1_bios");
+        checkBios("check_psx_bios");
         break;
       case "melonds":
-        checkBios("check_DS_bios");
+        checkBios("check_ds_bios");
         break;
       case "pcsx2":
-        checkBios("check_PS2_bios");
+        checkBios("check_ps2_bios");
         break;
       case "yuzu":
-        checkBios("check_Yuzu_bios");
+        checkBios("check_yuzu_bios");
         break;
       case "eden":
-        checkBios("check_Yuzu_bios");
+        checkBios("check_eden_bios");
         break;
       case "citron":
-        checkBios("check_Eden_bios");
+        checkBios("check_citron_bios");
         break;
       case "ryujinx":
-        checkBios("check_Ryujinx_bios");
+        checkBios("check_ryujinx_bios");
         break;
 
       default:
