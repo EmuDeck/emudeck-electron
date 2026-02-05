@@ -1062,14 +1062,13 @@ ipcMain.on("setToken", async (event, command) => {
   const backChannel = "getToken";
   const token = command[0];
   const user = command[1];
-  let bashCommand = `. ${appDataPath}/backend/functions/all.sh && echo ${token} > "$HOME/.config/EmuDeck/.rat" && echo ${user} > "$HOME/.config/EmuDeck/.rau" && RetroArch_retroAchievementsSetLogin && DuckStation_retroAchievementsSetLogin && PCSX2QT_retroAchievementsSetLogin && echo true`;
 
-  if (os.platform().includes("win32")) {
-    bashCommand = `cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1; . ./JSONtoPS1.ps1; JSONtoPS1; . ./all.ps1; RetroArch_retroAchievementsSetLogin ; DuckStation_retroAchievementsSetLogin ; PCSX2_retroAchievementsSetLogin ; echo true`;
-  }
+  fs.writeFileSync(`${appDataPath}/.rat`, token);
+  fs.writeFileSync(`${appDataPath}/.rau`, user);
 
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
+  let preCommand = `python ${appDataPath}\\backend\\api.py retro_achievements_set_login`;
+  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(preCommand, error, stdout, stderr);
     event.reply(backChannel, error, stdout, stderr);
   });
 });
