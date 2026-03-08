@@ -34,7 +34,7 @@ function DeviceSelectorPage() {
     dom: undefined,
   });
   const { disabledNext, disabledBack, data, dom } = statePage;
-
+  const ipcChannel = window.electron.ipcRenderer;
   // Setting the device
   const deviceSet = (deviceName) => {
     setStatePage({ ...statePage, disabledNext: false });
@@ -144,8 +144,8 @@ function DeviceSelectorPage() {
     if (device !== '') {
       setStatePage({ ...statePage, disabledNext: false });
     }
-    const json = JSON.stringify(state);
     //localStorage.setItem('settings_emudeck', json);
+    ipcChannel.sendMessage('saveSettings', JSON.stringify(state));
   }, [state]);
 
   useEffect(() => {

@@ -194,6 +194,7 @@ function MigrationPage() {
   useEffect(() => {
     const json = JSON.stringify(state);
     //localStorage.setItem('settings_emudeck', json);
+    ipcChannel.sendMessage('saveSettings', JSON.stringify(state));
   }, [state]);
 
   return (

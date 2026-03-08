@@ -102,8 +102,10 @@ function CheckUpdatePage() {
     let settingsStorage;
 
     ipcChannel.sendMessage('get_settings');
+		
     ipcChannel.once('get_settings', (message) => {
       settingsStorage = message;
+	  console.log({settingsStorage})
       if (settingsStorage) {
         const shadersStored = settingsStorage.shaders;
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;

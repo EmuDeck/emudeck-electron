@@ -372,6 +372,7 @@ function CloudSyncPageConfig() {
       });
 
       //localStorage.setItem('settings_emudeck', json);
+      ipcChannel.sendMessage('saveSettings', JSON.stringify(state));
     }
   }, [cloudSync]);
 

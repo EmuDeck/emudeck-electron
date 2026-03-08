@@ -33,7 +33,7 @@ function EmulatorConfigResolutionPage() {
   const saveResolutions = () => {
     const json = JSON.stringify(state);
     //localStorage.setItem('settings_emudeck', json);
-
+    ipcChannel.sendMessage('saveSettings', JSON.stringify(state));
     const modalData = {
       active: true,
       header: <span className="h4">Settings saved!</span>,

@@ -192,12 +192,16 @@ function QuickSettingsPage() {
       },
     });
     if (arStatus === '169') {
-      ipcChannel.sendMessage('emudeck-legacy', ['dolphin|||Dolphin_wideScreenOn']);
+      ipcChannel.sendMessage('emudeck-legacy', [
+        'dolphin|||Dolphin_wideScreenOn',
+      ]);
       ipcChannel.once('dolphin', () => {
         notificationShow(`🎉 ${t('QuickSettingsPage.nofifDolphinAR')}`);
       });
     } else {
-      ipcChannel.sendMessage('emudeck-legacy', ['dolphin|||Dolphin_wideScreenOff']);
+      ipcChannel.sendMessage('emudeck-legacy', [
+        'dolphin|||Dolphin_wideScreenOff',
+      ]);
       ipcChannel.once('dolphin', () => {
         notificationShow(`🎉 ${t('QuickSettingsPage.nofifDolphinAR')}`);
       });
@@ -274,7 +278,9 @@ function QuickSettingsPage() {
       ? (functionAutoSave = 'RetroArch_autoSaveOn')
       : (functionAutoSave = 'RetroArch_autoSaveOff');
 
-    ipcChannel.sendMessage('emudeck-legacy', [`autoSave|||${functionAutoSave}`]);
+    ipcChannel.sendMessage('emudeck-legacy', [
+      `autoSave|||${functionAutoSave}`,
+    ]);
     ipcChannel.once('autoSave', () => {
       notificationShow(`🎉 ${t('QuickSettingsPage.nofifAutosave')}`);
     });
@@ -301,6 +307,7 @@ function QuickSettingsPage() {
 
   useEffect(() => {
     //localStorage.setItem('settings_emudeck', json);
+    ipcChannel.sendMessage('saveSettings', JSON.stringify(state));
   }, [state]);
 
   const onClickBoot = (status) => {
@@ -314,7 +321,9 @@ function QuickSettingsPage() {
       ? (functionBootMode = 'game_mode_enable')
       : (functionBootMode = 'game_mode_disable');
 
-    ipcChannel.sendMessage('emudeck-legacy', [`bootMode|||${functionBootMode}`]);
+    ipcChannel.sendMessage('emudeck-legacy', [
+      `bootMode|||${functionBootMode}`,
+    ]);
     ipcChannel.once('bootMode', () => {
       notificationShow(`🎉 ${t('QuickSettingsPage.nofifBoot')}`);
     });
