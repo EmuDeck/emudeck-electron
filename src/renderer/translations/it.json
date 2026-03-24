@@ -450,8 +450,8 @@
     "RAAchievements": {
       "modalWrongPassTitle": "Nome utente o password errati",
       "modalWrongPassDesc": "Se la tua password contiene caratteri speciali come _ o ', devi cambiarla su retroachievements.org",
-      "modalSuccessTitle": "Nome utente o password errati",
-      "modalSuccessDesc": "Se la tua password contiene caratteri speciali come _ o ', devi cambiarla su retroachievements.org",
+      "modalSuccessTitle": "RetroAchievements set!",
+      "modalSuccessDesc": "Now your games will show RetroAchievements progress",
       "modalErrorTitle": "Errore!",
       "modalErrorDesc": "L'utente e la password sono corretti ma EmuDeck non è riuscito a impostare la configurazione.",
       "register": "Se non hai un account, registrati ora:",
