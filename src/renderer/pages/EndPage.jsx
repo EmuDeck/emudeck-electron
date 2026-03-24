@@ -211,9 +211,11 @@ function EndPage() {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    setEmusPending(Object.values(installEmus));
-    setConfigsPending(Object.values(overwriteConfigEmus));
+  useEffect(() => {	
+	invokeIpc(`emudeck_init`).then((e) => {
+		setEmusPending(Object.values(installEmus));
+		setConfigsPending(Object.values(overwriteConfigEmus));
+	});
   }, []);
 
   useEffect(() => {
