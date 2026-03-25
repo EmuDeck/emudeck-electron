@@ -248,8 +248,8 @@ if (isDebug) {
 }
 
 const installExtensions = async () => {
-  // electron-devtools-installer removed — fails to download from Chrome Web Store.
-  // Use standalone react-devtools if needed: npx react-devtools
+  // React DevTools: Electron doesn't fully support Manifest V3 extensions yet.
+  // Use standalone react-devtools when needed: npx react-devtools
 };
 
 const createWindow = async () => {
