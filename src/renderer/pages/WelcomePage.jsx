@@ -182,7 +182,7 @@ function WelcomePage() {
               {news &&
                 news.map((item) => {
                   return (
-                    <Card key={item.link} css="is-selected">
+                    <Card key={item.title} css="is-selected">
                       <a target={item.target} href={item.link}>
                         <span className="h5">{item.title}</span>
                         <p>{item.desc}</p>
