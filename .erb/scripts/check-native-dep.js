@@ -1,7 +1,7 @@
-import fs from 'fs';
-import chalk from 'chalk';
-import { execSync } from 'child_process';
-import { dependencies } from '../../package.json';
+const fs = require('fs');
+const chalk = require('chalk');
+const { execSync } = require('child_process');
+const { dependencies } = require('../../package.json');
 
 if (dependencies) {
   const dependenciesKeys = Object.keys(dependencies);
