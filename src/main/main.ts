@@ -242,7 +242,9 @@ if (process.env.NODE_ENV === 'production') {
 const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 if (isDebug) {
-  require('electron-debug')();
+  import('electron-debug').then(({ default: electronDebug }) =>
+    electronDebug()
+  );
 }
 
 const installExtensions = async () => {
@@ -315,9 +317,7 @@ const createWindow = async () => {
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
       autoHideMenuBar: true,
       webPreferences: {
-        preload: app.isPackaged
-          ? path.join(__dirname, 'preload.js')
-          : path.join(__dirname, '../../.erb/dll/preload.js'),
+        preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
         contextIsolation: true,
       },
@@ -334,9 +334,7 @@ const createWindow = async () => {
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
       autoHideMenuBar: true,
       webPreferences: {
-        preload: app.isPackaged
-          ? path.join(__dirname, 'preload.js')
-          : path.join(__dirname, '../../.erb/dll/preload.js'),
+        preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
         contextIsolation: true,
       },
@@ -352,9 +350,7 @@ const createWindow = async () => {
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
       autoHideMenuBar: true,
       webPreferences: {
-        preload: app.isPackaged
-          ? path.join(__dirname, 'preload.js')
-          : path.join(__dirname, '../../.erb/dll/preload.js'),
+        preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
         contextIsolation: true,
       },
