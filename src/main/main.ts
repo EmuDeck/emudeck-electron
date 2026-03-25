@@ -900,9 +900,9 @@ ipcMain.on('pull', async (event, branch) => {
   const hasGitDir = fs.existsSync(gitDir);
 
   let preCommand: any;
-  preCommand = `cd ${appDataPath}/backend && git fetch origin && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
+  preCommand = `cd ${appDataPath}/backend && git fetch origin && git checkout ${branchGIT} && git reset --hard origin/${branchGIT} && git clean -fd`;
   if (os.platform().includes('win32')) {
-    preCommand = `cd ${appDataPath}\\backend && git fetch origin && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull`;
+    preCommand = `cd ${appDataPath}\\backend && git fetch origin && git checkout ${branchGIT} && git reset --hard origin/${branchGIT} && git clean -fd`;
   }
 
   // Legacy installs from emudeck-we
@@ -984,8 +984,9 @@ ipcMain.on('pull', async (event, branch) => {
     logCommand(bashCommand, error, stdout, stderr);
 
     // Si el pull falla, seguimos con la versión local existente
-    if (error || stderr.includes('fatal:')) {
+    if (error) {
       console.warn('Git pull failed, continuing with existing local version');
+      console.error('Error:', error.message);
       logCommand(
         'PULL FAILED: Using existing local version',
         error,
