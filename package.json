@@ -150,7 +150,7 @@
     "css-loader": "^7.1.4",
     "css-minimizer-webpack-plugin": "^3.4.1",
     "detect-port": "^2.1.0",
-    "electron": "^22.3.27",
+    "electron": "^41.0.4",
     "electron-builder": "^26.8.1",
     "electron-devtools-installer": "^3.2.0",
     "electron-notarize": "^1.2.2",
