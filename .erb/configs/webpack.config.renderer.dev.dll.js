@@ -2,19 +2,19 @@
  * Builds the DLL for development electron renderer process
  */
 
-import webpack from 'webpack';
-import path from 'path';
-import { merge } from 'webpack-merge';
-import baseConfig from './webpack.config.base';
-import webpackPaths from './webpack.paths';
-import { dependencies } from '../../package.json';
-import checkNodeEnv from '../scripts/check-node-env';
+const webpack = require('webpack');
+const path = require('path');
+const { merge } = require('webpack-merge');
+const baseConfig = require('./webpack.config.base');
+const webpackPaths = require('./webpack.paths');
+const { dependencies } = require('../../package.json');
+const checkNodeEnv = require('../scripts/check-node-env');
 
 checkNodeEnv('development');
 
 const dist = webpackPaths.dllPath;
 
-const configuration: webpack.Configuration = {
+const configuration = {
   context: webpackPaths.rootPath,
 
   devtool: 'eval',
@@ -28,7 +28,7 @@ const configuration: webpack.Configuration = {
   /**
    * Use `module` from `webpack.config.renderer.dev.js`
    */
-  module: require('./webpack.config.renderer.dev').default.module,
+  module: require('./webpack.config.renderer.dev').module,
 
   entry: {
     renderer: Object.keys(dependencies || {}),
@@ -49,15 +49,6 @@ const configuration: webpack.Configuration = {
       name: '[name]',
     }),
 
-    /**
-     * Create global constants which can be configured at compile time.
-     *
-     * Useful for allowing different behaviour between development builds and
-     * release builds
-     *
-     * NODE_ENV should be production so that modules do not perform certain
-     * development checks
-     */
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
     }),
@@ -74,4 +65,4 @@ const configuration: webpack.Configuration = {
   ],
 };
 
-export default merge(baseConfig, configuration);
+module.exports = merge(baseConfig, configuration);

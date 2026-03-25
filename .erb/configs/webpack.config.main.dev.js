@@ -2,13 +2,13 @@
  * Webpack config for development electron main process
  */
 
-import path from 'path';
-import webpack from 'webpack';
-import { merge } from 'webpack-merge';
-import baseConfig from './webpack.config.base';
-import webpackPaths from './webpack.paths';
+const path = require('path');
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
+const baseConfig = require('./webpack.config.base');
+const webpackPaths = require('./webpack.paths');
 
-const configuration: webpack.Configuration = {
+const configuration = {
   devtool: 'inline-source-map',
 
   mode: 'development',
@@ -39,4 +39,4 @@ const configuration: webpack.Configuration = {
   },
 };
 
-export default merge(baseConfig, configuration);
+module.exports = merge(baseConfig, configuration);
