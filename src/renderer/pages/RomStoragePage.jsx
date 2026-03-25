@@ -1,17 +1,17 @@
-import { useTranslation } from 'react-i18next';
-import React, { useEffect, useState, useContext, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { GlobalContext } from 'context/globalContext';
-import { invokeIpc } from 'common';
+import { useTranslation } from "react-i18next";
+import React, { useEffect, useState, useContext, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "context/globalContext";
+import { invokeIpc } from "common";
 //
 // Components
 //
 
-import EmuModal from 'components/molecules/EmuModal/EmuModal';
-import Wrapper from 'components/molecules/Wrapper/Wrapper';
-import Header from 'components/organisms/Header/Header';
-import Footer from 'components/organisms/Footer/Footer';
-import RomStorage from 'components/organisms/Wrappers/RomStorage';
+import EmuModal from "components/molecules/EmuModal/EmuModal";
+import Wrapper from "components/molecules/Wrapper/Wrapper";
+import Header from "components/organisms/Header/Header";
+import Footer from "components/organisms/Footer/Footer";
+import RomStorage from "components/organisms/Wrappers/RomStorage";
 
 //
 // Hooks
@@ -45,7 +45,7 @@ function RomStoragePage() {
   const [statePage, setStatePage] = useState({
     disabledNext: storage === null,
     disabledBack: false,
-    data: '',
+    data: "",
     sdCardValid: null,
     sdCardName: undefined,
     status: undefined,
@@ -54,15 +54,7 @@ function RomStoragePage() {
     hddrives: [],
   });
 
-  const {
-    disabledNext,
-    disabledBack,
-    sdCardValid,
-    sdCardName,
-    status,
-    modal,
-    hddrives,
-  } = statePage;
+  const { disabledNext, disabledBack, sdCardValid, sdCardName, status, modal, hddrives } = statePage;
   const { system, storagePath } = state;
 
   //
@@ -71,22 +63,21 @@ function RomStoragePage() {
   // We set the selected storage
   const storageSet = (storageName) => {
     // We prevent the function to continue if the custom location testing is still in progress
-    if (status === 'testing') {
+    if (status === "testing") {
       return;
     }
 
-    if (storageName === 'Custom') {
-      ipcChannel.sendMessage('emudeck', ['custom_location|||custom_location']);
+    if (storageName === "Custom") {
+      ipcChannel.sendMessage("emudeck", ["custom_location|||custom_location"]);
 
-      ipcChannel.once('customLocation', (message) => {
-        const stdout = message.stdout.replace('\n', '');
-
-        const storagePath = stdout;
+      ipcChannel.once("custom_location", (message) => {
+        const stdout = JSON.parse(message.stdout.replace("\n", ""));
+        const storagePath = stdout.result;
 
         setStatePage({
           ...statePage,
           disabledNext: true,
-          status: 'testing',
+          status: "testing",
         });
         setState({
           ...state,
@@ -95,18 +86,14 @@ function RomStoragePage() {
         });
         // is it valid?
 
-        ipcChannel.sendMessage('emudeck', [
-          `test_location_valid|||test_location_valid custom ${stdout}`,
-        ]);
+        ipcChannel.sendMessage("emudeck", [`test_location_valid|||test_location_valid custom ${storagePath}`]);
 
-        ipcChannel.once('test_location_valid', (messageLocation) => {
+        ipcChannel.once("test_location_valid", (messageLocation) => {
           if (messageLocation) {
-            const stdoutLocation = messageLocation.stdout.replace('\n', '');
-
+            let stdoutLocation = JSON.parse(messageLocation.stdout.replace("\n", ""));
+            stdoutLocation = stdoutLocation.result;
             let statusLocation;
-            stdoutLocation.includes('Valid')
-              ? (statusLocation = true)
-              : (statusLocation = false);
+            stdoutLocation.includes("Valid") ? (statusLocation = true) : (statusLocation = false);
 
             if (statusLocation === true) {
               setStatePage({
@@ -118,8 +105,8 @@ function RomStoragePage() {
               const modalData = {
                 active: true,
                 header: <span className="h4">Ooops 😞</span>,
-                body: <p>{t('RomStoragePage.modalErrorDetecting')}</p>,
-                css: 'emumodal--xs',
+                body: <p>{t("RomStoragePage.modalErrorDetecting")}</p>,
+                css: "emumodal--xs",
               };
               setStatePage({ ...statePage, modal: modalData });
             }
@@ -127,8 +114,8 @@ function RomStoragePage() {
             const modalData = {
               active: true,
               header: <span className="h4">Ooops 😞</span>,
-              body: <p>{t('RomStoragePage.modalErrorWritable')}</p>,
-              css: 'emumodal--xs',
+              body: <p>{t("RomStoragePage.modalErrorWritable")}</p>,
+              css: "emumodal--xs",
             };
             setStatePage({
               ...statePage,
@@ -144,7 +131,7 @@ function RomStoragePage() {
           }
         });
       });
-    } else if (storageName === 'SD-Card') {
+    } else if (storageName === "SD-Card") {
       const sdCardPath = sdCardName;
       setState({
         ...state,
@@ -155,11 +142,11 @@ function RomStoragePage() {
         ...statePage,
         disabledNext: false,
       });
-    } else if (storageName === 'Internal Storage') {
+    } else if (storageName === "Internal Storage") {
       setState({
         ...state,
         storage: storageName,
-        storagePath: '$HOME',
+        storagePath: "$HOME",
       });
       setStatePage({
         ...statePage,
@@ -179,13 +166,12 @@ function RomStoragePage() {
   };
   // We get the SD Card name. Only Linux
   const getSDName = () => {
-    ipcChannel.sendMessage('emudeck', ['get_sd_path|||get_sd_path']);
-    ipcChannel.once('get_sd_path', (message) => {
-
+    ipcChannel.sendMessage("emudeck", ["get_sd_path|||get_sd_path"]);
+    ipcChannel.once("get_sd_path", (message) => {
       const response = JSON.parse(message.stdout);
 
       let stdout = response.result;
-      if (stdout === '') {
+      if (stdout === "") {
         stdout = null;
       }
       setStatePage({
@@ -200,16 +186,15 @@ function RomStoragePage() {
   };
   // We heck if it's formated in a valid file system. Only Linux
   const checkSDValid = () => {
-    ipcChannel.sendMessage('emudeck', [`SDCardValid|||test_location_valid SD`]);
+    ipcChannel.sendMessage("emudeck", [`SDCardValid|||test_location_valid SD`]);
 
-    ipcChannel.once('SDCardValid', (message) => {
-
-      if (message === 'nogit') {
+    ipcChannel.once("SDCardValid", (message) => {
+      if (message === "nogit") {
         const modalData = {
           active: true,
           header: <span className="h4">Ooops 😞</span>,
-          body: <p>{t('RomStoragePage.modalError')}</p>,
-          css: 'emumodal--xs',
+          body: <p>{t("RomStoragePage.modalError")}</p>,
+          css: "emumodal--xs",
         };
         setStatePage({
           ...statePage,
@@ -217,9 +202,9 @@ function RomStoragePage() {
         });
       }
 
-      const stdout = message.stdout.replace('\n', '');
+      const stdout = message.stdout.replace("\n", "");
       let statusSD;
-      stdout.includes('Valid') ? (statusSD = true) : (statusSD = false);
+      stdout.includes("Valid") ? (statusSD = true) : (statusSD = false);
       if (statusSD === true) {
         getSDName();
       } else {
@@ -237,7 +222,7 @@ function RomStoragePage() {
       console.log({ message });
       const hdrives = message;
 
-      const hdrivesCleanup = hdrives.replace(/(\r\n|\r|\n)/g, '');
+      const hdrivesCleanup = hdrives.replace(/(\r\n|\r|\n)/g, "");
       const jsonDrives = JSON.parse(hdrivesCleanup);
 
       setStatePage({
@@ -256,18 +241,18 @@ function RomStoragePage() {
   // Do we have a valid SD Card?
   useEffect(() => {
     if (navigator.onLine === false) {
-      navigate('/error');
+      navigate("/error");
       return;
     }
 
-    if (system !== 'win32') {
+    if (system !== "win32") {
       checkSDValid();
-    } else if (system === 'win32') {
+    } else if (system === "win32") {
       const modalData = {
         active: true,
         header: <span className="h4">Collecting Drives Names</span>,
         body: <p>This will take a few seconds. Please wait...</p>,
-        css: 'emumodal--xs',
+        css: "emumodal--xs",
       };
       setStatePage({ ...statePage, modal: modalData });
       // We get the drives
@@ -277,7 +262,7 @@ function RomStoragePage() {
 
   // We make sure we get the new SD Card name on State when we populate it if the user selected the SD Card in the previous installation
   useEffect(() => {
-    if (storage === 'SD-Card') {
+    if (storage === "SD-Card") {
       setState({
         ...state,
         storagePath: sdCardName,
@@ -294,15 +279,15 @@ function RomStoragePage() {
   //
   return (
     <Wrapper>
-      <Header title={t('RomStoragePage.title')} />
-      <p className="lead">{t('RomStoragePage.description')}</p>
+      <Header title={t("RomStoragePage.title")} />
+      <p className="lead">{t("RomStoragePage.description")}</p>
       <RomStorage
         status={status}
         sdCardValid={sdCardValid}
-        showSDCard={system !== 'win32'}
-        showInternal={system !== 'win32'}
-        showCustom={!!(system !== 'win32' && system !== 'darwin')}
-        hddrives={system === 'win32' ? hddrives : false}
+        showSDCard={system !== "win32"}
+        showInternal={system !== "win32"}
+        showCustom={!!(system !== "win32" && system !== "darwin")}
+        hddrives={system === "win32" ? hddrives : false}
         reloadSDcard={checkSDValid}
         sdCardName={sdCardName}
         customPath={storagePath}
@@ -311,7 +296,7 @@ function RomStoragePage() {
       />
       <Footer
         next="device-selector"
-        nextText={t('general.next')}
+        nextText={t("general.next")}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
         comments="If you need to change your ROM directory later, you can use the exclusive <strong>EmuDeck Migration Tool.</strong>"
