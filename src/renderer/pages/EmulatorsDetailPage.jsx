@@ -93,7 +93,7 @@ function EmulatorsDetailPage() {
     ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
     ipcChannel.once(`${biosCommand}`, (message) => {
       let stdout = message.stdout.replace('\n', '');
-      stdout = json.parse(stdout);
+      stdout = JSON.parse(stdout);
       const result = stdout.result;
 
       let biosStatus;
@@ -455,7 +455,7 @@ function EmulatorsDetailPage() {
       ]);
       ipcChannel.once(`${code}_is_installed`, (message) => {
         let stdout = message.stdout.replace('\n', '');
-        stdout = json.parse(stdout);
+        stdout = JSON.parse(stdout);
         const result = stdout.result;
         if (/true|OK/.test(result)) {
           ipcChannel.sendMessage('emudeck', [`${code}_init|||${code}_init`]);
