@@ -207,64 +207,51 @@ function DeviceSelectorPage() {
               )}
           </>
         )}
+
+        <Card
+          css={device === 'Asus Rog Ally' && 'is-selected'}
+          onClick={() => deviceSet('Asus Rog Ally')}
+        >
+          <img src={imgally} width="100" alt="Background" />
+          <span className="h6">Asus Rog Ally</span>
+        </Card>
+        <Card
+          css={device === 'AOKZOE PRO1' && 'is-selected'}
+          onClick={() => deviceSet('AOKZOE PRO1')}
+        >
+          <img src={imgaokzoepro} width="100" alt="Background" />
+          <span className="h6">AOKZOE PRO1</span>
+        </Card>
+        <Card
+          css={device === 'AYA Neo Geek' && 'is-selected'}
+          onClick={() => deviceSet('AYA Neo Geek')}
+        >
+          <img src={imgayaneogeek} width="100" alt="Background" />
+          <span className="h6">AYA Neo Geek</span>
+        </Card>
+        <Card
+          css={device === 'AYA Neo 2' && 'is-selected'}
+          onClick={() => deviceSet('AYA Neo 2')}
+        >
+          <img src={imgayaneo2} width="100" alt="Background" />
+          <span className="h6">AYA Neo 2</span>
+        </Card>
+        <Card
+          css={device === 'AYA Neo Kun' && 'is-selected'}
+          onClick={() => deviceSet('AYA Neo Kun')}
+        >
+          <img src={imgayaneokun} width="100" alt="Background" />
+          <span className="h6">AYA Neo Kun</span>
+        </Card>
+        <Card
+          css={device === 'Lenovo Legion Go' && 'is-selected'}
+          onClick={() => deviceSet('Lenovo Legion Go')}
+        >
+          <img src={imglegiongo} width="100" alt="Background" />
+          <span className="h6">Lenovo Legion Go</span>
+        </Card>
         {system === 'win32' && (
           <>
-            <Card
-              css={device === 'Steam Deck' && 'is-selected'}
-              onClick={() => deviceSet('Steam Deck')}
-            >
-              <img src={imgDeck} width="100" alt="Background" />
-              <span className="h6">Steam Deck</span>
-            </Card>
-            <Card
-              css={device === 'Anbernic Win600' && 'is-selected'}
-              onClick={() => deviceSet('Anbernic Win600')}
-            >
-              <img src={imgWin600} width="100" alt="Background" />
-              <span className="h6">Anbernic WIN600</span>
-            </Card>
-            <Card
-              css={device === 'Asus Rog Ally' && 'is-selected'}
-              onClick={() => deviceSet('Asus Rog Ally')}
-            >
-              <img src={imgally} width="100" alt="Background" />
-              <span className="h6">Asus Rog Ally</span>
-            </Card>
-            <Card
-              css={device === 'AOKZOE PRO1' && 'is-selected'}
-              onClick={() => deviceSet('AOKZOE PRO1')}
-            >
-              <img src={imgaokzoepro} width="100" alt="Background" />
-              <span className="h6">AOKZOE PRO1</span>
-            </Card>
-            <Card
-              css={device === 'AYA Neo Geek' && 'is-selected'}
-              onClick={() => deviceSet('AYA Neo Geek')}
-            >
-              <img src={imgayaneogeek} width="100" alt="Background" />
-              <span className="h6">AYA Neo Geek</span>
-            </Card>
-            <Card
-              css={device === 'AYA Neo 2' && 'is-selected'}
-              onClick={() => deviceSet('AYA Neo 2')}
-            >
-              <img src={imgayaneo2} width="100" alt="Background" />
-              <span className="h6">AYA Neo 2</span>
-            </Card>
-            <Card
-              css={device === 'AYA Neo Kun' && 'is-selected'}
-              onClick={() => deviceSet('AYA Neo Kun')}
-            >
-              <img src={imgayaneokun} width="100" alt="Background" />
-              <span className="h6">AYA Neo Kun</span>
-            </Card>
-            <Card
-              css={device === 'Lenovo Legion Go' && 'is-selected'}
-              onClick={() => deviceSet('Lenovo Legion Go')}
-            >
-              <img src={imglegiongo} width="100" alt="Background" />
-              <span className="h6">Lenovo Legion Go</span>
-            </Card>
             <Card
               css={device === 'Windows PC' && 'is-selected'}
               onClick={() => deviceSet('Windows PC')}

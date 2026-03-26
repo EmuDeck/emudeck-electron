@@ -7,6 +7,7 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
 import Footer from 'components/organisms/Footer/Footer';
 import Main from 'components/organisms/Main/Main';
+import Video from 'components/atoms/Video/Video';
 import { Img, Iframe } from 'getbasecore/Atoms';
 
 import { iconSuccess, iconDanger } from 'components/utils/images/icons';
@@ -134,13 +135,11 @@ function FrontendSelectorPage() {
                   </button>
                 </li>
 
-                {system !== 'win32' && branch != 'main' && (
+                {1 != 1 && (
                   <li className="">
                     <button
                       type="button"
-                      className={`card ${
-                        deckyromlauncher.status ? 'is-selected' : ''
-                      }`}
+                      className={`card ${deckyromlauncher.status ? 'is-selected' : ''}`}
                       onClick={() => enableRL()}
                     >
                       <svg
@@ -270,13 +269,15 @@ function FrontendSelectorPage() {
 
           <div className="selector-menu__img" style={{ flex: '1' }}>
             {esde.status && (
-              <Iframe src="https://www.youtube-nocookie.com/embed/twNE8i3aI0g?autoplay=1&playlist=twNE8i3aI0g&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+              <div class="embed-responsive__item">
+                <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/twNE8i3aI0g-ESDE.mp4" />
+              </div>
             )}
             {deckyromlauncher.status && (
-              <Iframe src="https://www.youtube-nocookie.com/embed/aVZuoIfIdkU?autoplay=1&playlist=aVZuoIfIdkU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+              <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/aVZuoIfIdkU-RL.mp4" />
             )}
             {steam.status && (
-              <Iframe src="https://www.youtube-nocookie.com/embed/BsqWFHPp5UU?autoplay=1&playlist=BsqWFHPp5UU&loop=1&controls=0&mute=1&rel=0&modestbranding=1" />
+              <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/BsqWFHPp5UU-SRM.mp4" />
             )}
           </div>
         </div>
