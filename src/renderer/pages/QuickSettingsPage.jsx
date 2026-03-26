@@ -49,10 +49,10 @@ function QuickSettingsPage() {
     let functionBezel;
 
     arStatus
-      ? (functionBezel = 'RetroArch_bezelOnAll')
-      : (functionBezel = 'RetroArch_bezelOffAll');
+      ? (functionBezel = 'retroarch_bezel_on_all')
+      : (functionBezel = 'retroarch_bezel_off_all');
 
-    ipcChannel.sendMessage('emudeck-legacy', [`bezels|||${functionBezel}`]);
+    ipcChannel.sendMessage('emudeck', [`bezels|||${functionBezel}`]);
     ipcChannel.once('bezels', () => {
       notificationShow(`🎉 ${t('QuickSettingsPage.notifBezels')}`);
     });
@@ -63,7 +63,7 @@ function QuickSettingsPage() {
       cloudSyncStatus: cloudStatus,
     });
 
-    ipcChannel.sendMessage('emudeck-legacy', [
+    ipcChannel.sendMessage('emudeck', [
       `cloudSync|||cloud_sync_toggle ${cloudStatus}`,
     ]);
     ipcChannel.once('cloudSync', () => {
@@ -81,23 +81,23 @@ function QuickSettingsPage() {
 
     switch (arStatus) {
       case 32:
-        ipcChannel.sendMessage('emudeck-legacy', [
-          'sega32|||RetroArch_mastersystem_ar32 && RetroArch_genesis_ar32  && RetroArch_segacd_ar32 && RetroArch_sega32x_ar32',
+        ipcChannel.sendMessage('emudeck', [
+          `sega32|||--batch '[{"func": "retroarch_mastersystem_ar32"}, {"func": "retroarch_genesis_ar32"}, {"func": "retroarch_segacd_ar32"},  {"func": "retroarch_sega32x_ar32"}]'`,
         ]);
         ipcChannel.once('sega32', () => {
           notificationShow(`🎉 ${t('QuickSettingsPage.nofisSegaAR')}`);
         });
         break;
       default: // 43
-        ipcChannel.sendMessage('emudeck-legacy', [
-          'sega43|||RetroArch_mastersystem_ar43 && RetroArch_genesis_ar43  && RetroArch_segacd_ar43 && RetroArch_sega32x_ar43',
+        ipcChannel.sendMessage('emudeck', [
+          `sega43|||--batch '[{"func": "retroarch_mastersystem_ar43"}, {"func": "retroarch_genesis_ar43"}, {"func": "retroarch_segacd_ar43"},  {"func": "retroarch_sega32x_ar43"}]'`,
         ]);
         ipcChannel.once('sega43', () => {
           notificationShow(`🎉 ${t('QuickSettingsPage.nofisSegaAR')}`);
         });
         if (bezels === true) {
-          ipcChannel.sendMessage('emudeck-legacy', [
-            'sega43Bezels|||RetroArch_mastersystem_bezelOn && RetroArch_genesis_bezelOn && RetroArch_segacd_bezelOn && RetroArch_sega32x_bezelOn',
+          ipcChannel.sendMessage('emudeck', [
+            `sega43Bezels|||--batch '[{"func": "retroarch_mastersystem_bezel_on"}, {"func": "retroarch_genesis_bezel_on"}, {"func": "retroarch_segacd_bezel_on"},  {"func": "retroarch_sega32x_bezel_on"}]'`,
           ]);
         }
         break;
@@ -113,36 +113,36 @@ function QuickSettingsPage() {
     });
     switch (arStatus) {
       case 87:
-        ipcChannel.sendMessage('emudeck-legacy', [
-          'snes87|||RetroArch_snes_ar87 && RetroArch_nes_ar87',
+        ipcChannel.sendMessage('emudeck', [
+          `snes87|||--batch '[{"func": "retroarch_snes_ar87"}, {"func": "retroarch_nes_ar87"}]'`,
         ]);
         ipcChannel.once('snes87', () => {
           notificationShow(`🎉 ${t('QuickSettingsPage.notifSNESRatio')}`);
         });
         if (bezels === true) {
-          ipcChannel.sendMessage('emudeck-legacy', [
-            'snes87Bezels|||RetroArch_snes_bezelOn && RetroArch_snes_ar87 && RetroArch_nes_ar87',
+          ipcChannel.sendMessage('emudeck', [
+            `snes87Bezels|||--batch '[{"func": "retroarch_snes_bezel_on"}, {"func": "retroarch_snes_ar87"}, {"func": "retroarch_nes_ar87"}]'`,
           ]);
         }
         break;
       case 32:
-        ipcChannel.sendMessage('emudeck-legacy', [
-          'snes32|||RetroArch_snes_ar32 && RetroArch_nes_ar32',
+        ipcChannel.sendMessage('emudeck', [
+          `snes32|||--batch '[{"func": "retroarch_snes_ar32"}, {"func": "retroarch_nes_ar32"}]'`,
         ]);
         ipcChannel.once('snes32', () => {
           notificationShow(`🎉 ${t('QuickSettingsPage.notifSNESRatio')}`);
         });
         break;
       default: // 43
-        ipcChannel.sendMessage('emudeck-legacy', [
-          'snes43|||RetroArch_snes_ar43 && RetroArch_nes_ar43',
+        ipcChannel.sendMessage('emudeck', [
+          `snes43|||--batch '[{"func": "retroarch_snes_ar43"}, {"func": "retroarch_nes_ar43"}]'`,
         ]);
         ipcChannel.once('snes43', () => {
           notificationShow(`🎉 ${t('QuickSettingsPage.notifSNESRatio')}`);
         });
         if (bezels === true) {
-          ipcChannel.sendMessage('emudeck-legacy', [
-            'snes43Bezels|||RetroArch_snes_bezelOn',
+          ipcChannel.sendMessage('emudeck', [
+            'snes43Bezels|||retroarch_snes_bezel_on',
           ]);
         }
         break;
@@ -158,24 +158,25 @@ function QuickSettingsPage() {
     });
     switch (arStatus) {
       case 169:
-        ipcChannel.sendMessage('emudeck-legacy', [
-          '3d169|||RetroArch_Beetle_PSX_HW_wideScreenOn && DuckStation_wideScreenOn && RetroArch_Flycast_wideScreenOn && Xemu_wideScreenOn && RetroArch_dreamcast_bezelOff && RetroArch_psx_bezelOff',
+        ipcChannel.sendMessage('emudeck', [
+          `3d169|||--batch '[{"func": "retroarch_Beetle_PSX_HW_wideScreen_on"}, {"func": "duckstation_wideScreen_on"}, {"func": "retroarch_Flycast_wideScreen_on"}, {"func": "xemu_wideScreen_on"}, {"func": "retroarch_dreamcast_bezel_off"}, {"func": "retroarch_psx_bezel_off"}]'`,
         ]);
         ipcChannel.once('3d169', () => {
           notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
         });
         break;
       default: // 43
-        ipcChannel.sendMessage('emudeck-legacy', [
-          '3d43|||RetroArch_Flycast_wideScreenOff && RetroArch_Beetle_PSX_HW_wideScreenOff && DuckStation_wideScreenOff && Xemu_wideScreenOff',
+        ipcChannel.sendMessage('emudeck', [
+          `3d43|||--batch '[{"func": "retroarch_Flycast_wideScreen_off"}, {"func": "retroarch_Beetle_PSX_HW_wideScreen_off"}, {"func": "duckStation_wideScreen_off"}, {"func": "xemu_wideScreen_off"}]'`,
         ]);
         ipcChannel.once('3d43', () => {
           notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
         });
         if (bezels === true) {
-          ipcChannel.sendMessage('emudeck-legacy', [
-            '3d43Bezels|||RetroArch_dreamcast_bezelOn && RetroArch_psx_bezelOn',
+          ipcChannel.sendMessage('emudeck', [
+            `3d43Bezels|||--batch '[{"func": "retroarch_dreamcast_bezel_on"}, {"func": "retroarch_psx_bezel_on"}]'`,
           ]);
+
           ipcChannel.once('3d43Bezels', () => {
             notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
           });
@@ -192,16 +193,12 @@ function QuickSettingsPage() {
       },
     });
     if (arStatus === '169') {
-      ipcChannel.sendMessage('emudeck-legacy', [
-        'dolphin|||Dolphin_wideScreenOn',
-      ]);
+      ipcChannel.sendMessage('emudeck', ['dolphin|||dolphin_widescreen_on']);
       ipcChannel.once('dolphin', () => {
         notificationShow(`🎉 ${t('QuickSettingsPage.nofifDolphinAR')}`);
       });
     } else {
-      ipcChannel.sendMessage('emudeck-legacy', [
-        'dolphin|||Dolphin_wideScreenOff',
-      ]);
+      ipcChannel.sendMessage('emudeck', ['dolphin|||dolphin_widescreen_off']);
       ipcChannel.once('dolphin', () => {
         notificationShow(`🎉 ${t('QuickSettingsPage.nofifDolphinAR')}`);
       });
@@ -219,10 +216,10 @@ function QuickSettingsPage() {
     let functionCRT;
 
     arStatus
-      ? (functionCRT = 'RetroArch_CRTshaderOnAll')
-      : (functionCRT = 'RetroArch_CRTshaderOffAll');
+      ? (functionCRT = 'retroarch_crt_shader_on_all')
+      : (functionCRT = 'retroarch_crt_shader_off_all');
 
-    ipcChannel.sendMessage('emudeck-legacy', [`CRT|||${functionCRT}`]);
+    ipcChannel.sendMessage('emudeck', [`CRT|||${functionCRT}`]);
     ipcChannel.once('CRT', () => {
       notificationShow(`🎉 ${t('QuickSettingsPage.nofifCRTShader')}`);
     });
@@ -239,10 +236,10 @@ function QuickSettingsPage() {
     let functionCRT3D;
 
     arStatus
-      ? (functionCRT3D = 'RetroArch_3DCRTshaderOnAll')
-      : (functionCRT3D = 'RetroArch_3DCRTshaderOffAll');
+      ? (functionCRT3D = 'retroarch_3D_crt_shader_on_all')
+      : (functionCRT3D = 'retroarch_3D_crt_shader_off_all');
 
-    ipcChannel.sendMessage('emudeck-legacy', [`CRT3D|||${functionCRT3D}`]);
+    ipcChannel.sendMessage('emudeck', [`CRT3D|||${functionCRT3D}`]);
     ipcChannel.once('CRT3D', () => {
       notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DCRTShader')}`);
     });
@@ -258,10 +255,10 @@ function QuickSettingsPage() {
     let functionLCD;
 
     arStatus
-      ? (functionLCD = 'RetroArch_MATshadersOnAll')
-      : (functionLCD = 'RetroArch_MATshadersOffAll');
+      ? (functionLCD = 'retroarch_matrix_shaders_on_all')
+      : (functionLCD = 'retroarch_matrix_shaders_off_all');
 
-    ipcChannel.sendMessage('emudeck-legacy', [`LCD|||${functionLCD}`]);
+    ipcChannel.sendMessage('emudeck', [`LCD|||${functionLCD}`]);
     ipcChannel.once('LCD', () => {
       notificationShow(`🎉 ${t('QuickSettingsPage.nofifLCDShader')}`);
     });
@@ -275,12 +272,10 @@ function QuickSettingsPage() {
 
     let functionAutoSave;
     status
-      ? (functionAutoSave = 'RetroArch_autoSaveOn')
-      : (functionAutoSave = 'RetroArch_autoSaveOff');
+      ? (functionAutoSave = 'retroarch_auto_save_on')
+      : (functionAutoSave = 'retroarch_auto_save_off');
 
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `autoSave|||${functionAutoSave}`,
-    ]);
+    ipcChannel.sendMessage('emudeck', [`autoSave|||${functionAutoSave}`]);
     ipcChannel.once('autoSave', () => {
       notificationShow(`🎉 ${t('QuickSettingsPage.nofifAutosave')}`);
     });
@@ -294,10 +289,10 @@ function QuickSettingsPage() {
 
     let functionAutoSave;
     value === 'abxy'
-      ? (functionAutoSave = 'controllerLayout_ABXY')
-      : (functionAutoSave = 'controllerLayout_BAYX');
+      ? (functionAutoSave = 'controller_layout_ABXY')
+      : (functionAutoSave = 'controller_layout_BAYX');
 
-    ipcChannel.sendMessage('emudeck-legacy', [
+    ipcChannel.sendMessage('emudeck', [
       `controllerLayout|||${functionAutoSave}`,
     ]);
     ipcChannel.once('controllerLayout', () => {
@@ -321,9 +316,7 @@ function QuickSettingsPage() {
       ? (functionBootMode = 'game_mode_enable')
       : (functionBootMode = 'game_mode_disable');
 
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `bootMode|||${functionBootMode}`,
-    ]);
+    ipcChannel.sendMessage('emudeck', [`bootMode|||${functionBootMode}`]);
     ipcChannel.once('bootMode', () => {
       notificationShow(`🎉 ${t('QuickSettingsPage.nofifBoot')}`);
     });

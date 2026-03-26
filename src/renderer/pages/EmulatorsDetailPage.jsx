@@ -89,167 +89,15 @@ function EmulatorsDetailPage() {
   const [DSBios, setDSBios] = useState(null);
   const ipcChannel = window.electron.ipcRenderer;
 
-  const yuzuEAsetToken = (data) => {
-    console.log({ data });
-    let yuzuEAtokenValue;
-    data.target.value === ''
-      ? (yuzuEAtokenValue = null)
-      : (yuzuEAtokenValue = data.target.value);
-
-    setState({
-      ...state,
-      yuzuEAtoken: yuzuEAtokenValue,
-    });
-  };
-
-  const parserSeletor = () => {
-    navigate('/parser-selector');
-  };
-
-  const removeParsers = () => {
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `SRM_deleteCache|||SRM_deleteCache`,
-    ]);
-  };
-
-  const yuzuEAaskToken = () => {
-    const modalData = {
-      active: true,
-      header: <span className="h4">Yuzu Early Access</span>,
-      body: (
-        <>
-          <p>
-            Enter your Yuzu Early Access Token to automatically download and
-            update Yuzu Early Access.
-          </p>
-          <p>You can get this from your Yuzu Patreon.</p>
-          <p>https://yuzu-emu.org/help/early-access/</p>
-          <p>
-            Once you have entered your token in this window it will be saved to
-            ~/emudeck/yuzu-ea-token.txt
-          </p>
-          <div className="form">
-            <FormInputSimple
-              css="form__control--dark"
-              label="Yuzu EA Token"
-              type="yuzuEAtoken"
-              name="yuzuEAtoken"
-              id="yuzuEAtoken"
-              value={yuzuEAtoken}
-              onChange={yuzuEAsetToken}
-            />
-          </div>
-        </>
-      ),
-      footer: (
-        <BtnGroup>
-          <BtnSimple
-            css="btn-simple--2"
-            type="button"
-            aria="Close Modal"
-            onClick={() => closeModal()}
-          >
-            Close
-          </BtnSimple>
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Add Token"
-            onClick={() => yuzuEAaddToken()}
-          >
-            Next
-          </BtnSimple>
-        </BtnGroup>
-      ),
-      css: 'emumodal--xs',
-    };
-    setStatePage({
-      ...statePage,
-      modal: modalData,
-    });
-  };
-
-  const yuzuEAaddToken = () => {
-    const modalData = {
-      active: true,
-      body: <p>Please wait, installing Yuzu Early Access</p>,
-      footer: <ProgressBar css="progress--success" infinite max="100" />,
-    };
-    setStatePage({
-      ...statePage,
-      modal: modalData,
-      css: 'emumodal--xs',
-    });
-
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `YuzuEA_addToken|||YuzuEA_addToken "${yuzuEAtoken}"`,
-    ]);
-    let modalHeader;
-    let modalBody;
-    let modalFooter;
-    ipcChannel.once('YuzuEA_addToken', (message) => {
-      console.log({ message });
-      const { stdout } = message;
-      const response = stdout.replaceAll('\n', '');
-      // We store the token for next installs
-      console.log({ response });
-      switch (true) {
-        case response.includes('invalid'):
-          modalHeader = <span className="h4">Wrong Token</span>;
-          modalBody = 'Please check your Token and try again';
-          break;
-        case response.includes('fail'):
-          modalHeader = <span className="h4">Yuzu Early Access Failed</span>;
-          modalBody =
-            'There was an issue installing Yuzu Early Access, please try again.';
-          break;
-        case /true|OK/.test(response):
-          modalHeader = <span className="h4">Yuzu Early Access Success!</span>;
-          modalBody = (
-            <p>
-              Yuzu Early Access has been installed, you can play games as
-              always. EmuDeck will detect you have Yuzu EA and use that
-              instead.You don't need to do setup anything else.
-            </p>
-          );
-          break;
-        default:
-          modalHeader = <span className="h4">Unknown error!</span>;
-          modalBody = <p>There's been an error, please try again</p>;
-          break;
-      }
-
-      const modalData = {
-        active: true,
-        header: modalHeader,
-        body: modalBody,
-        footer: modalFooter,
-        css: 'emumodal--xs',
-      };
-      setStatePage({
-        ...statePage,
-        modal: modalData,
-      });
-
-      if (response === 'true') {
-        const json = JSON.stringify(state);
-        //localStorage.setItem('settings_emudeck', json);
-        ipcChannel.sendMessage('saveSettings', JSON.stringify(state));
-      }
-    });
-  };
-
   const checkBios = (biosCommand) => {
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `${biosCommand}|||${biosCommand}`,
-    ]);
-    ipcChannel.once(`${biosCommand}`, (status) => {
-      status = status.stdout;
-
-      status = status.replace('\n', '');
+    ipcChannel.sendMessage('emudeck', [`${biosCommand}|||${biosCommand}`]);
+    ipcChannel.once(`${biosCommand}`, (message) => {
+      let stdout = message.stdout.replace('\n', '');
+      stdout = json.parse(stdout);
+      const result = stdout.result;
 
       let biosStatus;
-      /True|OK/.test(status) ? (biosStatus = true) : (biosStatus = false);
+      /True|OK/.test(result) ? (biosStatus = true) : (biosStatus = false);
 
       switch (biosCommand) {
         case 'check_psx_bios':
@@ -606,10 +454,10 @@ function EmulatorsDetailPage() {
         `${code}_is_installed|||${code}_is_installed`,
       ]);
       ipcChannel.once(`${code}_is_installed`, (message) => {
-        console.log({ message });
-        status = message.stdout;
-        status.replace('\n', '');
-        if (/true|OK/.test(status)) {
+        let stdout = message.stdout.replace('\n', '');
+        stdout = json.parse(stdout);
+        const result = stdout.result;
+        if (/true|OK/.test(result)) {
           ipcChannel.sendMessage('emudeck', [`${code}_init|||${code}_init`]);
 
           const modalData = {
@@ -701,7 +549,7 @@ function EmulatorsDetailPage() {
     });
 
     if (alternative) {
-      ipcChannel.sendMessage('emudeck-legacy', [
+      ipcChannel.sendMessage('emudeck', [
         `${code}_uninstall|||${code}_uninstall_alt`,
       ]);
     } else {
@@ -844,141 +692,6 @@ function EmulatorsDetailPage() {
     });
   };
 
-  const onClickMigrate = (code) => {
-    const modalData = {
-      active: true,
-      header: (
-        <span className="h4">Migrate {code} from Flatpak to AppImage</span>
-      ),
-      body: (
-        <>
-          <p>
-            It's migration time! To keep things simple, the version of RPCS3 you
-            are using is unofficially supported by the primary developers of
-            RPCS3. This migration will download the RPCS3 AppImage, which will
-            also include frequent updates and performance improvements.
-          </p>
-          <p>
-            EmuDeck will migrate your saves and your configurations (yes your
-            per-game configurations too), so you can continue playing right
-            away.
-          </p>
-        </>
-      ),
-      footer: (
-        <BtnGroup>
-          <BtnSimple
-            css="btn-simple--2"
-            type="button"
-            aria="Close Modal"
-            onClick={() => closeModal()}
-          >
-            Close
-          </BtnSimple>
-          <BtnSimple
-            css="btn-simple--1"
-            type="button"
-            aria="Add Token"
-            onClick={() => doMigration(code)}
-          >
-            Migrate
-          </BtnSimple>
-        </BtnGroup>
-      ),
-      css: 'emumodal--xs',
-    };
-
-    setStatePage({
-      ...statePage,
-      modal: modalData,
-    });
-  };
-
-  const showCustom = () => {
-    let bashCommand;
-    if (system === 'win32') {
-      bashCommand = `New-Item -ItemType Directory -Force -Path "$toolsPath\\srm\\userData\\parsers\\custom\\ -ErrorAction SilentlyContinue";Invoke-Item "$toolsPath\\srm\\userData\\parsers\\custom\\"`;
-    } else if (system === 'darwin') {
-      bashCommand = `mkdir -p "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"`;
-    } else {
-      bashCommand = `mkdir -p "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; gnome-open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; kde-open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"`;
-    }
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `openCustomFolder|||${bashCommand}`,
-    ]);
-  };
-
-  const installOptional = () => {
-    const modalData = {
-      active: true,
-      body: (
-        <>
-          <p>Please wait, installing additional parsers:</p>
-          <ul className="list">
-            <li>Nintendo GameBoy - SameBoy</li>
-            <li>Nintendo GameBoy Color - SameBoy</li>
-            <li>Sega Saturn - Yabause</li>
-            <li>Nintendo GameBoy Color - mGBA Standalone</li>
-            <li>Nintendo GameBoy - mGBA Standalone</li>
-          </ul>
-        </>
-      ),
-      footer: <ProgressBar css="progress--success" infinite max="100" />,
-    };
-    setStatePage({
-      ...statePage,
-      modal: modalData,
-    });
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `API_optional_parsers|||API_optional_parsers`,
-    ]);
-
-    ipcChannel.once(`API_optional_parsers`, (message) => {
-      const stdout = message.message;
-
-      closeModal();
-    });
-  };
-
-  const doMigration = (code) => {
-    const modalData = {
-      active: true,
-      body: <p>Please wait, migrating {code}</p>,
-      footer: <ProgressBar css="progress--success" infinite max="100" />,
-    };
-    setStatePage({
-      ...statePage,
-      modal: modalData,
-      css: 'emumodal--xs',
-    });
-
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `${code}_migrate|||${code}_migrate`,
-    ]);
-
-    ipcChannel.once(`${code}_migrate`, (message) => {
-      const stdout = message.message;
-
-      const response = stdout.replaceAll('\n', '');
-      let modalData;
-      if (/true|OK/.test(response)) {
-        modalData = {
-          active: true,
-          header: <span className="h4">{code} success!</span>,
-          body: <p>{code} has been migrated, have fun!</p>,
-          css: 'emumodal--xs',
-        };
-      } else {
-        modalData = {
-          active: true,
-          header: <span className="h4">{code} failed</span>,
-          body: <p>There was an issue trying to migrate {code}</p>,
-          css: 'emumodal--xs',
-        };
-      }
-    });
-  };
-
   const selectEmu = (e) => {
     const emu = e.target.value;
     if (emu != '-1') {
@@ -1051,101 +764,12 @@ function EmulatorsDetailPage() {
         newDesiredVersions: repoVersions,
       });
     });
-
-    // save OG Alternatives
-
-    const ogStateAlternativeValues = emulatorAlternative;
-    delete ogStateAlternativeValues.multiemulator;
-    const json = JSON.stringify(ogStateAlternativeValues);
-    localStorage.setItem('ogStateAlternative', json);
   }, []);
 
   useEffect(() => {
     const json = JSON.stringify(stateCurrentConfigs);
     localStorage.setItem('current_versions', json);
   }, [stateCurrentConfigs]);
-
-  useEffect(() => {
-    if (lastSelected !== null) {
-      saveParsers();
-    }
-  }, [lastSelected]);
-
-  useEffect(() => {
-    const ogStateAlternative = JSON.parse(
-      localStorage.getItem('ogStateAlternative')
-    );
-
-    function sameObjects(obj1, obj2) {
-      const keys1 = Object.keys(obj1);
-      const keys2 = Object.keys(obj2);
-
-      if (keys1.length !== keys2.length) {
-        return false;
-      }
-
-      for (const key of keys1) {
-        if (obj1[key] !== obj2[key]) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-    const sameObject = sameObjects(ogStateAlternative, emulatorAlternative);
-
-    if (!sameObject) {
-      if (system === 'win32') {
-        ipcChannel.sendMessage('emudeck-legacy', [
-          `parsersUpdatePrev|||setSetting emuGBA ${state.emulatorAlternative.gba}; setSetting emuMAME ${state.emulatorAlternative.mame}; setSetting emuMULTI ${state.emulatorAlternative.multiemulator}; setSetting emuN64 ${state.emulatorAlternative.n64}; setSetting emuNDS ${state.emulatorAlternative.nds}; setSetting emuPSP ${state.emulatorAlternative.psp}; setSetting emuPSX ${state.emulatorAlternative.psx}; setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm}; setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status};setSetting doInstallmelonDS ${state.installEmus.melonds.status};setSetting doInstallDuck ${state.installEmus.duckstation.status};;setSetting doInstallFlycast ${state.installEmus.dreamcast.status}`,
-        ]);
-      } else {
-        ipcChannel.sendMessage('emudeck-legacy', [
-          `parsersUpdatePrev|||$(. ~/.config/EmuDeck/backend/functions/all.sh && setSetting emuGBA ${state.emulatorAlternative.gba} >/dev/null && setSetting emuMAME ${state.emulatorAlternative.mame} >/dev/null && setSetting emuMULTI ${state.emulatorAlternative.multiemulator} >/dev/null && setSetting emuN64 ${state.emulatorAlternative.n64} >/dev/null && setSetting emuNDS ${state.emulatorAlternative.nds} >/dev/null && setSetting emuPSP ${state.emulatorAlternative.psp} >/dev/null && setSetting emuPSX ${state.emulatorAlternative.psx} >/dev/null && setSetting emuSCUMMVM ${state.emulatorAlternative.scummvm} && setSetting doInstallPPSSPP ${state.installEmus.ppsspp.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame.status} >/dev/null && setSetting doInstallmelonDS ${state.installEmus.melonds.status} >/dev/null && setSetting doInstallDuck ${state.installEmus.duckstation.status} >/dev/null && setSetting doInstallFlycast ${state.installEmus.flycast.status} >/dev/null && setSetting doInstallMAME ${state.installEmus.mame} >/dev/null && setSetting doInstallRMG ${state.installEmus.rmg.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status} >/dev/null && setSetting doInstallScummVM ${state.installEmus.scummvm.status}} >/dev/null) >/dev/null`,
-        ]);
-      }
-
-      ipcChannel.once(`parsersUpdatePrev`, () => {
-        ipcChannel.sendMessage('emudeck-legacy', [`parsersUpdate|||SRM_init`]);
-      });
-
-      ipcChannel.once(`parsersUpdate`, (message) => {
-        const status = message.stdout;
-        status.replace('\n', '');
-        console.log({ message });
-        let modalData;
-        if (/true|OK/.test(status)) {
-          modalData = {
-            active: true,
-            header: <span className="h4">Success!</span>,
-            body: <p>All Parsers have been configured.</p>,
-            footer: (
-              <BtnSimple
-                css="btn-simple--1"
-                type="button"
-                onClick={() => navigate('/welcome')}
-              >
-                Close
-              </BtnSimple>
-            ),
-            css: 'emumodal--xs',
-          };
-        } else if (system !== 'win32') {
-          modalData = {
-            active: true,
-            header: <span className="h4">Failed</span>,
-            body: <p>There was an issue trying to configure your parsers</p>,
-            css: 'emumodal--xs',
-          };
-          console.log({ modalData });
-        }
-        setStatePage({
-          ...statePage,
-          modal: modalData,
-        });
-      });
-    }
-  }, [emulatorAlternative]);
 
   return (
     <Wrapper>
@@ -1170,18 +794,12 @@ function EmulatorsDetailPage() {
           nds={DSBios}
           onChange={selectEmu}
           onClick={resetEmu}
-          onClickCustomParser={showCustom}
-          onClickOptionalParser={installOptional}
           onClickInstall={installEmu}
           onClickReInstall={reInstallEmu}
           onClickHotkeys={showHotkeys}
           onClickControls={showControls}
           onClickUninstall={uninstallEmu}
-          onClickMigrate={onClickMigrate}
-          onClickParsers={parserSeletor}
-          onClickRemoveParsers={removeParsers}
           installEmus={installEmus[emulatorSelected]}
-          yuzuEAaskToken={yuzuEAaskToken}
         />
       )}
       <Footer next={false} />

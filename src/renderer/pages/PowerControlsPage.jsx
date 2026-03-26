@@ -108,11 +108,13 @@ function PowerControlsPage() {
       `powerControls|||Plugins_installPowerControls ${escapedPass} && echo true`,
     ]);
 
-    ipcChannel.once('powerControls', (status) => {
-      const { stdout } = status;
+    ipcChannel.once('powerControls', (message) => {
+      let stdout = message.stdout.replace('\n', '');
+      stdout = JSON.parse(stdout);
+      const result = stdout.result;
 
       let modalData;
-      if (/true|OK/.test(stdout)) {
+      if (/true|OK/.test(result)) {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,

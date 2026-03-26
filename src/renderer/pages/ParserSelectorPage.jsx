@@ -368,8 +368,8 @@ function ParserSelectorPage() {
               emulatorAlternative.gba === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.gba === 'mgba'
-                ? 'multiemulator'
-                : 'mgba',
+                  ? 'multiemulator'
+                  : 'mgba',
           };
         }
         if (emulatorProp === 'flycast') {
@@ -379,8 +379,8 @@ function ParserSelectorPage() {
               emulatorAlternative.dreamcast === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.dreamcast === 'flycast'
-                ? 'multiemulator'
-                : 'flycast',
+                  ? 'multiemulator'
+                  : 'flycast',
           };
         }
         if (emulatorProp === 'duckstation') {
@@ -390,8 +390,8 @@ function ParserSelectorPage() {
               emulatorAlternative.psx === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.psx === 'duckstation'
-                ? 'multiemulator'
-                : 'duckstation',
+                  ? 'multiemulator'
+                  : 'duckstation',
           };
         }
         if (emulatorProp === 'rmg') {
@@ -401,8 +401,8 @@ function ParserSelectorPage() {
               emulatorAlternative.n64 === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.n64 === 'rmg'
-                ? 'multiemulator'
-                : 'rmg',
+                  ? 'multiemulator'
+                  : 'rmg',
           };
         }
         if (emulatorProp === 'scummvm') {
@@ -412,8 +412,8 @@ function ParserSelectorPage() {
               emulatorAlternative.scummvm === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.scummvm === 'scummvm'
-                ? 'multiemulator'
-                : 'scummvm',
+                  ? 'multiemulator'
+                  : 'scummvm',
           };
         }
         if (emulatorProp === 'ppsspp') {
@@ -423,8 +423,8 @@ function ParserSelectorPage() {
               emulatorAlternative.psp === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.psp === 'ppsspp'
-                ? 'multiemulator'
-                : 'ppsspp',
+                  ? 'multiemulator'
+                  : 'ppsspp',
           };
         }
         if (emulatorProp === 'duckstation') {
@@ -434,8 +434,8 @@ function ParserSelectorPage() {
               emulatorAlternative.psx === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.psx === 'duckstation'
-                ? 'multiemulator'
-                : 'duckstation',
+                  ? 'multiemulator'
+                  : 'duckstation',
           };
         }
         if (emulatorProp === 'mame') {
@@ -445,8 +445,8 @@ function ParserSelectorPage() {
               emulatorAlternative.mame === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.mame === 'mame'
-                ? 'multiemulator'
-                : 'mame',
+                  ? 'multiemulator'
+                  : 'mame',
           };
         }
         if (emulatorProp === 'melonds') {
@@ -456,8 +456,8 @@ function ParserSelectorPage() {
               emulatorAlternative.nds === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.nds === 'melonds'
-                ? 'multiemulator'
-                : 'melonds',
+                  ? 'multiemulator'
+                  : 'melonds',
           };
         }
       }
@@ -1062,7 +1062,7 @@ function ParserSelectorPage() {
     // We revert back the emulators status
     const localogStateEmus = JSON.parse(localStorage.getItem('ogStateEmus'));
     const localogStateAlternativeEmus = JSON.parse(
-      localStorage.getItem('ogStateAlternative')
+      localStorage.getItem('ogStateAlternative'),
     );
     if (restoreAlternative) {
       setState({
@@ -1112,11 +1112,11 @@ function ParserSelectorPage() {
     }
 
     ipcChannel.once(`parsersUpdate`, (message) => {
-      const status = message.stdout;
-      status.replace('\n', '');
-      console.log({ message });
+      let stdout = message.stdout.replace('\n', '');
+      stdout = JSON.parse(stdout);
+      const result = stdout.result;
       let modalData;
-      if (/true|OK/.test(status)) {
+      if (/true|OK/.test(result)) {
         modalData = {
           active: true,
           header: <span className="h4">Success!</span>,

@@ -118,11 +118,9 @@ function CopyGamesPage() {
     }
 
     if (storageName === 'Custom') {
-      ipcChannel.sendMessage('emudeck-legacy', [
-        'customLocation|||customLocation',
-      ]);
+      ipcChannel.sendMessage('emudeck', ['custom_location|||custom_location']);
 
-      ipcChannel.once('customLocation', (message) => {
+      ipcChannel.once('custom_location', (message) => {
         const pathUSB = message.stdout.replace('\n', '');
         setStatePage({
           ...statePage,
@@ -133,15 +131,17 @@ function CopyGamesPage() {
         });
         // is it valid?
 
-        ipcChannel.sendMessage('emudeck-legacy', [
-          `testLocation|||sleep 1 && testLocationValidRelaxed "custom" "${pathUSB}"`,
+        ipcChannel.sendMessage('emudeck', [
+          `test_location_valid_only_write|||test_location_valid_only_write "custom" "${pathUSB}"`,
         ]);
 
-        ipcChannel.once('testLocation', (message) => {
-          const stdout = message.stdout.replace('\n', '');
+        ipcChannel.once('test_location_valid_only_write', (message) => {
+          let stdout = message.stdout.replace('\n', '');
+          stdout = JSON.parse(stdout);
+          const result = stdout.result;
 
           let status;
-          stdout.includes('Valid') ? (status = true) : (status = false);
+          result.includes('Valid') ? (status = true) : (status = false);
 
           if (status === true) {
             setStatePage({
@@ -176,12 +176,15 @@ function CopyGamesPage() {
   };
 
   const startCopyGames = () => {
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `CopyGames|||CopyGames '${storageUSBPath}'`,
+    ipcChannel.sendMessage('emudeck', [
+      `copy_games|||copy_games '${storageUSBPath}'`,
     ]);
 
-    ipcChannel.once('CopyGames', (message) => {
-      const stdout = message.stdout.replace('\n', '');
+    ipcChannel.once('copy_games', (message) => {
+      let stdout = message.stdout.replace('\n', '');
+      stdout = JSON.parse(stdout);
+      const result = stdout.result;
+
       setStatePage({
         ...statePage,
         statusCopyGames: true,
@@ -194,15 +197,17 @@ function CopyGamesPage() {
       ...statePage,
       statusCreateStructure: 'waiting',
     });
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `CreateStructureUSB|||CreateStructureUSB '${storageUSBPath}'`,
+    ipcChannel.sendMessage('emudeck', [
+      `create_structure_usb|||create_structure_usb '${storageUSBPath}'`,
     ]);
 
-    ipcChannel.once('CreateStructureUSB', (message) => {
-      const stdout = message.stdout.replace('\n', '');
+    ipcChannel.once('create_structure_usb', (message) => {
+      let stdout = message.stdout.replace('\n', '');
+      stdout = JSON.parse(stdout);
+      const result = stdout.result;
       console.log({ stdout });
       let status;
-      /true|OK/.test(stdout) ? (status = true) : (status = false);
+      /true|OK/.test(result) ? (status = true) : (status = false);
       let modalData;
       if (/true|OK/.test(stdout)) {
         status = true;
@@ -236,7 +241,7 @@ function CopyGamesPage() {
           modal: modalData,
           statusCreateStructure: status,
         });
-      } else if (stdout.includes('false')) {
+      } else if (result.includes('false')) {
         status = false;
         modalData = {
           active: true,

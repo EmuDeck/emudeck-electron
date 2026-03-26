@@ -53,10 +53,10 @@ function PegasusThemeChoicePage() {
       css: 'emumodal--xs',
     };
     setStatePage({ ...statePage, modal: modalData });
-    console.log(`pegasus_applyTheme|||pegasus_applyTheme ${themePegasus[0]}`);
+    console.log(`pegasus_applyTheme|||pegasus_apply_theme ${themePegasus[0]}`);
 
-    ipcChannel.sendMessage('emudeck-legacy', [
-      `pegasus_applyTheme|||pegasus_applyTheme ${themePegasus[0]}`,
+    ipcChannel.sendMessage('emudeck', [
+      `pegasus_applyTheme|||pegasus_apply_theme ${themePegasus[0]}`,
     ]);
     ipcChannel.once('pegasus_applyTheme', () => {
       const modalData = {
