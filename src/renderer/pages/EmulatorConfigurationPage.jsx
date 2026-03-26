@@ -77,7 +77,7 @@ const images = {
 function EmulatorConfigurationPage() {
   const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
-  const { overwriteConfigEmus, second } = state;
+  const { overwriteConfigEmus, second, device } = state;
 
   const [statePage] = useState({
     disabledNext: false,
@@ -110,7 +110,7 @@ function EmulatorConfigurationPage() {
     overwriteConfigEmus.ra.status === false &&
     overwriteConfigEmus.dolphin.status === false
   ) {
-    nextPage = 'controller-layout';
+    nextPage = 'emulator-resolution';
   } else {
     nextPage = 'aspect-ratio-dolphin';
   }
@@ -120,6 +120,7 @@ function EmulatorConfigurationPage() {
       <Header title={t('EmulatorConfigurationPage.title')} />
 
       <p className="lead">{t('EmulatorConfigurationPage.description')}</p>
+      {device}
       <EmulatorConfiguration data={data} onClick={toggleEmus} images={images} />
       <Footer
         next={nextPage}

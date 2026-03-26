@@ -40,7 +40,7 @@ function Shaders3DPage() {
         disabledBack={disabledBack}
       />
       <Footer
-        next="controller-layout"
+        next="emulator-resolution"
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />
