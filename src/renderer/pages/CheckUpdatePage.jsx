@@ -62,6 +62,9 @@ function CheckUpdatePage() {
     achievements,
   } = state;
 
+  const [depsReady, setDepsReady] = useState(null);
+  const [installing, setInstalling] = useState(false);
+
   let updateTimeOut;
   let pullTimeOut;
   let cloneTimeOut;
@@ -305,7 +308,127 @@ function CheckUpdatePage() {
     //# settingsStorage = JSON.parse(localStorage.getItem('settings_emudeck'));
   };
 
+  // Check dependencies on Windows
   useEffect(() => {
+    ipcChannel.sendMessage('check-dependencies');
+    ipcChannel.once('check-dependencies', (deps) => {
+      if (deps.git && deps.python) {
+        setDepsReady(true);
+      } else {
+        const missingList = [];
+        if (!deps.git) missingList.push('Git');
+        if (!deps.python) missingList.push('Python');
+
+        setStatePage({
+          ...statePageRef.current,
+          modal: {
+            active: true,
+            header: <span className="h4">Missing dependencies</span>,
+            body: (
+              <p>
+                EmuDeck needs <strong>{missingList.join(' and ')}</strong> to
+                work on Windows. Click Install to download and install them
+                automatically.
+              </p>
+            ),
+            footer: (
+              <BtnSimple
+                css="btn-simple--1"
+                type="button"
+                aria="Install"
+                disabled={false}
+                style={{ marginBottom: 0 }}
+                onClick={() => {
+                  setInstalling(true);
+                  setStatePage({
+                    ...statePageRef.current,
+                    modal: {
+                      active: true,
+                      header: (
+                        <span className="h4">
+                          Installing {missingList.join(' and ')}...
+                        </span>
+                      ),
+                      body: (
+                        <p>
+                          This may take a few minutes. Please don't close
+                          EmuDeck.
+                        </p>
+                      ),
+                      footer: (
+                        <ProgressBar
+                          css="progress--success"
+                          infinite
+                          max="100"
+                        />
+                      ),
+                      css: 'emumodal--xs emumodal--loading',
+                    },
+                  });
+                  ipcChannel.sendMessage('install-dependencies');
+                  ipcChannel.once('install-dependencies', (result) => {
+                    setInstalling(false);
+                    if (result.success) {
+                      setDepsReady(true);
+                      setStatePage({
+                        ...statePageRef.current,
+                        modal: {
+                          active: true,
+                          header: (
+                            <span className="h4">
+                              Checking for updates...
+                            </span>
+                          ),
+                          body: (
+                            <p>
+                              Please stand by while we check if there is a new
+                              version available...
+                            </p>
+                          ),
+                          footer: (
+                            <ProgressBar
+                              css="progress--success"
+                              infinite
+                              max="100"
+                            />
+                          ),
+                          css: 'emumodal--xs emumodal--loading',
+                        },
+                      });
+                    } else {
+                      setStatePage({
+                        ...statePageRef.current,
+                        modal: {
+                          active: true,
+                          header: <span className="h4">Installation failed</span>,
+                          body: (
+                            <p>
+                              Could not install dependencies automatically.
+                              Please install{' '}
+                              <strong>{missingList.join(' and ')}</strong>{' '}
+                              manually and restart EmuDeck.
+                            </p>
+                          ),
+                          css: 'emumodal--xs',
+                        },
+                      });
+                    }
+                  });
+                }}
+              >
+                Install
+              </BtnSimple>
+            ),
+            css: 'emumodal--sm',
+          },
+        });
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (depsReady !== true) return;
+
     // Update timeout + Force clone check
 
     updateTimeOut = setTimeout(() => {
@@ -457,7 +580,7 @@ function CheckUpdatePage() {
     // });
 
     //  }, 500);
-  }, []);
+  }, [depsReady]);
 
   useEffect(() => {
     //

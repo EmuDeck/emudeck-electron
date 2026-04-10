@@ -721,6 +721,76 @@ ipcMain.on('get_settings', async (event: any) => {
 });
 
 //
+// Check Windows dependencies (git, python)
+//
+ipcMain.on('check-dependencies', async (event) => {
+  const backChannel = 'check-dependencies';
+
+  if (!os.platform().includes('win32')) {
+    event.reply(backChannel, { git: true, python: true });
+    return;
+  }
+
+  const checkCommand = (cmd: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      exec(`where ${cmd}`, shellType, (error) => {
+        resolve(!error);
+      });
+    });
+  };
+
+  const [git, python] = await Promise.all([
+    checkCommand('git'),
+    checkCommand('python'),
+  ]);
+
+  event.reply(backChannel, { git, python });
+});
+
+ipcMain.on('install-dependencies', async (event) => {
+  const backChannel = 'install-dependencies';
+
+  if (!os.platform().includes('win32')) {
+    event.reply(backChannel, { success: true });
+    return;
+  }
+
+  const missing: string[] = [];
+
+  const checkCommand = (cmd: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      exec(`where ${cmd}`, shellType, (error) => {
+        resolve(!error);
+      });
+    });
+  };
+
+  const hasGit = await checkCommand('git');
+  const hasPython = await checkCommand('python');
+
+  if (!hasGit) missing.push('Git.Git');
+  if (!hasPython) missing.push('Python.Python.3.12');
+
+  if (missing.length === 0) {
+    event.reply(backChannel, { success: true });
+    return;
+  }
+
+  const wingetInstalls = missing
+    .map((pkg) => `winget install --id ${pkg} -e --accept-source-agreements --accept-package-agreements`)
+    .join(' && ');
+
+  exec(wingetInstalls, shellType, (error, stdout, stderr) => {
+    logCommand(wingetInstalls, error, stdout, stderr);
+    if (error) {
+      event.reply(backChannel, { success: false, error: stderr || error.message });
+    } else {
+      event.reply(backChannel, { success: true, installed: missing });
+    }
+  });
+});
+
+//
 // Installing  Bash / PowerShell backend
 //
 ipcMain.on('check-git', async (event) => {
