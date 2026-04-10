@@ -28,7 +28,6 @@ const os = require('os');
 const fs = require('fs');
 const lsbRelease = require('lsb-release');
 let appDataPath = app.getPath('userData');
-console.log({ appDataPath });
 if (os.platform().includes('darwin')) {
   appDataPath = `${os.homedir()}/.config/EmuDeck`;
 }
@@ -777,13 +776,19 @@ ipcMain.on('install-dependencies', async (event) => {
   }
 
   const wingetInstalls = missing
-    .map((pkg) => `winget install --id ${pkg} -e --accept-source-agreements --accept-package-agreements`)
+    .map(
+      (pkg) =>
+        `winget install --id ${pkg} -e --accept-source-agreements --accept-package-agreements`,
+    )
     .join(' && ');
 
   exec(wingetInstalls, shellType, (error, stdout, stderr) => {
     logCommand(wingetInstalls, error, stdout, stderr);
     if (error) {
-      event.reply(backChannel, { success: false, error: stderr || error.message });
+      event.reply(backChannel, {
+        success: false,
+        error: stderr || error.message,
+      });
     } else {
       event.reply(backChannel, { success: true, installed: missing });
     }
