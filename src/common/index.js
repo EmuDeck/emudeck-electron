@@ -5,6 +5,10 @@ export const invokeIpc = (args) => {
 
     ipcChannel.once("emudeck", ({ stdout = "", stderr = "" }) => {
       const out = stdout.trim();
+      stderr = stderr
+        .split("\n")
+        .filter((line) => !line.startsWith("[notice]"))
+        .join("\n");
 
       // Parse as JSON
       try {
