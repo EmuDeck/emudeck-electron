@@ -121,7 +121,10 @@ function CopyGamesPage() {
       ipcChannel.sendMessage('emudeck', ['custom_location|||custom_location']);
 
       ipcChannel.once('custom_location', (message) => {
-        const pathUSB = message.stdout.replace('\n', '');
+        let stdout = message.stdout.replace('\n', '');
+        stdout = JSON.parse(stdout);
+        const pathUSB = stdout.result;
+
         setStatePage({
           ...statePage,
           disabledNext: true,
@@ -202,14 +205,14 @@ function CopyGamesPage() {
     ]);
 
     ipcChannel.once('create_structure_usb', (message) => {
+      console.log({ message });
       let stdout = message.stdout.replace('\n', '');
       stdout = JSON.parse(stdout);
       const result = stdout.result;
-      console.log({ stdout });
       let status;
       /true|OK/.test(result) ? (status = true) : (status = false);
       let modalData;
-      if (/true|OK/.test(stdout)) {
+      if (/true|OK/.test(result)) {
         status = true;
         modalData = {
           active: true,
@@ -241,7 +244,7 @@ function CopyGamesPage() {
           modal: modalData,
           statusCreateStructure: status,
         });
-      } else if (result.includes('false')) {
+      } else if (/false/.test(result)) {
         status = false;
         modalData = {
           active: true,

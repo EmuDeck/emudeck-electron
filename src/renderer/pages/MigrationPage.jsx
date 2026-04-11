@@ -49,7 +49,8 @@ function MigrationPage() {
       ipcChannel.sendMessage('emudeck', ['custom_location|||custom_location']);
 
       ipcChannel.once('custom_location', (message) => {
-        const stdout = JSON.parse(message.stdout.replace('\n', ''));
+        let stdout = message.stdout.replace('\n', '');
+        stdout = JSON.parse(stdout);
         const storagePath = stdout.result;
 
         // is it valid?
@@ -58,13 +59,13 @@ function MigrationPage() {
           `test_location_valid|||test_location_valid custom ${storagePath}`,
         ]);
 
-        ipcChannel.once('test_location_valid', (messageLocation) => {
-          let stdoutLocation = JSON.parse(
-            messageLocation.stdout.replace('\n', ''),
-          );
-          stdoutLocation = stdoutLocation.result;
+        ipcChannel.once('test_location_valid', (message) => {
+          let stdout = message.stdout.replace('\n', '');
+          stdout = JSON.parse(stdout);
+          const stdoutLocation = stdout.result;
           let statusLocation;
-          stdoutLocation.includes('Valid')
+
+          /Valid/.test(stdoutLocation)
             ? (statusLocation = true)
             : (statusLocation = false);
 
@@ -115,22 +116,12 @@ function MigrationPage() {
     ipcChannel.sendMessage('emudeck', [`SDCardValid|||test_location_valid SD`]);
 
     ipcChannel.once('SDCardValid', (message) => {
-      if (message === 'nogit') {
-        const modalData = {
-          active: true,
-          header: <span className="h4">Ooops 😞</span>,
-          body: <p>{t('RomStoragePage.modalError')}</p>,
-          css: 'emumodal--xs',
-        };
-        setStatePage({
-          ...statePage,
-          modal: modalData,
-        });
-      }
+      let stdout = message.stdout.replace('\n', '');
+      stdout = JSON.parse(stdout);
+      const result = stdout.result;
 
-      const stdout = message.stdout.replace('\n', '');
       let statusSD;
-      stdout.includes('Valid') ? (statusSD = true) : (statusSD = false);
+      /Valid/.test(result) ? (statusSD = true) : (statusSD = false);
       if (statusSD === true) {
         getSDName();
       } else {
@@ -161,16 +152,16 @@ function MigrationPage() {
   const getSDName = () => {
     ipcChannel.sendMessage('emudeck', ['get_sd_path|||get_sd_path']);
     ipcChannel.once('get_sd_path', (message) => {
-      const response = JSON.parse(message.stdout);
-
-      let stdout = response.result;
-      if (stdout === '') {
-        stdout = null;
+      let stdout = message.stdout.replace('\n', '');
+      stdout = JSON.parse(stdout);
+      const response = stdout.result;
+      if (response === '') {
+        response = null;
       }
       setStatePage({
         ...statePage,
-        sdCardName: stdout,
-        sdCardValid: stdout != null,
+        sdCardName: response,
+        sdCardValid: response != null,
       });
       setState({
         ...state,
@@ -189,10 +180,11 @@ function MigrationPage() {
     ]);
 
     ipcChannel.once('migration_init', (message) => {
+      console.log({ message });
       let stdout = message.stdout.replace('\n', '');
       stdout = JSON.parse(stdout);
-      const result = stdout.result;
-      if (result.includes('Valid')) {
+      const response = stdout.result;
+      if (/Valid/.test(response)) {
         setStatePage({
           ...statePage,
           statusMigration: null,

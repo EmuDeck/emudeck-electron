@@ -910,8 +910,6 @@ ipcMain.on('pull', async (event, branch) => {
     bashCommand = `${preCommand} && python3 ${appDataPath}/backend/api.py "app_init"`;
   }
 
-  console.log(bashCommand);
-
   // Si no hay .git, necesitamos hacer clone primero (o usar fallback)
   if (!hasGitDir) {
     console.warn('No .git directory found, need to clone first');
