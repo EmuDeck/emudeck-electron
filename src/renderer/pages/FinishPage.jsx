@@ -8,12 +8,15 @@ import Main from 'components/organisms/Main/Main';
 import { BtnSimple } from 'getbasecore/Atoms';
 import { GlobalContext } from 'context/globalContext';
 import { yoshiMario, yoshi } from 'components/utils/images/gifs';
+import { invokeIpc } from 'common';
 
 function FinishPage() {
   const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
   const { system, second } = state;
   const navigate = useNavigate();
+  const ipcChannel = window.electron.ipcRenderer;
+
   useEffect(() => {
     const json = JSON.stringify(state);
     ipcChannel.sendMessage('saveSettings', json);
@@ -23,7 +26,7 @@ function FinishPage() {
     <Wrapper aside={second === true}>
       <Header
         title={`${t(
-          'FinishPage.title'
+          'FinishPage.title',
         )}<img src=${yoshi} style="width:30px" alt="" />`}
       />
       <Main>
