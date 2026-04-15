@@ -1089,33 +1089,6 @@ ipcMain.on('setToken', async (event, command) => {
   });
 });
 
-ipcMain.on('saveSettings', async (event, command) => {
-  const backChannel = 'saveSettings';
-
-  // json data
-  const jsonData = command;
-
-  // parse json
-  const jsonObj = JSON.parse(jsonData);
-
-  // stringify JSON Object
-  const jsonContent = JSON.stringify(jsonObj);
-
-  const homedir = require('os').homedir();
-
-  let settingsFile = `${appDataPath}/settings.json`;
-  if (os.platform().includes('win32')) {
-    settingsFile = `${appDataPath}/settings.json`;
-  }
-
-  fs.writeFile(settingsFile, jsonContent, 'utf8', function (err: any) {
-    if (err) {
-      event.reply(backChannel, err);
-    }
-    event.reply(backChannel, 'true');
-  });
-});
-
 const STATE_FILE = path.join(appDataPath, 'settings.json');
 
 ipcMain.handle('save-state', async (_event, newState) => {

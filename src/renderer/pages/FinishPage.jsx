@@ -17,11 +17,6 @@ function FinishPage() {
   const navigate = useNavigate();
   const ipcChannel = window.electron.ipcRenderer;
 
-  useEffect(() => {
-    const json = JSON.stringify(state);
-    ipcChannel.sendMessage('saveSettings', json);
-  }, []);
-
   return (
     <Wrapper aside={second === true}>
       <Header

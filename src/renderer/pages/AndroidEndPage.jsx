@@ -110,8 +110,7 @@ function AndroidEndPage() {
 
     //localStorage.setItem('settings_emudeck', json);
 
-    ipcChannel.sendMessage('saveSettings', [JSON.stringify(state)]);
-    ipcChannel.once('saveSettings', () => {
+    ipcChannel.invoke('save-state', state).then((response) => {
       if (system === 'win32') {
         ipcChannel.sendMessage('bash-nolog-legacy', [
           `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/android/setup.ps1`,

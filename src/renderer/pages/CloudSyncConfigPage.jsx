@@ -371,8 +371,6 @@ function CloudSyncPageConfig() {
         cloud_sync_status: true,
       });
 
-      //localStorage.setItem('settings_emudeck', json);
-      ipcChannel.sendMessage('saveSettings', JSON.stringify(state));
     }
   }, [cloudSync]);
 

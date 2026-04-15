@@ -1171,10 +1171,6 @@ function ParserSelectorPage() {
     }
   }, [revertParsers]);
 
-  // const json = JSON.stringify(state);
-  // //localStorage.setItem('settings_emudeck', json);
-  ipcChannel.sendMessage('saveSettings', JSON.stringify(state));
-
   return (
     <Wrapper>
       <Header title={t('ParserSelectorPage.title')} />

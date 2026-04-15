@@ -300,10 +300,6 @@ function QuickSettingsPage() {
     });
   };
 
-  useEffect(() => {
-    //localStorage.setItem('settings_emudeck', json);
-    ipcChannel.sendMessage('saveSettings', JSON.stringify(state));
-  }, [state]);
 
   const onClickBoot = (status) => {
     setState({

@@ -169,8 +169,6 @@ function DeviceSelectorPage() {
     if (device !== '') {
       setStatePage({ ...statePage, disabledNext: false });
     }
-    //localStorage.setItem('settings_emudeck', json);
-    ipcChannel.sendMessage('saveSettings', JSON.stringify(state));
   }, [state]);
 
   useEffect(() => {
