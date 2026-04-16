@@ -96,7 +96,7 @@ function CheckUpdatePage() {
   const updateFiles = () => {
     // Get latest settings versions in storage
     const currentVersions = JSON.parse(
-      localStorage.getItem('current_versions')
+      localStorage.getItem('current_versions'),
     );
     if (currentVersions) {
       setStateCurrentConfigs({ ...currentVersions });
@@ -123,6 +123,7 @@ function CheckUpdatePage() {
         delete settingsStorage.overwriteConfigEmus.primehacks;
         delete settingsStorage.overwriteConfigEmus.citra;
         delete settingsStorage.overwriteConfigEmus.lime3ds;
+        delete settingsStorage.installFrontends.deckyromlauncher;
         //delete settingsStorage.installEmus.ares;
         //delete settingsStorage.overwriteConfigEmus.ares;
         delete settingsStorage.android.installEmus.citrammj;
@@ -375,9 +376,7 @@ function CheckUpdatePage() {
                         modal: {
                           active: true,
                           header: (
-                            <span className="h4">
-                              Checking for updates...
-                            </span>
+                            <span className="h4">Checking for updates...</span>
                           ),
                           body: (
                             <p>
@@ -400,7 +399,9 @@ function CheckUpdatePage() {
                         ...statePageRef.current,
                         modal: {
                           active: true,
-                          header: <span className="h4">Installation failed</span>,
+                          header: (
+                            <span className="h4">Installation failed</span>
+                          ),
                           body: (
                             <p>
                               Could not install dependencies automatically.

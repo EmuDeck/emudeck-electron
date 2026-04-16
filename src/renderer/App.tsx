@@ -537,15 +537,9 @@ export default function App() {
         name: 'Pegasus',
         desc: 'Add this launcher to your Steam Library. Recommended for big collections. You need to run EmulationStation parsers to show artwork in Pegasus Themes',
       },
-      deckyromlauncher: {
-        id: 'deckyromlauncher',
-        status: true,
-        name: 'Retro Library',
-        desc: 'A separate Retro Library that does not interfiere with your Games Library. All games and artwork are detected automatically.',
-      },
       steam: {
         id: 'steam',
-        status: false,
+        status: true,
         installed: undefined,
         name: 'Steam Library',
         desc: 'Integrate your games inside your Steam Library. Recommended for curated collections',

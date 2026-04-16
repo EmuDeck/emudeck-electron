@@ -27,34 +27,9 @@ function FrontendSelectorPage() {
           ...steam,
           status: false,
         },
-        deckyromlauncher: {
-          ...deckyromlauncher,
-          status: false,
-        },
         esde: {
           ...esde,
           status: true,
-        },
-      },
-    });
-  };
-
-  const enableRL = () => {
-    setState({
-      ...state,
-      installFrontends: {
-        ...installFrontends,
-        steam: {
-          ...steam,
-          status: false,
-        },
-        deckyromlauncher: {
-          ...deckyromlauncher,
-          status: true,
-        },
-        esde: {
-          ...esde,
-          status: false,
         },
       },
     });
@@ -68,10 +43,6 @@ function FrontendSelectorPage() {
         steam: {
           ...steam,
           status: true,
-        },
-        deckyromlauncher: {
-          ...deckyromlauncher,
-          status: false,
         },
         esde: {
           ...esde,
@@ -90,15 +61,6 @@ function FrontendSelectorPage() {
     }
     return 'emulator-selector';
   };
-
-  //Forced RL on non windows
-  useEffect(() => {
-    if (system != 'win32' && branch != 'main') {
-      enableRL();
-    } else {
-      enableESDE();
-    }
-  }, []);
 
   return (
     <Wrapper css="wrapper__full">
@@ -134,32 +96,6 @@ function FrontendSelectorPage() {
                     <p>EmulationStation (ES-DE)</p>
                   </button>
                 </li>
-
-                {1 != 1 && (
-                  <li className="">
-                    <button
-                      type="button"
-                      className={`card ${deckyromlauncher.status ? 'is-selected' : ''}`}
-                      onClick={() => enableRL()}
-                    >
-                      <svg
-                        className="card__selected"
-                        width={20}
-                        height={20}
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M19.9219 9.96094C19.9219 15.4004 15.4102 19.9219 9.96094 19.9219C4.52148 19.9219 0 15.4004 0 9.96094C0 4.51172 4.51172 0 9.95117 0C15.4004 0 19.9219 4.51172 19.9219 9.96094ZM12.998 6.08398L8.82812 12.7832L6.8457 10.2246C6.60156 9.90234 6.38672 9.81445 6.10352 9.81445C5.66406 9.81445 5.32227 10.1758 5.32227 10.6152C5.32227 10.8398 5.41016 11.0547 5.55664 11.25L8.00781 14.2578C8.26172 14.5996 8.53516 14.7363 8.86719 14.7363C9.19922 14.7363 9.48242 14.5801 9.6875 14.2578L14.2773 7.03125C14.3945 6.82617 14.5215 6.60156 14.5215 6.38672C14.5215 5.92773 14.1211 5.63477 13.6914 5.63477C13.4375 5.63477 13.1836 5.79102 12.998 6.08398Z"
-                          fill="#E7D8FF"
-                        />
-                      </svg>
-                      <span className="h4">Medium</span>
-                      <p>Retro Library</p>
-                    </button>
-                  </li>
-                )}
                 <li className="">
                   <button
                     type="button"
@@ -179,7 +115,7 @@ function FrontendSelectorPage() {
                         fill="#E7D8FF"
                       />
                     </svg>
-                    <span className="h4">Highest</span>
+                    <span className="h4">High</span>
                     <p>Steam Rom Manager</p>
                   </button>
                 </li>
@@ -213,34 +149,6 @@ function FrontendSelectorPage() {
                 </ul>
               </div>
             )}
-            {deckyromlauncher.status && (
-              <div className="selector-menu__details">
-                <p className="lead">Description</p>
-                <p>
-                  RetroLibrary and Decky loader will be installed, you can
-                  access Retro Library from your Steam Menu
-                </p>
-                <p className="lead">Features</p>
-                <ul>
-                  <li>
-                    <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
-                    Doesn't clutter your library
-                  </li>
-                  <li>
-                    <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
-                    Automatic artwork parsing
-                  </li>
-                  <li>
-                    <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
-                    Most recently played games will appear in your home
-                  </li>
-                  <li>
-                    <Img src={iconDanger} css="icon icon--xs" alt="OK" />
-                    Small number of Themes to chose from
-                  </li>
-                </ul>
-              </div>
-            )}
             {steam.status && (
               <div className="selector-menu__details">
                 <p className="lead">Description</p>
@@ -269,12 +177,9 @@ function FrontendSelectorPage() {
 
           <div className="selector-menu__img" style={{ flex: '1' }}>
             {esde.status && (
-              <div class="embed-responsive__item">
+              <div className="embed-responsive__item">
                 <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/twNE8i3aI0g-ESDE.mp4" />
               </div>
-            )}
-            {deckyromlauncher.status && (
-              <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/aVZuoIfIdkU-RL.mp4" />
             )}
             {steam.status && (
               <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/BsqWFHPp5UU-SRM.mp4" />
@@ -285,9 +190,7 @@ function FrontendSelectorPage() {
       <Footer
         next={nextPage()}
         disabledNext={
-          !installFrontends.esde.status &&
-          !installFrontends.steam.status &&
-          !installFrontends.deckyromlauncher.status
+          !installFrontends.esde.status && !installFrontends.steam.status
         }
         nextText={
           mode === 'easy' && !installFrontends.esde.status
