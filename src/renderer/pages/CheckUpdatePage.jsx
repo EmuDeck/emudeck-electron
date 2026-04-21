@@ -105,10 +105,10 @@ function CheckUpdatePage() {
     let settingsStorage;
 
     ipcChannel.sendMessage('get_settings');
-		
+
     ipcChannel.once('get_settings', (message) => {
       settingsStorage = message;
-	  console.log({settingsStorage})
+      console.log({ settingsStorage });
       if (settingsStorage) {
         const shadersStored = settingsStorage.shaders;
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
@@ -313,12 +313,13 @@ function CheckUpdatePage() {
   useEffect(() => {
     ipcChannel.sendMessage('check-dependencies');
     ipcChannel.once('check-dependencies', (deps) => {
-      if (deps.git && deps.python) {
+      if (deps.git && deps.python && deps.steam) {
         setDepsReady(true);
       } else {
         const missingList = [];
         if (!deps.git) missingList.push('Git');
         if (!deps.python) missingList.push('Python');
+        if (!deps.steam) missingList.push('Steam');
 
         setStatePage({
           ...statePageRef.current,
@@ -327,8 +328,8 @@ function CheckUpdatePage() {
             header: <span className="h4">Missing dependencies</span>,
             body: (
               <p>
-                EmuDeck needs <strong>{missingList.join(' and ')}</strong> to
-                work on Windows. Click Install to download and install them
+                EmuDeck needs <strong>{missingList.join(', ')}</strong> to work
+                on Windows. Click Install to download and install them
                 automatically.
               </p>
             ),
@@ -392,6 +393,46 @@ function CheckUpdatePage() {
                             />
                           ),
                           css: 'emumodal--xs emumodal--loading',
+                        },
+                      });
+                    } else if (result.wingetMissing) {
+                      setStatePage({
+                        ...statePageRef.current,
+                        modal: {
+                          active: true,
+                          header: (
+                            <span className="h4">Winget not available</span>
+                          ),
+                          body: (
+                            <>
+                              <p>
+                                EmuDeck uses Windows Package Manager (winget) to
+                                install dependencies automatically, but it's not
+                                available on your system. Please download and
+                                install the following manually, then restart
+                                EmuDeck:
+                              </p>
+                              <ul>
+                                {result.missingPackages.map((pkg) => (
+                                  <li key={pkg.name}>
+                                    <button
+                                      type="button"
+                                      className="btn-link"
+                                      onClick={() =>
+                                        ipcChannel.sendMessage(
+                                          'open-url',
+                                          pkg.url,
+                                        )
+                                      }
+                                    >
+                                      Download {pkg.name}
+                                    </button>
+                                  </li>
+                                ))}
+                              </ul>
+                            </>
+                          ),
+                          css: 'emumodal--sm',
                         },
                       });
                     } else {

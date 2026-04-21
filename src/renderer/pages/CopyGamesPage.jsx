@@ -579,16 +579,6 @@ function CopyGamesPage() {
                   <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/twNE8i3aI0g-ESDE.mp4" />
                 </>
               )}
-              {installFrontends.deckyromlauncher.status && (
-                <>
-                  <p className="lead">
-                    We've added EmulationStation DE (ES-DE) to your Steam
-                    Library. Finish the installation and then go back to gaming
-                    mode, look for ES-DE in the Non Steam Games tab
-                  </p>
-                  <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/aVZuoIfIdkU-RL.mp4" />
-                </>
-              )}
             </Main>
           )}
 
@@ -665,17 +655,6 @@ function CopyGamesPage() {
             Next
           </BtnSimple>
         )}
-        {statusCopyGames === 'final' &&
-          installFrontends.deckyromlauncher.status && (
-            <BtnSimple
-              css="btn-simple--2"
-              type="button"
-              aria="Go Next"
-              onClick={() => navigate('/hotkeys')}
-            >
-              Next
-            </BtnSimple>
-          )}
         {statusCopyGames === true && (
           <BtnSimple
             css="btn-simple--1"

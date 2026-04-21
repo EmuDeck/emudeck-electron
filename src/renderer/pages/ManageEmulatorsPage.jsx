@@ -410,9 +410,6 @@ function ManageEmulatorsPage() {
                 if (item.id === 'steam') {
                   return;
                 }
-                if (item.id === 'deckyromlauncher') {
-                  return;
-                }
 
                 return (
                   <Card

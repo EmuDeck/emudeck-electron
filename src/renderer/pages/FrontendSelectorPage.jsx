@@ -16,7 +16,7 @@ function FrontendSelectorPage() {
   const { state, setState } = useContext(GlobalContext);
 
   const { installFrontends, branch, system, mode } = state;
-  const { steam, deckyromlauncher, esde } = installFrontends;
+  const { steam, esde } = installFrontends;
 
   const enableESDE = () => {
     setState({

@@ -9,8 +9,8 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { exec, spawn } from 'child_process';
-import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron';
+import { exec, spawn, execSync } from 'child_process';
+import { app, BrowserWindow, ipcMain, nativeTheme, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 // eslint-disable-next-line
@@ -720,30 +720,130 @@ ipcMain.on('get_settings', async (event: any) => {
 });
 
 //
-// Check Windows dependencies (git, python)
+// Check Windows dependencies (git, python, steam)
 //
+// Detection mixes PATH lookup with filesystem fallback. The Electron process
+// inherits PATH at startup, so after a fresh winget install the updated PATH
+// won't be visible here — but the binaries exist on disk, and we can find them.
+//
+const checkSteamInstalled = (): boolean => {
+  const programFiles = process.env.ProgramFiles;
+  const programFilesX86 = process.env['ProgramFiles(x86)'];
+  const candidates = [
+    programFilesX86 && `${programFilesX86}\\Steam\\steam.exe`,
+    programFiles && `${programFiles}\\Steam\\steam.exe`,
+  ].filter(Boolean) as string[];
+  return candidates.some((p) => fs.existsSync(p));
+};
+
+const checkGitInstalled = async (): Promise<boolean> => {
+  const inPath = await new Promise<boolean>((resolve) => {
+    exec('where git', shellType, (error) => resolve(!error));
+  });
+  if (inPath) return true;
+  const programFiles = process.env.ProgramFiles;
+  const programFilesX86 = process.env['ProgramFiles(x86)'];
+  const localAppData = process.env.LOCALAPPDATA;
+  const candidates = [
+    programFiles && `${programFiles}\\Git\\cmd\\git.exe`,
+    programFilesX86 && `${programFilesX86}\\Git\\cmd\\git.exe`,
+    localAppData && `${localAppData}\\Programs\\Git\\cmd\\git.exe`,
+  ].filter(Boolean) as string[];
+  return candidates.some((p) => fs.existsSync(p));
+};
+
+// Windows ships a Microsoft Store stub at %LOCALAPPDATA%\Microsoft\WindowsApps\python.exe
+// that `where python` finds even when Python isn't installed. Filter it out, and
+// fall back to scanning the standard winget install locations.
+const checkPythonInstalled = async (): Promise<boolean> => {
+  const inPath = await new Promise<boolean>((resolve) => {
+    exec('where python', shellType, (error, stdout) => {
+      if (error || !stdout) return resolve(false);
+      const realPaths = stdout
+        .split(/\r?\n/)
+        .map((l) => l.trim())
+        .filter((l) => l && !l.toLowerCase().includes('\\windowsapps\\'));
+      resolve(realPaths.length > 0);
+    });
+  });
+  if (inPath) return true;
+  const programFiles = process.env.ProgramFiles;
+  const localAppData = process.env.LOCALAPPDATA;
+  const bases = [
+    localAppData && `${localAppData}\\Programs\\Python`,
+    programFiles,
+  ].filter(Boolean) as string[];
+  for (const base of bases) {
+    try {
+      const entries = fs.readdirSync(base);
+      for (const entry of entries) {
+        if (
+          entry.startsWith('Python') &&
+          fs.existsSync(`${base}\\${entry}\\python.exe`)
+        ) {
+          return true;
+        }
+      }
+    } catch {
+      // base directory doesn't exist
+    }
+  }
+  return false;
+};
+
 ipcMain.on('check-dependencies', async (event) => {
   const backChannel = 'check-dependencies';
 
   if (!os.platform().includes('win32')) {
-    event.reply(backChannel, { git: true, python: true });
+    event.reply(backChannel, { git: true, python: true, steam: true });
     return;
   }
 
-  const checkCommand = (cmd: string): Promise<boolean> => {
-    return new Promise((resolve) => {
-      exec(`where ${cmd}`, shellType, (error) => {
-        resolve(!error);
-      });
-    });
-  };
-
   const [git, python] = await Promise.all([
-    checkCommand('git'),
-    checkCommand('python'),
+    checkGitInstalled(),
+    checkPythonInstalled(),
   ]);
+  const steam = checkSteamInstalled();
 
-  event.reply(backChannel, { git, python });
+  event.reply(backChannel, { git, python, steam });
+});
+
+const WINGET_PKG_INFO: Record<string, { name: string; url: string }> = {
+  'Git.Git': { name: 'Git', url: 'https://git-scm.com/download/win' },
+  'Python.Python.3.12': {
+    name: 'Python',
+    url: 'https://www.python.org/downloads/windows/',
+  },
+  'Valve.Steam': {
+    name: 'Steam',
+    url: 'https://store.steampowered.com/about/',
+  },
+};
+
+const checkWingetAvailable = (): Promise<boolean> => {
+  return new Promise((resolve) => {
+    exec('where winget', shellType, (error) => resolve(!error));
+  });
+};
+
+// Re-read the Windows PATH from the registry. The Electron process inherits
+// PATH at startup, so packages installed by winget during the current session
+// aren't visible here — or in any child process we spawn, including the one
+// `app.relaunch()` creates. Mutating process.env.PATH before relaunch means
+// the relauncher inherits the fresh value.
+const refreshWindowsPath = () => {
+  try {
+    const cmd =
+      'powershell -NoProfile -Command "[Environment]::GetEnvironmentVariable(\'Path\',\'Machine\') + \';\' + [Environment]::GetEnvironmentVariable(\'Path\',\'User\')"';
+    const newPath = execSync(cmd, { encoding: 'utf-8' }).trim();
+    if (newPath) process.env.PATH = newPath;
+  } catch {
+    // leave the stale PATH rather than break the relaunch
+  }
+};
+
+ipcMain.on('open-url', (_event, url: string) => {
+  shell.openExternal(url);
 });
 
 ipcMain.on('install-dependencies', async (event) => {
@@ -754,45 +854,117 @@ ipcMain.on('install-dependencies', async (event) => {
     return;
   }
 
+  const hasGit = await checkGitInstalled();
+  const hasPython = await checkPythonInstalled();
+  const hasSteam = checkSteamInstalled();
+
   const missing: string[] = [];
-
-  const checkCommand = (cmd: string): Promise<boolean> => {
-    return new Promise((resolve) => {
-      exec(`where ${cmd}`, shellType, (error) => {
-        resolve(!error);
-      });
-    });
-  };
-
-  const hasGit = await checkCommand('git');
-  const hasPython = await checkCommand('python');
-
   if (!hasGit) missing.push('Git.Git');
   if (!hasPython) missing.push('Python.Python.3.12');
+  if (!hasSteam) missing.push('Valve.Steam');
 
   if (missing.length === 0) {
     event.reply(backChannel, { success: true });
     return;
   }
 
-  const wingetInstalls = missing
-    .map(
-      (pkg) =>
-        `winget install --id ${pkg} -e --accept-source-agreements --accept-package-agreements`,
-    )
-    .join(' && ');
+  const wingetAvailable = await checkWingetAvailable();
+  if (!wingetAvailable) {
+    event.reply(backChannel, {
+      success: false,
+      wingetMissing: true,
+      missingPackages: missing.map((id) => WINGET_PKG_INFO[id]),
+    });
+    return;
+  }
 
-  exec(wingetInstalls, shellType, (error, stdout, stderr) => {
-    logCommand(wingetInstalls, error, stdout, stderr);
-    if (error) {
+  // On ARM64 hosts, pin Python to x64 so pip resolves win_amd64 wheels under
+  // Prism emulation. Native win_arm64 wheels are scarce on PyPI (e.g. brotli,
+  // a py7zr transitive dep, ships no ARM wheel and fails to build without
+  // Visual C++). Git and Steam work fine native ARM, so we only override
+  // Python.
+  const hostArch = (
+    process.env.PROCESSOR_ARCHITEW6432 ||
+    process.env.PROCESSOR_ARCHITECTURE ||
+    ''
+  ).toUpperCase();
+  const isArm64Host = hostArch === 'ARM64';
+
+  // Run winget in a visible PowerShell window. Some packages (notably Python)
+  // install silently, so without a visible console the user thinks nothing is
+  // happening. `start /wait` blocks cmd until the window closes.
+  //
+  // Retry each install up to 3 times — winget intermittently fails to locate
+  // packages when its source catalog is stale or the registry request hiccups.
+  const scriptLines = [
+    '$ErrorActionPreference = "Continue"',
+    'Write-Host "Refreshing winget sources..."',
+    'winget source update | Out-Null',
+    'function Install-WithRetry {',
+    '  param([string]$Id, [int]$Retries = 3, [string]$Architecture = "")',
+    '  $extra = @()',
+    '  if ($Architecture) { $extra = @("--architecture", $Architecture) }',
+    '  for ($i = 1; $i -le $Retries; $i++) {',
+    '    Write-Host ""',
+    '    Write-Host "Installing $Id (attempt $i/$Retries)..."',
+    '    winget install --id $Id -e --accept-source-agreements --accept-package-agreements @extra',
+    '    if ($LASTEXITCODE -eq 0) { return }',
+    '    Write-Host "Attempt $i failed (exit $LASTEXITCODE). Retrying in 3s..."',
+    '    Start-Sleep -Seconds 3',
+    '  }',
+    '  Write-Host "Gave up on $Id after $Retries attempts."',
+    '}',
+    ...missing.map((pkg) => {
+      if (pkg === 'Python.Python.3.12' && isArm64Host) {
+        return `Install-WithRetry -Id "${pkg}" -Architecture "x64"`;
+      }
+      return `Install-WithRetry -Id "${pkg}"`;
+    }),
+    'Write-Host ""',
+    'Write-Host "Done. This window will close."',
+    'Start-Sleep -Seconds 3',
+  ];
+  const scriptPath = path.join(appDataPath, 'install-deps.ps1');
+  fs.writeFileSync(scriptPath, scriptLines.join('\r\n'), 'utf-8');
+
+  const cmd = `start /wait "" powershell -ExecutionPolicy Bypass -NoProfile -File "${scriptPath}"`;
+  exec(
+    cmd,
+    { maxBuffer: 1024 * 1024 * 50 },
+    async (error, stdout, stderr) => {
+      logCommand(cmd, error, stdout, stderr);
+
+      // PATH in this process is stale post-install; verify by filesystem.
+      const afterGit = await checkGitInstalled();
+      const afterPython = await checkPythonInstalled();
+      const afterSteam = checkSteamInstalled();
+
+      if (afterGit && afterPython && afterSteam) {
+        event.reply(backChannel, {
+          success: true,
+          installed: missing,
+          relaunch: true,
+        });
+        // Relaunch so the next process picks up the updated PATH before the
+        // backend clone tries to exec git/python.
+        setTimeout(() => {
+          refreshWindowsPath();
+          app.relaunch();
+          app.exit(0);
+        }, 1500);
+        return;
+      }
+
+      const stillMissing: string[] = [];
+      if (!afterGit) stillMissing.push('Git');
+      if (!afterPython) stillMissing.push('Python');
+      if (!afterSteam) stillMissing.push('Steam');
       event.reply(backChannel, {
         success: false,
-        error: stderr || error.message,
+        error: `Failed to install: ${stillMissing.join(', ')}`,
       });
-    } else {
-      event.reply(backChannel, { success: true, installed: missing });
-    }
-  });
+    },
+  );
 });
 
 //
@@ -820,7 +992,7 @@ ipcMain.on('clone', async (event, branch) => {
 
   let bashCommand: any;
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:APPDATA/EmuDeck/logs" -ErrorAction SilentlyContinue; Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && Stop-Transcript && echo true `;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:APPDATA/EmuDeck/logs" -ErrorAction SilentlyContinue; & { git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --progress --no-single-branch --depth=1 ${repo} ./backend } *> "$env:APPDATA/EmuDeck/logs/git.log" }" && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && echo true `;
   } else {
     bashCommand = `rm -rf ${appDataPath}/backend && mkdir -p ${appDataPath}/backend && mkdir -p ~/emudeck/logs && git config --global http.lowSpeedLimit 1000 && git config --global http.lowSpeedTime 60 && git config --global http.postBuffer 524288000 && git clone --no-single-branch --depth=1 ${repo} ${appDataPath}/backend/ && cd ${appDataPath}/backend && git checkout ${branchGIT} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
   }
@@ -899,7 +1071,7 @@ ipcMain.on('pull', async (event, branch) => {
   if (os.platform().includes('win32')) {
     const legacyPath = `${appDataPath}/backend/functions/all.ps1`;
     if (fs.existsSync(legacyPath)) {
-      preCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && rmdir backend /q /s && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:APPDATA/EmuDeck/logs" -ErrorAction SilentlyContinue; Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && echo true `;
+      preCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && rmdir backend /q /s && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:APPDATA/EmuDeck/logs" -ErrorAction SilentlyContinue; & { git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --progress --no-single-branch --depth=1 ${repo} ./backend } *> "$env:APPDATA/EmuDeck/logs/git.log" }" && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && echo true `;
     }
   }
 
@@ -1145,123 +1317,6 @@ ipcMain.on('check-versions', async (event) => {
 //     });
 //   });
 // });
-
-// Dependencies checks
-
-ipcMain.on('validate-git', async (event) => {
-  // mainWindow.webContents.openDevTools();
-
-  const backChannel = 'validate-git';
-  const bashCommand = 'git -v';
-  // eslint-disable-next-line
-  return exec(`${bashCommand}`, (error: any, stdout: any, stderr: any) => {
-    logCommand(bashCommand, error, stdout, stderr);
-
-    let status;
-    if (stdout.includes('git version')) {
-      status = true;
-    } else {
-      status = false;
-    }
-
-    if (status === true) {
-      event.reply(backChannel, {
-        stdout: status,
-        stderr,
-        error,
-      });
-    } else {
-      const bashCommand2 =
-        'start powershell -ExecutionPolicy Bypass -command "& { winget install -e --id Git.Git --accept-package-agreements --accept-source-agreements }';
-      return exec(`${bashCommand2}`, shellType, (error, stdout, stderr) => {
-        logCommand(bashCommand2, error, stdout, stderr);
-
-        event.reply(backChannel, {
-          stdout: false,
-          stderr,
-          error,
-        });
-      });
-    }
-  });
-});
-
-ipcMain.on('validate-7Zip', async (event) => {
-  const backChannel = 'validate-7Zip';
-  const programFilesPath = process.env.ProgramFiles;
-  const homeUser = os.homedir();
-  const path1 = `${programFilesPath}/7-zip`;
-  const path2 = `${programFilesPath} (x86)/7-zip`;
-  const path3 = `${appDataPath}/backend/wintools/7z.exe`;
-  if (fs.existsSync(path1)) {
-    event.reply(backChannel, {
-      stdout: true,
-    });
-    return;
-  }
-  if (fs.existsSync(path2)) {
-    event.reply(backChannel, {
-      stdout: true,
-    });
-    return;
-  }
-  if (fs.existsSync(path3)) {
-    event.reply(backChannel, {
-      stdout: true,
-    });
-    return;
-  }
-
-  const bashCommand =
-    'start powershell -ExecutionPolicy Bypass -command "& { winget install -e --id 7zip.7zip --accept-package-agreements --accept-source-agreements }';
-  // eslint-disable-next-line
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
-
-    if (fs.existsSync(path1)) {
-      event.reply(backChannel, {
-        stdout: true,
-      });
-      return;
-    }
-    if (fs.existsSync(path2)) {
-      event.reply(backChannel, {
-        stdout: true,
-      });
-      return;
-    }
-
-    event.reply(backChannel, {
-      stdout: false,
-      stderr,
-      error,
-    });
-  });
-});
-
-ipcMain.on('validate-Steam', async (event) => {
-  const backChannel = 'validate-Steam';
-  const programFilesPath = process.env.ProgramFiles;
-  const path1 = `${programFilesPath}/Steam`;
-  const path2 = `${programFilesPath} (x86)/Steam`;
-  if (fs.existsSync(path1)) {
-    event.reply(backChannel, {
-      stdout: true,
-    });
-    return;
-  }
-
-  if (fs.existsSync(path2)) {
-    event.reply(backChannel, {
-      stdout: true,
-    });
-    return;
-  }
-
-  event.reply(backChannel, {
-    stdout: false,
-  });
-});
 
 ipcMain.on('reload', async () => {
   mainWindow.reload();

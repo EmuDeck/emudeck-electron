@@ -77,10 +77,6 @@ function WelcomePage() {
         installFrontends: {
           ...state.installFrontends,
           esde: { ...state.installFrontends.esde, status: true },
-          deckyromlauncher: {
-            ...state.installFrontends.deckyromlauncher,
-            status: false,
-          },
         },
         mode: value,
       });
