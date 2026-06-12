@@ -1,17 +1,17 @@
-import { useTranslation } from "react-i18next";
-import React, { useEffect, useState, useContext, useRef } from "react";
-import { GlobalContext } from "context/globalContext";
-import { useNavigate } from "react-router-dom";
-import Wrapper from "components/molecules/Wrapper/Wrapper";
-import Main from "components/organisms/Main/Main";
-import Card from "components/molecules/Card/Card";
-import Header from "components/organisms/Header/Header";
-import ProgressBar from "components/atoms/ProgressBar/ProgressBar";
-import { BtnSimple } from "getbasecore/Atoms";
-import Sonic from "components/organisms/Sonic/Sonic";
-import ProgressBar from "components/atoms/ProgressBar/ProgressBar";
-import End from "components/organisms/Wrappers/End";
-import { invokeIpc } from "common";
+import { useTranslation } from 'react-i18next';
+import React, { useEffect, useState, useContext, useRef } from 'react';
+import { GlobalContext } from 'context/globalContext';
+import { useNavigate } from 'react-router-dom';
+import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import Main from 'components/organisms/Main/Main';
+import Card from 'components/molecules/Card/Card';
+import Header from 'components/organisms/Header/Header';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+import { BtnSimple } from 'getbasecore/Atoms';
+import Sonic from 'components/organisms/Sonic/Sonic';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+import End from 'components/organisms/Wrappers/End';
+import { invokeIpc } from 'common';
 
 import {
   imgra,
@@ -43,7 +43,7 @@ import {
   imgmodel2,
   imgbigpemu,
   imgshadps4,
-} from "components/utils/images/images";
+} from 'components/utils/images/images';
 
 const images = {
   ra: imgra,
@@ -84,7 +84,7 @@ function EndPage() {
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: true,
-    data: "",
+    data: '',
     step: undefined,
     dom: undefined,
   });
@@ -93,30 +93,39 @@ function EndPage() {
   const [configsPending, setConfigsPending] = useState(undefined);
 
   const { disabledNext, data, step, dom } = statePage;
-  const { second, branch, storagePath, gamemode, device, system, installEmus, installFrontends, overwriteConfigEmus } =
-    state;
+  const {
+    second,
+    branch,
+    storagePath,
+    gamemode,
+    device,
+    system,
+    installEmus,
+    installFrontends,
+    overwriteConfigEmus,
+  } = state;
   const installEmusArray = Object.values(installEmus);
 
   const ipcChannel = window.electron.ipcRenderer;
 
   const [msg, setMsg] = useState({
-    message: "",
+    message: '',
     percentage: 0,
   });
 
   const { message, percentage } = msg;
 
   const readMSG = () => {
-    ipcChannel.sendMessage("getMSG", []);
-    ipcChannel.on("getMSG", (messageInput) => {
+    ipcChannel.sendMessage('getMSG', []);
+    ipcChannel.on('getMSG', (messageInput) => {
       //
-      const messageArray = messageInput.stdout.split("#");
+      const messageArray = messageInput.stdout.split('#');
       const messageText = messageArray[1];
       let messagePercent = messageArray[0];
-      messagePercent = messagePercent.replaceAll(" ", "");
-      messagePercent = messagePercent.replaceAll("\n", "");
-      messagePercent = messagePercent.replaceAll("\n\r", "");
-      messagePercent = messagePercent.replaceAll("\r", "");
+      messagePercent = messagePercent.replaceAll(' ', '');
+      messagePercent = messagePercent.replaceAll('\n', '');
+      messagePercent = messagePercent.replaceAll('\n\r', '');
+      messagePercent = messagePercent.replaceAll('\r', '');
       setMsg({ message: messageText, percentage: messagePercent });
     });
   };
@@ -127,23 +136,26 @@ function EndPage() {
       header: <span className="h4">Launching Steam Rom Manager</span>,
       body: (
         <p>
-          We will close Steam if its running and then Steam Rom Manager will open, this could take a few seconds, please
-          wait.
+          We will close Steam if its running and then Steam Rom Manager will
+          open, this could take a few seconds, please wait.
         </p>
       ),
       footer: <ProgressBar css="progress--success" infinite max="100" />,
-      css: "emumodal--xs",
+      css: 'emumodal--xs',
     };
 
-    if (system === "win32") {
+    if (system === 'win32') {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
-        "emudeck",
-        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"'
+        'emudeck',
+        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"',
       );
-    } else if (system !== "darwin") {
+    } else if (system !== 'darwin') {
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage("emudeck", '"$toolsPath/launchers/srm/steamrommanager.sh"');
+      ipcChannel.sendMessage(
+        'emudeck',
+        '"$toolsPath/launchers/srm/steamrommanager.sh"',
+      );
     } else {
       modalData = {
         active: true,
@@ -151,20 +163,23 @@ function EndPage() {
         body: (
           <>
             <p>
-              We will close Steam if its running and then Steam Rom Manager will open, this could take a few seconds,
-              please wait.
+              We will close Steam if its running and then Steam Rom Manager will
+              open, this could take a few seconds, please wait.
             </p>
           </>
         ),
         footer: <ProgressBar css="progress--success" infinite max="100" />,
-        css: "emumodal--sm",
+        css: 'emumodal--sm',
       };
       setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage("emudeck", '"$toolsPath/launchers/srm/steamrommanager.sh"');
+      ipcChannel.sendMessage(
+        'emudeck',
+        '"$toolsPath/launchers/srm/steamrommanager.sh"',
+      );
     }
     let timer;
 
-    if (system === "win32") {
+    if (system === 'win32') {
       timer = 30000;
     } else {
       timer = 10;
@@ -181,21 +196,23 @@ function EndPage() {
   };
 
   const showLog = () => {
-    if (system === "win32") {
-      ipcChannel.sendMessage("bash-nolog-legacy", [
+    if (system === 'win32') {
+      ipcChannel.sendMessage('bash-nolog-legacy', [
         `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:APPDATA/emudeck/logs/emudeckSetup.log -Tail 100 -Wait }"`,
       ]);
-    } else if (system === "darwin") {
-      ipcChannel.sendMessage("bash-nolog-legacy", [
+    } else if (system === 'darwin') {
+      ipcChannel.sendMessage('bash-nolog-legacy', [
         `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/.config/EmuDeck/logs/emudeckSetup.log"'`,
       ]);
     } else {
-      ipcChannel.sendMessage("bash-nolog-legacy", [`konsole -e tail -f "$HOME/.config/EmuDeck/logs/emudeckSetup.log"`]);
+      ipcChannel.sendMessage('bash-nolog-legacy', [
+        `konsole -e tail -f "$HOME/.config/EmuDeck/logs/emudeckSetup.log"`,
+      ]);
     }
   };
 
   let pollingTime = 500;
-  if (system === "win32") {
+  if (system === 'win32') {
     pollingTime = 2000;
   }
 
@@ -203,7 +220,7 @@ function EndPage() {
   useEffect(() => {
     const interval = setInterval(() => {
       readMSG();
-      if (message.includes("100")) {
+      if (message.includes('100')) {
         clearInterval(interval);
       }
     }, pollingTime);
@@ -211,11 +228,11 @@ function EndPage() {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {	
-	invokeIpc(`emudeck_init`).then((e) => {
-		setEmusPending(Object.values(installEmus));
-		setConfigsPending(Object.values(overwriteConfigEmus));
-	});
+  useEffect(() => {
+    invokeIpc(`emudeck_init`).then((e) => {
+      setEmusPending(Object.values(installEmus));
+      setConfigsPending(Object.values(overwriteConfigEmus));
+    });
   }, []);
 
   useEffect(() => {
@@ -257,7 +274,7 @@ function EndPage() {
       const frontsPendingFiltered = frontsPending.filter((e) => e.status);
       console.log({ frontsPendingFiltered });
       const id = frontsPendingFiltered[0].id;
-      if (id) {
+      if (id && id !== 'steam') {
         invokeIpc(`${id}_install`).then((e) => {
           if (overwriteConfigEmus.esde.status) {
             invokeIpc(`esde_init`).then((e) => {});
@@ -271,24 +288,25 @@ function EndPage() {
     }
   }, [frontsPending]);
 
-  let nextPage = "/copy-games";
+  let nextPage = '/copy-games';
 
-  if (branch.includes("early") || branch === "dev") {
-    nextPage = "/cloud-sync";
+  if (branch.includes('early') || branch === 'dev') {
+    nextPage = '/cloud-sync';
   }
 
   return (
     <Wrapper css="wrapper__full" aside={false}>
-      {disabledNext === true && <Header title={t("EndPage.title")} />}
-      {disabledNext === false && step === undefined && system !== "win32" && (
-        <Header title={t("EndPage.titleFinish")} />
+      {disabledNext === true && <Header title={t('EndPage.title')} />}
+      {disabledNext === false && step === undefined && system !== 'win32' && (
+        <Header title={t('EndPage.titleFinish')} />
       )}
-      {disabledNext === false && step === undefined && device === "Asus Rog Ally" && (
-        <Header title={t("EndPage.titleAlly")} />
-      )}
-      {disabledNext === false && step === undefined && device !== "Asus Rog Ally" && system === "win32" && (
-        <Header title={t("EndPage.titleWin32")} />
-      )}
+      {disabledNext === false &&
+        step === undefined &&
+        device === 'Asus Rog Ally' && <Header title={t('EndPage.titleAlly')} />}
+      {disabledNext === false &&
+        step === undefined &&
+        device !== 'Asus Rog Ally' &&
+        system === 'win32' && <Header title={t('EndPage.titleWin32')} />}
       {disabledNext === true && (
         <Main>
           <div className="cards cards--mini">
@@ -296,13 +314,17 @@ function EndPage() {
               emusPending
                 .filter((e) => e.status)
                 .map((item) => {
-                  if (item.id === "srm" || item.id === "primehacks") {
+                  if (item.id === 'srm' || item.id === 'primehacks') {
                     return;
                   }
                   const img = images[item.id];
                   // eslint-disable-next-line consistent-return
                   return (
-                    <Card css={item.installed === true && "is-selected"} key={item.id} onClick={() => onClick(item.id)}>
+                    <Card
+                      css={item.installed === true && 'is-selected'}
+                      key={item.id}
+                      onClick={() => onClick(item.id)}
+                    >
                       <img src={img} alt={item.name} />
                       <ProgressBar css="progress--success" infinite max="100" />
                     </Card>
@@ -316,7 +338,11 @@ function EndPage() {
                   const img = images[item.id];
                   // eslint-disable-next-line consistent-return
                   return (
-                    <Card css={item.installed === true && "is-selected"} key={item.id} onClick={() => onClick(item.id)}>
+                    <Card
+                      css={item.installed === true && 'is-selected'}
+                      key={item.id}
+                      onClick={() => onClick(item.id)}
+                    >
                       <img src={img} alt={item.name} />
                       <ProgressBar css="progress--success" infinite max="100" />
                     </Card>
@@ -338,7 +364,7 @@ function EndPage() {
           css="btn-simple--1"
           type="button"
           aria="Go Next"
-          disabled={disabledNext && "true"}
+          disabled={disabledNext && 'true'}
           onClick={() => navigate(nextPage)}
         >
           Next
