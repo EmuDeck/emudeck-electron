@@ -207,13 +207,7 @@ function DeviceSelectorPage() {
               <img src={imgSteamMachine} width="100" alt="Background" />
               <span className="h6">Steam Machine</span>
             </Card>
-            <Card
-              css={device === 'Playnix Console' && 'is-selected'}
-              onClick={() => deviceSet('Playnix Console')}
-            >
-              <img src={imgPlaynixConsole} width="100" alt="Background" />
-              <span className="h6">Playnix Console</span>
-            </Card>
+
             <Card
               css={device === 'Steam OS Handheld' && 'is-selected'}
               onClick={() => deviceSet('Steam OS Handheld')}
