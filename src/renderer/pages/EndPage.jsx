@@ -274,7 +274,7 @@ function EndPage() {
       const frontsPendingFiltered = frontsPending.filter((e) => e.status);
       console.log({ frontsPendingFiltered });
       const id = frontsPendingFiltered[0].id;
-      if (id && id !== 'steam') {
+      if (id !== 'steam') {
         invokeIpc(`${id}_install`).then((e) => {
           if (overwriteConfigEmus.esde.status) {
             invokeIpc(`esde_init`).then((e) => {});
@@ -284,6 +284,8 @@ function EndPage() {
 
           setStatePage({ ...statePage, disabledNext: false });
         });
+      } else {
+        setStatePage({ ...statePage, disabledNext: false });
       }
     }
   }, [frontsPending]);
