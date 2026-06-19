@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=EmuDeck
+GenericName=Emulation Manager
+Comment=Play all your RetroGames
+Exec=emudeck %U
+Icon=com.emudeck.EmuDeck
+Terminal=false
+Categories=Game;Utility;
+Keywords=emulation;emudeck;retro;games;
+StartupWMClass=EmuDeck

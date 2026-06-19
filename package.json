@@ -52,6 +52,8 @@
     "build:linux:x64": "npm run build && npm exec electron-builder -- --publish never --linux --x64",
     "build:mac": "npm run build && npm exec electron-builder -- --publish never --mac",
     "build:x64": "npm run build && npm exec electron-builder -- --publish never --linux --x64 && npm exec electron-builder -- --publish never --win --x64",
+    "flatpak:sources": "bash .erb/scripts/flatpak-gen-sources.sh",
+    "flatpak:build": "flatpak-builder --user --install --force-clean release/flatpak-build flatpak/com.emudeck.EmuDeck.yaml",
     "submodule:update": "git submodule update --remote --merge"
   },
   "lint-staged": {

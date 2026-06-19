@@ -1,0 +1,70 @@
+# How to test in linux:
+#   flatpak install -y flathub org.freedesktop.Sdk//24.08 org.freedesktop.Platform//24.08 \
+#       org.electronjs.Electron2.BaseApp//24.08 org.freedesktop.Sdk.Extension.node22//24.08
+#   flatpak-builder --user --install --force-clean build-dir flatpak/com.emudeck.EmuDeck.yaml
+#   flatpak run com.emudeck.EmuDeck
+
+app-id: com.emudeck.EmuDeck
+runtime: org.freedesktop.Platform
+runtime-version: "24.08"
+sdk: org.freedesktop.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: "24.08"
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.node22
+command: emudeck
+separate-locales: false
+
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=x11
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --device=all
+  - --filesystem=home
+  - --filesystem=/run/media
+  - --filesystem=/media
+  - --talk-name=org.freedesktop.Flatpak
+  - --env=TMPDIR=/var/tmp
+
+modules:
+  - name: emudeck
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/node22/bin
+      env:
+        npm_config_offline: "true"
+        npm_config_cache: /run/build/emudeck/npm-cache
+        XDG_CACHE_HOME: /run/build/emudeck/flatpak-node/cache
+        electron_config_cache: /run/build/emudeck/flatpak-node/cache/electron
+    build-commands:
+      - npm ci --offline --no-audit --no-fund --legacy-peer-deps
+      - npm run build
+      - bash flatpak/install.sh
+      - |
+        for s in 16 24 32 48 64 96 128 256 512; do
+          install -Dm644 assets/icons/${s}x${s}.png \
+            /app/share/icons/hicolor/${s}x${s}/apps/com.emudeck.EmuDeck.png
+        done
+      - install -Dm644 flatpak/com.emudeck.EmuDeck.desktop      /app/share/applications/com.emudeck.EmuDeck.desktop
+      - install -Dm644 flatpak/com.emudeck.EmuDeck.metainfo.xml /app/share/metainfo/com.emudeck.EmuDeck.metainfo.xml
+    sources:
+      - type: git
+        url: https://github.com/EmuDeck/emudeck-electron.git
+        branch: dev
+        # tag: v2.6.0
+        commit: 8a843ad9ca3883860bad8c5f520beee4c629d7d1
+
+      - type: git
+        url: https://github.com/EmuDeck/emudeck-gui-components.git
+        commit: b78fadb0f6aa01ec0c1c778f9c7bfc70f8236253
+        dest: src/renderer/components
+
+      - type: git
+        url: https://github.com/dragoonDorise/EmuDeck.git
+        commit: 374abb06135ef3d977eaf2949a76ab901f5de8e3
+        dest: fallback-backend
+
+      - generated-sources.json

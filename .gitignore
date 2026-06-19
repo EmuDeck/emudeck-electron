@@ -29,3 +29,4 @@ npm-debug.log.*
 *.scss.d.ts
 release/app/package-lock.json
 *.db
+flatpak/generated-sources.json

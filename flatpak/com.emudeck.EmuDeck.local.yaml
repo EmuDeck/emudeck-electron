@@ -1,0 +1,56 @@
+app-id: com.emudeck.EmuDeck
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: '24.08'
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.node22
+command: emudeck
+separate-locales: false
+
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=x11
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --device=all
+  - --filesystem=home
+  - --filesystem=/run/media
+  - --filesystem=/media
+  - --talk-name=org.freedesktop.Flatpak
+  - --env=TMPDIR=/var/tmp
+
+modules:
+  - name: emudeck
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/node22/bin
+      env:
+        npm_config_offline: 'true'
+        npm_config_cache: /run/build/emudeck/flatpak-node/npm-cache
+        XDG_CACHE_HOME: /run/build/emudeck/flatpak-node/cache
+        electron_config_cache: /run/build/emudeck/flatpak-node/cache/electron
+    build-commands:
+      - npm ci --offline --no-audit --no-fund --legacy-peer-deps
+      - npm run build
+      - bash flatpak/install.sh
+      - |
+        for s in 16 24 32 48 64 96 128 256 512; do
+          install -Dm644 assets/icons/${s}x${s}.png \
+            /app/share/icons/hicolor/${s}x${s}/apps/com.emudeck.EmuDeck.png
+        done
+      - install -Dm644 flatpak/com.emudeck.EmuDeck.desktop      /app/share/applications/com.emudeck.EmuDeck.desktop
+      - install -Dm644 flatpak/com.emudeck.EmuDeck.metainfo.xml /app/share/metainfo/com.emudeck.EmuDeck.metainfo.xml
+    sources:
+      - type: dir
+        path: ..
+        skip:
+          - .git
+          - node_modules
+          - release/build
+          - release/flatpak-build
+          - flatpak/.flatpak-builder
+      - generated-sources.json

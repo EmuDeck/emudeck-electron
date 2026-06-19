@@ -31,6 +31,17 @@ let appDataPath = app.getPath('userData');
 if (os.platform().includes('darwin')) {
   appDataPath = `${os.homedir()}/.config/EmuDeck`;
 }
+const isFlatpak = !!process.env.FLATPAK_ID;
+if (isFlatpak) {
+  appDataPath = `${os.homedir()}/.config/EmuDeck`;
+}
+
+//flatpak permissions
+const onHost = (cmd: string): string => {
+  if (!isFlatpak) return cmd;
+  const escaped = cmd.replace(/'/g, `'\\''`);
+  return `flatpak-spawn --host bash -lc '${escaped}'`;
+};
 const settingsPath = path.join(appDataPath, 'settings.json');
 
 let savedSettings: any;
@@ -42,10 +53,8 @@ try {
     console.warn(
       `No existe ${settingsPath}, usando configuración por defecto.`,
     );
-    // aquí puedes dejar savedSettings = {} u otros valores por defecto
     savedSettings = undefined;
   } else {
-    // si es otro error (p. ej. JSON mal formado), lo relanzamos
     throw err;
   }
 }
@@ -102,7 +111,6 @@ const getFallbackBackendPath = (): string => {
     : path.join(__dirname, '../../fallback-backend');
 };
 
-// Helper para copiar el bundle de fallback
 const copyFallbackBackend = async (targetPath: string): Promise<boolean> => {
   return new Promise((resolve) => {
     const FALLBACK_BACKEND_PATH = getFallbackBackendPath();
@@ -143,7 +151,6 @@ const copyFallbackBackend = async (targetPath: string): Promise<boolean> => {
   });
 };
 
-// Helper para inicializar git en el fallback (para futuros pulls)
 const initGitInFallback = (
   targetPath: string,
   branch: string,
@@ -159,7 +166,7 @@ const initGitInFallback = (
       `git reset --hard origin/${branch}`,
     ].join(' && ');
 
-    exec(commands, shellType, (error, stdout, stderr) => {
+    exec(onHost(commands), shellType, (error, stdout, stderr) => {
       logCommand('initGitInFallback', error, stdout, stderr);
       // Resolvemos siempre, aunque falle el git init
       // Al menos tenemos el código del fallback funcionando
@@ -415,7 +422,7 @@ ipcMain.on('bash-legacy', async (event, command) => {
     bashCommand = command;
   }
 
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(onHost(bashCommand), shellType, (error, stdout, stderr) => {
     // event.reply('console', { backChannel });
     logCommand(bashCommand, error, stdout, stderr);
     event.reply(backChannel, stdout);
@@ -436,7 +443,7 @@ ipcMain.on('bash-nolog-legacy', async (event, command) => {
     bashCommand = command;
   }
 
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(onHost(bashCommand), shellType, (error, stdout, stderr) => {
     // event.reply('console', { backChannel });
     event.reply(backChannel, stdout);
   });
@@ -469,7 +476,7 @@ ipcMain.on('emudeck', async (event, command) => {
     preCommand = `python3 ${appDataPath}/backend/api.py ${bashCommand}`;
   }
 
-  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(onHost(preCommand), shellType, (error, stdout, stderr) => {
     // event.reply('console', { backChannel });
     logCommand(bashCommand, error, stdout, stderr);
     event.reply(backChannel, {
@@ -496,7 +503,7 @@ ipcMain.on('getMSG', async (event) => {
     bashCommand = `cat "$HOME/.config/EmuDeck/logs/msg.log"`;
   }
 
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(onHost(bashCommand), shellType, (error, stdout, stderr) => {
     event.reply(backChannel, {
       stdout,
       stderr,
@@ -834,7 +841,7 @@ const checkWingetAvailable = (): Promise<boolean> => {
 const refreshWindowsPath = () => {
   try {
     const cmd =
-      'powershell -NoProfile -Command "[Environment]::GetEnvironmentVariable(\'Path\',\'Machine\') + \';\' + [Environment]::GetEnvironmentVariable(\'Path\',\'User\')"';
+      "powershell -NoProfile -Command \"[Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [Environment]::GetEnvironmentVariable('Path','User')\"";
     const newPath = execSync(cmd, { encoding: 'utf-8' }).trim();
     if (newPath) process.env.PATH = newPath;
   } catch {
@@ -928,43 +935,39 @@ ipcMain.on('install-dependencies', async (event) => {
   fs.writeFileSync(scriptPath, scriptLines.join('\r\n'), 'utf-8');
 
   const cmd = `start /wait "" powershell -ExecutionPolicy Bypass -NoProfile -File "${scriptPath}"`;
-  exec(
-    cmd,
-    { maxBuffer: 1024 * 1024 * 50 },
-    async (error, stdout, stderr) => {
-      logCommand(cmd, error, stdout, stderr);
+  exec(cmd, { maxBuffer: 1024 * 1024 * 50 }, async (error, stdout, stderr) => {
+    logCommand(cmd, error, stdout, stderr);
 
-      // PATH in this process is stale post-install; verify by filesystem.
-      const afterGit = await checkGitInstalled();
-      const afterPython = await checkPythonInstalled();
-      const afterSteam = checkSteamInstalled();
+    // PATH in this process is stale post-install; verify by filesystem.
+    const afterGit = await checkGitInstalled();
+    const afterPython = await checkPythonInstalled();
+    const afterSteam = checkSteamInstalled();
 
-      if (afterGit && afterPython && afterSteam) {
-        event.reply(backChannel, {
-          success: true,
-          installed: missing,
-          relaunch: true,
-        });
-        // Relaunch so the next process picks up the updated PATH before the
-        // backend clone tries to exec git/python.
-        setTimeout(() => {
-          refreshWindowsPath();
-          app.relaunch();
-          app.exit(0);
-        }, 1500);
-        return;
-      }
-
-      const stillMissing: string[] = [];
-      if (!afterGit) stillMissing.push('Git');
-      if (!afterPython) stillMissing.push('Python');
-      if (!afterSteam) stillMissing.push('Steam');
+    if (afterGit && afterPython && afterSteam) {
       event.reply(backChannel, {
-        success: false,
-        error: `Failed to install: ${stillMissing.join(', ')}`,
+        success: true,
+        installed: missing,
+        relaunch: true,
       });
-    },
-  );
+      // Relaunch so the next process picks up the updated PATH before the
+      // backend clone tries to exec git/python.
+      setTimeout(() => {
+        refreshWindowsPath();
+        app.relaunch();
+        app.exit(0);
+      }, 1500);
+      return;
+    }
+
+    const stillMissing: string[] = [];
+    if (!afterGit) stillMissing.push('Git');
+    if (!afterPython) stillMissing.push('Python');
+    if (!afterSteam) stillMissing.push('Steam');
+    event.reply(backChannel, {
+      success: false,
+      error: `Failed to install: ${stillMissing.join(', ')}`,
+    });
+  });
 });
 
 //
@@ -977,7 +980,7 @@ ipcMain.on('check-git', async (event) => {
   if (os.platform().includes('win32')) {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git rev-parse --is-inside-work-tree`;
   }
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(onHost(bashCommand), shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
     event.reply(backChannel, error, stdout, stderr);
   });
@@ -997,7 +1000,7 @@ ipcMain.on('clone', async (event, branch) => {
     bashCommand = `rm -rf ${appDataPath}/backend && mkdir -p ${appDataPath}/backend && mkdir -p ~/emudeck/logs && git config --global http.lowSpeedLimit 1000 && git config --global http.lowSpeedTime 60 && git config --global http.postBuffer 524288000 && git clone --no-single-branch --depth=1 ${repo} ${appDataPath}/backend/ && cd ${appDataPath}/backend && git checkout ${branchGIT} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
   }
 
-  return exec(`${bashCommand}`, shellType, async (error, stdout, stderr) => {
+  return exec(onHost(bashCommand), shellType, async (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
 
     // Si el clone falló, intentar con el fallback
@@ -1094,53 +1097,70 @@ ipcMain.on('pull', async (event, branch) => {
       cloneCommand = `rm -rf ${appDataPath}/backend && git clone --no-single-branch --depth=1 ${repo} ${appDataPath}/backend/ && cd ${appDataPath}/backend && git checkout ${branchGIT}`;
     }
 
-    return exec(`${cloneCommand}`, shellType, async (error, stdout, stderr) => {
-      logCommand('pull-reclone', error, stdout, stderr);
+    return exec(
+      onHost(cloneCommand),
+      shellType,
+      async (error, stdout, stderr) => {
+        logCommand('pull-reclone', error, stdout, stderr);
 
-      if (error || stderr.includes('fatal:')) {
-        // Clone falló, usar fallback
-        console.warn('Re-clone failed during pull, using fallback...');
+        if (error || stderr.includes('fatal:')) {
+          // Clone falló, usar fallback
+          console.warn('Re-clone failed during pull, using fallback...');
 
-        try {
-          if (fs.existsSync(backendPath)) {
-            fs.rmSync(backendPath, { recursive: true, force: true });
+          try {
+            if (fs.existsSync(backendPath)) {
+              fs.rmSync(backendPath, { recursive: true, force: true });
+            }
+            fs.mkdirSync(backendPath, { recursive: true });
+          } catch (e) {}
+
+          const copySuccess = await copyFallbackBackend(backendPath);
+
+          if (copySuccess) {
+            await initGitInFallback(backendPath, branchGIT);
+
+            // Ejecutar app_init con el fallback
+            const initCommand = os.platform().includes('win32')
+              ? `python ${appDataPath}\\backend\\api.py "app_init"`
+              : `python3 ${appDataPath}/backend/api.py "app_init"`;
+
+            exec(
+              onHost(initCommand),
+              shellType,
+              (initError, initStdout, initStderr) => {
+                logCommand(
+                  'fallback-app_init',
+                  initError,
+                  initStdout,
+                  initStderr,
+                );
+                event.reply(backChannel, 'true (fallback)');
+              },
+            );
+          } else {
+            event.reply(backChannel, 'fallback_failed');
           }
-          fs.mkdirSync(backendPath, { recursive: true });
-        } catch (e) {}
-
-        const copySuccess = await copyFallbackBackend(backendPath);
-
-        if (copySuccess) {
-          await initGitInFallback(backendPath, branchGIT);
-
-          // Ejecutar app_init con el fallback
+        } else {
+          // Clone exitoso, ahora ejecutar app_init
           const initCommand = os.platform().includes('win32')
             ? `python ${appDataPath}\\backend\\api.py "app_init"`
             : `python3 ${appDataPath}/backend/api.py "app_init"`;
 
-          exec(initCommand, shellType, (initError, initStdout, initStderr) => {
-            logCommand('fallback-app_init', initError, initStdout, initStderr);
-            event.reply(backChannel, 'true (fallback)');
-          });
-        } else {
-          event.reply(backChannel, 'fallback_failed');
+          exec(
+            onHost(initCommand),
+            shellType,
+            (initError, initStdout, initStderr) => {
+              logCommand('app_init', initError, initStdout, initStderr);
+              event.reply(backChannel, stdout + initStdout);
+            },
+          );
         }
-      } else {
-        // Clone exitoso, ahora ejecutar app_init
-        const initCommand = os.platform().includes('win32')
-          ? `python ${appDataPath}\\backend\\api.py "app_init"`
-          : `python3 ${appDataPath}/backend/api.py "app_init"`;
-
-        exec(initCommand, shellType, (initError, initStdout, initStderr) => {
-          logCommand('app_init', initError, initStdout, initStderr);
-          event.reply(backChannel, stdout + initStdout);
-        });
-      }
-    });
+      },
+    );
   }
 
   // Flujo normal: ya tiene .git, hacer pull
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(onHost(bashCommand), shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
 
     // Si el pull falla, seguimos con la versión local existente
@@ -1159,16 +1179,20 @@ ipcMain.on('pull', async (event, branch) => {
         ? `python ${appDataPath}\\backend\\api.py "app_init"`
         : `python3 ${appDataPath}/backend/api.py "app_init"`;
 
-      exec(initCommand, shellType, (initError, initStdout, initStderr) => {
-        logCommand(
-          'app_init after failed pull',
-          initError,
-          initStdout,
-          initStderr,
-        );
-        // Responder con éxito aunque el pull fallara
-        event.reply(backChannel, 'true (cached)');
-      });
+      exec(
+        onHost(initCommand),
+        shellType,
+        (initError, initStdout, initStderr) => {
+          logCommand(
+            'app_init after failed pull',
+            initError,
+            initStdout,
+            initStderr,
+          );
+          // Responder con éxito aunque el pull fallara
+          event.reply(backChannel, 'true (cached)');
+        },
+      );
     } else {
       event.reply(backChannel, stdout);
     }
@@ -1186,7 +1210,7 @@ ipcMain.on('check-git-status', async (event) => {
     bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git status`;
   }
 
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(onHost(bashCommand), shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
     event.reply(backChannel, stdout);
   });
@@ -1240,7 +1264,7 @@ ipcMain.on('getToken', async (event, command) => {
     bashCommand = `curl "https://retroachievements.org/dorequest.php?r=login&u=${command.user}&p=${command.pass}"`;
   }
 
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(onHost(bashCommand), shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
     event.reply(backChannel, error, stdout, stderr);
   });
@@ -1255,7 +1279,7 @@ ipcMain.on('setToken', async (event, command) => {
   fs.writeFileSync(`${appDataPath}/.rau`, user);
 
   let preCommand = `python ${appDataPath}\\backend\\api.py retro_achievements_set_login`;
-  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(onHost(preCommand), shellType, (error, stdout, stderr) => {
     logCommand(preCommand, error, stdout, stderr);
     event.reply(backChannel, error, stdout, stderr);
   });
@@ -1339,7 +1363,7 @@ app.on('session-created', (session: any) => {
 });
 ipcMain.on('open-folder', async (event, path) => {
   const bashCommand = `xdg-open ${path}`;
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(onHost(bashCommand), shellType, (error, stdout, stderr) => {
     // event.reply('console', { backChannel });
     logCommand(bashCommand, error, stdout, stderr);
     event.reply('open-folder', stdout);
@@ -1363,7 +1387,7 @@ ipcMain.on('run-app', async (event, appPath) => {
     if (!appPathFixed.includes('"')) {
       appPathFixed = `"${appPathFixed}"`;
     }
-    return exec(`${appPathFixed}`, shellType, (error, stdout, stderr) => {
+    return exec(onHost(appPathFixed), shellType, (error, stdout, stderr) => {
       // event.reply('console', { backChannel });
       logCommand(appPathFixed, error, stdout, stderr);
       event.reply('run-app', 'launched');
