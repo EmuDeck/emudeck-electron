@@ -13,6 +13,7 @@ import CloudSyncConfig from 'components/organisms/Wrappers/CloudSyncConfig';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import PatreonLogin from 'components/organisms/PatreonLogin/PatreonLogin';
 import { Img } from 'getbasecore/Atoms';
+import { useFetchCond } from 'hooks/useFetchCond';
 import {
   iconSuccess,
   iconDanger,
@@ -58,46 +59,69 @@ function CloudSyncPageConfig() {
 
   const cloudSyncSet = (item) => {
     let modalData;
-    if (item === 'Emudeck-GDrive') {
-      modalData = {
-        active: true,
-        header: <span className="h4">Warning</span>,
-        body: (
-          <p>
-            If you are using a free Google Drive account we don't recomended to
-            use it with CloudSync since Google will throttle your connection,
-            making CloudSync really really slow.
-          </p>
-        ),
-        css: 'emumodal--sm',
-      };
-    }
+    if (item === 'Emudeck-cloud-selector') {
+      const patreonToken = localStorage.getItem('patreon_token');
+      const cloudSyncUser = patreonToken.split('|||')[0];
 
-    if (item === 'Emudeck-SMB' || item === 'Emudeck-SFTP') {
-      modalData = {
-        active: true,
-        header: <span className="h4">Warning</span>,
-        body: (
-          <p>
-            You might need to create an emudeck folder in the root of your
-            storage before setting up CloudSync
-          </p>
-        ),
-        css: 'emumodal--sm',
-      };
+      emudeckCloudLogin.post({ token: patreonToken }).then((data) => {
+        const emudeckCloudType = data.cloud;
+        let emudeckCloudProvider;
+        let cloudSyncPrefix = 'pe';
+        if (data.cloud == 'cloud1') {
+          emudeckCloudProvider = 'Emudeck-cloud';
+          cloudSyncPrefix = 'cs' + cloudSyncUser;
+        } else {
+          emudeckCloudProvider = 'Emudeck-cloud2';
+          cloudSyncPrefix = 'emudeck-saves/cs' + cloudSyncUser;
+        }
+
+        setState({
+          ...state,
+          cloudSync: emudeckCloudProvider,
+          cs_user: cloudSyncPrefix,
+        });
+      });
+    } else {
+      if (item === 'Emudeck-GDrive') {
+        modalData = {
+          active: true,
+          header: <span className="h4">Warning</span>,
+          body: (
+            <p>
+              If you are using a free Google Drive account we don't recomended
+              to use it with CloudSync since Google will throttle your
+              connection, making CloudSync really really slow.
+            </p>
+          ),
+          css: 'emumodal--sm',
+        };
+      }
+
+      if (item === 'Emudeck-SMB' || item === 'Emudeck-SFTP') {
+        modalData = {
+          active: true,
+          header: <span className="h4">Warning</span>,
+          body: (
+            <p>
+              You might need to create an emudeck folder in the root of your
+              storage before setting up CloudSync
+            </p>
+          ),
+          css: 'emumodal--sm',
+        };
+      }
+
+      setState({
+        ...state,
+        cloudSync: item,
+        cs_user: '',
+      });
+      setStatePage({
+        ...statePage,
+        showLoginButton: false,
+        modal: modalData,
+      });
     }
-    const patreonToken = localStorage.getItem('patreon_token');
-    const patreonTokenUser = patreonToken.split('|||');
-    setState({
-      ...state,
-      cloudSync: item,
-      cs_user: patreonTokenUser,
-    });
-    setStatePage({
-      ...statePage,
-      showLoginButton: false,
-      modal: modalData,
-    });
   };
 
   const closeModal = () => {
@@ -189,12 +213,12 @@ function CloudSyncPageConfig() {
     setStateCfg(cfgOk);
 
     const serviceCreatedOk = await sendHealthCheck(
-      'cloud_sync_health_checkServiceCreated'
+      'cloud_sync_health_checkServiceCreated',
     );
     setStateServiceCreated(serviceCreatedOk);
 
     const serviceStartsOk = await sendHealthCheck(
-      'cloud_sync_health_checkServiceStarts'
+      'cloud_sync_health_checkServiceStarts',
     );
     setStateCheckServiceStarts(serviceStartsOk);
 
@@ -202,7 +226,7 @@ function CloudSyncPageConfig() {
     setStateUpload(uploadOk);
 
     const uploadedOk = await sendHealthCheck(
-      'cloud_sync_health_isFileUploaded'
+      'cloud_sync_health_isFileUploaded',
     );
     setStateIsFileUploaded(uploadedOk);
 
@@ -210,7 +234,7 @@ function CloudSyncPageConfig() {
     setStateDownload(downloadOk);
 
     const downloadedOk = await sendHealthCheck(
-      'cloud_sync_health_isFileDownloaded'
+      'cloud_sync_health_isFileDownloaded',
     );
     setStateIsFileDownloaded(downloadedOk);
   };
@@ -370,7 +394,6 @@ function CloudSyncPageConfig() {
         cs_user: `cs${patreonTokenUser[0]}`,
         cloud_sync_status: true,
       });
-
     }
   }, [cloudSync]);
 
