@@ -398,6 +398,11 @@ function CloudSyncPageConfig() {
   }, [cloudSync]);
 
   useEffect(() => {
+    setState({
+      ...state,
+      cloudSync: null,
+      cs_user: null,
+    });
     if (system !== 'win32') {
       const modalData = {
         active: true,
