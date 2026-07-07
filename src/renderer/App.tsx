@@ -517,8 +517,8 @@ export default function App() {
       eden: { id: 'eden', status: false, name: 'Eden' },
       citron: { id: 'citron', status: false, name: 'Citron' },
       esde: { id: 'esde', status: true, name: 'EmulationStation DE' },
-      pegasus: { id: 'pegasus', status: true, name: 'Pegasus' },
-      srm: { id: 'srm', status: false, name: 'Steam Rom Manager' },
+      pegasus: { id: 'pegasus', status: false, name: 'Pegasus' },
+      srm: { id: 'srm', status: true, name: 'Steam Rom Manager' },
     },
     installFrontends: {
       esde: {
