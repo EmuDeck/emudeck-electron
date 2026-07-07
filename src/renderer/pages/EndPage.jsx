@@ -269,6 +269,15 @@ function EndPage() {
     console.log({ emusPending, frontsPending, configsPending });
   }, [emusPending, frontsPending, configsPending]);
 
+  // When the installation is finished, restart explorer on Windows
+  useEffect(() => {
+    if (disabledNext === false && system === 'win32') {
+      ipcChannel.sendMessage('bash-nolog-legacy', [
+        `powershell -ExecutionPolicy Bypass -NoProfile -command "Stop-Process -Name explorer -Force"`,
+      ]);
+    }
+  }, [disabledNext]);
+
   useEffect(() => {
     if (frontsPending && frontsPending.length > 1) {
       const frontsPendingFiltered = frontsPending.filter((e) => e.status);
