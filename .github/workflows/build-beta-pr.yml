@@ -1,16 +1,13 @@
-name: Publish
+name: PR Auto-build
 
 on:
-  push:
-    branches:
-      - beta
+  pull_request:
+    types: [labeled]
+  pull_request_review:
+    types: [submitted]
 
 jobs:
   publish-linux:
-    # To enable auto publishing to github, update your electron publisher
-    # config in package.json > "build" and remove the conditional below
-    #if: ${{ github.repository_owner === 'electron-react-boilerplate' }}
-
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -45,8 +42,6 @@ jobs:
         run: |
           sed -i "s|main|beta|g" "./src/data/branch.json"
           sed -i "s|emudeck-electron|emudeck-electron-beta|g" "./package.json"
-          #sed -i "s|EmuDeck|EmuDeck-beta|g" "./release/app/package.json"
-          #sed -i 's|"productName": "EmuDeck"|"productName": "EmuDeck-beta"|g' "./package.json"
 
       - name: Install Wine
         run: |
@@ -54,17 +49,7 @@ jobs:
           sudo apt update
           sudo apt install -y wine64 wine32
 
-      - name: Publish releases
-        env:
-          # These values are used for auto updates signing
-          #APPLE_ID: ${{ secrets.APPLE_ID }}
-          #APPLE_ID_PASS: ${{ secrets.APPLE_ID_PASS }}
-          #CSC_LINK: ${{ secrets.CSC_LINK }}
-          #CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-          # This is used for uploading release assets to github
-          #npm run build:${GITHUB_REF##*/} -> Branch name
-          #npm exec electron-builder -- --publish always --linux --win
-          GH_TOKEN: ${{ secrets.github_token }}
+      - name: build releases
         run: |
           npm run postinstall
           npm run build
@@ -76,8 +61,8 @@ jobs:
           name: EmuDeck-Beta-AppImage
           path: '**/*.AppImage'
 
-      - name: Upload Artifact
+      - name: Upload Artifact Windows
         uses: actions/upload-artifact@v4
         with:
-          name: EmuDeck-beta-windows
+          name: EmuDeck-Beta-Win32
           path: '**/*.exe'

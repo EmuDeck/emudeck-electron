@@ -55,7 +55,6 @@ function CheckUpdatePage() {
     system,
     second,
     installEmus,
-    android,
     installFrontends,
     overwriteConfigEmus,
     shaders,
@@ -126,10 +125,7 @@ function CheckUpdatePage() {
         delete settingsStorage.installFrontends.deckyromlauncher;
         //delete settingsStorage.installEmus.ares;
         //delete settingsStorage.overwriteConfigEmus.ares;
-        delete settingsStorage.android.installEmus.citrammj;
-        delete settingsStorage.android.overwriteConfigEmus.citra;
-        delete settingsStorage.android.overwriteConfigEmus.citrammj;
-        delete settingsStorage.installFrontends;
+        //delete settingsStorage.android;
         const installEmusStored = settingsStorage.installEmus;
         // const installFrontendsStored = settingsStorage.installFrontends;
 
@@ -233,7 +229,6 @@ function CheckUpdatePage() {
             setState({
               ...state,
               ...settingsStorage,
-              android: { ...android },
               installEmus: { ...installEmus, ...installEmusStored },
               overwriteConfigEmus: {
                 ...overwriteConfigEmus,

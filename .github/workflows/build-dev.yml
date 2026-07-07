@@ -3,10 +3,10 @@ name: Publish
 on:
   push:
     branches:
-      - beta
+      - dev
 
 jobs:
-  publish-linux:
+  publish:
     # To enable auto publishing to github, update your electron publisher
     # config in package.json > "build" and remove the conditional below
     #if: ${{ github.repository_owner === 'electron-react-boilerplate' }}
@@ -41,12 +41,11 @@ jobs:
         if: steps.cache-node_modules.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Set Beta Build
+      - name: Set Early Build
         run: |
-          sed -i "s|main|beta|g" "./src/data/branch.json"
-          sed -i "s|emudeck-electron|emudeck-electron-beta|g" "./package.json"
-          #sed -i "s|EmuDeck|EmuDeck-beta|g" "./release/app/package.json"
-          #sed -i 's|"productName": "EmuDeck"|"productName": "EmuDeck-beta"|g' "./package.json"
+          sed -i "s|main|dev|g" "./src/data/branch.json"
+          #sed -i "s|EmuDeck|EmuDeck-dev|g" "./release/app/package.json"
+          #sed -i 's|"productName": "EmuDeck"|"productName": "EmuDeck-dev"|g' "./package.json"
 
       - name: Install Wine
         run: |
@@ -73,11 +72,11 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: EmuDeck-Beta-AppImage
+          name: EmuDeck-dev-AppImage
           path: '**/*.AppImage'
 
-      - name: Upload Artifact
+      - name: Upload Artifact Windows
         uses: actions/upload-artifact@v4
         with:
-          name: EmuDeck-beta-windows
+          name: EmuDeck-dev-Win32
           path: '**/*.exe'

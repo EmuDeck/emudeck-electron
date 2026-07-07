@@ -1,24 +1,28 @@
 name: Publish
+
 on:
   push:
     branches:
       - early
+
 jobs:
   publish-linux:
+    # To enable auto publishing to github, update your electron publisher
+    # config in package.json > "build" and remove the conditional below
+    #if: ${{ github.repository_owner === 'electron-react-boilerplate' }}
+
     runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
         os: [ubuntu-latest]
+
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
-      - name: Update submodule to latest
-        run: |
-          git submodule update --remote --merge
-          cd fallback-backend && git checkout early && git pull origin early
+      - name: Git Submodule Update
+        run: git submodule update --init --recursive
 
       - name: Use cached node_modules
         id: cache-node_modules
@@ -41,6 +45,8 @@ jobs:
         run: |
           sed -i "s|main|early|g" "./src/data/branch.json"
           sed -i "s|emudeck-electron|emudeck-electron-early|g" "./package.json"
+          #sed -i "s|EmuDeck|EmuDeck-early|g" "./release/app/package.json"
+          #sed -i 's|"productName": "EmuDeck"|"productName": "EmuDeck-early"|g' "./package.json"
 
       - name: Install Wine
         run: |
@@ -50,20 +56,27 @@ jobs:
 
       - name: Publish releases
         env:
+          # These values are used for auto updates signing
+          #APPLE_ID: ${{ secrets.APPLE_ID }}
+          #APPLE_ID_PASS: ${{ secrets.APPLE_ID_PASS }}
+          #CSC_LINK: ${{ secrets.CSC_LINK }}
+          #CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+          # This is used for uploading release assets to github
+          #npm run build:${GITHUB_REF##*/} -> Branch name
+          #npm exec electron-builder -- --publish always --linux --win
           GH_TOKEN: ${{ secrets.github_token }}
         run: |
           npm run postinstall
           npm run build
-          npm exec electron-builder -- --publish always --linux --x64 && npm exec electron-builder -- --publish always --win --x64
+          npm exec electron-builder -- --publish always --linux --x64 --arm64 && npm exec electron-builder -- --publish always --win --x64
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: EmuDeck-Early-AppImage
-          path: "**/*.AppImage"
-
+          path: '**/*.AppImage'
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: EmuDeck-early-windows
-          path: "**/*.exe"
+          path: '**/*.exe'

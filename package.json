@@ -248,7 +248,8 @@
       "target": [
         "AppImage"
       ],
-      "category": "Development"
+      "category": "Development",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
     },
     "directories": {
       "app": "release/app",
