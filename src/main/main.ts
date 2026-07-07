@@ -1254,20 +1254,38 @@ ipcMain.on('debug', async () => {
 });
 
 // RetroAchievements
-ipcMain.on('getToken', async (event, command) => {
+ipcMain.on('getToken', (event, command) => {
   const backChannel = 'getToken';
-  const escapedUserName = `${command.user.replace(/'/g, "'\\''")}`;
-  // str.replace(/[\\$'"]/g, "\\$&")
-  const escapedPass = `${command.pass.replace(/'/g, "'\\''")}`;
-  let bashCommand = `curl --location --data-urlencode u='${escapedUserName}' --data-urlencode p='${escapedPass}' --request POST 'https://retroachievements.org/dorequest.php?r=login'`;
-  if (os.platform().includes('win32')) {
-    bashCommand = `curl "https://retroachievements.org/dorequest.php?r=login&u=${command.user}&p=${command.pass}"`;
-  }
 
-  return exec(onHost(bashCommand), shellType, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, error, stdout, stderr);
-  });
+  const body = new URLSearchParams({
+    r: 'login2',
+    u: command.user,
+    p: command.pass,
+  }).toString();
+
+  const req = https.request(
+    'https://retroachievements.org/dorequest.php',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(body),
+        'User-Agent': `EmuDeck/${app.getVersion()}`,
+      },
+    },
+    (res) => {
+      let stdout = '';
+      res.on('data', (chunk) => (stdout += chunk));
+      res.on('end', () => {
+        console.log(`getToken -> HTTP ${stdout}`);
+        event.reply(backChannel, null, stdout, '');
+      });
+    },
+  );
+
+  req.on('error', (err) => event.reply(backChannel, err, '', String(err)));
+  req.write(body);
+  req.end();
 });
 
 ipcMain.on('setToken', async (event, command) => {
