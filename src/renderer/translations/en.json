@@ -90,6 +90,7 @@
       "nofif3DCRTShader": "3D CRT Shader updated!",
       "nofifLCDShader": "LCD Shader updated!",
       "nofifAutosave": "AutoSave updated!",
+      "nofifAutoMap": "AutoMap updated!",
       "nofifController": "Controller Layout updated!",
       "nofifBoot": "BootMode updated, please restart your device!"
     },

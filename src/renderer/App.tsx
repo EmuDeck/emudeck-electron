@@ -267,6 +267,7 @@ export default function App() {
       hardcore: false,
     },
     autosave: false,
+    automap: true,
     ar: {
       sega: 43,
       snes: 43,

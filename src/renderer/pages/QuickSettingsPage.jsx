@@ -264,6 +264,15 @@ function QuickSettingsPage() {
     });
   };
 
+  const autoMapSet = (status) => {
+    setState({
+      ...state,
+      automap: status,
+    });
+
+    notificationShow(`🎉 ${t('QuickSettingsPage.nofifAutoMap')}`);
+  };
+
   const autoSaveSet = (status) => {
     setState({
       ...state,
@@ -300,7 +309,6 @@ function QuickSettingsPage() {
     });
   };
 
-
   const onClickBoot = (status) => {
     setState({
       ...state,
@@ -335,6 +343,7 @@ function QuickSettingsPage() {
         onClickCRT3D={onClickCRT3D}
         onClickLCD={onClickLCD}
         onClickAutoSave={autoSaveSet}
+        onClickAutoMap={autoMapSet}
         onClickControllerLayoutSet={controllerLayoutSet}
         onClickBoot={onClickBoot}
       />
