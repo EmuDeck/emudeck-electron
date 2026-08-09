@@ -144,6 +144,7 @@ function EmulatorsDetailPage() {
   };
 
   const showControls = (emulator, code) => {
+    let img;
     switch (emulator) {
       case 'ra':
         img = raControls;

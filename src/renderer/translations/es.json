@@ -50,7 +50,6 @@
       "logsError": "Hubo un problema al obtener tus registros, por favor recógelos manualmente desde la carpeta emudeck en tu carpeta de usuario.",
       "bootMode": "Modo de Juego",
       "pegasusTheme": "Tema Pegasus",
-      "featured:": "Featured",
       "otherSettings": "Otras Configuraciones",
       "exclusiveTools": "Herramientas exclusivas de EmuDeck",
       "thirdParty": "Herramientas de Terceros",
@@ -91,7 +90,7 @@
       "nofif3DCRTShader": "¡Shader CRT 3D actualizado!",
       "nofifLCDShader": "¡Shader LCD actualizado!",
       "nofifAutosave": "¡AutoGuardado actualizado!",
-      "nofifAutoMap": "AutoMap updated!",
+      "nofifAutoMap": "¡AutoMap actualizado!",
       "nofifController": "¡Diseño de control actualizado!",
       "nofifBoot": "¡Modo de arranque actualizado, por favor reinicia tu dispositivo!"
     },
@@ -209,7 +208,7 @@
         "changelog": "Ver Registro de Cambios"
       },
       "error": {
-        "title": "Ooopsie",
+        "title": "¡Vaya!",
         "description": "Parece que hay un problema al descargar el backend. Por favor, reinicia EmuDeck después de comprobar que tu red funciona correctamente."
       }
     },
@@ -329,7 +328,7 @@
       "change": "Cambiar cuenta de Patreon",
       "check": "Comprobar token",
       "checking": "Comprobando token...",
-      "license": "Login with License"
+      "license": "Iniciar sesión con Licencia"
     },
     "PegasusThemeChoicePage": {
       "title": "Tema Predeterminado de Pegasus",
@@ -361,7 +360,11 @@
     },
     "RABezelsPage": {
       "title": "Configurar biseles de juego",
-      "description": ""
+      "description": "Usa los biseles preconfigurados de EmuDeck para ocultar las barras negras verticales en juegos de 8 y 16 bits."
+    },
+    "AutoMapPage": {
+      "title": "Configurar AutoMap",
+      "description": "Activa AutoMap para que EmuDeck configure tus controles en los emuladores que no detectan los mandos automáticamente. Esto también habilitará la configuración automática de mandos para hasta 4 jugadores y la compatibilidad con otros mandos como el Steam Controller, 8BitDo, Xbox, DualSense, otras portátiles con SteamOS, etc."
     },
     "RomStoragePage": {
       "title": "Selecciona tu Directorio de ROMs",
@@ -452,8 +455,8 @@
     "RAAchievements": {
       "modalWrongPassTitle": "Nombre de usuario o contraseña incorrectos",
       "modalWrongPassDesc": "Si tu contraseña contiene caracteres especiales como _ o ' necesitas cambiarla en retroachievements.org",
-      "modalSuccessTitle": "RetroAchievements set!",
-      "modalSuccessDesc": "Now your games will show RetroAchievements progress",
+      "modalSuccessTitle": "Nombre de usuario o contraseña incorrectos",
+      "modalSuccessDesc": "Si tu contraseña contiene caracteres especiales como _ o ' necesitas cambiarla en retroachievements.org",
       "modalErrorTitle": "¡Error!",
       "modalErrorDesc": "El usuario y la contraseña son correctos pero EmuDeck no pudo configurar la conexión.",
       "register": "Si no tienes una cuenta, regístrate ahora:",

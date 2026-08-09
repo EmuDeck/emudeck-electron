@@ -21,7 +21,6 @@ import {
   imgchimeraOS,
   imgayaneokun,
   imglegiongo,
-  imgPlaynixConsole,
 } from 'components/utils/images/images';
 
 function DeviceSelectorPage() {
@@ -35,7 +34,7 @@ function DeviceSelectorPage() {
     dom: undefined,
   });
   const { disabledNext, disabledBack, data, dom } = statePage;
-  const ipcChannel = window.electron.ipcRenderer;
+
   // Setting the device
   const deviceSet = (deviceName) => {
     setStatePage({ ...statePage, disabledNext: false });
@@ -76,12 +75,30 @@ function DeviceSelectorPage() {
       melonds: '720P',
     };
 
+    const steamMachine = {
+      dolphin: '4K',
+      duckstation: '4K',
+      pcsx2: '4K',
+      yuzu: '1080P',
+      citron: '1080P',
+      ppsspp: '4K',
+      rpcs3: '1080P',
+      ryujinx: '1080P',
+      xemu: '1080P',
+      cemu: '1080P',
+      xenia: '1080P',
+      azahar: '4K',
+      vita3k: '4K',
+      flycast: '4K',
+      melonds: '4K',
+    };
+
     const r1080p = {
       dolphin: '1080P',
       duckstation: '1080P',
       pcsx2: '1080P',
       yuzu: '1080P',
-      citron: '720P',
+      citron: '1080P',
       ppsspp: '1080P',
       rpcs3: '1080P',
       ryujinx: '1080P',
@@ -94,31 +111,13 @@ function DeviceSelectorPage() {
       melonds: '1080P',
     };
 
-    const r4K = {
-      dolphin: '4K',
-      duckstation: '4K',
-      pcsx2: '4K',
-      yuzu: '4K',
-      citron: '4K',
-      ppsspp: '4K',
-      rpcs3: '4K',
-      ryujinx: '4K',
-      xemu: '4K',
-      cemu: '4K',
-      xenia: '4K',
-      azahar: '4K',
-      vita3k: '4K',
-      flycast: '4K',
-      melonds: '4K',
-    };
-
     let resolutionsObj = {};
     switch (deviceName) {
       case 'Steam Deck':
         resolutionsObj = deck;
         break;
       case 'Steam Machine':
-        resolutionsObj = r1080p;
+        resolutionsObj = steamMachine;
         break;
       case 'Playnix Console':
         resolutionsObj = r1080p;
@@ -169,6 +168,8 @@ function DeviceSelectorPage() {
     if (device !== '') {
       setStatePage({ ...statePage, disabledNext: false });
     }
+    const json = JSON.stringify(state);
+    localStorage.setItem('settings_emudeck', json);
   }, [state]);
 
   useEffect(() => {
@@ -207,7 +208,6 @@ function DeviceSelectorPage() {
               <img src={imgSteamMachine} width="100" alt="Background" />
               <span className="h6">Steam Machine</span>
             </Card>
-
             <Card
               css={device === 'Steam OS Handheld' && 'is-selected'}
               onClick={() => deviceSet('Steam OS Handheld')}
@@ -245,7 +245,13 @@ function DeviceSelectorPage() {
         )}
       </DeviceSelector>
       <Footer
-        next="frontend-selector"
+        next={
+          system === 'win32'
+            ? 'frontend-selector'
+            : mode === 'easy'
+              ? 'frontend-selector'
+              : 'automap'
+        }
         nextText={t('general.next')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}

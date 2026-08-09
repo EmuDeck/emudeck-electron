@@ -11,7 +11,7 @@
       "skip": "Skip",
       "pressContinue": "Press Continue when you've done it",
       "yes": "Yes",
-      "yes": "No",
+      "no": "No",
       "month": "month",
       "join": "Join",
       "login": "Login",
@@ -36,6 +36,7 @@
       "quickReset": "Quick Reset",
       "customReset": "Custom Reset",
       "screenResolution": "Screen Resolution",
+      "portable": "Make Portable SD",
       "retroAchievements": "Retro Achievements",
       "biosChecker": "BIOS Checker",
       "cloudSaves": "Cloud Saves",
@@ -50,11 +51,13 @@
       "logsError": "There was an issue getting your logs, please collect them manually from the emudeck folder in your user folder.",
       "bootMode": "Gaming Mode",
       "pegasusTheme": "Pegasus Theme",
-      "featured:": "Featured",
+      "featured": "Featured",
       "otherSettings": "Other Settings",
       "exclusiveTools": "EmuDeck exclusive tools",
       "thirdParty": "Third Party Tools",
-      "other": "Other Stuff"
+      "other": "Other Stuff",
+      "autoMap": "AutoMap",
+      "import_export": "Import / Export"
     },
     "ManageEmulatorsPage": {
       "title": "Manage your Emulators",
@@ -346,6 +349,10 @@
       "title": "Configure game bezels",
       "description": "Use EmuDeck's pre-configured bezels to hide the vertical black bars on 8 bit and 16 bit games."
     },
+    "AutoMapPage": {
+      "title": "Configure AutoMap",
+      "description": "Enable AutoMap to allow EmuDeck to set up your controls in emulators that doesn't detect controllers automatically. This will also enable auto setup of controllers for up to 4 players and support for other controllers like the Steam Controller, 8BitDo, Xbox, DualSense, other SteamOS handhelds, etc."
+    },
     "RomStoragePage": {
       "title": "Select your ROM Directory",
       "description": "Your ROM directory will be squared away within an Emulation folder in your selected directory.",
@@ -431,8 +438,8 @@
     "RAAchievements": {
       "modalWrongPassTitle": "Wrong username or password",
       "modalWrongPassDesc": "If your password contains special characters like _ or ' you need to change it on retroachievements.org",
-      "modalSuccessTitle": "RetroAchievements set!",
-      "modalSuccessDesc": "Now your games will show RetroAchievements progress",
+      "modalSuccessTitle": "Wrong username or password",
+      "modalSuccessDesc": "If your password contains special characters like _ or ' you need to change it on retroachievements.org",
       "modalErrorTitle": "Error!",
       "modalErrorDesc": "The user & password are correct but EmuDeck could not set the configuration.",
       "register": "If you do not have an account, register now:",

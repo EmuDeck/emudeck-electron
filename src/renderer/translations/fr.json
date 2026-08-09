@@ -50,7 +50,7 @@
       "logsError": "Un problème est survenu lors de l'obtention de vos journaux, veuillez les collecter manuellement dans le dossier emudeck de votre dossier utilisateur.",
       "bootMode": "Mode jeu",
       "pegasusTheme": "Thème Pegasus",
-      "featured:": "En vedette",
+      "featured": "En vedette",
       "otherSettings": "Autres paramètres",
       "exclusiveTools": "Outils exclusifs EmuDeck",
       "thirdParty": "Outils tiers",
@@ -90,7 +90,7 @@
       "nofif3DCRTShader": "Shader 3D CRT mis à jour!",
       "nofifLCDShader": "Shader LCD mis à jour!",
       "nofifAutosave": "AutoSave mis à jour!",
-      "nofifAutoMap": "AutoMap updated!",
+      "nofifAutoMap": "AutoMap mis à jour !",
       "nofifController": "Disposition du contrôleur mise à jour!",
       "nofifBoot": "Mode de démarrage mis à jour, veuillez redémarrer votre appareil!"
     },
@@ -208,7 +208,7 @@
         "changelog": "Voir le journal des modifications"
       },
       "error": {
-        "title": "Ooopsie",
+        "title": "Oups !",
         "description": "Il semble y avoir un problème lors du téléchargement du backend. Veuillez redémarrer EmuDeck après avoir vérifié que votre réseau fonctionne"
       }
     },
@@ -328,7 +328,7 @@
       "change": "Changer de compte Patreon",
       "check": "Vérifier le jeton",
       "checking": "Vérification du jeton...",
-      "license": "Login with License"
+      "license": "Se connecter avec une licence"
     },
     "PegasusThemeChoicePage": {
       "title": "Thème par défaut de Pegasus",
@@ -360,7 +360,11 @@
     },
     "RABezelsPage": {
       "title": "Configurer les lunettes de jeu",
-      "description": ""
+      "description": "Utilisez les bordures préconfigurées d'EmuDeck pour masquer les barres noires verticales sur les jeux 8 bits et 16 bits."
+    },
+    "AutoMapPage": {
+      "title": "Configurer AutoMap",
+      "description": "Activez AutoMap pour permettre à EmuDeck de configurer vos commandes dans les émulateurs qui ne détectent pas les manettes automatiquement. Cela activera également la configuration automatique des manettes pour jusqu'à 4 joueurs ainsi que la prise en charge d'autres manettes comme la Steam Controller, 8BitDo, Xbox, DualSense, d'autres consoles portables SteamOS, etc."
     },
     "RomStoragePage": {
       "title": "Sélectionnez votre répertoire de ROM",
@@ -451,8 +455,8 @@
     "RAAchievements": {
       "modalWrongPassTitle": "Nom d'utilisateur ou mot de passe incorrect",
       "modalWrongPassDesc": "Si votre mot de passe contient des caractères spéciaux comme _ ou ', vous devez le modifier sur retroachievements.org",
-      "modalSuccessTitle": "RetroAchievements set!",
-      "modalSuccessDesc": "Now your games will show RetroAchievements progress",
+      "modalSuccessTitle": "Nom d'utilisateur ou mot de passe incorrect",
+      "modalSuccessDesc": "Si votre mot de passe contient des caractères spéciaux comme _ ou ', vous devez le modifier sur retroachievements.org",
       "modalErrorTitle": "Erreur !",
       "modalErrorDesc": "Le nom d'utilisateur et le mot de passe sont corrects, mais EmuDeck n'a pas pu définir la configuration.",
       "register": "Si vous n'avez pas de compte, inscrivez-vous maintenant :",

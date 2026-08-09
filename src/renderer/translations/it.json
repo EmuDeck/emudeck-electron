@@ -50,7 +50,7 @@
       "logsError": "Si è verificato un problema nel recuperare i tuoi log, raccoglili manualmente dalla cartella emudeck nella tua cartella utente.",
       "bootMode": "Modalità di gioco",
       "pegasusTheme": "Tema Pegasus",
-      "featured:": "In primo piano",
+      "featured": "In primo piano",
       "otherSettings": "Altre impostazioni",
       "exclusiveTools": "Strumenti esclusivi EmuDeck",
       "thirdParty": "Strumenti di terze parti",
@@ -90,7 +90,7 @@
       "nofif3DCRTShader": "Shader CRT 3D aggiornato!",
       "nofifLCDShader": "Shader LCD aggiornato!",
       "nofifAutosave": "AutoSave aggiornato!",
-      "nofifAutoMap": "AutoMap updated!",
+      "nofifAutoMap": "AutoMap aggiornato!",
       "nofifController": "Layout del controller aggiornato!",
       "nofifBoot": "Modalità di avvio aggiornata, riavvia il tuo dispositivo!"
     },
@@ -328,7 +328,7 @@
       "change": "Cambia account Patreon",
       "check": "Controlla il token",
       "checking": "Controllo del token in corso...",
-      "license": "Login with License"
+      "license": "Accedi con Licenza"
     },
     "PegasusThemeChoicePage": {
       "title": "Tema predefinito di Pegasus",
@@ -360,7 +360,11 @@
     },
     "RABezelsPage": {
       "title": "Configura cornici di gioco",
-      "description": ""
+      "description": "Utilizza le cornici preconfigurate di EmuDeck per nascondere le barre nere verticali nei giochi a 8 e 16 bit."
+    },
+    "AutoMapPage": {
+      "title": "Configura AutoMap",
+      "description": "Attiva AutoMap per consentire a EmuDeck di configurare i comandi negli emulatori che non rilevano automaticamente i controller. Questo abiliterà anche la configurazione automatica dei controller fino a 4 giocatori e il supporto per altri controller come Steam Controller, 8BitDo, Xbox, DualSense, altre console portatili SteamOS, ecc."
     },
     "RomStoragePage": {
       "title": "Seleziona la directory delle ROM",
@@ -451,8 +455,8 @@
     "RAAchievements": {
       "modalWrongPassTitle": "Nome utente o password errati",
       "modalWrongPassDesc": "Se la tua password contiene caratteri speciali come _ o ', devi cambiarla su retroachievements.org",
-      "modalSuccessTitle": "RetroAchievements set!",
-      "modalSuccessDesc": "Now your games will show RetroAchievements progress",
+      "modalSuccessTitle": "Nome utente o password errati",
+      "modalSuccessDesc": "Se la tua password contiene caratteri speciali come _ o ', devi cambiarla su retroachievements.org",
       "modalErrorTitle": "Errore!",
       "modalErrorDesc": "L'utente e la password sono corretti ma EmuDeck non è riuscito a impostare la configurazione.",
       "register": "Se non hai un account, registrati ora:",
