@@ -85,7 +85,7 @@ function QuickSettingsPage() {
           'sega32|||RetroArch_mastersystem_ar32 && RetroArch_genesis_ar32  && RetroArch_segacd_ar32 && RetroArch_sega32x_ar32',
         ]);
         ipcChannel.once('sega32', () => {
-          notificationShow(`🎉 ${t('QuickSettingsPage.nofisSegaAR')}`);
+          notificationShow(`🎉 ${t('QuickSettingsPage.notifSegaAR')}`);
         });
         break;
       default: // 43
@@ -93,7 +93,7 @@ function QuickSettingsPage() {
           'sega43|||RetroArch_mastersystem_ar43 && RetroArch_genesis_ar43  && RetroArch_segacd_ar43 && RetroArch_sega32x_ar43',
         ]);
         ipcChannel.once('sega43', () => {
-          notificationShow(`🎉 ${t('QuickSettingsPage.nofisSegaAR')}`);
+          notificationShow(`🎉 ${t('QuickSettingsPage.notifSegaAR')}`);
         });
         if (bezels === true) {
           ipcChannel.sendMessage('emudeck', [

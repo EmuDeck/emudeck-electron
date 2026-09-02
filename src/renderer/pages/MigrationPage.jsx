@@ -75,7 +75,7 @@ function MigrationPage() {
           } else {
             const modalData = {
               active: true,
-              header: <span className="h4">Ooops 😞</span>,
+              header: <span className="h4">{t('general.ooops')}</span>,
               body: <p>{t('RomStoragePage.modalErrorWritable')}</p>,
               css: 'emumodal--xs',
             };

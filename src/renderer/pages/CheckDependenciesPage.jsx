@@ -108,19 +108,16 @@ function CheckDependenciesPage() {
   const showModal = (url) => {
     const modalData = {
       active: true,
-      header: <span className="h4">Downloading dependency</span>,
+      header: (
+        <span className="h4">{t('CheckDependenciesPage.downloading')}</span>
+      ),
       body: (
         <>
-          <p>
-            If your download doesn't start please open this url in a browser:
-          </p>
+          <p>{t('CheckDependenciesPage.downloadNotStarting')}</p>
           <p>
             <strong>{url}</strong>
           </p>
-          <p>
-            After that, restart EmuDeck, if the problem persists restart your
-            device.
-          </p>
+          <p>{t('CheckDependenciesPage.restart')}</p>
         </>
       ),
     };
@@ -154,18 +151,14 @@ function CheckDependenciesPage() {
     <Wrapper aside={false}>
       {statusGIT === undefined ||
         (statusSteam === undefined && (
-          <Header title="Checking dependencies..." />
+          <Header title={t('CheckDependenciesPage.checking')} />
         ))}
 
       {!statusGIT ||
         (!statusSteam && (
           <>
-            <Header title="Missing dependencies..." />
-            <p className="lead">
-              Please install the following programs, EmuDeck needs them to work.
-              After that, restart EmuDeck, if the problem persists restart your
-              device.
-            </p>
+            <Header title={t('CheckDependenciesPage.missing')} />
+            <p className="lead">{t('CheckDependenciesPage.missingBody')}</p>
           </>
         ))}
 
@@ -184,7 +177,7 @@ function CheckDependenciesPage() {
                   )
                 }
               >
-                Download GIT
+                {t('CheckDependenciesPage.downloadGit')}
               </a>
             </Card>
           </div>
@@ -203,7 +196,7 @@ function CheckDependenciesPage() {
                   )
                 }
               >
-                Install Steam
+                {t('CheckDependenciesPage.installSteam')}
               </a>
             </Card>
           </div>

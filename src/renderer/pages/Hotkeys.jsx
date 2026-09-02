@@ -26,8 +26,15 @@ function Hotkeys() {
       <Main>
         <div className="container--grid">
           <div data-col-sm="9">
-            {system === 'win32' && <img src={basicHotkeysWin} alt="Hotkeys" />}
-            {system !== 'win32' && <img src={basicHotkeys} alt="Hotkeys" />}
+            {system === 'win32' && (
+              <img
+                src={basicHotkeysWin}
+                alt={t('EmulatorsDetailPage.hotkeys')}
+              />
+            )}
+            {system !== 'win32' && (
+              <img src={basicHotkeys} alt={t('EmulatorsDetailPage.hotkeys')} />
+            )}
           </div>
         </div>
       </Main>

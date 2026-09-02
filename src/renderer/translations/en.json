@@ -25,7 +25,24 @@
       "save": "Save",
       "both": "Both",
       "start": "Start",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "warning": "Warning",
+      "description": "Description",
+      "features": "Features",
+      "on": "On",
+      "off": "Off",
+      "download": "Download",
+      "update": "Update",
+      "reinstall": "Reinstall",
+      "pleaseWait": "Please wait...",
+      "sudoPassword": "Sudo Password",
+      "sudoDetected": "We have detected you have set a sudo password, type it on the next input to install this tool.",
+      "all": "All",
+      "recommended": "recommended",
+      "successExcl": "Success!",
+      "failed": "Failed",
+      "settingsSaved": "Settings saved!",
+      "ooops": "Ooops 😞"
     },
     "footer": {
       "exit": "Exit To Gaming Mode"
@@ -59,7 +76,129 @@
       "thirdParty": "Third Party Tools",
       "other": "Other Stuff",
       "autoMap": "AutoMap",
-      "importExport": "Import / Export"
+      "importExport": "Import / Export",
+      "portableSD": {
+        "errorBody": "Conversion failed, please try again.",
+        "successP1": "Now your SD card is portable!",
+        "successP2": "In order to use your EmuDeck installation in different devices you now need to put your current SD Card in the new device and reinstall EmuDeck on it.",
+        "successP3": "Don't worry, this won't delete anything on the SD Card",
+        "successP4": "Keep in mind that Steam Rom Manager entries doesn't transfer over, you need to add them manually on the new device.",
+        "modalTitle": "Portable SD Card",
+        "modalP1": "This feature will make your SD Card portable in case you installed EmuDeck before version 2.7, meaning that you'll be able to use the same SD card among several EmuDeck installations on different Linux / SteamOS devices ( not compatible with Windows devices ).",
+        "modalP2": "Press the Start button to start the process, this will move all your saved games to your SD Card and configure your emulators with the new paths.",
+        "modalP3": "If you are using Syncthing you'll need to manually update your paths."
+      },
+      "srm": {
+        "body": "We will close Steam if its running and then Steam Rom Manager will open, this could take a few seconds, please wait.",
+        "desktopControls": "Desktop controls will temporarily revert to touch/trackpad/L2/R2."
+      },
+      "reset": {
+        "warningBody": "Doing a reset will overwrite any customization you could have made and restore our EmuDeck defaults"
+      },
+      "cards": {
+        "manual": {
+          "title": "Manual"
+        },
+        "quickSettings": {
+          "description": "Customize bezels, shaders, aspect ratio, auto save, and more"
+        },
+        "manageEmulators": {
+          "description": "Manage and update your Emulators and configurations"
+        },
+        "store": {
+          "description": "Download free non-commercial homebrew games"
+        },
+        "srm": {
+          "description": "Add emulators, tools, or ROMs to your Steam Library"
+        },
+        "importGames": {
+          "description": "Transfer your games using a USB Drive"
+        },
+        "quickReset": {
+          "description": "Update or reset your installation to the latest EmuDeck version in one easy click"
+        },
+        "customReset": {
+          "description": "Update or reset your installation to the latest EmuDeck version in custom mode"
+        },
+        "portable": {
+          "description": "Make your SD installation portable"
+        },
+        "screenResolution": {
+          "description": "Upscale your emulators resolution"
+        },
+        "retroAchievements": {
+          "description": "Configure RetroAchievements for Duckstation, PCSX2, and RetroArch"
+        },
+        "importExport": {
+          "description": "Import / Export your installation"
+        },
+        "autoMap": {
+          "description": "Map your controllers"
+        },
+        "compressor": {
+          "title": "EmuDeck Compressor",
+          "description": "Compress your ROMs to optimize your storage"
+        },
+        "biosChecker": {
+          "description": "Use the EmuDeck BIOS Checker to validate your BIOS"
+        },
+        "bootMode": {
+          "description": "Boot directly on Steam, not Windows"
+        },
+        "pegasusTheme": {
+          "description": "Pick your Pegasus theme"
+        },
+        "cloudSaves": {
+          "description": "Sync or backup your saves and save states to the cloud"
+        },
+        "migration": {
+          "description": "Migrate your EmuDeck installation to your SD Card or vice versa"
+        },
+        "emuDecky": {
+          "description": "Plugin to easily view emulator hotkeys and configure EmuDeck in Gaming Mode"
+        },
+        "onlineMultiplayer": {
+          "title": "Online Multiplayer",
+          "description": "Play your emulators over internet with your friends"
+        },
+        "gyro": {
+          "description": "Enable your Steam Deck gyroscope in emulation"
+        },
+        "deckyPerformance": {
+          "description": "A Decky Loader Plugin to manage performance settings in Game Mode"
+        },
+        "earlyAccess": {
+          "description": "Support EmuDeck on Patreon and get early access to our latest features"
+        },
+        "resetToken": {
+          "title": "Reset Token",
+          "description": "Switch token"
+        },
+        "logFiles": {
+          "description": "Send us your logs if you have issues"
+        },
+        "changelog": {
+          "description": "Read about the latest changes to EmuDeck"
+        },
+        "cloudServices": {
+          "description": "Manage your cloud services, Xbox Cloud Gaming, and more!"
+        },
+        "uninstall": {
+          "description": "Uninstall EmuDeck from your system"
+        }
+      },
+      "buttons": {
+        "configure": "Configure",
+        "update": "Update",
+        "getFreeGames": "Get free games",
+        "launch": "Launch",
+        "addMoreGames": "Add more games",
+        "reinstall": "Reinstall",
+        "donate": "Donate",
+        "changeToken": "Change Token",
+        "createZip": "Create Zip",
+        "read": "Read"
+      }
     },
     "ImportExportPage": {
       "title": "Import / Export EmuDeck to another device",
@@ -97,7 +236,9 @@
       "modalUpdatedTitle": "{{name}} configuration updated!",
       "modalUpdatedDesc": "{{name}} configuration was updated with our latest improvements, optimizations and bug fixes!",
       "modalFailedTitle": "{{name}} configuration reset failed",
-      "modalFailedDesc": "There was an issue trying to reset {{name}} configuration"
+      "modalFailedDesc": "There was an issue trying to reset {{name}} configuration",
+      "updateAvailable": "Update Available",
+      "toolsFrontends": "Manage your Tools & Frontends"
     },
     "QuickSettingsPage": {
       "title": "Configure your Settings",
@@ -113,7 +254,19 @@
       "nofifAutosave": "AutoSave updated!",
       "nofifAutoMap": "AutoMap updated!",
       "nofifController": "Controller Layout updated!",
-      "nofifBoot": "BootMode updated, please restart your device!"
+      "nofifBoot": "BootMode updated, please restart your device!",
+      "autoSave": "AutoSave",
+      "controllerLayout": "Controller Layout",
+      "cloudSync": "CloudSync",
+      "bezels": "Bezels",
+      "segaClassicAR": "Sega Classic AR",
+      "nintendoClassicAR": "Nintendo Classic AR",
+      "classics3dAR": "3D Classics AR",
+      "gamecubeAR": "GameCube AR",
+      "lcdHandhelds": "LCD Handhelds",
+      "crt2d": "CRT 2D",
+      "crt3d": "CRT 3D",
+      "notifSegaAR": "Sega Aspect Ratio updated!"
     },
     "AndroidEmulatorSelectorPage": {
       "title": "Emulators and tools for Android",
@@ -155,7 +308,7 @@
       "configs": {
         "yuzu": "Go to your device, and click on Get Started and finish setup on your device. Your Keys should be in {{storage}}/Emulation/bios/yuzu/keys.",
         "ppsspp": "Go to your device and create the PSP folder in {{storage}}/Emulation/saves/. Press Continue when you've done it.",
-        "nethersx2": "Go to your device and setup your bios. Your bios should be in {storage}/Emulation/bios/",
+        "nethersx2": "Go to your device and setup your bios. Your bios should be in {{storage}}/Emulation/bios/",
         "ra1": "Go to your device, go to Load Core, Download Core and installall the cores you need.",
         "ra2": "Each core is used for a different systems, these are the ones needed for the most common systems:",
         "ra3": "mgba (GameBoy Advance), genesis_plus_gx(Genesis,MasterSystem), snex9x(Super Nintendo), melonds (Nintendo DS),mame2003_plus (MAME), mesen (NES), gambatte (GameBoy), mupen64plus_next(Nintendo 64), swanstation (Playstation 1)",
@@ -198,7 +351,7 @@
     },
     "AutoSavePage": {
       "title": "Configure Auto Save",
-      "description": ""
+      "description": "If enabled, your game state will be saved on exit and automatically loaded when opened again when using RetroArch."
     },
     "ChangeLogPage": {
       "title": "Latest changes",
@@ -206,7 +359,32 @@
     },
     "CHDToolPage": {
       "title": "EmuDeck Compression Tool",
-      "description": "The Compression Tool is a script that looks through certain ROM folders and compresses games by up to 70% of their original file size using CHD, RVZ, Trimmed 3DS, XISO, and 7Zip formats."
+      "description": "The Compression Tool is a script that looks through certain ROM folders and compresses games by up to 70% of their original file size using CHD, RVZ, Trimmed 3DS, XISO, and 7Zip formats.",
+      "cso": {
+        "title": "CSO format",
+        "description": "Used to compress PlayStation Portable ROMs. When compressing PlayStation Portable ROMs, you will be prompted to select if you would like to compress your ROMs to CSO or CHD."
+      },
+      "chd": {
+        "title": "CHD format",
+        "description": "Used to compress CD-i, Dreamcast, PSP, PSX, PS2, Sega/MegaCD, 3DO, Saturn, TurboGraphix/PCEngineCD, PC-FX, Amiga CD32, NeoGeoCD games."
+      },
+      "rvz": {
+        "title": "RVZ format",
+        "description": "Used to compress GameCube and Wii games."
+      },
+      "trimmed3ds": {
+        "title": "Trimmed 3DS format",
+        "description": "Used to compress 3DS games."
+      },
+      "xiso": {
+        "title": "XISO format",
+        "description": "Used to compress Xbox games."
+      },
+      "sevenzip": {
+        "title": "7Zip format",
+        "description": "Used to primarily compress a wide variety of RetroArch systems."
+      },
+      "run": "Run the Compression Tool"
     },
     "CheckBiosPage": {
       "title": "Bios files checker",
@@ -231,12 +409,55 @@
       "error": {
         "title": "Ooopsie",
         "description": "There seems to be an issue downloading the backend. Please restart EmuDeck after testing your network is working"
-      }
+      },
+      "seeMoreDetails": "See more details",
+      "backendError": "There seems to be an issue building the backend. Please restart EmuDeck if this screen doesn't dissapear in about 5 seconds",
+      "backendError2": "There's been an issue building the backend, please restart EmuDeck if this screen doesn't dissapear in about 5 seconds.",
+      "offline": "You need to be connected to the internet."
     },
     "CloudSyncConfigPage": {
       "title": "Cloud Sync - Select your provider",
       "title2": "Cloud Backup - Select your provider",
-      "description": ""
+      "description": "",
+      "recommendedProviders": "Recommended providers",
+      "legacyProviders": "Legacy providers",
+      "setupSync": "Setup Cloud Sync",
+      "setupBackup": "Setup Save Backup",
+      "testSyncHealth": "Test Cloud Sync Health",
+      "testBackupHealth": "Test Cloud Backup Health",
+      "manageFiles": "Manage Files",
+      "gdriveWarning": "If you are using a free Google Drive account we don't recomended to use it with CloudSync since Google will throttle your connection, making CloudSync really really slow.",
+      "smbWarning": "You might need to create an emudeck folder in the root of your storage before setting up CloudSync",
+      "uploading": "Uploading",
+      "downloading": "Downloading",
+      "standBy": "Please stand by...",
+      "uploadComplete": "Upload Complete",
+      "uploadCompleteBody": "All your saved games and states have been uploaded to your cloud provider.",
+      "downloadComplete": "Download Complete",
+      "downloadCompleteBody": "All your saved games and states have been downloaded from your cloud provider.",
+      "installing": "Installing Cloud{{type}}",
+      "installingBody": "Please stand by... this could take a while, depending on your provider & internet speed",
+      "configured": "Cloud{{type}} Configured",
+      "configuredBody": "Now every time you load a game your game states and saved games will be synced to the cloud. Keep in mind that every time you play on a device that last save will be the one on the cloud",
+      "uploadOrDownload": "Do you want to upload or download all your saved games now?",
+      "downloadAll": "Download all saves",
+      "uploadAll": "Upload all saves",
+      "installError": "Error Installing Cloud{{type}}",
+      "installErrorBody": "There's been an issue installing Cloud{{type}}, please try again. Make sure your credentials are correct.",
+      "chromeWarning": "Make sure you have Google Chrome installed, Firefox won't work. Once you have Cloud{{type}} installed you can remove Chrome",
+      "uninstalled": "Cloud Sync uninstalled",
+      "chromeDep": "Google Chrome dependency",
+      "chromeDepBody": "Make sure you have Google Chrome or any other Chromium browser set as your default browser to install Cloud{{type}}. You can set your old browser by default once the installation is complete.",
+      "testingHealth": "Cloud Sync - Testing Health",
+      "health": {
+        "rclone": "Does the Rclone executable exists?",
+        "serviceExists": "Does the service exist?",
+        "serviceStarts": "Does the service start?",
+        "testUpload": "Did the test upload work?",
+        "fileUploaded": "Is the test file uploaded?",
+        "testDownload": "Did the test download work?",
+        "fileDownloaded": "Is the test file downloaded?"
+      }
     },
     "CloudSyncPage": {
       "title": "Cloud Saves",
@@ -244,7 +465,32 @@
     },
     "ConfirmationPage": {
       "title": "Here is what EmuDeck will do",
-      "description": ""
+      "description": "",
+      "installationPath": "Your installation path:",
+      "userHomeFolder": "User Home Folder",
+      "willInstall": "EmuDeck will install:",
+      "willConfigure": "EmuDeck will configure:",
+      "customizations": "Your customizations",
+      "aspectRatio": "Aspect Ratio",
+      "segaClassic": "Sega Classic",
+      "nintendoClassic": "Nintendo Classic",
+      "classic3dGames": "Classic 3D Games",
+      "gamecube": "Gamecube",
+      "other": "Other",
+      "autoSave": "AutoSave",
+      "retroAchievements": "RetroAchievements",
+      "bezels": "Bezels",
+      "handheldsShader": "Handhelds Shader",
+      "classic2dShader": "Classic 2D Shader",
+      "classic3dShader": "Classic 3D Shader",
+      "resolutions": "Resolutions",
+      "resGamecubeWii": "GameCube + Wii:",
+      "resPs1": "PlayStation 1:",
+      "resPs2": "PlayStation 2:",
+      "resPs3": "PlayStation 3:",
+      "resSwitch": "Switch:",
+      "resNds": "Nintendo DS:",
+      "resN3ds": "Nintendo 3DS:"
     },
     "ControllerLayoutPage": {
       "title": "Configure Controller Layout",
@@ -252,7 +498,48 @@
     },
     "CopyGamesPage": {
       "title": "",
-      "description": ""
+      "description": "",
+      "usb": {
+        "intro": "Plug a USB Drive into the Steam Deck USB C port, using a hub or adapter. EmuDeck will create a ROMs and BIOS folder, allowing you to copy your ROMs and BIOS to your USB Drive on another device. When you are ready, return to this page, and EmuDeck will transfer your newly copied files to your Steam Deck.",
+        "select": "Select your USB Drive",
+        "drive": "USB Drive",
+        "step1": "Step 1: Prepare USB drive",
+        "step1Note": "(we won't delete anything)",
+        "creatingFolders": "Creating EmuDeck folders...",
+        "step2": "Step 2: Transfer your ROMs & BIOS from the USB",
+        "step2Note": "(Make sure you already copied them in the USB)",
+        "copying": "Copying games...",
+        "insertUsb": "Insert USB"
+      },
+      "foldersCreated": "Folders created",
+      "foldersCreatedBody": "We've created the following folders:",
+      "romsHelp": "Every system has it's own subfolder, check {{path}}/roms/systems.txt to learn which folder is for each system",
+      "biosHelp": "Don't create any aditional folder or subfolder, if a system doesn't have its own folder, just copy the bios file in the roms folder.",
+      "foldersError": "There was an issue creating folders in your USB Drive, please try again.",
+      "whereToCopy": "Where do I copy my games?",
+      "whereToCopyBody": "In the <strong>\"roms\"</strong> folder, you will find a large assortment of folders. These folders correspond to consoles. For example, <strong>\"gc\"</strong> is the folder for your Nintendo Gamecube ROMs. In the <strong>\"bios\"</strong> folder, you will place your BIOS directly into the folder unless a folder already exists.",
+      "whereToCopyReady": "Once you have placed your ROMs and BIOS, you are ready to continue",
+      "usbTitle": "Use a USB Drive to transfer your games",
+      "manualTitle": "Manual Copy",
+      "manualDescription": "Once you have collected your files, click the “Open Emulation Folder” button below",
+      "openEmulationFolder": "Open Emulation Folder",
+      "waitingTitle": "Waiting for Manual Copy",
+      "waitingDescription": "Once you have copied your files please click on the \"Next\" button",
+      "backupTitle": "Import EmuDeck data from another device",
+      "chooseTitle": "Let's copy your games",
+      "chooseDescription": "First, you will need to gather your ROMs and BIOS. These are copyright and EmuDeck will not provide these for legal reasons.",
+      "modeManual": "Manual copy",
+      "modeManualDesc": "You will need to copy your games manually",
+      "modeAuto": "Automatic import",
+      "modeAutoDesc": "You'll need a different computer to create a USB Drive",
+      "modeBackup": "Import Backup",
+      "modeBackupDesc": "Pick this if you already have EmuDeck installed in other device",
+      "biosTitle": "Let's test those BIOS",
+      "launchTitle": "How to launch your games?",
+      "srmInfo": "Steam ROM Manager or SRM is a tool that will add your Games, Emulators to your Steam Library so you can launch them in Game Mode",
+      "esdeInfo": "We've added EmulationStation DE (ES-DE) to your Steam Library. Finish the installation and then go back to gaming mode, look for ES-DE in the Non Steam Games tab",
+      "launchSRM": "Launch Steam ROM Manager",
+      "skipForNow": "Skip for now"
     },
     "DeviceSelectorPage": {
       "title": "Select your device",
@@ -263,20 +550,27 @@
       "description": "Donate on Patreon and help us grow and improve! As a member of our community you'll get 1 on 1 individual support and early access to our latest features, some of them exclusive for patrons only",
       "eaTier": {
         "description": "Get access to the latest features and apps before anyone, this includes exclusive support and new features for SteamOS, Windows, MacOS and Android in the future.",
-        "list": "<li>- Early access</li><li>- General Support</li><li>- CloudSync ( Sync your saved games across Mac, Windows or Linux )</li><li>- Private Discord community</li>"
+        "list": "<li>- Early access</li><li>- General Support</li><li>- CloudSync ( Sync your saved games across Mac, Windows or Linux )</li><li>- Private Discord community</li>",
+        "title": "Early Access"
       },
       "fanTier": {
         "description": "You really really love what I do, and I thank you for that! This contribution will help EmuDeck buy new devices and set custom optimizations for others systems.",
-        "list": "<li>- Same features as Early Access and</li><li>- Voting rights, let's shape the future of EmuDeck together</li>"
-      }
+        "list": "<li>- Same features as Early Access and</li><li>- Voting rights, let's shape the future of EmuDeck together</li>",
+        "title": "EmuDeck Fan"
+      },
+      "imgAlt": "Keep up the Work",
+      "exit": "Exit"
     },
     "EmuDeckyPage": {
       "title": "Configure EmuDecky",
-      "description": ""
+      "description": "",
+      "intro": "EmuDecky is a plugin that allows you to see all of EmuDeck controls and hotkeys while you are gaming and event configure EmuDeck!. To use EmuDecky: In Game Mode, press the ... button, press the socket icon, and select EmuDecky.",
+      "install": "Install EmuDecky"
     },
     "EmulatorConfigResolutionPage": {
       "title": "Emulator Resolution",
-      "description": ""
+      "description": "",
+      "saved": "Your emulators now have the new resolutions you set."
     },
     "EmulatorConfigurationPage": {
       "title": "Emulator and Tools Configurations",
@@ -288,20 +582,123 @@
     },
     "EmulatorsDetailPage": {
       "title": "",
-      "description": ""
+      "description": "",
+      "bios": "Bios",
+      "emulatedSystems": "Emulated Systems",
+      "specialConfiguration": "Special Configuration",
+      "biosNeeded": "Bios needed",
+      "actions": "Actions",
+      "emulatorNotFound": "Emulator not found",
+      "updateConfiguration": "Update configuration",
+      "resetConfiguration": "Reset configuration",
+      "reinstallUpdate": "ReInstall / Update",
+      "removeCache": "Remove Cache",
+      "standaloneParsers": "Standalone Parsers",
+      "controls": "Controls",
+      "hotkeys": "Hotkeys",
+      "hotkeysExpert": "Hotkeys - Expert",
+      "controlsGamecube": "Controls GameCube",
+      "hotkeysGamecube": "Hotkeys GameCube",
+      "classicControlsWii": "Classic Controls Wii",
+      "controlsWii": "Controls Wii",
+      "nunchuckControls": "Nunchuck Controls",
+      "hotkeysWii": "Hotkeys Wii",
+      "hotkeysGamecubeExpert": "Hotkeys GameCube - Expert",
+      "hotkeysWiiExpert": "Hotkeys Wii - Expert",
+      "resetCemuProton": "Reset Cemu Proton",
+      "yuzuEA": {
+        "title": "Yuzu Early Access",
+        "enterToken": "Enter your Yuzu Early Access Token to automatically download and update Yuzu Early Access.",
+        "fromPatreon": "You can get this from your Yuzu Patreon.",
+        "savedTo": "Once you have entered your token in this window it will be saved to ~/emudeck/yuzu-ea-token.txt",
+        "tokenLabel": "Yuzu EA Token",
+        "installing": "Please wait, installing Yuzu Early Access",
+        "wrongToken": "Wrong Token",
+        "wrongTokenBody": "Please check your Token and try again",
+        "failed": "Yuzu Early Access Failed",
+        "failedBody": "There was an issue installing Yuzu Early Access, please try again.",
+        "success": "Yuzu Early Access Success!",
+        "successBody": "Yuzu Early Access has been installed, you can play games as always. EmuDeck will detect you have Yuzu EA and use that instead. You don't need to setup anything else."
+      },
+      "unknownError": "Unknown error!",
+      "unknownErrorBody": "There's been an error, please try again",
+      "installing": "Installing {{code}}",
+      "installingWait": "Please wait while we install {{code}}",
+      "installSuccess": "{{code}} success!",
+      "installSuccessBody": "{{code}} has been installed, now you can play games from {{code}} using EmulationStation-DE or adding them to your Steam Library using Steam Rom Manager",
+      "installed": "{{code}} installed!",
+      "installFailed": "{{code}} failed",
+      "installFailedBody": "There was an issue trying to install {{code}}",
+      "parserUpdateNeeded": "Parser update needed",
+      "parserUpdateBody": "If you want to use this new Standalone emulator in Steam you need to go to Steam Rom Manager and pick the proper parser.",
+      "uninstalling": "Uninstalling {{code}}",
+      "uninstallingWait": "Please wait while we uninstall {{code}}",
+      "uninstalled": "{{code}} uninstalled!",
+      "uninstalledBody": "{{code}} has been uninstalled, you will need to delete your entries from Steam using Steam Rom Manager and manually delete your saved games in Emulation/saves/{{code}}",
+      "uninstallFailed": "{{code}} uninstall failed",
+      "uninstallFailedBody": "There was an issue trying to uninstall {{code}}",
+      "resetting": "Resetting {{code}}'s configuration",
+      "resettingWait": "Please wait while we reset {{code}}'s configuration",
+      "configUpdated": "{{name}}'s configuration updated!",
+      "configUpdatedBody": "{{name}}'s configuration was updated with our latest improvements, optimizations and bug fixes!",
+      "configResetFailed": "{{name}} configuration reset failed",
+      "configResetFailedBody": "There was an issue trying to reset {{name}} configuration",
+      "migrateTitle": "Migrate {{code}} from Flatpak to AppImage",
+      "migrateBody1": "It's migration time! To keep things simple, the version of RPCS3 you are using is unofficially supported by the primary developers of RPCS3. This migration will download the RPCS3 AppImage, which will also include frequent updates and performance improvements.",
+      "migrateBody2": "EmuDeck will migrate your saves and your configurations (yes your per-game configurations too), so you can continue playing right away.",
+      "migrate": "Migrate",
+      "migrating": "Please wait, migrating {{code}}",
+      "migratedBody": "{{code}} has been migrated, have fun!",
+      "migrateFailedBody": "There was an issue trying to migrate {{code}}",
+      "optionalParsers": "Please wait, installing additional parsers:"
     },
     "EmulatorSelectorPage": {
       "title": "Emulators and tools for {{device}}",
-      "standaloneRA": "RetroArch or Standalone Emulator?"
+      "standaloneRA": "RetroArch or Standalone Emulator?",
+      "xeniaTitle": "Xenia Emulator - Disclaimer",
+      "xeniaBody": "Xenia is an experimental Emulator, don't expect a lot of games to work.",
+      "shadps4Title": "ShadPS4 Emulator - Disclaimer",
+      "shadps4Body": "ShadPS4 is an experimental Emulator, don't expect a lot of games to work.",
+      "classicGamesQuestion": "You've selected two emulators for the same systems, which one do you want to use for Classic games like Super Nintendo, Nes, Nintendo 64, Dreamcast, etc?",
+      "whichEmulator": "Which emulator do you want to use",
+      "whichEmulatorGBA": "Which emulator do you want to use for GameBoy Advance.",
+      "hasPros": "has these pros:",
+      "hasPro": "has this pro:",
+      "bothNote": "If you chose Both, we will use Ares when available, and RetroArch for all the other cores",
+      "parserNote": "We will only add the parser according to your selection so you don't end up with duplicates in your library.",
+      "pros": {
+        "retroAchievements": "RetroAchievements",
+        "bezelsShaders": "Bezels & Shaders",
+        "autoSaveStates": "Auto Save States",
+        "alternativeRA": "Alternative for people that dislike RetroArch",
+        "gbaLink": "GBA Link for Multiplayer, Pokemon Trading, etc.",
+        "betterPerformance": "Better performance",
+        "betterPerformanceScaling": "Better performance and scaling",
+        "betterCompatibility": "Better compatibility",
+        "threeCores": "3 different cores: 2003 plus, 2010 and current",
+        "betterKeymapping": "Better Keymapping and Controller support",
+        "native": "Not an emulation but runs natively",
+        "lessResources": "Takes less resources",
+        "hasBetterCompatibility": "Has better compatibility",
+        "flexibleConfig": "More flexible configuration"
+      }
     },
     "EndPage": {
       "title": "We are completing your installation...",
       "titleFinish": "Installation complete!",
       "titleAlly": "Asus Rog Ally Controller configuration",
-      "titleWin32": "Controller configuration"
+      "titleWin32": "Controller configuration",
+      "postInstallStatus": "Post Installation Status",
+      "postInstallDescription": "Please check that all your emulators has been installed. If an emulator or tool failed to install, run a <strong>Custom Reset</strong> or install the emulator using the <strong>Manage Emulators</strong> page.",
+      "readBefore": "⚠️ Read before continuing ⚠️",
+      "readBeforeDescription": "EmuDeck is designed to work using <strong>Steam input</strong>, you need to launch the games using Steam after adding them with Steam Rom Manager, same thing with the Emulators, EmulationStation or Pegasus, otherwise the <strong>controls and hotkeys won't work</strong>.<br />Apps like DeckTools or Handheld Companion might break controls too in some cases.<br />Make sure your handheld is on GamePad mode at all times, not on Desktop or Auto.<br /><strong>If you want to use other Frontends like Playnite you will need to activate Steam Input on the Desktop as shown on the video and keep Steam open in the background at all times.</strong>",
+      "installing": "Installing EmuDeck...",
+      "openLog": "Open detailed log"
     },
     "ErrorPage": {
-      "title": ""
+      "title": "Not connected 😢",
+      "noConnection": "Ooops, it seems you don't have internet connection",
+      "needConnection": "An active internet connection is needed to install EmuDeck"
     },
     "ESDEThemePage": {
       "title": "EmulationStation-DE Default Theme",
@@ -317,7 +714,24 @@
     },
     "FrontendSelectorPage": {
       "title": "Frontends for {{device}}",
-      "description": "Select which frontends you would like to use to launch your games. You may select more than one."
+      "description": "Select which frontends you would like to use to launch your games. You may select more than one.",
+      "integrationTitle": "Pick your level of integration",
+      "integrationDescription": "EmuDeck can integrate into your system in different levels",
+      "low": "Low",
+      "highest": "Highest",
+      "esde": {
+        "description": "EmulationStation will be added as a non Steam Game so you can launch all your games from one single app",
+        "feature1": "Plenty of Themes",
+        "feature2": "Doesn't clutter your library",
+        "feature3": "Manual artwork parsing",
+        "feature4": "Games not integrated with Steam"
+      },
+      "srm": {
+        "description": "Steam Rom Manager will be installed so you can add your games in Steam just like if they were Steam Games",
+        "feature1": "Games tightly integrated with your Steam Library",
+        "feature2": "Can clutter your library if you have a lot of games",
+        "feature3": "Desktop mode needed to add more games"
+      }
     },
     "GameModePage": {
       "title": "Boot Mode",
@@ -340,7 +754,12 @@
       "description": "This utility will move your EmuDeck installation, with your ROMs intact, to the selected destination as well as update your Steam Library paths."
     },
     "ParserSelectorPage": {
-      "title": "Parsers for Steam Rom Manager"
+      "title": "Parsers for Steam Rom Manager",
+      "updating": "Updating Parsers!",
+      "updatingWait": "Please wait a few seconds...",
+      "allConfigured": "All Parsers have been configured.",
+      "configureError": "There was an issue trying to configure your parsers",
+      "description": "Pick which emulator you want Steam Rom Manager to use for each system."
     },
     "PatroenLoginPage": {
       "title": "Login into Patreon",
@@ -349,7 +768,11 @@
       "change": "Change Patreon Account",
       "check": "Check Token",
       "checking": "Checking token...",
-      "license": "Login with License"
+      "license": "Login with License",
+      "featureTitle": "Early Access Feature",
+      "featureDescription": "You need to log into patreon in order to access this feature while it's being tested on our Early Access branch.",
+      "checkFeatures": "Check Early Access features",
+      "token": "Token"
     },
     "PegasusThemeChoicePage": {
       "title": "Pegasus Default Theme",
@@ -392,7 +815,11 @@
       "description": "Your ROM directory will be squared away within an Emulation folder in your selected directory.",
       "modalErrorDetecting": "There was an error detecting your storage...",
       "modalErrorWritable": "Non writable directory selected, please choose another...",
-      "modalError": "There was an error, please restart EmuDeck..."
+      "modalError": "There was an error, please restart EmuDeck...",
+      "customDrive": "Custom Drive",
+      "customDirectory": "Custom Directory",
+      "collectingDrives": "Collecting Drives Names",
+      "collectingDrivesBody": "This will take a few seconds. Please wait..."
     },
     "Shaders2DPage": {
       "title": "Configure CRT Shader for Classic 2D Games",
@@ -407,11 +834,15 @@
       "description": "The LCD Shader simulates the old LCD Matrix screens of handheld systems."
     },
     "StoreFrontPage": {
-      "title": "EmuDeck Store"
+      "title": "EmuDeck Store",
+      "tabsAria": "Demo Tabs"
     },
     "UninstallPage": {
       "title": "Uninstall EmuDeck",
-      "description": "The EmuDeck Uninstallation utility should only be used if you are intending on removing EmuDeck from your system. If you are having issues, run a Custom Reset, troubleshoot the specific tool or emulator, or visit EmuDeck Discord or Reddit for additional support."
+      "description": "The EmuDeck Uninstallation utility should only be used if you are intending on removing EmuDeck from your system. If you are having issues, run a Custom Reset, troubleshoot the specific tool or emulator, or visit EmuDeck Discord or Reddit for additional support.",
+      "discord": "Our Discord",
+      "reddit": "Our Reddit",
+      "confirm": "I know what I am doing, I would like to uninstall EmuDeck."
     },
     "UpdateEmusPage": {
       "title": "Update your Emulators & Tools",
@@ -426,7 +857,11 @@
       },
       "easy": "This mode automatically installs and configures your device with our recommended settings so you can start playing right away. Recommended if you are new to emulation.",
       "custom": "This mode allows you to customize your EmuDeck install. Configure Aspect Ratios, Bezels, Filters, RetroAchievements,Emulators, Frontends, and more. Recommended for advanced users.",
-      "android": "Install EmuDeck ( beta ) on your Android device."
+      "android": "Install EmuDeck ( beta ) on your Android device.",
+      "easyTitle": "Easy Mode",
+      "customTitle": "Custom Mode",
+      "news": "EmuDeck News",
+      "gamesOfTheMonth": "Games of the month by"
     },
     "CheckBios": {
       "detected": "- Detected",
@@ -438,7 +873,17 @@
       "tip4": "Tip 4: Your BIOS files must be placed in Emulation/bios. Do not make sub-folders for BIOS files. For the Nintendo Switch, use our pre-created folders.",
       "tip5": "Tip 5: For systems not listed here, check this link.",
       "cheat": "Cheat Sheet",
-      "tip6": " You can use this link as a handy guide for how your BIOS should be named."
+      "tip6": " You can use this link as a handy guide for how your BIOS should be named.",
+      "ps1": "Playstation 1 BIOS",
+      "ps2": "Playstation 2 BIOS",
+      "yuzu": "Yuzu Firmware",
+      "eden": "Eden Firmware",
+      "ryujinx": "Ryujinx Firmware",
+      "citron": "Citron Firmware",
+      "segacd": "Sega CD BIOS",
+      "saturn": "Saturn BIOS",
+      "nds": "Nintendo DS BIOS",
+      "dreamcast": "Dreamcast BIOS"
     },
     "CloudSync": {
       "sync": "Sync",
@@ -471,7 +916,8 @@
       "sdCard": "SD Card",
       "internalStorage": "Internal Storage",
       "start": "Start Migration",
-      "migrating": "Migrating..."
+      "migrating": "Migrating...",
+      "errorDetectingSD": "Error detecting SD Card"
     },
     "RAAchievements": {
       "modalWrongPassTitle": "Wrong username or password",
@@ -482,7 +928,10 @@
       "modalErrorDesc": "The user & password are correct but EmuDeck could not set the configuration.",
       "register": "If you do not have an account, register now:",
       "success": "You are successfully connected to RetroAchievements!",
-      "reset": "Reset Login"
+      "reset": "Reset Login",
+      "username": "Username",
+      "password": "Password",
+      "hardcoreMode": "HardCore mode"
     },
     "StoreFront": {
       "alertInstalled": "Game Installed.\nGo back to EmulationStation to play it",
@@ -520,6 +969,166 @@
       "preparingExport": "Preparing export…",
       "unexpectedError": "Unexpected error: {{error}}",
       "eta": "{{eta}} left"
+    },
+    "SelectorMenu": {
+      "appliedTo": "Settings will be applied to"
+    },
+    "credits": {
+      "originalIdeaBy": "Original idea by",
+      "assetsBy": "Assets by"
+    },
+    "languages": {
+      "en": "English",
+      "es": "Spanish",
+      "fr": "French",
+      "it": "Italian",
+      "de": "German"
+    },
+    "systems": {
+      "switch": "Switch",
+      "gamecubeWii": "GameCube & Wii",
+      "wiiu": "Nintendo Wii U",
+      "ps1": "PlayStation 1",
+      "ps2": "PlayStation 2",
+      "ps3": "PlayStation 3",
+      "psp": "PSP",
+      "psvita": "PS Vita",
+      "xbox": "Xbox",
+      "dreamcast": "Dreamcast",
+      "nds": "Nintendo DS",
+      "n3ds": "Nintendo 3DS"
+    },
+    "DeckyRomLauncherPage": {
+      "intro": "Retro Library is a plugin that allows you to have a second Steam Library with only your roms so they are not mixed up with your Steam games.",
+      "autoDetect": "All games and artwork are detected automatically.",
+      "install": "Install Retro Library",
+      "title": "Configure Retro Library"
+    },
+    "RemotePlayWhateverPage": {
+      "intro": "Play with your friends both locally and over the internet. More info on this tool",
+      "here": "here",
+      "step1": "First click on install RemotePlayWhatever, this will install it and open Steam Rom Manager to add its shorcut to Steam",
+      "step2": "When you are in gaming mode go to the Emulator collection and launch RemotePlayWhatever, invite your Steam Friend, go back to your library using the STEAM button, open your game from EmulationStation and start playing!",
+      "beta": "This app is on beta, so sometimes it does not work 100% fine, expect some crashes and issues with the sound. At the moment launching games outside EmulationStation is not supported.",
+      "install": "Install RemotePlayWhatever",
+      "title": "Multiplayer with RemotePlayWhatever - Beta"
+    },
+    "VideoGuidePage": {
+      "intro": "Learn how to set up EmuDeck with this wonderful guide from Russ at RetroGameCorps.",
+      "sections": "Sections",
+      "introduction": "Introduction",
+      "writtenGuide": "Written Guide and Recommended Tools",
+      "installing": "Installing EmuDeck",
+      "configuringGames": "Configuring Games and BIOS Files",
+      "configuringSRM": "Configuring Steam ROM Manager",
+      "tools": "EmuDeck Tools and New Features",
+      "tips": "Quick Tips and Tricks",
+      "title": "Emulation Showcase"
+    },
+    "aspectRatio": {
+      "original": "Original Aspect Ratio",
+      "widescreen": " Widescreen <br /> (Expect some graphical glitches.)",
+      "defaultOriginal": " Default Original",
+      "snesReal": "The real SNES Resolution",
+      "smallerBars": " Smaller black bars, slight horizontal distortion"
+    },
+    "plugins": {
+      "passwordCreated": "Password created",
+      "installingWait": "Please wait while we install the plugin",
+      "installError": "Error installing plugin",
+      "installing": "Installing {{plugin}}",
+      "installed": "{{plugin}} Installed"
+    },
+    "AutoMapConfigPage": {
+      "saved": "AutoMap is now enabled for the selected emulators."
+    },
+    "HelpPage": {
+      "title": "Wiki"
+    },
+    "CheckDependenciesPage": {
+      "downloading": "Downloading dependency",
+      "downloadNotStarting": "If your download doesn't start please open this url in a browser:",
+      "restart": "After that, restart EmuDeck, if the problem persists restart your device.",
+      "checking": "Checking dependencies...",
+      "missing": "Missing dependencies...",
+      "missingBody": "Please install the following programs, EmuDeck needs them to work. After that, restart EmuDeck, if the problem persists restart your device.",
+      "downloadGit": "Download GIT",
+      "installSteam": "Install Steam"
+    },
+    "devices": {
+      "mac": "Mac",
+      "steamDeck": "Steam Deck",
+      "steamMachine": "Steam Machine",
+      "steamOSHandheld": "SteamOS Handheld",
+      "linuxPC": "Linux PC",
+      "windowsPC": "Windows PC",
+      "windowsHandheld": "Windows Handheld"
+    },
+    "aria": {
+      "goBack": "Go Back",
+      "goNext": "Go Next",
+      "waitingCopyGames": "Waiting for games copy",
+      "updateOrReset": "Update or reset configuration",
+      "showLog": "Show log",
+      "disabled": "Disabled",
+      "closeModal": "Close Modal",
+      "addToken": "Add Token",
+      "zoomIn": "Zoom In",
+      "zoomOut": "Zoom Out",
+      "uploadAllSaves": "Upload all your saves to your Cloud Provider",
+      "downloadAllSaves": "Download all saves from your Cloud Provider",
+      "updateFromDiscover": "Update Emulators from the Discover Store",
+      "updateAppImages": "Update AppImages, Binaries, and Windows Executables",
+      "uninstallSaveSync": "Uninstall SaveSync",
+      "installSaveSync": "Install SaveSync",
+      "testCloudHealth": "Test Cloud Health",
+      "startCopyGames": "Start copying games",
+      "resetCemuProton": "Reset old Cemu Proton Configuration",
+      "installCHDTool": "Install CHDTool"
+    },
+    "frontends": {
+      "esde": {
+        "desc": "Add this launcher to your Steam Library. Recommended for big collections"
+      },
+      "pegasus": {
+        "desc": "Add this launcher to your Steam Library. Recommended for big collections. You need to run EmulationStation parsers to show artwork in Pegasus Themes"
+      },
+      "steam": {
+        "desc": "Integrate your games inside your Steam Library. Recommended for curated collections"
+      }
+    },
+    "menu": {
+      "app": "EmuDeck",
+      "inspectElement": "Inspect element",
+      "about": "About EmuDeck",
+      "services": "Services",
+      "hide": "Hide EmuDeck",
+      "hideOthers": "Hide Others",
+      "showAll": "Show All",
+      "quit": "Quit",
+      "edit": "Edit",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "selectAll": "Select All",
+      "view": "View",
+      "reload": "Reload",
+      "toggleFullScreen": "Toggle Full Screen",
+      "toggleDevTools": "Toggle Developer Tools",
+      "window": "Window",
+      "minimize": "Minimize",
+      "close": "Close",
+      "closeWindow": "Close",
+      "bringAllToFront": "Bring All to Front",
+      "help": "Help",
+      "learnMore": "Learn More",
+      "documentation": "Documentation",
+      "community": "Community Discussions",
+      "searchIssues": "Search Issues",
+      "file": "File",
+      "open": "Open"
     }
   }
 }

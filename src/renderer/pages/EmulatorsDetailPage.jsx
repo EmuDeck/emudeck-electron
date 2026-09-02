@@ -15,7 +15,6 @@ import {
   citraHotkeys,
   duckstationControls,
   duckstationHotkeys,
-  duckstationHotkeys,
   gamecubeControls,
   gamecubeHotkeysExpert,
   gamecubeHotkeys,
@@ -113,23 +112,19 @@ function EmulatorsDetailPage() {
   const yuzuEAaskToken = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Yuzu Early Access</span>,
+      header: (
+        <span className="h4">{t('EmulatorsDetailPage.yuzuEA.title')}</span>
+      ),
       body: (
         <>
-          <p>
-            Enter your Yuzu Early Access Token to automatically download and
-            update Yuzu Early Access.
-          </p>
-          <p>You can get this from your Yuzu Patreon.</p>
+          <p>{t('EmulatorsDetailPage.yuzuEA.enterToken')}</p>
+          <p>{t('EmulatorsDetailPage.yuzuEA.fromPatreon')}</p>
           <p>https://yuzu-emu.org/help/early-access/</p>
-          <p>
-            Once you have entered your token in this window it will be saved to
-            ~/emudeck/yuzu-ea-token.txt
-          </p>
+          <p>{t('EmulatorsDetailPage.yuzuEA.savedTo')}</p>
           <div className="form">
             <FormInputSimple
               css="form__control--dark"
-              label="Yuzu EA Token"
+              label={t('EmulatorsDetailPage.yuzuEA.tokenLabel')}
               type="yuzuEAtoken"
               name="yuzuEAtoken"
               id="yuzuEAtoken"
@@ -144,18 +139,18 @@ function EmulatorsDetailPage() {
           <BtnSimple
             css="btn-simple--2"
             type="button"
-            aria="Close Modal"
+            aria={t('aria.closeModal')}
             onClick={() => closeModal()}
           >
-            Close
+            {t('general.close')}
           </BtnSimple>
           <BtnSimple
             css="btn-simple--1"
             type="button"
-            aria="Add Token"
+            aria={t('aria.addToken')}
             onClick={() => yuzuEAaddToken()}
           >
-            Next
+            {t('general.next')}
           </BtnSimple>
         </BtnGroup>
       ),
@@ -170,7 +165,7 @@ function EmulatorsDetailPage() {
   const yuzuEAaddToken = () => {
     const modalData = {
       active: true,
-      body: <p>Please wait, installing Yuzu Early Access</p>,
+      body: <p>{t('EmulatorsDetailPage.yuzuEA.installing')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
     };
     setStatePage({
@@ -193,27 +188,32 @@ function EmulatorsDetailPage() {
       console.log({ response });
       switch (true) {
         case response.includes('invalid'):
-          modalHeader = <span className="h4">Wrong Token</span>;
-          modalBody = 'Please check your Token and try again';
+          modalHeader = (
+            <span className="h4">
+              {t('EmulatorsDetailPage.yuzuEA.wrongToken')}
+            </span>
+          );
+          modalBody = t('EmulatorsDetailPage.yuzuEA.wrongTokenBody');
           break;
         case response.includes('fail'):
-          modalHeader = <span className="h4">Yuzu Early Access Failed</span>;
-          modalBody =
-            'There was an issue installing Yuzu Early Access, please try again.';
+          modalHeader = (
+            <span className="h4">{t('EmulatorsDetailPage.yuzuEA.failed')}</span>
+          );
+          modalBody = t('EmulatorsDetailPage.yuzuEA.failedBody');
           break;
         case response.includes('true'):
-          modalHeader = <span className="h4">Yuzu Early Access Success!</span>;
-          modalBody = (
-            <p>
-              Yuzu Early Access has been installed, you can play games as
-              always. EmuDeck will detect you have Yuzu EA and use that
-              instead.You don't need to do setup anything else.
-            </p>
+          modalHeader = (
+            <span className="h4">
+              {t('EmulatorsDetailPage.yuzuEA.success')}
+            </span>
           );
+          modalBody = <p>{t('EmulatorsDetailPage.yuzuEA.successBody')}</p>;
           break;
         default:
-          modalHeader = <span className="h4">Unknown error!</span>;
-          modalBody = <p>There's been an error, please try again</p>;
+          modalHeader = (
+            <span className="h4">{t('EmulatorsDetailPage.unknownError')}</span>
+          );
+          modalBody = <p>{t('EmulatorsDetailPage.unknownErrorBody')}</p>;
           break;
       }
 
@@ -377,7 +377,13 @@ function EmulatorsDetailPage() {
 
     const modalData = {
       active: true,
-      body: <img onClick={() => closeModal()} src={img} alt="Controls" />,
+      body: (
+        <img
+          onClick={() => closeModal()}
+          src={img}
+          alt={t('EmulatorsDetailPage.controls')}
+        />
+      ),
       css: 'emumodal--full',
     };
     setStatePage({
@@ -478,7 +484,13 @@ function EmulatorsDetailPage() {
 
     const modalData = {
       active: true,
-      body: <img onClick={() => closeModal()} src={img} alt="Hotkeys" />,
+      body: (
+        <img
+          onClick={() => closeModal()}
+          src={img}
+          alt={t('EmulatorsDetailPage.hotkeys')}
+        />
+      ),
       css: 'emumodal--full',
     };
     setStatePage({
@@ -490,8 +502,12 @@ function EmulatorsDetailPage() {
   const reInstallEmu = (emulator, code) => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing {code}</span>,
-      body: <p>Please wait while we install {code}</p>,
+      header: (
+        <span className="h4">
+          {t('EmulatorsDetailPage.installing', { code })}
+        </span>
+      ),
+      body: <p>{t('EmulatorsDetailPage.installingWait', { code })}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -523,13 +539,13 @@ function EmulatorsDetailPage() {
 
           const modalData = {
             active: true,
-            header: <span className="h4">{code} success!</span>,
+            header: (
+              <span className="h4">
+                {t('EmulatorsDetailPage.installSuccess', { code })}
+              </span>
+            ),
             body: (
-              <p>
-                {code} has been installed, now you can play games from {code}{' '}
-                using EmulationStation-DE or adding them to your Steam Library
-                using Steam Rom Manager
-              </p>
+              <p>{t('EmulatorsDetailPage.installSuccessBody', { code })}</p>
             ),
             css: 'emumodal--xs',
           };
@@ -576,8 +592,12 @@ function EmulatorsDetailPage() {
         } else {
           const modalData = {
             active: true,
-            header: <span className="h4">{code} failed</span>,
-            body: <p>There was an issue trying to install {code}</p>,
+            header: (
+              <span className="h4">
+                {t('EmulatorsDetailPage.installFailed', { code })}
+              </span>
+            ),
+            body: <p>{t('EmulatorsDetailPage.installFailedBody', { code })}</p>,
             css: 'emumodal--xs',
           };
 
@@ -596,8 +616,12 @@ function EmulatorsDetailPage() {
   const installEmu = (emulator, code) => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing {code}</span>,
-      body: <p>Please wait while we install {code}</p>,
+      header: (
+        <span className="h4">
+          {t('EmulatorsDetailPage.installing', { code })}
+        </span>
+      ),
+      body: <p>{t('EmulatorsDetailPage.installingWait', { code })}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -626,13 +650,13 @@ function EmulatorsDetailPage() {
         if (status.includes('true')) {
           const modalData = {
             active: true,
-            header: <span className="h4">{code} installed!</span>,
+            header: (
+              <span className="h4">
+                {t('EmulatorsDetailPage.installed', { code })}
+              </span>
+            ),
             body: (
-              <p>
-                {code} has been installed, now you can play games from {code}{' '}
-                using EmulationStation-DE or adding them to your Steam Library
-                using Steam Rom Manager
-              </p>
+              <p>{t('EmulatorsDetailPage.installSuccessBody', { code })}</p>
             ),
             css: 'emumodal--xs',
           };
@@ -665,21 +689,24 @@ function EmulatorsDetailPage() {
           ) {
             const modalData = {
               active: true,
-              header: <span className="h4">Parser update needed</span>,
-              body: (
-                <p>
-                  If you want to use this new Standalone emulator in Steam you
-                  need to go to Steam Rom Manager and pick the proper parser.
-                </p>
+              header: (
+                <span className="h4">
+                  {t('EmulatorsDetailPage.parserUpdateNeeded')}
+                </span>
               ),
+              body: <p>{t('EmulatorsDetailPage.parserUpdateBody')}</p>,
               css: 'emumodal--xs',
             };
           }
         } else {
           const modalData = {
             active: true,
-            header: <span className="h4">{code} installation failed</span>,
-            body: <p>There was an issue trying to install {code}</p>,
+            header: (
+              <span className="h4">
+                {t('EmulatorsDetailPage.installFailed', { code })}
+              </span>
+            ),
+            body: <p>{t('EmulatorsDetailPage.installFailedBody', { code })}</p>,
             css: 'emumodal--xs',
           };
 
@@ -700,8 +727,12 @@ function EmulatorsDetailPage() {
 
     const modalData = {
       active: true,
-      header: <span className="h4">Uninstalling {code}</span>,
-      body: <p>Please wait while we uninstall {code}</p>,
+      header: (
+        <span className="h4">
+          {t('EmulatorsDetailPage.uninstalling', { code })}
+        </span>
+      ),
+      body: <p>{t('EmulatorsDetailPage.uninstallingWait', { code })}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -737,14 +768,12 @@ function EmulatorsDetailPage() {
         if (status.includes('false')) {
           const modalData = {
             active: true,
-            header: <span className="h4">{code} uninstalled!</span>,
-            body: (
-              <p>
-                {code} has been uninstalled, you will need to delete your
-                entries from Steam using Steam Rom Manager and manually delete
-                your saved games in Emulation/saves/{code}
-              </p>
+            header: (
+              <span className="h4">
+                {t('EmulatorsDetailPage.uninstalled', { code })}
+              </span>
             ),
+            body: <p>{t('EmulatorsDetailPage.uninstalledBody', { code })}</p>,
             css: 'emumodal--xs',
           };
 
@@ -781,8 +810,14 @@ function EmulatorsDetailPage() {
         } else {
           const modalData = {
             active: true,
-            header: <span className="h4">{code} uninstall failed</span>,
-            body: <p>There was an issue trying to uninstall {code}</p>,
+            header: (
+              <span className="h4">
+                {t('EmulatorsDetailPage.uninstallFailed', { code })}
+              </span>
+            ),
+            body: (
+              <p>{t('EmulatorsDetailPage.uninstallFailedBody', { code })}</p>
+            ),
             css: 'emumodal--xs',
           };
 
@@ -798,8 +833,12 @@ function EmulatorsDetailPage() {
   const resetEmu = (code, name, id) => {
     const modalData = {
       active: true,
-      header: <span className="h4">Resetting {code}'s configuration</span>,
-      body: <p>Please wait while we reset {code}'s configuration</p>,
+      header: (
+        <span className="h4">
+          {t('EmulatorsDetailPage.resetting', { code })}
+        </span>
+      ),
+      body: <p>{t('EmulatorsDetailPage.resettingWait', { code })}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -827,13 +866,12 @@ function EmulatorsDetailPage() {
       if (status.includes('true')) {
         const modalData = {
           active: true,
-          header: <span className="h4">{name}'s configuration updated!</span>,
-          body: (
-            <p>
-              {name}'s configuration was updated with our latest improvements,
-              optimizations and bug fixes!
-            </p>
+          header: (
+            <span className="h4">
+              {t('EmulatorsDetailPage.configUpdated', { name })}
+            </span>
           ),
+          body: <p>{t('EmulatorsDetailPage.configUpdatedBody', { name })}</p>,
           css: 'emumodal--xs',
         };
 
@@ -849,8 +887,14 @@ function EmulatorsDetailPage() {
       } else {
         const modalData = {
           active: true,
-          header: <span className="h4">{name} configuration reset failed</span>,
-          body: <p>There was an issue trying to reset {name} configuration</p>,
+          header: (
+            <span className="h4">
+              {t('EmulatorsDetailPage.configResetFailed', { name })}
+            </span>
+          ),
+          body: (
+            <p>{t('EmulatorsDetailPage.configResetFailedBody', { name })}</p>
+          ),
           css: 'emumodal--xs',
         };
 
@@ -866,21 +910,14 @@ function EmulatorsDetailPage() {
     const modalData = {
       active: true,
       header: (
-        <span className="h4">Migrate {code} from Flatpak to AppImage</span>
+        <span className="h4">
+          {t('EmulatorsDetailPage.migrateTitle', { code })}
+        </span>
       ),
       body: (
         <>
-          <p>
-            It's migration time! To keep things simple, the version of RPCS3 you
-            are using is unofficially supported by the primary developers of
-            RPCS3. This migration will download the RPCS3 AppImage, which will
-            also include frequent updates and performance improvements.
-          </p>
-          <p>
-            EmuDeck will migrate your saves and your configurations (yes your
-            per-game configurations too), so you can continue playing right
-            away.
-          </p>
+          <p>{t('EmulatorsDetailPage.migrateBody1')}</p>
+          <p>{t('EmulatorsDetailPage.migrateBody2')}</p>
         </>
       ),
       footer: (
@@ -888,18 +925,18 @@ function EmulatorsDetailPage() {
           <BtnSimple
             css="btn-simple--2"
             type="button"
-            aria="Close Modal"
+            aria={t('aria.closeModal')}
             onClick={() => closeModal()}
           >
-            Close
+            {t('general.close')}
           </BtnSimple>
           <BtnSimple
             css="btn-simple--1"
             type="button"
-            aria="Add Token"
+            aria={t('aria.addToken')}
             onClick={() => doMigration(code)}
           >
-            Migrate
+            {t('EmulatorsDetailPage.migrate')}
           </BtnSimple>
         </BtnGroup>
       ),
@@ -929,7 +966,7 @@ function EmulatorsDetailPage() {
       active: true,
       body: (
         <>
-          <p>Please wait, installing additional parsers:</p>
+          <p>{t('EmulatorsDetailPage.optionalParsers')}</p>
           <ul className="list">
             <li>Nintendo GameBoy - SameBoy</li>
             <li>Nintendo GameBoy Color - SameBoy</li>
@@ -959,7 +996,7 @@ function EmulatorsDetailPage() {
   const doMigration = (code) => {
     const modalData = {
       active: true,
-      body: <p>Please wait, migrating {code}</p>,
+      body: <p>{t('EmulatorsDetailPage.migrating', { code })}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
     };
     setStatePage({
@@ -978,15 +1015,23 @@ function EmulatorsDetailPage() {
       if (response.includes('true')) {
         modalData = {
           active: true,
-          header: <span className="h4">{code} success!</span>,
-          body: <p>{code} has been migrated, have fun!</p>,
+          header: (
+            <span className="h4">
+              {t('EmulatorsDetailPage.installSuccess', { code })}
+            </span>
+          ),
+          body: <p>{t('EmulatorsDetailPage.migratedBody', { code })}</p>,
           css: 'emumodal--xs',
         };
       } else {
         modalData = {
           active: true,
-          header: <span className="h4">{code} failed</span>,
-          body: <p>There was an issue trying to migrate {code}</p>,
+          header: (
+            <span className="h4">
+              {t('EmulatorsDetailPage.installFailed', { code })}
+            </span>
+          ),
+          body: <p>{t('EmulatorsDetailPage.migrateFailedBody', { code })}</p>,
           css: 'emumodal--xs',
         };
       }
@@ -1130,15 +1175,15 @@ function EmulatorsDetailPage() {
         if (status.includes('true')) {
           modalData = {
             active: true,
-            header: <span className="h4">Success!</span>,
-            body: <p>All Parsers have been configured.</p>,
+            header: <span className="h4">{t('general.successExcl')}</span>,
+            body: <p>{t('ParserSelectorPage.allConfigured')}</p>,
             footer: (
               <BtnSimple
                 css="btn-simple--1"
                 type="button"
                 onClick={() => navigate('/welcome')}
               >
-                Close
+                {t('general.close')}
               </BtnSimple>
             ),
             css: 'emumodal--xs',
@@ -1146,8 +1191,8 @@ function EmulatorsDetailPage() {
         } else if (system !== 'win32') {
           modalData = {
             active: true,
-            header: <span className="h4">Failed</span>,
-            body: <p>There was an issue trying to configure your parsers</p>,
+            header: <span className="h4">{t('general.failed')}</span>,
+            body: <p>{t('ParserSelectorPage.configureError')}</p>,
             css: 'emumodal--xs',
           };
           console.log({ modalData });

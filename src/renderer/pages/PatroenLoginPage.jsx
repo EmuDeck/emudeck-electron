@@ -344,7 +344,7 @@ function PatreonLoginPage() {
         {patreonClicked && (
           <div className="form">
             <FormInputSimple
-              label="Token"
+              label={t('PatroenLoginPage.token')}
               type="token"
               name="token"
               id="token"

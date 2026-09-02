@@ -64,10 +64,8 @@ function FrontendSelectorPage() {
 
   return (
     <Wrapper css="wrapper__full">
-      <Header title="Pick your level of integration" />
-      <p className="lead">
-        EmuDeck can integrate into your system in different levels
-      </p>
+      <Header title={t('FrontendSelectorPage.integrationTitle')} />
+      <p className="lead">{t('FrontendSelectorPage.integrationDescription')}</p>
       <Main>
         <div className="selector-menu ">
           <div className="selector-menu__text">
@@ -92,7 +90,7 @@ function FrontendSelectorPage() {
                         fill="#E7D8FF"
                       />
                     </svg>
-                    <span className="h4">Low</span>
+                    <span className="h4">{t('FrontendSelectorPage.low')}</span>
                     <p>EmulationStation (ES-DE)</p>
                   </button>
                 </li>
@@ -116,7 +114,9 @@ function FrontendSelectorPage() {
                         fill="#E7D8FF"
                       />
                     </svg>
-                    <span className="h4">Highest</span>
+                    <span className="h4">
+                      {t('FrontendSelectorPage.highest')}
+                    </span>
                     <p>Steam Rom Manager</p>
                   </button>
                 </li>
@@ -124,52 +124,46 @@ function FrontendSelectorPage() {
             </div>
             {esde.status && (
               <div className="selector-menu__details">
-                <p className="lead">Description</p>
-                <p>
-                  EmulationStation will be added as a non Steam Game so you can
-                  launch all your games from one single app
-                </p>
-                <p className="lead">Features</p>
+                <p className="lead">{t('general.description')}</p>
+                <p>{t('FrontendSelectorPage.esde.description')}</p>
+                <p className="lead">{t('general.features')}</p>
                 <ul>
                   <li>
                     <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
-                    Plenty of Themes
+                    {t('FrontendSelectorPage.esde.feature1')}
                   </li>
                   <li>
                     <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
-                    Doesn't clutter your library
+                    {t('FrontendSelectorPage.esde.feature2')}
                   </li>
                   <li>
                     <Img src={iconDanger} css="icon icon--xs" alt="OK" />
-                    Manual artwork parsing
+                    {t('FrontendSelectorPage.esde.feature3')}
                   </li>
                   <li>
                     <Img src={iconDanger} css="icon icon--xs" alt="OK" />
-                    Games not integrated with Steam
+                    {t('FrontendSelectorPage.esde.feature4')}
                   </li>
                 </ul>
               </div>
             )}
             {steam.status && (
               <div className="selector-menu__details">
-                <p className="lead">Description</p>
-                <p>
-                  Steam Rom Manager will be installed so you can add your games
-                  in Steam just like if they were Steam Games
-                </p>
-                <p className="lead">Features</p>
+                <p className="lead">{t('general.description')}</p>
+                <p>{t('FrontendSelectorPage.srm.description')}</p>
+                <p className="lead">{t('general.features')}</p>
                 <ul>
                   <li>
                     <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
-                    Games tightly integrated with your Steam Library
+                    {t('FrontendSelectorPage.srm.feature1')}
                   </li>
                   <li>
                     <Img src={iconDanger} css="icon icon--xs" alt="OK" />
-                    Can clutter your library if you have a lot of games
+                    {t('FrontendSelectorPage.srm.feature2')}
                   </li>
                   <li>
                     <Img src={iconDanger} css="icon icon--xs" alt="OK" />
-                    Desktop mode needed to add more games
+                    {t('FrontendSelectorPage.srm.feature3')}
                   </li>
                 </ul>
               </div>

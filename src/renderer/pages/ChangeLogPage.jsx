@@ -192,7 +192,7 @@ function ChangeLogPage() {
       </ChangeLog>
       <Footer
         next={false}
-        backText="Back"
+        backText={t('general.back')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

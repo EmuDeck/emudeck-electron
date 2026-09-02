@@ -117,7 +117,7 @@ function RomStoragePage() {
             } else {
               const modalData = {
                 active: true,
-                header: <span className="h4">Ooops 😞</span>,
+                header: <span className="h4">{t('general.ooops')}</span>,
                 body: <p>{t('RomStoragePage.modalErrorDetecting')}</p>,
                 css: 'emumodal--xs',
               };
@@ -126,7 +126,7 @@ function RomStoragePage() {
           } else {
             const modalData = {
               active: true,
-              header: <span className="h4">Ooops 😞</span>,
+              header: <span className="h4">{t('general.ooops')}</span>,
               body: <p>{t('RomStoragePage.modalErrorWritable')}</p>,
               css: 'emumodal--xs',
             };
@@ -205,7 +205,7 @@ function RomStoragePage() {
       if (message === 'nogit') {
         const modalData = {
           active: true,
-          header: <span className="h4">Ooops 😞</span>,
+          header: <span className="h4">{t('general.ooops')}</span>,
           body: <p>{t('RomStoragePage.modalError')}</p>,
           css: 'emumodal--xs',
         };
@@ -462,8 +462,10 @@ function RomStoragePage() {
     } else if (system === 'win32') {
       const modalData = {
         active: true,
-        header: <span className="h4">Collecting Drives Names</span>,
-        body: <p>This will take a few seconds. Please wait...</p>,
+        header: (
+          <span className="h4">{t('RomStoragePage.collectingDrives')}</span>
+        ),
+        body: <p>{t('RomStoragePage.collectingDrivesBody')}</p>,
         css: 'emumodal--xs',
       };
       setStatePage({ ...statePage, modal: modalData });

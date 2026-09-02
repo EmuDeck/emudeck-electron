@@ -11,6 +11,7 @@
       "skip": "Überspringen",
       "pressContinue": "Drücken Sie Weiter, wenn Sie fertig sind",
       "yes": "Ja",
+      "no": "Nein",
       "month": "Monat",
       "join": "Beitreten",
       "login": "Anmelden",
@@ -23,9 +24,25 @@
       "loading": "Wird geladen",
       "save": "Speichern",
       "both": "Beide",
-      "no": "Nein",
       "start": "Starten",
-      "cancel": "Abbrechen"
+      "cancel": "Abbrechen",
+      "warning": "Achtung",
+      "description": "Beschreibung",
+      "features": "Funktionen",
+      "on": "Ja",
+      "off": "Nein",
+      "download": "Herunterladen",
+      "update": "Aktualisieren",
+      "reinstall": "Neu installieren",
+      "pleaseWait": "Bitte warten...",
+      "sudoPassword": "Sudo-Passwort",
+      "sudoDetected": "Wir haben festgestellt, dass du ein Sudo-Passwort festgelegt hast. Gib es im nächsten Feld ein, um dieses Tool zu installieren.",
+      "all": "Alle",
+      "recommended": "empfohlen",
+      "successExcl": "Geschafft!",
+      "failed": "Fehlgeschlagen",
+      "settingsSaved": "Einstellungen gespeichert!",
+      "ooops": "Hoppla 😞"
     },
     "footer": {
       "exit": "Spielmodus beenden"
@@ -38,6 +55,7 @@
       "quickReset": "Schnell zurücksetzen",
       "customReset": "Benutzerdefiniertes Zurücksetzen",
       "screenResolution": "Bildschirmauflösung",
+      "portable": "SD-Karte portabel machen",
       "retroAchievements": "Retro-Erfolge",
       "biosChecker": "BIOS-Prüfer",
       "cloudSaves": "Cloud-Speicherung",
@@ -52,11 +70,151 @@
       "logsError": "Beim Abrufen Ihrer Protokolle ist ein Problem aufgetreten. Holen Sie sie manuell aus dem Emudeck-Ordner in Ihrem Benutzerordner ab.",
       "bootMode": "Spielmodus",
       "pegasusTheme": "Pegasus-Thema",
+      "featured": "Vorgestellt",
       "otherSettings": "Andere Einstellungen",
       "exclusiveTools": "Exklusive EmuDeck-Tools",
       "thirdParty": "Tools von Drittanbietern",
       "other": "Andere Dinge",
-      "featured": "Vorgestellt"
+      "autoMap": "AutoMap",
+      "importExport": "Importieren / Exportieren",
+      "portableSD": {
+        "errorBody": "Die Umwandlung ist fehlgeschlagen, bitte versuche es erneut.",
+        "successP1": "Deine SD-Karte ist jetzt portabel!",
+        "successP2": "Um deine EmuDeck-Installation auf verschiedenen Geräten zu nutzen, musst du deine aktuelle SD-Karte in das neue Gerät einsetzen und EmuDeck dort neu installieren.",
+        "successP3": "Keine Sorge, dabei wird nichts auf der SD-Karte gelöscht",
+        "successP4": "Beachte, dass die Einträge aus dem Steam Rom Manager nicht übertragen werden; du musst sie auf dem neuen Gerät manuell hinzufügen.",
+        "modalTitle": "Portable SD-Karte",
+        "modalP1": "Diese Funktion macht deine SD-Karte portabel, falls du EmuDeck vor Version 2.7 installiert hast. Das heißt, du kannst dieselbe SD-Karte für mehrere EmuDeck-Installationen auf verschiedenen Linux-/SteamOS-Geräten verwenden ( nicht kompatibel mit Windows-Geräten ).",
+        "modalP2": "Drücke auf Start, um den Vorgang zu beginnen. Dabei werden alle deine Spielstände auf die SD-Karte verschoben und deine Emulatoren mit den neuen Pfaden konfiguriert.",
+        "modalP3": "Wenn du Syncthing benutzt, musst du deine Pfade manuell aktualisieren."
+      },
+      "srm": {
+        "body": "Wir schließen Steam, falls es läuft, und öffnen dann den Steam Rom Manager. Das kann ein paar Sekunden dauern, bitte warte.",
+        "desktopControls": "Die Desktop-Steuerung wechselt vorübergehend zurück zu Touch/Trackpad/L2/R2."
+      },
+      "reset": {
+        "warningBody": "Ein Zurücksetzen überschreibt alle von dir vorgenommenen Anpassungen und stellt die EmuDeck-Standardeinstellungen wieder her"
+      },
+      "cards": {
+        "manual": {
+          "title": "Handbuch"
+        },
+        "quickSettings": {
+          "description": "Passe Rahmen, Shader, Seitenverhältnis, automatisches Speichern und vieles mehr an"
+        },
+        "manageEmulators": {
+          "description": "Verwalte und aktualisiere deine Emulatoren und deren Konfigurationen"
+        },
+        "store": {
+          "description": "Lade kostenlose, nicht kommerzielle Homebrew-Spiele herunter"
+        },
+        "srm": {
+          "description": "Füge Emulatoren, Tools oder ROMs zu deiner Steam-Bibliothek hinzu"
+        },
+        "importGames": {
+          "description": "Übertrage deine Spiele mit einem USB-Stick"
+        },
+        "quickReset": {
+          "description": "Aktualisiere oder setze deine Installation mit einem Klick auf die neueste EmuDeck-Version zurück"
+        },
+        "customReset": {
+          "description": "Aktualisiere oder setze deine Installation im benutzerdefinierten Modus auf die neueste EmuDeck-Version zurück"
+        },
+        "portable": {
+          "description": "Mache deine Installation auf der SD-Karte portabel"
+        },
+        "screenResolution": {
+          "description": "Erhöhe die Auflösung deiner Emulatoren"
+        },
+        "retroAchievements": {
+          "description": "Richte RetroAchievements für Duckstation, PCSX2 und RetroArch ein"
+        },
+        "importExport": {
+          "description": "Importiere / Exportiere deine Installation"
+        },
+        "autoMap": {
+          "description": "Belege deine Controller"
+        },
+        "compressor": {
+          "title": "EmuDeck-Kompressor",
+          "description": "Komprimiere deine ROMs, um Speicherplatz zu sparen"
+        },
+        "biosChecker": {
+          "description": "Nutze den BIOS-Prüfer von EmuDeck, um deine BIOS-Dateien zu überprüfen"
+        },
+        "bootMode": {
+          "description": "Starte direkt in Steam statt in Windows"
+        },
+        "pegasusTheme": {
+          "description": "Wähle dein Pegasus-Theme"
+        },
+        "cloudSaves": {
+          "description": "Synchronisiere oder sichere deine Spielstände und Savestates in der Cloud"
+        },
+        "migration": {
+          "description": "Migriere deine EmuDeck-Installation auf deine SD-Karte oder umgekehrt"
+        },
+        "emuDecky": {
+          "description": "Plugin, um Emulator-Tastenkürzel einfach anzuzeigen und EmuDeck im Spielmodus zu konfigurieren"
+        },
+        "onlineMultiplayer": {
+          "title": "Online-Mehrspieler",
+          "description": "Spiele deine Emulatoren übers Internet mit deinen Freunden"
+        },
+        "gyro": {
+          "description": "Aktiviere das Gyroskop deines Steam Decks in der Emulation"
+        },
+        "deckyPerformance": {
+          "description": "Ein Decky-Loader-Plugin zur Verwaltung der Leistungseinstellungen im Spielmodus"
+        },
+        "earlyAccess": {
+          "description": "Unterstütze EmuDeck auf Patreon und erhalte frühzeitigen Zugang zu unseren neuesten Funktionen"
+        },
+        "resetToken": {
+          "title": "Token zurücksetzen",
+          "description": "Token wechseln"
+        },
+        "logFiles": {
+          "description": "Schicke uns deine Logs, wenn du Probleme hast"
+        },
+        "changelog": {
+          "description": "Lies die neuesten Änderungen an EmuDeck"
+        },
+        "cloudServices": {
+          "description": "Verwalte deine Cloud-Dienste, Xbox Cloud Gaming und mehr"
+        },
+        "uninstall": {
+          "description": "Deinstalliere EmuDeck von deinem System"
+        }
+      },
+      "buttons": {
+        "configure": "Konfigurieren",
+        "update": "Aktualisieren",
+        "getFreeGames": "Kostenlose Spiele",
+        "launch": "Starten",
+        "addMoreGames": "Weitere Spiele hinzufügen",
+        "reinstall": "Neu installieren",
+        "donate": "Spenden",
+        "changeToken": "Token ändern",
+        "createZip": "Zip erstellen",
+        "read": "Lesen"
+      }
+    },
+    "ImportExportPage": {
+      "title": "EmuDeck auf ein anderes Gerät importieren / exportieren",
+      "description": "Auf dieser Seite kannst du deine EmuDeck-Installation auf ein anderes System übertragen, egal ob Linux oder Windows.",
+      "export": "Exportieren",
+      "exportDescription": "Diese Option exportiert alle deine Roms, BIOS-Dateien und Spielstände auf ein anderes Gerät. Emulator-Einstellungen und Steam-Rom-Manager-Einträge werden nicht exportiert.",
+      "import": "Importieren",
+      "importDescription": "Diese Option importiert alle deine Roms, BIOS-Dateien und Spielstände von einem anderen Gerät. Emulator-Einstellungen und Steam-Rom-Manager-Einträge werden nicht importiert.",
+      "importButton": "Import starten",
+      "exportButton": "Export starten",
+      "exportBackup": "Backup exportieren",
+      "importBackup": "Backup importieren",
+      "selectExport": "Wähle aus, was du exportieren möchtest:",
+      "selectImport": "Wähle aus, was du importieren möchtest:",
+      "pickDriveExport": "Wo möchtest du dein Backup speichern?",
+      "pickDriveImport": "Wo ist dein Backup gespeichert?"
     },
     "ManageEmulatorsPage": {
       "title": "Verwalten Sie Ihre Emulatoren",
@@ -78,7 +236,9 @@
       "modalUpdatedTitle": "{{name}}-Einstellungen aktualisiert!",
       "modalUpdatedDesc": "Die Einstellungen für {{name}} wurden mit unseren neuesten Verbesserungen, Optimierungen und Fehlerkorrekturen aktualisiert!",
       "modalFailedTitle": "Fehler beim Zurücksetzen der {{name}}-Einstellungen",
-      "modalFailedDesc": "Beim Versuch, die Einstellungen für {{name}} zurückzusetzen, ist ein Problem aufgetreten."
+      "modalFailedDesc": "Beim Versuch, die Einstellungen für {{name}} zurückzusetzen, ist ein Problem aufgetreten.",
+      "updateAvailable": "Update verfügbar",
+      "toolsFrontends": "Verwalte deine Tools & Frontends"
     },
     "QuickSettingsPage": {
       "title": "Konfigurieren Sie Ihre Einstellungen",
@@ -94,7 +254,19 @@
       "nofifAutosave": "Automatisches Speichern aktualisiert!",
       "nofifAutoMap": "AutoMap aktualisiert!",
       "nofifController": "Controller-Design aktualisiert!",
-      "nofifBoot": "Startmodus aktualisiert, bitte starten Sie Ihr Gerät neu!"
+      "nofifBoot": "Startmodus aktualisiert, bitte starten Sie Ihr Gerät neu!",
+      "autoSave": "Automatisches Speichern",
+      "controllerLayout": "Controller-Belegung",
+      "cloudSync": "CloudSync",
+      "bezels": "Rahmen",
+      "segaClassicAR": "Seitenverhältnis Sega-Klassiker",
+      "nintendoClassicAR": "Seitenverhältnis Nintendo-Klassiker",
+      "classics3dAR": "Seitenverhältnis 3D-Klassiker",
+      "gamecubeAR": "Seitenverhältnis GameCube",
+      "lcdHandhelds": "LCD-Handhelds",
+      "crt2d": "CRT 2D",
+      "crt3d": "CRT 3D",
+      "notifSegaAR": "Sega-Seitenverhältnis aktualisiert!"
     },
     "AndroidEmulatorSelectorPage": {
       "title": "Emulatoren und Tools für Android",
@@ -136,7 +308,7 @@
       "configs": {
         "yuzu": "Gehen Sie zu Ihrem Gerät, klicken Sie auf Get Started und schließen Sie die Einrichtung auf Ihrem Gerät ab. Ihre Keys sollten sich in {{storage}}/Emulation/bios/yuzu/keys befinden.",
         "ppsspp": "Gehen Sie zu Ihrem Gerät und erstellen Sie den PSP-Ordner in {{storage}}/Emulation/saves/. Drücken Sie auf Weiter, wenn Sie fertig sind.",
-        "nethersx2": "Gehen Sie zu Ihrem Gerät und richten Sie Ihr BIOS ein. Ihr BIOS sollte sich in {storage}/Emulation/bios/ befinden",
+        "nethersx2": "Gehen Sie zu Ihrem Gerät und richten Sie Ihr BIOS ein. Ihr BIOS sollte sich in {{storage}}/Emulation/bios/ befinden",
         "ra1": "Gehen Sie zu Ihrem Gerät, dann zu Load Core, Download Core und installieren Sie alle benötigten Cores.",
         "ra2": "Jeder Core wird für ein anderes System verwendet. Dies sind die Cores für die gängigsten Systeme:",
         "ra3": "mgba (GameBoy Advance), genesis_plus_gx(Genesis,MasterSystem), snex9x(Super Nintendo), melonds (Nintendo DS),mame2003_plus (MAME), mesen (NES), gambatte (GameBoy), mupen64plus_next(Nintendo 64), swanstation (Playstation 1)",
@@ -187,7 +359,32 @@
     },
     "CHDToolPage": {
       "title": "EmuDeck Komprimierungstool",
-      "description": "Das Komprimierungstool ist ein Skript, das bestimmte ROM-Ordner durchsucht und Spiele mit den Formaten CHD, RVZ, Trimmed 3DS, XISO und 7Zip auf bis zu 70 % ihrer ursprünglichen Dateigröße komprimiert."
+      "description": "Das Komprimierungstool ist ein Skript, das bestimmte ROM-Ordner durchsucht und Spiele mit den Formaten CHD, RVZ, Trimmed 3DS, XISO und 7Zip auf bis zu 70 % ihrer ursprünglichen Dateigröße komprimiert.",
+      "cso": {
+        "title": "CSO-Format",
+        "description": "Wird zum Komprimieren von PlayStation-Portable-ROMs verwendet. Beim Komprimieren von PlayStation-Portable-ROMs wirst du gefragt, ob du sie als CSO oder CHD komprimieren möchtest."
+      },
+      "chd": {
+        "title": "CHD-Format",
+        "description": "Wird zum Komprimieren von Spielen für CD-i, Dreamcast, PSP, PSX, PS2, Sega/MegaCD, 3DO, Saturn, TurboGraphix/PCEngineCD, PC-FX, Amiga CD32 und NeoGeoCD verwendet."
+      },
+      "rvz": {
+        "title": "RVZ-Format",
+        "description": "Wird zum Komprimieren von GameCube- und Wii-Spielen verwendet."
+      },
+      "trimmed3ds": {
+        "title": "Getrimmtes 3DS-Format",
+        "description": "Wird zum Komprimieren von 3DS-Spielen verwendet."
+      },
+      "xiso": {
+        "title": "XISO-Format",
+        "description": "Wird zum Komprimieren von Xbox-Spielen verwendet."
+      },
+      "sevenzip": {
+        "title": "7Zip-Format",
+        "description": "Wird vor allem zum Komprimieren einer großen Bandbreite von RetroArch-Systemen verwendet."
+      },
+      "run": "Kompressions-Tool starten"
     },
     "CheckBiosPage": {
       "title": "BIOS-Dateien-Prüfer",
@@ -212,12 +409,55 @@
       "error": {
         "title": "Hoppla",
         "description": "Beim Herunterladen des Backends scheint es ein Problem zu geben. Bitte starten Sie EmuDeck neu, nachdem Sie geprüft haben, dass Ihr Netzwerk funktioniert"
-      }
+      },
+      "seeMoreDetails": "Mehr Details anzeigen",
+      "backendError": "Beim Erstellen des Backends scheint es ein Problem zu geben. Starte EmuDeck neu, falls dieser Bildschirm nicht innerhalb von etwa 5 Sekunden verschwindet",
+      "backendError2": "Beim Erstellen des Backends ist ein Problem aufgetreten. Starte EmuDeck neu, falls dieser Bildschirm nicht innerhalb von etwa 5 Sekunden verschwindet.",
+      "offline": "Du musst mit dem Internet verbunden sein."
     },
     "CloudSyncConfigPage": {
       "title": "Cloud-Synchronisierung – Wählen Sie Ihren Anbieter",
       "title2": "Cloud-Backup – Wählen Sie Ihren Anbieter",
-      "description": ""
+      "description": "",
+      "recommendedProviders": "Empfohlene Anbieter",
+      "legacyProviders": "Ältere Anbieter",
+      "setupSync": "Cloud Sync einrichten",
+      "setupBackup": "Spielstand-Backup einrichten",
+      "testSyncHealth": "Cloud-Sync-Status prüfen",
+      "testBackupHealth": "Cloud-Backup-Status prüfen",
+      "manageFiles": "Dateien verwalten",
+      "gdriveWarning": "Wenn du ein kostenloses Google-Drive-Konto verwendest, raten wir von der Nutzung mit CloudSync ab, da Google deine Verbindung drosselt und CloudSync dadurch sehr, sehr langsam wird.",
+      "smbWarning": "Möglicherweise musst du im Stammverzeichnis deines Speichers einen Ordner namens emudeck anlegen, bevor du CloudSync einrichtest",
+      "uploading": "Wird hochgeladen",
+      "downloading": "Wird heruntergeladen",
+      "standBy": "Bitte warten...",
+      "uploadComplete": "Upload abgeschlossen",
+      "uploadCompleteBody": "Alle deine Spielstände und Savestates wurden zu deinem Cloud-Anbieter hochgeladen.",
+      "downloadComplete": "Download abgeschlossen",
+      "downloadCompleteBody": "Alle deine Spielstände und Savestates wurden von deinem Cloud-Anbieter heruntergeladen.",
+      "installing": "Cloud{{type}} wird installiert",
+      "installingBody": "Bitte warten... das kann je nach Anbieter und Internetgeschwindigkeit eine Weile dauern",
+      "configured": "Cloud{{type}} konfiguriert",
+      "configuredBody": "Ab jetzt werden bei jedem Spielstart deine Savestates und Spielstände mit der Cloud synchronisiert. Beachte, dass bei jedem Spielen auf einem Gerät der letzte Spielstand derjenige ist, der in der Cloud landet",
+      "uploadOrDownload": "Möchtest du jetzt alle deine Spielstände hochladen oder herunterladen?",
+      "downloadAll": "Alle Spielstände herunterladen",
+      "uploadAll": "Alle Spielstände hochladen",
+      "installError": "Fehler bei der Installation von Cloud{{type}}",
+      "installErrorBody": "Bei der Installation von Cloud{{type}} ist ein Problem aufgetreten, bitte versuche es erneut. Stelle sicher, dass deine Zugangsdaten korrekt sind.",
+      "chromeWarning": "Stelle sicher, dass Google Chrome installiert ist, Firefox funktioniert nicht. Sobald Cloud{{type}} installiert ist, kannst du Chrome wieder entfernen",
+      "uninstalled": "Cloud Sync deinstalliert",
+      "chromeDep": "Google-Chrome-Abhängigkeit",
+      "chromeDepBody": "Stelle sicher, dass Google Chrome oder ein anderer Chromium-Browser als Standardbrowser eingestellt ist, um Cloud{{type}} zu installieren. Nach Abschluss der Installation kannst du deinen alten Browser wieder als Standard festlegen.",
+      "testingHealth": "Cloud Sync – Statusprüfung",
+      "health": {
+        "rclone": "Existiert die Rclone-Programmdatei?",
+        "serviceExists": "Existiert der Dienst?",
+        "serviceStarts": "Startet der Dienst?",
+        "testUpload": "Hat der Test-Upload funktioniert?",
+        "fileUploaded": "Wurde die Testdatei hochgeladen?",
+        "testDownload": "Hat der Test-Download funktioniert?",
+        "fileDownloaded": "Wurde die Testdatei heruntergeladen?"
+      }
     },
     "CloudSyncPage": {
       "title": "Cloud-Spielstände",
@@ -225,7 +465,32 @@
     },
     "ConfirmationPage": {
       "title": "Das wird EmuDeck tun",
-      "description": ""
+      "description": "",
+      "installationPath": "Dein Installationspfad:",
+      "userHomeFolder": "Persönlicher Ordner des Benutzers",
+      "willInstall": "EmuDeck installiert:",
+      "willConfigure": "EmuDeck konfiguriert:",
+      "customizations": "Deine Anpassungen",
+      "aspectRatio": "Seitenverhältnis",
+      "segaClassic": "Sega-Klassiker",
+      "nintendoClassic": "Nintendo-Klassiker",
+      "classic3dGames": "Klassische 3D-Spiele",
+      "gamecube": "Gamecube",
+      "other": "Sonstiges",
+      "autoSave": "Automatisches Speichern",
+      "retroAchievements": "RetroAchievements",
+      "bezels": "Rahmen",
+      "handheldsShader": "Handheld-Shader",
+      "classic2dShader": "Klassischer 2D-Shader",
+      "classic3dShader": "Klassischer 3D-Shader",
+      "resolutions": "Auflösungen",
+      "resGamecubeWii": "GameCube + Wii:",
+      "resPs1": "PlayStation 1:",
+      "resPs2": "PlayStation 2:",
+      "resPs3": "PlayStation 3:",
+      "resSwitch": "Switch:",
+      "resNds": "Nintendo DS:",
+      "resN3ds": "Nintendo 3DS:"
     },
     "ControllerLayoutPage": {
       "title": "Controller-Belegung konfigurieren",
@@ -233,7 +498,48 @@
     },
     "CopyGamesPage": {
       "title": "",
-      "description": ""
+      "description": "",
+      "usb": {
+        "intro": "Schließe einen USB-Stick über einen Hub oder Adapter an den USB-C-Anschluss des Steam Decks an. EmuDeck legt einen ROMs- und einen BIOS-Ordner an, sodass du deine ROMs und BIOS-Dateien von einem anderen Gerät aus auf den USB-Stick kopieren kannst. Wenn du fertig bist, kehre zu dieser Seite zurück und EmuDeck überträgt die neu kopierten Dateien auf dein Steam Deck.",
+        "select": "Wähle deinen USB-Stick",
+        "drive": "USB-Stick",
+        "step1": "Schritt 1: USB-Stick vorbereiten",
+        "step1Note": "(wir löschen nichts)",
+        "creatingFolders": "EmuDeck-Ordner werden erstellt...",
+        "step2": "Schritt 2: Deine ROMs & BIOS-Dateien vom USB-Stick übertragen",
+        "step2Note": "(Stelle sicher, dass du sie bereits auf den USB-Stick kopiert hast)",
+        "copying": "Spiele werden kopiert...",
+        "insertUsb": "USB-Stick einstecken"
+      },
+      "foldersCreated": "Ordner erstellt",
+      "foldersCreatedBody": "Wir haben die folgenden Ordner erstellt:",
+      "romsHelp": "Jedes System hat seinen eigenen Unterordner. Schau in {{path}}/roms/systems.txt nach, welcher Ordner zu welchem System gehört",
+      "biosHelp": "Lege keine zusätzlichen Ordner oder Unterordner an. Wenn ein System keinen eigenen Ordner hat, kopiere die BIOS-Datei einfach in den bios-Ordner.",
+      "foldersError": "Beim Erstellen der Ordner auf deinem USB-Stick ist ein Problem aufgetreten, bitte versuche es erneut.",
+      "whereToCopy": "Wohin kopiere ich meine Spiele?",
+      "whereToCopyBody": "Im Ordner <strong>\"roms\"</strong> findest du viele Unterordner. Diese Ordner entsprechen den Konsolen. Zum Beispiel ist <strong>\"gc\"</strong> der Ordner für deine Nintendo-Gamecube-ROMs. Im Ordner <strong>\"bios\"</strong> legst du deine BIOS-Dateien direkt ab, sofern nicht bereits ein passender Unterordner existiert.",
+      "whereToCopyReady": "Sobald du deine ROMs und BIOS-Dateien abgelegt hast, kannst du fortfahren",
+      "usbTitle": "Übertrage deine Spiele mit einem USB-Stick",
+      "manualTitle": "Manuelles Kopieren",
+      "manualDescription": "Sobald du deine Dateien zusammengestellt hast, klicke unten auf die Schaltfläche „Emulation-Ordner öffnen“",
+      "openEmulationFolder": "Emulation-Ordner öffnen",
+      "waitingTitle": "Warten auf das manuelle Kopieren",
+      "waitingDescription": "Wenn du deine Dateien kopiert hast, klicke bitte auf die Schaltfläche „Weiter“",
+      "backupTitle": "EmuDeck-Daten von einem anderen Gerät importieren",
+      "chooseTitle": "Kopieren wir deine Spiele",
+      "chooseDescription": "Zuerst musst du deine ROMs und BIOS-Dateien zusammenstellen. Diese sind urheberrechtlich geschützt und EmuDeck stellt sie aus rechtlichen Gründen nicht bereit.",
+      "modeManual": "Manuelles Kopieren",
+      "modeManualDesc": "Du musst deine Spiele manuell kopieren",
+      "modeAuto": "Automatischer Import",
+      "modeAutoDesc": "Du brauchst einen anderen Computer, um einen USB-Stick vorzubereiten",
+      "modeBackup": "Backup importieren",
+      "modeBackupDesc": "Wähle dies, wenn du EmuDeck bereits auf einem anderen Gerät installiert hast",
+      "biosTitle": "Testen wir diese BIOS-Dateien",
+      "launchTitle": "Wie starte ich meine Spiele?",
+      "srmInfo": "Steam ROM Manager (SRM) ist ein Tool, das deine Spiele und Emulatoren zu deiner Steam-Bibliothek hinzufügt, damit du sie im Spielmodus starten kannst",
+      "esdeInfo": "Wir haben EmulationStation DE (ES-DE) zu deiner Steam-Bibliothek hinzugefügt. Schließe die Installation ab, kehre in den Spielmodus zurück und suche ES-DE im Tab der Nicht-Steam-Spiele",
+      "launchSRM": "Steam ROM Manager starten",
+      "skipForNow": "Vorerst überspringen"
     },
     "DeviceSelectorPage": {
       "title": "Wählen Sie Ihr Gerät",
@@ -244,20 +550,27 @@
       "description": "Spenden Sie auf Patreon und helfen Sie uns zu wachsen und besser zu werden! Als Mitglied unserer Community erhalten Sie persönlichen 1-zu-1-Support und frühzeitigen Zugriff auf unsere neuesten Funktionen, von denen einige exklusiv für Unterstützer sind",
       "eaTier": {
         "description": "Erhalten Sie vor allen anderen Zugriff auf die neuesten Funktionen und Apps, einschließlich exklusivem Support und neuen Funktionen für SteamOS, Windows, MacOS und zukünftig Android.",
-        "list": "<li>- Früher Zugriff</li><li>- Allgemeiner Support</li><li>- CloudSync ( Synchronisieren Sie Ihre Spielstände zwischen Mac, Windows und Linux )</li><li>- Private Discord-Community</li>"
+        "list": "<li>- Früher Zugriff</li><li>- Allgemeiner Support</li><li>- CloudSync ( Synchronisieren Sie Ihre Spielstände zwischen Mac, Windows und Linux )</li><li>- Private Discord-Community</li>",
+        "title": "Early Access"
       },
       "fanTier": {
         "description": "Sie lieben wirklich, was ich tue, und dafür danke ich Ihnen! Dieser Beitrag hilft EmuDeck dabei, neue Geräte anzuschaffen und benutzerdefinierte Optimierungen für weitere Systeme zu entwickeln.",
-        "list": "<li>- Dieselben Funktionen wie bei Early Access und</li><li>- Stimmrecht – gestalten wir die Zukunft von EmuDeck gemeinsam</li>"
-      }
+        "list": "<li>- Dieselben Funktionen wie bei Early Access und</li><li>- Stimmrecht – gestalten wir die Zukunft von EmuDeck gemeinsam</li>",
+        "title": "EmuDeck-Fan"
+      },
+      "imgAlt": "Weiter so",
+      "exit": "Beenden"
     },
     "EmuDeckyPage": {
       "title": "EmuDecky konfigurieren",
-      "description": ""
+      "description": "",
+      "intro": "EmuDecky ist ein Plugin, mit dem du alle Steuerungen und Tastenkürzel von EmuDeck während des Spielens sehen und EmuDeck sogar konfigurieren kannst! So nutzt du EmuDecky: Drücke im Spielmodus die ...-Taste, tippe auf das Steckdosen-Symbol und wähle EmuDecky.",
+      "install": "EmuDecky installieren"
     },
     "EmulatorConfigResolutionPage": {
       "title": "Emulator-Auflösung",
-      "description": ""
+      "description": "",
+      "saved": "Deine Emulatoren haben jetzt die neuen Auflösungen, die du eingestellt hast."
     },
     "EmulatorConfigurationPage": {
       "title": "Konfigurationen für Emulatoren und Tools",
@@ -269,20 +582,123 @@
     },
     "EmulatorsDetailPage": {
       "title": "",
-      "description": ""
+      "description": "",
+      "bios": "BIOS",
+      "emulatedSystems": "Emulierte Systeme",
+      "specialConfiguration": "Spezielle Konfiguration",
+      "biosNeeded": "Benötigte BIOS-Dateien",
+      "actions": "Aktionen",
+      "emulatorNotFound": "Emulator nicht gefunden",
+      "updateConfiguration": "Konfiguration aktualisieren",
+      "resetConfiguration": "Konfiguration zurücksetzen",
+      "reinstallUpdate": "Neu installieren / Aktualisieren",
+      "removeCache": "Cache leeren",
+      "standaloneParsers": "Standalone-Parser",
+      "controls": "Steuerung",
+      "hotkeys": "Tastenkürzel",
+      "hotkeysExpert": "Tastenkürzel – Experte",
+      "controlsGamecube": "Steuerung GameCube",
+      "hotkeysGamecube": "Tastenkürzel GameCube",
+      "classicControlsWii": "Klassische Steuerung Wii",
+      "controlsWii": "Steuerung Wii",
+      "nunchuckControls": "Nunchuk-Steuerung",
+      "hotkeysWii": "Tastenkürzel Wii",
+      "hotkeysGamecubeExpert": "Tastenkürzel GameCube – Experte",
+      "hotkeysWiiExpert": "Tastenkürzel Wii – Experte",
+      "resetCemuProton": "Cemu Proton zurücksetzen",
+      "yuzuEA": {
+        "title": "Yuzu Early Access",
+        "enterToken": "Gib deinen Yuzu-Early-Access-Token ein, um Yuzu Early Access automatisch herunterzuladen und zu aktualisieren.",
+        "fromPatreon": "Du bekommst ihn über deinen Yuzu-Patreon.",
+        "savedTo": "Sobald du deinen Token in diesem Fenster eingegeben hast, wird er in ~/emudeck/yuzu-ea-token.txt gespeichert",
+        "tokenLabel": "Yuzu-EA-Token",
+        "installing": "Bitte warten, Yuzu Early Access wird installiert",
+        "wrongToken": "Falscher Token",
+        "wrongTokenBody": "Bitte überprüfe deinen Token und versuche es erneut",
+        "failed": "Yuzu Early Access fehlgeschlagen",
+        "failedBody": "Bei der Installation von Yuzu Early Access ist ein Problem aufgetreten, bitte versuche es erneut.",
+        "success": "Yuzu Early Access installiert!",
+        "successBody": "Yuzu Early Access wurde installiert, du kannst wie gewohnt spielen. EmuDeck erkennt, dass du Yuzu EA hast, und verwendet es stattdessen. Du musst nichts weiter einrichten."
+      },
+      "unknownError": "Unbekannter Fehler!",
+      "unknownErrorBody": "Es ist ein Fehler aufgetreten, bitte versuche es erneut",
+      "installing": "{{code}} wird installiert",
+      "installingWait": "Bitte warte, während wir {{code}} installieren",
+      "installSuccess": "{{code}} installiert!",
+      "installSuccessBody": "{{code}} wurde installiert. Du kannst jetzt {{code}}-Spiele über EmulationStation-DE spielen oder sie mit dem Steam Rom Manager zu deiner Steam-Bibliothek hinzufügen",
+      "installed": "{{code}} installiert!",
+      "installFailed": "{{code}} fehlgeschlagen",
+      "installFailedBody": "Bei der Installation von {{code}} ist ein Problem aufgetreten",
+      "parserUpdateNeeded": "Parser-Update erforderlich",
+      "parserUpdateBody": "Wenn du diesen neuen Standalone-Emulator in Steam verwenden möchtest, musst du im Steam Rom Manager den passenden Parser auswählen.",
+      "uninstalling": "{{code}} wird deinstalliert",
+      "uninstallingWait": "Bitte warte, während wir {{code}} deinstallieren",
+      "uninstalled": "{{code}} deinstalliert!",
+      "uninstalledBody": "{{code}} wurde deinstalliert. Du musst die zugehörigen Einträge mit dem Steam Rom Manager aus Steam entfernen und deine Spielstände in Emulation/saves/{{code}} manuell löschen",
+      "uninstallFailed": "Deinstallation von {{code}} fehlgeschlagen",
+      "uninstallFailedBody": "Bei der Deinstallation von {{code}} ist ein Problem aufgetreten",
+      "resetting": "Konfiguration von {{code}} wird zurückgesetzt",
+      "resettingWait": "Bitte warte, während wir die Konfiguration von {{code}} zurücksetzen",
+      "configUpdated": "Konfiguration von {{name}} aktualisiert!",
+      "configUpdatedBody": "Die Konfiguration von {{name}} wurde mit unseren neuesten Verbesserungen, Optimierungen und Fehlerbehebungen aktualisiert!",
+      "configResetFailed": "Zurücksetzen der Konfiguration von {{name}} fehlgeschlagen",
+      "configResetFailedBody": "Beim Zurücksetzen der Konfiguration von {{name}} ist ein Problem aufgetreten",
+      "migrateTitle": "{{code}} von Flatpak zu AppImage migrieren",
+      "migrateBody1": "Zeit für die Migration! Um es einfach zu halten: Die von dir verwendete RPCS3-Version wird von den Hauptentwicklern von RPCS3 nicht offiziell unterstützt. Bei dieser Migration wird das RPCS3-AppImage heruntergeladen, das außerdem häufige Updates und Leistungsverbesserungen enthält.",
+      "migrateBody2": "EmuDeck migriert deine Spielstände und deine Konfigurationen (ja, auch die spielspezifischen Konfigurationen), damit du sofort weiterspielen kannst.",
+      "migrate": "Migrieren",
+      "migrating": "Bitte warten, {{code}} wird migriert",
+      "migratedBody": "{{code}} wurde migriert, viel Spaß!",
+      "migrateFailedBody": "Bei der Migration von {{code}} ist ein Problem aufgetreten",
+      "optionalParsers": "Bitte warten, zusätzliche Parser werden installiert:"
     },
     "EmulatorSelectorPage": {
       "title": "Emulatoren und Tools für {{device}}",
-      "standaloneRA": "RetroArch oder eigenständiger Emulator?"
+      "standaloneRA": "RetroArch oder eigenständiger Emulator?",
+      "xeniaTitle": "Xenia-Emulator – Hinweis",
+      "xeniaBody": "Xenia ist ein experimenteller Emulator, erwarte nicht, dass viele Spiele laufen.",
+      "shadps4Title": "ShadPS4-Emulator – Hinweis",
+      "shadps4Body": "ShadPS4 ist ein experimenteller Emulator, erwarte nicht, dass viele Spiele laufen.",
+      "classicGamesQuestion": "Du hast zwei Emulatoren für dieselben Systeme ausgewählt. Welchen möchtest du für Klassiker wie Super Nintendo, Nes, Nintendo 64, Dreamcast usw. verwenden?",
+      "whichEmulator": "Welchen Emulator möchtest du verwenden",
+      "whichEmulatorGBA": "Welchen Emulator möchtest du für GameBoy Advance verwenden.",
+      "hasPros": "hat diese Vorteile:",
+      "hasPro": "hat diesen Vorteil:",
+      "bothNote": "Wenn du Beide wählst, verwenden wir Ares, wo verfügbar, und RetroArch für alle anderen Cores",
+      "parserNote": "Wir fügen nur den Parser passend zu deiner Auswahl hinzu, damit du keine Duplikate in deiner Bibliothek hast.",
+      "pros": {
+        "retroAchievements": "RetroAchievements",
+        "bezelsShaders": "Rahmen & Shader",
+        "autoSaveStates": "Automatische Savestates",
+        "alternativeRA": "Alternative für alle, die RetroArch nicht mögen",
+        "gbaLink": "GBA-Link für Mehrspieler, Pokémon-Tausch usw.",
+        "betterPerformance": "Bessere Leistung",
+        "betterPerformanceScaling": "Bessere Leistung und Skalierung",
+        "betterCompatibility": "Bessere Kompatibilität",
+        "threeCores": "3 verschiedene Cores: 2003 plus, 2010 und aktuell",
+        "betterKeymapping": "Bessere Tastenbelegung und Controller-Unterstützung",
+        "native": "Keine Emulation, läuft nativ",
+        "lessResources": "Benötigt weniger Ressourcen",
+        "hasBetterCompatibility": "Hat eine bessere Kompatibilität",
+        "flexibleConfig": "Flexiblere Konfiguration"
+      }
     },
     "EndPage": {
       "title": "Wir schließen Ihre Installation ab...",
       "titleFinish": "Installation abgeschlossen!",
       "titleAlly": "Controller-Konfiguration für Asus Rog Ally",
-      "titleWin32": "Controller-Konfiguration"
+      "titleWin32": "Controller-Konfiguration",
+      "postInstallStatus": "Status nach der Installation",
+      "postInstallDescription": "Bitte überprüfe, ob alle deine Emulatoren installiert wurden. Falls ein Emulator oder ein Tool nicht installiert werden konnte, führe ein <strong>benutzerdefiniertes Zurücksetzen</strong> durch oder installiere den Emulator über die Seite <strong>Emulatoren verwalten</strong>.",
+      "readBefore": "⚠️ Vor dem Fortfahren lesen ⚠️",
+      "readBeforeDescription": "EmuDeck ist auf <strong>Steam Input</strong> ausgelegt: Du musst die Spiele über Steam starten, nachdem du sie mit dem Steam Rom Manager hinzugefügt hast – dasselbe gilt für die Emulatoren, EmulationStation oder Pegasus. Andernfalls <strong>funktionieren Steuerung und Tastenkürzel nicht</strong>.<br />Apps wie DeckTools oder Handheld Companion können die Steuerung in manchen Fällen ebenfalls stören.<br />Achte darauf, dass dein Handheld immer im GamePad-Modus ist, nicht im Desktop- oder Auto-Modus.<br /><strong>Wenn du andere Frontends wie Playnite nutzen möchtest, musst du Steam Input auf dem Desktop aktivieren, wie im Video gezeigt, und Steam dauerhaft im Hintergrund geöffnet lassen.</strong>",
+      "installing": "EmuDeck wird installiert...",
+      "openLog": "Detailliertes Log öffnen"
     },
     "ErrorPage": {
-      "title": ""
+      "title": "",
+      "noConnection": "Hoppla, anscheinend hast du keine Internetverbindung",
+      "needConnection": "Für die Installation von EmuDeck wird eine aktive Internetverbindung benötigt"
     },
     "ESDEThemePage": {
       "title": "EmulationStation-DE Standard-Theme",
@@ -298,7 +714,24 @@
     },
     "FrontendSelectorPage": {
       "title": "Frontends für {{device}}",
-      "description": "Wählen Sie, welche Frontends Sie zum Starten Ihrer Spiele verwenden möchten. Sie können mehrere auswählen."
+      "description": "Wählen Sie, welche Frontends Sie zum Starten Ihrer Spiele verwenden möchten. Sie können mehrere auswählen.",
+      "integrationTitle": "Wähle deinen Integrationsgrad",
+      "integrationDescription": "EmuDeck kann sich auf unterschiedliche Weise in dein System integrieren",
+      "low": "Niedrig",
+      "highest": "Maximal",
+      "esde": {
+        "description": "EmulationStation wird als Nicht-Steam-Spiel hinzugefügt, damit du alle deine Spiele aus einer einzigen App starten kannst",
+        "feature1": "Jede Menge Themes",
+        "feature2": "Überfüllt deine Bibliothek nicht",
+        "feature3": "Manuelles Zuordnen der Grafiken",
+        "feature4": "Spiele sind nicht in Steam integriert"
+      },
+      "srm": {
+        "description": "Der Steam Rom Manager wird installiert, damit du deine Spiele in Steam hinzufügen kannst, als wären es Steam-Spiele",
+        "feature1": "Spiele nahtlos in deine Steam-Bibliothek integriert",
+        "feature2": "Kann deine Bibliothek überfüllen, wenn du viele Spiele hast",
+        "feature3": "Der Desktop-Modus ist nötig, um weitere Spiele hinzuzufügen"
+      }
     },
     "GameModePage": {
       "title": "Startmodus",
@@ -321,7 +754,12 @@
       "description": "Dieses Dienstprogramm verschiebt Ihre EmuDeck-Installation mit intakten ROMs an das ausgewählte Ziel und aktualisiert außerdem die Pfade Ihrer Steam-Bibliothek."
     },
     "ParserSelectorPage": {
-      "title": "Parser für Steam Rom Manager"
+      "title": "Parser für Steam Rom Manager",
+      "updating": "Parser werden aktualisiert!",
+      "updatingWait": "Bitte warte ein paar Sekunden...",
+      "allConfigured": "Alle Parser wurden konfiguriert.",
+      "configureError": "Beim Konfigurieren deiner Parser ist ein Problem aufgetreten",
+      "description": "Wähle aus, welchen Emulator der Steam Rom Manager für jedes System verwenden soll."
     },
     "PatroenLoginPage": {
       "title": "Bei Patreon anmelden",
@@ -330,7 +768,11 @@
       "change": "Patreon-Konto wechseln",
       "check": "Token prüfen",
       "checking": "Token wird geprüft...",
-      "license": "Mit Lizenz anmelden"
+      "license": "Mit Lizenz anmelden",
+      "featureTitle": "Early-Access-Funktion",
+      "featureDescription": "Du musst dich bei Patreon anmelden, um diese Funktion zu nutzen, solange sie in unserem Early-Access-Branch getestet wird.",
+      "checkFeatures": "Early-Access-Funktionen ansehen",
+      "token": "Token"
     },
     "PegasusThemeChoicePage": {
       "title": "Pegasus Standard-Theme",
@@ -373,7 +815,11 @@
       "description": "Ihr ROM-Verzeichnis wird ordentlich in einem Emulation-Ordner innerhalb des ausgewählten Verzeichnisses abgelegt.",
       "modalErrorDetecting": "Beim Erkennen Ihres Speichers ist ein Fehler aufgetreten...",
       "modalErrorWritable": "Nicht beschreibbares Verzeichnis ausgewählt, bitte wählen Sie ein anderes...",
-      "modalError": "Es ist ein Fehler aufgetreten, bitte starten Sie EmuDeck neu..."
+      "modalError": "Es ist ein Fehler aufgetreten, bitte starten Sie EmuDeck neu...",
+      "customDrive": "Benutzerdefiniertes Laufwerk",
+      "customDirectory": "Benutzerdefinierter Ordner",
+      "collectingDrives": "Laufwerksnamen werden ermittelt",
+      "collectingDrivesBody": "Das dauert ein paar Sekunden. Bitte warten..."
     },
     "Shaders2DPage": {
       "title": "CRT-Shader für klassische 2D-Spiele konfigurieren",
@@ -388,18 +834,22 @@
       "description": "Der LCD-Shader simuliert die alten LCD-Matrix-Bildschirme von Handheld-Systemen."
     },
     "StoreFrontPage": {
-      "title": "EmuDeck Store"
+      "title": "EmuDeck Store",
+      "tabsAria": "Demo-Tabs"
     },
     "UninstallPage": {
       "title": "EmuDeck deinstallieren",
-      "description": "Das EmuDeck-Deinstallationsprogramm sollte nur verwendet werden, wenn Sie EmuDeck von Ihrem System entfernen möchten. Bei Problemen führen Sie ein benutzerdefiniertes Zurücksetzen durch, beheben Sie den Fehler beim betreffenden Tool oder Emulator oder besuchen Sie den EmuDeck-Discord oder -Reddit für weitere Unterstützung."
+      "description": "Das EmuDeck-Deinstallationsprogramm sollte nur verwendet werden, wenn Sie EmuDeck von Ihrem System entfernen möchten. Bei Problemen führen Sie ein benutzerdefiniertes Zurücksetzen durch, beheben Sie den Fehler beim betreffenden Tool oder Emulator oder besuchen Sie den EmuDeck-Discord oder -Reddit für weitere Unterstützung.",
+      "discord": "Unser Discord",
+      "reddit": "Unser Reddit",
+      "confirm": "Ich weiß, was ich tue, ich möchte EmuDeck deinstallieren."
     },
     "UpdateEmusPage": {
       "title": "Aktualisieren Sie Ihre Emulatoren und Tools",
       "description": "Emulatoren und Tools können auf verschiedene Arten installiert werden. EmuDeck installiert einige Emulatoren und Tools als Flatpaks aus dem Discover Store. Andere werden direkt von der Website des Entwicklers als AppImages oder Binaries für Sie heruntergeladen. Einige wenige sind Windows-Programme, die über Proton heruntergeladen und ausgeführt werden."
     },
     "WelcomePage": {
-      "title": "Willkommen bei EmuDeck!",
+      "title": "Willkommen bei EmuDeck für {{systemName}}",
       "description": "Vielen Dank, dass Sie sich für EmuDeck für Ihre Emulationsbedürfnisse entschieden haben. Dieser Einrichtungsprozess führt Sie durch die Installation und die initiale Konfiguration, damit Sie in kürzester Zeit spielen können.",
       "errorModal": {
         "title": "Fehler beim Erkennen Ihres Betriebssystems",
@@ -407,7 +857,11 @@
       },
       "easy": "Dieser Modus installiert und konfiguriert Ihr Gerät automatisch mit unseren empfohlenen Einstellungen, damit Sie sofort mit dem Spielen beginnen können. Empfohlen, wenn Sie neu in der Emulation sind.",
       "custom": "Dieser Modus ermöglicht es Ihnen, die EmuDeck-Installation anzupassen. Konfigurieren Sie Seitenverhältnisse, Rahmen, Filter, RetroAchievements, Emulatoren, Frontends und mehr. Empfohlen für fortgeschrittene Benutzer.",
-      "android": "Installieren Sie EmuDeck (Beta) auf Ihrem Android-Gerät."
+      "android": "Installieren Sie EmuDeck (Beta) auf Ihrem Android-Gerät.",
+      "easyTitle": "Einfacher Modus",
+      "customTitle": "Benutzerdefinierter Modus",
+      "news": "EmuDeck-Neuigkeiten",
+      "gamesOfTheMonth": "Spiele des Monats von"
     },
     "CheckBios": {
       "detected": "- Erkannt",
@@ -419,7 +873,17 @@
       "tip4": "Tipp 4: Ihre BIOS-Dateien müssen in Emulation/bios abgelegt werden. Erstellen Sie keine Unterordner für BIOS-Dateien. Für die Nintendo Switch verwenden Sie unsere vorbereiteten Ordner.",
       "tip5": "Tipp 5: Für hier nicht aufgeführte Systeme schauen Sie sich diesen Link an.",
       "cheat": "Spickzettel",
-      "tip6": " Sie können diesen Link als praktischen Leitfaden dafür nutzen, wie Ihre BIOS-Dateien benannt sein sollten."
+      "tip6": " Sie können diesen Link als praktischen Leitfaden dafür nutzen, wie Ihre BIOS-Dateien benannt sein sollten.",
+      "ps1": "Playstation-1-BIOS",
+      "ps2": "Playstation-2-BIOS",
+      "yuzu": "Yuzu-Firmware",
+      "eden": "Eden-Firmware",
+      "ryujinx": "Ryujinx-Firmware",
+      "citron": "Citron-Firmware",
+      "segacd": "Sega-CD-BIOS",
+      "saturn": "Saturn-BIOS",
+      "nds": "Nintendo-DS-BIOS",
+      "dreamcast": "Dreamcast-BIOS"
     },
     "CloudSync": {
       "sync": "Synchronisieren",
@@ -452,7 +916,8 @@
       "sdCard": "SD-Karte",
       "internalStorage": "Interner Speicher",
       "start": "Migration starten",
-      "migrating": "Migration läuft..."
+      "migrating": "Migration läuft...",
+      "errorDetectingSD": "Fehler beim Erkennen der SD-Karte"
     },
     "RAAchievements": {
       "modalWrongPassTitle": "Falscher Benutzername oder falsches Passwort",
@@ -463,7 +928,10 @@
       "modalErrorDesc": "Benutzername und Passwort sind korrekt, aber EmuDeck konnte die Konfiguration nicht vornehmen.",
       "register": "Wenn Sie noch kein Konto haben, registrieren Sie sich jetzt:",
       "success": "Sie sind erfolgreich mit RetroAchievements verbunden!",
-      "reset": "Anmeldung zurücksetzen"
+      "reset": "Anmeldung zurücksetzen",
+      "username": "Benutzername",
+      "password": "Passwort",
+      "hardcoreMode": "HardCore-Modus"
     },
     "StoreFront": {
       "alertInstalled": "Spiel installiert.\nKehren Sie zu EmulationStation zurück, um es zu spielen",
@@ -475,6 +943,192 @@
       "title": "Wählen Sie aus, welche Gruppe Sie aktualisieren möchten:",
       "btn1": "Flatpaks aktualisieren",
       "btn2": "AppImages, Binaries und Windows-Programme aktualisieren"
+    },
+    "importExport": {
+      "items": {
+        "roms": "Roms",
+        "bios": "BIOS",
+        "saves": "Spielstände",
+        "storage": "Speicher",
+        "esdeArtwork": "ES-DE-Medien"
+      },
+      "importing": "{{item}} wird importiert",
+      "exporting": "{{item}} wird exportiert",
+      "calculatingSize": "Größe von {{item}} wird berechnet",
+      "noSpace": "Nicht genug Speicherplatz auf {{destination}} für {{item}}. Vorgang abgebrochen.",
+      "failed": "Kopieren von {{item}} fehlgeschlagen (Code {{code}})",
+      "invalidOrigin": "Ungültige Quelle: {{path}}",
+      "invalidDestination": "Ungültiges Ziel: {{path}}",
+      "nothingSelectedImport": "Nichts zum Importieren ausgewählt",
+      "nothingSelectedExport": "Nichts zum Exportieren ausgewählt",
+      "importFinished": "Import abgeschlossen",
+      "exportFinished": "Export abgeschlossen",
+      "importFinishedWithErrors": "Import abgeschlossen. Diese Elemente konnten nicht kopiert werden: {{items}}",
+      "exportFinishedWithErrors": "Export abgeschlossen. Diese Elemente konnten nicht kopiert werden: {{items}}",
+      "preparingImport": "Import wird vorbereitet…",
+      "preparingExport": "Export wird vorbereitet…",
+      "unexpectedError": "Unerwarteter Fehler: {{error}}",
+      "eta": "noch {{eta}}"
+    },
+    "SelectorMenu": {
+      "appliedTo": "Die Einstellungen werden angewendet auf"
+    },
+    "credits": {
+      "originalIdeaBy": "Ursprüngliche Idee von",
+      "assetsBy": "Grafiken von"
+    },
+    "languages": {
+      "en": "Englisch",
+      "es": "Spanisch",
+      "fr": "Französisch",
+      "it": "Italienisch",
+      "de": "Deutsch"
+    },
+    "systems": {
+      "switch": "Switch",
+      "gamecubeWii": "GameCube & Wii",
+      "wiiu": "Nintendo Wii U",
+      "ps1": "PlayStation 1",
+      "ps2": "PlayStation 2",
+      "ps3": "PlayStation 3",
+      "psp": "PSP",
+      "psvita": "PS Vita",
+      "xbox": "Xbox",
+      "dreamcast": "Dreamcast",
+      "nds": "Nintendo DS",
+      "n3ds": "Nintendo 3DS"
+    },
+    "DeckyRomLauncherPage": {
+      "intro": "Retro Library ist ein Plugin, mit dem du eine zweite Steam-Bibliothek nur mit deinen ROMs hast, damit sie nicht mit deinen Steam-Spielen vermischt werden.",
+      "autoDetect": "Alle Spiele und Grafiken werden automatisch erkannt.",
+      "install": "Retro Library installieren",
+      "title": "Retro Library konfigurieren"
+    },
+    "RemotePlayWhateverPage": {
+      "intro": "Spiele mit deinen Freunden lokal und übers Internet. Mehr Infos zu diesem Tool",
+      "here": "hier",
+      "step1": "Klicke zuerst auf RemotePlayWhatever installieren. Es wird installiert und der Steam Rom Manager öffnet sich, um die Verknüpfung zu Steam hinzuzufügen",
+      "step2": "Wenn du im Spielmodus bist, gehe zur Emulatoren-Sammlung und starte RemotePlayWhatever, lade deinen Steam-Freund ein, kehre mit der STEAM-Taste zu deiner Bibliothek zurück, öffne dein Spiel in EmulationStation und leg los!",
+      "beta": "Diese App ist in der Beta-Phase und funktioniert daher nicht immer einwandfrei; rechne mit gelegentlichen Abstürzen und Tonproblemen. Das Starten von Spielen außerhalb von EmulationStation wird derzeit nicht unterstützt.",
+      "install": "RemotePlayWhatever installieren",
+      "title": "Mehrspieler mit RemotePlayWhatever – Beta"
+    },
+    "VideoGuidePage": {
+      "intro": "Lerne mit dieser großartigen Anleitung von Russ von RetroGameCorps, wie du EmuDeck einrichtest.",
+      "sections": "Abschnitte",
+      "introduction": "Einführung",
+      "writtenGuide": "Schriftliche Anleitung und empfohlene Tools",
+      "installing": "EmuDeck installieren",
+      "configuringGames": "Spiele und BIOS-Dateien einrichten",
+      "configuringSRM": "Steam ROM Manager einrichten",
+      "tools": "EmuDeck-Tools und neue Funktionen",
+      "tips": "Schnelle Tipps und Tricks",
+      "title": "Emulations-Schaufenster"
+    },
+    "aspectRatio": {
+      "original": "Originales Seitenverhältnis",
+      "widescreen": " Breitbild <br /> (Erwarte einige Grafikfehler.)",
+      "defaultOriginal": " Original (Standard)",
+      "snesReal": "Die echte SNES-Auflösung",
+      "smallerBars": " Schmalere schwarze Balken, leichte horizontale Verzerrung"
+    },
+    "plugins": {
+      "passwordCreated": "Passwort erstellt",
+      "installingWait": "Bitte warte, während wir das Plugin installieren",
+      "installError": "Fehler bei der Installation des Plugins",
+      "installing": "{{plugin}} wird installiert",
+      "installed": "{{plugin}} installiert"
+    },
+    "AutoMapConfigPage": {
+      "saved": "AutoMap ist jetzt für die ausgewählten Emulatoren aktiviert."
+    },
+    "HelpPage": {
+      "title": "Wiki"
+    },
+    "CheckDependenciesPage": {
+      "downloading": "Abhängigkeit wird heruntergeladen",
+      "downloadNotStarting": "Falls der Download nicht startet, öffne diese URL in einem Browser:",
+      "restart": "Starte anschließend EmuDeck neu; besteht das Problem weiterhin, starte dein Gerät neu.",
+      "checking": "Abhängigkeiten werden geprüft...",
+      "missing": "Fehlende Abhängigkeiten...",
+      "missingBody": "Bitte installiere die folgenden Programme, EmuDeck benötigt sie zum Funktionieren. Starte anschließend EmuDeck neu; besteht das Problem weiterhin, starte dein Gerät neu.",
+      "downloadGit": "GIT herunterladen",
+      "installSteam": "Steam installieren"
+    },
+    "devices": {
+      "mac": "Mac",
+      "steamDeck": "Steam Deck",
+      "steamMachine": "Steam Machine",
+      "steamOSHandheld": "SteamOS-Handheld",
+      "linuxPC": "Linux-PC",
+      "windowsPC": "Windows-PC",
+      "windowsHandheld": "Windows-Handheld"
+    },
+    "aria": {
+      "goBack": "Zurück",
+      "goNext": "Weiter",
+      "waitingCopyGames": "Warten auf das Kopieren der Spiele",
+      "updateOrReset": "Konfiguration aktualisieren oder zurücksetzen",
+      "showLog": "Log anzeigen",
+      "disabled": "Deaktiviert",
+      "closeModal": "Fenster schließen",
+      "addToken": "Token hinzufügen",
+      "zoomIn": "Vergrößern",
+      "zoomOut": "Verkleinern",
+      "uploadAllSaves": "Alle deine Spielstände zu deinem Cloud-Anbieter hochladen",
+      "downloadAllSaves": "Alle Spielstände von deinem Cloud-Anbieter herunterladen",
+      "updateFromDiscover": "Emulatoren über den Discover-Store aktualisieren",
+      "updateAppImages": "AppImages, Binärdateien und Windows-Programme aktualisieren",
+      "uninstallSaveSync": "SaveSync deinstallieren",
+      "installSaveSync": "SaveSync installieren",
+      "testCloudHealth": "Cloud-Status prüfen",
+      "startCopyGames": "Kopieren der Spiele starten",
+      "resetCemuProton": "Alte Cemu-Proton-Konfiguration zurücksetzen",
+      "installCHDTool": "CHDTool installieren"
+    },
+    "frontends": {
+      "esde": {
+        "desc": "Füge diesen Launcher zu deiner Steam-Bibliothek hinzu. Empfohlen für große Sammlungen"
+      },
+      "pegasus": {
+        "desc": "Füge diesen Launcher zu deiner Steam-Bibliothek hinzu. Empfohlen für große Sammlungen. Du musst die EmulationStation-Parser ausführen, damit die Grafiken in den Pegasus-Themes angezeigt werden"
+      },
+      "steam": {
+        "desc": "Integriere deine Spiele direkt in deine Steam-Bibliothek. Empfohlen für kuratierte Sammlungen"
+      }
+    },
+    "menu": {
+      "app": "EmuDeck",
+      "inspectElement": "Element untersuchen",
+      "about": "Über EmuDeck",
+      "services": "Dienste",
+      "hide": "EmuDeck ausblenden",
+      "hideOthers": "Andere ausblenden",
+      "showAll": "Alle einblenden",
+      "quit": "Beenden",
+      "edit": "Bearbeiten",
+      "undo": "Rückgängig",
+      "redo": "Wiederholen",
+      "cut": "Ausschneiden",
+      "copy": "Kopieren",
+      "paste": "Einfügen",
+      "selectAll": "Alles auswählen",
+      "view": "Ansicht",
+      "reload": "Neu laden",
+      "toggleFullScreen": "Vollbild",
+      "toggleDevTools": "Entwicklertools",
+      "window": "Fenster",
+      "minimize": "Minimieren",
+      "close": "Schließen",
+      "closeWindow": "Schließen",
+      "bringAllToFront": "Alle nach vorne bringen",
+      "help": "Hilfe",
+      "learnMore": "Mehr erfahren",
+      "documentation": "Dokumentation",
+      "community": "Community-Diskussionen",
+      "searchIssues": "Issues durchsuchen",
+      "file": "Datei",
+      "open": "Öffnen"
     },
     "AndroidPermissionsPage": {
       "title": "Android-Berechtigungen",
@@ -530,48 +1184,6 @@
     "NoInternetPage": {
       "title": "Keine Internetverbindung",
       "description": "Es konnte keine Verbindung zum Server hergestellt werden. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
-    },
-    "importExport": {
-      "items": {
-        "roms": "Roms",
-        "bios": "BIOS",
-        "saves": "Spielstände",
-        "storage": "Speicher",
-        "esdeArtwork": "ES-DE-Medien"
-      },
-      "importing": "{{item}} wird importiert",
-      "exporting": "{{item}} wird exportiert",
-      "calculatingSize": "Größe von {{item}} wird berechnet",
-      "noSpace": "Nicht genug Speicherplatz auf {{destination}} für {{item}}. Vorgang abgebrochen.",
-      "failed": "Kopieren von {{item}} fehlgeschlagen (Code {{code}})",
-      "invalidOrigin": "Ungültige Quelle: {{path}}",
-      "invalidDestination": "Ungültiges Ziel: {{path}}",
-      "nothingSelectedImport": "Nichts zum Importieren ausgewählt",
-      "nothingSelectedExport": "Nichts zum Exportieren ausgewählt",
-      "importFinished": "Import abgeschlossen",
-      "exportFinished": "Export abgeschlossen",
-      "importFinishedWithErrors": "Import abgeschlossen. Diese Elemente konnten nicht kopiert werden: {{items}}",
-      "exportFinishedWithErrors": "Export abgeschlossen. Diese Elemente konnten nicht kopiert werden: {{items}}",
-      "preparingImport": "Import wird vorbereitet…",
-      "preparingExport": "Export wird vorbereitet…",
-      "unexpectedError": "Unerwarteter Fehler: {{error}}",
-      "eta": "noch {{eta}}"
-    },
-    "ImportExportPage": {
-      "title": "EmuDeck auf ein anderes Gerät importieren / exportieren",
-      "description": "Auf dieser Seite kannst du deine EmuDeck-Installation auf ein anderes System übertragen, egal ob Linux oder Windows.",
-      "export": "Exportieren",
-      "exportDescription": "Diese Option exportiert alle deine Roms, BIOS-Dateien und Spielstände auf ein anderes Gerät. Emulator-Einstellungen und Steam-Rom-Manager-Einträge werden nicht exportiert.",
-      "import": "Importieren",
-      "importDescription": "Diese Option importiert alle deine Roms, BIOS-Dateien und Spielstände von einem anderen Gerät. Emulator-Einstellungen und Steam-Rom-Manager-Einträge werden nicht importiert.",
-      "importButton": "Import starten",
-      "exportButton": "Export starten",
-      "exportBackup": "Backup exportieren",
-      "importBackup": "Backup importieren",
-      "selectExport": "Wähle aus, was du exportieren möchtest:",
-      "selectImport": "Wähle aus, was du importieren möchtest:",
-      "pickDriveExport": "Wo möchtest du dein Backup speichern?",
-      "pickDriveImport": "Wo ist dein Backup gespeichert?"
     }
   }
 }

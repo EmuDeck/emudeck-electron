@@ -62,7 +62,6 @@ import {
   iconDisk,
   iconHelp,
   iconScreen,
-  iconPackage,
   iconUpdate,
 } from 'components/utils/images/icons';
 
@@ -407,7 +406,7 @@ function ManageEmulatorsPage() {
                             fill-opacity="0.85"
                           />
                         </svg>
-                        Update Available
+                        {t('ManageEmulatorsPage.updateAvailable')}
                       </small>
                     )}
                   </Card>
@@ -415,7 +414,9 @@ function ManageEmulatorsPage() {
               })}
             </div>
             <hr />
-            <span className="h2">Manage your Tools & Frontends</span>
+            <span className="h2">
+              {t('ManageEmulatorsPage.toolsFrontends')}
+            </span>
             <div className="cards cards--medium">
               {installFrontendsArray.map((item) => {
                 const img = images[item.id];
@@ -474,7 +475,7 @@ function ManageEmulatorsPage() {
                             fill-opacity="0.85"
                           />
                         </svg>
-                        Update Available
+                        {t('ManageEmulatorsPage.updateAvailable')}
                       </small>
                     )}
                   </Card>

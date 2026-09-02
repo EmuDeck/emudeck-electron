@@ -26,7 +26,7 @@ function VideoGuidePage() {
 
   return (
     <Wrapper>
-      <Header title="Emulation Showcase" />
+      <Header title={t('VideoGuidePage.title')} />
       <VideoGuide onClick={changeMinute} minute={minute} />
       <Footer
         next={false}

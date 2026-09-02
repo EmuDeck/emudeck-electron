@@ -24,8 +24,12 @@ function RemotePlayWhateverPage() {
   const installRPW = () => {
     let modalData = {
       active: true,
-      header: <span className="h4">Installing RemotePlayWhatEver</span>,
-      body: <p>Please wait while we install the plugin</p>,
+      header: (
+        <span className="h4">
+          {t('plugins.installing', { plugin: 'RemotePlayWhatever' })}
+        </span>
+      ),
+      body: <p>{t('plugins.installingWait')}</p>,
       footer: <ProgressBar css="progress--success" infinite={true} max="100" />,
       css: 'emumodal--xs',
     };
@@ -42,8 +46,8 @@ function RemotePlayWhateverPage() {
     ipcChannel.once('EmuDecky', (status) => {
       modalData = {
         active: true,
-        header: <span className="h4">Success!</span>,
-        body: <p>RemotePlayWhatEver installed</p>,
+        header: <span className="h4">{t('general.successExcl')}</span>,
+        body: <p>{t('plugins.installed', { plugin: 'RemotePlayWhatever' })}</p>,
         css: 'emumodal--xs',
       };
 
@@ -56,7 +60,7 @@ function RemotePlayWhateverPage() {
 
   return (
     <Wrapper>
-      <Header title="Multiplayer with  RemotePlayWhatever - Beta" />
+      <Header title={t('RemotePlayWhateverPage.title')} />
       <RemotePlayWhatever
         showNotification={showNotification}
         notificationText={notificationText}

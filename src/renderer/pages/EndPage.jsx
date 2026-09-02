@@ -61,13 +61,10 @@ function EndPage() {
   const openSRM = () => {
     let modalData = {
       active: true,
-      header: <span className="h4">Launching Steam Rom Manager</span>,
-      body: (
-        <p>
-          We will close Steam if its running and then Steam Rom Manager will
-          open, this could take a few seconds, please wait.
-        </p>
+      header: (
+        <span className="h4">{t('general.launching')} Steam Rom Manager</span>
       ),
+      body: <p>{t('aside.srm.body')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -87,15 +84,10 @@ function EndPage() {
     } else {
       modalData = {
         active: true,
-        header: <span className="h4">Launching Steam Rom Manager</span>,
-        body: (
-          <>
-            <p>
-              We will close Steam if its running and then Steam Rom Manager will
-              open, this could take a few seconds, please wait.
-            </p>
-          </>
+        header: (
+          <span className="h4">{t('general.launching')} Steam Rom Manager</span>
         ),
+        body: <p>{t('aside.srm.body')}</p>,
         footer: <ProgressBar css="progress--success" infinite max="100" />,
         css: 'emumodal--sm',
       };
@@ -218,11 +210,11 @@ function EndPage() {
         <BtnSimple
           css="btn-simple--1"
           type="button"
-          aria="Go Next"
+          aria={t('aria.goNext')}
           disabled={disabledNext && 'true'}
           onClick={() => navigate(nextPage)}
         >
-          Next
+          {t('general.next')}
           <svg
             className="rightarrow"
             width="32"

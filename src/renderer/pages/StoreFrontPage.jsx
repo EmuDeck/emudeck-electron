@@ -40,7 +40,7 @@ function StoreFrontPage() {
         <BtnSimple
           css="btn-simple--1"
           type="button"
-          aria="Go Back"
+          aria={t('aria.goBack')}
           disabled={false}
           onClick={() => navigate(-1)}
         >

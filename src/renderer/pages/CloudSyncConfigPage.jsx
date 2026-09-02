@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
-import { BtnSimple } from 'getbasecore/Atoms';
+import { BtnSimple, Img } from 'getbasecore/Atoms';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
@@ -12,7 +12,6 @@ import { useParams } from 'react-router-dom';
 import CloudSyncConfig from 'components/organisms/Wrappers/CloudSyncConfig';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import PatreonLogin from 'components/organisms/PatreonLogin/PatreonLogin';
-import { Img } from 'getbasecore/Atoms';
 import { useFetchCond } from 'hooks/useFetchCond';
 import {
   iconSuccess,
@@ -87,14 +86,8 @@ function CloudSyncPageConfig() {
       if (item === 'Emudeck-GDrive') {
         modalData = {
           active: true,
-          header: <span className="h4">Warning</span>,
-          body: (
-            <p>
-              If you are using a free Google Drive account we don't recomended
-              to use it with CloudSync since Google will throttle your
-              connection, making CloudSync really really slow.
-            </p>
-          ),
+          header: <span className="h4">{t('general.warning')}</span>,
+          body: <p>{t('CloudSyncConfigPage.gdriveWarning')}</p>,
           css: 'emumodal--sm',
         };
       }
@@ -102,13 +95,8 @@ function CloudSyncPageConfig() {
       if (item === 'Emudeck-SMB' || item === 'Emudeck-SFTP') {
         modalData = {
           active: true,
-          header: <span className="h4">Warning</span>,
-          body: (
-            <p>
-              You might need to create an emudeck folder in the root of your
-              storage before setting up CloudSync
-            </p>
-          ),
+          header: <span className="h4">{t('general.warning')}</span>,
+          body: <p>{t('CloudSyncConfigPage.smbWarning')}</p>,
           css: 'emumodal--sm',
         };
       }
@@ -137,8 +125,8 @@ function CloudSyncPageConfig() {
   const uploadAll = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Uploading</span>,
-      body: <p>Please stand by...</p>,
+      header: <span className="h4">{t('CloudSyncConfigPage.uploading')}</span>,
+      body: <p>{t('CloudSyncConfigPage.standBy')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
     };
     setStatePage({ ...statePage, modal: modalData });
@@ -148,13 +136,10 @@ function CloudSyncPageConfig() {
     ipcChannel.once('uploadAll', (message) => {
       const modalData = {
         active: true,
-        header: <span className="h4">Upload Complete</span>,
-        body: (
-          <p>
-            All your saved games and states have been uploaded to your cloud
-            provider.
-          </p>
+        header: (
+          <span className="h4">{t('CloudSyncConfigPage.uploadComplete')}</span>
         ),
+        body: <p>{t('CloudSyncConfigPage.uploadCompleteBody')}</p>,
         css: 'emumodal--xs',
       };
       setStatePage({ ...statePage, modal: modalData });
@@ -164,8 +149,10 @@ function CloudSyncPageConfig() {
   const downloadAll = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Downloading</span>,
-      body: <p>Please stand by...</p>,
+      header: (
+        <span className="h4">{t('CloudSyncConfigPage.downloading')}</span>
+      ),
+      body: <p>{t('CloudSyncConfigPage.standBy')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -178,13 +165,12 @@ function CloudSyncPageConfig() {
     ipcChannel.once('downloadAll', (message) => {
       const modalData = {
         active: true,
-        header: <span className="h4">Download Complete</span>,
-        body: (
-          <p>
-            All your saved games and states have been downloaded from your cloud
-            provider.
-          </p>
+        header: (
+          <span className="h4">
+            {t('CloudSyncConfigPage.downloadComplete')}
+          </span>
         ),
+        body: <p>{t('CloudSyncConfigPage.downloadCompleteBody')}</p>,
         css: 'emumodal--xs',
       };
       setStatePage({ ...statePage, modal: modalData });
@@ -242,14 +228,13 @@ function CloudSyncPageConfig() {
   const installRclone = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing Cloud{cloudSyncType}</span>,
-      css: 'emumodal--xs',
-      body: (
-        <p>
-          Please stand by... this could take a while, depending on your provider
-          & internet speed
-        </p>
+      header: (
+        <span className="h4">
+          {t('CloudSyncConfigPage.installing', { type: cloudSyncType })}
+        </span>
       ),
+      css: 'emumodal--xs',
+      body: <p>{t('CloudSyncConfigPage.installingBody')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
     };
     setStatePage({ ...statePage, disableButton: true, modal: modalData });
@@ -274,15 +259,15 @@ function CloudSyncPageConfig() {
         // checkHealth();
         modalData = {
           active: true,
-          header: <span className="h4">Cloud{cloudSyncType} Configured</span>,
+          header: (
+            <span className="h4">
+              {t('CloudSyncConfigPage.configured', { type: cloudSyncType })}
+            </span>
+          ),
           body: (
             <>
-              <p>
-                Now every time you load a game your game states and saved games
-                will be synced to the cloud. Keep in mind that every time you
-                play on a device that last save will be the one on the cloud
-              </p>
-              <p>Do you want to upload or download all your saved games now?</p>
+              <p>{t('CloudSyncConfigPage.configuredBody')}</p>
+              <p>{t('CloudSyncConfigPage.uploadOrDownload')}</p>
             </>
           ),
           css: 'emumodal--sm',
@@ -291,26 +276,26 @@ function CloudSyncPageConfig() {
               <BtnSimple
                 css="btn-simple--1"
                 type="button"
-                aria="Download all saves from your Cloud Provider"
+                aria={t('aria.downloadAllSaves')}
                 onClick={() => downloadAll()}
               >
-                Download all saves
+                {t('CloudSyncConfigPage.downloadAll')}
               </BtnSimple>
               <BtnSimple
                 css="btn-simple--1"
                 type="button"
-                aria="Upload all your saves to your Cloud Provider"
+                aria={t('aria.uploadAllSaves')}
                 onClick={() => uploadAll()}
               >
-                Upload all saves
+                {t('CloudSyncConfigPage.uploadAll')}
               </BtnSimple>
               <BtnSimple
                 css="btn-simple--1"
                 type="button"
-                aria="Close"
+                aria={t('general.close')}
                 onClick={() => closeModal()}
               >
-                Close
+                {t('general.close')}
               </BtnSimple>
             </>
           ),
@@ -323,19 +308,24 @@ function CloudSyncPageConfig() {
         // checkHealth();
         let warningChrome;
         if (system !== 'win32') {
-          warningChrome = `Make sure you have Google Chrome installed, Firefox won't work. Once you have Cloud${cloudSyncType} installed you can remove Chrome`;
+          warningChrome = t('CloudSyncConfigPage.chromeWarning', {
+            type: cloudSyncType,
+          });
         }
         modalData = {
           active: true,
           header: (
-            <span className="h4">Error Installing Cloud{cloudSyncType}</span>
+            <span className="h4">
+              {t('CloudSyncConfigPage.installError', { type: cloudSyncType })}
+            </span>
           ),
           css: 'emumodal--xs',
           body: (
             <>
               <p>
-                There's been an issue installing Cloud{cloudSyncType}, please
-                try again. Make sure your credentials are correct.
+                {t('CloudSyncConfigPage.installErrorBody', {
+                  type: cloudSyncType,
+                })}
               </p>
               <p>
                 <strong>{warningChrome}</strong>
@@ -367,7 +357,9 @@ function CloudSyncPageConfig() {
 
       const modalData = {
         active: true,
-        header: <span className="h4">Cloud Sync uninstalled</span>,
+        header: (
+          <span className="h4">{t('CloudSyncConfigPage.uninstalled')}</span>
+        ),
         css: 'emumodal--xs',
       };
       setStatePage({
@@ -401,12 +393,12 @@ function CloudSyncPageConfig() {
     if (system !== 'win32') {
       const modalData = {
         active: true,
-        header: <span className="h4">Google Chrome dependency</span>,
+        header: (
+          <span className="h4">{t('CloudSyncConfigPage.chromeDep')}</span>
+        ),
         body: (
           <p>
-            Make sure you have Google Chrome or any other Chromium browser set
-            as your default browser to install Cloud{cloudSyncType}. You can set
-            your old browser by default once the installation is complete.
+            {t('CloudSyncConfigPage.chromeDepBody', { type: cloudSyncType })}
           </p>
         ),
         css: 'emumodal--sm',
@@ -437,7 +429,7 @@ function CloudSyncPageConfig() {
         <PatreonLogin>
           {!showHealth && (
             <>
-              <Header title="Cloud Sync - Select your provider" />
+              <Header title={t('CloudSyncConfigPage.title')} />
 
               <CloudSyncConfig
                 onClick={cloudSyncSet}
@@ -452,13 +444,13 @@ function CloudSyncPageConfig() {
 
           {showHealth && (
             <>
-              <Header title="Cloud Sync - Testing Health" />
+              <Header title={t('CloudSyncConfigPage.testingHealth')} />
               <Main>
                 <div className="container--grid">
                   <div data-col-sm="6">
                     <ul className="list list--customization other">
                       <li>
-                        Does the Rclone executable exists?{' '}
+                        {t('CloudSyncConfigPage.health.rclone')}{' '}
                         <div className="list--customization__pill">
                           <Img
                             src={iconMap[stateBin]}
@@ -468,7 +460,7 @@ function CloudSyncPageConfig() {
                         </div>
                       </li>
                       <li>
-                        Does the service exist?{' '}
+                        {t('CloudSyncConfigPage.health.serviceExists')}{' '}
                         <div className="list--customization__pill">
                           <Img
                             src={iconMap[stateServiceCreated]}
@@ -478,7 +470,7 @@ function CloudSyncPageConfig() {
                         </div>
                       </li>
                       <li>
-                        Does the service start?{' '}
+                        {t('CloudSyncConfigPage.health.serviceStarts')}{' '}
                         <div className="list--customization__pill">
                           <Img
                             src={iconMap[stateCheckServiceStarts]}
@@ -488,7 +480,7 @@ function CloudSyncPageConfig() {
                         </div>
                       </li>
                       <li>
-                        Did the test upload work?{' '}
+                        {t('CloudSyncConfigPage.health.testUpload')}{' '}
                         <div className="list--customization__pill">
                           <Img
                             src={iconMap[stateUpload]}
@@ -498,7 +490,7 @@ function CloudSyncPageConfig() {
                         </div>
                       </li>
                       <li>
-                        Is the test file uploaded?{' '}
+                        {t('CloudSyncConfigPage.health.fileUploaded')}{' '}
                         <div className="list--customization__pill">
                           <Img
                             src={iconMap[stateIsFileUploaded]}
@@ -508,7 +500,7 @@ function CloudSyncPageConfig() {
                         </div>
                       </li>
                       <li>
-                        Did the test download work?{' '}
+                        {t('CloudSyncConfigPage.health.testDownload')}{' '}
                         <div className="list--customization__pill">
                           <Img
                             src={iconMap[stateDownload]}
@@ -518,7 +510,7 @@ function CloudSyncPageConfig() {
                         </div>
                       </li>
                       <li>
-                        Is the test file downloaded?{' '}
+                        {t('CloudSyncConfigPage.health.fileDownloaded')}{' '}
                         <div className="list--customization__pill">
                           <Img
                             src={iconMap[stateIsFileDownloaded]}
@@ -542,7 +534,7 @@ function CloudSyncPageConfig() {
         <>
           {!showHealth && (
             <>
-              <Header title="Cloud Backup - Select your provider" />
+              <Header title={t('CloudSyncConfigPage.title2')} />
 
               <CloudSyncConfig
                 onClick={cloudSyncSet}
@@ -560,7 +552,7 @@ function CloudSyncPageConfig() {
       )}
       <Footer
         next={nextButtonStatus()}
-        nextText="Copy games"
+        nextText={t('general.copyGames')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

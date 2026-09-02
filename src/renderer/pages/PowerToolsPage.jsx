@@ -60,8 +60,8 @@ function PowerToolsPage() {
     ]);
     const modalData = {
       active: true,
-      header: <span className="h4">Success!</span>,
-      body: <p>Password created</p>,
+      header: <span className="h4">{t('general.successExcl')}</span>,
+      body: <p>{t('plugins.passwordCreated')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -91,8 +91,12 @@ function PowerToolsPage() {
   const installPowerTools = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing PowerTools</span>,
-      body: <p>Please wait while we install the plugin</p>,
+      header: (
+        <span className="h4">
+          {t('plugins.installing', { plugin: 'PowerTools' })}
+        </span>
+      ),
+      body: <p>{t('plugins.installingWait')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -115,8 +119,8 @@ function PowerToolsPage() {
       if (stdout.includes('true')) {
         modalData = {
           active: true,
-          header: <span className="h4">Success!</span>,
-          body: <p>PowerTools Installed</p>,
+          header: <span className="h4">{t('general.successExcl')}</span>,
+          body: <p>{t('plugins.installed', { plugin: 'PowerTools' })}</p>,
           css: 'emumodal--xs',
         };
 
@@ -127,7 +131,7 @@ function PowerToolsPage() {
       } else {
         modalData = {
           active: true,
-          header: <span className="h4">Error installing plugin</span>,
+          header: <span className="h4">{t('plugins.installError')}</span>,
           body: <p>{JSON.stringify(status.stderr)}</p>,
           css: 'emumodal--xs',
         };

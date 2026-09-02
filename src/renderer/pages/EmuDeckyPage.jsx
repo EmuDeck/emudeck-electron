@@ -56,8 +56,8 @@ function EmuDeckyPage() {
 
     const modalData = {
       active: true,
-      header: <span className="h4">Success!</span>,
-      body: <p>Password created</p>,
+      header: <span className="h4">{t('general.successExcl')}</span>,
+      body: <p>{t('plugins.passwordCreated')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -87,8 +87,12 @@ function EmuDeckyPage() {
   const installEmuDecky = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing EmuDecky</span>,
-      body: <p>Please wait while we install the plugin</p>,
+      header: (
+        <span className="h4">
+          {t('plugins.installing', { plugin: 'EmuDecky' })}
+        </span>
+      ),
+      body: <p>{t('plugins.installingWait')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -109,8 +113,8 @@ function EmuDeckyPage() {
       if (stdout.includes('true')) {
         modalData = {
           active: true,
-          header: <span className="h4">Success!</span>,
-          body: <p>EmuDecky Installed</p>,
+          header: <span className="h4">{t('general.successExcl')}</span>,
+          body: <p>{t('plugins.installed', { plugin: 'EmuDecky' })}</p>,
           css: 'emumodal--xs',
         };
 
@@ -121,7 +125,7 @@ function EmuDeckyPage() {
       } else {
         modalData = {
           active: true,
-          header: <span className="h4">Error installing plugin</span>,
+          header: <span className="h4">{t('plugins.installError')}</span>,
           body: <p>{JSON.stringify(status.stderr)}</p>,
           css: 'emumodal--xs',
         };
@@ -155,7 +159,7 @@ function EmuDeckyPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure EmuDecky" />
+      <Header title={t('EmuDeckyPage.title')} />
       <EmuDecky
         installClick={installEmuDecky}
         sudoPass={sudoPass}
@@ -168,7 +172,7 @@ function EmuDeckyPage() {
       />
       <Footer
         next={false}
-        nextText={sudoPass ? 'Continue' : 'Skip'}
+        nextText={sudoPass ? t('general.continue') : t('general.skip')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

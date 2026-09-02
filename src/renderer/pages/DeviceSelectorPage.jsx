@@ -189,7 +189,7 @@ function DeviceSelectorPage() {
             onClick={() => deviceSet('Mac')}
           >
             <img src={imgmac} width="100" alt="Background" />
-            <span className="h6">Mac</span>
+            <span className="h6">{t('devices.mac')}</span>
           </Card>
         )}
         {system !== 'darwin' && system !== 'win32' && (
@@ -199,28 +199,28 @@ function DeviceSelectorPage() {
               onClick={() => deviceSet('Steam Deck')}
             >
               <img src={imgDeck} width="100" alt="Background" />
-              <span className="h6">Steam Deck</span>
+              <span className="h6">{t('devices.steamDeck')}</span>
             </Card>
             <Card
               css={device === 'Steam Machine' && 'is-selected'}
               onClick={() => deviceSet('Steam Machine')}
             >
               <img src={imgSteamMachine} width="100" alt="Background" />
-              <span className="h6">Steam Machine</span>
+              <span className="h6">{t('devices.steamMachine')}</span>
             </Card>
             <Card
               css={device === 'Steam OS Handheld' && 'is-selected'}
               onClick={() => deviceSet('Steam OS Handheld')}
             >
               <img src={imgayaneokun} width="100" alt="Background" />
-              <span className="h6">SteamOS Handheld</span>
+              <span className="h6">{t('devices.steamOSHandheld')}</span>
             </Card>
             <Card
               css={device === 'Linux PC' && 'is-selected'}
               onClick={() => deviceSet('Linux PC')}
             >
               <img src={imglinux} width="100" alt="Background" />
-              <span className="h6">Linux PC</span>
+              <span className="h6">{t('devices.linuxPC')}</span>
             </Card>
           </>
         )}
@@ -232,14 +232,14 @@ function DeviceSelectorPage() {
               onClick={() => deviceSet('Windows PC')}
             >
               <img src={imgwindows} width="100" alt="Background" />
-              <span className="h6">Windows PC</span>
+              <span className="h6">{t('devices.windowsPC')}</span>
             </Card>
             <Card
               css={device === 'Windows Handlheld' && 'is-selected'}
               onClick={() => deviceSet('Windows Handlheld')}
             >
               <img src={imgwindows} width="100" alt="Background" />
-              <span className="h6">Windows Handlheld</span>
+              <span className="h6">{t('devices.windowsHandheld')}</span>
             </Card>
           </>
         )}

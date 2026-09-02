@@ -147,13 +147,10 @@ function EmulatorSelectorPage() {
       if (emulatorProp === 'xenia') {
         modalData = {
           active: true,
-          header: <span className="h4">Xenia Emulator - Disclaimer</span>,
-          body: (
-            <p>
-              Xenia is an experimental Emulator, don't expect a lot of games to
-              work.
-            </p>
+          header: (
+            <span className="h4">{t('EmulatorSelectorPage.xeniaTitle')}</span>
           ),
+          body: <p>{t('EmulatorSelectorPage.xeniaBody')}</p>,
         };
         // setStatePage({ ...statePage, modal: modalData });
       }
@@ -161,13 +158,10 @@ function EmulatorSelectorPage() {
       if (emulatorProp === 'shadps4') {
         modalData = {
           active: true,
-          header: <span className="h4">ShadPS4 Emulator - Disclaimer</span>,
-          body: (
-            <p>
-              ShadPS4 is an experimental Emulator, don't expect a lot of games
-              to work.
-            </p>
+          header: (
+            <span className="h4">{t('EmulatorSelectorPage.shadps4Title')}</span>
           ),
+          body: <p>{t('EmulatorSelectorPage.shadps4Body')}</p>,
         };
         // setStatePage({ ...statePage, modal: modalData });
       }
@@ -492,33 +486,24 @@ function EmulatorSelectorPage() {
             active: true,
             body: (
               <>
-                <p>
-                  You've selected two emulators for the same systems, which one
-                  do you want to use for Classic games like Super Nintendo, Nes,
-                  Nintendo 64, Dreamcast, etc?
-                </p>
+                <p>{t('EmulatorSelectorPage.classicGamesQuestion')}</p>
                 <div className="h5">
-                  <strong>RetroArch (recommended)</strong> has these pros:
+                  <strong>RetroArch ({t('general.recommended')})</strong>{' '}
+                  {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>RetroAchievements</li>
-                  <li>Bezels & Shaders</li>
-                  <li>Auto Save States</li>
+                  <li>{t('EmulatorSelectorPage.pros.retroAchievements')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.bezelsShaders')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.autoSaveStates')}</li>
                 </ol>
                 <div className="h5">
-                  <strong>ares</strong> has this pro:
+                  <strong>ares</strong> {t('EmulatorSelectorPage.hasPro')}
                 </div>
                 <ol className="list">
-                  <li>Alternative for people that dislike RetroArch</li>
+                  <li>{t('EmulatorSelectorPage.pros.alternativeRA')}</li>
                 </ol>
-                <p>
-                  If you chose Both, we will use Ares when available, and
-                  RetroArch for all the other cores
-                </p>
-                <p>
-                  We will only add the parser according to your selection so you
-                  don't end up with duplicates in your library.
-                </p>
+                <p>{t('EmulatorSelectorPage.bothNote')}</p>
+                <p>{t('EmulatorSelectorPage.parserNote')}</p>
               </>
             ),
             footer: (
@@ -548,10 +533,10 @@ function EmulatorSelectorPage() {
                 <BtnSimple
                   css="btn-simple--3"
                   type="button"
-                  aria="Go Back"
+                  aria={t('aria.goBack')}
                   onClick={() => setAlternativeEmulator(system, 'both', 'both')}
                 >
-                  Both
+                  {t('general.both')}
                 </BtnSimple>
               </>
             ),
@@ -585,25 +570,23 @@ function EmulatorSelectorPage() {
             active: true,
             body: (
               <>
-                <p>Which emulator do you want to use for GameBoy Advance.</p>
+                <p>{t('EmulatorSelectorPage.whichEmulatorGBA')}</p>
                 <div className="h5">
-                  <strong>RetroArch (recommended)</strong> has these pros:
+                  <strong>RetroArch ({t('general.recommended')})</strong>{' '}
+                  {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>RetroAchievements</li>
-                  <li>Bezels & Shaders</li>
-                  <li>Auto Save States</li>
+                  <li>{t('EmulatorSelectorPage.pros.retroAchievements')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.bezelsShaders')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.autoSaveStates')}</li>
                 </ol>
                 <div className="h5">
-                  <strong>mGBA</strong> has this pro:
+                  <strong>mGBA</strong> {t('EmulatorSelectorPage.hasPro')}
                 </div>
                 <ol className="list">
-                  <li>GBA Link for Multiplayer, Pokemon Trading, etc.</li>
+                  <li>{t('EmulatorSelectorPage.pros.gbaLink')}</li>
                 </ol>
-                <p>
-                  We will only add the parser according to your selection so you
-                  don't end up with duplicates in your library.
-                </p>
+                <p>{t('EmulatorSelectorPage.parserNote')}</p>
               </>
             ),
           };
@@ -638,25 +621,23 @@ function EmulatorSelectorPage() {
             active: true,
             body: (
               <>
-                <p>Which emulator do you want to use</p>
+                <p>{t('EmulatorSelectorPage.whichEmulator')}</p>
                 <div className="h5">
-                  <strong>RetroArch (recommended)</strong> has these pros:
+                  <strong>RetroArch ({t('general.recommended')})</strong>{' '}
+                  {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>RetroAchievements</li>
-                  <li>Bezels & Shaders</li>
-                  <li>Auto Save States</li>
+                  <li>{t('EmulatorSelectorPage.pros.retroAchievements')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.bezelsShaders')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.autoSaveStates')}</li>
                 </ol>
                 <div className="h5">
-                  <strong>RMG</strong> has this pro:
+                  <strong>RMG</strong> {t('EmulatorSelectorPage.hasPro')}
                 </div>
                 <ol className="list">
-                  <li>Better Performance</li>
+                  <li>{t('EmulatorSelectorPage.pros.betterPerformance')}</li>
                 </ol>
-                <p>
-                  We will only add the parser according to your selection so you
-                  don't end up with duplicates in your library.
-                </p>
+                <p>{t('EmulatorSelectorPage.parserNote')}</p>
               </>
             ),
           };
@@ -689,25 +670,23 @@ function EmulatorSelectorPage() {
             active: true,
             body: (
               <>
-                <p>Which emulator do you want to use</p>
+                <p>{t('EmulatorSelectorPage.whichEmulator')}</p>
                 <div className="h5">
-                  <strong>RetroArch</strong> has these prosss:
+                  <strong>RetroArch</strong> {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>RetroAchievements</li>
-                  <li>Bezels & Shaders</li>
-                  <li>Auto Save States</li>
+                  <li>{t('EmulatorSelectorPage.pros.retroAchievements')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.bezelsShaders')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.autoSaveStates')}</li>
                 </ol>
                 <div className="h5">
-                  <strong>DuckStation (recommended)</strong> has this pro:
+                  <strong>DuckStation ({t('general.recommended')})</strong>{' '}
+                  {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>Better Performance</li>
+                  <li>{t('EmulatorSelectorPage.pros.betterPerformance')}</li>
                 </ol>
-                <p>
-                  We will only add the parser according to your selection so you
-                  don't end up with duplicates in your library.
-                </p>
+                <p>{t('EmulatorSelectorPage.parserNote')}</p>
               </>
             ),
           };
@@ -740,25 +719,25 @@ function EmulatorSelectorPage() {
             active: true,
             body: (
               <>
-                <p>Which emulator do you want to use</p>
+                <p>{t('EmulatorSelectorPage.whichEmulator')}</p>
                 <div className="h5">
-                  <strong>RetroArch</strong> has these pros:
+                  <strong>RetroArch</strong> {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>RetroAchievements</li>
-                  <li>Bezels & Shaders</li>
-                  <li>Auto Save States</li>
+                  <li>{t('EmulatorSelectorPage.pros.retroAchievements')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.bezelsShaders')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.autoSaveStates')}</li>
                 </ol>
                 <div className="h5">
-                  <strong>melonDS (recommended)</strong> has this pros:
+                  <strong>melonDS ({t('general.recommended')})</strong>{' '}
+                  {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>Better performance and scaling</li>
+                  <li>
+                    {t('EmulatorSelectorPage.pros.betterPerformanceScaling')}
+                  </li>
                 </ol>
-                <p>
-                  We will only add the parser according to your selection so you
-                  don't end up with duplicates in your library.
-                </p>
+                <p>{t('EmulatorSelectorPage.parserNote')}</p>
               </>
             ),
           };
@@ -791,26 +770,24 @@ function EmulatorSelectorPage() {
             active: true,
             body: (
               <>
-                <p>Which emulator do you want to use</p>
+                <p>{t('EmulatorSelectorPage.whichEmulator')}</p>
                 <div className="h5">
-                  <strong>RetroArch</strong> has these pros:
+                  <strong>RetroArch</strong> {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>RetroAchievements</li>
-                  <li>Bezels & Shaders</li>
-                  <li>Auto Save States</li>
+                  <li>{t('EmulatorSelectorPage.pros.retroAchievements')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.bezelsShaders')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.autoSaveStates')}</li>
                 </ol>
                 <div className="h5">
-                  <strong>PPSSPP (recommended)</strong> has this pro:
+                  <strong>PPSSPP ({t('general.recommended')})</strong>{' '}
+                  {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>Better performance</li>
-                  <li>Better compatibility</li>
+                  <li>{t('EmulatorSelectorPage.pros.betterPerformance')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.betterCompatibility')}</li>
                 </ol>
-                <p>
-                  We will only add the parser according to your selection so you
-                  don't end up with duplicates in your library.
-                </p>
+                <p>{t('EmulatorSelectorPage.parserNote')}</p>
               </>
             ),
           };
@@ -843,20 +820,18 @@ function EmulatorSelectorPage() {
             active: true,
             body: (
               <>
-                <p>Which emulator do you want to use</p>
+                <p>{t('EmulatorSelectorPage.whichEmulator')}</p>
                 <div className="h5">
-                  <strong>RetroArch (recommended)</strong> has these pros:
+                  <strong>RetroArch ({t('general.recommended')})</strong>{' '}
+                  {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>RetroAchievements</li>
-                  <li>Bezels & Shaders</li>
-                  <li>Auto Save States</li>
-                  <li>3 different cores: 2003 plus, 2010 and current</li>
+                  <li>{t('EmulatorSelectorPage.pros.retroAchievements')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.bezelsShaders')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.autoSaveStates')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.threeCores')}</li>
                 </ol>
-                <p>
-                  We will only add the parser according to your selection so you
-                  don't end up with duplicates in your library.
-                </p>
+                <p>{t('EmulatorSelectorPage.parserNote')}</p>
               </>
             ),
           };
@@ -889,29 +864,29 @@ function EmulatorSelectorPage() {
             active: true,
             body: (
               <>
-                <p>Which emulator do you want to use</p>
+                <p>{t('EmulatorSelectorPage.whichEmulator')}</p>
                 <div className="h5">
-                  <strong>RetroArch</strong> has these pros:
+                  <strong>RetroArch</strong> {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>RetroAchievements</li>
-                  <li>Bezels & Shaders</li>
-                  <li>Auto Save States</li>
-                  <li>Better Keymapping and Controller support</li>
+                  <li>{t('EmulatorSelectorPage.pros.retroAchievements')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.bezelsShaders')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.autoSaveStates')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.betterKeymapping')}</li>
                 </ol>
                 <div className="h5">
-                  <strong>ScummVM (recommended)</strong> has these pros:
+                  <strong>ScummVM ({t('general.recommended')})</strong>{' '}
+                  {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>Not an emulation but runs natively</li>
-                  <li>Takes less resources</li>
-                  <li>Has better compatibility</li>
-                  <li>More flexible configuration</li>
+                  <li>{t('EmulatorSelectorPage.pros.native')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.lessResources')}</li>
+                  <li>
+                    {t('EmulatorSelectorPage.pros.hasBetterCompatibility')}
+                  </li>
+                  <li>{t('EmulatorSelectorPage.pros.flexibleConfig')}</li>
                 </ol>
-                <p>
-                  We will only add the parser according to your selection so you
-                  don't end up with duplicates in your library.
-                </p>
+                <p>{t('EmulatorSelectorPage.parserNote')}</p>
               </>
             ),
           };
@@ -944,24 +919,21 @@ function EmulatorSelectorPage() {
             active: true,
             body: (
               <>
-                <p>Which emulator do you want to use</p>
+                <p>{t('EmulatorSelectorPage.whichEmulator')}</p>
                 <div className="h5">
-                  <strong>RetroArch</strong> has these pros:
+                  <strong>RetroArch</strong> {t('EmulatorSelectorPage.hasPros')}
                 </div>
                 <ol className="list">
-                  <li>RetroAchievements</li>
-                  <li>Bezels & Shaders</li>
+                  <li>{t('EmulatorSelectorPage.pros.retroAchievements')}</li>
+                  <li>{t('EmulatorSelectorPage.pros.bezelsShaders')}</li>
                 </ol>
                 <div className="h5">
-                  <strong>Flycast</strong> has this pro:
+                  <strong>Flycast</strong> {t('EmulatorSelectorPage.hasPro')}
                 </div>
                 <ol className="list">
-                  <li>Better performance</li>
+                  <li>{t('EmulatorSelectorPage.pros.betterPerformance')}</li>
                 </ol>
-                <p>
-                  We will only add the parser according to your selection so you
-                  don't end up with duplicates in your library.
-                </p>
+                <p>{t('EmulatorSelectorPage.parserNote')}</p>
               </>
             ),
           };
@@ -1003,7 +975,7 @@ function EmulatorSelectorPage() {
               <BtnSimple
                 css="btn-simple--2"
                 type="button"
-                aria="Go Back"
+                aria={t('aria.goBack')}
                 onClick={() => setAlternativeEmulator(system, 'both', 'both')}
               >
                 {t('general.both')}

@@ -203,13 +203,16 @@ function WelcomePage() {
 
       {second && (
         <>
-          <Header title="EmuDeck News" />
+          <Header title={t('WelcomePage.news')} />
           <Main>
             <div className="cards cards--maxi">
               {news &&
                 news.map((item) => {
                   return (
-                    <Card key={item.link} css="is-selected">
+                    <Card
+                      key={item.link}
+                      css="is-selected is-selected--hide-tick"
+                    >
                       <a target={item.target} href={item.link}>
                         <span className="h5">{item.title}</span>
                         <p>{item.desc}</p>
@@ -220,7 +223,7 @@ function WelcomePage() {
                 })}
             </div>
             <span className="h2">
-              Games of the month by{' '}
+              {t('WelcomePage.gamesOfTheMonth')}{' '}
               <a
                 href="https://retrohandhelds.gg"
                 target="blank"
@@ -237,7 +240,10 @@ function WelcomePage() {
               {game_of_the_month &&
                 game_of_the_month.map((item) => {
                   return (
-                    <Card key={item.title} css="is-selected">
+                    <Card
+                      key={item.title}
+                      css="is-selected is-selected--hide-tick"
+                    >
                       <a target="blank" href={item.link}>
                         <span className="h5">{item.title}</span>
                         <img src={item.img} />

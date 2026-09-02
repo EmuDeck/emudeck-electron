@@ -51,8 +51,8 @@ function GyroDSUPage() {
       if (stdout.includes('true')) {
         modalData = {
           active: true,
-          header: <span className="h4">Success!</span>,
-          body: <p>GyroDSU Installed</p>,
+          header: <span className="h4">{t('general.successExcl')}</span>,
+          body: <p>{t('plugins.installed', { plugin: 'GyroDSU' })}</p>,
           css: 'emumodal--xs',
         };
 
@@ -63,7 +63,7 @@ function GyroDSUPage() {
       } else {
         modalData = {
           active: true,
-          header: <span className="h4">Error installing plugin</span>,
+          header: <span className="h4">{t('plugins.installError')}</span>,
           body: <p>{JSON.stringify(status.stderr)}</p>,
           css: 'emumodal--xs',
         };

@@ -43,9 +43,9 @@ function AutoMapConfigPage() {
       console.log({ message });
       const modalData = {
         active: true,
-        header: <span className="h4">Settings saved!</span>,
+        header: <span className="h4">{t('general.settingsSaved')}</span>,
         css: 'emumodal--sm',
-        body: <p>AutoMap is now enabled for the selected emulators.</p>,
+        body: <p>{t('AutoMapConfigPage.saved')}</p>,
       };
       setStatePage({
         ...statePage,
@@ -63,7 +63,7 @@ function AutoMapConfigPage() {
         <BtnSimple
           css="btn-simple--1"
           type="button"
-          aria="Disabled"
+          aria={t('aria.disabled')}
           onClick={() => saveAutoMapSettings()}
         >
           {t('general.save')}

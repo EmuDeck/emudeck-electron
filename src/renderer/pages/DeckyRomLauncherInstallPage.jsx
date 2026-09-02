@@ -58,8 +58,8 @@ function DeckyRomLauncherInstallPage() {
 
     const modalData = {
       active: true,
-      header: <span className="h4">Success!</span>,
-      body: <p>Password created</p>,
+      header: <span className="h4">{t('general.successExcl')}</span>,
+      body: <p>{t('plugins.passwordCreated')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -89,8 +89,12 @@ function DeckyRomLauncherInstallPage() {
   const installDeckyRomLauncher = () => {
     const modalData = {
       active: true,
-      header: <span className="h4">Installing Retro Library</span>,
-      body: <p>Please wait while we install the plugin</p>,
+      header: (
+        <span className="h4">
+          {t('plugins.installing', { plugin: 'Retro Library' })}
+        </span>
+      ),
+      body: <p>{t('plugins.installingWait')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -110,8 +114,8 @@ function DeckyRomLauncherInstallPage() {
       if (stdout.includes('true')) {
         modalData = {
           active: true,
-          header: <span className="h4">Success!</span>,
-          body: <p>Retro Library Installed</p>,
+          header: <span className="h4">{t('general.successExcl')}</span>,
+          body: <p>{t('plugins.installed', { plugin: 'Retro Library' })}</p>,
           css: 'emumodal--xs',
         };
 
@@ -122,7 +126,7 @@ function DeckyRomLauncherInstallPage() {
       } else {
         modalData = {
           active: true,
-          header: <span className="h4">Error installing plugin</span>,
+          header: <span className="h4">{t('plugins.installError')}</span>,
           body: <p>{JSON.stringify(status.stderr)}</p>,
           css: 'emumodal--xs',
         };
@@ -171,7 +175,7 @@ function DeckyRomLauncherInstallPage() {
 
   return (
     <Wrapper>
-      <Header title="Configure Retro Library" />
+      <Header title={t('DeckyRomLauncherPage.title')} />
       <DeckyRomLauncher
         installClick={installDeckyRomLauncher}
         sudoPass={sudoPass}
@@ -184,7 +188,7 @@ function DeckyRomLauncherInstallPage() {
       />
       <Footer
         next={nextPage()}
-        nextText={sudoPass ? 'Continue' : 'Skip'}
+        nextText={sudoPass ? t('general.continue') : t('general.skip')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}
       />

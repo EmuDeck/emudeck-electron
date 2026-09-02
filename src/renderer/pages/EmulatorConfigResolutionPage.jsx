@@ -42,9 +42,9 @@ function EmulatorConfigResolutionPage() {
       console.log({ message });
       const modalData = {
         active: true,
-        header: <span className="h4">Settings saved!</span>,
+        header: <span className="h4">{t('general.settingsSaved')}</span>,
         css: 'emumodal--sm',
-        body: <p>Your emulators now have the new resolutions you set.</p>,
+        body: <p>{t('EmulatorConfigResolutionPage.saved')}</p>,
       };
       setStatePage({
         ...statePage,
@@ -61,7 +61,7 @@ function EmulatorConfigResolutionPage() {
         <BtnSimple
           css="btn-simple--1"
           type="button"
-          aria="Disabled"
+          aria={t('aria.disabled')}
           onClick={() => saveResolutions()}
         >
           {t('general.save')}

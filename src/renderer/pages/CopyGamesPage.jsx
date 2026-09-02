@@ -153,10 +153,8 @@ function CopyGamesPage() {
           } else {
             const modalData = {
               active: true,
-              header: <span className="h4">Ooops 😞</span>,
-              body: (
-                <p>Non writable directory selected, please choose another.</p>
-              ),
+              header: <span className="h4">{t('general.ooops')}</span>,
+              body: <p>{t('RomStoragePage.modalErrorWritable')}</p>,
               css: 'emumodal--xs',
             };
             setStatePage({
@@ -207,25 +205,20 @@ function CopyGamesPage() {
         status = true;
         modalData = {
           active: true,
-          header: <span className="h4">Folders created</span>,
+          header: (
+            <span className="h4">{t('CopyGamesPage.foldersCreated')}</span>
+          ),
           body: (
             <>
-              <p>We've created the following folders:</p>
+              <p>{t('CopyGamesPage.foldersCreatedBody')}</p>
               <ul className="list">
                 <li>{storageUSBPath}/EmuDeck/roms</li>
                 <li>{storageUSBPath}/EmuDeck/bios</li>
               </ul>
-              <span className="h4">Roms</span>
-              <p>
-                Every system has it's own subfolder, check {storageUSBPath}
-                /roms/systems.txt to learn which folder is for each system
-              </p>
-              <span className="h4">Bios</span>
-              <p>
-                Don't create any aditional folder or subfolder, if a system
-                doesn't have its own folder, just copy the bios file in the roms
-                folder.
-              </p>
+              <span className="h4">{t('importExport.items.roms')}</span>
+              <p>{t('CopyGamesPage.romsHelp', { path: storageUSBPath })}</p>
+              <span className="h4">{t('importExport.items.bios')}</span>
+              <p>{t('CopyGamesPage.biosHelp')}</p>
             </>
           ),
           css: 'emumodal--xl',
@@ -239,13 +232,8 @@ function CopyGamesPage() {
         status = false;
         modalData = {
           active: true,
-          header: <span className="h4">Error</span>,
-          body: (
-            <p>
-              There was an issue creating folders in your USB Drive, please try
-              again.
-            </p>
-          ),
+          header: <span className="h4">{t('general.error')}</span>,
+          body: <p>{t('CopyGamesPage.foldersError')}</p>,
           css: 'emumodal--xs',
         };
         setStatePage({
@@ -263,13 +251,10 @@ function CopyGamesPage() {
   const openSRM = () => {
     let modalData = {
       active: true,
-      header: <span className="h4">Launching Steam Rom Manager</span>,
-      body: (
-        <p>
-          We will close Steam if its running and then Steam Rom Manager will
-          open, this could take a few seconds, please wait.
-        </p>
+      header: (
+        <span className="h4">{t('general.launching')} Steam Rom Manager</span>
       ),
+      body: <p>{t('aside.srm.body')}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -289,16 +274,13 @@ function CopyGamesPage() {
     } else {
       modalData = {
         active: true,
-        header: <span className="h4">Launching Steam Rom Manager</span>,
+        header: (
+          <span className="h4">{t('general.launching')} Steam Rom Manager</span>
+        ),
         body: (
           <>
-            <p>
-              We will close Steam if its running and then Steam Rom Manager will
-              open, this could take a few seconds, please wait.
-            </p>
-            <strong>
-              Desktop controls will temporarily revert to touch/trackpad/L2/R2.
-            </strong>
+            <p>{t('aside.srm.body')}</p>
+            <strong>{t('aside.srm.desktopControls')}</strong>
           </>
         ),
         footer: <ProgressBar css="progress--success" infinite max="100" />,
@@ -362,20 +344,15 @@ function CopyGamesPage() {
 
     const modalData = {
       active: true,
-      header: <span className="h4">Where do I copy my games?</span>,
+      header: <span className="h4">{t('CopyGamesPage.whereToCopy')}</span>,
       body: (
         <>
-          <p>
-            In the <strong>"roms"</strong> folder, you will find a large
-            assortment of folders. These folders correspond to consoles. For
-            example, <strong>"gc"</strong> is the folder for your Nintendo
-            Gamecube ROMs. In the
-            <strong>"bios"</strong> folder, you will place your BIOS directly
-            into the folder unless a folder already exists.
-          </p>
-          <p>
-            Once you have placed your ROMs and BIOS, you are ready to continue
-          </p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: t('CopyGamesPage.whereToCopyBody'),
+            }}
+          />
+          <p>{t('CopyGamesPage.whereToCopyReady')}</p>
         </>
       ),
       css: 'emumodal--sm',
@@ -391,7 +368,7 @@ function CopyGamesPage() {
     <Wrapper aside={second === true}>
       {mode === 'auto' && statusCopyGames === null && (
         <>
-          <Header title="Use a USB Drive to transfer your games" />
+          <Header title={t('CopyGamesPage.usbTitle')} />
 
           <CopyGamesAuto
             onClick={storageSet}
@@ -408,19 +385,16 @@ function CopyGamesPage() {
 
       {mode === 'manual' && statusCopyGames === null && (
         <>
-          <Header title="Manual Copy" />
-          <p className="lead">
-            Once you have collected your files, click the “Open Emulation
-            Folder” button below
-          </p>
+          <Header title={t('CopyGamesPage.manualTitle')} />
+          <p className="lead">{t('CopyGamesPage.manualDescription')}</p>
           <div>
             <BtnSimple
               css="btn-simple--1"
               type="button"
-              aria="Go Next"
+              aria={t('aria.goNext')}
               onClick={() => openEmulationFolder()}
             >
-              Open Emulation Folder
+              {t('CopyGamesPage.openEmulationFolder')}
             </BtnSimple>
           </div>
         </>
@@ -428,27 +402,22 @@ function CopyGamesPage() {
 
       {mode === 'manual' && statusCopyGames === 'manual' && (
         <>
-          <Header title="Waiting for Manual Copy" />
-          <p className="lead">
-            Once you have copied your files please click on the "Next" button
-          </p>
+          <Header title={t('CopyGamesPage.waitingTitle')} />
+          <p className="lead">{t('CopyGamesPage.waitingDescription')}</p>
         </>
       )}
 
       {mode === 'backup' && statusCopyGames === null && (
         <>
-          <Header title="Import EmuDeck data from another device" />
+          <Header title={t('CopyGamesPage.backupTitle')} />
           <ImportExport exportEnable={false} />
         </>
       )}
 
       {mode === undefined && (
         <>
-          <Header title="Let's copy your games" />
-          <p className="lead">
-            First, you will need to gather your ROMs and BIOS. These are
-            copyright and EmuDeck will not provide these for legal reasons.
-          </p>
+          <Header title={t('CopyGamesPage.chooseTitle')} />
+          <p className="lead">{t('CopyGamesPage.chooseDescription')}</p>
           {system !== 'win32' && (
             <SelectorMenu
               imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
@@ -456,22 +425,22 @@ function CopyGamesPage() {
                 [
                   () => selectMode('manual'),
                   mode === 'manual' ? 'is-selected' : '',
-                  'Manual copy',
-                  'You will need to copy your games manually',
+                  t('CopyGamesPage.modeManual'),
+                  t('CopyGamesPage.modeManualDesc'),
                   true,
                 ],
                 [
                   () => selectMode('auto'),
                   mode === 'auto' ? 'is-selected' : '',
-                  'Automatic import',
-                  "You'll need a different computer to create a USB Drive",
+                  t('CopyGamesPage.modeAuto'),
+                  t('CopyGamesPage.modeAutoDesc'),
                   true,
                 ],
                 [
                   () => selectMode('backup'),
                   mode === 'backup' ? 'is-selected' : '',
-                  'Import Backup',
-                  'Pick this if you already have EmuDeck installed in other device',
+                  t('CopyGamesPage.modeBackup'),
+                  t('CopyGamesPage.modeBackupDesc'),
                   true,
                 ],
               ]}
@@ -484,8 +453,8 @@ function CopyGamesPage() {
                 [
                   () => selectMode('manual'),
                   mode === 'manual' ? 'is-selected' : '',
-                  'Manual copy',
-                  'You will need to copy your games manually',
+                  t('CopyGamesPage.modeManual'),
+                  t('CopyGamesPage.modeManualDesc'),
                   true,
                 ],
               ]}
@@ -496,12 +465,8 @@ function CopyGamesPage() {
 
       {statusCopyGames === true && (
         <>
-          <Header title="Let's test those BIOS" />
-          <p className="lead">
-            Some games will not load properly without BIOS files in place. Place
-            your BIOS in Emulation/bios and use this BIOS Checker to ensure that
-            you have the correct BIOS for your system.
-          </p>
+          <Header title={t('CopyGamesPage.biosTitle')} />
+          <p className="lead">{t('CheckBiosPage.description')}</p>
           <Main>
             <div className="container--grid">
               <div data-col-sm="6">
@@ -530,25 +495,10 @@ function CopyGamesPage() {
               <div data-col-sm="6">
                 <Alert css="alert--info">
                   <ul className="list">
-                    <li>
-                      Tip 1: Not all systems require additional BIOS files.
-                      Listed here are the more common systems.
-                    </li>
-                    <li>
-                      Tip 2: Make sure you have the correct BIOS for your ROM
-                      region. Your ROMs may come from the United States, Japan,
-                      Europe, etc.
-                    </li>
-                    <li>
-                      Tip 3: Casing matters. Even if your BIOS are detected,
-                      your BIOS must be lowercase for Playstation 1 and
-                      Playstation 2.
-                    </li>
-                    <li>
-                      Tip 4: Your BIOS files must be placed in Emulation/bios.
-                      Do not make sub-folders for BIOS files. For the Nintendo
-                      Switch, use our pre-created folders.
-                    </li>
+                    <li>{t('CheckBios.tip1')}</li>
+                    <li>{t('CheckBios.tip2')}</li>
+                    <li>{t('CheckBios.tip3')}</li>
+                    <li>{t('CheckBios.tip4')}</li>
                   </ul>
                 </Alert>
               </div>
@@ -559,28 +509,20 @@ function CopyGamesPage() {
 
       {statusCopyGames === 'final' && (
         <>
-          <Header title="How to launch your games?" />
+          <Header title={t('CopyGamesPage.launchTitle')} />
 
           {system != 'win32' && (
             <Main>
               {installFrontends.steam.status && (
                 <>
-                  <p className="lead">
-                    Steam ROM Manager or SRM is a tool that will add your Games,
-                    Emulators to your Steam Library so you can launch them in
-                    Game Mode
-                  </p>
+                  <p className="lead">{t('CopyGamesPage.srmInfo')}</p>
 
                   <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/BsqWFHPp5UU-SRM.mp4" />
                 </>
               )}
               {installFrontends.esde.status && (
                 <>
-                  <p className="lead">
-                    We've added EmulationStation DE (ES-DE) to your Steam
-                    Library. Finish the installation and then go back to gaming
-                    mode, look for ES-DE in the Non Steam Games tab
-                  </p>
+                  <p className="lead">{t('CopyGamesPage.esdeInfo')}</p>
                   <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/twNE8i3aI0g-ESDE.mp4" />
                 </>
               )}
@@ -591,11 +533,7 @@ function CopyGamesPage() {
             <Main>
               {installFrontends.esde.status && (
                 <>
-                  <p className="lead">
-                    We've added EmulationStation DE (ES-DE) to your Steam
-                    Library. Finish the installation and then go back to gaming
-                    mode, look for ES-DE in the Non Steam Games tab
-                  </p>
+                  <p className="lead">{t('CopyGamesPage.esdeInfo')}</p>
                   <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/twNE8i3aI0g-ESDE.mp4" />
                 </>
               )}
@@ -605,22 +543,14 @@ function CopyGamesPage() {
             <Main>
               {installFrontends.steam.status && (
                 <>
-                  <p className="lead">
-                    Steam ROM Manager or SRM is a tool that will add your Games,
-                    Emulators to your Steam Library so you can launch them in
-                    Game Mode
-                  </p>
+                  <p className="lead">{t('CopyGamesPage.srmInfo')}</p>
 
                   <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/BsqWFHPp5UU-SRM.mp4" />
                 </>
               )}
               {installFrontends.esde.status && (
                 <>
-                  <p className="lead">
-                    We've added EmulationStation DE (ES-DE) to your Steam
-                    Library. Finish the installation and then go back to gaming
-                    mode, look for ES-DE in the Non Steam Games tab
-                  </p>
+                  <p className="lead">{t('CopyGamesPage.esdeInfo')}</p>
                   <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/twNE8i3aI0g-ESDE.mp4" />
                 </>
               )}
@@ -634,70 +564,70 @@ function CopyGamesPage() {
             <BtnSimple
               css="btn-simple--2"
               type="button"
-              aria="Go Next"
+              aria={t('aria.goNext')}
               onClick={() => navigate('/hotkeys')}
             >
-              Skip
+              {t('general.skip')}
             </BtnSimple>
           ))}
         {statusCopyGames === 'final' && installFrontends.steam.status && (
           <BtnSimple
             css="btn-simple--1"
             type="button"
-            aria="Go Next"
+            aria={t('aria.goNext')}
             onClick={() => openSRM()}
           >
-            Launch Steam ROM Manager
+            {t('CopyGamesPage.launchSRM')}
           </BtnSimple>
         )}
         {statusCopyGames === 'final' && installFrontends.esde.status && (
           <BtnSimple
             css="btn-simple--2"
             type="button"
-            aria="Go Next"
+            aria={t('aria.goNext')}
             onClick={() => navigate('/hotkeys')}
           >
-            Next
+            {t('general.next')}
           </BtnSimple>
         )}
         {statusCopyGames === true && (
           <BtnSimple
             css="btn-simple--1"
             type="button"
-            aria="Go Next"
+            aria={t('aria.goNext')}
             onClick={() => finishAddingGames()}
           >
-            Next
+            {t('general.next')}
           </BtnSimple>
         )}
         {statusCopyGames === 'manual' && (
           <BtnSimple
             css="btn-simple--1"
             type="button"
-            aria="Go Next"
+            aria={t('aria.goNext')}
             onClick={() => skipAddingGames()}
           >
-            Next
+            {t('general.next')}
           </BtnSimple>
         )}
         {mode === 'backup' && statusCopyGames === null && (
           <BtnSimple
             css="btn-simple--2"
             type="button"
-            aria="Go Back"
+            aria={t('aria.goBack')}
             onClick={() => navigate('/hotkeys')}
           >
-            Next
+            {t('general.next')}
           </BtnSimple>
         )}
         {second && statusCopyGames === null && (
           <BtnSimple
             css="btn-simple--2"
             type="button"
-            aria="Go Back"
+            aria={t('aria.goBack')}
             onClick={() => navigate('/emulators')}
           >
-            Skip for now
+            {t('CopyGamesPage.skipForNow')}
           </BtnSimple>
         )}
       </footer>
