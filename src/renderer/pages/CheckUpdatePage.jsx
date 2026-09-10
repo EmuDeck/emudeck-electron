@@ -380,7 +380,7 @@ function CheckUpdatePage() {
                   type="link"
                   aria={t('CheckUpdatePage.found.changelog')}
                   target="_blank"
-                  href="https://emudeck.github.io/blog/"
+                  href={`https://cloud.emudeck.com/changelog/changelog.php?c=${branch}&s=${system}`}
                 >
                   {t('CheckUpdatePage.found.changelog')}
                 </BtnSimple>
