@@ -2,18 +2,18 @@
  * Build config for electron renderer process
  */
 
-import path from 'path';
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import { merge } from 'webpack-merge';
-import TerserPlugin from 'terser-webpack-plugin';
-import baseConfig from './webpack.config.base';
-import webpackPaths from './webpack.paths';
-import checkNodeEnv from '../scripts/check-node-env';
-import deleteSourceMaps from '../scripts/delete-source-maps';
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const { merge } = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
+const baseConfig = require('./webpack.config.base');
+const webpackPaths = require('./webpack.paths');
+const checkNodeEnv = require('../scripts/check-node-env');
+const deleteSourceMaps = require('../scripts/delete-source-maps');
 
 checkNodeEnv('production');
 deleteSourceMaps();
@@ -25,7 +25,7 @@ const devtoolsConfig =
       }
     : {};
 
-const configuration: webpack.Configuration = {
+const configuration = {
   ...devtoolsConfig,
 
   mode: 'production',
@@ -90,15 +90,6 @@ const configuration: webpack.Configuration = {
   },
 
   plugins: [
-    /**
-     * Create global constants which can be configured at compile time.
-     *
-     * Useful for allowing different behaviour between development builds and
-     * release builds
-     *
-     * NODE_ENV should be production so that modules do not perform certain
-     * development checks
-     */
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
       DEBUG_PROD: false,
@@ -126,4 +117,4 @@ const configuration: webpack.Configuration = {
   ],
 };
 
-export default merge(baseConfig, configuration);
+module.exports = merge(baseConfig, configuration);

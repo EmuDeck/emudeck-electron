@@ -2,11 +2,11 @@
  * Base webpack config used across other specific configs
  */
 
-import webpack from 'webpack';
-import webpackPaths from './webpack.paths';
-import { dependencies as externals } from '../../release/app/package.json';
+const webpack = require('webpack');
+const webpackPaths = require('./webpack.paths');
+const { dependencies: externals } = require('../../release/app/package.json');
 
-const configuration: webpack.Configuration = {
+const configuration = {
   externals: [...Object.keys(externals || {})],
 
   stats: 'errors-only',
@@ -50,4 +50,4 @@ const configuration: webpack.Configuration = {
   ],
 };
 
-export default configuration;
+module.exports = configuration;

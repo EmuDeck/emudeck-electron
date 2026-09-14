@@ -140,21 +140,14 @@ if (process.env.NODE_ENV === 'production') {
 const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 if (isDebug) {
-  require('electron-debug')();
+  import('electron-debug').then(({ default: electronDebug }) =>
+    electronDebug()
+  );
 }
 
 const installExtensions = async () => {
-  return;
-  const installer = require('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS'];
-
-  return installer
-    .default(
-      extensions.map((name) => installer[name]),
-      forceDownload
-    )
-    .catch(console.log);
+  // electron-devtools-installer removed: it no longer downloads from the Chrome Web Store.
+  // Use standalone react-devtools if needed: npx react-devtools
 };
 
 const resolveBash = (): string | undefined => {
@@ -258,9 +251,7 @@ const createWindow = async () => {
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
       autoHideMenuBar: true,
       webPreferences: {
-        preload: app.isPackaged
-          ? path.join(__dirname, 'preload.js')
-          : path.join(__dirname, '../../.erb/dll/preload.js'),
+        preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
         contextIsolation: true,
       },
@@ -277,9 +268,7 @@ const createWindow = async () => {
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
       autoHideMenuBar: true,
       webPreferences: {
-        preload: app.isPackaged
-          ? path.join(__dirname, 'preload.js')
-          : path.join(__dirname, '../../.erb/dll/preload.js'),
+        preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
         contextIsolation: true,
       },
@@ -295,9 +284,7 @@ const createWindow = async () => {
       fullscreen: app.commandLine.hasSwitch('no-sandbox') ? true : isFullscreen,
       autoHideMenuBar: true,
       webPreferences: {
-        preload: app.isPackaged
-          ? path.join(__dirname, 'preload.js')
-          : path.join(__dirname, '../../.erb/dll/preload.js'),
+        preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
         contextIsolation: true,
       },

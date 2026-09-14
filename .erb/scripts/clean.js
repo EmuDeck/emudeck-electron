@@ -1,6 +1,6 @@
-import rimraf from 'rimraf';
-import process from 'process';
-import webpackPaths from '../configs/webpack.paths';
+const rimraf = require('rimraf');
+const process = require('process');
+const webpackPaths = require('../configs/webpack.paths');
 
 const args = process.argv.slice(2);
 const commandMap = {
