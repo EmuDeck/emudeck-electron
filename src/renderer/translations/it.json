@@ -661,7 +661,7 @@
       "shadps4Body": "ShadPS4 è un emulatore sperimentale, non aspettarti che funzionino molti giochi.",
       "classicGamesQuestion": "Hai selezionato due emulatori per gli stessi sistemi, quale vuoi usare per i giochi classici come Super Nintendo, Nes, Nintendo 64, Dreamcast, ecc.?",
       "whichEmulator": "Quale emulatore vuoi usare",
-      "whichEmulatorGBA": "Quale emulatore vuoi usare per GameBoy Advance.",
+      "whichEmulatorGBA": "Quale emulatore vuoi usare per GameBoy / GameBoy Advance.",
       "hasPros": "ha questi vantaggi:",
       "hasPro": "ha questo vantaggio:",
       "bothNote": "Se scegli Entrambi, useremo Ares quando disponibile e RetroArch per tutti gli altri core",
