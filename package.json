@@ -36,6 +36,8 @@
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
     "build:main": "cross-env NODE_ENV=production webpack --config ./.erb/configs/webpack.config.main.prod.js",
+    "flatpak:sources": "bash .erb/scripts/flatpak-gen-sources.sh",
+    "flatpak:build": "flatpak-builder --user --install --force-clean release/flatpak-build flatpak/com.emudeck.EmuDeck.yaml",
     "build:renderer": "cross-env NODE_ENV=production webpack --config ./.erb/configs/webpack.config.renderer.prod.js",
     "postinstall": "node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && cross-env NODE_ENV=development webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.js",
     "lint": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx",
