@@ -1059,6 +1059,7 @@
       "mac": "Mac",
       "steamDeck": "Steam Deck",
       "steamMachine": "Steam Machine",
+	  "steamFrame": "Steam Frame",	
       "steamOSHandheld": "Console portable SteamOS",
       "linuxPC": "PC sous Linux",
       "windowsPC": "PC sous Windows",

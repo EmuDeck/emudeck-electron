@@ -11,6 +11,7 @@ import Card from 'components/molecules/Card/Card';
 import {
   imgDeck,
   imgSteamMachine,
+  imgSteamFrame,
   imgally,
   imgaokzoepro,
   imgayaneo2,
@@ -26,7 +27,7 @@ import {
 function DeviceSelectorPage() {
   const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
-  const { device, system, mode } = state;
+  const { device, system, mode, arch } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
@@ -194,20 +195,33 @@ function DeviceSelectorPage() {
         )}
         {system !== 'darwin' && system !== 'win32' && (
           <>
-            <Card
-              css={device === 'Steam Deck' && 'is-selected'}
-              onClick={() => deviceSet('Steam Deck')}
-            >
-              <img src={imgDeck} width="100" alt="Background" />
-              <span className="h6">{t('devices.steamDeck')}</span>
-            </Card>
-            <Card
-              css={device === 'Steam Machine' && 'is-selected'}
-              onClick={() => deviceSet('Steam Machine')}
-            >
-              <img src={imgSteamMachine} width="100" alt="Background" />
-              <span className="h6">{t('devices.steamMachine')}</span>
-            </Card>
+            {arch !== 'arm64' && (
+              <>
+                <Card
+                  css={device === 'Steam Deck' && 'is-selected'}
+                  onClick={() => deviceSet('Steam Deck')}
+                >
+                  <img src={imgDeck} width="100" alt="Background" />
+                  <span className="h6">{t('devices.steamDeck')}</span>
+                </Card>
+                <Card
+                  css={device === 'Steam Machine' && 'is-selected'}
+                  onClick={() => deviceSet('Steam Machine')}
+                >
+                  <img src={imgSteamMachine} width="100" alt="Background" />
+                  <span className="h6">{t('devices.steamMachine')}</span>
+                </Card>
+              </>
+            )}
+            {arch === 'arm64' && (
+              <Card
+                css={device === 'Steam Frame' && 'is-selected'}
+                onClick={() => deviceSet('Steam Frame')}
+              >
+                <img src={imgSteamFrame} width="100" alt="Background" />
+                <span className="h6">{t('devices.steamFrame')}</span>
+              </Card>
+            )}
             <Card
               css={device === 'Steam OS Handheld' && 'is-selected'}
               onClick={() => deviceSet('Steam OS Handheld')}
@@ -249,8 +263,8 @@ function DeviceSelectorPage() {
           system === 'win32'
             ? 'frontend-selector'
             : mode === 'easy'
-            ? 'frontend-selector'
-            : 'automap'
+              ? 'frontend-selector'
+              : 'automap'
         }
         nextText={t('general.next')}
         disabledNext={disabledNext}

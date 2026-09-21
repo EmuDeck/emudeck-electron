@@ -678,22 +678,24 @@ ipcMain.on('update-start', async (event) => {
 
 ipcMain.on('system-info-in', async (event) => {
   // const os = require('os');
+  // arch: 'arm64' | 'x64' | 'arm' | 'ia32' (architecture of the running Electron binary)
+  const arch = os.arch();
   const isDebug =
     process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
   if (isDebug) {
-    event.reply('system-info-out', fakeOS);
+    event.reply('system-info-out', fakeOS, arch);
   }
 
   if (os.platform() === 'linux') {
     lsbRelease((_: any, data: any) => {
       if (data.distributorID) {
-        event.reply('system-info-out', data.distributorID);
+        event.reply('system-info-out', data.distributorID, arch);
       } else {
-        event.reply('system-info-out', 'unknown');
+        event.reply('system-info-out', 'unknown', arch);
       }
     });
   } else {
-    event.reply('system-info-out', os.platform());
+    event.reply('system-info-out', os.platform(), arch);
   }
 });
 

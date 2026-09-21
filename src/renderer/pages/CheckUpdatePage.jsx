@@ -202,9 +202,10 @@ function CheckUpdatePage() {
 
       ipcChannel.once('version-out', (version) => {
         ipcChannel.sendMessage('system-info-in');
-        ipcChannel.once('system-info-out', (platform) => {
+        ipcChannel.once('system-info-out', (platform, arch) => {
           console.log({
             system: platform,
+            arch,
             version: version[0],
             gamemode: version[1],
           });
@@ -252,6 +253,7 @@ function CheckUpdatePage() {
             },
             shaders: { ...shaders, ...shadersStored },
             system: platform,
+            arch,
             systemName: systemNameValue,
             version: version[0],
             gamemode: version[1],
@@ -263,9 +265,10 @@ function CheckUpdatePage() {
       ipcChannel.sendMessage('version');
       ipcChannel.once('version-out', (version) => {
         ipcChannel.sendMessage('system-info-in');
-        ipcChannel.once('system-info-out', (platform) => {
+        ipcChannel.once('system-info-out', (platform, arch) => {
           console.log({
             system: platform,
+            arch,
             version: version[0],
             gamemode: version[1],
             branch,
@@ -303,6 +306,7 @@ function CheckUpdatePage() {
           setState({
             ...state,
             system: platform,
+            arch,
             systemName: systemNameValue,
             version: version[0],
             gamemode: version[1],
