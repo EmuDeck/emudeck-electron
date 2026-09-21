@@ -2,7 +2,7 @@
   "actions" : {
     "build" : {
       "enabled" : true,
-      "script" : "npm run build:windows"
+      "script" : "npm run build:windows-arm"
     }
   }
 }

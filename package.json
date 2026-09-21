@@ -39,6 +39,7 @@
     "flatpak:sources": "bash .erb/scripts/flatpak-gen-sources.sh",
     "flatpak:build": "flatpak-builder --user --install --force-clean release/flatpak-build flatpak/com.emudeck.EmuDeck.yaml",
     "build:renderer": "cross-env NODE_ENV=production webpack --config ./.erb/configs/webpack.config.renderer.prod.js",
+    "build:windows-arm": "npm run build && cross-env ELECTRON_BUILDER_7Z_FILTER=BCJ electron-builder build --win --arm64 --publish never",
     "postinstall": "node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && cross-env NODE_ENV=development webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.js",
     "lint": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx",
     "package": "cross-env node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never",
