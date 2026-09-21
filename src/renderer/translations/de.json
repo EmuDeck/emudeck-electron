@@ -1081,7 +1081,7 @@
       "mac": "Mac",
       "steamDeck": "Steam Deck",
       "steamMachine": "Steam Machine",
-	  "steamFrame": "Steam Frame",	
+      "steamFrame": "Steam Frame",
       "steamOSHandheld": "SteamOS-Handheld",
       "linuxPC": "Linux-PC",
       "windowsPC": "Windows-PC",
@@ -1207,6 +1207,12 @@
     "NoInternetPage": {
       "title": "Keine Internetverbindung",
       "description": "Es konnte keine Verbindung zum Server hergestellt werden. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
+    },
+    "WindowControls": {
+      "minimize": "Minimieren",
+      "maximize": "Maximieren",
+      "restore": "Wiederherstellen",
+      "close": "Schließen"
     }
   }
 }

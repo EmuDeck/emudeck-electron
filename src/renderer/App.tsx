@@ -73,6 +73,7 @@ import ErrorPage from 'pages/ErrorPage';
 import Hotkeys from 'pages/Hotkeys';
 import FinishPage from 'pages/FinishPage';
 
+import WindowControls from 'components/atoms/WindowControls/WindowControls';
 import { GlobalContext } from './context/globalContext';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
@@ -654,6 +655,7 @@ export default function App() {
           <Route exact path="/hotkeys" element={<Hotkeys />} />
           <Route exact path="/finish" element={<FinishPage />} />
         </Routes>
+        <WindowControls />
       </Router>
     </GlobalContext.Provider>
   );

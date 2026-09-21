@@ -227,8 +227,10 @@ const createWindow = async () => {
 
   const { screen } = require('electron');
   const primaryDisplay = screen.getPrimaryDisplay();
-  const { height } = primaryDisplay.workAreaSize;
+  const { width, height } = primaryDisplay.workAreaSize;
   const screenHeight = height < 701 ? 600 : 740;
+  // Small screens (e.g. Steam Deck at 1280x800 with panels): open maximized
+  const startMaximized = width < 1000 || height < 1000;
   const isFullscreen = false;
   // const os = require('os');
 
@@ -337,6 +339,11 @@ const createWindow = async () => {
     browserWindowSettings.titleBarStyle = 'hidden';
     browserWindowSettings.trafficLightPosition = { x: 14, y: 14 };
   }
+  // Linux / Windows: frameless window. The renderer draws its own window controls
+  // (WindowControls atom) and talks to us through the 'window-control' channel.
+  if (os.platform() === 'linux' || os.platform() === 'win32') {
+    browserWindowSettings.frame = false;
+  }
 
   mainWindow = new BrowserWindow(browserWindowSettings);
 
@@ -349,6 +356,9 @@ const createWindow = async () => {
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {
+      if (startMaximized && !mainWindow.isFullScreen()) {
+        mainWindow.maximize();
+      }
       mainWindow.show();
     }
 
@@ -361,6 +371,14 @@ const createWindow = async () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
     reactDevToolsWindow?.close();
+  });
+
+  // Keep the custom window controls in sync with the maximized state
+  mainWindow.on('maximize', () => {
+    mainWindow?.webContents.send('window-maximized', true);
+  });
+  mainWindow.on('unmaximize', () => {
+    mainWindow?.webContents.send('window-maximized', false);
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);
@@ -645,6 +663,22 @@ ipcMain.on('update-check', async (event) => {
       // Manejar cualquier error que pueda ocurrir
       console.error('Error:', error);
     });
+});
+
+// Window controls for the frameless Linux window
+ipcMain.on('window-control', (event, args) => {
+  const [action] = args;
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (!win) return;
+  if (action === 'minimize') win.minimize();
+  if (action === 'maximize') {
+    if (win.isMaximized()) win.unmaximize();
+    else win.maximize();
+  }
+  if (action === 'close') win.close();
+  if (action === 'state') {
+    event.reply('window-maximized', win.isMaximized());
+  }
 });
 
 // Release channel switcher

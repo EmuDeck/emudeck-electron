@@ -1152,6 +1152,12 @@
       "searchIssues": "Buscar incidencias",
       "file": "Archivo",
       "open": "Abrir"
+    },
+    "WindowControls": {
+      "minimize": "Minimizar",
+      "maximize": "Maximizar",
+      "restore": "Restaurar",
+      "close": "Cerrar"
     }
   }
 }

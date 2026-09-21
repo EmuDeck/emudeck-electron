@@ -1081,7 +1081,7 @@
       "mac": "Mac",
       "steamDeck": "Steam Deck",
       "steamMachine": "Steam Machine",
-	  "steamFrame": "Steam Frame",	
+      "steamFrame": "Steam Frame",
       "steamOSHandheld": "Portatile con SteamOS",
       "linuxPC": "PC con Linux",
       "windowsPC": "PC con Windows",
@@ -1152,6 +1152,12 @@
       "searchIssues": "Cerca tra le segnalazioni",
       "file": "File",
       "open": "Apri"
+    },
+    "WindowControls": {
+      "minimize": "Riduci a icona",
+      "maximize": "Ingrandisci",
+      "restore": "Ripristina",
+      "close": "Chiudi"
     }
   }
 }
