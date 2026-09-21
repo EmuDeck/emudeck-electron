@@ -1,5 +1,27 @@
 {
   "translation": {
+    "Header": {
+      "channels": {
+        "main": "Öffentlich",
+        "beta": "Beta",
+        "early": "Early",
+        "early-unstable": "Early Unstable"
+      },
+      "channel": {
+        "label": "Release-Kanal",
+        "confirmTitle": "Kanal wechseln?",
+        "confirmBody": "EmuDeck lädt den neuesten {{to}}-Build herunter (du bist auf {{from}}) und startet neu, um ihn zu installieren.",
+        "confirmNote": "Der Wechsel zu einem älteren Kanal kann eine ältere Version installieren als die, die du jetzt hast.",
+        "updating": "Wechsel zu {{channel}}",
+        "checking": "Suche nach dem neuesten Build...",
+        "downloading": "Lade {{version}} herunter...",
+        "downloadingPercent": "Download... {{percent}} %",
+        "installing": "Installation läuft, EmuDeck startet gleich neu...",
+        "sameVersion": "Der neueste Build dieses Kanals ({{version}}) ist dieselbe Version, die du bereits hast, nichts zu installieren.",
+        "devMode": "Der Updater ist im Entwicklungsmodus deaktiviert. Verwende einen paketierten Build, um den Kanal zu wechseln.",
+        "error": "Kanal konnte nicht gewechselt werden: {{error}}"
+      }
+    },
     "general": {
       "success": "Erfolg",
       "error": "Fehler",

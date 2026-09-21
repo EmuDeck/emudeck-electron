@@ -45,6 +45,9 @@ jobs:
         run: |
           sed -i "s|main|early|g" "./src/data/branch.json"
           sed -i "s|emudeck-electron|emudeck-electron-early|g" "./package.json"
+          # Channel-specific semver prerelease so the in-app channel selector can always
+          # switch builds (electron-updater refuses to install an identical version)
+          cd release/app && npm version --no-git-tag-version "$(node -p "require('./package.json').version")-early.${{ github.run_number }}"
           #sed -i "s|EmuDeck|EmuDeck-early|g" "./release/app/package.json"
           #sed -i 's|"productName": "EmuDeck"|"productName": "EmuDeck-early"|g' "./package.json"
 

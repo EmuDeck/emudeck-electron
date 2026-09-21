@@ -13,6 +13,7 @@ import path from 'path';
 import { exec, spawn, execSync } from 'child_process';
 import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import semver from 'semver';
 import log from 'electron-log';
 // eslint-disable-next-line
 import MenuBuilder from './menu';
@@ -560,13 +561,17 @@ ipcMain.on('update-check', async (event) => {
 
       const version = app.getVersion();
       const versionOnline = updateInfo.version;
-      const versionCheck = version.localeCompare(versionOnline, undefined, {
-        numeric: true,
-        sensitivity: 'base',
-      });
+      // semver-aware: channel builds carry a prerelease suffix (2.7.0-early.12)
+      const upToDate =
+        semver.valid(version) && semver.valid(versionOnline)
+          ? semver.gte(version, versionOnline)
+          : version.localeCompare(versionOnline, undefined, {
+              numeric: true,
+              sensitivity: 'base',
+            }) >= 0;
 
       logCommand('UPDATE: COMPARING VERSIONS');
-      if (versionCheck === 1 || versionCheck === 0) {
+      if (upToDate) {
         logCommand('UPDATE: UP TO DATE');
 
         event.reply('update-check-out', ['up-to-date', updateInfo]);
@@ -603,6 +608,61 @@ ipcMain.on('update-check', async (event) => {
     });
 });
 
+// Release channel switcher
+ipcMain.on('update-channel', async (event, args) => {
+  const RELEASE_CHANNELS: Record<string, string> = {
+    main: 'emudeck-electron',
+    beta: 'emudeck-electron-beta',
+    early: 'emudeck-electron-early',
+    'early-unstable': 'emudeck-electron-early-unstable',
+  };
+  const backChannel = 'update-channel-out';
+  const [channel] = args;
+  const repo = RELEASE_CHANNELS[channel];
+
+  if (process.env.NODE_ENV === 'development' || !app.isPackaged) {
+    logCommand(
+      `UPDATE CHANNEL: ${channel} requested but updater is disabled in DEV MODE`,
+    );
+    event.reply(backChannel, ['error', 'DEV MODE']);
+    return;
+  }
+
+  logCommand(`UPDATE CHANNEL: switching to ${channel} (${repo})`);
+  autoUpdater.setFeedURL({ provider: 'github', owner: 'EmuDeck', repo });
+  autoUpdater.allowDowngrade = true;
+  autoUpdater.allowPrerelease = true;
+
+  const onProgress = (progress: any) => {
+    event.reply(backChannel, ['progress', Math.round(progress.percent)]);
+  };
+  autoUpdater.on('download-progress', onProgress);
+
+  try {
+    event.reply(backChannel, ['checking', channel]);
+    const checkResult = await autoUpdater.checkForUpdates();
+    const updateInfo = checkResult?.updateInfo;
+    logCommand(
+      `UPDATE CHANNEL: latest on ${channel} is ${updateInfo?.version}`,
+    );
+
+    if (!checkResult || !checkResult.isUpdateAvailable) {
+      event.reply(backChannel, ['same-version', updateInfo]);
+      return;
+    }
+
+    event.reply(backChannel, ['downloading', updateInfo]);
+    await autoUpdater.downloadUpdate();
+    event.reply(backChannel, ['installing', updateInfo]);
+    autoUpdater.quitAndInstall(true, true);
+  } catch (error: any) {
+    logCommand(`UPDATE CHANNEL: ERROR ${error?.message || error}`);
+    event.reply(backChannel, ['error', String(error?.message || error)]);
+  } finally {
+    autoUpdater.removeListener('download-progress', onProgress);
+  }
+});
+
 ipcMain.on('update-start', async (event) => {
   // Force no autoupdate
   // event.reply('update-check-out', 'up-to-date');
@@ -627,13 +687,17 @@ ipcMain.on('update-start', async (event) => {
 
       const version = app.getVersion();
       const versionOnline = updateInfo.version;
-      const versionCheck = version.localeCompare(versionOnline, undefined, {
-        numeric: true,
-        sensitivity: 'base',
-      });
+      // semver-aware: channel builds carry a prerelease suffix (2.7.0-early.12)
+      const upToDate =
+        semver.valid(version) && semver.valid(versionOnline)
+          ? semver.gte(version, versionOnline)
+          : version.localeCompare(versionOnline, undefined, {
+              numeric: true,
+              sensitivity: 'base',
+            }) >= 0;
 
       logCommand('UPDATE: COMPARING VERSIONS');
-      if (versionCheck === 1 || versionCheck === 0) {
+      if (upToDate) {
         logCommand('UPDATE: UP TO DATE');
 
         event.reply('update-check-out', ['up-to-date', updateInfo]);
