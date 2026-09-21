@@ -146,9 +146,47 @@ if (isDebug) {
   );
 }
 
-const installExtensions = async () => {
-  // electron-devtools-installer removed: it no longer downloads from the Chrome Web Store.
-  // Use standalone react-devtools if needed: npx react-devtools
+let reactDevToolsWindow: BrowserWindow | null = null;
+
+const openReactDevTools = async () => {
+  const standalonePath = path.resolve(
+    app.getAppPath(),
+    '../../node_modules/react-devtools-core/standalone',
+  );
+  if (!fs.existsSync(`${standalonePath}.js`)) return;
+
+  reactDevToolsWindow = new BrowserWindow({
+    width: 1000,
+    height: 700,
+    title: 'React DevTools',
+    show: false,
+    webPreferences: { nodeIntegration: true, contextIsolation: false },
+  });
+  reactDevToolsWindow.on('closed', () => {
+    reactDevToolsWindow = null;
+  });
+
+  const html = `<!DOCTYPE html><html><head><meta charset="utf-8">
+<style>html,body,#container{margin:0;height:100%}</style></head>
+<body><div id="container"></div><script>
+const { ipcRenderer } = require('electron');
+require(${JSON.stringify(standalonePath)}).default
+  .setContentDOMNode(document.getElementById('container'))
+  .setStatusListener((status) => {
+    if (/listening/i.test(status)) ipcRenderer.send('react-devtools-ready');
+  })
+  .startServer(8097);
+</script></body></html>`;
+
+  const ready = new Promise((resolve: any) => {
+    ipcMain.once('react-devtools-ready', () => resolve());
+    setTimeout(resolve, 3000);
+  });
+  await reactDevToolsWindow.loadURL(
+    `data:text/html;charset=utf-8,${encodeURIComponent(html)}`,
+  );
+  reactDevToolsWindow.showInactive();
+  await ready;
 };
 
 const resolveBash = (): string | undefined => {
@@ -175,8 +213,8 @@ const shellType =
     : { shell: bashPath, maxBuffer: 10 * 1024 * 1024 };
 
 const createWindow = async () => {
-  if (isDebug) {
-    await installExtensions();
+  if (process.env.NODE_ENV === 'development') {
+    await openReactDevTools();
   }
 
   const RESOURCES_PATH = app.isPackaged
@@ -322,6 +360,7 @@ const createWindow = async () => {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+    reactDevToolsWindow?.close();
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);

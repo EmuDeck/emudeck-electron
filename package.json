@@ -178,6 +178,7 @@
     "lint-staged": "^16.4.0",
     "mini-css-extract-plugin": "^2.8.1",
     "prettier": "^3.8.1",
+    "react-devtools-core": "^8.0.0",
     "react-refresh": "^0.13.0",
     "rimraf": "^6.1.3",
     "sass": "^1.74.1",

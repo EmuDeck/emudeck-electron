@@ -4,8 +4,11 @@
     <meta charset="utf-8" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="script-src 'self' 'unsafe-inline'"
+      content="script-src 'self' 'unsafe-inline'<%= htmlWebpackPlugin.options.isDevelopment ? ' http://localhost:8097' : '' %>"
     />
+    <% if (htmlWebpackPlugin.options.isDevelopment) { %>
+    <script src="http://localhost:8097"></script>
+    <% } %>
     <title>EmuDeck</title>
   </head>
   <body>
