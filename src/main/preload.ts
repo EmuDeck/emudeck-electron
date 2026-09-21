@@ -11,6 +11,8 @@ contextBridge.exposeInMainWorld('backend', {
 });
 
 contextBridge.exposeInMainWorld('electron', {
+  // Real OS platform ('darwin' | 'win32' | 'linux'), not affected by fakeOS
+  platform: process.platform,
   ipcRenderer: {
     sendMessage(channel: Channels, args: unknown[]) {
       ipcRenderer.send(channel, args);

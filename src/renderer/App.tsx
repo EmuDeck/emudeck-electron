@@ -98,6 +98,11 @@ export default function App() {
     links: false,
   });
 
+  // Expose the real platform to CSS (e.g. native overlay scrollbars on macOS)
+  useEffect(() => {
+    document.body.dataset.platform = window.electron?.platform ?? '';
+  }, []);
+
   const [stateCurrentConfigs, setStateCurrentConfigs] = useState({
     ra: { id: 'ra', code: 'RetroArch', version: 0 },
     dolphin: { id: 'dolphin', code: 'Dolphin', version: 0 },

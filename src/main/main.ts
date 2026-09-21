@@ -75,7 +75,7 @@ const logCommand = (
   bashCommand: any,
   error: any = '',
   stdout: any = '',
-  stderr: any = ''
+  stderr: any = '',
 ) => {
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
@@ -141,7 +141,7 @@ const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 if (isDebug) {
   import('electron-debug').then(({ default: electronDebug }) =>
-    electronDebug()
+    electronDebug(),
   );
 }
 
@@ -205,7 +205,7 @@ const createWindow = async () => {
         const line = buf.slice(0, i);
         buf = buf.slice(i + 1);
         BrowserWindow.getAllWindows().forEach((w) =>
-          w.webContents.send('backend-log', line)
+          w.webContents.send('backend-log', line),
         );
       }
     });
@@ -289,6 +289,14 @@ const createWindow = async () => {
         contextIsolation: true,
       },
     };
+  }
+
+  // macOS only (real OS, regardless of fakeOS): hide the native title bar and
+  // draw the traffic lights over our content, like a native app.
+  // The renderer offsets its top-left content via body[data-platform='darwin'].
+  if (os.platform() === 'darwin') {
+    browserWindowSettings.titleBarStyle = 'hidden';
+    browserWindowSettings.trafficLightPosition = { x: 14, y: 14 };
   }
 
   mainWindow = new BrowserWindow(browserWindowSettings);
@@ -643,7 +651,7 @@ ipcMain.on('update-start', async (event) => {
           .then(() => {
             autoUpdater.quitAndInstall(
               true, // isSilent
-              true // isForceRunAfter, restart app after update is installed
+              true, // isForceRunAfter, restart app after update is installed
             );
           })
           .catch((error) => {
@@ -850,7 +858,7 @@ ipcMain.on('getToken', (event, command) => {
         console.log(`getToken -> HTTP ${stdout}`);
         event.reply(backChannel, null, stdout, '');
       });
-    }
+    },
   );
 
   req.on('error', (err) => event.reply(backChannel, err, '', String(err)));
