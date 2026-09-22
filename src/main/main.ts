@@ -11,7 +11,15 @@
 import https from 'https';
 import path from 'path';
 import { exec, spawn, execSync } from 'child_process';
-import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  ipcMain,
+  nativeTheme,
+  protocol,
+  net,
+} from 'electron';
+import { pathToFileURL } from 'url';
 import { autoUpdater } from 'electron-updater';
 import semver from 'semver';
 import log from 'electron-log';
@@ -29,6 +37,19 @@ const { shouldUseDarkColors } = nativeTheme;
 const os = require('os');
 const fs = require('fs');
 const lsbRelease = require('lsb-release');
+// Serves local artwork (ROM covers) to the renderer in dev (http) and prod (file)
+protocol.registerSchemesAsPrivileged([
+  {
+    scheme: 'emudeck-media',
+    privileges: {
+      standard: true,
+      secure: true,
+      supportFetchAPI: true,
+      stream: true,
+    },
+  },
+]);
+
 let appDataPath = app.getPath('userData');
 
 if (os.platform().includes('darwin')) {
@@ -663,6 +684,141 @@ ipcMain.on('update-check', async (event) => {
       // Manejar cualquier error que pueda ocurrir
       console.error('Error:', error);
     });
+});
+
+// ROM Library: thin layer over the backend's generateGameLists (bash/ps1),
+// which writes $storagePath/retrolibrary/cache/roms_games.json and downloads
+// artwork to $storagePath/retrolibrary/artwork/<platform>/media/box2dfront/.
+const isWin32 = () => os.platform().includes('win32');
+
+// Parses settings.sh / settings.ps1 into { storagePath, romsPath, toolsPath, ... }
+const readBackendSettings = () => {
+  const home = os.homedir();
+  const file = isWin32()
+    ? `${appDataPath}/settings.ps1`
+    : `${home}/.config/EmuDeck/settings.sh`;
+  const settings: Record<string, string> = { home };
+  if (!fs.existsSync(file)) return settings;
+  fs.readFileSync(file, 'utf8')
+    .split(/\r?\n/)
+    .forEach((line: string) => {
+      const match = line.match(/^\$?([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
+      if (!match) return;
+      const value = match[2]
+        .trim()
+        .replace(/["']/g, '')
+        .replace(/\$HOME|\$env:USERPROFILE|\$USERPROFILE/g, home);
+      settings[match[1]] = value;
+    });
+  return settings;
+};
+
+const romLibraryMsgFile = () =>
+  isWin32()
+    ? `${appDataPath}/logs/msg.log`
+    : `${os.homedir()}/.config/EmuDeck/logs/msg.log`;
+
+ipcMain.on('rom-library-config', (event) => {
+  const settings = readBackendSettings();
+  event.reply('rom-library-config', {
+    home: settings.home,
+    storagePath: settings.storagePath,
+    romsPath: settings.romsPath,
+    toolsPath: settings.toolsPath,
+    cacheFile: settings.storagePath
+      ? `${settings.storagePath}/retrolibrary/cache/roms_games.json`
+      : null,
+  });
+});
+
+// Reads the cached game list written by generateGameLists
+ipcMain.on('rom-library-json', (event) => {
+  const backChannel = 'rom-library-json';
+  const { storagePath } = readBackendSettings();
+  const file = `${storagePath}/retrolibrary/cache/roms_games.json`;
+  if (!storagePath || !fs.existsSync(file)) {
+    event.reply(backChannel, { ok: false, error: 'missing' });
+    return;
+  }
+  try {
+    const systems = JSON.parse(fs.readFileSync(file, 'utf8'));
+    event.reply(backChannel, { ok: true, systems });
+  } catch (error: any) {
+    event.reply(backChannel, {
+      ok: false,
+      error: String(error?.message || error),
+    });
+  }
+});
+
+// Runs the backend's generateGameLists; artwork keeps downloading afterwards
+ipcMain.on('rom-library-build', (event) => {
+  const backChannel = 'rom-library-build';
+  const bashCommand = isWin32()
+    ? `powershell -ExecutionPolicy Bypass -command "& { . $env:APPDATA/EmuDeck/backend/functions/all.ps1; generateGameLists }"`
+    : `. ${allPath} && generateGameLists`;
+  logCommand('ROM LIBRARY: generateGameLists');
+  exec(bashCommand, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, {
+      ok: !error,
+      error: error ? String(error.message) : null,
+    });
+  });
+});
+
+// Last status line the backend wrote while building (msg.log)
+ipcMain.on('rom-library-status', (event) => {
+  const file = romLibraryMsgFile();
+  let message = '';
+  try {
+    if (fs.existsSync(file)) message = fs.readFileSync(file, 'utf8').trim();
+  } catch {
+    message = '';
+  }
+  event.reply('rom-library-status', message);
+});
+
+// Launches a game with the system's launcher from roms_games.json, sourcing the
+// backend so $RetroArch_cores resolves and pointing the launcher at $toolsPath.
+ipcMain.on('rom-library-launch', (event, args) => {
+  const [launcher, filename] = args;
+  const backChannel = 'rom-library-launch';
+  if (isWin32()) {
+    event.reply(backChannel, { ok: false, error: 'unsupported' });
+    return;
+  }
+  if (!launcher) {
+    event.reply(backChannel, { ok: false, error: 'no-launch-command' });
+    return;
+  }
+  const { toolsPath } = readBackendSettings();
+  const quoted = `'${String(filename).replace(/'/g, `'\\''`)}'`;
+  let command = String(launcher)
+    .replace(/"?\{file\.path\}"?/g, quoted)
+    .replace(/CORESPATH/g, '"$RetroArch_cores"');
+  if (toolsPath) {
+    command = command.replace(/^\S*\/launchers\//, `${toolsPath}/launchers/`);
+  }
+  const bashCommand = `. ${allPath} && ${command}`;
+  logCommand(`ROM LIBRARY: ${bashCommand}`);
+  try {
+    const child = spawn(bashCommand, [], {
+      shell: bashPath || true,
+      detached: true,
+      stdio: 'ignore',
+    });
+    child.on('error', (error) => {
+      event.reply(backChannel, { ok: false, error: String(error.message) });
+    });
+    child.unref();
+    event.reply(backChannel, { ok: true });
+  } catch (error: any) {
+    event.reply(backChannel, {
+      ok: false,
+      error: String(error?.message || error),
+    });
+  }
 });
 
 // Window controls for the frameless Linux window
@@ -1532,6 +1688,11 @@ if (!gotTheLock) {
   app
     .whenReady()
     .then(() => {
+      protocol.handle('emudeck-media', (request) => {
+        const { pathname } = new URL(request.url);
+        const filePath = decodeURIComponent(pathname.replace(/^\//, ''));
+        return net.fetch(pathToFileURL(filePath).toString());
+      });
       createWindow();
 
       app.on('activate', () => {

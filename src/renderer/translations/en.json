@@ -207,6 +207,9 @@
         },
         "uninstall": {
           "description": "Uninstall EmuDeck from your system"
+        },
+        "romLibrary": {
+          "description": "Browse and launch your games"
         }
       },
       "buttons": {
@@ -220,7 +223,8 @@
         "changeToken": "Change Token",
         "createZip": "Create Zip",
         "read": "Read"
-      }
+      },
+      "romLibrary": "ROM Library"
     },
     "ImportExportPage": {
       "title": "Import / Export EmuDeck to another device",
@@ -1158,6 +1162,57 @@
       "maximize": "Maximize",
       "restore": "Restore",
       "close": "Close"
+    },
+    "RomLibrary": {
+      "title": "ROM Library",
+      "all": "All systems",
+      "search": "Search games…",
+      "games": "games",
+      "noGames": "No games found",
+      "refresh": "Rescan",
+      "launching": "Launching {{name}}…",
+      "launchError": "Could not launch {{name}}",
+      "launchUnsupported": "Launching games is not available on Windows yet",
+      "scanError": "Could not read the ROMs folder: {{error}}",
+      "building": "Building the game library…",
+      "noSettings": "EmuDeck settings not found. Run the setup first.",
+      "back": "Back to EmuDeck",
+      "systems": "Systems",
+      "collections": "Collections",
+      "collection": {
+        "new": "New collection",
+        "edit": "Edit",
+        "delete": "Delete",
+        "deleteConfirm": "Delete the collection \"{{name}}\"?",
+        "name": "Name",
+        "namePlaceholder": "My collection",
+        "manual": "Manual",
+        "manualHint": "Drag games here from the grid",
+        "smart": "Smart",
+        "smartHint": "Games are added by rules, like iTunes",
+        "match": "Include games that match",
+        "matchAll": "all of the rules",
+        "matchAny": "any of the rules",
+        "addRule": "Add rule",
+        "removeRule": "Remove rule",
+        "limit": "Limit to",
+        "limitHint": "items (0 = no limit)",
+        "removeGame": "Remove from collection",
+        "dropHint": "Drag games from any system or collection and drop them on this collection in the sidebar.",
+        "fields": {
+          "title": "Title",
+          "platform": "System",
+          "extension": "File type"
+        },
+        "ops": {
+          "contains": "contains",
+          "notContains": "does not contain",
+          "startsWith": "starts with",
+          "endsWith": "ends with",
+          "is": "is",
+          "isNot": "is not"
+        }
+      }
     }
   }
 }

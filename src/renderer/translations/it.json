@@ -207,6 +207,9 @@
         },
         "uninstall": {
           "description": "Disinstalla EmuDeck dal tuo sistema"
+        },
+        "romLibrary": {
+          "description": "Sfoglia e avvia i tuoi giochi"
         }
       },
       "buttons": {
@@ -220,7 +223,8 @@
         "changeToken": "Cambia token",
         "createZip": "Crea Zip",
         "read": "Leggi"
-      }
+      },
+      "romLibrary": "Libreria ROM"
     },
     "ImportExportPage": {
       "title": "Importa / Esporta EmuDeck su un altro dispositivo",
@@ -1158,6 +1162,57 @@
       "maximize": "Ingrandisci",
       "restore": "Ripristina",
       "close": "Chiudi"
+    },
+    "RomLibrary": {
+      "title": "Libreria ROM",
+      "all": "Tutti i sistemi",
+      "search": "Cerca giochi…",
+      "games": "giochi",
+      "noGames": "Nessun gioco trovato",
+      "refresh": "Riesegui scansione",
+      "launching": "Avvio di {{name}}…",
+      "launchError": "Impossibile avviare {{name}}",
+      "launchUnsupported": "L’avvio dei giochi non è ancora disponibile su Windows",
+      "scanError": "Impossibile leggere la cartella delle ROM: {{error}}",
+      "building": "Creazione della libreria di giochi…",
+      "noSettings": "Impostazioni di EmuDeck non trovate. Esegui prima l’installazione.",
+      "back": "Torna a EmuDeck",
+      "systems": "Sistemi",
+      "collections": "Collezioni",
+      "collection": {
+        "new": "Nuova collezione",
+        "edit": "Modifica",
+        "delete": "Elimina",
+        "deleteConfirm": "Eliminare la collezione \"{{name}}\"?",
+        "name": "Nome",
+        "namePlaceholder": "La mia collezione",
+        "manual": "Manuale",
+        "manualHint": "Trascina qui i giochi dalla griglia",
+        "smart": "Smart",
+        "smartHint": "I giochi vengono aggiunti tramite regole, come in iTunes",
+        "match": "Includi i giochi che soddisfano",
+        "matchAll": "tutte le regole",
+        "matchAny": "almeno una regola",
+        "addRule": "Aggiungi regola",
+        "removeRule": "Rimuovi regola",
+        "limit": "Limita a",
+        "limitHint": "elementi (0 = nessun limite)",
+        "removeGame": "Rimuovi dalla collezione",
+        "dropHint": "Trascina i giochi da qualsiasi sistema o collezione e rilasciali su questa collezione nella barra laterale.",
+        "fields": {
+          "title": "Titolo",
+          "platform": "Sistema",
+          "extension": "Tipo di file"
+        },
+        "ops": {
+          "contains": "contiene",
+          "notContains": "non contiene",
+          "startsWith": "inizia con",
+          "endsWith": "finisce con",
+          "is": "è",
+          "isNot": "non è"
+        }
+      }
     }
   }
 }

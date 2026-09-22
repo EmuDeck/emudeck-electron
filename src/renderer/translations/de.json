@@ -207,6 +207,9 @@
         },
         "uninstall": {
           "description": "Deinstalliere EmuDeck von deinem System"
+        },
+        "romLibrary": {
+          "description": "Spiele durchsuchen und starten"
         }
       },
       "buttons": {
@@ -220,7 +223,8 @@
         "changeToken": "Token ändern",
         "createZip": "Zip erstellen",
         "read": "Lesen"
-      }
+      },
+      "romLibrary": "ROM-Bibliothek"
     },
     "ImportExportPage": {
       "title": "EmuDeck auf ein anderes Gerät importieren / exportieren",
@@ -1213,6 +1217,57 @@
       "maximize": "Maximieren",
       "restore": "Wiederherstellen",
       "close": "Schließen"
+    },
+    "RomLibrary": {
+      "title": "ROM-Bibliothek",
+      "all": "Alle Systeme",
+      "search": "Spiele suchen…",
+      "games": "Spiele",
+      "noGames": "Keine Spiele gefunden",
+      "refresh": "Neu scannen",
+      "launching": "{{name}} wird gestartet…",
+      "launchError": "{{name}} konnte nicht gestartet werden",
+      "launchUnsupported": "Das Starten von Spielen ist unter Windows noch nicht verfügbar",
+      "scanError": "ROM-Ordner konnte nicht gelesen werden: {{error}}",
+      "building": "Spielebibliothek wird erstellt…",
+      "noSettings": "EmuDeck-Einstellungen nicht gefunden. Führe zuerst die Einrichtung aus.",
+      "back": "Zurück zu EmuDeck",
+      "systems": "Systeme",
+      "collections": "Sammlungen",
+      "collection": {
+        "new": "Neue Sammlung",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "deleteConfirm": "Sammlung „{{name}}“ löschen?",
+        "name": "Name",
+        "namePlaceholder": "Meine Sammlung",
+        "manual": "Manuell",
+        "manualHint": "Spiele aus dem Raster hierher ziehen",
+        "smart": "Intelligent",
+        "smartHint": "Spiele werden per Regeln hinzugefügt, wie in iTunes",
+        "match": "Spiele aufnehmen, die",
+        "matchAll": "alle Regeln erfüllen",
+        "matchAny": "mindestens eine Regel erfüllen",
+        "addRule": "Regel hinzufügen",
+        "removeRule": "Regel entfernen",
+        "limit": "Begrenzen auf",
+        "limitHint": "Einträge (0 = kein Limit)",
+        "removeGame": "Aus Sammlung entfernen",
+        "dropHint": "Ziehe Spiele aus einem beliebigen System oder einer Sammlung und lege sie in der Seitenleiste auf dieser Sammlung ab.",
+        "fields": {
+          "title": "Titel",
+          "platform": "System",
+          "extension": "Dateityp"
+        },
+        "ops": {
+          "contains": "enthält",
+          "notContains": "enthält nicht",
+          "startsWith": "beginnt mit",
+          "endsWith": "endet mit",
+          "is": "ist",
+          "isNot": "ist nicht"
+        }
+      }
     }
   }
 }
