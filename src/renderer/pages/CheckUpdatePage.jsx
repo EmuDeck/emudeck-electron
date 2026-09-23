@@ -428,6 +428,8 @@ function CheckUpdatePage() {
 
       ipcChannel.once('update-check-out', (message) => {
         if (message[0] === 'updating') {
+          // Show the changelog on the first launch after the update installs
+          localStorage.setItem('show_changelog', true);
           const modalData = {
             active: true,
             header: (
