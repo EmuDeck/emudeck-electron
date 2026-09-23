@@ -16,12 +16,17 @@
   },
   {
     "title": "AutoMap Controllers",
-    "description": "Enable AutoMap to allow EmuDeck to set up your controls in emulators that doesn't detect controllers automatically. This will also enable auto setup of controllers for up to 4 players and support for other controllers like the Steam Controller, 8BitDo, Xbox, DualSense, other SteamOS handhelds, etc",
+    "description": "Enable AutoMap to allow EmuDeck to set up your controls in emulators that doesn't detect controllers automatically. This will also enable auto setup of controllers for up to 4 players and support for other linux distros and external controllers like the Steam Controller, 8BitDo, Xbox, DualSense, non Steam Deck handhelds, etc",
     "image": "true"
   },
   {
     "title": "Steam Machine improvements",
-    "description": "Improvements to Steam Machine support like default 1080P / 4K setup in selected emulators",
+    "description": "Improvements to Steam Machine support: added default 1080P / 4K setup in selected emulators.",
+    "image": "true"
+  },
+  {
+    "title": "Steam Frame beta support",
+    "description": "Added <strong>experimentral</strong> ARM builds with Steam Frame support. We'll be adding more emulators and special features for ARM and the Steam Frame soon!",
     "image": "true"
   },
   {
@@ -36,7 +41,7 @@
   },
   {
     "title": "Several Bug fixes",
-    "description": "<div style='text-align:left'><p><strong>DuckStation</strong>: Save state on exit disabled by default</p><p><strong>Eden:</strong>New BIOS/firmware check</p><p><strong>ES-DE:</strong> picks the right RPCS3 variant per file type (directory, ISO, shortcut)</p><p>Gamelists moved to the storage folder instead of saves. downloaded_media symlinked into storage for Windows migration compatibility</p><p><strong>Launchers:</strong>All now use #!/usr/bin/env bash thanks to<strong>vquintin</strong></p><p>Removed old launchers for Citra, Lime3DS and Suyu</p><p><strong>melonDS:</strong>New melonDS.toml shipped</p><p><strong>RMG:</strong>Config updated to v0.9.0 with a Steam Deck controller profile</p><p><strong>RPCS3:</strong> config.yml cleaned of obsolete keys</p><p><strong>Steam ROM Manager</strong>: Init re-runs if steamDirectory is empty. New parser Sony PlayStation 3 - RPCS3 (ISO)</p><p>BigPemu Parser category renamed</p><p><strong>Xemu</strong>: Saves set up on init</p><p><strong>Other:</strong>No hardcoded /usr/bin/flatpak, /usr/bin/python or /bin/bash in launchers, ES-DE commands or generated scripts.</p><p>Save folders now use ln -sfn in order to fix broken symlinks</p><p>Added missing translations to the EmuDeck app</p></div>",
+    "description": "<div style='text-align:left'><p><strong>DuckStation</strong>: Save state on exit disabled by default</p><p><strong>Eden:</strong>New BIOS/firmware check</p><p><strong>ES-DE:</strong> picks the right RPCS3 variant per file type (directory, ISO, shortcut)</p><p>Gamelists moved to the storage folder instead of saves. downloaded_media symlinked into storage for Windows migration compatibility</p><p><strong>Launchers:</strong>All now use #!/usr/bin/env bash thanks to<strong>vquintin</strong></p><p>Removed old launchers for Citra, Lime3DS and Suyu</p><p><strong>melonDS:</strong>New melonDS.toml shipped</p><p><strong>RMG:</strong>Config updated to v0.9.0 with a Steam Deck controller profile</p><p><strong>RPCS3:</strong> config.yml cleaned of obsolete keys</p><p><strong>Steam ROM Manager</strong>: Init re-runs if steamDirectory is empty. New parser Sony PlayStation 3 - RPCS3 (ISO)</p><p>BigPemu Parser category renamed</p><p><strong>Xemu</strong>: Saves set up on init</p><p><strong>Other:</strong>No hardcoded /usr/bin/flatpak, /usr/bin/python or /bin/bash in launchers, ES-DE commands or generated scripts.</p><p>Save folders now use ln -sfn in order to fix broken symlinks</p><p>Added missing translations and cosmetic improvements to the EmuDeck app. New EmuDeck Store link. Release channel selector.</p></div>",
     "image": "false"
   }
 ]
