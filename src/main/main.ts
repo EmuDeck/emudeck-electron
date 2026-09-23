@@ -858,9 +858,11 @@ ipcMain.on('update-channel', async (event, args) => {
   }
 
   logCommand(`UPDATE CHANNEL: switching to ${channel} (${repo})`);
-  autoUpdater.setFeedURL({ provider: 'github', owner: 'EmuDeck', repo });
+  autoUpdater.setFeedURL({
+    provider: 'generic',
+    url: `https://github.com/EmuDeck/${repo}/releases/latest/download`,
+  });
   autoUpdater.allowDowngrade = true;
-  autoUpdater.allowPrerelease = true;
 
   const onProgress = (progress: any) => {
     event.reply(backChannel, ['progress', Math.round(progress.percent)]);
