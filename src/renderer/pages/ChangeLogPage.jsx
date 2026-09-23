@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
@@ -27,6 +28,7 @@ import img15 from 'assets/changelog/banner_dolphin.png';
 
 function ChangeLogPage() {
   const { t, i18n } = useTranslation();
+  const fromUpdate = !!(useLocation().state || {}).fromUpdate;
   const { state } = useContext(GlobalContext);
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -192,6 +194,7 @@ function ChangeLogPage() {
       </ChangeLog>
       <Footer
         next={false}
+        back={fromUpdate ? 'welcome' : ''}
         backText={t('general.back')}
         disabledNext={disabledNext}
         disabledBack={disabledBack}

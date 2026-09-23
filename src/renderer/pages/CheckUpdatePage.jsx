@@ -623,7 +623,10 @@ function CheckUpdatePage() {
   useEffect(() => {
     console.log({ downloadComplete });
     if (downloadComplete === true) {
-      if (navigator.onLine) {
+      // First launch after an update: show the changelog instead of Welcome
+      if (localStorage.getItem('show_changelog') === 'true') {
+        navigate('/change-log', { state: { fromUpdate: true } });
+      } else if (navigator.onLine) {
         navigate('/welcome');
       } else {
         navigate('/settings');
