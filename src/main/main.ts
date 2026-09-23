@@ -1001,8 +1001,11 @@ ipcMain.on('system-info-in', async (event) => {
 });
 
 ipcMain.on('version', async (event: any) => {
+  let version = app.getVersion();
+  const versionMin = version.match(/^\d+(\.\d+)*/)[0];
+
   event.reply('version-out', [
-    app.getVersion(),
+    versionMin,
     app.commandLine.hasSwitch('no-sandbox'),
   ]);
 });
