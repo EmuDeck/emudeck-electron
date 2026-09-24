@@ -1,0 +1,453 @@
+{
+  "translation": {
+    "general": {
+      "success": "Lyckades",
+      "error": "Fel",
+      "launching": "Startar",
+      "continue": "Fortsätt",
+      "back": "Bakåt",
+      "next": "Nästa",
+      "finish": "Färdig",
+      "skip": "Hoppa över",
+      "pressContinue": "Tryck på Fortsätt när du är färdig",
+      "yes": "Ja",
+      "yes": "Nej",
+      "month": "månad",
+      "join": "Gå med",
+      "login": "Logga in",
+      "copyGames": "Kopiera spel",
+      "install": "Installera",
+      "uninstall": "Avinstallera",
+      "close": "Stäng",
+      "moreInfo": "Mer info",
+      "sudo": "EmuDeck har upptäckt att du redan har ett sudo-lösenord, skriv in det nedan.",
+      "loading": "Läser in",
+      "save": "Spara",
+      "both": "Båda"
+    },
+    "footer": {
+      "exit": "Avsluta till spelläge"
+    },
+    "aside": {
+      "android": "Android",
+      "quickSettings": "Snabbinställningar",
+      "manageEmulators": "Hantera emulatorer",
+      "importGames": "Importera spel & BIOS",
+      "quickReset": "Snabbåterställning",
+      "customReset": "Anpassad återställning",
+      "screenResolution": "Skärmupplösning",
+      "retroAchievements": "Retro Achievements",
+      "biosChecker": "BIOS-kontrollerare",
+      "cloudSaves": "Molnsparningar",
+      "migrateInstalation": "Migrera installation",
+      "gyro": "Gyroscope",
+      "earlyAccess": "Skaffa Early Access",
+      "logFiles": "Hämta loggfiler",
+      "changelog": "Ändringslogg",
+      "cloudServices": "Molntjänster",
+      "uninstall": "Avinstallera",
+      "logsSuccess": "Vi har skapat en Zip-fil med alla dina loggar",
+      "logsError": "Det uppstod ett problem med att hämta dina loggar. Hämta dem manuellt från mappen emudeck i din användarmapp.",
+      "bootMode": "Spelläge",
+      "pegasusTheme": "Pegasus Theme",
+      "featured:": "Trendar",
+      "otherSettings": "Övriga inställningar",
+      "exclusiveTools": "Exklusiva EmuDeck-verktyg",
+      "thirdParty": "Tredjepartsverktyg",
+      "other": "Andra saker"
+    },
+    "ManageEmulatorsPage": {
+      "title": "Hantera dina emulatorer",
+      "description": "På denna sida kan du uppdatera dina konfigurationer eller installera nya emulatorer. En orange avisering betyder att du har en konfigurationsuppdatering klar för respektive emulator.",
+      "updateConfigs": {
+        "title": "Uppdatera alla konfigurationer",
+        "description": "Uppdatera alla dina konfigurationer på en gång. Nya konfigurationer kan innehålla buggfixar eller prestandaförbättringar. Detta kommer att skriva över alla globala emulatorinställningar som du har ändrat. Inställningarna för varje spel kommer att behållas",
+        "button": "Uppdatera"
+      },
+      "updateEmus": {
+        "title": "Uppdatera dina emulatorer",
+        "description": "Uppdatera dina emulatorer direkt från EmuDeck",
+        "button": "Uppdatera"
+      },
+      "modalResetTitle": "Återställer konfiguration för emulatorer",
+      "modalResetDesc": "Vänta medan vi återställer alla emulatorers konfigurationer.",
+      "modalResetingTitle": "Återställer konfiguration för {{code}}",
+      "modalResetingDesc": "Vänta medan vi återställer konfigurationen för {{code}}",
+      "modalUpdatedTitle": "Konfiguration för {{name}} uppdaterad!",
+      "modalUpdatedDesc": "Konfigurationen av {{name}} har uppdaterats med våra senaste förbättringar, optimeringar och buggfixar!",
+      "modalFailedTitle": "Återställningen av konfigurationen för {{name}} misslyckades",
+      "modalFailedDesc": "Det uppstod ett problem vid försökt att återställa konfigurationen för {{name}}."
+    },
+    "QuickSettingsPage": {
+      "title": "Konfigurera dina inställningar",
+      "description": "Välj ett alternativ för att automatiskt tillämpa det på ditt system. Du behöver inte göra en Anpassad EmuDeck-uppdatering för att tillämpa dessa inställningar.",
+      "notifBezels": "Ramar uppdaterade!",
+      "notifSNESRatio": "SNES-bildförhållande uppdaterat!",
+      "notifCloudSync": "CloudSync-status uppdaterad!",
+      "nofif3DAR": "3D-bildförhållande uppdaterat!",
+      "nofifDolphinAR": "Bildförhållande för Dolphin uppdaterat!",
+      "nofifCRTShader": "CRT Shader uppdaterad!",
+      "nofif3DCRTShader": "3D CRT Shader uppdaterad!",
+      "nofifLCDShader": "LCD Shader uppdaterad!",
+      "nofifAutosave": "AutoSave uppdaterad!",
+      "nofifController": "Kontrollerlayout uppdaterad!",
+      "nofifBoot": "BootMode uppdaterat, starta om din enhet!"
+    },
+    "AndroidEmulatorSelectorPage": {
+      "title": "Emulatorer och verktyg för Android",
+      "description": "Dessa är de emulatorer som EmuDeck installerar på ditt system. Valda emulatorer kommer att installeras och uppdateras till den senaste versionen. Emulatorer som inte valts kommer inte att installeras eller uppdateras."
+    },
+    "AndroidEndPage": {
+      "title": "Förbereder din Android-enhet...",
+      "description": ""
+    },
+    "AndroidFinishPage": {
+      "title": "EmuDeck Android installerat!",
+      "description": "Om allt gick bra bör du se din frontend på din Android-enhet.</br>Om så inte är fallet, installera om EmuDeck."
+    },
+    "AndroidFrontendSelectorPage": {
+      "title": "Frontends för Android",
+      "description": "Välj vilka frontends du vill använda för att starta dina spel. Du kan välja fler än en."
+    },
+    "AndroidOwnAPKPage": {
+      "title": "Ta med din egna APK",
+      "description": "Har du en annan emulator eller vill du installera ESDE?<br/>Lägg alla dina APK-filer i din nedladdningsmapp så installerar EmuDeck dem<br/><strong>Använd inte piratkopierade APK-filer</strong>"
+    },
+
+    "AndroidRABezelsPage": {
+      "title": "Konfigurera spelramar",
+      "description": "Använd EmuDecks förkonfigurerade ramar för att dölja de vertikala svarta fälten i 8-bitars- och 16-bitars-spel."
+    },
+    "AndroidRomStoragePage": {
+      "title": "Välj ROM-lagring för din Android-enhet",
+      "description": "",
+      "warning": {
+        "title": "Se till att din Android-enhet är:",
+        "line1": "- Ansluten via USB med dataöverföringsfunktioner",
+        "line2": "- Utvecklarläge och USB-felsökning är aktiverat",
+        "line3": "- Du har accepterat alla frågor på din enhet",
+        "line4": "- Du har valt Filöverföring när enheten frågat dig",
+        "title2": "Hur man aktiverar utvecklarläget"
+      }
+    },
+    "AndroidSetupPage": {
+      "configs": {
+        "yuzu": "Gå till din enhet, klicka på Kom igång och slutför installationen på din enhet. Dina nycklar bör finnas i {{storage}}/Emulation/bios/yuzu/keys.",
+        "ppsspp": "Gå till din enhet och skapa mappen PSP i {{storage}}/Emulation/saves/. Tryck på Fortsätt när du är klar.",
+        "nethersx2": "Gå till din enhet och konfigurera BIOS. BIOS bör finnas i {storage}/Emulation/bios/",
+        "ra1": "Gå till din enhet, gå till Läs in kärna, hämta ner kärna och installera alla kärnor du behöver.",
+        "ra2": "Varje kärna används för olika system, och dessa är de som behövs för de vanligaste systemen:",
+        "ra3": "mgba (GameBoy Advance), genesis_plus_gx(Genesis,MasterSystem), snex9x(Super Nintendo), melonds (Nintendo DS),mame2003_plus (MAME), mesen (NES), gambatte (GameBoy), mupen64plus_next(Nintendo 64), swanstation (Playstation 1)",
+        "ra4": "Gå sedan till Inställningar, Katalog. Ställ in ditt system/BIOS till {{storage}}/Emulation/bios. Ställ in spara filer till {{storage}}/Emulation/saves/RetroArch/saves och spara tillstånd till {{storage}}/Emulation/saves/RetroArch/states"
+      }
+    },
+    "AndroidWelcomePage": {
+      "description": "Denna förhandsversion låter dig installera flera emulatorer och konfigurationer på din Android-enhet",
+      "quickInstall": {
+        "title": "Installera till Android",
+        "button": "Installera",
+        "description": "Guiden som installerar dina emulatorer, kopierar din nuvarande BIOS-mapp och guidar dig genom installationen av din Android-enhet"
+      },
+      "manageEmulators": {
+        "title": "Hantera emulatorer",
+        "button": "Installera",
+        "description": "Installera emulatorer en efter en"
+      },
+      "saveSync": {
+        "title": "SaveSync",
+        "button": "Installera",
+        "description": "Synkronisera dina sparade spel"
+      }
+    },
+    "AspectRatio3DPage": {
+      "title": "Konfigurera bildförhållande för klassiska 3D-spel",
+      "description": "Välj bildformat för Dreamcast- och Nintendo 64-systemen."
+    },
+    "AspectRatioDolphinPage": {
+      "title": "Konfigurera bildförhållande för Gamecube-spel",
+      "description": "Välj bildformat för Gamecube-spel. Du kan ändra denna inställning när som helst i spelet genom att trycka på Start + DPad höger."
+    },
+    "AspectRatioSegaPage": {
+      "title": "Konfigurera bildförhållande för klassiska Sega-system",
+      "description": "Välj bildformat för klassiska Sega Systems."
+    },
+    "AspectRatioSNESPage": {
+      "title": "Konfigurera bildförhållande för klassisk Nintendo",
+      "description": "Välj bildformat för Super Nintendo och NES."
+    },
+    "AutoSavePage": { "title": "Konfigurera automatisk sparning", "description": "" },
+    "ChangeLogPage": { "title": "Senaste ändringar", "description": "" },
+    "CHDToolPage": {
+      "title": "EmuDecks komprimeringsverktyg",
+      "description": "Komprimeringsverktyget är ett skript som söker igenom vissa ROM-mappar och komprimerar spel med upp till 70% av deras ursprungliga filstorlek med hjälp av formaten CHD, RVZ, Trimmed 3DS, XISO och 7Zip."
+    },
+    "CheckBiosPage": {
+      "title": "Kontroll av Bios-filer",
+      "description": "Vissa spel läses inte in korrekt utan BIOS-filer. Placera din BIOS i Emulation/bios och använd denna BIOS-kontroll för att säkerställa att du har rätt BIOS för ditt system."
+    },
+    "CheckUpdatePage": {
+      "title": "EmuDeck läses in...",
+      "backend": "Bygger EmuDeck-backend och kör automatisk diagnostik i bakgrunden...",
+      "checking": {
+        "title": "Letar efter uppdateringar...",
+        "description": "Vänta medan vi kontrollerar om det finns en ny version tillgänglig..."
+      },
+      "updating": {
+        "title": "Uppdaterar!",
+        "description": "EmuDeck startar om så snart uppdateringen är klar. Håll i dig!"
+      },
+      "found": {
+        "title": "Uppdatering hittades!",
+        "description": "Vill du uppdatera? <br /> <strong>Denna uppdatering kommer inte att ändra dina spel eller inställningar</strong> <br /> Gå till Hantera emulatorer för att tillämpa alla nya konfigurationer.",
+        "changelog": "Se ändringslogg"
+      },
+      "error": {
+        "title": "Hoppsan",
+        "description": "Det verkar finnas ett problem med nedladdningen av backend. Starta om EmuDeck efter att ha testat att ditt nätverk fungerar"
+      }
+    },
+    "CloudSyncConfigPage": {
+      "title": "Cloud Sync - Välj din leverantör",
+      "title2": "Cloud Backup - Välj din leverantör",
+      "description": ""
+    },
+    "CloudSyncPage": {
+      "title": "Molnsparningar",
+      "description": "Välj önskad typ av molnlagring."
+    },
+    "ConfirmationPage": {
+      "title": "Här är vad EmuDeck kommer att göra",
+      "description": ""
+    },
+    "ControllerLayoutPage": {
+      "title": "Konfigurera kontrollerlayout",
+      "description": "Vill du ställa in din kontroller så att knapparna motsvarar positionen på de ursprungliga kontrollerna (A är mappad till B) eller vill du använda din kontrollers layout (A är mappad till A)"
+    },
+    "CopyGamesPage": { "title": "", "description": "" },
+    "DeviceSelectorPage": {
+      "title": "Välj din enhet",
+      "description": "EmuDeck skräddarsyr installationen för olika hårdvara. Varje enhet har sin egen konfiguration, emulatorer och förkonfigurerade ramar."
+    },
+    "EarlyAccessPage": {
+      "title": "Hjälp oss genom att ge dig stöd till EmuDeck",
+      "description": "Donera på Patreon och hjälp oss att växa och förbättras! Som medlem i vår gemenskap får du personlig support och tidig tillgång till våra senaste funktioner, varav vissa är exklusiva för våra sponsorer",
+      "eaTier": {
+        "description": "Få tillgång till de senaste funktionerna och apparna före alla andra, inklusive exklusiv support och nya funktioner för SteamOS, Windows, MacOS och Android i framtiden.",
+        "list": "<li>- Early access</li><li>- Allmän support</li><li>- CloudSync ( Synkronisera dina sparade spel mellan Mac, Windows eller Linux )</li><li>- Privat Discord-gemenskap</li>"
+      },
+      "fanTier": {
+        "description": "Du gillar verkligen det jag gör, och jag tackar dig för det! Det här bidraget kommer att hjälpa EmuDeck att köpa nya enheter och ställa in anpassade optimeringar för andra system.",
+        "list": "<li>- Samma funktioner som Early Access och</li><li>- Rösträtt, låt oss forma EmuDecks framtid tillsammans</li>"
+      }
+    },
+    "EmuDeckyPage": { "title": "Konfigurera EmuDecky", "description": "" },
+    "EmulatorConfigResolutionPage": {
+      "title": "Emulatorupplösning",
+      "description": ""
+    },
+    "EmulatorConfigurationPage": {
+      "title": "Konfigurationer för emulatorer och verktyg",
+      "description": "EmuDeck kommer att optimera och konfigurera emulatorer under installationen. Valda emulatorer kommer att återställas och uppdateras till EmuDecks standardinställningar. Emulatorer som inte valts kommer inte att ändras och EmuDeck kommer att respektera dina inställningar (rekommenderas inte)."
+    },
+    "EmulatorResolutionPage": {
+      "title": "Emulatorupplösning",
+      "description": "Välj den upplösning du vill använda för dina emulatorer. Tänk på att en högre upplösning kräver en snabbare dator."
+    },
+    "EmulatorsDetailPage": { "title": "", "description": "" },
+    "EmulatorSelectorPage": {
+      "title": "Emulatorer och verktyg för {{device}}",
+      "standaloneRA": "RetroArch eller fristående emulator?"
+    },
+    "EndPage": {
+      "title": "Vi färdigställer din installation...",
+      "titleFinish": "Installationen är färdig!",
+      "titleAlly": "Konfiguration för Asus Rog Ally-kontroller",
+      "titleWin32": "Kontrollerkonfiguration"
+    },
+    "ErrorPage": { "title": "" },
+    "ESDEThemePage": {
+      "title": "Standardtema för EmulationStation-DE",
+      "description": "Välj ditt standardtema."
+    },
+    "FinishPage": {
+      "title": "Vad är kvar?",
+      "line1": "Nu när du har placerat dina filer på rätt plats och valt ett frontend-program kanske du undrar: vad återstår?",
+      "line2": "Du kan helt enkelt gå tillbaka till spelläget och börja spela retrospel!",
+      "line3": "EmuDeck innehåller dock en stor uppsättning funktioner som du kan testa. Du kanske vill använda ”Komprimeringsverktyg” för att komprimera dina ROM-filer och spara utrymme, eller använda verktyget ”Molntjänster” för att lägga till dina favoritströmningtjänster till din föredragna frontend.",
+      "line4": "Det finns mycket att upptäcka och utforska i applikationen, men för tillfället är din introduktion klar,",
+      "line5": "EmuDeck-utvecklarna hoppas verkligen att du kommer att uppskatta din upplevelse"
+    },
+    "FrontendSelectorPage": {
+      "title": "Frontends för {{device}}",
+      "description": "Välj vilka frontends du vill använda för att starta dina spel. Du kan välja fler än en."
+    },
+    "GameModePage": {
+      "title": "Uppstartsläge",
+      "description": "Välj hur du vill starta upp enheten.",
+      "modalGameEnabledTitle": "Spelläget aktiverat",
+      "modalGameEnabledDesc": "Starta om enheten för att gå till spelläge, avsluta Steam för att gå tillbaka till skrivbordet",
+      "modalDesktopEnabledTitle": "Skrivbordsläget aktiverat",
+      "modalDesktopEnabledDesc": "Nästa gång du startar om enheten kommer du direkt till skrivbordsläget"
+    },
+    "GyroDSUPage": {
+      "title": "Konfigurera SteamDeckGyroDSU",
+      "description": "SteamDeckGyroDSU är ett tillägg som låter dig använda ditt Steam Deck-gyroskop i Cemu (Wii U), Citra (3DS), Dolphin (Gamecube och Wii), Ryujinx (Nintendo Switch) och Yuzu (Nintendo Switch)."
+    },
+    "HotkeysPage": {
+      "title": "Snabbtangenter för emulatorer",
+      "description": "De flesta emulatorer har en rad snabbtangenter som gör dem enklare att använda."
+    },
+    "MigrationPage": {
+      "title": "Migrera din installation",
+      "description": "Detta verktyg flyttar din EmuDeck-installation, med dina ROM-filer intakta, till den valda destinationen och uppdaterar även dina Steam Library-sökvägar."
+    },
+    "ParserSelectorPage": {
+      "title": "Tolkare för Steam Rom Manager"
+    },
+    "PatroenLoginPage": {
+      "title": "Logga in till Patreon",
+      "description": "Logga in till Patreon för att komma åt denna förutgåva.",
+      "login": "Logga in med Patreon ",
+      "change": "Byt Patreon-konto",
+      "check": "Kontrollera token",
+      "checking": "Kontrollerar token...",
+      "license": "Logga in med licens"
+    },
+    "PegasusThemeChoicePage": {
+      "title": "Pegasus standardtema",
+      "description": "Välj ditt standardtema.",
+      "modalInstallingTitle": "Installerar tema",
+      "modalInstallingDesc": "Vänta...",
+      "modalInstalledTitle": "Tema installerat",
+      "modalInstalledDesc": "Nästa gång du öppnar Pegasus kommer detta att vara standardtemat."
+    },
+    "PegasusThemePage": {
+      "title": "Standardtema för Pegasus",
+      "description": "Välj ditt standardtema."
+    },
+    "PowerControlsPage": {
+      "title": "Konfigurera PowerControls",
+      "description": "PowerControls är ett tillägg som låter dig justera din CPU och GPU för maximal prestanda på mer krävande emulatorer samt kontrollera TDP i kompatibla enheter. När du installerar PowerControls i den här menyn installeras även Decky Loader, en tilläggshanterare."
+    },
+    "PowerToolsPage": {
+      "title": "Konfigurera PowerTools",
+      "description": "PowerControls är ett tillägg som låter dig justera din CPU och GPU för maximal prestanda på mer krävande emulatorer samt kontrollera TDP i kompatibla enheter. När du installerar PowerControls i den här menyn installeras även Decky Loader, en tilläggshanterare."
+    },
+    "RAAchievementsConfigPage": {
+      "title": "Konfigurera RetroAchievements",
+      "description": "RetroAchievements.org är ett gemenskapsinitiativ för att samarbeta och skapa skräddarsydda prestationer i emulerade klassiska spel. Ange dina kontouppgifter för att konfigurera RetroAchievements för Duckstation, PCSX2, PPSSPP och RetroArch."
+    },
+    "RAAchievementsPage": {
+      "title": "Konfigurera RetroAchievements",
+      "description": "RetroAchievements.org är ett gemenskapsdrivet initiativ för att samarbeta och skapa skräddarsydda prestationer i emulerade klassiska spel. Ange dina kontouppgifter för att konfigurera RetroAchievements för Duckstation, PCSX2, PPSSPP och RetroArch."
+    },
+    "RABezelsPage": {
+      "title": "Konfigurera spelramar",
+      "description": "Använd EmuDecks förkonfigurerade ramar för att dölja de vertikala svarta fälten i 8-bitars- och 16-bitarsspel."
+    },
+    "RomStoragePage": {
+      "title": "Välj din ROM-katalog",
+      "description": "Din ROM-katalog kommer att placeras i en emuleringsmapp i den valda katalogen.",
+      "modalErrorDetecting": "Det uppstod ett fel vid identifieringen av ditt lagringsutrymme...",
+      "modalErrorWritable": "Icke-skrivbar katalog vald, välj en annan...",
+      "modalError": "Det uppstod ett fel, starta om EmuDeck..."
+    },
+    "Shaders2DPage": {
+      "title": "Konfigurera CRT Shader för klassiska 2D-spel",
+      "description": "CRT Shader ger dina klassiska system en falsk retro-CRT-känsla."
+    },
+    "Shaders3DPage": {
+      "title": "Konfigurera CRT Shader för klassiska 3D-spel",
+      "description": "CRT Shader ger dina klassiska system en falsk retro-CRT-känsla."
+    },
+    "ShadersHandheldsPage": {
+      "title": "Konfigurera LCD Shader för handhållna system",
+      "description": "LCD Shader simulerar de gamla LCD-matrisskärmarna på handhållna system."
+    },
+    "StoreFrontPage": { "title": "EmuDeck Store" },
+    "UninstallPage": {
+      "title": "Avinstallera EmuDeck",
+      "description": "Verktyget EmuDeck Uninstallation ska endast användas om du avser att ta bort EmuDeck från ditt system. Om du har problem, kör en anpassad återställning, felsök det specifika verktyget eller emulatorn, eller besök EmuDeck Discord eller Reddit för ytterligare support."
+    },
+    "UpdateEmusPage": {
+      "title": "Update your Emulators & Tools",
+      "description": "Emulatorer och verktyg kan installeras på många olika sätt. EmuDeck installerar vissa emulatorer och verktyg som Flatpaks från Discover Store. Andra hämtas ner direkt från utvecklarens webbplats som AppImages eller binärfiler. Några är körbara Windows-filer som hämtas ner och körs via Proton."
+    },
+    "WelcomePage": {
+      "title": "Välkommen till EmuDeck för {{systemName}}",
+      "description": "Välj hur du vill konfigurera din enhet",
+      "errorModal": {
+        "title": "Fel vid identifiering av ditt operativsystem",
+        "description": "<p>Klicka på knappen Stäng för att försöka igen</p><p>Om problemet kvarstår, kontakta oss på Discord: https://discord.com/invite/b9F7GpXtFP</p>"
+      },
+      "easy": "Det här läget installerar och konfigurerar automatiskt din enhet med våra rekommenderade inställningar så att du kan börja spela direkt. Rekommenderas om du är nybörjare inom emulering.",
+      "custom": "I det här läget kan du anpassa din EmuDeck-installation. Konfigurera bildformat, ramar, filter, RetroAchievements, emulatorer, frontends och mycket mer. Rekommenderas för avancerade användare.",
+      "android": "Installera EmuDeck ( beta ) på din Android-enhet."
+    },
+    "CheckBios": {
+      "detected": "- hittades",
+      "missing": " - saknas",
+      "sarching": "...söker...",
+      "tip1": "Tips 1: Inte alla system kräver ytterligare BIOS-filer. Här listas de vanligaste systemen.",
+      "tip2": "Tips 2: Se till att du har rätt BIOS för din ROM-region. Dina ROM-minnen kan komma från USA, Japan, Europa osv.",
+      "tip3": "Tips 3: Versaler och gemener är viktiga. Även om ditt BIOS upptäcks måste det skrivas med gemener för Playstation 1 och Playstation 2.",
+      "tip4": "Tips 4: Dina BIOS-filer måste placeras i Emulation/bios. Skapa inte undermappar för BIOS-filer. För Nintendo Switch använder du våra förskapade mappar.",
+      "tip5": "Tips 5: För system som inte finns med här, kolla den här länken.",
+      "cheat": "Fusklapp",
+      "tip6": "Du kan använda den här länken som en praktisk guide för hur ditt BIOS ska namnges."
+    },
+    "CloudSync": {
+      "sync": "Synkronisera",
+      "backup": "Säkerhetskopiera",
+      "syncDesc": "Synka mellan EmuDeck-installationer - <strong> Endast Patrons</strong>",
+      "backupDesc": "Säkerhetskopiera dina spel till molnet"
+    },
+    "ControllerLayout": {
+      "option1": "Positionsmatchning",
+      "option2": "Layoutmatcha kontroller"
+    },
+    "GameMode": {
+      "steam": {
+        "title": "SteamUI",
+        "description": "Efterlikna Steam Deck-upplevelsen genom att starta direkt i SteamUI."
+      },
+      "windows": {
+        "title": "Windows-skrivbord",
+        "description": "Starta upp till Windows-skrivbordet precis som en Windows PC"
+      }
+    },
+    "ManageEmulators": { "description": "" },
+    "Migration": {
+      "current": "Aktuell installation:",
+      "errorDetected": "Hittades inte",
+      "custom": "Anpassad katalog",
+      "destination": "Välj ditt mål:",
+      "sdCard": "SD-kort",
+      "internalStorage": "Intern lagring",
+      "start": "Starta migrering",
+      "migrating": "Migrerar..."
+    },
+    "RAAchievements": {
+      "modalWrongPassTitle": "Felaktigt användarnamn eller lösenord",
+      "modalWrongPassDesc": "Om ditt lösenord innehåller specialtecken som _ eller ' måste du ändra det på retroachievements.org.",
+      "modalSuccessTitle": "Fel användarnamn eller lösenord",
+      "modalSuccessDesc": "Om ditt lösenord innehåller specialtecken som _ eller ' måste du ändra det på retroachievements.org.",
+      "modalErrorTitle": "Fel!",
+      "modalErrorDesc": "Användarnamnet och lösenordet är korrekta, men EmuDeck kunde inte ställa in konfigurationen.",
+      "register": "Registrera dig nu om du inte har ett konto:",
+      "success": "Du har anslutit till RetroAchievements!",
+      "reset": "Återställ inloggning"
+    },
+    "StoreFront": {
+      "alertInstalled": "Spelet installerat.\nGå tillbaka till EmulationStation för att spela det",
+      "alertError": "Det uppstod ett fel vid installation av spelet",
+      "alertUninstall": "Spelet avinstallerat",
+      "featured": "HomeBrew-spel som trendar"
+    },
+    "UpdateEmus": {
+      "title": "Välj vilken batch du vill uppdatera:",
+      "btn1": "Uppdatera Flatpaks",
+      "btn2": "Uppdatera AppImages, binärer och körbara Windows-filer"
+    }
+  }
+}
