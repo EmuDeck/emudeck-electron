@@ -25,8 +25,8 @@
     "image": "true"
   },
   {
-    "title": "Steam Frame beta support",
-    "description": "Added <strong>experimentral</strong> ARM builds with Steam Frame support. We'll be adding more emulators and special features for ARM and the Steam Frame soon!",
+    "title": "ARM linux devices support",
+    "description": "Added <strong>experimentral</strong> ARM builds with Steam Frame and ArmadaOS support.",
     "image": "true"
   },
   {
