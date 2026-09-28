@@ -1058,7 +1058,7 @@ ipcMain.on('pull', async (event, branch) => {
 
   let bashCommand;
 
-  bashCommand = `cd ~/.config/EmuDeck/backend && git reset --hard && git clean -fd && git checkout ${branchGIT} && git pull && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
+  bashCommand = `cd ~/.config/EmuDeck/backend && git fetch --depth=1 origin ${branchGIT} && git checkout -f -B ${branchGIT} FETCH_HEAD && git reset --hard FETCH_HEAD && git clean -fd && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
 
   //Dev on macOS
   if (os.platform().includes('darwin')) {
@@ -1066,7 +1066,7 @@ ipcMain.on('pull', async (event, branch) => {
   }
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git reset --hard ; git clean -fd ; git checkout ${branchGIT} ; git pull --allow-unrelated-histories -X theirs;cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit; Stop-Transcript; "}`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git fetch --depth=1 origin ${branchGIT} ; git checkout -f -B ${branchGIT} FETCH_HEAD ; git reset --hard FETCH_HEAD ; git clean -fd ;cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit; Stop-Transcript; "}`;
   }
 
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
