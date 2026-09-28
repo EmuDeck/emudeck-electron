@@ -49,6 +49,8 @@ function CloudSyncPage() {
       <Footer
         next={nextButtonStatus()}
         nextText={t('general.next')}
+        third="copy-games"
+        thirdText={t('general.skip')}
         disabledNext={disabledNext}
         disabledBack={type !== 'welcome'}
       />

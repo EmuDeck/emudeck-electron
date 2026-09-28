@@ -194,6 +194,27 @@
       "8": ["Decrease Upscale", "SELECT+DOWN"]
     }
   },
+  "armsx2": {
+    "id": "armsx2",
+    "name": "ARMSX2",
+    "code": "ARMSX2",
+
+    "description": "ARMSX2 is a Sony Playstation 2 emulator, forked from the original PCSX2 emulator for ARM devices.",
+    "special_configuration": "BIOS: BIOS are required, ROMs do not need region specific BIOS.",
+    "bios": ["ps2"],
+    "systems": "Sony Playstation 2",
+    "hotkeys": {
+      "0": ["Action", "Keys"],
+      "1": ["Load State", "SELECT+L1"],
+      "2": ["Save State", "SELECT+R1"],
+      "3": ["Exit", "SELECT+START"],
+      "4": ["Fast Forward", "SELECT+R2"],
+      "5": ["Pause", "SELECT+A"],
+      "6": ["Software Rendering", "SELECT+LEFT"],
+      "7": ["Increase Upscale", "SELECT+UP"],
+      "8": ["Decrease Upscale", "SELECT+DOWN"]
+    }
+  },
   "rpcs3": {
     "id": "rpcs3",
     "name": "RPCS3",

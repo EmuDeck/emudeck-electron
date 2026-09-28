@@ -114,6 +114,7 @@ export default function App() {
     melonds: { id: 'melonds', code: 'melonDS', version: 0 },
     azahar: { id: 'azahar', code: 'Azahar', version: 0 },
     pcsx2: { id: 'pcsx2', code: 'PCSX2QT', version: 0 },
+    armsx2: { id: 'armsx2', code: 'ARMSX2', version: 0 },
     rpcs3: { id: 'rpcs3', code: 'RPCS3', version: 0 },
     yuzu: { id: 'yuzu', code: 'Yuzu', version: 0 },
     eden: { id: 'eden', code: 'Eden', version: 0 },
@@ -199,6 +200,13 @@ export default function App() {
         installed: undefined,
         name: 'ares',
         platforms: 'Retro Systems',
+      },
+      armsx2: {
+        id: 'armsx2',
+        status: true,
+        installed: undefined,
+        name: 'ARMSX2',
+        platforms: 'Playstation 2',
       },
       bigpemu: {
         id: 'bigpemu',
@@ -390,6 +398,7 @@ export default function App() {
     },
     overwriteConfigEmus: {
       ares: { id: 'ares', status: false, name: 'ares' },
+      armsx2: { id: 'armsx2', status: true, name: 'ARMSX2' },
       bigpemu: {
         id: 'bigpemu',
         status: false,
@@ -467,7 +476,7 @@ export default function App() {
     resolutions: {
       dolphin: '720P',
       duckstation: '720P',
-      pcsx2: '720P',
+      pcsx2: '720P', // Used for ARMSX2 too
       yuzu: '720P', // Used for all Switch emulators
       ppsspp: '720P',
       rpcs3: '720P',

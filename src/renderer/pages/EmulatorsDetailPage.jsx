@@ -313,6 +313,9 @@ function EmulatorsDetailPage() {
       case 'pcsx2':
         img = pcsx2Controls;
         break;
+      case 'armsx2':
+        img = pcsx2Controls;
+        break;
       case 'rpcs3':
         img = rpcs3Controls;
         break;
@@ -416,6 +419,9 @@ function EmulatorsDetailPage() {
       case 'pcsx2':
         img = pcsx2Hotkeys;
         break;
+      case 'armsx2':
+        img = pcsx2Hotkeys;
+        break;
       case 'rpcs3':
         img = rpcs3Hotkeys;
         break;
@@ -474,6 +480,9 @@ function EmulatorsDetailPage() {
         img = wiiHotkeysExpert;
         break;
       case 'pcsx2_expert':
+        img = pcsx2HotkeysExpert;
+        break;
+      case 'armsx2_expert':
         img = pcsx2HotkeysExpert;
         break;
 
@@ -635,6 +644,115 @@ function EmulatorsDetailPage() {
     ]);
 
     ipcChannel.once(`${code}_install`, (message) => {
+      let status = message.stdout;
+      status.replace('\n', '');
+      // Lets check if it did install
+      ipcChannel.sendMessage('emudeck', [
+        `${code}_IsInstalled|||${code}_IsInstalled`,
+      ]);
+
+      ipcChannel.once(`${code}_IsInstalled`, (message) => {
+        console.log({ message });
+        status = message.stdout;
+        status.replace('\n', '');
+
+        if (status.includes('true')) {
+          const modalData = {
+            active: true,
+            header: (
+              <span className="h4">
+                {t('EmulatorsDetailPage.installed', { code })}
+              </span>
+            ),
+            body: (
+              <p>{t('EmulatorsDetailPage.installSuccessBody', { code })}</p>
+            ),
+            css: 'emumodal--xs',
+          };
+
+          setStatePage({
+            ...statePage,
+            modal: modalData,
+          });
+          // We set the emu as install = yes
+          setState({
+            ...state,
+            installEmus: {
+              ...installEmus,
+              [emulator]: {
+                id: emulator,
+                name: code,
+                status: true,
+              },
+            },
+          });
+
+          if (
+            emulator === 'ppsspp' ||
+            emulator === 'melonds' ||
+            emulator === 'scummvm' ||
+            emulator === 'duckstation' ||
+            emulator === 'mame' ||
+            emulator === 'rmg' ||
+            emulator === 'flycast'
+          ) {
+            const modalData = {
+              active: true,
+              header: (
+                <span className="h4">
+                  {t('EmulatorsDetailPage.parserUpdateNeeded')}
+                </span>
+              ),
+              body: <p>{t('EmulatorsDetailPage.parserUpdateBody')}</p>,
+              css: 'emumodal--xs',
+            };
+          }
+        } else {
+          const modalData = {
+            active: true,
+            header: (
+              <span className="h4">
+                {t('EmulatorsDetailPage.installFailed', { code })}
+              </span>
+            ),
+            body: <p>{t('EmulatorsDetailPage.installFailedBody', { code })}</p>,
+            css: 'emumodal--xs',
+          };
+
+          setStatePage({
+            ...statePage,
+            modal: modalData,
+          });
+          // We save it on localstorage
+          const json = JSON.stringify(state);
+          localStorage.setItem('settings_emudeck', json);
+        }
+      });
+    });
+  };
+
+  const addtoSteamEmu = (emulator, code) => {
+    const modalData = {
+      active: true,
+      header: (
+        <span className="h4">
+          {t('EmulatorsDetailPage.installing', { code })}
+        </span>
+      ),
+      body: <p>{t('EmulatorsDetailPage.installingWait', { code })}</p>,
+      footer: <ProgressBar css="progress--success" infinite max="100" />,
+      css: 'emumodal--xs',
+    };
+    setStatePage({
+      ...statePage,
+      modal: modalData,
+    });
+
+    ipcChannel.sendMessage('emudeck', [
+      `${code}_addToSteam|||${code}_addToSteam`,
+    ]);
+
+    ipcChannel.once(`${code}_addToSteam`, (message) => {
       let status = message.stdout;
       status.replace('\n', '');
       // Lets check if it did install
@@ -1072,6 +1190,9 @@ function EmulatorsDetailPage() {
       case 'pcsx2':
         checkBios('checkPS2BIOS');
         break;
+      case 'armsx2':
+        checkBios('checkPS2BIOS');
+        break;
       case 'yuzu':
         checkBios('checkYuzuBios');
         break;
@@ -1131,7 +1252,7 @@ function EmulatorsDetailPage() {
 
   useEffect(() => {
     const ogStateAlternative = JSON.parse(
-      localStorage.getItem('ogStateAlternative')
+      localStorage.getItem('ogStateAlternative'),
     );
 
     function sameObjects(obj1, obj2) {
@@ -1232,6 +1353,7 @@ function EmulatorsDetailPage() {
           onClickOptionalParser={installOptional}
           onClickInstall={installEmu}
           onClickReInstall={reInstallEmu}
+          onClickAddToSteam={addtoSteamEmu}
           onClickHotkeys={showHotkeys}
           onClickControls={showControls}
           onClickUninstall={uninstallEmu}

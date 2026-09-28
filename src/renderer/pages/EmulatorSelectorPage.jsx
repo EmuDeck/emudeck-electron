@@ -17,6 +17,7 @@ import {
   imgduckstation,
   imgazahar,
   imgpcsx2,
+  imgarmsx2,
   imgrpcs3,
   imgyuzu,
   imgeden,
@@ -49,6 +50,7 @@ const images = {
   duckstation: imgduckstation,
   azahar: imgazahar,
   pcsx2: imgpcsx2,
+  armsx2: imgarmsx2,
   rpcs3: imgrpcs3,
   yuzu: imgyuzu,
   eden: imgeden,
@@ -310,8 +312,8 @@ function EmulatorSelectorPage() {
               emulatorAlternative.gba === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.gba === 'mgba'
-                ? 'multiemulator'
-                : 'mgba',
+                  ? 'multiemulator'
+                  : 'mgba',
           };
         }
         if (emulatorProp === 'duckstation') {
@@ -321,8 +323,8 @@ function EmulatorSelectorPage() {
               emulatorAlternative.psx === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.psx === 'duckstation'
-                ? 'multiemulator'
-                : 'duckstation',
+                  ? 'multiemulator'
+                  : 'duckstation',
           };
         }
         if (emulatorProp === 'rmg') {
@@ -332,8 +334,8 @@ function EmulatorSelectorPage() {
               emulatorAlternative.n64 === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.n64 === 'rmg'
-                ? 'multiemulator'
-                : 'rmg',
+                  ? 'multiemulator'
+                  : 'rmg',
           };
         }
         if (emulatorProp === 'scummvm') {
@@ -343,8 +345,8 @@ function EmulatorSelectorPage() {
               emulatorAlternative.scummvm === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.scummvm === 'scummvm'
-                ? 'multiemulator'
-                : 'scummvm',
+                  ? 'multiemulator'
+                  : 'scummvm',
           };
         }
         if (emulatorProp === 'flycast') {
@@ -354,8 +356,8 @@ function EmulatorSelectorPage() {
               emulatorAlternative.dreamcast === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.dreamcast === 'flycast'
-                ? 'multiemulator'
-                : 'flycast',
+                  ? 'multiemulator'
+                  : 'flycast',
           };
         }
         if (emulatorProp === 'ppsspp') {
@@ -365,8 +367,8 @@ function EmulatorSelectorPage() {
               emulatorAlternative.psp === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.psp === 'ppsspp'
-                ? 'multiemulator'
-                : 'ppsspp',
+                  ? 'multiemulator'
+                  : 'ppsspp',
           };
         }
         if (emulatorProp === 'duckstation') {
@@ -376,8 +378,8 @@ function EmulatorSelectorPage() {
               emulatorAlternative.psx === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.psx === 'duckstation'
-                ? 'multiemulator'
-                : 'duckstation',
+                  ? 'multiemulator'
+                  : 'duckstation',
           };
         }
         if (emulatorProp === 'mame') {
@@ -387,8 +389,8 @@ function EmulatorSelectorPage() {
               emulatorAlternative.mame === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.mame === 'mame'
-                ? 'multiemulator'
-                : 'mame',
+                  ? 'multiemulator'
+                  : 'mame',
           };
         }
         if (emulatorProp === 'melonds') {
@@ -398,8 +400,8 @@ function EmulatorSelectorPage() {
               emulatorAlternative.nds === 'both'
                 ? 'multiemulator'
                 : emulatorAlternative.nds === 'melonds'
-                ? 'multiemulator'
-                : 'melonds',
+                  ? 'multiemulator'
+                  : 'melonds',
           };
         }
       }

@@ -21,6 +21,7 @@ import {
   imgduckstation,
   imgazahar,
   imgpcsx2,
+  imgarmsx2,
   imgrpcs3,
   imgyuzu,
   imgeden,
@@ -74,6 +75,7 @@ const images = {
   duckstation: imgduckstation,
   azahar: imgazahar,
   pcsx2: imgpcsx2,
+  armsx2: imgarmsx2,
   rpcs3: imgrpcs3,
   yuzu: imgyuzu,
   eden: imgeden,
@@ -119,7 +121,7 @@ function ManageEmulatorsPage() {
     dom,
   } = statePage;
 
-  const { system, installEmus, installFrontends, branch, mode } = state;
+  const { system, installEmus, installFrontends, branch, mode, arch } = state;
 
   const installEmusArray = Object.values(installEmus);
   const installFrontendsArray = Object.values(installFrontends);
@@ -334,7 +336,7 @@ function ManageEmulatorsPage() {
                     iconSize="md"
                     title={t('ManageEmulatorsPage.updateConfigs.title')}
                     description={t(
-                      'ManageEmulatorsPage.updateConfigs.description'
+                      'ManageEmulatorsPage.updateConfigs.description',
                     )}
                     button={t('ManageEmulatorsPage.updateConfigs.button')}
                     onClick={() => resetEmus()}
@@ -351,7 +353,7 @@ function ManageEmulatorsPage() {
                     button={t('ManageEmulatorsPage.updateEmus.button')}
                     title={t('ManageEmulatorsPage.updateEmus.title')}
                     description={t(
-                      'ManageEmulatorsPage.updateEmus.description'
+                      'ManageEmulatorsPage.updateEmus.description',
                     )}
                     onClick={() => navigate(`/update-emulators`)}
                   />
@@ -365,6 +367,22 @@ function ManageEmulatorsPage() {
                 const updateNotif = updates[item.id];
                 if (system === 'win32') {
                   if (item.id === 'rmg') {
+                    return;
+                  }
+                }
+
+                if (system !== 'win32' && arch == 'arm64') {
+                  if (
+                    item.id === 'pcsx2' ||
+                    item.id === 'shadps4' ||
+                    item.id === 'model2' ||
+                    item.id === 'supermodel'
+                  ) {
+                    return;
+                  }
+                }
+                if (arch != 'arm64') {
+                  if (item.id === 'armsx2') {
                     return;
                   }
                 }

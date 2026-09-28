@@ -36,7 +36,7 @@ function AutoMapConfigPage() {
     localStorage.setItem('settings_emudeck', json);
 
     ipcChannel.sendMessage('emudeck', [
-      `setAutoMapSettings|||setSetting autoMapDolPhin ${state.automap.dolphin}; setSetting autoMapSwitch ${state.automap.yuzu}; setSetting autoMapCemu ${state.automap.cemu}; `,
+      `setAutoMapSettings|||setSetting autoMapDolphin ${state.automap.dolphin}; setSetting autoMapSwitch ${state.automap.yuzu}; setSetting autoMapCemu ${state.automap.cemu}; `,
     ]);
 
     ipcChannel.once('setAutoMapSettings', (message) => {

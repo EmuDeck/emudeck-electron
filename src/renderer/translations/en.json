@@ -112,7 +112,8 @@
       },
       "srm": {
         "body": "We will close Steam if its running and then Steam Rom Manager will open, this could take a few seconds, please wait.",
-        "desktopControls": "Desktop controls will temporarily revert to touch/trackpad/L2/R2."
+        "desktopControls": "Desktop controls will temporarily revert to touch/trackpad/L2/R2.",
+        "bodyFrame": "You need to open Steam Rom Manager from the + button in the SteamOS dashboard"
       },
       "reset": {
         "warningBody": "Doing a reset will overwrite any customization you could have made and restore our EmuDeck defaults"
@@ -718,6 +719,7 @@
       "postInstallDescription": "Please check that all your emulators has been installed. If an emulator or tool failed to install, run a <strong>Custom Reset</strong> or install the emulator using the <strong>Manage Emulators</strong> page.",
       "readBefore": "⚠️ Read before continuing ⚠️",
       "readBeforeDescription": "EmuDeck is designed to work using <strong>Steam input</strong>, you need to launch the games using Steam after adding them with Steam Rom Manager, same thing with the Emulators, EmulationStation or Pegasus, otherwise the <strong>controls and hotkeys won't work</strong>.<br />Apps like DeckTools or Handheld Companion might break controls too in some cases.<br />Make sure your handheld is on GamePad mode at all times, not on Desktop or Auto.<br /><strong>If you want to use other Frontends like Playnite you will need to activate Steam Input on the Desktop as shown on the video and keep Steam open in the background at all times.</strong>",
+      "readBeforeDescriptionFrame": "The Steam Frame has some differences with a regular SteamOS device.<ul><li>- Emulators or Frontends like ESDE can't detect the Frame controllers when launched from Desktop Mode or from the SteamOS dashboard [+] button.</li><li>- Because of that (and to prevent cluttering the [+] Menu) we don't add Emulator shortcuts when installing them.</li><li>- If you want to change any emulator settings please add them to Steam using the <strong>Add to Steam</strong> button in the emulator page inside Manage Emulators or use Steam Rom Manager to add them in bulk.</li><li>- You need to manually restart Steam every time you add a new Game, Emulator or Frontend to your Steam Library.</li></ul>",
       "installing": "Installing EmuDeck...",
       "openLog": "Open detailed log"
     },
@@ -822,11 +824,11 @@
     },
     "RAAchievementsConfigPage": {
       "title": "Configure RetroAchievements",
-      "description": "RetroAchievements.org is a community led effort to collaborate and create custom-made achievements in emulated classic games. Enter your account information to set up RetroAchievements for Duckstation, PCSX2, PPSSPP, and RetroArch."
+      "description": "RetroAchievements.org is a community led effort to collaborate and create custom-made achievements in emulated classic games. Enter your account information to set up RetroAchievements for Duckstation, PCSX2 / ARMSX2, PPSSPP, and RetroArch."
     },
     "RAAchievementsPage": {
       "title": "Configure RetroAchievements",
-      "description": "RetroAchievements.org is a community led effort to collaborate and create custom-made achievements in emulated classic games. Enter your account information to set up RetroAchievements for Duckstation, PCSX2, PPSSPP, and RetroArch."
+      "description": "RetroAchievements.org is a community led effort to collaborate and create custom-made achievements in emulated classic games. Enter your account information to set up RetroAchievements for Duckstation, PCSX2 / ARMSX2, PPSSPP, and RetroArch."
     },
     "RABezelsPage": {
       "title": "Configure game bezels",
@@ -882,10 +884,12 @@
         "description": "<p>Click on the Close button to try again</p><p>If the issue persists, please contact us on Discord: https://discord.com/invite/b9F7GpXtFP</p>"
       },
       "easy": "This mode automatically installs and configures your device with our recommended settings so you can start playing right away. Recommended if you are new to emulation.",
+      "ondemand": "This mode won't install any emulators, it will just create the folder structure for your roms, all emulators will be installed later on demand when launching a game that needs it.",
       "custom": "This mode allows you to customize your EmuDeck install. Configure Aspect Ratios, Bezels, Filters, RetroAchievements,Emulators, Frontends, and more. Recommended for advanced users.",
       "android": "Install EmuDeck ( beta ) on your Android device.",
       "easyTitle": "Easy Mode",
       "customTitle": "Custom Mode",
+      "ondemandTitle": "On Demand Mode",
       "news": "EmuDeck News",
       "gamesOfTheMonth": "Games of the month by"
     },

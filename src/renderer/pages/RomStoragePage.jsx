@@ -305,6 +305,12 @@ function RomStoragePage() {
             installed: undefined,
             name: 'PCSX2',
           },
+          armsx2: {
+            id: 'armsx2',
+            status: false,
+            installed: undefined,
+            name: 'ARMSX2',
+          },
           rpcs3: {
             id: 'rpcs3',
             status: false,
@@ -422,6 +428,7 @@ function RomStoragePage() {
           melonds: { id: 'melonds', status: false, name: 'melonDS' },
           azahar: { id: 'azahar', status: false, name: 'Azahar' },
           pcsx2: { id: 'pcsx2', status: false, name: 'PCSX2' },
+          armsx2: { id: 'armsx2', status: false, name: 'ARMSX2' },
           rpcs3: { id: 'rpcs3', status: false, name: 'RPCS3' },
           yuzu: { id: 'yuzu', status: false, name: 'Yuzu' },
           ryujinx: { id: 'ryujinx', status: false, name: 'Ryujinx' },

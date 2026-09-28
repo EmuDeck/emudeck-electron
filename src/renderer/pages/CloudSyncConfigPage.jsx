@@ -199,12 +199,12 @@ function CloudSyncPageConfig() {
     setStateCfg(cfgOk);
 
     const serviceCreatedOk = await sendHealthCheck(
-      'cloud_sync_health_checkServiceCreated'
+      'cloud_sync_health_checkServiceCreated',
     );
     setStateServiceCreated(serviceCreatedOk);
 
     const serviceStartsOk = await sendHealthCheck(
-      'cloud_sync_health_checkServiceStarts'
+      'cloud_sync_health_checkServiceStarts',
     );
     setStateCheckServiceStarts(serviceStartsOk);
 
@@ -212,7 +212,7 @@ function CloudSyncPageConfig() {
     setStateUpload(uploadOk);
 
     const uploadedOk = await sendHealthCheck(
-      'cloud_sync_health_isFileUploaded'
+      'cloud_sync_health_isFileUploaded',
     );
     setStateIsFileUploaded(uploadedOk);
 
@@ -220,7 +220,7 @@ function CloudSyncPageConfig() {
     setStateDownload(downloadOk);
 
     const downloadedOk = await sendHealthCheck(
-      'cloud_sync_health_isFileDownloaded'
+      'cloud_sync_health_isFileDownloaded',
     );
     setStateIsFileDownloaded(downloadedOk);
   };

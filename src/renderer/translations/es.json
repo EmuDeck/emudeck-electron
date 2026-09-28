@@ -112,7 +112,8 @@
       },
       "srm": {
         "body": "Cerraremos Steam si está abierto y después se abrirá Steam Rom Manager; esto puede tardar unos segundos, espera por favor.",
-        "desktopControls": "Los controles de escritorio volverán temporalmente a táctil/trackpad/L2/R2."
+        "desktopControls": "Los controles de escritorio volverán temporalmente a táctil/trackpad/L2/R2.",
+        "bodyFrame": "Tienes que abrir Steam Rom Manager desde el botón + del panel de SteamOS"
       },
       "reset": {
         "warningBody": "Hacer un reinicio sobrescribirá cualquier personalización que hayas hecho y restaurará los valores por defecto de EmuDeck"
@@ -719,7 +720,8 @@
       "readBefore": "⚠️ Lee esto antes de continuar ⚠️",
       "readBeforeDescription": "EmuDeck está diseñado para funcionar con <strong>Steam Input</strong>: tienes que lanzar los juegos desde Steam después de añadirlos con Steam Rom Manager, y lo mismo con los emuladores, EmulationStation o Pegasus; si no, <strong>los controles y los atajos no funcionarán</strong>.<br />Aplicaciones como DeckTools o Handheld Companion también pueden romper los controles en algunos casos.<br />Asegúrate de que tu consola portátil está siempre en modo GamePad, no en Escritorio ni en Automático.<br /><strong>Si quieres usar otros frontends como Playnite tendrás que activar Steam Input en el escritorio como se muestra en el vídeo y mantener Steam abierto en segundo plano en todo momento.</strong>",
       "installing": "Instalando EmuDeck...",
-      "openLog": "Abrir el log detallado"
+      "openLog": "Abrir el log detallado",
+      "readBeforeDescriptionFrame": "La Steam Frame tiene algunas diferencias respecto a un dispositivo SteamOS normal.<ul><li>- Los emuladores o frontends como ESDE no detectan los mandos de la Frame cuando se lanzan desde el modo Escritorio o desde el botón [+] del panel de SteamOS.</li><li>- Por eso (y para no llenar el menú [+]) no añadimos accesos directos de los emuladores al instalarlos.</li><li>- Si quieres cambiar los ajustes de algún emulador, añádelo a Steam con el botón <strong>Añadir a Steam</strong> de la página del emulador en Gestionar emuladores, o usa Steam Rom Manager para añadirlos en bloque.</li><li>- Tienes que reiniciar Steam manualmente cada vez que añadas un juego, emulador o frontend nuevo a tu biblioteca de Steam.</li></ul>"
     },
     "ErrorPage": {
       "title": "",
@@ -822,11 +824,11 @@
     },
     "RAAchievementsConfigPage": {
       "title": "Configurar RetroAchievements",
-      "description": "RetroAchievements.org es un esfuerzo liderado por la comunidad para colaborar y crear logros personalizados en juegos clásicos emulados. Ingresa tu información de cuenta para configurar RetroAchievements para Duckstation, PCSX2, PPSSPP y RetroArch."
+      "description": "RetroAchievements.org es un esfuerzo liderado por la comunidad para colaborar y crear logros personalizados en juegos clásicos emulados. Ingresa tu información de cuenta para configurar RetroAchievements para Duckstation, PCSX2 / ARMSX2, PPSSPP y RetroArch."
     },
     "RAAchievementsPage": {
       "title": "Configurar RetroAchievements",
-      "description": "RetroAchievements.org es un esfuerzo liderado por la comunidad para colaborar y crear logros personalizados en juegos clásicos emulados. Ingresa tu información de cuenta para configurar RetroAchievements para Duckstation, PCSX2, PPSSPP y RetroArch."
+      "description": "RetroAchievements.org es un esfuerzo liderado por la comunidad para colaborar y crear logros personalizados en juegos clásicos emulados. Ingresa tu información de cuenta para configurar RetroAchievements para Duckstation, PCSX2 / ARMSX2, PPSSPP y RetroArch."
     },
     "RABezelsPage": {
       "title": "Configurar biseles de juego",
