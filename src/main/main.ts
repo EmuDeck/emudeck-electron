@@ -75,6 +75,10 @@ export default class AppUpdater {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
     autoUpdater.autoDownload = false;
+    // Enforce integrity of downloaded updates: never allow installing an
+    // older, potentially unverified/insecure build to bypass current
+    // signature/checksum-verified code (CWE-494).
+    autoUpdater.allowDowngrade = false;
   }
 }
 
