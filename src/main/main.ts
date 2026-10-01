@@ -979,6 +979,17 @@ ipcMain.on('update-start', async (event) => {
     });
 });
 
+// Distro name from /etc/os-release, for systems without lsb_release
+const osReleaseName = (): string => {
+  try {
+    const content = fs.readFileSync('/etc/os-release', 'utf8');
+    const match = content.match(/^NAME="?([^"\n]*)"?/m);
+    return match ? match[1] : 'unknown';
+  } catch (error) {
+    return 'unknown';
+  }
+};
+
 ipcMain.on('system-info-in', async (event) => {
   // const os = require('os');
   // arch: 'arm64' | 'x64' | 'arm' | 'ia32' (architecture of the running Electron binary)
@@ -990,13 +1001,17 @@ ipcMain.on('system-info-in', async (event) => {
   }
 
   if (os.platform() === 'linux') {
-    lsbRelease((_: any, data: any) => {
-      if (data.distributorID) {
-        event.reply('system-info-out', data.distributorID, arch);
-      } else {
-        event.reply('system-info-out', 'unknown', arch);
-      }
-    });
+    try {
+      lsbRelease((_: any, data: any) => {
+        event.reply(
+          'system-info-out',
+          data?.distributorID || osReleaseName(),
+          arch,
+        );
+      });
+    } catch (error) {
+      event.reply('system-info-out', osReleaseName(), arch);
+    }
   } else {
     event.reply('system-info-out', os.platform(), arch);
   }
