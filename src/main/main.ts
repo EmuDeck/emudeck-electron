@@ -36,6 +36,36 @@ const { branchOG } = branchFile;
 const { shouldUseDarkColors } = nativeTheme;
 const os = require('os');
 const fs = require('fs');
+
+// Forces PATH on windows so GIT and Python are available on first install
+if (os.platform() === 'win32') {
+  const localPrograms = path.join(process.env.LOCALAPPDATA || '', 'Programs');
+  const extraPaths = [path.join(localPrograms, 'Git', 'cmd')];
+  const pythonRoot = path.join(localPrograms, 'Python');
+  try {
+    const latestPython = fs
+      .readdirSync(pythonRoot)
+      .filter((dir: string) => /^Python3/i.test(dir))
+      .sort((a: string, b: string) =>
+        b.localeCompare(a, undefined, { numeric: true })
+      )[0];
+    if (latestPython) {
+      extraPaths.push(
+        path.join(pythonRoot, latestPython),
+        path.join(pythonRoot, latestPython, 'Scripts')
+      );
+    }
+  } catch (error) {
+    // No Python detected
+  }
+  const currentPaths = (process.env.PATH || '').split(';');
+  const missingPaths = extraPaths.filter(
+    (dir) => fs.existsSync(dir) && !currentPaths.includes(dir)
+  );
+  if (missingPaths.length) {
+    process.env.PATH = [...missingPaths, ...currentPaths].join(';');
+  }
+}
 const lsbRelease = require('lsb-release');
 // Serves local artwork (ROM covers) to the renderer in dev (http) and prod (file)
 protocol.registerSchemesAsPrivileged([
@@ -97,7 +127,7 @@ const logCommand = (
   bashCommand: any,
   error: any = '',
   stdout: any = '',
-  stderr: any = '',
+  stderr: any = ''
 ) => {
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
@@ -163,7 +193,7 @@ const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 if (isDebug) {
   import('electron-debug').then(({ default: electronDebug }) =>
-    electronDebug(),
+    electronDebug()
   );
 }
 
@@ -172,7 +202,7 @@ let reactDevToolsWindow: BrowserWindow | null = null;
 const openReactDevTools = async () => {
   const standalonePath = path.resolve(
     app.getAppPath(),
-    '../../node_modules/react-devtools-core/standalone',
+    '../../node_modules/react-devtools-core/standalone'
   );
   if (!fs.existsSync(`${standalonePath}.js`)) return;
 
@@ -204,7 +234,7 @@ require(${JSON.stringify(standalonePath)}).default
     setTimeout(resolve, 3000);
   });
   await reactDevToolsWindow.loadURL(
-    `data:text/html;charset=utf-8,${encodeURIComponent(html)}`,
+    `data:text/html;charset=utf-8,${encodeURIComponent(html)}`
   );
   reactDevToolsWindow.showInactive();
   await ready;
@@ -267,7 +297,7 @@ const createWindow = async () => {
         const line = buf.slice(0, i);
         buf = buf.slice(i + 1);
         BrowserWindow.getAllWindows().forEach((w) =>
-          w.webContents.send('backend-log', line),
+          w.webContents.send('backend-log', line)
         );
       }
     });
@@ -851,7 +881,7 @@ ipcMain.on('update-channel', async (event, args) => {
 
   if (process.env.NODE_ENV === 'development' || !app.isPackaged) {
     logCommand(
-      `UPDATE CHANNEL: ${channel} requested but updater is disabled in DEV MODE`,
+      `UPDATE CHANNEL: ${channel} requested but updater is disabled in DEV MODE`
     );
     event.reply(backChannel, ['error', 'DEV MODE']);
     return;
@@ -874,7 +904,7 @@ ipcMain.on('update-channel', async (event, args) => {
     const checkResult = await autoUpdater.checkForUpdates();
     const updateInfo = checkResult?.updateInfo;
     logCommand(
-      `UPDATE CHANNEL: latest on ${channel} is ${updateInfo?.version}`,
+      `UPDATE CHANNEL: latest on ${channel} is ${updateInfo?.version}`
     );
 
     if (!checkResult || !checkResult.isUpdateAvailable) {
@@ -946,7 +976,7 @@ ipcMain.on('update-start', async (event) => {
           .then(() => {
             autoUpdater.quitAndInstall(
               true, // isSilent
-              true, // isForceRunAfter, restart app after update is installed
+              true // isForceRunAfter, restart app after update is installed
             );
           })
           .catch((error) => {
@@ -979,6 +1009,17 @@ ipcMain.on('update-start', async (event) => {
     });
 });
 
+// Distro name from /etc/os-release, for systems without lsb_release
+const osReleaseName = (): string => {
+  try {
+    const content = fs.readFileSync('/etc/os-release', 'utf8');
+    const match = content.match(/^NAME="?([^"\n]*)"?/m);
+    return match ? match[1] : 'unknown';
+  } catch (error) {
+    return 'unknown';
+  }
+};
+
 ipcMain.on('system-info-in', async (event) => {
   // const os = require('os');
   // arch: 'arm64' | 'x64' | 'arm' | 'ia32' (architecture of the running Electron binary)
@@ -990,13 +1031,17 @@ ipcMain.on('system-info-in', async (event) => {
   }
 
   if (os.platform() === 'linux') {
-    lsbRelease((_: any, data: any) => {
-      if (data.distributorID) {
-        event.reply('system-info-out', data.distributorID, arch);
-      } else {
-        event.reply('system-info-out', 'unknown', arch);
-      }
-    });
+    try {
+      lsbRelease((_: any, data: any) => {
+        event.reply(
+          'system-info-out',
+          data?.distributorID || osReleaseName(),
+          arch
+        );
+      });
+    } catch (error) {
+      event.reply('system-info-out', osReleaseName(), arch);
+    }
   } else {
     event.reply('system-info-out', os.platform(), arch);
   }
@@ -1156,7 +1201,7 @@ ipcMain.on('getToken', (event, command) => {
         console.log(`getToken -> HTTP ${stdout}`);
         event.reply(backChannel, null, stdout, '');
       });
-    },
+    }
   );
 
   req.on('error', (err) => event.reply(backChannel, err, '', String(err)));

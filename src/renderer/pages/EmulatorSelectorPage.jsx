@@ -77,8 +77,13 @@ const images = {
 function EmulatorSelectorPage() {
   const { t, i18n } = useTranslation();
   const { state, setState } = useContext(GlobalContext);
-  const { device, installEmus, emulatorAlternative, overwriteConfigEmus } =
-    state;
+  const {
+    device,
+    installEmus,
+    emulatorAlternative,
+    overwriteConfigEmus,
+    arch,
+  } = state;
 
   const [statePage, setStatePage] = useState({
     disabledNext: false,
@@ -431,12 +436,40 @@ function EmulatorSelectorPage() {
       installEmus: {
         ...installEmus,
         [emulatorProp]: { ...installEmus[emulatorProp], status: !status },
+        armsx2: {
+          id: 'armsx2',
+          status: arch !== 'arm64' ? false : !status,
+          installed: undefined,
+          name: 'ARMSX2',
+          platforms: 'Playstation 2',
+        },
+        pcsx2: {
+          id: 'pcsx2',
+          status: arch === 'arm64' ? false : !status,
+          installed: undefined,
+          name: 'PCSX2',
+          platforms: 'Playstation 2',
+        },
       },
       overwriteConfigEmus: {
         ...overwriteConfigEmus,
         [emulatorProp]: {
           ...overwriteConfigEmus[emulatorProp],
           status: !status,
+        },
+        armsx2: {
+          id: 'armsx2',
+          status: arch !== 'arm64' ? false : !status,
+          installed: undefined,
+          name: 'ARMSX2',
+          platforms: 'Playstation 2',
+        },
+        pcsx2: {
+          id: 'pcsx2',
+          status: arch === 'arm64' ? false : !status,
+          installed: undefined,
+          name: 'PCSX2',
+          platforms: 'Playstation 2',
         },
       },
       emulatorAlternative: {
