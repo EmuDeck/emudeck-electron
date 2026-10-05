@@ -8,6 +8,7 @@ import {
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 
 import CheckUpdatePage from 'pages/CheckUpdatePage';
+import UpdateNotifier from 'components/organisms/UpdateNotifier/UpdateNotifier';
 import WelcomePage from 'pages/WelcomePage';
 import DeviceSelectorPage from 'pages/DeviceSelectorPage';
 import EmulatorSelectorPage from 'pages/EmulatorSelectorPage';
@@ -693,6 +694,7 @@ export default function App() {
           <Route exact path="/hotkeys" element={<Hotkeys />} />
           <Route exact path="/finish" element={<FinishPage />} />
         </Routes>
+        <UpdateNotifier />
         <WindowControls />
       </Router>
     </GlobalContext.Provider>

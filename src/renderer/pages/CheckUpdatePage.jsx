@@ -26,7 +26,7 @@ function CheckUpdatePage() {
     disabledNext: true,
     disabledBack: true,
     downloadComplete: !navigator.onLine ? true : null,
-    update: null,
+    update: 'up-to-date',
     cloned: null,
     data: '',
     dom: undefined,
@@ -318,164 +318,7 @@ function CheckUpdatePage() {
   };
 
   useEffect(() => {
-    // Update timeout + Force clone check
-
-    updateTimeOut = setTimeout(() => {
-      setStatePage({
-        ...statePage,
-        update: 'up-to-date',
-      });
-      updateFiles();
-    }, 10000);
-
-    if (navigator.onLine) {
-      ipcChannel.sendMessage('update-check');
-
-      ipcChannel.once('update-check-out', (message) => {
-        // We clear the timeout
-        clearTimeout(updateTimeOut);
-
-        let modalData;
-        if (message[0] === 'updating') {
-          modalData = {
-            active: true,
-            header: (
-              <span className="h4">
-                🎉 {t('CheckUpdatePage.updating.title')} 🎉
-              </span>
-            ),
-            body: (
-              <p className="h5">{t('CheckUpdatePage.updating.description')}</p>
-            ),
-            footer: <ProgressBar css="progress--success" infinite max="100" />,
-            css: 'emumodal--xs emumodal--loading',
-          };
-        }
-
-        if (message[0] === 'update-available') {
-          modalData = {
-            active: true,
-            header: (
-              <span className="h4">
-                🎉 {t('CheckUpdatePage.found.title')} 🎉
-              </span>
-            ),
-            body: (
-              <p
-                className="lead"
-                dangerouslySetInnerHTML={{
-                  __html: t('CheckUpdatePage.found.description'),
-                }}
-              />
-            ),
-            footer: (
-              <div>
-                <BtnSimple
-                  css="btn-simple--1"
-                  type="button"
-                  aria={t('general.yes')}
-                  style={{ marginBottom: 0 }}
-                  onClick={() => doUpdate()}
-                >
-                  {t('general.yes')}
-                </BtnSimple>
-                <BtnSimple
-                  css="btn-simple--2"
-                  type="link"
-                  aria={t('CheckUpdatePage.found.changelog')}
-                  target="_blank"
-                  href={`https://cloud.emudeck.com/changelog/changelog.php?c=${branch}&s=${system}`}
-                >
-                  {t('CheckUpdatePage.found.changelog')}
-                </BtnSimple>
-                <BtnSimple
-                  css="btn-simple--3"
-                  type="button"
-                  aria={t('general.no')}
-                  style={{ marginBottom: 0 }}
-                  onClick={() => cancelUpdate()}
-                >
-                  {t('general.no')}
-                </BtnSimple>
-              </div>
-            ),
-            css: 'emumodal--sm',
-          };
-        }
-
-        setStatePage({
-          ...statePage,
-          update: message[0],
-          data: message[1],
-          modal: modalData,
-        });
-        if (message[0] === 'up-to-date') {
-          updateFiles();
-        } else {
-        }
-      });
-    } else {
-      updateFiles();
-      clearTimeout(updateTimeOut);
-      setStatePage({
-        ...statePage,
-        update: 'up-to-date',
-      });
-    }
-
-    const doUpdate = () => {
-      ipcChannel.sendMessage('update-start');
-
-      ipcChannel.once('update-check-out', (message) => {
-        if (message[0] === 'updating') {
-          // Show the changelog on the first launch after the update installs
-          localStorage.setItem('show_changelog', true);
-          const modalData = {
-            active: true,
-            header: (
-              <span className="h4">
-                🎉 {t('CheckUpdatePage.updating.title')} 🎉
-              </span>
-            ),
-            body: (
-              <p className="h5">{t('CheckUpdatePage.updating.description')}</p>
-            ),
-            footer: <ProgressBar css="progress--success" infinite max="100" />,
-            css: 'emumodal--xs emumodal--loading',
-          };
-          setStatePage({
-            ...statePage,
-            modal: modalData,
-          });
-        }
-      });
-    };
-
-    const cancelUpdate = () => {
-      updateFiles();
-      setStatePage({
-        ...statePage,
-        update: 'up-to-date',
-      });
-    };
-
-    // ipcChannel.sendMessage('clean-log');
-
-    //  setTimeout(() => {
-
-    // ipcChannel.sendMessage('update-check');
-
-    // ipcChannel.once('update-check-out', (message) => {
-    //
-    //
-    //   setStatePage({
-    //     ...statePage,
-    //     update: message[0],
-    //     data: message[1],
-    //   });
-    // });
-
-    //  }, 500);
+    updateFiles();
   }, []);
 
   useEffect(() => {
@@ -483,10 +326,6 @@ function CheckUpdatePage() {
     // Cloning project
     //
 
-    // Force changelog after update
-    if (update === 'updating') {
-      localStorage.setItem('show_changelog', true);
-    }
     if (update === 'up-to-date') {
       // is the git repo cloned?
 
