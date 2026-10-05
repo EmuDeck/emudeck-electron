@@ -522,7 +522,7 @@ ipcMain.on('emudeck', async (event, command) => {
     event.reply(backChannel, 'nogit');
     let bashCommand;
     if (os.platform().includes('win32')) {
-      bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:USERPROFILE/EmuDeck/logs/pull.log"; git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchOG} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && Stop-Transcript; && CLS && echo true`;
+      bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:USERPROFILE/EmuDeck/logs/pull.log"; git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --no-single-branch --depth=1 https://github.com/EmuDeck/emudeck-we.git ./backend; Stop-Transcript"} && cd backend && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchOG} && cd %userprofile% && (if not exist emudeck mkdir emudeck) && echo true`;
     } else if (os.platform().includes('darwin')) {
       bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && git config --global http.lowSpeedLimit 1000 && git config --global http.lowSpeedTime 60 && git config --global http.postBuffer 524288000 && git clone --no-single-branch --depth=1 https://github.com/dragoonDorise/EmuDeck.git ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branchOG} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
     } else {
@@ -1087,7 +1087,7 @@ ipcMain.on('clone', async (event, branch) => {
   const backChannel = 'clone';
   let bashCommand;
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:APPDATA/EmuDeck/logs"  -ErrorAction SilentlyContinue; Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend  && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && if not exist emudeck mkdir emudeck && cd emudeck && CLS && Stop-Transcript && echo true `;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -ExecutionPolicy Bypass -command "& { mkdir "$env:APPDATA/EmuDeck/logs"  -ErrorAction SilentlyContinue; Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; git config --global http.lowSpeedLimit 1000 ; git config --global http.lowSpeedTime 60 ; git config --global http.postBuffer 524288000 ; git clone --no-single-branch --depth=1 ${repo} ./backend; Stop-Transcript"} && cd backend  && git config user.email "emudeck@emudeck.com" && git config user.name "EmuDeck" && git checkout ${branchGIT} && cd %userprofile% && (if not exist emudeck mkdir emudeck) && echo true `;
   } else {
     bashCommand = `rm -rf ~/.config/EmuDeck/backend && mkdir -p ~/.config/EmuDeck/backend && mkdir -p ~/emudeck/logs && git config --global http.lowSpeedLimit 1000 && git config --global http.lowSpeedTime 60 && git config --global http.postBuffer 524288000 && git clone --no-single-branch --depth=1 ${repo} ~/.config/EmuDeck/backend/ && cd ~/.config/EmuDeck/backend && git checkout ${branchGIT} && touch ~/.config/EmuDeck/.cloned && printf "ec" && echo true`;
   }
@@ -1103,15 +1103,29 @@ ipcMain.on('pull', async (event, branch) => {
 
   let bashCommand;
 
-  bashCommand = `cd ~/.config/EmuDeck/backend && { pgrep -x git >/dev/null || find .git -name '*.lock' -delete; } && git fetch --depth=1 origin ${branchGIT} && git checkout -f -B ${branchGIT} FETCH_HEAD && git reset --hard FETCH_HEAD && git clean -fd && . ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
+  bashCommand = `cd ~/.config/EmuDeck/backend 2>/dev/null && git rev-parse --is-inside-work-tree >/dev/null 2>&1 || { echo not-cloned; exit 0; }; { pgrep -x git >/dev/null || find .git -name '*.lock' -delete; } && git fetch --no-tags --depth=1 origin ${branchGIT} && git checkout -f -B ${branchGIT} FETCH_HEAD && git reset --hard FETCH_HEAD && git clean -fd`;
 
   //Dev on macOS
   if (os.platform().includes('darwin')) {
-    bashCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
+    bashCommand = `echo true`;
   }
 
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && powershell -ExecutionPolicy Bypass -command "& { Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; if (-not (Get-Process git -ErrorAction SilentlyContinue)) { Get-ChildItem .git -Recurse -Filter *.lock | Remove-Item -Force } ; git fetch --depth=1 origin ${branchGIT} ; git checkout -f -B ${branchGIT} FETCH_HEAD ; git reset --hard FETCH_HEAD ; git clean -fd ;cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; appImageInit; Stop-Transcript; "}`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -NoProfile -ExecutionPolicy Bypass -command "& { if ((git -C backend rev-parse --is-inside-work-tree 2>$null) -ne 'true') { 'not-cloned'; exit } ; cd backend ; Start-Transcript "$env:APPDATA/EmuDeck/logs/git.log"; if (-not (Get-Process git -ErrorAction SilentlyContinue)) { Get-ChildItem .git -Recurse -Filter *.lock | Remove-Item -Force } ; git fetch --no-tags --depth=1 origin ${branchGIT} ; git checkout -f -B ${branchGIT} FETCH_HEAD ; git reset --hard FETCH_HEAD ; git clean -fd ; Stop-Transcript; "}`;
+  }
+
+  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, stdout);
+  });
+});
+
+ipcMain.on('app-init', async (event) => {
+  const backChannel = 'app-init';
+  let bashCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && appImageInit`;
+
+  if (os.platform().includes('win32')) {
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && cd functions && powershell -NoProfile -ExecutionPolicy Bypass -command "& { Start-Transcript -Append "$env:APPDATA/EmuDeck/logs/git.log"; . ./all.ps1 ; appImageInit; Stop-Transcript; "}`;
   }
 
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
@@ -1122,13 +1136,10 @@ ipcMain.on('pull', async (event, branch) => {
 
 ipcMain.on('check-git-status', async (event) => {
   const backChannel = 'check-git-status';
-  let bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
+  let bashCommand = `cd ~/.config/EmuDeck/backend 2>/dev/null && git rev-parse --is-inside-work-tree >/dev/null 2>&1 || { echo not-a-repo; exit 0; }; if [ "$(git rev-parse HEAD 2>/dev/null)" = "$(git rev-parse FETCH_HEAD 2>/dev/null)" ]; then echo up-to-date; else echo outdated; fi`;
 
-  if (os.platform().includes('darwin')) {
-    bashCommand = `cd ~/.config/EmuDeck/backend && git status`;
-  }
   if (os.platform().includes('win32')) {
-    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && cd backend && git status`;
+    bashCommand = `cd %userprofile% && cd AppData && cd Roaming && cd EmuDeck && powershell -NoProfile -ExecutionPolicy Bypass -command "& { if ((git -C backend rev-parse --is-inside-work-tree 2>$null) -ne 'true') { 'not-a-repo'; exit } ; if ((git -C backend rev-parse HEAD) -eq (git -C backend rev-parse FETCH_HEAD 2>$null)) { 'up-to-date' } else { 'outdated' } }"`;
   }
 
   return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {

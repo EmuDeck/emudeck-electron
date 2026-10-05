@@ -59,7 +59,6 @@ function CheckUpdatePage() {
     achievements,
   } = state;
 
-  let updateTimeOut;
   let pullTimeOut;
   let cloneTimeOut;
   // Darwin terminal permissions
@@ -348,10 +347,45 @@ function CheckUpdatePage() {
         css: 'emumodal--xs emumodal--loading',
       };
 
-      // setStatePage({
-      //   ...statePage,
-      //   modal: modalDataGit,
-      // });
+      if (navigator.onLine) {
+        setStatePage({ ...statePageRef.current, modal: modalDataGit });
+        console.log(`GIT PULL ${branch}`);
+        ipcChannel.sendMessage('pull', branch);
+        pullTimeOut = setTimeout(() => {
+          ipcChannel.sendMessage('check-git-status', branch);
+          ipcChannel.once('check-git-status', (output) => {
+            console.log({ output });
+            if (output.includes('up-to-date')) {
+              setStatePage({ ...statePageRef.current, downloadComplete: true });
+            } else {
+              const modalData = {
+                active: true,
+                header: <span className="h4">{t('general.ooops')}</span>,
+                body: <p>{t('CheckUpdatePage.backendError2')}</p>,
+                footer: '',
+                css: 'emumodal--xs',
+              };
+              setStatePage({
+                ...statePageRef.current,
+                modal: modalData,
+              });
+            }
+          });
+        }, 20000);
+        ipcChannel.once('pull', (output) => {
+          console.log('GIT PULL response');
+          console.log({ output });
+          clearTimeout(pullTimeOut);
+          if (output && output.includes('not-cloned')) {
+            setStatePage({ ...statePageRef.current, cloned: false });
+            return;
+          }
+          // appImageInit runs in the background while the user is already on Welcome
+          ipcChannel.sendMessage('app-init');
+          setStatePage({ ...statePageRef.current, downloadComplete: true });
+        });
+        return;
+      }
 
       ipcChannel.sendMessage('check-git');
       ipcChannel.once('check-git', (error, stdout, stderr) => {
@@ -382,8 +416,8 @@ function CheckUpdatePage() {
         ipcChannel.sendMessage(`clone`, branch);
         cloneTimeOut = setTimeout(() => {
           ipcChannel.sendMessage('check-git-status', branch);
-          ipcChannel.once('check-git-status', (error) => {
-            if (error.includes('not a git directory')) {
+          ipcChannel.once('check-git-status', (output) => {
+            if (output.includes('not-a-repo')) {
               // alert('There seems to be an issue, please restart EmuDeck');
               const modalData = {
                 active: true,
@@ -417,45 +451,7 @@ function CheckUpdatePage() {
         });
       }
     } else if (cloned === true) {
-      // alert('cloned true');
-      if (navigator.onLine) {
-        // alert(branch);
-
-        console.log(`GIT PULL ${branch}`);
-        ipcChannel.sendMessage('pull', branch);
-        pullTimeOut = setTimeout(() => {
-          ipcChannel.sendMessage('check-git-status', branch);
-          ipcChannel.once('check-git-status', (error) => {
-            console.log({ error });
-            if (error.includes('Your branch is up to date')) {
-              setStatePage({ ...statePageRef.current, downloadComplete: true });
-            } else {
-              const modalData = {
-                active: true,
-                header: <span className="h4">{t('general.ooops')}</span>,
-                body: <p>{t('CheckUpdatePage.backendError2')}</p>,
-                footer: '',
-                css: 'emumodal--xs',
-              };
-              setStatePage({
-                ...statePageRef.current,
-                modal: modalData,
-              });
-            }
-          });
-        }, 20000);
-        ipcChannel.once('pull', (error, stdout, stderr) => {
-          console.log('GIT PULL response');
-          console.log({ error, stdout, stderr });
-
-          updateTimeOut = setTimeout(() => {
-            clearTimeout(pullTimeOut);
-            setStatePage({ ...statePageRef.current, downloadComplete: true });
-          }, 1000);
-        });
-      } else {
-        setStatePage({ ...statePage, downloadComplete: true });
-      }
+      setStatePage({ ...statePage, downloadComplete: true });
     }
   }, [cloned]);
 
