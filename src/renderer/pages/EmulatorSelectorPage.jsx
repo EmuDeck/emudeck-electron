@@ -430,46 +430,17 @@ function EmulatorSelectorPage() {
 
       console.log({ systemsValue });
     }
-
     setState({
       ...state,
       installEmus: {
         ...installEmus,
         [emulatorProp]: { ...installEmus[emulatorProp], status: !status },
-        armsx2: {
-          id: 'armsx2',
-          status: arch !== 'arm64' ? false : !status,
-          installed: undefined,
-          name: 'ARMSX2',
-          platforms: 'Playstation 2',
-        },
-        pcsx2: {
-          id: 'pcsx2',
-          status: arch === 'arm64' ? false : !status,
-          installed: undefined,
-          name: 'PCSX2',
-          platforms: 'Playstation 2',
-        },
       },
       overwriteConfigEmus: {
         ...overwriteConfigEmus,
         [emulatorProp]: {
           ...overwriteConfigEmus[emulatorProp],
           status: !status,
-        },
-        armsx2: {
-          id: 'armsx2',
-          status: arch !== 'arm64' ? false : !status,
-          installed: undefined,
-          name: 'ARMSX2',
-          platforms: 'Playstation 2',
-        },
-        pcsx2: {
-          id: 'pcsx2',
-          status: arch === 'arm64' ? false : !status,
-          installed: undefined,
-          name: 'PCSX2',
-          platforms: 'Playstation 2',
         },
       },
       emulatorAlternative: {

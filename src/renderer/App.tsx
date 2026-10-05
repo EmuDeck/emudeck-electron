@@ -491,6 +491,33 @@ export default function App() {
     },
   });
 
+  // ARMSX / PCSX2 status depending on arch
+  useEffect(() => {
+    if (!state.arch) return;
+    const emuToHide = state.arch === 'arm64' ? 'pcsx2' : 'armsx2';
+    if (emuToHide === 'pcsx2' && state.system === 'win32') {
+      return;
+    }
+    if (
+      !state.installEmus[emuToHide].status &&
+      !state.overwriteConfigEmus[emuToHide].status
+    ) {
+      return;
+    }
+
+    setState((prev) => ({
+      ...prev,
+      installEmus: {
+        ...prev.installEmus,
+        [emuToHide]: { ...prev.installEmus[emuToHide], status: false },
+      },
+      overwriteConfigEmus: {
+        ...prev.overwriteConfigEmus,
+        [emuToHide]: { ...prev.overwriteConfigEmus[emuToHide], status: false },
+      },
+    }));
+  }, [state.arch, state.system, state.installEmus, state.overwriteConfigEmus]);
+
   return (
     <GlobalContext.Provider
       value={{
