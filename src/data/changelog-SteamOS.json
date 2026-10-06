@@ -1,5 +1,10 @@
 [
   {
+    "title": "2.7.2 Hotfixes",
+    "description": "<div style='text-align:left'><p>Improved app startup times</p><p>Fixed language icons not being clickable</p><p>Fixed ARMSX2 appearing in non ARM systems</p></div>",
+    "image": "true"
+  },
+  {
     "title": "RetroAchievements",
     "description": "EmuDeck now uses the RetroAchievements new API and we've added support for Dolphin RetroAchievements setup",
     "image": "true"
