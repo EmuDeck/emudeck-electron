@@ -19,12 +19,10 @@ export default class MenuBuilder {
   }
 
   buildMenu(): Menu {
-    if (
+    this.setupContextMenu(
       process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
-    ) {
-      this.setupDevelopmentEnvironment();
-    }
+        process.env.DEBUG_PROD === 'true',
+    );
 
     const template =
       process.platform === 'darwin'
@@ -37,18 +35,24 @@ export default class MenuBuilder {
     return menu;
   }
 
-  setupDevelopmentEnvironment(): void {
+  setupContextMenu(isDebug: boolean): void {
     this.mainWindow.webContents.on('context-menu', (_, props) => {
-      const { x, y } = props;
+      const { x, y, selectionText } = props;
+      const template: MenuItemConstructorOptions[] = [];
 
-      Menu.buildFromTemplate([
-        {
+      if (selectionText) {
+        template.push({ role: 'copy' }, { type: 'separator' });
+      }
+      template.push({ label: '↑ ↑ ↓ ↓ ← → ← → B A', enabled: false });
+      if (isDebug) {
+        template.push({
           label: 'Inspect element',
           click: () => {
             this.mainWindow.webContents.inspectElement(x, y);
           },
-        },
-      ]).popup({ window: this.mainWindow });
+        });
+      }
+      Menu.buildFromTemplate(template).popup({ window: this.mainWindow });
     });
   }
 
