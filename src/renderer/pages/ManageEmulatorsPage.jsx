@@ -11,6 +11,7 @@ import CardSettings from 'components/molecules/CardSettings/CardSettings';
 import Card from 'components/molecules/Card/Card';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
+import { isEmulatorAvailable } from 'components/utils/isEmulatorAvailable';
 
 import {
   imgra,
@@ -133,6 +134,23 @@ function ManageEmulatorsPage() {
 
   const pageRef = useRef(statePage);
   pageRef.current = statePage;
+
+  const pendingUpdates = (repoVersions, currentConfigs) => {
+    const differences = {};
+    Object.keys(repoVersions || {}).forEach((key) => {
+      const { id } = repoVersions[key];
+      if (
+        installEmus[id] &&
+        JSON.stringify(repoVersions[key]) !==
+          JSON.stringify(currentConfigs[key]) &&
+        installEmus[id].status &&
+        isEmulatorAvailable(id, system, arch)
+      ) {
+        differences[key] = repoVersions[key];
+      }
+    });
+    return differences;
+  };
 
   const resetEmus = () => {
     const modalData = {
@@ -264,29 +282,9 @@ function ManageEmulatorsPage() {
     // We check if the user has pending updates
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {
-      // No versioning found, what to do?
-
-      // Thanks chatGPT lol
-      const obj1 = repoVersions;
-      const obj2 = stateCurrentConfigs;
-
-      const differences = {};
-
-      for (const key in obj1) {
-        if (installEmus[obj1[key].id]) {
-          if (
-            JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key]) &&
-            installEmus[obj1[key].id].status &&
-            installEmus[obj1[key].code] !== 'BigPemu'
-          ) {
-            differences[key] = obj1[key];
-          }
-        }
-      }
-
       setStatePage({
         ...statePage,
-        updates: differences,
+        updates: pendingUpdates(repoVersions, stateCurrentConfigs),
         newDesiredVersions: repoVersions,
       });
     });
@@ -296,22 +294,9 @@ function ManageEmulatorsPage() {
 
   useEffect(() => {
     if (modal === false) {
-      // const updates = diff(newDesiredVersions, stateCurrentConfigs);
-      alert('false');
-      const obj1 = newDesiredVersions;
-      const obj2 = stateCurrentConfigs;
-
-      const updates = {};
-
-      for (const key in obj1) {
-        if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
-          updates[key] = obj1[key];
-        }
-      }
-
       setStatePage({
         ...statePage,
-        updates,
+        updates: pendingUpdates(newDesiredVersions, stateCurrentConfigs),
       });
 
       const json = JSON.stringify(stateCurrentConfigs);
@@ -371,20 +356,8 @@ function ManageEmulatorsPage() {
                   }
                 }
 
-                if (system !== 'win32' && arch == 'arm64') {
-                  if (
-                    item.id === 'pcsx2' ||
-                    item.id === 'shadps4' ||
-                    item.id === 'model2' ||
-                    item.id === 'supermodel'
-                  ) {
-                    return;
-                  }
-                }
-                if (arch != 'arm64') {
-                  if (item.id === 'armsx2') {
-                    return;
-                  }
+                if (!isEmulatorAvailable(item.id, system, arch)) {
+                  return;
                 }
 
                 if (item.id === 'srm') {
