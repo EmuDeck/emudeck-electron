@@ -23,6 +23,8 @@
       }
     },
     "general": {
+      "ok": "OK",
+      "help": "Ayuda",
       "success": "Éxito",
       "error": "Error",
       "launching": "Iniciando",
@@ -83,7 +85,7 @@
       "cloudSaves": "Guardados en la Nube",
       "migrateInstalation": "Migrar Instalación",
       "gyro": "Giroscopio",
-      "earlyAccess": "Obtener Acceso Anticipado",
+      "earlyAccess": "Apoya a EmuDeck",
       "logFiles": "Obtener Archivos de Registro",
       "changelog": "Registro de Cambios",
       "cloudServices": "Servicios en la Nube",
@@ -113,6 +115,7 @@
       "srm": {
         "body": "Cerraremos Steam si está abierto y después se abrirá Steam Rom Manager; esto puede tardar unos segundos, espera por favor.",
         "desktopControls": "Los controles de escritorio volverán temporalmente a táctil/trackpad/L2/R2.",
+        "titleFrame": "Instrucciones para Steam Frame",
         "bodyFrame": "Tienes que abrir Steam Rom Manager desde el botón + del panel de SteamOS"
       },
       "reset": {
@@ -415,6 +418,7 @@
     },
     "CheckBiosPage": {
       "title": "Comprobador de archivos BIOS",
+      "checkAgain": "Comprobar de nuevo",
       "description": "Algunos juegos no se cargarán correctamente sin archivos BIOS en su lugar. Coloca tu BIOS en Emulation/bios y usa este Comprobador de BIOS para asegurarte de tener la BIOS correcta para tu sistema."
     },
     "CheckUpdatePage": {
@@ -527,10 +531,23 @@
       "title": "",
       "description": "",
       "usb": {
-        "intro": "Conecta una unidad USB al puerto USB C de la Steam Deck, usando un hub o un adaptador. EmuDeck creará una carpeta de ROMs y otra de BIOS, para que puedas copiar tus ROMs y BIOS a la unidad USB desde otro dispositivo. Cuando estés listo, vuelve a esta página y EmuDeck transferirá los archivos que acabas de copiar a tu Steam Deck.",
+        "intro": "Para importar tus juegos y BIOS, descarga <a href='https://github.com/EmuDeck/quickstart/archive/refs/heads/main.zip' target='_blank'>https://github.com/EmuDeck/quickstart/archive/refs/heads/main.zip</a> desde otro ordenador, descomprímelo y copia la carpeta EmuDeckBackup a una unidad USB.",
+        "ready": "¿Tienes tu unidad USB preparada?",
+        "readyDesc": "Pulsa Sí si ya tienes una copia de seguridad creada con EmuDeck o si ya has usado la guía QuickStart de EmuDeck. Pulsa No para crear tu unidad USB ahora.",
+        "twoWays": "Hay dos formas de crear tu unidad USB",
+        "noBackup": "No tengo backup",
+        "refresh": "Actualizar",
+        "otherPC": "Prepárala en otro ordenador",
+        "downloadZip": "Descargar zip",
+        "generate": "Deja que EmuDeck la prepare",
+        "generateDesc": "Conecta tu unidad USB y selecciónala. EmuDeck descargará la carpeta EmuDeckBackup y la copiará en tu unidad.",
+        "created": "Unidad USB creada",
+        "comeBack": "Lee el archivo README.md de tu unidad USB, ahí se explica dónde copiar tus ROMs y BIOS.",
+        "finishHint": "Cuando hayas copiado todos tus juegos y BIOS a la unidad USB, vuelve aquí para que podamos terminar la instalación.",
+        "readyImport": "Estoy listo para importar mis juegos",
         "select": "Selecciona tu unidad USB",
         "drive": "Unidad USB",
-        "step1": "Paso 1: Preparar la unidad USB",
+        "step1": "Preparar la unidad USB",
         "step1Note": "(no borraremos nada)",
         "creatingFolders": "Creando las carpetas de EmuDeck...",
         "step2": "Paso 2: Transferir tus ROMs y BIOS desde el USB",
@@ -548,20 +565,22 @@
       "whereToCopyReady": "Una vez que hayas colocado tus ROMs y BIOS, ya puedes continuar",
       "usbTitle": "Usa una unidad USB para transferir tus juegos",
       "manualTitle": "Copia manual",
-      "manualDescription": "Cuando tengas tus archivos preparados, pulsa el botón “Abrir carpeta Emulation” de abajo",
-      "openEmulationFolder": "Abrir carpeta Emulation",
+      "manualDescription": "Cuando tengas tus archivos preparados, pulsa el botón “Muéstrame la carpeta Emulation” de abajo",
+      "openEmulationFolder": "Muéstrame la carpeta Emulation",
+      "manualDone": "Avísame cuando hayas terminado de copiar tus juegos y BIOS",
       "waitingTitle": "Esperando a la copia manual",
       "waitingDescription": "Cuando hayas copiado tus archivos pulsa el botón \"Siguiente\"",
       "backupTitle": "Importar datos de EmuDeck desde otro dispositivo",
-      "chooseTitle": "Vamos a copiar tus juegos",
-      "chooseDescription": "Primero tendrás que reunir tus ROMs y BIOS. Están sujetos a derechos de autor y EmuDeck no los proporciona por motivos legales.",
-      "modeManual": "Copia manual",
-      "modeManualDesc": "Tendrás que copiar tus juegos manualmente",
-      "modeAuto": "Importación automática",
-      "modeAutoDesc": "Necesitarás otro ordenador para preparar la unidad USB",
+      "chooseTitle": "Vamos a añadir tus juegos a EmuDeck",
+      "chooseDescription": "Primero tendrás que reunir tus ROMs y BIOS. Están sujetos a derechos de autor y EmuDeck no los proporciona por motivos legales. Te recomendamos usar una unidad USB para transferir tus juegos desde otro ordenador.",
+      "modeManual": "Transferencia manual",
+      "modeManualDesc": "Tendrás que transferir tus juegos manualmente desde tu unidad USB",
+      "modeAuto": "Transferencia automática",
+      "modeAutoDesc": "EmuDeck transferirá automáticamente tus ROMs desde tu unidad USB",
       "modeBackup": "Importar copia de seguridad",
       "modeBackupDesc": "Elige esto si ya tienes EmuDeck instalado en otro dispositivo",
-      "biosTitle": "Vamos a comprobar esas BIOS",
+      "retryImport": "Volver a importar",
+      "biosTitle": "Vamos a comprobar tus BIOS",
       "launchTitle": "¿Cómo lanzo mis juegos?",
       "srmInfo": "Steam ROM Manager o SRM es una herramienta que añadirá tus juegos y emuladores a tu biblioteca de Steam para que puedas lanzarlos desde el Modo Juego",
       "esdeInfo": "Hemos añadido EmulationStation DE (ES-DE) a tu biblioteca de Steam. Termina la instalación y vuelve al Modo Juego, busca ES-DE en la pestaña de juegos que no son de Steam",
@@ -573,11 +592,12 @@
       "description": "EmuDeck adapta la instalación para hardware diferente. Cada dispositivo tendrá su propia configuración, emuladores y biseles preconfigurados."
     },
     "EarlyAccessPage": {
+      "priceFor": "Por solo {{price}}",
       "title": "Ayúdanos apoyando a EmuDeck",
       "description": "¡Dona en Patreon y ayúdanos a crecer y mejorar! Como miembro de nuestra comunidad, recibirás soporte individualizado y acceso anticipado a nuestras últimas características, algunas exclusivas solo para mecenas.",
       "eaTier": {
-        "description": "Obtén acceso a las últimas características y aplicaciones antes que nadie, esto incluye soporte exclusivo y nuevas características para SteamOS, Windows, MacOS y Android en el futuro.",
-        "list": "<li>- Acceso anticipado</li><li>- Soporte general</li><li>- CloudSync (Sincroniza tus partidas guardadas en Mac, Windows o Linux)</li><li>- Comunidad privada en Discord</li>",
+        "description": "Obtén acceso a las últimas características y aplicaciones antes que nadie, esto incluye soporte exclusivo y nuevas características para SteamOS, Windows, MacOS y Android.",
+        "list": "<li>- Acceso anticipado</li><li>- Soporte personalizado uno a uno</li><li>- EmuDeck Cloud, alojamiento gratuito para sincronizar tus partidas guardadas en Mac, Windows, Linux o Android</li><li>- Comunidad privada en Discord</li>",
         "title": "Acceso anticipado"
       },
       "fanTier": {
@@ -733,6 +753,10 @@
       "description": "Selecciona tu tema predeterminado."
     },
     "FinishPage": {
+      "backToGameMode": "Volver al modo juego",
+      "backToGameModeBody": "Tu dispositivo saldrá del modo escritorio y volverá al modo juego. Asegúrate de haber guardado tu trabajo antes de continuar.",
+      "restartSteam": "Reiniciar Steam",
+      "restartSteamBody": "Steam tiene que reiniciarse para que los juegos que has añadido y EmulationStation-DE aparezcan en tu biblioteca.",
       "title": "¿Qué queda?",
       "line1": "Ahora que has colocado tus archivos en su lugar adecuado y seleccionado un frontend, puede que te estés preguntando, ¿qué queda?",
       "line2": "¡Simplemente puedes volver al Modo de Juego y disfrutar de los juegos retro!",
@@ -800,6 +824,7 @@
       "featureTitle": "Función de acceso anticipado",
       "featureDescription": "Tienes que iniciar sesión en Patreon para acceder a esta función mientras se prueba en nuestra rama de acceso anticipado.",
       "checkFeatures": "Ver funciones de acceso anticipado",
+      "joinPatreon": "Únete al Patreon de EmuDeck",
       "token": "Token"
     },
     "PegasusThemeChoicePage": {
@@ -904,6 +929,15 @@
       "tip6": " Puedes usar este enlace como una guía práctica para cómo deberían nombrarse tus BIOS.",
       "ps1": "BIOS de Playstation 1",
       "ps2": "BIOS de Playstation 2",
+      "ps3": "Firmware de Playstation 3",
+      "helpDefault": "Copia tus BIOS en Emulation/bios. <strong>No uses subcarpetas.</strong>",
+      "helpEden": "Copia el firmware en Emulation/bios/eden/firmware y las keys en Emulation/bios/eden/keys.",
+      "helpRyujinx": "Copia las keys en Emulation/bios/ryujinx/keys. El firmware se tiene que instalar desde el propio Ryujinx (Actions > Install Firmware).",
+      "helpPs3": "Descarga el último firmware de PS3 desde la web de Sony con el botón de abajo y después instálalo desde RPCS3 (File > Install Firmware).",
+      "downloadFirmware": "Descargar firmware",
+      "openEmu": "Abrir {{name}}",
+      "openBiosFolder": "Abrir carpeta BIOS",
+      "validFiles": "Archivos de BIOS aceptados:",
       "yuzu": "Firmware de Yuzu",
       "eden": "Firmware de Eden",
       "ryujinx": "Firmware de Ryujinx",
