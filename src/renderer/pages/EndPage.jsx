@@ -6,7 +6,6 @@ import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
 import Header from 'components/organisms/Header/Header';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
-import { BtnSimple } from 'getbasecore/Atoms';
 import Sonic from 'components/organisms/Sonic/Sonic';
 import End from 'components/organisms/Wrappers/End';
 
@@ -73,13 +72,13 @@ function EndPage() {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
-        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"'
+        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"',
       );
     } else if (system !== 'darwin') {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
-        '"$toolsPath/launchers/srm/steamrommanager.sh"'
+        '"$toolsPath/launchers/srm/steamrommanager.sh"',
       );
     } else {
       modalData = {
@@ -94,7 +93,7 @@ function EndPage() {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
-        '"$toolsPath/launchers/srm/steamrommanager.sh"'
+        '"$toolsPath/launchers/srm/steamrommanager.sh"',
       );
     }
     let timer;
@@ -150,6 +149,14 @@ function EndPage() {
 
   // Running the installer
   useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      setTimeout(
+        () => setStatePage({ ...statePage, disabledNext: false }),
+        1000,
+      );
+      return;
+    }
+
     const json = JSON.stringify(state);
 
     localStorage.setItem('settings_emudeck', json);
@@ -183,8 +190,7 @@ function EndPage() {
   }
 
   return (
-    <Wrapper css="wrapper__full" aside={false}>
-      {disabledNext === true && <Header title={t('EndPage.title')} />}
+    <Wrapper css="wrapper__fullscreen" aside={false}>
       {disabledNext === false && step === undefined && system !== 'win32' && (
         <Header title={t('EndPage.titleFinish')} />
       )}
@@ -205,31 +211,8 @@ function EndPage() {
         message={message}
         percentage={percentage}
         disabledNext={disabledNext}
+        onNext={() => navigate(nextPage)}
       />
-      <footer className="footer">
-        <BtnSimple
-          css="btn-simple--1"
-          type="button"
-          aria={t('aria.goNext')}
-          disabled={disabledNext && 'true'}
-          onClick={() => navigate(nextPage)}
-        >
-          {t('general.next')}
-          <svg
-            className="rightarrow"
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill="currentColor"
-              d="M16.4091 8.48003L21.5024 13.5734L1.98242 13.5734L1.98242 18.0178H21.5024L16.4091 23.1111L19.5558 26.2578L30.018 15.7956L19.5558 5.33337L16.4091 8.48003Z"
-            />
-          </svg>
-        </BtnSimple>
-      </footer>
     </Wrapper>
   );
 }
