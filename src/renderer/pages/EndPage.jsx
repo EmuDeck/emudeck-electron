@@ -178,6 +178,7 @@ function EndPage() {
       }
 
       ipcChannel.once('finish', () => {
+        localStorage.setItem('install_finished', 'true');
         setStatePage({ ...statePage, disabledNext: false });
       });
     });

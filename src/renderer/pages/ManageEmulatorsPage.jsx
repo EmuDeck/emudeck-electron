@@ -279,6 +279,24 @@ function ManageEmulatorsPage() {
       delete stateCurrentConfigs.rmg;
     }
 
+    // Eden can't be installed from here, so we mark it as selected if we find it installed
+    ipcChannel.sendMessage('emudeck', ['Eden_IsInstalled|||Eden_IsInstalled']);
+    ipcChannel.once('Eden_IsInstalled', (message) => {
+      if (message.stdout.includes('true')) {
+        setState((prev) => {
+          const newState = {
+            ...prev,
+            installEmus: {
+              ...prev.installEmus,
+              eden: { ...prev.installEmus.eden, status: true },
+            },
+          };
+          localStorage.setItem('settings_emudeck', JSON.stringify(newState));
+          return newState;
+        });
+      }
+    });
+
     // We check if the user has pending updates
     ipcChannel.sendMessage('check-versions');
     ipcChannel.once('check-versions', (repoVersions) => {

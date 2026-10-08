@@ -10,8 +10,12 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import Header from 'components/organisms/Header/Header';
 import { BtnSimple, Img, Iframe } from 'getbasecore/Atoms';
 import CopyGamesAuto from 'components/organisms/Wrappers/CopyGamesAuto';
+import RomsCheatSheet from 'components/molecules/RomsCheatSheet/RomsCheatSheet';
+import CheckBios from 'components/organisms/Wrappers/CheckBios';
 import SelectorMenu from 'components/molecules/SelectorMenu/SelectorMenu';
-import ImportExport from 'components/organisms/Wrappers/ImportExport';
+import ImportExport, {
+  useImportExport,
+} from 'components/organisms/Wrappers/ImportExport';
 import { Alert } from 'getbasecore/Molecules';
 import { imgSTEAM } from 'components/utils/images/images';
 import { iconSuccess, iconDanger } from 'components/utils/images/icons';
@@ -21,7 +25,7 @@ function CopyGamesPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
-  const { storagePath, second, system, installFrontends } = state;
+  const { storagePath, second, system, installFrontends, device } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
@@ -30,9 +34,28 @@ function CopyGamesPage() {
     status: undefined,
     storageUSB: undefined,
     storageUSBPath: undefined,
+    usbReady: undefined,
     modal: undefined,
     mode: undefined,
     frontend: undefined,
+  });
+  const {
+    modal: importModal,
+    pickDrive,
+    closeModal: closeImportModal,
+  } = useImportExport({
+    selection: {
+      roms: true,
+      bios: true,
+      storage: false,
+      saves: false,
+      esdeArtwork: false,
+    },
+    onFinish: (json) => {
+      if ((json.key || '').startsWith('importExport.importFinished')) {
+        setStatePage((prev) => ({ ...prev, statusCopyGames: true }));
+      }
+    },
   });
   const {
     statusCopyGames,
@@ -40,78 +63,11 @@ function CopyGamesPage() {
     status,
     storageUSBPath,
     storageUSB,
+    usbReady,
     modal,
     mode,
     frontend,
   } = statePage;
-  const [stateBios, setStateBios] = useState({
-    PlayStation1: undefined,
-    PlayStation2: undefined,
-    SegaCD: undefined,
-    Saturn: undefined,
-    NintendoDS: undefined,
-    Switch: undefined,
-    Dreamcast: undefined,
-  });
-
-  const updateBiosState = (prevState, key) => {
-    return { ...prevState, key };
-  };
-
-  const checkBios = (bios) => {
-    let biosToCheck;
-    switch (bios) {
-      case 'PlayStation1':
-        biosToCheck = 'checkPS1BIOS';
-        break;
-      case 'PlayStation2':
-        biosToCheck = 'checkPS2BIOS';
-        break;
-      case 'Switch':
-        biosToCheck = 'checkYuzuBios';
-        break;
-      case 'SegaCD':
-        biosToCheck = 'checkSegaCDBios';
-        break;
-      case 'Saturn':
-        biosToCheck = 'checkSaturnBios';
-        break;
-      case 'Dreamcast':
-        biosToCheck = 'checkDreamcastBios';
-        break;
-      case 'NintendoDS':
-        biosToCheck = 'checkDSBios';
-        break;
-      default:
-        break;
-    }
-
-    ipcChannel.sendMessage('emudeck', [`checkBios|||${biosToCheck}`]);
-
-    ipcChannel.once('checkBios', (message) => {
-      const { stdout } = message;
-      let status;
-      stdout.includes('false') ? (status = false) : (status = true);
-      updateBiosState((prevState) => ({ ...prevState, [bios]: status }));
-
-      setStateBios((prevState) =>
-        updateBiosState({ ...prevState, [bios]: status })
-      );
-    });
-  };
-
-  useEffect(() => {
-    if (statusCopyGames === true) {
-      checkBios('PlayStation1');
-      checkBios('PlayStation2');
-      checkBios('Switch');
-      checkBios('SegaCD');
-      checkBios('Saturn');
-      checkBios('Dreamcast');
-      checkBios('NintendoDS');
-    }
-  }, [statusCopyGames]);
-
   const storageSet = (storageName) => {
     // We prevent the function to continue if the custom location testing is still in progress
     if (status === 'testing') {
@@ -186,69 +142,83 @@ function CopyGamesPage() {
     });
   };
 
-  const startCreateStructureOnUSB = () => {
-    setStatePage({
-      ...statePage,
-      statusCreateStructure: 'waiting',
-    });
+  // Copies the quickstart folders into the selected drive and reports the result
+  const createUSB = (drive) => {
+    setStatePage((prev) => ({
+      ...prev,
+      modal: {
+        active: true,
+        header: (
+          <span className="h4">{t('CopyGamesPage.usb.creatingFolders')}</span>
+        ),
+        body: <p>{drive}</p>,
+        footer: <ProgressBar css="progress--success" infinite max="100" />,
+        css: 'emumodal--xs',
+      },
+    }));
     ipcChannel.sendMessage('emudeck', [
-      `CreateStructureUSB|||CreateStructureUSB '${storageUSBPath}'`,
+      `CreateStructureUSB|||CreateStructureUSB '${drive}'`,
     ]);
 
     ipcChannel.once('CreateStructureUSB', (message) => {
-      const stdout = message.stdout.replace('\n', '');
-      console.log({ stdout });
-      let status;
-      stdout.includes('true') ? (status = true) : (status = false);
-      let modalData;
-      if (stdout.includes('true')) {
-        status = true;
+      let modalData = {
+        active: true,
+        header: <span className="h4">{t('general.error')}</span>,
+        body: <p>{t('CopyGamesPage.foldersError')}</p>,
+        css: 'emumodal--xs',
+      };
+      if (message.stdout.includes('true')) {
         modalData = {
           active: true,
-          header: (
-            <span className="h4">{t('CopyGamesPage.foldersCreated')}</span>
-          ),
+          header: <span className="h4">{t('CopyGamesPage.usb.created')}</span>,
           body: (
             <>
-              <p>{t('CopyGamesPage.foldersCreatedBody')}</p>
               <ul className="list">
-                <li>{storageUSBPath}/EmuDeck/roms</li>
-                <li>{storageUSBPath}/EmuDeck/bios</li>
+                <li>{drive}/EmuDeckBackup/roms</li>
+                <li>{drive}/EmuDeckBackup/bios</li>
               </ul>
-              <span className="h4">{t('importExport.items.roms')}</span>
-              <p>{t('CopyGamesPage.romsHelp', { path: storageUSBPath })}</p>
-              <span className="h4">{t('importExport.items.bios')}</span>
-              <p>{t('CopyGamesPage.biosHelp')}</p>
+              <p>{t('CopyGamesPage.usb.comeBack')}</p>
+              <p>{t('CopyGamesPage.usb.finishHint')}</p>
             </>
           ),
-          css: 'emumodal--xl',
+          footer: (
+            <BtnSimple
+              css="btn-simple--1"
+              type="button"
+              aria={t('CopyGamesPage.usb.readyImport')}
+              onClick={() =>
+                setStatePage((prev) => ({
+                  ...prev,
+                  usbReady: undefined,
+                  modal: { active: false },
+                }))
+              }
+            >
+              {t('CopyGamesPage.usb.readyImport')}
+            </BtnSimple>
+          ),
+          css: 'emumodal--sm',
         };
-        setStatePage({
-          ...statePage,
-          modal: modalData,
-          statusCreateStructure: status,
-        });
-      } else if (stdout.includes('false')) {
-        status = false;
-        modalData = {
-          active: true,
-          header: <span className="h4">{t('general.error')}</span>,
-          body: <p>{t('CopyGamesPage.foldersError')}</p>,
-          css: 'emumodal--xs',
-        };
-        setStatePage({
-          ...statePage,
-          modal: modalData,
-          statusCreateStructure: status,
-        });
-      } else {
-        // Already created folders? let's copy
-        startCopyGames();
       }
+      setStatePage((prev) => ({ ...prev, modal: modalData }));
     });
   };
 
   const openSRM = () => {
+    // On Steam Frame SRM has to be opened from the SteamOS + menu
+    if (device === 'Steam Frame') {
+      setStatePage({
+        ...statePage,
+        modal: {
+          active: true,
+          header: <span className="h4">{t('aside.srm.titleFrame')}</span>,
+          body: <p>{t('aside.srm.bodyFrame')}</p>,
+          css: 'emumodal--xs',
+        },
+      });
+      return;
+    }
+
     let modalData = {
       active: true,
       header: (
@@ -263,13 +233,13 @@ function CopyGamesPage() {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
-        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"'
+        'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"',
       );
     } else if (system !== 'darwin') {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
-        '"$toolsPath/launchers/srm/steamrommanager.sh"'
+        '"$toolsPath/launchers/srm/steamrommanager.sh"',
       );
     } else {
       modalData = {
@@ -289,7 +259,7 @@ function CopyGamesPage() {
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
-        '"$toolsPath/launchers/srm/steamrommanager.sh"'
+        '"$toolsPath/launchers/srm/steamrommanager.sh"',
       );
     }
     let timer;
@@ -314,8 +284,58 @@ function CopyGamesPage() {
   const skipAddingGames = () => {
     setStatePage({
       ...statePage,
-      statusCopyGames: 'final',
+      statusCopyGames: true,
     });
+  };
+
+  // Goes back to the import mode selector to add missing files
+  const retryImport = () => {
+    setStatePage((prev) => ({
+      ...prev,
+      mode: undefined,
+      usbReady: undefined,
+      statusCopyGames: null,
+    }));
+  };
+
+  // Opens the import drive picker with options to refresh or continue without a backup
+  const openImportPicker = () => {
+    pickDrive('import', {
+      footer: (refresh) => (
+        <>
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria={t('CopyGamesPage.usb.noBackup')}
+            onClick={() => {
+              closeImportModal();
+              setStatePage((prev) => ({ ...prev, usbReady: false }));
+            }}
+          >
+            {t('CopyGamesPage.usb.noBackup')}
+          </BtnSimple>
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            aria={t('CopyGamesPage.usb.refresh')}
+            onClick={() => refresh()}
+          >
+            {t('CopyGamesPage.usb.refresh')}
+          </BtnSimple>
+        </>
+      ),
+    });
+  };
+
+  useEffect(() => {
+    if (mode === 'auto' && usbReady === undefined && statusCopyGames === null) {
+      openImportPicker();
+    }
+  }, [mode, usbReady]);
+
+  // Goes back to the manual / automatic selector
+  const backAuto = () => {
+    setStatePage((prev) => ({ ...prev, mode: undefined, usbReady: undefined }));
   };
 
   const finishAddingGames = () => {
@@ -339,64 +359,100 @@ function CopyGamesPage() {
     });
   };
 
+  // Opens the Emulation folder and asks the user to confirm when the copy is done
   const openEmulationFolder = () => {
     ipcChannel.sendMessage('open-folder', `${storagePath}/Emulation`);
 
     const modalData = {
       active: true,
-      header: <span className="h4">{t('CopyGamesPage.whereToCopy')}</span>,
-      body: (
+      header: <span className="h4">{t('CopyGamesPage.manualDone')}</span>,
+      footer: (
         <>
-          <p
-            dangerouslySetInnerHTML={{
-              __html: t('CopyGamesPage.whereToCopyBody'),
-            }}
-          />
-          <p>{t('CopyGamesPage.whereToCopyReady')}</p>
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            aria={t('general.cancel')}
+            onClick={() =>
+              setStatePage((prev) => ({
+                ...prev,
+                modal: { active: false },
+                mode: undefined,
+              }))
+            }
+          >
+            {t('general.cancel')}
+          </BtnSimple>
+          <BtnSimple
+            css="btn-simple--1"
+            type="button"
+            aria={t('general.next')}
+            onClick={() =>
+              setStatePage((prev) => ({
+                ...prev,
+                modal: { active: false },
+                statusCopyGames: true,
+              }))
+            }
+          >
+            {t('general.next')}
+          </BtnSimple>
         </>
       ),
-      css: 'emumodal--sm',
+      css: 'emumodal--xs',
     };
-    setStatePage({
-      ...statePage,
-      modal: modalData,
-      statusCopyGames: 'manual',
-    });
+    setStatePage({ ...statePage, modal: modalData });
   };
 
   return (
     <Wrapper aside={second === true}>
       {mode === 'auto' && statusCopyGames === null && (
         <>
-          <Header title={t('CopyGamesPage.usbTitle')} />
+          <Header />
 
-          <CopyGamesAuto
-            onClick={storageSet}
-            onClickStart={startCreateStructureOnUSB}
-            onClickCopyGames={startCopyGames}
-            storagUSB={storageUSB}
-            storageUSBPath={storageUSBPath}
-            statusCopyGames={system === 'win32' ? true : statusCopyGames}
-            statusCreateStructure={statusCreateStructure}
-            installFrontends={installFrontends}
-          />
+          {usbReady === false && (
+            <CopyGamesAuto
+              onClickCreate={() =>
+                pickDrive('export', {
+                  title: t('CopyGamesPage.usb.select'),
+                  onSelect: createUSB,
+                })
+              }
+            />
+          )}
         </>
       )}
 
       {mode === 'manual' && statusCopyGames === null && (
         <>
-          <Header title={t('CopyGamesPage.manualTitle')} />
-          <p className="lead">{t('CopyGamesPage.manualDescription')}</p>
-          <div>
-            <BtnSimple
-              css="btn-simple--1"
-              type="button"
-              aria={t('aria.goNext')}
-              onClick={() => openEmulationFolder()}
-            >
-              {t('CopyGamesPage.openEmulationFolder')}
-            </BtnSimple>
-          </div>
+          <Header />
+          <Main>
+            <div className="container--grid">
+              <div
+                data-col-sm="6"
+                style={{ position: 'sticky', top: 0, alignSelf: 'start' }}
+              >
+                <span className="h4">{t('CopyGamesPage.whereToCopy')}</span>
+                <p
+                  className="lead"
+                  dangerouslySetInnerHTML={{
+                    __html: t('CopyGamesPage.whereToCopyBody'),
+                  }}
+                />
+                <p className="lead">{t('CopyGamesPage.whereToCopyReady')}</p>
+                <BtnSimple
+                  css="btn-simple--1"
+                  type="button"
+                  aria={t('aria.goNext')}
+                  onClick={() => openEmulationFolder()}
+                >
+                  {t('CopyGamesPage.openEmulationFolder')}
+                </BtnSimple>
+              </div>
+              <div data-col-sm="6">
+                <RomsCheatSheet />
+              </div>
+            </div>
+          </Main>
         </>
       )}
 
@@ -414,11 +470,12 @@ function CopyGamesPage() {
         </>
       )}
 
-      {mode === undefined && (
+      {mode === undefined && statusCopyGames === null && (
         <>
           <Header title={t('CopyGamesPage.chooseTitle')} />
           <p className="lead">{t('CopyGamesPage.chooseDescription')}</p>
-          {system !== 'win32' && (
+
+          <Main>
             <SelectorMenu
               imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
               options={[
@@ -436,30 +493,9 @@ function CopyGamesPage() {
                   t('CopyGamesPage.modeAutoDesc'),
                   true,
                 ],
-                [
-                  () => selectMode('backup'),
-                  mode === 'backup' ? 'is-selected' : '',
-                  t('CopyGamesPage.modeBackup'),
-                  t('CopyGamesPage.modeBackupDesc'),
-                  true,
-                ],
               ]}
             />
-          )}
-          {system === 'win32' && (
-            <SelectorMenu
-              imgs={[[imgSTEAM, mode === undefined ? '' : 'is-hidden']]}
-              options={[
-                [
-                  () => selectMode('manual'),
-                  mode === 'manual' ? 'is-selected' : '',
-                  t('CopyGamesPage.modeManual'),
-                  t('CopyGamesPage.modeManualDesc'),
-                  true,
-                ],
-              ]}
-            />
-          )}
+          </Main>
         </>
       )}
 
@@ -467,98 +503,57 @@ function CopyGamesPage() {
         <>
           <Header title={t('CopyGamesPage.biosTitle')} />
           <p className="lead">{t('CheckBiosPage.description')}</p>
-          <Main>
-            <div className="container--grid">
-              <div data-col-sm="6">
-                {Object.entries(stateBios).map((item, index) => {
-                  if (item[0] === 'key') {
-                    return;
-                  }
-                  return (
-                    <Alert
-                      key={item[0]}
-                      css={`alert--mini ${
-                        item[1] === true ? 'alert--success' : 'alert--danger'
-                      }`}
-                    >
-                      {item[1] === true && (
-                        <Img src={iconSuccess} css="icon icon--xs" alt="OK" />
-                      )}
-                      {item[1] === false && (
-                        <Img src={iconDanger} css="icon icon--xs" alt="OK" />
-                      )}
-                      {item[0]} BIOS
-                    </Alert>
-                  );
-                })}
-              </div>
-              <div data-col-sm="6">
-                <Alert css="alert--info">
-                  <ul className="list">
-                    <li>{t('CheckBios.tip1')}</li>
-                    <li>{t('CheckBios.tip2')}</li>
-                    <li>{t('CheckBios.tip3')}</li>
-                    <li>{t('CheckBios.tip4')}</li>
-                  </ul>
-                </Alert>
-              </div>
-            </div>
-          </Main>
+          <CheckBios />
         </>
       )}
 
       {statusCopyGames === 'final' && (
         <>
-          <Header title={t('CopyGamesPage.launchTitle')} />
-
-          {system != 'win32' && (
-            <Main>
-              {installFrontends.steam.status && (
-                <>
+          <Header />
+          <Main>
+            <div className="container--grid">
+              <div data-col-md="3">
+                <h1 className="h2">{t('CopyGamesPage.launchTitle')}</h1>
+                {installFrontends.steam.status && (
                   <p className="lead">{t('CopyGamesPage.srmInfo')}</p>
-
+                )}
+                {installFrontends.esde.status && (
+                  <p className="lead">{t('CopyGamesPage.esdeInfo')}</p>
+                )}
+              </div>
+              <div data-col-md="9">
+                {installFrontends.steam.status && (
                   <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/BsqWFHPp5UU-SRM.mp4" />
-                </>
-              )}
-              {installFrontends.esde.status && (
-                <>
-                  <p className="lead">{t('CopyGamesPage.esdeInfo')}</p>
+                )}
+                {installFrontends.esde.status && (
                   <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/twNE8i3aI0g-ESDE.mp4" />
-                </>
-              )}
-            </Main>
-          )}
-
-          {system == 'win32' && mode == 'easy' && (
-            <Main>
-              {installFrontends.esde.status && (
-                <>
-                  <p className="lead">{t('CopyGamesPage.esdeInfo')}</p>
-                  <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/twNE8i3aI0g-ESDE.mp4" />
-                </>
-              )}
-            </Main>
-          )}
-          {system == 'win32' && mode != 'easy' && (
-            <Main>
-              {installFrontends.steam.status && (
-                <>
-                  <p className="lead">{t('CopyGamesPage.srmInfo')}</p>
-
-                  <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/BsqWFHPp5UU-SRM.mp4" />
-                </>
-              )}
-              {installFrontends.esde.status && (
-                <>
-                  <p className="lead">{t('CopyGamesPage.esdeInfo')}</p>
-                  <Video src="https://f005.backblazeb2.com/file/emudeck-assets/videos/twNE8i3aI0g-ESDE.mp4" />
-                </>
-              )}
-            </Main>
-          )}
+                )}
+              </div>
+            </div>
+          </Main>
         </>
       )}
       <footer className="footer">
+        {(mode === 'auto' || mode === 'manual') && statusCopyGames === null && (
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            aria={t('aria.goBack')}
+            onClick={() => backAuto()}
+          >
+            {t('general.back')}
+          </BtnSimple>
+        )}
+        {mode === 'auto' && statusCopyGames === null && usbReady === false && (
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            aria={t('aria.goNext')}
+            onClick={() => finishAddingGames()}
+          >
+            {t('general.skip')}
+          </BtnSimple>
+        )}
         {statusCopyGames === true ||
           (statusCopyGames === 'final' && second && (
             <BtnSimple
@@ -570,6 +565,19 @@ function CopyGamesPage() {
               {t('general.skip')}
             </BtnSimple>
           ))}
+        {statusCopyGames === 'final' &&
+          !second &&
+          installFrontends.steam.status &&
+          !installFrontends.esde.status && (
+            <BtnSimple
+              css="btn-simple--2"
+              type="button"
+              aria={t('aria.goNext')}
+              onClick={() => navigate('/hotkeys')}
+            >
+              {t('general.skip')}
+            </BtnSimple>
+          )}
         {statusCopyGames === 'final' && installFrontends.steam.status && (
           <BtnSimple
             css="btn-simple--1"
@@ -588,6 +596,16 @@ function CopyGamesPage() {
             onClick={() => navigate('/hotkeys')}
           >
             {t('general.next')}
+          </BtnSimple>
+        )}
+        {statusCopyGames === true && (
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            aria={t('CopyGamesPage.retryImport')}
+            onClick={() => retryImport()}
+          >
+            {t('CopyGamesPage.retryImport')}
           </BtnSimple>
         )}
         {statusCopyGames === true && (
@@ -620,6 +638,16 @@ function CopyGamesPage() {
             {t('general.next')}
           </BtnSimple>
         )}
+        {mode === undefined && statusCopyGames === null && !second && (
+          <BtnSimple
+            css="btn-simple--2"
+            type="button"
+            aria={t('aria.goNext')}
+            onClick={() => finishAddingGames()}
+          >
+            {t('general.skip')}
+          </BtnSimple>
+        )}
         {second && statusCopyGames === null && (
           <BtnSimple
             css="btn-simple--2"
@@ -632,6 +660,7 @@ function CopyGamesPage() {
         )}
       </footer>
       <EmuModal modal={modal} />
+      <EmuModal modal={importModal} />
     </Wrapper>
   );
 }

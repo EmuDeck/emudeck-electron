@@ -87,16 +87,38 @@ function CloudSyncPageConfig() {
         modalData = {
           active: true,
           header: <span className="h4">{t('general.warning')}</span>,
-          body: <p>{t('CloudSyncConfigPage.gdriveWarning')}</p>,
+          body: (
+            <>
+              <p>{t('CloudSyncConfigPage.gdriveWarning')}</p>
+              {system !== 'win32' && (
+                <p>
+                  {t('CloudSyncConfigPage.chromeDepBody', {
+                    type: cloudSyncType,
+                  })}
+                </p>
+              )}
+            </>
+          ),
           css: 'emumodal--sm',
         };
-      }
-
-      if (item === 'Emudeck-SMB' || item === 'Emudeck-SFTP') {
+      } else if (item === 'Emudeck-SMB' || item === 'Emudeck-SFTP') {
         modalData = {
           active: true,
           header: <span className="h4">{t('general.warning')}</span>,
           body: <p>{t('CloudSyncConfigPage.smbWarning')}</p>,
+          css: 'emumodal--sm',
+        };
+      } else if (system !== 'win32' && item !== 'Emudeck-NextCloud') {
+        modalData = {
+          active: true,
+          header: (
+            <span className="h4">{t('CloudSyncConfigPage.chromeDep')}</span>
+          ),
+          body: (
+            <p>
+              {t('CloudSyncConfigPage.chromeDepBody', { type: cloudSyncType })}
+            </p>
+          ),
           css: 'emumodal--sm',
         };
       }
@@ -390,24 +412,6 @@ function CloudSyncPageConfig() {
       cloudSync: null,
       cs_user: null,
     });
-    if (system !== 'win32') {
-      const modalData = {
-        active: true,
-        header: (
-          <span className="h4">{t('CloudSyncConfigPage.chromeDep')}</span>
-        ),
-        body: (
-          <p>
-            {t('CloudSyncConfigPage.chromeDepBody', { type: cloudSyncType })}
-          </p>
-        ),
-        css: 'emumodal--sm',
-      };
-      setStatePage({
-        ...statePage,
-        modal: modalData,
-      });
-    }
   }, []);
 
   const nextButtonStatus = () => {

@@ -78,6 +78,7 @@ function EmulatorsDetailPage() {
   // TODO: Use only one state for bioses, doing it this way is quick but madness
   const [ps1Bios, setps1Bios] = useState(null);
   const [ps2Bios, setps2Bios] = useState(null);
+  const [ps3Firmware, setPs3Firmware] = useState(null);
   const [switchBios, setSwitchBios] = useState(null);
   const [citronBios, setCitronBios] = useState(null);
   const [ryujinxBios, setRyujinxBios] = useState(null);
@@ -251,6 +252,9 @@ function EmulatorsDetailPage() {
           break;
         case 'checkPS2BIOS':
           setps2Bios(biosStatus);
+          break;
+        case 'checkPS3Firmware':
+          setPs3Firmware(biosStatus);
           break;
         case 'checkEdenBios':
           setSwitchBios(biosStatus);
@@ -1205,6 +1209,9 @@ function EmulatorsDetailPage() {
       case 'ryujinx':
         checkBios('checkRyujinxBios');
         break;
+      case 'rpcs3':
+        checkBios('checkPS3Firmware');
+        break;
 
       default:
     }
@@ -1339,6 +1346,7 @@ function EmulatorsDetailPage() {
           updateAvailable={updates[emulator] !== undefined}
           ps1={ps1Bios}
           ps2={ps2Bios}
+          ps3={ps3Firmware}
           eswitch={edenBios}
           nswitch={switchBios}
           rswitch={ryujinxBios}

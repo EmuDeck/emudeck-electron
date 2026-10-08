@@ -222,7 +222,7 @@
 
     "description": "RPCS3 is a Sony PlayStation 3 emulator, originally developed by DH, Hykem, and AlexAltea. That's right, the Steam Deck can emulate PS3 too.",
     "special_configuration": "Firmware: Install firmware through the RPCS3 GUI. Follow RPSC3's Quickstart Guide: <a className='link' target='_blank' href='https://rpcs3.net/quickstart'>here</a>. You will need to tweak settings for most games. Check RPCS3's Wiki for specific setting recommendations.",
-    "bios": [],
+    "bios": ["ps3"],
     "systems": "Sony Playstation 3",
     "hotkeys": {
       "0": ["Action", "Keys"],

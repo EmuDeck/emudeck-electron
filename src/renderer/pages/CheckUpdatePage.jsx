@@ -241,6 +241,9 @@ function CheckUpdatePage() {
           setState({
             ...state,
             ...settingsStorage,
+            second:
+              settingsStorage.second === true ||
+              localStorage.getItem('install_finished') === 'true',
             installEmus: { ...installEmus, ...installEmusStored },
             overwriteConfigEmus: {
               ...overwriteConfigEmus,

@@ -21,20 +21,18 @@ function Hotkeys() {
 
   return (
     <Wrapper aside={second === true}>
-      <Header title={t('HotkeysPage.title')} />
-      <p className="lead">{t('HotkeysPage.description')}</p>
+      <Header />
       <Main>
         <div className="container--grid">
-          <div data-col-sm="9">
-            {system === 'win32' && (
-              <img
-                src={basicHotkeysWin}
-                alt={t('EmulatorsDetailPage.hotkeys')}
-              />
-            )}
-            {system !== 'win32' && (
-              <img src={basicHotkeys} alt={t('EmulatorsDetailPage.hotkeys')} />
-            )}
+          <div data-col-md="3">
+            <h1 className="h2">{t('HotkeysPage.title')}</h1>
+            <p className="lead">{t('HotkeysPage.description')}</p>
+          </div>
+          <div data-col-md="9">
+            <img
+              src={system === 'win32' ? basicHotkeysWin : basicHotkeys}
+              alt={t('EmulatorsDetailPage.hotkeys')}
+            />
           </div>
         </div>
       </Main>
