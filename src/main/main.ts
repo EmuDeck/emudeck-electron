@@ -1750,8 +1750,14 @@ if (!gotTheLock) {
     .whenReady()
     .then(() => {
       protocol.handle('emudeck-media', (request) => {
-        const { pathname } = new URL(request.url);
-        const filePath = decodeURIComponent(pathname.replace(/^\//, ''));
+        const { host, pathname } = new URL(request.url);
+        const assetsPath = app.isPackaged
+          ? path.join(process.resourcesPath, 'assets')
+          : path.join(app.getAppPath(), '../../assets');
+        const filePath =
+          host === 'assets'
+            ? path.join(assetsPath, decodeURIComponent(pathname))
+            : decodeURIComponent(pathname.replace(/^\//, ''));
         return net.fetch(pathToFileURL(filePath).toString());
       });
       createWindow();
