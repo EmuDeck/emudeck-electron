@@ -18,6 +18,7 @@ import {
   nativeTheme,
   protocol,
   net,
+  shell,
 } from 'electron';
 import { pathToFileURL } from 'url';
 import { autoUpdater } from 'electron-updater';
@@ -1681,13 +1682,11 @@ app.on('window-all-closed', () => {
 // app.on('session-created', (session: any) => {
 //   console.log({ session });
 // });
-ipcMain.on('open-folder', async (event, path) => {
-  const bashCommand = `xdg-open ${path}`;
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
-    // event.reply('console', { backChannel });
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply('open-folder', stdout);
-  });
+ipcMain.on('open-folder', async (event, folderPath) => {
+  const fullPath = path.normalize(folderPath.replace('$HOME', os.homedir()));
+  const error = await shell.openPath(fullPath);
+  logCommand(`open-folder ${fullPath}`, error);
+  event.reply('open-folder', error);
 });
 
 ipcMain.on('run-app', async (event, appPath) => {
