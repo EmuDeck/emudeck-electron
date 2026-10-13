@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 //
 import { BtnSimple, FormInputSimple } from 'getbasecore/Atoms';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
+import EarlyAccessTiers from 'components/organisms/EarlyAccessTiers/EarlyAccessTiers';
 
 import Main from 'components/organisms/Main/Main';
 import Header from 'components/organisms/Header/Header';
@@ -301,69 +302,76 @@ function PatreonLoginPage() {
     <Wrapper>
       <Header title={t('PatroenLoginPage.title')} />
       <Main>
-        {errorMessage === undefined && (
-          <p className="lead">{t('PatroenLoginPage.description')}</p>
-        )}
-        {!!errorMessage && <p className="lead">{errorMessage}</p>}
+        <div className="container--grid">
+          <div data-col-sm="8">
+            {errorMessage === undefined && (
+              <p className="lead">{t('PatroenLoginPage.description')}</p>
+            )}
+            {!!errorMessage && <p className="lead">{errorMessage}</p>}
 
-        {!patreonClicked && (
-          <>
-            <BtnSimple
-              css="btn-simple--3"
-              type="link"
-              target="_blank"
-              href="https://token.emudeck.com/"
-              aria={t('PatroenLoginPage.login')}
-              onClick={() => patreonShowInput()}
-              disabled={accessAllowed}
-            >
-              {accessAllowed || t('PatroenLoginPage.login')}{' '}
-              {accessAllowed && `- ${t('general.loading')}`}
-            </BtnSimple>
-            <BtnSimple
-              css="btn-simple--3"
-              type="link"
-              target="_blank"
-              href="https://patreon.com/"
-              aria={t('PatroenLoginPage.change')}
-            >
-              {t('PatroenLoginPage.change')}
-            </BtnSimple>
-            <BtnSimple
-              css="btn-simple--2"
-              type="button"
-              aria={t('PatroenLoginPage.login')}
-              onClick={() => patreonShowInput(false)}
-              disabled={accessAllowed}
-            >
-              {accessAllowed || t('PatroenLoginPage.license')}{' '}
-              {accessAllowed && `- ${t('general.loading')}`}
-            </BtnSimple>
-          </>
-        )}
-        {patreonClicked && (
-          <div className="form">
-            <FormInputSimple
-              label={t('PatroenLoginPage.token')}
-              type="token"
-              name="token"
-              id="token"
-              value={patreonTokenTemp}
-              onChange={patreonSetToken}
-            />
-            {patreonTokenTemp !== null && (
-              <BtnSimple
-                css="btn-simple--3"
-                type="button"
-                aria={t('general.next')}
-                onClick={() => patreonCheckToken()}
-              >
-                {status === null && t('PatroenLoginPage.check')}
-                {status === 'checking' && t('PatroenLoginPage.checking')}
-              </BtnSimple>
+            {!patreonClicked && (
+              <>
+                <BtnSimple
+                  css="btn-simple--3"
+                  type="link"
+                  target="_blank"
+                  href="https://token.emudeck.com/"
+                  aria={t('PatroenLoginPage.login')}
+                  onClick={() => patreonShowInput()}
+                  disabled={accessAllowed}
+                >
+                  {accessAllowed || t('PatroenLoginPage.login')}{' '}
+                  {accessAllowed && `- ${t('general.loading')}`}
+                </BtnSimple>
+                <BtnSimple
+                  css="btn-simple--3"
+                  type="link"
+                  target="_blank"
+                  href="https://patreon.com/"
+                  aria={t('PatroenLoginPage.change')}
+                >
+                  {t('PatroenLoginPage.change')}
+                </BtnSimple>
+                <BtnSimple
+                  css="btn-simple--2"
+                  type="button"
+                  aria={t('PatroenLoginPage.login')}
+                  onClick={() => patreonShowInput(false)}
+                  disabled={accessAllowed}
+                >
+                  {accessAllowed || t('PatroenLoginPage.license')}{' '}
+                  {accessAllowed && `- ${t('general.loading')}`}
+                </BtnSimple>
+              </>
+            )}
+            {patreonClicked && (
+              <div className="form">
+                <FormInputSimple
+                  label={t('PatroenLoginPage.token')}
+                  type="token"
+                  name="token"
+                  id="token"
+                  value={patreonTokenTemp}
+                  onChange={patreonSetToken}
+                />
+                {patreonTokenTemp !== null && (
+                  <BtnSimple
+                    css="btn-simple--3"
+                    type="button"
+                    aria={t('general.next')}
+                    onClick={() => patreonCheckToken()}
+                  >
+                    {status === null && t('PatroenLoginPage.check')}
+                    {status === 'checking' && t('PatroenLoginPage.checking')}
+                  </BtnSimple>
+                )}
+              </div>
             )}
           </div>
-        )}
+          <div data-col-sm="4">
+            {!patreonClicked && <EarlyAccessTiers />}
+          </div>
+        </div>
       </Main>
     </Wrapper>
   );
