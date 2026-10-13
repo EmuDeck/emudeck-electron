@@ -693,7 +693,14 @@
       "migrating": "Veuillez patienter, migration de {{code}}",
       "migratedBody": "{{code}} a été migré, amusez-vous bien !",
       "migrateFailedBody": "Un problème est survenu lors de la migration de {{code}}",
-      "optionalParsers": "Veuillez patienter, installation des parsers supplémentaires :"
+      "optionalParsers": "Veuillez patienter, installation des parsers supplémentaires :",
+      "addingToSteam": "Ajout de {{code}} à Steam",
+      "addingToSteamWait": "Veuillez patienter pendant l'ajout de {{code}} à Steam",
+      "addedToSteam": "{{code}} ajouté à Steam !",
+      "addedToSteamBody": "{{code}} a été ajouté à votre bibliothèque Steam.",
+      "addedToSteamFrameBody": "{{code}} a été ajouté à votre bibliothèque Steam. Pour le voir dans Steam, vous devez redémarrer SteamOS.",
+      "restartSteamOS": "Redémarrer SteamOS",
+      "addToSteamFailedBody": "Un problème est survenu lors de l'ajout de {{code}} à Steam"
     },
     "EmulatorSelectorPage": {
       "title": "Émulateurs et outils pour {{device}}",

@@ -693,7 +693,14 @@
       "migrating": "Please wait, migrating {{code}}",
       "migratedBody": "{{code}} has been migrated, have fun!",
       "migrateFailedBody": "There was an issue trying to migrate {{code}}",
-      "optionalParsers": "Please wait, installing additional parsers:"
+      "optionalParsers": "Please wait, installing additional parsers:",
+      "addingToSteam": "Adding {{code}} to Steam",
+      "addingToSteamWait": "Please wait while we add {{code}} to Steam",
+      "addedToSteam": "{{code}} added to Steam!",
+      "addedToSteamBody": "{{code}} has been added to your Steam library.",
+      "addedToSteamFrameBody": "{{code}} has been added to your Steam library. To see it in Steam you need to restart SteamOS.",
+      "restartSteamOS": "Restart SteamOS",
+      "addToSteamFailedBody": "There was an issue trying to add {{code}} to Steam"
     },
     "EmulatorSelectorPage": {
       "title": "Emulators and tools for {{device}}",

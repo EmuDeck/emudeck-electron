@@ -48,6 +48,7 @@ function EmulatorsDetailPage() {
     installEmus,
     installFrontends,
     mode,
+    device,
     system,
     yuzuEAtoken,
     emulatorAlternative,
@@ -740,10 +741,10 @@ function EmulatorsDetailPage() {
       active: true,
       header: (
         <span className="h4">
-          {t('EmulatorsDetailPage.installing', { code })}
+          {t('EmulatorsDetailPage.addingToSteam', { code })}
         </span>
       ),
-      body: <p>{t('EmulatorsDetailPage.installingWait', { code })}</p>,
+      body: <p>{t('EmulatorsDetailPage.addingToSteamWait', { code })}</p>,
       footer: <ProgressBar css="progress--success" infinite max="100" />,
       css: 'emumodal--xs',
     };
@@ -774,11 +775,40 @@ function EmulatorsDetailPage() {
             active: true,
             header: (
               <span className="h4">
-                {t('EmulatorsDetailPage.installed', { code })}
+                {t('EmulatorsDetailPage.addedToSteam', { code })}
               </span>
             ),
             body: (
-              <p>{t('EmulatorsDetailPage.installSuccessBody', { code })}</p>
+              <p>
+                {device === 'Steam Frame'
+                  ? t('EmulatorsDetailPage.addedToSteamFrameBody', { code })
+                  : t('EmulatorsDetailPage.addedToSteamBody', { code })}
+              </p>
+            ),
+            footer: device === 'Steam Frame' && (
+              <>
+                <BtnSimple
+                  css="btn-simple--2"
+                  type="button"
+                  aria={t('general.close')}
+                  onClick={() => closeModal()}
+                >
+                  {t('general.close')}
+                </BtnSimple>
+                <BtnSimple
+                  css="btn-simple--1"
+                  type="button"
+                  aria={t('EmulatorsDetailPage.restartSteamOS')}
+                  onClick={() => {
+                    ipcChannel.sendMessage('emudeck', [
+                      'killSteam|||killSteam',
+                    ]);
+                    closeModal();
+                  }}
+                >
+                  {t('EmulatorsDetailPage.restartSteamOS')}
+                </BtnSimple>
+              </>
             ),
             css: 'emumodal--xs',
           };
@@ -788,10 +818,12 @@ function EmulatorsDetailPage() {
             modal: modalData,
           });
           // We set the emu as install = yes
+          const installGroup =
+            emulator === 'esde' ? 'installFrontends' : 'installEmus';
           setState({
             ...state,
-            installEmus: {
-              ...installEmus,
+            [installGroup]: {
+              ...state[installGroup],
               [emulator]: {
                 id: emulator,
                 name: code,
@@ -828,7 +860,9 @@ function EmulatorsDetailPage() {
                 {t('EmulatorsDetailPage.installFailed', { code })}
               </span>
             ),
-            body: <p>{t('EmulatorsDetailPage.installFailedBody', { code })}</p>,
+            body: (
+              <p>{t('EmulatorsDetailPage.addToSteamFailedBody', { code })}</p>
+            ),
             css: 'emumodal--xs',
           };
 
