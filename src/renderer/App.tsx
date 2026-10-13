@@ -76,6 +76,7 @@ import Hotkeys from 'pages/Hotkeys';
 import FinishPage from 'pages/FinishPage';
 
 import WindowControls from 'components/atoms/WindowControls/WindowControls';
+import { isEmulatorAvailable } from 'components/utils/isEmulatorAvailable';
 import { GlobalContext } from './context/globalContext';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
@@ -492,31 +493,36 @@ export default function App() {
     },
   });
 
-  // ARMSX / PCSX2 status depending on arch
+  // Disable emulators that are not avaiable ( ARM vs X86)
   useEffect(() => {
     if (!state.arch) return;
-    const emuToHide = state.arch === 'arm64' ? 'pcsx2' : 'armsx2';
-    if (emuToHide === 'pcsx2' && state.system === 'win32') {
-      return;
-    }
-    if (
-      !state.installEmus[emuToHide].status &&
-      !state.overwriteConfigEmus[emuToHide].status
-    ) {
-      return;
-    }
+    const emusToHide = (
+      Object.keys(state.installEmus) as (keyof typeof state.installEmus)[]
+    ).filter((id) => !isEmulatorAvailable(id, state.system, state.arch));
 
-    setState((prev) => ({
-      ...prev,
-      installEmus: {
-        ...prev.installEmus,
-        [emuToHide]: { ...prev.installEmus[emuToHide], status: false },
-      },
-      overwriteConfigEmus: {
-        ...prev.overwriteConfigEmus,
-        [emuToHide]: { ...prev.overwriteConfigEmus[emuToHide], status: false },
-      },
-    }));
+    emusToHide.forEach((emuToHide) => {
+      if (
+        !state.installEmus[emuToHide].status &&
+        !state.overwriteConfigEmus[emuToHide].status
+      ) {
+        return;
+      }
+
+      setState((prev) => ({
+        ...prev,
+        installEmus: {
+          ...prev.installEmus,
+          [emuToHide]: { ...prev.installEmus[emuToHide], status: false },
+        },
+        overwriteConfigEmus: {
+          ...prev.overwriteConfigEmus,
+          [emuToHide]: {
+            ...prev.overwriteConfigEmus[emuToHide],
+            status: false,
+          },
+        },
+      }));
+    });
   }, [state.arch, state.system, state.installEmus, state.overwriteConfigEmus]);
 
   return (

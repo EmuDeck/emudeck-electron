@@ -177,10 +177,8 @@ function ManageEmulatorsPage() {
         const { id } = item;
         const { version } = item;
 
-        if (system === 'win32') {
-          if (item.id === 'rmg') {
-            return;
-          }
+        if (!isEmulatorAvailable(item.id, system, arch)) {
+          return;
         }
 
         if (item.id === 'ares') {
@@ -273,12 +271,6 @@ function ManageEmulatorsPage() {
   };
 
   useEffect(() => {
-    // Clean win32 systems
-
-    if (system === 'win32') {
-      delete stateCurrentConfigs.rmg;
-    }
-
     // Eden can't be installed from here, so we mark it as selected if we find it installed
     ipcChannel.sendMessage('emudeck', ['Eden_IsInstalled|||Eden_IsInstalled']);
     ipcChannel.once('Eden_IsInstalled', (message) => {
@@ -368,12 +360,6 @@ function ManageEmulatorsPage() {
               {installEmusArray.map((item) => {
                 const img = images[item.id];
                 const updateNotif = updates[item.id];
-                if (system === 'win32') {
-                  if (item.id === 'rmg') {
-                    return;
-                  }
-                }
-
                 if (!isEmulatorAvailable(item.id, system, arch)) {
                   return;
                 }
