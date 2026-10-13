@@ -114,9 +114,7 @@
       },
       "srm": {
         "body": "We will close Steam if its running and then Steam Rom Manager will open, this could take a few seconds, please wait.",
-        "desktopControls": "Desktop controls will temporarily revert to touch/trackpad/L2/R2.",
-        "titleFrame": "Steam Frame instructions",
-        "bodyFrame": "You need to open Steam Rom Manager from the + button in the SteamOS dashboard"
+        "desktopControls": "Desktop controls will temporarily revert to touch/trackpad/L2/R2."
       },
       "reset": {
         "warningBody": "Doing a reset will overwrite any customization you could have made and restore our EmuDeck defaults"

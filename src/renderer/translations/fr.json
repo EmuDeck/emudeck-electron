@@ -114,9 +114,7 @@
       },
       "srm": {
         "body": "Nous fermerons Steam s'il est ouvert, puis Steam Rom Manager s'ouvrira ; cela peut prendre quelques secondes, veuillez patienter.",
-        "desktopControls": "Les commandes du bureau reviendront temporairement au tactile/pavé tactile/L2/R2.",
-        "titleFrame": "Instructions pour Steam Frame",
-        "bodyFrame": "Vous devez ouvrir Steam Rom Manager depuis le bouton + du tableau de bord SteamOS"
+        "desktopControls": "Les commandes du bureau reviendront temporairement au tactile/pavé tactile/L2/R2."
       },
       "reset": {
         "warningBody": "Une réinitialisation écrasera toutes les personnalisations que vous avez pu faire et restaurera les réglages par défaut d'EmuDeck"

@@ -114,9 +114,7 @@
       },
       "srm": {
         "body": "Wir schließen Steam, falls es läuft, und öffnen dann den Steam Rom Manager. Das kann ein paar Sekunden dauern, bitte warte.",
-        "desktopControls": "Die Desktop-Steuerung wechselt vorübergehend zurück zu Touch/Trackpad/L2/R2.",
-        "titleFrame": "Anleitung für Steam Frame",
-        "bodyFrame": "Du musst den Steam Rom Manager über die Schaltfläche + im SteamOS-Dashboard öffnen"
+        "desktopControls": "Die Desktop-Steuerung wechselt vorübergehend zurück zu Touch/Trackpad/L2/R2."
       },
       "reset": {
         "warningBody": "Ein Zurücksetzen überschreibt alle von dir vorgenommenen Anpassungen und stellt die EmuDeck-Standardeinstellungen wieder her"

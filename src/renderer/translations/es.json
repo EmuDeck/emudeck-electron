@@ -114,9 +114,7 @@
       },
       "srm": {
         "body": "Cerraremos Steam si está abierto y después se abrirá Steam Rom Manager; esto puede tardar unos segundos, espera por favor.",
-        "desktopControls": "Los controles de escritorio volverán temporalmente a táctil/trackpad/L2/R2.",
-        "titleFrame": "Instrucciones para Steam Frame",
-        "bodyFrame": "Tienes que abrir Steam Rom Manager desde el botón + del panel de SteamOS"
+        "desktopControls": "Los controles de escritorio volverán temporalmente a táctil/trackpad/L2/R2."
       },
       "reset": {
         "warningBody": "Hacer un reinicio sobrescribirá cualquier personalización que hayas hecho y restaurará los valores por defecto de EmuDeck"
