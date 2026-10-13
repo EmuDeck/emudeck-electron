@@ -1075,8 +1075,6 @@ function EmulatorsDetailPage() {
     let bashCommand;
     if (system === 'win32') {
       bashCommand = `New-Item -ItemType Directory -Force -Path "$toolsPath\\srm\\userData\\parsers\\custom\\ -ErrorAction SilentlyContinue";Invoke-Item "$toolsPath\\srm\\userData\\parsers\\custom\\"`;
-    } else if (system === 'darwin') {
-      bashCommand = `mkdir -p "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"`;
     } else {
       bashCommand = `mkdir -p "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; gnome-open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"; kde-open "$HOME/.config/steam-rom-manager/userData/parsers/custom/"`;
     }

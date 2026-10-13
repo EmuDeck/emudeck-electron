@@ -114,8 +114,7 @@ function FinishPage() {
     {
       iconFlat: 'joystick',
       title: t('FinishPage.backToGameMode'),
-      status:
-        system !== 'win32' && system !== 'darwin' && device !== 'Steam Frame',
+      status: system !== 'win32' && device !== 'Steam Frame',
       highlight: true,
       function: () =>
         confirmAction(
@@ -151,25 +150,25 @@ function FinishPage() {
     {
       iconFlat: 'prize',
       title: t('aside.retroAchievements'),
-      status: system !== 'darwin' && mode === 'easy',
+      status: mode === 'easy',
       function: () => navigate('/RA-achievements-config'),
     },
     {
       iconFlat: 'compress',
       title: t('aside.cards.compressor.title'),
-      status: system !== 'darwin',
+      status: true,
       function: () => navigate('/chd-tool'),
     },
     {
       iconFlat: 'cloud',
       title: t('aside.cloudSaves'),
-      status: system !== 'darwin' && !branch.includes('early'),
+      status: !branch.includes('early'),
       function: () => navigate('/cloud-sync/welcome'),
     },
     {
       iconFlat: 'cloud',
       title: t('aside.cloudServices'),
-      status: !(system === 'win32' || system === 'darwin'),
+      status: system !== 'win32',
       function: () => openCSM(),
     },
     {

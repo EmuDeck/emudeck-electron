@@ -18,7 +18,6 @@ import {
   imgayaneogeek,
   imglinux,
   imgwindows,
-  imgmac,
   imgchimeraOS,
   imgayaneokun,
   imglegiongo,
@@ -173,27 +172,12 @@ function DeviceSelectorPage() {
     localStorage.setItem('settings_emudeck', json);
   }, [state]);
 
-  useEffect(() => {
-    if (system === 'darwin') {
-      deviceSet('Mac');
-    }
-  }, []);
-
   return (
     <Wrapper>
       <Header title={t('DeviceSelectorPage.title')} />
       <p className="lead">{t('DeviceSelectorPage.description')}</p>
       <DeviceSelector data={data} onClick={deviceSet}>
-        {system === 'darwin' && (
-          <Card
-            css={device === 'Mac' && 'is-selected'}
-            onClick={() => deviceSet('Mac')}
-          >
-            <img src={imgmac} width="100" alt="Background" />
-            <span className="h6">{t('devices.mac')}</span>
-          </Card>
-        )}
-        {system !== 'darwin' && system !== 'win32' && (
+        {system !== 'win32' && (
           <>
             {arch !== 'arm64' && (
               <>

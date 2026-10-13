@@ -338,7 +338,7 @@ function ManageEmulatorsPage() {
                   />
                 </div>
               )}
-              {system !== 'win32' && system !== 'darwin' && (
+              {system !== 'win32' && (
                 <div data-col-md="6">
                   <CardSettings
                     icon={iconPackage}
@@ -372,11 +372,6 @@ function ManageEmulatorsPage() {
                   return;
                 }
 
-                if (system === 'darwin') {
-                  if (item.id !== 'ra') {
-                    return;
-                  }
-                }
                 return (
                   <Card
                     css={item.status === true && 'is-selected'}
@@ -419,12 +414,6 @@ function ManageEmulatorsPage() {
 
                 if (item.id === 'steam') {
                   return;
-                }
-
-                if (system === 'darwin') {
-                  if (item.id !== 'esde') {
-                    return;
-                  }
                 }
 
                 return (

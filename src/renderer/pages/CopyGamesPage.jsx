@@ -219,7 +219,7 @@ function CopyGamesPage() {
       return;
     }
 
-    let modalData = {
+    const modalData = {
       active: true,
       header: (
         <span className="h4">{t('general.launching')} Steam Rom Manager</span>
@@ -235,27 +235,7 @@ function CopyGamesPage() {
         'emudeck',
         'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"',
       );
-    } else if (system !== 'darwin') {
-      setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage(
-        'emudeck',
-        '"$toolsPath/launchers/srm/steamrommanager.sh"',
-      );
     } else {
-      modalData = {
-        active: true,
-        header: (
-          <span className="h4">{t('general.launching')} Steam Rom Manager</span>
-        ),
-        body: (
-          <>
-            <p>{t('aside.srm.body')}</p>
-            <strong>{t('aside.srm.desktopControls')}</strong>
-          </>
-        ),
-        footer: <ProgressBar css="progress--success" infinite max="100" />,
-        css: 'emumodal--sm',
-      };
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',

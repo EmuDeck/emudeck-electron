@@ -58,7 +58,7 @@ function EndPage() {
   };
 
   const openSRM = () => {
-    let modalData = {
+    const modalData = {
       active: true,
       header: (
         <span className="h4">{t('general.launching')} Steam Rom Manager</span>
@@ -74,22 +74,7 @@ function EndPage() {
         'emudeck',
         'powershell -ExecutionPolicy Bypass -NoProfile -File "$toolsPath/launchers/srm/steamrommanager.ps1"',
       );
-    } else if (system !== 'darwin') {
-      setStatePage({ ...statePage, modal: modalData });
-      ipcChannel.sendMessage(
-        'emudeck',
-        '"$toolsPath/launchers/srm/steamrommanager.sh"',
-      );
     } else {
-      modalData = {
-        active: true,
-        header: (
-          <span className="h4">{t('general.launching')} Steam Rom Manager</span>
-        ),
-        body: <p>{t('aside.srm.body')}</p>,
-        footer: <ProgressBar css="progress--success" infinite max="100" />,
-        css: 'emumodal--sm',
-      };
       setStatePage({ ...statePage, modal: modalData });
       ipcChannel.sendMessage(
         'emudeck',
@@ -118,10 +103,6 @@ function EndPage() {
     if (system === 'win32') {
       ipcChannel.sendMessage('bash-nolog', [
         `start powershell -NoExit -ExecutionPolicy Bypass -command "& { Get-Content $env:APPDATA/emudeck/logs/emudeckSetup.log -Tail 100 -Wait }"`,
-      ]);
-    } else if (system === 'darwin') {
-      ipcChannel.sendMessage('bash-nolog', [
-        `osascript -e 'tell app "Terminal" to do script "clear && tail -f $HOME/.config/EmuDeck/logs/emudeckSetup.log"'`,
       ]);
     } else {
       ipcChannel.sendMessage('bash-nolog', [
@@ -166,10 +147,6 @@ function EndPage() {
       if (system === 'win32') {
         ipcChannel.sendMessage('bash-nolog', [
           `finish|||powershell -ExecutionPolicy Bypass . $env:USERPROFILE/AppData/Roaming/EmuDeck/backend/setup.ps1`,
-        ]);
-      } else if (system === 'darwin') {
-        ipcChannel.sendMessage('bash-nolog', [
-          `finish|||osascript -e 'tell application "Terminal" to do script "bash ~/.config/EmuDeck/backend/setup.sh" activate'`,
         ]);
       } else {
         ipcChannel.sendMessage('bash-nolog', [
