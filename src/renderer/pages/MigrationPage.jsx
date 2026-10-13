@@ -169,7 +169,7 @@ function MigrationPage() {
     });
 
     ipcChannel.sendMessage('emudeck', [
-      `Migration_init|||Migration_init ${storagePathDestination}`,
+      `Migration_init|||Migration_init "${storagePathDestination}"`,
     ]);
 
     ipcChannel.once('Migration_init', (message) => {
