@@ -10,14 +10,14 @@ import Card from 'components/molecules/Card/Card';
 import ChangeLog from 'components/organisms/Wrappers/ChangeLog';
 
 import img0 from 'assets/changelog/banner_bug.png';
-import img1 from 'assets/changelog/banner_dolphin.png';
-import img2 from 'assets/changelog/banner_resolution.png';
-import img3 from 'assets/changelog/banner_video.png';
-import img4 from 'assets/changelog/banner_automap.png';
-import img5 from 'assets/changelog/banner_steammachine.jpg';
-import img6 from 'assets/changelog/banner_gyro.png';
+import img1 from 'assets/changelog/banner_steamframe.jpg';
+import img2 from 'assets/changelog/banner_dolphin.png';
+import img3 from 'assets/changelog/banner_resolution.png';
+import img4 from 'assets/changelog/banner_video.png';
+import img5 from 'assets/changelog/banner_automap.png';
+import img6 from 'assets/changelog/banner_steammachine.jpg';
 import img7 from 'assets/changelog/banner_gyro.png';
-import img8 from 'assets/changelog/banner_dolphin.png';
+import img8 from 'assets/changelog/banner_gyro.png';
 import img9 from 'assets/changelog/banner_dolphin.png';
 import img10 from 'assets/changelog/banner_dolphin.png';
 import img11 from 'assets/changelog/banner_dolphin.png';
@@ -26,6 +26,7 @@ import img13 from 'assets/changelog/banner_dolphin.png';
 import img14 from 'assets/changelog/banner_dolphin.png';
 import img15 from 'assets/changelog/banner_dolphin.png';
 import img16 from 'assets/changelog/banner_dolphin.png';
+import img17 from 'assets/changelog/banner_dolphin.png';
 
 function ChangeLogPage() {
   const { t, i18n } = useTranslation();
