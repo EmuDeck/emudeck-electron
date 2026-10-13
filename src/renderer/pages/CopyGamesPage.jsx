@@ -25,7 +25,7 @@ function CopyGamesPage() {
   const ipcChannel = window.electron.ipcRenderer;
   const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
-  const { storagePath, second, system, installFrontends, device } = state;
+  const { storagePath, second, system, installFrontends } = state;
   const [statePage, setStatePage] = useState({
     disabledNext: true,
     disabledBack: false,
@@ -205,20 +205,6 @@ function CopyGamesPage() {
   };
 
   const openSRM = () => {
-    // On Steam Frame SRM has to be opened from the SteamOS + menu
-    if (device === 'Steam Frame') {
-      setStatePage({
-        ...statePage,
-        modal: {
-          active: true,
-          header: <span className="h4">{t('aside.srm.titleFrame')}</span>,
-          body: <p>{t('aside.srm.bodyFrame')}</p>,
-          css: 'emumodal--xs',
-        },
-      });
-      return;
-    }
-
     const modalData = {
       active: true,
       header: (
