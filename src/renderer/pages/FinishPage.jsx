@@ -174,7 +174,8 @@ function FinishPage() {
     {
       iconFlat: 'plugin',
       title: 'EmuDecky',
-      status: system !== 'win32' && !cloudSyncStatus,
+      status:
+        system !== 'win32' && !cloudSyncStatus && device !== 'Steam Frame',
       function: () => navigate('/decky-controls'),
     },
     {
