@@ -143,12 +143,6 @@ function FinishPage() {
       function: () => navigate('/early-access'),
     },
     {
-      iconFlat: 'joystick',
-      title: t('aside.romLibrary'),
-      status: branch.includes('dev'),
-      function: () => navigate('/rom-library'),
-    },
-    {
       iconFlat: 'package',
       title: t('StoreFrontPage.title'),
       status: true,

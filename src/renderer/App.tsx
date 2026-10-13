@@ -65,7 +65,6 @@ import AutoSavePage from 'pages/AutoSavePage';
 import ControllerLayoutPage from 'pages/ControllerLayoutPage';
 import ConfirmationPage from 'pages/ConfirmationPage';
 import StoreFrontPage from 'pages/StoreFrontPage';
-import RomLibraryPage from 'pages/RomLibraryPage';
 import MetroCopPage from 'pages/MetroCopPage';
 import EmulatorResolutionPage from 'pages/EmulatorResolutionPage';
 import EmulatorConfigResolutionPage from 'pages/EmulatorConfigResolutionPage';
@@ -596,7 +595,6 @@ export default function App() {
 
           <Route exact path="/confirmation" element={<ConfirmationPage />} />
           <Route exact path="/store-front" element={<StoreFrontPage />} />
-          <Route exact path="/rom-library" element={<RomLibraryPage />} />
           <Route exact path="/metro-cop" element={<MetroCopPage />} />
 
           <Route

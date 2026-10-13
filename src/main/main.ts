@@ -1304,6 +1304,22 @@ ipcMain.on('check-versions', async (event) => {
 //   });
 // });
 
+ipcMain.on('get-ports', (event) => {
+  const backChannel = 'get-ports';
+  const jsonPath = isWin32()
+    ? `${appDataPath}/backend/ports.json`
+    : `${os.homedir()}/.config/EmuDeck/backend/ports.json`;
+  try {
+    const json = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+    event.reply(backChannel, { ok: true, ports: json.ports || [] });
+  } catch (error: any) {
+    event.reply(backChannel, {
+      ok: false,
+      error: String(error?.message || error),
+    });
+  }
+});
+
 // Store functions
 
 ipcMain.on('get-store-featured', async (event) => {
