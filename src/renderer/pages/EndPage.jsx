@@ -41,11 +41,14 @@ function EndPage() {
   });
 
   const { message, percentage } = msg;
+  const installFinished = useRef(false);
 
   const readMSG = () => {
     ipcChannel.sendMessage('getMSG', []);
-    ipcChannel.on('getMSG', (messageInput) => {
-      //
+    ipcChannel.once('getMSG', (messageInput) => {
+      if (installFinished.current) {
+        return;
+      }
       const messageArray = messageInput.stdout.split('#');
       const messageText = messageArray[1];
       let messagePercent = messageArray[0];
@@ -118,15 +121,15 @@ function EndPage() {
 
   // Reading messages from backend
   useEffect(() => {
-    const interval = setInterval(() => {
-      readMSG();
-      if (message.includes('100')) {
-        clearInterval(interval);
-      }
-    }, pollingTime);
+    if (!disabledNext) {
+      installFinished.current = true;
+      setMsg({ message: t('EndPage.installFinished'), percentage: 100 });
+      return undefined;
+    }
+    const interval = setInterval(readMSG, pollingTime);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [disabledNext]);
 
   // Running the installer
   useEffect(() => {

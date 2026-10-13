@@ -742,6 +742,7 @@
       "readBeforeDescription": "EmuDeck is designed to work using <strong>Steam input</strong>, you need to launch the games using Steam after adding them with Steam Rom Manager, same thing with the Emulators, EmulationStation or Pegasus, otherwise the <strong>controls and hotkeys won't work</strong>.<br />Apps like DeckTools or Handheld Companion might break controls too in some cases.<br />Make sure your handheld is on GamePad mode at all times, not on Desktop or Auto.<br /><strong>If you want to use other Frontends like Playnite you will need to activate Steam Input on the Desktop as shown on the video and keep Steam open in the background at all times.</strong>",
       "readBeforeDescriptionFrame": "The Steam Frame has some differences with a regular SteamOS device.<ul><li>- Emulators or Frontends like ESDE can't detect the Frame controllers when launched from Desktop Mode or from the SteamOS dashboard [+] button.</li><li>- Because of that (and to prevent cluttering the [+] Menu) we don't add Emulator shortcuts when installing them.</li><li>- If you want to change any emulator settings please add them to Steam using the <strong>Add to Steam</strong> button in the emulator page inside Manage Emulators or use Steam Rom Manager to add them in bulk.</li><li>- You need to manually restart Steam every time you add a new Game, Emulator or Frontend to your Steam Library.</li></ul>",
       "installing": "Installing EmuDeck...",
+      "installFinished": "Installation finished",
       "openLog": "Open detailed log"
     },
     "ErrorPage": {

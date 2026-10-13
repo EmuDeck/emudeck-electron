@@ -261,7 +261,7 @@ const resolveBash = (): string | undefined => {
 const bashPath = resolveBash();
 const shellType =
   os.platform() === 'win32'
-    ? {}
+    ? { maxBuffer: 10 * 1024 * 1024 }
     : { shell: bashPath, maxBuffer: 10 * 1024 * 1024 };
 
 const createWindow = async () => {
