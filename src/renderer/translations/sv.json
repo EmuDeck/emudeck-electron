@@ -581,7 +581,7 @@
         "title": "Tidig åtkomst"
       },
       "fanTier": {
-        "description": "Du tycker verkligen mycket om det jag gör, och det tackar jag för! Bidraget hjälper EmuDeck att köpa nya enheter och göra särskilda optimeringar för andra system.",
+        "description": "Du tycker verkligen mycket om det jag gör och det tackar jag för! Bidraget hjälper EmuDeck att köpa nya enheter och göra särskilda optimeringar för andra system.",
         "list": "<li>- Samma funktioner som Tidig åtkomst samt</li><li>- rösträtt; låt oss forma EmuDecks framtid tillsammans</li>",
         "title": "EmuDeck-fan"
       },
@@ -591,7 +591,7 @@
     "EmuDeckyPage": {
       "title": "Konfigurera EmuDecky",
       "description": "",
-      "intro": "EmuDecky är en insticksmodul som låter dig se EmuDecks kontroller och snabbtangenter medan du spelar, och även konfigurera EmuDeck. För att använda EmuDecky: tryck på knappen … i spelläget, tryck på kontaktikonen och välj EmuDecky.",
+      "intro": "EmuDecky är en insticksmodul som låter dig se EmuDecks kontroller och snabbtangenter medan du spelar och även konfigurera EmuDeck. För att använda EmuDecky: tryck på knappen … i spelläget, tryck på kontaktikonen och välj EmuDecky.",
       "install": "Installera EmuDecky"
     },
     "EmulatorConfigResolutionPage": {
@@ -719,7 +719,7 @@
       "postInstallDescription": "Kontrollera att alla emulatorer har installerats. Om en emulator eller ett verktyg inte kunde installeras kör du <strong>Anpassad återställning</strong> eller installerar emulatorn från sidan <strong>Hantera emulatorer</strong>.",
       "readBefore": "⚠️ Läs innan du fortsätter ⚠️",
       "readBeforeDescription": "EmuDeck är avsett att användas med <strong>Steam Input</strong>. Du måste starta spelen från Steam efter att de har lagts till med Steam Rom Manager. Detsamma gäller emulatorer, EmulationStation och Pegasus, annars <strong>fungerar inte kontroller och snabbtangenter</strong>.<br />Appar som DeckTools eller Handheld Companion kan ibland också störa kontrollerna.<br />Kontrollera att den handhållna enheten alltid är i GamePad-läge, inte Skrivbord eller Auto.<br /><strong>Vill du använda andra gränssnitt som Playnite måste du aktivera Steam Input på skrivbordet enligt videon och alltid låta Steam köras i bakgrunden.</strong>",
-      "readBeforeDescriptionFrame": "Steam Frame skiljer sig från en vanlig SteamOS-enhet.<ul><li>- Emulatorer eller gränssnitt som ESDE kan inte identifiera Frames handkontroller när de startas från skrivbordsläge eller SteamOS-panelens knapp [+].</li><li>- Därför, och för att inte fylla menyn [+], lägger vi inte till emulatorgenvägar när de installeras.</li><li>- Vill du ändra en emulatorinställning lägger du till den i Steam med knappen <strong>Lägg till i Steam</strong> på emulatorsidan under Hantera emulatorer, eller använder Steam Rom Manager för massinläggning.</li><li>- Du måste starta om Steam manuellt varje gång du lägger till ett nytt spel, en emulator eller ett gränssnitt i Steam-biblioteket.</li></ul>",
+      "readBeforeDescriptionFrame": "Steam Frame skiljer sig från en vanlig SteamOS-enhet.<ul><li>- Emulatorer eller gränssnitt som ESDE kan inte identifiera Frames handkontroller när de startas från skrivbordsläge eller SteamOS-panelens knapp [+].</li><li>- Därför lägger vi inte till emulatorgenvägar när de installeras, för att inte fylla menyn [+].</li><li>- Vill du ändra en emulatorinställning lägger du till den i Steam med knappen <strong>Lägg till i Steam</strong> på emulatorsidan under Hantera emulatorer eller använder Steam Rom Manager för massinläggning.</li><li>- Du måste starta om Steam manuellt varje gång du lägger till ett nytt spel, en emulator eller ett gränssnitt i Steam-biblioteket.</li></ul>",
       "installing": "Installerar EmuDeck …",
       "openLog": "Öppna detaljerad logg"
     },
