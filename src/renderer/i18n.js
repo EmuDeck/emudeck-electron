@@ -6,6 +6,7 @@ import en from './translations/en.json';
 import fr from './translations/fr.json';
 import it from './translations/it.json';
 import de from './translations/de.json';
+import sv from './translations/sv.json';
 i18n
   // detect user language
   // learn more: https://github.com/i18next/i18next-browser-languageDetector
@@ -26,6 +27,7 @@ i18n
       fr,
       de,
       it,
+      sv,
     },
   });
 
