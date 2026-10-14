@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { GlobalContext } from 'context/globalContext';
-import { useNavigate } from 'react-router-dom';
 
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 import Header from 'components/organisms/Header/Header';
@@ -11,9 +10,7 @@ import ControllerLayout from 'components/organisms/Wrappers/ControllerLayout';
 
 function ControllerLayoutPage() {
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
   const { state, setState } = useContext(GlobalContext);
-  const { system } = state;
   const [statePage] = useState({
     disabledNext: false,
     disabledBack: false,
@@ -25,12 +22,6 @@ function ControllerLayoutPage() {
       controllerLayout: shaderStatus,
     });
   };
-
-  useEffect(() => {
-    if (system === 'win32') {
-      navigate('/confirmation');
-    }
-  }, []);
 
   return (
     <Wrapper>
