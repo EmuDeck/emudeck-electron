@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
+import { GlobalContext } from 'context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from 'components/molecules/Wrapper/Wrapper';
 
@@ -15,6 +16,7 @@ import steamLogo from 'assets/steam-logo.png';
 
 function CheckDependenciesPage() {
   const { t, i18n } = useTranslation();
+  const { setState } = useContext(GlobalContext);
   const [stateGIT, setStateGIT] = useState({
     statusGIT: null,
   });
@@ -127,6 +129,7 @@ function CheckDependenciesPage() {
   useEffect(() => {
     ipcChannel.sendMessage('system-info-in');
     ipcChannel.once('system-info-out', (system) => {
+      setState((prev) => ({ ...prev, system }));
       if (system === 'win32') {
         // GIT?
         checkGit();
