@@ -32,7 +32,7 @@ import fakeOSFile from '../data/local-fake-os.json';
 const { fakeOS } = fakeOSFile;
 
 import branchFile from '../data/branch.json';
-const { branchOG } = branchFile;
+const { branch: branchOG } = branchFile;
 
 const { shouldUseDarkColors } = nativeTheme;
 const os = require('os');
