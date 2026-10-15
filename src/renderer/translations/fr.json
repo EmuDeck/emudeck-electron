@@ -791,7 +791,7 @@
       "title": "Mode de démarrage",
       "description": "Sélectionnez comment vous voulez démarrer votre appareil.",
       "modalGameEnabledTitle": "Mode Jeu activé",
-      "modalGameEnabledDesc": "Redémarrez votre appareil pour passer en mode Jeu, quittez Steam pour revenir à votre Bureau",
+      "modalGameEnabledDesc": "Redémarrez votre appareil pour passer en mode Jeu. Quittez Big Picture ou Steam pour revenir à votre Bureau. Si vous vous retrouvez un jour sur un écran noir, appuyez sur Ctrl+Maj+Échap, choisissez Exécuter une nouvelle tâche et tapez explorer.exe",
       "modalDesktopEnabledTitle": "Mode Bureau activé",
       "modalDesktopEnabledDesc": "La prochaine fois que vous redémarrerez votre appareil, vous passerez directement en mode Bureau"
     },

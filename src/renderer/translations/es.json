@@ -791,7 +791,7 @@
       "title": "Modo de Arranque",
       "description": "Selecciona cómo quieres arrancar tu dispositivo.",
       "modalGameEnabledTitle": "Modo de Juego habilitado",
-      "modalGameEnabledDesc": "Reinicia tu dispositivo para entrar en el Modo de Juego, Sal de Steam para volver a tu Escritorio",
+      "modalGameEnabledDesc": "Reinicia tu dispositivo para entrar en el Modo de Juego. Sal de Big Picture o de Steam para volver a tu Escritorio. Si alguna vez te quedas en una pantalla negra, pulsa Ctrl+Mayús+Esc, elige Ejecutar nueva tarea y escribe explorer.exe",
       "modalDesktopEnabledTitle": "Modo de Escritorio habilitado",
       "modalDesktopEnabledDesc": "La próxima vez que reinicies tu dispositivo, entrarás directamente en el Modo de Escritorio"
     },

@@ -791,7 +791,7 @@
       "title": "Boot Mode",
       "description": "Select how you want to boot your device.",
       "modalGameEnabledTitle": "Game Mode enabled",
-      "modalGameEnabledDesc": "Restart your device to go into Game Mode, Exit Steam to go back to your Desktop",
+      "modalGameEnabledDesc": "Restart your device to go into Game Mode. Exit Big Picture or Steam to go back to your Desktop. If you ever end up on a black screen, press Ctrl+Shift+Esc, choose Run new task and type explorer.exe",
       "modalDesktopEnabledTitle": "Desktop Mode enabled",
       "modalDesktopEnabledDesc": "Next time you restart your device you'll go directly into Desktop Mode"
     },

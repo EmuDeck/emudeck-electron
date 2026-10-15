@@ -791,7 +791,7 @@
       "title": "Startmodus",
       "description": "Wählen Sie, wie Ihr Gerät starten soll.",
       "modalGameEnabledTitle": "Spielmodus aktiviert",
-      "modalGameEnabledDesc": "Starten Sie Ihr Gerät neu, um in den Spielmodus zu gelangen. Beenden Sie Steam, um zum Desktop zurückzukehren",
+      "modalGameEnabledDesc": "Starten Sie Ihr Gerät neu, um in den Spielmodus zu gelangen. Beenden Sie Big Picture oder Steam, um zum Desktop zurückzukehren. Falls Sie einmal auf einem schwarzen Bildschirm landen, drücken Sie Strg+Umschalt+Esc, wählen Sie Neuen Task ausführen und geben Sie explorer.exe ein",
       "modalDesktopEnabledTitle": "Desktop-Modus aktiviert",
       "modalDesktopEnabledDesc": "Beim nächsten Neustart Ihres Geräts gelangen Sie direkt in den Desktop-Modus"
     },

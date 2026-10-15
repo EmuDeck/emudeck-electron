@@ -791,7 +791,7 @@
       "title": "Modalità di avvio",
       "description": "Seleziona come desideri avviare il tuo dispositivo.",
       "modalGameEnabledTitle": "Modalità gioco abilitata",
-      "modalGameEnabledDesc": "Riavvia il tuo dispositivo per entrare in Modalità Gioco, Esci da Steam per tornare al tuo Desktop",
+      "modalGameEnabledDesc": "Riavvia il tuo dispositivo per entrare in Modalità Gioco. Esci da Big Picture o da Steam per tornare al tuo Desktop. Se ti ritrovi con uno schermo nero, premi Ctrl+Maiusc+Esc, scegli Esegui nuova attività e digita explorer.exe",
       "modalDesktopEnabledTitle": "Modalità Desktop abilitata",
       "modalDesktopEnabledDesc": "La prossima volta che riavvierai il tuo dispositivo, entrerai direttamente nella Modalità Desktop"
     },
