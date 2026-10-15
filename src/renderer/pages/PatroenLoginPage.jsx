@@ -95,7 +95,7 @@ function PatreonLoginPage() {
 
   const patreonCheckToken = (tokenArg) => {
     const settingsStorage = JSON.parse(
-      localStorage.getItem('settings_emudeck')
+      localStorage.getItem('settings_emudeck'),
     );
 
     let token;
@@ -148,7 +148,7 @@ function PatreonLoginPage() {
           });
         } else {
           const settingsStorage = JSON.parse(
-            localStorage.getItem('settings_emudeck')
+            localStorage.getItem('settings_emudeck'),
           );
           const shadersStored = settingsStorage.shaders;
           const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
@@ -172,7 +172,7 @@ function PatreonLoginPage() {
                 gamemode: version[1],
               });
               alert(
-                "No patreon detected, you can use EmuDeck but you won't get new updates"
+                "No patreon detected, you can use EmuDeck but you won't get new updates",
               );
               setState({
                 ...state,
@@ -231,11 +231,11 @@ function PatreonLoginPage() {
       });
     } else if (accessAllowed === 'cancel') {
       const updateOrLogin = confirm(
-        'Please log back in to Patreon to keep EmuDeck updated. Press OK to log in again or Cancel to continue with no updates'
+        'Please log back in to Patreon to keep EmuDeck updated. Press OK to log in again or Cancel to continue with no updates',
       );
       if (!updateOrLogin) {
         const settingsStorage = JSON.parse(
-          localStorage.getItem('settings_emudeck')
+          localStorage.getItem('settings_emudeck'),
         );
         const shadersStored = settingsStorage.shaders;
         const overwriteConfigEmusStored = settingsStorage.overwriteConfigEmus;
@@ -311,36 +311,47 @@ function PatreonLoginPage() {
 
             {!patreonClicked && (
               <>
+                <div>
+                  <BtnSimple
+                    css="btn-simple--3"
+                    type="link"
+                    target="_blank"
+                    href="https://token.emudeck.com/"
+                    aria={t('PatroenLoginPage.login')}
+                    onClick={() => patreonShowInput()}
+                    disabled={accessAllowed}
+                  >
+                    {accessAllowed || t('PatroenLoginPage.login')}{' '}
+                    {accessAllowed && `- ${t('general.loading')}`}
+                  </BtnSimple>
+                  <BtnSimple
+                    css="btn-simple--3"
+                    type="link"
+                    target="_blank"
+                    href="https://patreon.com/"
+                    aria={t('PatroenLoginPage.change')}
+                  >
+                    {t('PatroenLoginPage.change')}
+                  </BtnSimple>
+                  <BtnSimple
+                    css="btn-simple--2"
+                    type="button"
+                    aria={t('PatroenLoginPage.login')}
+                    onClick={() => patreonShowInput(false)}
+                    disabled={accessAllowed}
+                  >
+                    {accessAllowed || t('PatroenLoginPage.license')}{' '}
+                    {accessAllowed && `- ${t('general.loading')}`}
+                  </BtnSimple>
+                </div>
                 <BtnSimple
-                  css="btn-simple--3"
+                  css="btn-simple--6"
                   type="link"
                   target="_blank"
-                  href="https://token.emudeck.com/"
-                  aria={t('PatroenLoginPage.login')}
-                  onClick={() => patreonShowInput()}
-                  disabled={accessAllowed}
+                  href="https://www.patreon.com/checkout/dragoonDorise?rid=8177551"
+                  aria={t('PatroenLoginPage.joinPatreon')}
                 >
-                  {accessAllowed || t('PatroenLoginPage.login')}{' '}
-                  {accessAllowed && `- ${t('general.loading')}`}
-                </BtnSimple>
-                <BtnSimple
-                  css="btn-simple--3"
-                  type="link"
-                  target="_blank"
-                  href="https://patreon.com/"
-                  aria={t('PatroenLoginPage.change')}
-                >
-                  {t('PatroenLoginPage.change')}
-                </BtnSimple>
-                <BtnSimple
-                  css="btn-simple--2"
-                  type="button"
-                  aria={t('PatroenLoginPage.login')}
-                  onClick={() => patreonShowInput(false)}
-                  disabled={accessAllowed}
-                >
-                  {accessAllowed || t('PatroenLoginPage.license')}{' '}
-                  {accessAllowed && `- ${t('general.loading')}`}
+                  {t('PatroenLoginPage.joinPatreon')}
                 </BtnSimple>
               </>
             )}
@@ -368,9 +379,7 @@ function PatreonLoginPage() {
               </div>
             )}
           </div>
-          <div data-col-sm="4">
-            {!patreonClicked && <EarlyAccessTiers />}
-          </div>
+          <div data-col-sm="4">{!patreonClicked && <EarlyAccessTiers />}</div>
         </div>
       </Main>
     </Wrapper>

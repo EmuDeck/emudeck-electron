@@ -46,6 +46,7 @@ const configuration = {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
+      PUBLIC_URL: '',
     }),
   ],
 };
