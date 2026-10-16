@@ -77,6 +77,7 @@ import FinishPage from 'pages/FinishPage';
 
 import WindowControls from 'components/atoms/WindowControls/WindowControls';
 import { isEmulatorAvailable } from 'components/utils/isEmulatorAvailable';
+import { isFrontendAvailable } from 'components/utils/isFrontendAvailable';
 import { GlobalContext } from './context/globalContext';
 
 import 'getbasecore/src/utils/reset/core_reset.scss';
@@ -524,6 +525,32 @@ export default function App() {
       }));
     });
   }, [state.arch, state.system, state.installEmus, state.overwriteConfigEmus]);
+
+  useEffect(() => {
+    if (!state.arch) return;
+    const frontendsToHide = (
+      Object.keys(
+        state.installFrontends,
+      ) as (keyof typeof state.installFrontends)[]
+    ).filter((id) => !isFrontendAvailable(id, state.system, state.arch));
+
+    frontendsToHide.forEach((frontendToHide) => {
+      if (!state.installFrontends[frontendToHide].status) {
+        return;
+      }
+
+      setState((prev) => ({
+        ...prev,
+        installFrontends: {
+          ...prev.installFrontends,
+          [frontendToHide]: {
+            ...prev.installFrontends[frontendToHide],
+            status: false,
+          },
+        },
+      }));
+    });
+  }, [state.arch, state.system, state.installFrontends]);
 
   return (
     <GlobalContext.Provider

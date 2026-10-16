@@ -12,6 +12,7 @@ import Card from 'components/molecules/Card/Card';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import EmuModal from 'components/molecules/EmuModal/EmuModal';
 import { isEmulatorAvailable } from 'components/utils/isEmulatorAvailable';
+import { isFrontendAvailable } from 'components/utils/isFrontendAvailable';
 
 import {
   imgra,
@@ -411,6 +412,9 @@ function ManageEmulatorsPage() {
               {installFrontendsArray.map((item) => {
                 const img = images[item.id];
                 const updateNotif = updates[item.id];
+                if (!isFrontendAvailable(item.id, system, arch)) {
+                  return;
+                }
 
                 if (item.id === 'steam') {
                   return;
