@@ -39,6 +39,10 @@ function CheckUpdatePage() {
     },
   });
 
+  const [macDeps, setMacDeps] = useState(
+    window.electron.platform !== 'darwin'
+  );
+
   const statePageRef = useRef(statePage);
   statePageRef.current = statePage;
   const { downloadComplete, cloned, update, modal } = statePageRef.current;
@@ -270,6 +274,30 @@ function CheckUpdatePage() {
     //
 
     if (update === 'up-to-date') {
+      if (!macDeps) {
+        ipcChannel.sendMessage('check-mac-deps');
+        const unsubscribe = ipcChannel.on('check-mac-deps', (installed) => {
+          if (installed) {
+            unsubscribe();
+            setMacDeps(true);
+            return;
+          }
+          setStatePage({
+            ...statePageRef.current,
+            modal: {
+              active: true,
+              header: (
+                <span className="h4">{t('CheckUpdatePage.macDeps.title')}</span>
+              ),
+              body: <p>{t('CheckUpdatePage.macDeps.description')}</p>,
+              footer: <ProgressBar css="progress--success" infinite max="100" />,
+              css: 'emumodal--xs emumodal--loading',
+            },
+          });
+        });
+        return unsubscribe;
+      }
+
       // is the git repo cloned?
 
       const modalDataGit = {
@@ -350,7 +378,7 @@ function CheckUpdatePage() {
         });
       });
     }
-  }, [update, system]);
+  }, [update, system, macDeps]);
 
   useEffect(() => {
     // settings here

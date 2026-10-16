@@ -243,8 +243,9 @@ require(${JSON.stringify(standalonePath)}).default
 
 const resolveBash = (): string | undefined => {
   if (os.platform() === 'win32') return undefined;
+  if (os.platform() === 'darwin') return '/bin/bash';
 
-  const candidates = ['/opt/homebrew/bin/bash', '/usr/bin/bash', '/bin/bash'];
+  const candidates = ['/usr/bin/bash', '/bin/bash'];
 
   for (const bin of candidates) {
     if (!fs.existsSync(bin)) continue;
@@ -1074,6 +1075,26 @@ ipcMain.on('check-git', async (event) => {
   });
 });
 
+ipcMain.on('check-mac-deps', async (event) => {
+  const backChannel = 'check-mac-deps';
+  exec('xcode-select -p', (error) => {
+    if (!error) {
+      event.reply(backChannel, true);
+      return;
+    }
+    exec('xcode-select --install');
+    event.reply(backChannel, false);
+    const interval = setInterval(() => {
+      exec('xcode-select -p', (err) => {
+        if (!err) {
+          clearInterval(interval);
+          event.reply(backChannel, true);
+        }
+      });
+    }, 5000);
+  });
+});
+
 ipcMain.on('clone', async (event, branch) => {
   const branchGIT = branch;
   let repo;
@@ -1106,8 +1127,12 @@ ipcMain.on('pull', async (event, branch) => {
 
   bashCommand = `cd ~/.config/EmuDeck/backend 2>/dev/null && git rev-parse --is-inside-work-tree >/dev/null 2>&1 || { echo not-cloned; exit 0; }; { pgrep -x git >/dev/null || find .git -name '*.lock' -delete; } && git fetch --no-tags --depth=1 origin ${branchGIT} && git checkout -f -B ${branchGIT} FETCH_HEAD && git reset --hard FETCH_HEAD && git clean -fd`;
 
-  //Dev on macOS
-  if (os.platform().includes('darwin')) {
+  //Dev: backend symlinked to a local repo, don't reset it
+  const backendPath = path.join(os.homedir(), '.config/EmuDeck/backend');
+  if (
+    fs.existsSync(backendPath) &&
+    fs.lstatSync(backendPath).isSymbolicLink()
+  ) {
     bashCommand = `echo true`;
   }
 

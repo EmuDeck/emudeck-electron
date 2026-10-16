@@ -418,6 +418,10 @@
     "CheckUpdatePage": {
       "title": "EmuDeck est en cours de chargement...",
       "backend": "Construction du backend EmuDeck et exécution des autodiagnostics en arrière-plan...",
+      "macDeps": {
+        "title": "Installation de Git et Python",
+        "description": "EmuDeck a besoin des Command Line Tools d'Apple. Cliquez sur Installer dans la fenêtre macOS et attendez la fin, EmuDeck continuera automatiquement."
+      },
       "checking": {
         "title": "Recherche de mises à jour...",
         "description": "Veuillez patienter pendant que nous vérifions s'il y a une nouvelle version disponible..."
