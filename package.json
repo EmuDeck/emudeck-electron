@@ -242,6 +242,9 @@
         "nsis"
       ]
     },
+    "nsis": {
+      "artifactName": "EmuDeck Setup.exe"
+    },
     "portable": {
       "artifactName": "EmuDeck.exe"
     },
