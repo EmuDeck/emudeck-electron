@@ -1793,7 +1793,7 @@ if (!gotTheLock) {
         const { host, pathname } = new URL(request.url);
         const assetsPath = app.isPackaged
           ? path.join(process.resourcesPath, 'assets')
-          : path.join(app.getAppPath(), '../../assets');
+          : path.join(app.getAppPath(), '../../src/assets');
         const filePath =
           host === 'assets'
             ? path.join(assetsPath, decodeURIComponent(pathname))

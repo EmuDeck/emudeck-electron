@@ -261,7 +261,11 @@
       "output": "release/build"
     },
     "extraResources": [
-      "./assets/**"
+      "./assets/**",
+      {
+        "from": "src/assets",
+        "to": "assets"
+      }
     ],
     "publish": {
       "provider": "github",
