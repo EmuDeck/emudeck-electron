@@ -773,7 +773,7 @@ ipcMain.on('rom-library-build', (event) => {
   const backChannel = 'rom-library-build';
   const bashCommand = isWin32()
     ? `powershell -ExecutionPolicy Bypass -command "& { . $env:APPDATA/EmuDeck/backend/functions/all.ps1; generateGameLists }"`
-    : `. ${allPath} && generateGameLists`;
+    : `. ${allPath} && generateGameLists box2dfront`;
   logCommand('ROM LIBRARY: generateGameLists');
   exec(bashCommand, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
