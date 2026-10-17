@@ -339,7 +339,7 @@ function ManageEmulatorsPage() {
                   />
                 </div>
               )}
-              {system !== 'win32' && (
+              {system !== 'win32' && system !== 'darwin' && (
                 <div data-col-md="6">
                   <CardSettings
                     icon={iconPackage}
