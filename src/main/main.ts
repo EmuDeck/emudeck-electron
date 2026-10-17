@@ -267,7 +267,8 @@ const createWindow = async () => {
   const { width, height } = primaryDisplay.workAreaSize;
   const screenHeight = height < 701 ? 600 : 740;
   // Small screens (e.g. Steam Deck at 1280x800 with panels): open maximized
-  const startMaximized = width < 1000 || height < 1000;
+  const startMaximized =
+    os.platform() !== 'darwin' && (width < 1000 || height < 1000);
   const isFullscreen = false;
   // const os = require('os');
 
