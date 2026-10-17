@@ -56,7 +56,7 @@
     "build:x64": "npm run build && npm exec electron-builder -- --publish never --linux --x64 && npm exec electron-builder -- --publish never --win --x64"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "*.{ts,tsx}": [
       "cross-env NODE_ENV=development eslint --cache"
     ],
     "*.json,.{eslintrc,prettierrc}": [

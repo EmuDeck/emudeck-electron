@@ -12,6 +12,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'off',
     'no-shadow': 'off',
     'react/no-unescaped-entities': 'off',
+    'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
   },
   parserOptions: {
     ecmaVersion: 2020,

@@ -11,17 +11,9 @@
 import https from 'https';
 import path from 'path';
 import { exec, spawn, execSync } from 'child_process';
-import {
-  app,
-  BrowserWindow,
-  ipcMain,
-  nativeTheme,
-  protocol,
-  net,
-  shell,
-} from 'electron';
+import { app, BrowserWindow, ipcMain, protocol, net, shell } from 'electron';
 import { pathToFileURL } from 'url';
-import { autoUpdater } from 'electron-updater';
+import { autoUpdater, UpdateCheckResult } from 'electron-updater';
 import semver from 'semver';
 import log from 'electron-log';
 // eslint-disable-next-line
@@ -29,12 +21,12 @@ import MenuBuilder from './menu';
 // eslint-disable-next-line
 import { resolveHtmlPath } from './util';
 import fakeOSFile from '../data/local-fake-os.json';
-const { fakeOS } = fakeOSFile;
 
 import branchFile from '../data/branch.json';
+
+const { fakeOS } = fakeOSFile;
 const { branch: branchOG } = branchFile;
 
-const { shouldUseDarkColors } = nativeTheme;
 const os = require('os');
 const fs = require('fs');
 
@@ -48,12 +40,12 @@ if (os.platform() === 'win32') {
       .readdirSync(pythonRoot)
       .filter((dir: string) => /^Python3/i.test(dir))
       .sort((a: string, b: string) =>
-        b.localeCompare(a, undefined, { numeric: true })
+        b.localeCompare(a, undefined, { numeric: true }),
       )[0];
     if (latestPython) {
       extraPaths.push(
         path.join(pythonRoot, latestPython),
-        path.join(pythonRoot, latestPython, 'Scripts')
+        path.join(pythonRoot, latestPython, 'Scripts'),
       );
     }
   } catch (error) {
@@ -61,7 +53,7 @@ if (os.platform() === 'win32') {
   }
   const currentPaths = (process.env.PATH || '').split(';');
   const missingPaths = extraPaths.filter(
-    (dir) => fs.existsSync(dir) && !currentPaths.includes(dir)
+    (dir) => fs.existsSync(dir) && !currentPaths.includes(dir),
   );
   if (missingPaths.length) {
     process.env.PATH = [...missingPaths, ...currentPaths].join(';');
@@ -87,18 +79,11 @@ if (os.platform().includes('darwin')) {
   appDataPath = `${os.homedir()}/.config/EmuDeck`;
 }
 
-const homeUser = os.homedir();
 let allPath;
 if (os.platform().includes('win32')) {
   allPath = `${appDataPath}/backend/functions/all.ps1`;
 } else {
   allPath = `${appDataPath}/backend/functions/all.sh`;
-}
-let startCommand;
-let finishCommand;
-if (os.platform().includes('win32')) {
-  startCommand = 'powershell -ExecutionPolicy Bypass -command "& {';
-  finishCommand = '}"';
 }
 
 export default class AppUpdater {
@@ -128,7 +113,7 @@ const logCommand = (
   bashCommand: any,
   error: any = '',
   stdout: any = '',
-  stderr: any = ''
+  stderr: any = '',
 ) => {
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
@@ -193,9 +178,9 @@ if (process.env.NODE_ENV === 'production') {
 const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 if (isDebug) {
-  import('electron-debug').then(({ default: electronDebug }) =>
-    electronDebug()
-  );
+  import('electron-debug')
+    .then(({ default: electronDebug }) => electronDebug())
+    .catch(console.log);
 }
 
 let reactDevToolsWindow: BrowserWindow | null = null;
@@ -203,7 +188,7 @@ let reactDevToolsWindow: BrowserWindow | null = null;
 const openReactDevTools = async () => {
   const standalonePath = path.resolve(
     app.getAppPath(),
-    '../../node_modules/react-devtools-core/standalone'
+    '../../node_modules/react-devtools-core/standalone',
   );
   if (!fs.existsSync(`${standalonePath}.js`)) return;
 
@@ -235,7 +220,7 @@ require(${JSON.stringify(standalonePath)}).default
     setTimeout(resolve, 3000);
   });
   await reactDevToolsWindow.loadURL(
-    `data:text/html;charset=utf-8,${encodeURIComponent(html)}`
+    `data:text/html;charset=utf-8,${encodeURIComponent(html)}`,
   );
   reactDevToolsWindow.showInactive();
   await ready;
@@ -247,16 +232,15 @@ const resolveBash = (): string | undefined => {
 
   const candidates = ['/usr/bin/bash', '/bin/bash'];
 
-  for (const bin of candidates) {
-    if (!fs.existsSync(bin)) continue;
+  return candidates.find((bin) => {
+    if (!fs.existsSync(bin)) return false;
     try {
       const v = execSync(`${bin} -c 'echo $BASH_VERSINFO'`).toString().trim();
-      if (parseInt(v, 10) >= 4) return bin;
+      return parseInt(v, 10) >= 4;
     } catch {
-      /* siguiente */
+      return false;
     }
-  }
-  return undefined;
+  });
 };
 
 const bashPath = resolveBash();
@@ -287,25 +271,26 @@ const createWindow = async () => {
   const isFullscreen = false;
   // const os = require('os');
 
-  //Web socket
+  // Web socket
   const net = require('net');
   const logServer = net.createServer((sock) => {
     let buf = '';
     sock.setEncoding('utf8');
     sock.on('data', (chunk) => {
       buf += chunk;
-      let i;
-      while ((i = buf.indexOf('\n')) !== -1) {
+      let i = buf.indexOf('\n');
+      while (i !== -1) {
         const line = buf.slice(0, i);
         buf = buf.slice(i + 1);
         BrowserWindow.getAllWindows().forEach((w) =>
-          w.webContents.send('backend-log', line)
+          w.webContents.send('backend-log', line),
         );
+        i = buf.indexOf('\n');
       }
     });
   });
 
-  //Dynamic random port as a system var
+  // Dynamic random port as a system var
   logServer.listen(0, '127.0.0.1', () => {
     process.env.EMUDECK_BACKEND_PORT = String(logServer.address().port);
   });
@@ -496,7 +481,7 @@ ipcMain.on('bash-nolog', async (event, command) => {
     bashCommand = command;
   }
 
-  return exec(`${bashCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(`${bashCommand}`, shellType, (error, stdout) => {
     // event.reply('console', { backChannel });
     event.reply(backChannel, stdout);
   });
@@ -883,7 +868,7 @@ ipcMain.on('update-channel', async (event, args) => {
 
   if (process.env.NODE_ENV === 'development' || !app.isPackaged) {
     logCommand(
-      `UPDATE CHANNEL: ${channel} requested but updater is disabled in DEV MODE`
+      `UPDATE CHANNEL: ${channel} requested but updater is disabled in DEV MODE`,
     );
     event.reply(backChannel, ['error', 'DEV MODE']);
     return;
@@ -906,7 +891,7 @@ ipcMain.on('update-channel', async (event, args) => {
     const checkResult = await autoUpdater.checkForUpdates();
     const updateInfo = checkResult?.updateInfo;
     logCommand(
-      `UPDATE CHANNEL: latest on ${channel} is ${updateInfo?.version}`
+      `UPDATE CHANNEL: latest on ${channel} is ${updateInfo?.version}`,
     );
 
     if (!checkResult || !checkResult.isUpdateAvailable) {
@@ -978,7 +963,7 @@ ipcMain.on('update-start', async (event) => {
           .then(() => {
             autoUpdater.quitAndInstall(
               true, // isSilent
-              true // isForceRunAfter, restart app after update is installed
+              true, // isForceRunAfter, restart app after update is installed
             );
           })
           .catch((error) => {
@@ -1038,7 +1023,7 @@ ipcMain.on('system-info-in', async (event) => {
         event.reply(
           'system-info-out',
           data?.distributorID || osReleaseName(),
-          arch
+          arch,
         );
       });
     } catch (error) {
@@ -1050,7 +1035,7 @@ ipcMain.on('system-info-in', async (event) => {
 });
 
 ipcMain.on('version', async (event: any) => {
-  let version = app.getVersion();
+  const version = app.getVersion();
   const versionMin = version.match(/^\d+(\.\d+)*/)[0];
 
   event.reply('version-out', [
@@ -1127,7 +1112,7 @@ ipcMain.on('pull', async (event, branch) => {
 
   bashCommand = `cd ~/.config/EmuDeck/backend 2>/dev/null && git rev-parse --is-inside-work-tree >/dev/null 2>&1 || { echo not-cloned; exit 0; }; { pgrep -x git >/dev/null || find .git -name '*.lock' -delete; } && git fetch --no-tags --depth=1 origin ${branchGIT} && git checkout -f -B ${branchGIT} FETCH_HEAD && git reset --hard FETCH_HEAD && git clean -fd`;
 
-  //Dev: backend symlinked to a local repo, don't reset it
+  // Dev: backend symlinked to a local repo, don't reset it
   const backendPath = path.join(os.homedir(), '.config/EmuDeck/backend');
   if (
     fs.existsSync(backendPath) &&
@@ -1233,12 +1218,14 @@ ipcMain.on('getToken', (event, command) => {
     },
     (res) => {
       let stdout = '';
-      res.on('data', (chunk) => (stdout += chunk));
+      res.on('data', (chunk) => {
+        stdout += chunk;
+      });
       res.on('end', () => {
         console.log(`getToken -> HTTP ${stdout}`);
         event.reply(backChannel, null, stdout, '');
       });
-    }
+    },
   );
 
   req.on('error', (err) => event.reply(backChannel, err, '', String(err)));
@@ -1272,8 +1259,6 @@ ipcMain.on('saveSettings', async (event, command) => {
 
   // stringify JSON Object
   const jsonContent = JSON.stringify(jsonObj);
-
-  const homedir = require('os').homedir();
 
   let settingsFile = `${appDataPath}/settings.json`;
   if (os.platform().includes('win32')) {
@@ -1369,7 +1354,6 @@ ipcMain.on('get-store-featured', async (event) => {
 });
 
 ipcMain.on('get-store', async (event) => {
-  const userHomeDir = os.homedir();
   const backChannel = 'get-store';
 
   const buildJsonStore = async () => {
@@ -1630,7 +1614,6 @@ ipcMain.on('validate-git', async (event) => {
 ipcMain.on('validate-7Zip', async (event) => {
   const backChannel = 'validate-7Zip';
   const programFilesPath = process.env.ProgramFiles;
-  const homeUser = os.homedir();
   const path1 = `${programFilesPath}/7-zip`;
   const path2 = `${programFilesPath} (x86)/7-zip`;
   const path3 = `${appDataPath}/backend/wintools/7z.exe`;
@@ -1747,11 +1730,12 @@ ipcMain.on('run-app', async (event, appPath) => {
     if (!appPathFixed.includes('"')) {
       appPathFixed = `"${appPathFixed}"`;
     }
-    return exec(`${appPathFixed}`, shellType, (error, stdout, stderr) => {
+    exec(`${appPathFixed}`, shellType, (error, stdout, stderr) => {
       // event.reply('console', { backChannel });
       logCommand(appPathFixed, error, stdout, stderr);
       event.reply('run-app', 'launched');
     });
+    return;
     // externalApp = spawn('xdg-open', [appPathFixed]);
   }
 
