@@ -759,7 +759,26 @@ ipcMain.on('rom-library-json', (event) => {
   }
   try {
     const systems = JSON.parse(fs.readFileSync(file, 'utf8'));
-    event.reply(backChannel, { ok: true, systems });
+    const missingFile = `${storagePath}/retrolibrary/cache/missing_artwork_no_hash.json`;
+    const missingArtwork = fs.existsSync(missingFile)
+      ? JSON.parse(fs.readFileSync(missingFile, 'utf8'))
+      : [];
+    const lockFile = `${storagePath}/retrolibrary/cache/artwork.lock`;
+    let artworkRunning = false;
+    if (fs.existsSync(lockFile)) {
+      try {
+        process.kill(Number(fs.readFileSync(lockFile, 'utf8').trim()), 0);
+        artworkRunning = true;
+      } catch (lockError: any) {
+        artworkRunning = lockError.code === 'EPERM';
+      }
+    }
+    event.reply(backChannel, {
+      ok: true,
+      systems,
+      missingArtwork,
+      artworkRunning,
+    });
   } catch (error: any) {
     event.reply(backChannel, {
       ok: false,

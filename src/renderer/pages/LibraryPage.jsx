@@ -19,8 +19,18 @@ function LibraryPage() {
     gameList: undefined,
     platform: {},
     storagePath: '',
+    missingArtwork: [],
+    artworkVersion: 0,
+    scraping: false,
   });
-  const { gameList, platform, storagePath } = statePage;
+  const {
+    gameList,
+    platform,
+    storagePath,
+    missingArtwork,
+    artworkVersion,
+    scraping,
+  } = statePage;
 
   const selectPlatform = (selected) => {
     setStatePage({ ...statePage, platform: selected });
@@ -35,24 +45,53 @@ function LibraryPage() {
     ipcChannel.once('rom-library-build', () => {
       ipcChannel.sendMessage('rom-library-json', []);
       ipcChannel.once('rom-library-json', (data) => {
+        const missingPlatforms = (data.missingArtwork || [])
+          .filter((item) => item.games.length)
+          .map((item) => item.id);
         setStatePage((prev) => ({
           ...prev,
           gameList: data,
           platform: (data.systems && data.systems[0]) || {},
+          missingArtwork: missingPlatforms,
+          scraping: system !== 'win32' || data.artworkRunning,
         }));
       });
     });
+
+    const unsubscribe = window.backend.message((line) => {
+      let json;
+      try {
+        json = JSON.parse(line);
+      } catch (error) {
+        return;
+      }
+      if (json && json.key === 'retrolibrary.artwork') {
+        setStatePage((prev) => ({
+          ...prev,
+          missingArtwork: json.missing,
+          artworkVersion: prev.artworkVersion + 1,
+          scraping: !json.finished,
+        }));
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
   return (
     <div className={`app ${system}`}>
       <AsideLibrary
         systems={gameList && gameList.systems}
+        missing={missingArtwork}
+        scraping={scraping}
         onClick={selectPlatform}
       />
       <div className="wrapper">
         <Header title={platform.title} />
-        <Library games={platform.games} storagePath={storagePath} />
+        <Library
+          games={platform.games}
+          storagePath={storagePath}
+          artworkVersion={artworkVersion}
+        />
       </div>
     </div>
   );
