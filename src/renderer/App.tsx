@@ -103,9 +103,21 @@ export default function App() {
     links: false,
   });
 
-  // Expose the real platform to CSS (e.g. native overlay scrollbars on macOS)
   useEffect(() => {
     document.body.dataset.platform = window.electron?.platform ?? '';
+    // Trick to check type of scrollbars on macos
+    const checkScrollbars = () => {
+      const probe = document.createElement('div');
+      probe.style.cssText =
+        'position:absolute;top:-9999px;width:100px;height:100px;overflow:scroll';
+      document.documentElement.appendChild(probe);
+      document.body.dataset.scrollbars =
+        probe.offsetWidth - probe.clientWidth > 0 ? 'classic' : 'overlay';
+      probe.remove();
+    };
+    checkScrollbars();
+    window.addEventListener('focus', checkScrollbars);
+    return () => window.removeEventListener('focus', checkScrollbars);
   }, []);
 
   const [stateCurrentConfigs, setStateCurrentConfigs] = useState({

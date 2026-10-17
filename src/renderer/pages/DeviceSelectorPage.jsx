@@ -21,6 +21,7 @@ import {
   imgchimeraOS,
   imgayaneokun,
   imglegiongo,
+  imgmac,
 } from 'components/utils/images/images';
 
 function DeviceSelectorPage() {
@@ -177,7 +178,7 @@ function DeviceSelectorPage() {
       <Header title={t('DeviceSelectorPage.title')} />
       <p className="lead">{t('DeviceSelectorPage.description')}</p>
       <DeviceSelector data={data} onClick={deviceSet}>
-        {system !== 'win32' && (
+        {system !== 'win32' && system !== 'darwin' && (
           <>
             {arch !== 'arm64' && (
               <>
@@ -238,6 +239,18 @@ function DeviceSelectorPage() {
             >
               <img src={imgwindows} width="100" alt="Background" />
               <span className="h6">{t('devices.windowsHandheld')}</span>
+            </Card>
+          </>
+        )}
+
+        {system === 'darwin' && (
+          <>
+            <Card
+              css={device === 'Mac' && 'is-selected'}
+              onClick={() => deviceSet('Mac')}
+            >
+              <img src={imgmac} width="100" alt="Background" />
+              <span className="h6">{t('devices.mac')}</span>
             </Card>
           </>
         )}

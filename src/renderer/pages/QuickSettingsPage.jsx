@@ -191,7 +191,7 @@ function QuickSettingsPage() {
         dolphin: arStatus,
       },
     });
-    if (arStatus === '169') {
+    if (arStatus === 169) {
       ipcChannel.sendMessage('emudeck', ['dolphin|||Dolphin_wideScreenOn']);
       ipcChannel.once('dolphin', () => {
         notificationShow(`🎉 ${t('QuickSettingsPage.nofifDolphinAR')}`);

@@ -27,6 +27,10 @@ function CHDToolPage() {
       ipcChannel.sendMessage('bash-nolog', [
         `start "" cmd /k "%APPDATA%\\EmuDeck\\backend\\tools\\chdconv\\chddeck.bat"`,
       ]);
+    } else if (system === 'darwin') {
+      ipcChannel.sendMessage('bash-nolog', [
+        `. $HOME/.config/EmuDeck/backend/functions/all.sh && startCompressor`,
+      ]);
     } else {
       ipcChannel.sendMessage('bash-nolog', [
         `konsole -e "/bin/bash $HOME/.config/EmuDeck/backend/tools/chdconv/chddeck.sh"`,
