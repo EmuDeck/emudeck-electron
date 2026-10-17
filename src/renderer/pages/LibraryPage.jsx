@@ -36,6 +36,18 @@ function LibraryPage() {
     setStatePage({ ...statePage, platform: selected });
   };
 
+  const launchGame = (game) => {
+    ipcChannel.sendMessage('rom-library-launch', [
+      platform.launcher,
+      game.filename,
+    ]);
+    ipcChannel.once('rom-library-launch', (response) => {
+      if (!response.ok) {
+        console.error('Library launch error', response.error);
+      }
+    });
+  };
+
   useEffect(() => {
     ipcChannel.sendMessage('rom-library-config', []);
     ipcChannel.once('rom-library-config', (config) => {
@@ -91,6 +103,7 @@ function LibraryPage() {
           games={platform.games}
           storagePath={storagePath}
           artworkVersion={artworkVersion}
+          onLaunch={launchGame}
         />
       </div>
     </div>

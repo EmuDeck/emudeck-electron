@@ -832,7 +832,8 @@ ipcMain.on('rom-library-launch', (event, args) => {
   const { toolsPath } = readBackendSettings();
   const quoted = `'${String(filename).replace(/'/g, `'\\''`)}'`;
   let command = String(launcher)
-    .replace(/"?\{file\.path\}"?/g, quoted)
+    .replace(/\\"/g, '"')
+    .replace(/"?'?\{file\.path\}'?"?/g, quoted)
     .replace(/CORESPATH/g, '"$RetroArch_cores"');
   if (toolsPath) {
     command = command.replace(/^\S*\/launchers\//, `${toolsPath}/launchers/`);
