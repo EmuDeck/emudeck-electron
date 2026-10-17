@@ -132,6 +132,9 @@
         "store": {
           "description": "Lade kostenlose, nicht kommerzielle Homebrew-Spiele herunter"
         },
+        "library": {
+          "description": "Durchsuche und starte deine Spiele"
+        },
         "srm": {
           "description": "Füge Emulatoren, Tools oder ROMs zu deiner Steam-Bibliothek hinzu"
         },
@@ -895,6 +898,11 @@
     "StoreFrontPage": {
       "title": "EmuDeck Store",
       "tabsAria": "Demo-Tabs"
+    },
+    "LibraryPage": {
+      "title": "Bibliothek",
+      "description": "Durchsuche und starte deine Spiele",
+      "platforms": "Plattformen"
     },
     "UninstallPage": {
       "title": "EmuDeck deinstallieren",

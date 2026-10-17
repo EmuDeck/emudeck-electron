@@ -132,6 +132,9 @@
         "store": {
           "description": "Descarga juegos homebrew gratuitos y no comerciales"
         },
+        "library": {
+          "description": "Explora y lanza tus juegos"
+        },
         "srm": {
           "description": "Añade emuladores, herramientas o ROMs a tu biblioteca de Steam"
         },
@@ -895,6 +898,11 @@
     "StoreFrontPage": {
       "title": "Tienda de EmuDeck",
       "tabsAria": "Pestañas de la demo"
+    },
+    "LibraryPage": {
+      "title": "Biblioteca",
+      "description": "Explora y lanza tus juegos",
+      "platforms": "Plataformas"
     },
     "UninstallPage": {
       "title": "Desinstalar EmuDeck",

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   MemoryRouter as Router,
   Routes,
   Route,
   useLocation,
 } from 'react-router-dom';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
 
 import CheckUpdatePage from 'pages/CheckUpdatePage';
 import UpdateNotifier from 'components/organisms/UpdateNotifier/UpdateNotifier';
@@ -65,6 +64,7 @@ import AutoSavePage from 'pages/AutoSavePage';
 import ControllerLayoutPage from 'pages/ControllerLayoutPage';
 import ConfirmationPage from 'pages/ConfirmationPage';
 import StoreFrontPage from 'pages/StoreFrontPage';
+import LibraryPage from 'pages/LibraryPage';
 import MetroCopPage from 'pages/MetroCopPage';
 import EmulatorResolutionPage from 'pages/EmulatorResolutionPage';
 import EmulatorConfigResolutionPage from 'pages/EmulatorConfigResolutionPage';
@@ -564,17 +564,20 @@ export default function App() {
     });
   }, [state.arch, state.system, state.installFrontends]);
 
+  const contextValue = useMemo(
+    () => ({
+      state,
+      setState,
+      stateCurrentConfigs,
+      setStateCurrentConfigs,
+      stateAside,
+      setStateAside,
+    }),
+    [state, stateCurrentConfigs, stateAside],
+  );
+
   return (
-    <GlobalContext.Provider
-      value={{
-        state,
-        setState,
-        stateCurrentConfigs,
-        setStateCurrentConfigs,
-        stateAside,
-        setStateAside,
-      }}
-    >
+    <GlobalContext.Provider value={contextValue}>
       <Router>
         <RouteClass />
         <Routes>
@@ -640,6 +643,7 @@ export default function App() {
 
           <Route exact path="/confirmation" element={<ConfirmationPage />} />
           <Route exact path="/store-front" element={<StoreFrontPage />} />
+          <Route exact path="/library" element={<LibraryPage />} />
           <Route exact path="/metro-cop" element={<MetroCopPage />} />
 
           <Route
