@@ -49,25 +49,40 @@ function LibraryPage() {
   };
 
   useEffect(() => {
+    const showGameList = (data) => {
+      const missingPlatforms = (data.missingArtwork || [])
+        .filter((item) => item.games.length)
+        .map((item) => item.id);
+      setStatePage((prev) => {
+        const systems = data.systems || [];
+        let selected = systems.find((item) => item.id === prev.platform.id);
+        if (!selected) {
+          selected = systems[0] || {};
+        }
+        return {
+          ...prev,
+          gameList: data,
+          platform: selected,
+          missingArtwork: missingPlatforms,
+          scraping: system !== 'win32' || data.artworkRunning,
+        };
+      });
+    };
+
     ipcChannel.sendMessage('rom-library-config', []);
     ipcChannel.once('rom-library-config', (config) => {
       setStatePage((prev) => ({ ...prev, storagePath: config.storagePath }));
     });
+    ipcChannel.sendMessage('rom-library-json', []);
+    ipcChannel.once('rom-library-json', (data) => {
+      if (data.ok) {
+        showGameList(data);
+      }
+    });
     ipcChannel.sendMessage('rom-library-build', []);
     ipcChannel.once('rom-library-build', () => {
       ipcChannel.sendMessage('rom-library-json', []);
-      ipcChannel.once('rom-library-json', (data) => {
-        const missingPlatforms = (data.missingArtwork || [])
-          .filter((item) => item.games.length)
-          .map((item) => item.id);
-        setStatePage((prev) => ({
-          ...prev,
-          gameList: data,
-          platform: (data.systems && data.systems[0]) || {},
-          missingArtwork: missingPlatforms,
-          scraping: system !== 'win32' || data.artworkRunning,
-        }));
-      });
+      ipcChannel.once('rom-library-json', showGameList);
     });
 
     const unsubscribe = window.backend.message((line) => {
