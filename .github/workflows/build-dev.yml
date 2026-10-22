@@ -80,3 +80,10 @@ jobs:
         with:
           name: EmuDeck-dev-Win32
           path: '**/*.exe'
+
+  publish-mac:
+    needs: publish
+    uses: ./.github/workflows/build-mac.yml
+    with:
+      channel: dev
+    secrets: inherit

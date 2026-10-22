@@ -84,3 +84,12 @@ jobs:
         with:
           name: EmuDeck-beta-windows
           path: '**/*.exe'
+
+  publish-mac:
+    needs: publish-linux
+    uses: ./.github/workflows/build-mac.yml
+    with:
+      channel: beta
+      repo: emudeck-electron-beta
+      prerelease: beta
+    secrets: inherit

@@ -1,0 +1,74 @@
+name: Build macOS
+
+on:
+  workflow_call:
+    inputs:
+      channel:
+        description: Release channel written to src/data/branch.json
+        type: string
+        default: main
+      repo:
+        description: GitHub repo the release is published to
+        type: string
+        default: emudeck-electron
+      prerelease:
+        description: Semver prerelease tag added to the version, empty for none
+        type: string
+        default: ''
+
+jobs:
+  publish-mac:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v4
+
+      - name: Git Submodule Update
+        run: git submodule update --init --recursive
+
+      - name: Install Node and NPM
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set channel
+        if: inputs.channel != 'main'
+        run: sed -i '' "s|main|${{ inputs.channel }}|g" ./src/data/branch.json
+
+      - name: Set release repo
+        if: inputs.repo != 'emudeck-electron'
+        run: sed -i '' "s|emudeck-electron|${{ inputs.repo }}|g" ./package.json
+
+      - name: Set prerelease version
+        if: inputs.prerelease != ''
+        working-directory: release/app
+        run: npm version --no-git-tag-version "$(node -p "require('./package.json').version")-${{ inputs.prerelease }}.${{ github.run_number }}"
+
+      - name: Publish releases
+        env:
+          # Developer ID Application certificate (.p12 in base64) and its password
+          CSC_LINK: ${{ secrets.CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+          # Notarization with an app-specific password
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          # This is used for uploading release assets to github
+          GH_TOKEN: ${{ secrets.github_token }}
+        run: |
+          npm run postinstall
+          npm run build
+          npm exec electron-builder -- --publish always --mac default --arm64
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: EmuDeck-${{ inputs.channel }}-mac
+          path: |
+            release/build/*.dmg
+            release/build/*.zip

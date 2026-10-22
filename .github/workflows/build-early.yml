@@ -83,3 +83,12 @@ jobs:
         with:
           name: EmuDeck-early-windows
           path: '**/*.exe'
+
+  publish-mac:
+    needs: publish-linux
+    uses: ./.github/workflows/build-mac.yml
+    with:
+      channel: early
+      repo: emudeck-electron-early
+      prerelease: early
+    secrets: inherit

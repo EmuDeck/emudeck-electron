@@ -84,3 +84,12 @@ jobs:
         with:
           name: EmuDeck-early-unstable-windows
           path: '**/*.exe'
+
+  publish-mac:
+    needs: publish-linux
+    uses: ./.github/workflows/build-mac.yml
+    with:
+      channel: early-unstable
+      repo: emudeck-electron-early-unstable
+      prerelease: unstable
+    secrets: inherit

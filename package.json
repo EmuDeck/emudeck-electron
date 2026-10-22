@@ -52,7 +52,7 @@
     "test": "jest",
     "build:windows": "npm run build && npm exec electron-builder -- --publish never --win",
     "build:linux": "npm run build && npm exec electron-builder -- --publish never --linux",
-    "build:mac": "npm run build && npm exec electron-builder -- --publish never --mac",
+    "build:mac": "npm run build && cross-env APPLE_KEYCHAIN_PROFILE=emudeck-notary electron-builder --publish never --mac",
     "build:x64": "npm run build && npm exec electron-builder -- --publish never --linux --x64 && npm exec electron-builder -- --publish never --win --x64"
   },
   "lint-staged": {
@@ -153,7 +153,6 @@
     "detect-port": "^2.1.0",
     "electron": "^41.0.4",
     "electron-builder": "^26.8.1",
-    "electron-notarize": "^1.2.2",
     "electron-rebuild": "^3.2.9",
     "electronmon": "^2.0.2",
     "eslint": "^8.57.0",
@@ -207,13 +206,11 @@
       "node_modules",
       "package.json"
     ],
-    "afterSign": ".erb/scripts/notarize.js",
     "mac": {
       "target": {
         "target": "default",
         "arch": [
-          "arm64",
-          "x64"
+          "arm64"
         ]
       },
       "type": "distribution",
