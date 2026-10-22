@@ -109,7 +109,7 @@ function PowerControlsPage() {
     const escapedPass = sudoPass.replaceAll("'", "'\\''");
 
     ipcChannel.sendMessage('emudeck', [
-      `powerControls|||Plugins_installPowerControls ${escapedPass} && echo true`,
+      `powerControls|||Plugins_installPowerControl ${escapedPass} && echo true`,
     ]);
 
     ipcChannel.once('powerControls', (status) => {
