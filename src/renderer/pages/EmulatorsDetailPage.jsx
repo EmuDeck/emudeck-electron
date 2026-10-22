@@ -1272,7 +1272,9 @@ function EmulatorsDetailPage() {
 
     // save OG Alternatives
 
-    const ogStateAlternativeValues = emulatorAlternative;
+    // Copy it: deleting from emulatorAlternative itself would remove
+    // multiemulator from the global state.
+    const ogStateAlternativeValues = { ...emulatorAlternative };
     delete ogStateAlternativeValues.multiemulator;
     const json = JSON.stringify(ogStateAlternativeValues);
     localStorage.setItem('ogStateAlternative', json);
@@ -1310,7 +1312,9 @@ function EmulatorsDetailPage() {
 
       return true;
     }
-    const sameObject = sameObjects(ogStateAlternative, emulatorAlternative);
+    const currentAlternative = { ...emulatorAlternative };
+    delete currentAlternative.multiemulator;
+    const sameObject = sameObjects(ogStateAlternative, currentAlternative);
 
     if (!sameObject) {
       if (system === 'win32') {
