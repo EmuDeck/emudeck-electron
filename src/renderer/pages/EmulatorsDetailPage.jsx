@@ -1159,10 +1159,12 @@ function EmulatorsDetailPage() {
       css: 'emumodal--xs',
     });
 
-    ipcChannel.sendMessage('emudeck', [`${code}_migrate|||${code}_migrate`]);
+    ipcChannel.sendMessage('emudeck', [
+      `${code}_migrate|||${code}_migrate && echo true`,
+    ]);
 
     ipcChannel.once(`${code}_migrate`, (message) => {
-      const stdout = message.message;
+      const { stdout } = message;
 
       const response = stdout.replaceAll('\n', '');
       let modalData;
@@ -1189,6 +1191,10 @@ function EmulatorsDetailPage() {
           css: 'emumodal--xs',
         };
       }
+      setStatePage({
+        ...statePage,
+        modal: modalData,
+      });
     });
   };
 
