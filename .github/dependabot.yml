@@ -1,0 +1,8 @@
+version: 2
+updates:
+  - package-ecosystem: 'npm' # o "pip", "github-actions", etc.
+    directory: '/' # donde está el package.json
+    target-branch: 'dev'
+    schedule:
+      interval: 'weekly' # daily / weekly / monthly
+    open-pull-requests-limit: 10
