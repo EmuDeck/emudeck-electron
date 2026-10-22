@@ -1374,102 +1374,6 @@ ipcMain.on('get-store-featured', async (event) => {
   // });
 });
 
-ipcMain.on('get-store', async (event) => {
-  const backChannel = 'get-store';
-
-  const buildJsonStore = async () => {
-    // GB HomebrewGames
-    let dir = `${appDataPath}/store/`;
-    if (os.platform().includes('win32')) {
-      dir = `${appDataPath}/store/`;
-    }
-
-    let jsonArray: any = [];
-
-    await new Promise((resolve: any, reject: any) => {
-      fs.readdir(dir, (err: any, files: any) => {
-        if (err) reject(err);
-        files.forEach((file: any) => {
-          if (file.includes('.json') && !file.includes('store')) {
-            const jsonPath = `${dir}${file}`;
-            try {
-              const data = fs.readFileSync(jsonPath);
-              const json = JSON.parse(data);
-              jsonArray = jsonArray.concat(json);
-            } catch (err) {
-              console.error(err);
-            }
-          }
-        });
-        const storeJson = {
-          data: jsonArray,
-        };
-        resolve(storeJson);
-      });
-    }).then(async (storeJson: any) => {
-      let dir = `${appDataPath}/feeds/`;
-      if (os.platform().includes('win32')) {
-        dir = `${appDataPath}/feeds/`;
-      }
-      let jsonArray: any = [];
-
-      await new Promise((resolve: any, reject: any) => {
-        fs.readdir(dir, (err: any, files: any) => {
-          if (err) reject(err);
-          if (files !== undefined) {
-            files.forEach((file: any) => {
-              if (file.includes('.json') && !file.includes('store')) {
-                const jsonPath = `${dir}${file}`;
-                try {
-                  const data = fs.readFileSync(jsonPath);
-                  const json = JSON.parse(data);
-                  jsonArray = jsonArray.concat(json);
-                } catch (err) {
-                  console.error(err);
-                }
-              }
-            });
-          }
-          const feedsJson = {
-            data: jsonArray,
-          };
-
-          // console.log({ storeJson });
-          // console.log({ jsonArray });
-          const fullJson = {
-            store: storeJson,
-            feeds: feedsJson,
-          };
-
-          resolve(fullJson);
-        });
-      }).then((fullJson: any) => {
-        let file = `${appDataPath}/store/store.json`;
-        if (os.platform().includes('win32')) {
-          file = `${appDataPath}/store/store.json`;
-        }
-
-        fs.writeFileSync(file, JSON.stringify(fullJson));
-      });
-    });
-  };
-
-  buildJsonStore()
-    .then(() => {
-      let jsonPath = `${appDataPath}/store/store.json`;
-      if (os.platform().includes('win32')) {
-        jsonPath = `${appDataPath}/store/store.json`;
-      }
-      const data = fs.readFileSync(jsonPath);
-      const json = JSON.parse(data);
-      event.reply(backChannel, json);
-    })
-    .catch((error) => {
-      // Manejar cualquier error que pueda ocurrir en doUpdate o autoUpdater
-      console.error('Error:', error);
-    });
-});
-
 ipcMain.on('build-store', async (event) => {
   const buildJson = (system: any, name: any) => {
     // GB HomebrewGames
@@ -1534,61 +1438,31 @@ ipcMain.on('build-store', async (event) => {
 
 ipcMain.on('installGame', async (event, command) => {
   const backChannel = 'installGame';
+  const [url, system, name, coverUrl = '', screenshotUrl = ''] = command;
+  const isWin = os.platform().includes('win32');
+  const quote = (value: string) =>
+    isWin
+      ? `'${String(value).replace(/'/g, "''")}'`
+      : `'${String(value).replace(/'/g, `'\\''`)}'`;
+  const bashCommand = `emuDeckInstallHomebrewGame ${[
+    system,
+    name,
+    url,
+    coverUrl,
+    screenshotUrl,
+  ]
+    .map(quote)
+    .join(' ')}`;
+  const preCommand = isWin
+    ? `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`
+    : `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
 
-  const game = command[0];
-  const system = command[2];
-  // eslint-disable-next-line
-  const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
-
-  // Alternative syntax using RegExp constructor
-  // const regex = new RegExp('([^\\/]+?)(?=\\.\\w+$)|([^\\/]+?)(?=$)', '')
-
-  let gameName = game.match(regex);
-  // eslint-disable-next-line
-  gameName = gameName[0];
-
-  let bashCommand = `emuDeckInstallHomebrewGame '${system}' '${gameName}' '${game}'`;
-  let preCommand;
-  if (os.platform().includes('win32')) {
-    bashCommand = bashCommand.replaceAll('&&', ';');
-    preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
-  } else {
-    preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
-  }
-
-  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
+  return exec(preCommand, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, error, stdout, stderr);
-  });
-});
-
-ipcMain.on('unInstallGame', async (event, command) => {
-  const backChannel = 'unInstallGame';
-
-  const game = command[0];
-  const system = command[2];
-  // eslint-disable-next-line
-  const regex = /([^\/]+?)(?=\.\w+$)|([^\/]+?)(?=$)/;
-
-  // Alternative syntax using RegExp constructor
-  // const regex = new RegExp('([^\\/]+?)(?=\\.\\w+$)|([^\\/]+?)(?=$)', '')
-
-  let gameName = game.match(regex);
-  // eslint-disable-next-line
-  gameName = gameName[0];
-
-  let bashCommand = `emuDeckUnInstallHomebrewGame '${system}' '${gameName}' '${game}'`;
-  let preCommand;
-  if (os.platform().includes('win32')) {
-    bashCommand = bashCommand.replaceAll('&&', ';');
-    preCommand = `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`;
-  } else {
-    preCommand = `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
-  }
-
-  return exec(`${preCommand}`, shellType, (error, stdout, stderr) => {
-    logCommand(bashCommand, error, stdout, stderr);
-    event.reply(backChannel, error, stdout, stderr);
+    event.reply(backChannel, {
+      ok: !error && String(stdout).includes('true'),
+      error: error ? String(error.message) : null,
+    });
   });
 });
 

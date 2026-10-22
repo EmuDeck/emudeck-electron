@@ -145,7 +145,7 @@ function FinishPage() {
       iconFlat: 'package',
       title: t('StoreFrontPage.title'),
       status: true,
-      function: () => window.open('https://store.emudeck.com', '_blank'),
+      function: () => navigate('/store'),
     },
     {
       iconFlat: 'prize',

@@ -904,6 +904,19 @@
       "description": "Sfoglia e avvia i tuoi giochi",
       "platforms": "Piattaforme"
     },
+    "StorePage": {
+      "free": "Gratis",
+      "developer": "Sviluppatore",
+      "buy": "Acquista su EmuDeck Store",
+      "installing": "Installazione...",
+      "installed": "Installato! Lo troverai nella tua Libreria.",
+      "installError": "Impossibile installare il gioco.",
+      "get": "Ottieni",
+      "by": "di {{name}}",
+      "noDescription": "Nessuna descrizione disponibile.",
+      "comments": "Commenti",
+      "noComments": "Ancora nessun commento."
+    },
     "UninstallPage": {
       "title": "Disinstalla EmuDeck",
       "description": "L'utilità di disinstallazione di EmuDeck dovrebbe essere utilizzata solo se hai intenzione di rimuovere EmuDeck dal tuo sistema. Se stai riscontrando problemi, esegui un ripristino personalizzato, risolvi i problemi specifici dello strumento o dell'emulatore o visita EmuDeck Discord o Reddit per ulteriore supporto.",

@@ -1,9 +1,5 @@
 export const useFetchCond = (endpoint) => {
-  let defaultHeader = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  };
-  defaultHeader = {};
+  const defaultHeader = {};
   const customFetch = (
     url,
     method = 'GET',
@@ -14,18 +10,10 @@ export const useFetchCond = (endpoint) => {
       method,
       headers,
     };
-    let path;
     if (body) {
-      let token;
-      let domain;
-
-      path = endpoint;
-      const bodyData = {
-        ...body,
-      };
-      options.body = JSON.stringify(bodyData);
+      options.body = JSON.stringify({ ...body });
     }
-    return fetch(path, options)
+    return fetch(url, options)
       .then((response) => response.json())
       .catch((err) => {
         throw new Error(err);
