@@ -22,13 +22,13 @@ jobs:
 
     steps:
       - name: Checkout git repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Git Submodule Update
         run: git submodule update --init --recursive
 
       - name: Install Node and NPM
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -80,7 +80,7 @@ jobs:
           npm exec electron-builder -- --publish always --mac default --arm64
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: EmuDeck-${{ inputs.channel }}-mac
           path: |

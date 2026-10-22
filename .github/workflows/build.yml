@@ -19,20 +19,20 @@ jobs:
 
     steps:
       - name: Checkout git repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Git Submodule Update
         run: git submodule update --init --recursive
 
       - name: Use cached node_modules
         id: cache-node_modules
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: node_modules
           key: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Install Node and NPM
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -64,13 +64,13 @@ jobs:
           npm exec electron-builder -- --publish always --linux --x64 --arm64 && npm exec electron-builder -- --publish always --win --x64
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: EmuDeck-AppImage
           path: '**/*.AppImage'
 
       - name: Upload Artifact Windows
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: EmuDeck-Win32
           path: '**/*.exe'
