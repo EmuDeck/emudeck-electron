@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { GlobalContext } from 'context/globalContext';
 import { useFetchCond } from 'hooks/useFetchCond';
@@ -9,7 +10,10 @@ import Header from 'components/organisms/Header/Header';
 
 import Store from 'components/organisms/Wrappers/Store';
 
+import './store-page.scss';
+
 function StorePage() {
+  const { t } = useTranslation();
   const { state } = useContext(GlobalContext);
   const { system } = state;
   const ipcChannel = window.electron.ipcRenderer;
@@ -19,8 +23,25 @@ function StorePage() {
     game: null,
     comments: [],
     status: '',
+    tag: '',
+    pricing: 'all',
   });
-  const { catalog, platform, game, comments, status } = statePage;
+  const { catalog, platform, game, comments, status, tag, pricing } =
+    statePage;
+  const platformGames = platform.games || [];
+  const tags = [...new Set(platformGames.flatMap((item) => item.tags))].sort();
+  const games = platformGames.filter((item) => {
+    if (tag && !item.tags.includes(tag)) {
+      return false;
+    }
+    if (pricing === 'free') {
+      return !item.price;
+    }
+    if (pricing === 'paid') {
+      return item.price > 0;
+    }
+    return true;
+  });
 
   const storeWS = useFetchCond('https://store.emudeck.com/rest/store.php');
   const freeOrderWS = useFetchCond('https://store.emudeck.com/rest/add-free-order.php');
@@ -47,7 +68,7 @@ function StorePage() {
   }, []);
 
   const selectPlatform = (selected) => {
-    setStatePage({ ...statePage, platform: selected });
+    setStatePage({ ...statePage, platform: selected, tag: '' });
   };
 
   const setStatus = (code) => {
@@ -123,11 +144,35 @@ function StorePage() {
     <div className={`app ${system}`}>
       <AsideLibrary systems={catalog} onClick={selectPlatform} />
       <div className="wrapper">
-        <Header title={platform.title} />
-        <Store
-          games={platform.games}
-          onClick={selectGame}
-        />
+        <Header />
+        <div className="store-page__toolbar">
+          <h1 className="h2">{platform.title}</h1>
+          <div className="store-page__filters">
+            {['', ...tags].map((item) => (
+              <button
+                key={item}
+                type="button"
+                className={`store-page__filter ${tag === item ? 'is-active' : ''}`}
+                onClick={() => setStatePage({ ...statePage, tag: item })}
+              >
+                {item || t('StorePage.allTags')}
+              </button>
+            ))}
+          </div>
+          <div className="store-page__filters">
+            {['all', 'free', 'paid'].map((item) => (
+              <button
+                key={item}
+                type="button"
+                className={`store-page__filter ${pricing === item ? 'is-active' : ''}`}
+                onClick={() => setStatePage({ ...statePage, pricing: item })}
+              >
+                {t(`StorePage.${item}`)}
+              </button>
+            ))}
+          </div>
+        </div>
+        <Store games={games} onClick={selectGame} />
       </div>
       <EmuModal modal={modal} />
     </div>

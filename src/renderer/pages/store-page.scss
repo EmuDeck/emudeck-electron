@@ -1,0 +1,32 @@
+.store-page {
+  &__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    .h2 {
+      margin: 0;
+      margin-right: auto;
+    }
+  }
+  &__filters {
+    -webkit-app-region: no-drag;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  &__filter {
+    font-size: 1.3rem;
+    padding: 4px 12px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    &.is-active {
+      background: #e5d6ff;
+      color: var(--color-text-3);
+    }
+  }
+}

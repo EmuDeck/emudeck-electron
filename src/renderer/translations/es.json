@@ -906,6 +906,9 @@
     },
     "StorePage": {
       "free": "Gratis",
+      "all": "Todos",
+      "paid": "De pago",
+      "allTags": "Todos los tags",
       "developer": "Desarrollador",
       "buy": "Comprar en EmuDeck Store",
       "installing": "Instalando...",
