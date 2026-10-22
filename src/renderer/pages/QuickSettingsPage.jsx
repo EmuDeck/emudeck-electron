@@ -94,12 +94,13 @@ function QuickSettingsPage() {
         ]);
         ipcChannel.once('sega43', () => {
           notificationShow(`🎉 ${t('QuickSettingsPage.notifSegaAR')}`);
+          // Only after the ratio change: both rewrite the same overrides
+          if (bezels === true) {
+            ipcChannel.sendMessage('emudeck', [
+              'sega43Bezels|||RetroArch_mastersystem_bezelOn && RetroArch_genesis_bezelOn && RetroArch_segacd_bezelOn && RetroArch_sega32x_bezelOn',
+            ]);
+          }
         });
-        if (bezels === true) {
-          ipcChannel.sendMessage('emudeck', [
-            'sega43Bezels|||RetroArch_mastersystem_bezelOn && RetroArch_genesis_bezelOn && RetroArch_segacd_bezelOn && RetroArch_sega32x_bezelOn',
-          ]);
-        }
         break;
     }
   };
@@ -118,12 +119,12 @@ function QuickSettingsPage() {
         ]);
         ipcChannel.once('snes87', () => {
           notificationShow(`🎉 ${t('QuickSettingsPage.notifSNESRatio')}`);
+          if (bezels === true) {
+            ipcChannel.sendMessage('emudeck', [
+              'snes87Bezels|||RetroArch_snes_bezelOn && RetroArch_snes_ar87 && RetroArch_nes_ar87',
+            ]);
+          }
         });
-        if (bezels === true) {
-          ipcChannel.sendMessage('emudeck', [
-            'snes87Bezels|||RetroArch_snes_bezelOn && RetroArch_snes_ar87 && RetroArch_nes_ar87',
-          ]);
-        }
         break;
       case 32:
         ipcChannel.sendMessage('emudeck', [
@@ -139,12 +140,12 @@ function QuickSettingsPage() {
         ]);
         ipcChannel.once('snes43', () => {
           notificationShow(`🎉 ${t('QuickSettingsPage.notifSNESRatio')}`);
+          if (bezels === true) {
+            ipcChannel.sendMessage('emudeck', [
+              'snes43Bezels|||RetroArch_snes_bezelOn',
+            ]);
+          }
         });
-        if (bezels === true) {
-          ipcChannel.sendMessage('emudeck', [
-            'snes43Bezels|||RetroArch_snes_bezelOn',
-          ]);
-        }
         break;
     }
   };
@@ -171,15 +172,15 @@ function QuickSettingsPage() {
         ]);
         ipcChannel.once('3d43', () => {
           notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
+          if (bezels === true) {
+            ipcChannel.sendMessage('emudeck', [
+              '3d43Bezels|||RetroArch_dreamcast_bezelOn && RetroArch_psx_bezelOn',
+            ]);
+            ipcChannel.once('3d43Bezels', () => {
+              notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
+            });
+          }
         });
-        if (bezels === true) {
-          ipcChannel.sendMessage('emudeck', [
-            '3d43Bezels|||RetroArch_dreamcast_bezelOn && RetroArch_psx_bezelOn',
-          ]);
-          ipcChannel.once('3d43Bezels', () => {
-            notificationShow(`🎉 ${t('QuickSettingsPage.nofif3DAR')}`);
-          });
-        }
         break;
     }
   };
