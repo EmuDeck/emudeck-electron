@@ -12,6 +12,7 @@ import StoreLogin from 'components/molecules/StoreLogin/StoreLogin';
 import Header from 'components/organisms/Header/Header';
 
 import Store from 'components/organisms/Wrappers/Store';
+import StoreTop from 'components/organisms/Wrappers/StoreTop';
 
 import './store-page.scss';
 
@@ -30,9 +31,13 @@ function StorePage() {
     pricing: 'all',
     token: localStorage.getItem('emudeck_store_token') || '',
     currentGameOwned: false,
+    currentGameInstalled: false,
+    ratingStatus: '',
+    commentStatus: '',
     login: false,
-    account: false,
+    view: 'store',
     orders: null,
+    top: null,
   });
   const {
     catalog,
@@ -44,9 +49,13 @@ function StorePage() {
     pricing,
     token,
     currentGameOwned,
+    currentGameInstalled,
+    ratingStatus,
+    commentStatus,
     login,
-    account,
+    view,
     orders,
+    top,
   } = statePage;
   const platformGames = platform.games || [];
   const tags = [...new Set(platformGames.flatMap((item) => item.tags))].sort();
@@ -62,17 +71,20 @@ function StorePage() {
     }
     return true;
   });
-  const purchasedGames = catalog
-    .flatMap((item) => item.games)
+  const catalogGames = catalog.flatMap((item) => item.games);
+  const purchasedGames = catalogGames
     .filter((item) => item.price > 0 && (orders || []).includes(item.id));
 
   const storeWS = useFetchCond('https://store.emudeck.com/rest/store.php');
   const freeOrderWS = useFetchCond('https://store.emudeck.com/rest/add-free-order.php');
   const downloadLinkWS = useFetchCond('https://store.emudeck.com/rest/generate-link.php');
   const commentsWS = useFetchCond('https://store.emudeck.com/rest/comments.php');
+  const ratingWS = useFetchCond('https://store.emudeck.com/rest/rating.php');
   const loginWS = useFetchCond('https://store.emudeck.com/rest/login.php');
   const checkOrderWS = useFetchCond('https://store.emudeck.com/rest/check-order.php');
   const ordersWS = useFetchCond('https://store.emudeck.com/rest/orders.php');
+  const topWS = useFetchCond('https://store.emudeck.com/rest/top.php');
+  const developersWS = useFetchCond('https://store.emudeck.com/rest/developer.php');
 
   useEffect(() => {
     storeWS
@@ -99,13 +111,13 @@ function StorePage() {
       ...prev,
       token: '',
       currentGameOwned: false,
-      account: false,
+      view: 'store',
       orders: null,
     }));
   };
 
   const openAccount = () => {
-    setStatePage({ ...statePage, account: true, orders: null });
+    setStatePage({ ...statePage, view: 'purchases', orders: null });
     ordersWS
       .post({ token })
       .then((data) => {
@@ -138,8 +150,24 @@ function StorePage() {
     setStatePage((prev) => ({ ...prev, token: newToken, login: false }));
   };
 
+  const openTop = () => {
+    setStatePage({ ...statePage, view: 'top' });
+    Promise.all([topWS.get(), developersWS.get()])
+      .then(([games, developers]) => {
+        setStatePage((prev) => ({
+          ...prev,
+          top: {
+            free: games.free || [],
+            paid: games.paid || [],
+            developers: developers.developers || [],
+          },
+        }));
+      })
+      .catch((error) => console.error('Store top error', error));
+  };
+
   const selectPlatform = (selected) => {
-    setStatePage({ ...statePage, platform: selected, tag: '', account: false });
+    setStatePage({ ...statePage, platform: selected, tag: '', view: 'store' });
   };
 
   const setStatus = (code) => {
@@ -169,10 +197,31 @@ function StorePage() {
           (artwork.screenshot || [])[0],
         ]);
         ipcChannel.once('installGame', (response) => {
-          setStatus(response.ok ? 'installed' : 'error');
+          setStatePage((prev) => ({
+            ...prev,
+            status: response.ok ? 'installed' : 'error',
+            currentGameInstalled: response.ok,
+            currentGameOwned: prev.currentGameOwned || (response.ok && !!token),
+          }));
         });
       })
       .catch(() => setStatus('error'));
+  };
+
+  const uninstallGame = (selected) => {
+    setStatus('uninstalling');
+    ipcChannel.sendMessage('uninstallGame', [selected.platform, selected.name]);
+    ipcChannel.once('uninstallGame', (response) => {
+      if (!response.ok) {
+        setStatus('uninstallError');
+        return;
+      }
+      setStatePage((prev) => ({
+        ...prev,
+        status: 'uninstalled',
+        currentGameInstalled: false,
+      }));
+    });
   };
 
   const selectGame = (selected) => {
@@ -182,8 +231,15 @@ function StorePage() {
       comments: [],
       status: '',
       currentGameOwned: false,
+      currentGameInstalled: false,
+      ratingStatus: '',
+      commentStatus: '',
     });
-    if (token && selected.price) {
+    ipcChannel.sendMessage('store-installed', [selected.platform, selected.name]);
+    ipcChannel.once('store-installed', (installed) => {
+      setStatePage((prev) => ({ ...prev, currentGameInstalled: installed }));
+    });
+    if (token) {
       checkOrderWS
         .post({ token, game_id: selected.id })
         .then((data) => {
@@ -201,6 +257,52 @@ function StorePage() {
       .catch((error) => console.error('Store comments error', error));
   };
 
+  const rateGame = (rating) => {
+    ratingWS
+      .post({ token, game_id: game.id, rating })
+      .then((data) => {
+        if (data.status !== 'success') {
+          setStatePage((prev) => ({ ...prev, ratingStatus: 'error' }));
+          return;
+        }
+        const newRating = { avg: data.avg_rating, total: data.total };
+        const withRating = (list) =>
+          list.map((item) =>
+            item.id === game.id ? { ...item, rating: newRating } : item,
+          );
+        setStatePage((prev) => ({
+          ...prev,
+          ratingStatus: 'sent',
+          game: { ...prev.game, rating: newRating },
+          catalog: prev.catalog.map((item) => ({
+            ...item,
+            games: withRating(item.games),
+          })),
+          platform: { ...prev.platform, games: withRating(prev.platform.games || []) },
+        }));
+      })
+      .catch(() => setStatePage((prev) => ({ ...prev, ratingStatus: 'error' })));
+  };
+
+  const postComment = (body) => {
+    setStatePage((prev) => ({ ...prev, commentStatus: 'sending' }));
+    return commentsWS
+      .post({ action: 'post', game_id: game.id, token, body })
+      .then((data) => {
+        if (data.status === 'success') {
+          setStatePage((prev) => ({ ...prev, commentStatus: 'sent' }));
+          return true;
+        }
+        const code = String(data.message).includes('already') ? 'already' : 'error';
+        setStatePage((prev) => ({ ...prev, commentStatus: code }));
+        return false;
+      })
+      .catch(() => {
+        setStatePage((prev) => ({ ...prev, commentStatus: 'error' }));
+        return false;
+      });
+  };
+
   const closeGame = () => {
     setStatePage((prev) => ({ ...prev, game: null }));
   };
@@ -209,26 +311,59 @@ function StorePage() {
     if (!game) {
       return false;
     }
+    let reviewBlock = '';
+    if (!token) {
+      reviewBlock = 'login';
+    } else if (game.price && !currentGameOwned) {
+      reviewBlock = 'buy';
+    } else if (!game.price && !currentGameInstalled) {
+      reviewBlock = 'install';
+    } else if (!currentGameOwned) {
+      reviewBlock = 'reinstall';
+    }
+    const canReview = !reviewBlock;
     return {
       active: true,
       body: (
         <GameDetail
+          key={game.id}
           game={game}
           comments={comments}
           status={status}
           owned={currentGameOwned}
-          onAction={() =>
-            !game.price || currentGameOwned
-              ? installGame(game)
-              : window.open(`https://store.emudeck.com/?game=${game.id}`, '_blank')
-          }
+          installed={currentGameInstalled}
+          ratingStatus={ratingStatus}
+          commentStatus={commentStatus}
+          reviewBlock={reviewBlock}
+          onRate={canReview ? rateGame : null}
+          onComment={canReview ? postComment : null}
+          onAction={() => {
+            if (currentGameInstalled) {
+              uninstallGame(game);
+              return;
+            }
+            if (!game.price || currentGameOwned) {
+              installGame(game);
+              return;
+            }
+            window.open(`https://store.emudeck.com/?game=${game.id}`, '_blank');
+          }}
           onClose={closeGame}
         />
       ),
       footer: <></>,
       css: 'emumodal--game',
     };
-  }, [game, comments, status, currentGameOwned, token]);
+  }, [
+    game,
+    comments,
+    status,
+    currentGameOwned,
+    currentGameInstalled,
+    ratingStatus,
+    commentStatus,
+    token,
+  ]);
 
   const loginModal = useMemo(() => {
     if (!login) {
@@ -260,8 +395,18 @@ function StorePage() {
           >
             <div className="list--icons list--icons--xs">
               <div className="text">
-                <Icon name="cloud" fill="transparent" />
+                <Icon name="package" fill="transparent" />
                 {token ? t('StorePage.purchases') : t('StorePage.login')}
+              </div>
+            </div>
+          </button>
+        </li>
+        <li>
+          <button type="button" onClick={openTop}>
+            <div className="list--icons list--icons--xs">
+              <div className="text">
+                <Icon name="prize" fill="transparent" />
+                {t('StorePage.top')}
               </div>
             </div>
           </button>
@@ -269,7 +414,7 @@ function StorePage() {
       </AsideLibrary>
       <div className="wrapper">
         <Header />
-        {account ? (
+        {view === 'purchases' && (
           <>
             <div className="store-page__toolbar">
               <h1 className="h2">{t('StorePage.purchases')}</h1>
@@ -287,7 +432,11 @@ function StorePage() {
             )}
             <Store games={purchasedGames} onClick={selectGame} />
           </>
-        ) : (
+        )}
+        {view === 'top' && (
+          <StoreTop top={top} games={catalogGames} onClick={selectGame} />
+        )}
+        {view === 'store' && (
           <>
             <div className="store-page__toolbar">
               <h1 className="h2">{platform.title}</h1>

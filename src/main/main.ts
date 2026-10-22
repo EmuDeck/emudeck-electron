@@ -1436,26 +1436,26 @@ ipcMain.on('build-store', async (event) => {
   // });
 });
 
-ipcMain.on('installGame', async (event, command) => {
-  const backChannel = 'installGame';
-  const [url, system, name, coverUrl = '', screenshotUrl = ''] = command;
+const homebrewCommand = (fn: string, args: string[]) => {
   const isWin = os.platform().includes('win32');
   const quote = (value: string) =>
     isWin
       ? `'${String(value).replace(/'/g, "''")}'`
       : `'${String(value).replace(/'/g, `'\\''`)}'`;
-  const bashCommand = `emuDeckInstallHomebrewGame ${[
-    system,
-    name,
-    url,
-    coverUrl,
-    screenshotUrl,
-  ]
-    .map(quote)
-    .join(' ')}`;
+  const bashCommand = `${fn} ${args.map(quote).join(' ')}`;
   const preCommand = isWin
     ? `powershell -ExecutionPolicy Bypass -command "& { cd $env:USERPROFILE ; cd AppData ; cd Roaming  ; cd EmuDeck ; cd backend ; cd functions ; . ./all.ps1 ; ${bashCommand} "}`
     : `. ~/.config/EmuDeck/backend/functions/all.sh && ${bashCommand}`;
+  return { bashCommand, preCommand };
+};
+
+ipcMain.on('installGame', async (event, command) => {
+  const backChannel = 'installGame';
+  const [url, system, name, coverUrl = '', screenshotUrl = ''] = command;
+  const { bashCommand, preCommand } = homebrewCommand(
+    'emuDeckInstallHomebrewGame',
+    [system, name, url, coverUrl, screenshotUrl],
+  );
 
   return exec(preCommand, shellType, (error, stdout, stderr) => {
     logCommand(bashCommand, error, stdout, stderr);
@@ -1464,6 +1464,35 @@ ipcMain.on('installGame', async (event, command) => {
       error: error ? String(error.message) : null,
     });
   });
+});
+
+ipcMain.on('uninstallGame', async (event, command) => {
+  const backChannel = 'uninstallGame';
+  const [system, name] = command;
+  const { bashCommand, preCommand } = homebrewCommand(
+    'emuDeckUnInstallHomebrewGame',
+    [system, name],
+  );
+
+  return exec(preCommand, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, {
+      ok: !error && String(stdout).includes('true'),
+      error: error ? String(error.message) : null,
+    });
+  });
+});
+
+ipcMain.on('store-installed', (event, command) => {
+  const [system, name] = command;
+  const { romsPath } = readBackendSettings();
+  const installed =
+    Boolean(romsPath) &&
+    [
+      `${romsPath}/${system}/${name}.zip`,
+      `${romsPath}/${system}/homebrew/${name}.zip`,
+    ].some((file) => fs.existsSync(file));
+  event.reply('store-installed', installed);
 });
 
 // Dependencies checks
