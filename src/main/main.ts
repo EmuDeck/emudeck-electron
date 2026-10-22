@@ -1307,6 +1307,8 @@ ipcMain.on('check-versions', async (event) => {
     event.reply(backChannel, json);
   } catch (err) {
     console.error(err);
+    // Always answer: the pages wait for this reply before rendering
+    event.reply(backChannel, '');
   }
   // });
 });
