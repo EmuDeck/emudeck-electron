@@ -145,7 +145,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "browserslist-config-erb": "^0.0.3",
     "chalk": "^4.1.2",
-    "concurrently": "^9.2.1",
+    "concurrently": "^9.2.5",
     "core-js": "^3.36.1",
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.4",
