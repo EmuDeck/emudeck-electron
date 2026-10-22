@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import { GlobalContext } from 'context/globalContext';
 import { useFetchCond } from 'hooks/useFetchCond';
 import { BtnSimple } from 'getbasecore/Atoms';
@@ -16,8 +17,16 @@ import StoreTop from 'components/organisms/Wrappers/StoreTop';
 
 import './store-page.scss';
 
-function StorePage() {
+function StorePage({ site = 'store' }) {
   const { t } = useTranslation();
+  const api = `https://${site}.emudeck.com/rest`;
+  const tokenKey = `emudeck_${site}_token`;
+  let installChannel = 'installGame';
+  let uninstallChannel = 'uninstallGame';
+  if (site === 'remix') {
+    installChannel = 'installRemix';
+    uninstallChannel = 'uninstallRemix';
+  }
   const { state } = useContext(GlobalContext);
   const { system } = state;
   const ipcChannel = window.electron.ipcRenderer;
@@ -29,12 +38,13 @@ function StorePage() {
     status: '',
     tag: '',
     pricing: 'all',
-    token: localStorage.getItem('emudeck_store_token') || '',
+    token: localStorage.getItem(tokenKey) || '',
     currentGameOwned: false,
     currentGameInstalled: false,
     ratingStatus: '',
     commentStatus: '',
     login: false,
+    missingRom: false,
     view: 'store',
     orders: null,
     top: null,
@@ -53,6 +63,7 @@ function StorePage() {
     ratingStatus,
     commentStatus,
     login,
+    missingRom,
     view,
     orders,
     top,
@@ -75,16 +86,16 @@ function StorePage() {
   const purchasedGames = catalogGames
     .filter((item) => item.price > 0 && (orders || []).includes(item.id));
 
-  const storeWS = useFetchCond('https://store.emudeck.com/rest/store.php');
-  const freeOrderWS = useFetchCond('https://store.emudeck.com/rest/add-free-order.php');
-  const downloadLinkWS = useFetchCond('https://store.emudeck.com/rest/generate-link.php');
-  const commentsWS = useFetchCond('https://store.emudeck.com/rest/comments.php');
-  const ratingWS = useFetchCond('https://store.emudeck.com/rest/rating.php');
-  const loginWS = useFetchCond('https://store.emudeck.com/rest/login.php');
-  const checkOrderWS = useFetchCond('https://store.emudeck.com/rest/check-order.php');
-  const ordersWS = useFetchCond('https://store.emudeck.com/rest/orders.php');
-  const topWS = useFetchCond('https://store.emudeck.com/rest/top.php');
-  const developersWS = useFetchCond('https://store.emudeck.com/rest/developer.php');
+  const storeWS = useFetchCond(`${api}/store.php`);
+  const freeOrderWS = useFetchCond(`${api}/add-free-order.php`);
+  const downloadLinkWS = useFetchCond(`${api}/generate-link.php`);
+  const commentsWS = useFetchCond(`${api}/comments.php`);
+  const ratingWS = useFetchCond(`${api}/rating.php`);
+  const loginWS = useFetchCond(`${api}/login.php`);
+  const checkOrderWS = useFetchCond(`${api}/check-order.php`);
+  const ordersWS = useFetchCond(`${api}/orders.php`);
+  const topWS = useFetchCond(`${api}/top.php`);
+  const developersWS = useFetchCond(`${api}/developer.php`);
 
   useEffect(() => {
     storeWS
@@ -106,7 +117,7 @@ function StorePage() {
   }, []);
 
   const logout = () => {
-    localStorage.removeItem('emudeck_store_token');
+    localStorage.removeItem(tokenKey);
     setStatePage((prev) => ({
       ...prev,
       token: '',
@@ -146,7 +157,7 @@ function StorePage() {
   }, [token]);
 
   const saveToken = (newToken) => {
-    localStorage.setItem('emudeck_store_token', newToken);
+    localStorage.setItem(tokenKey, newToken);
     setStatePage((prev) => ({ ...prev, token: newToken, login: false }));
   };
 
@@ -189,17 +200,25 @@ function StorePage() {
           return;
         }
         const artwork = selected.artwork || {};
-        ipcChannel.sendMessage('installGame', [
+        ipcChannel.sendMessage(installChannel, [
           data.url,
           selected.platform,
           selected.name,
           (artwork.titlescreen || [])[0],
           (artwork.screenshot || [])[0],
         ]);
-        ipcChannel.once('installGame', (response) => {
+        ipcChannel.once(installChannel, (response) => {
+          let installStatus = 'error';
+          if (response.ok) {
+            installStatus = 'installed';
+          }
+          if (response.missingRom) {
+            installStatus = '';
+          }
           setStatePage((prev) => ({
             ...prev,
-            status: response.ok ? 'installed' : 'error',
+            status: installStatus,
+            missingRom: response.missingRom,
             currentGameInstalled: response.ok,
             currentGameOwned: prev.currentGameOwned || (response.ok && !!token),
           }));
@@ -210,8 +229,8 @@ function StorePage() {
 
   const uninstallGame = (selected) => {
     setStatus('uninstalling');
-    ipcChannel.sendMessage('uninstallGame', [selected.platform, selected.name]);
-    ipcChannel.once('uninstallGame', (response) => {
+    ipcChannel.sendMessage(uninstallChannel, [selected.platform, selected.name]);
+    ipcChannel.once(uninstallChannel, (response) => {
       if (!response.ok) {
         setStatus('uninstallError');
         return;
@@ -235,8 +254,8 @@ function StorePage() {
       ratingStatus: '',
       commentStatus: '',
     });
-    ipcChannel.sendMessage('store-installed', [selected.platform, selected.name]);
-    ipcChannel.once('store-installed', (installed) => {
+    ipcChannel.sendMessage(`${site}-installed`, [selected.platform, selected.name]);
+    ipcChannel.once(`${site}-installed`, (installed) => {
       setStatePage((prev) => ({ ...prev, currentGameInstalled: installed }));
     });
     if (token) {
@@ -346,7 +365,7 @@ function StorePage() {
               installGame(game);
               return;
             }
-            window.open(`https://store.emudeck.com/?game=${game.id}`, '_blank');
+            window.open(`https://${site}.emudeck.com/?game=${game.id}`, '_blank');
           }}
           onClose={closeGame}
         />
@@ -374,6 +393,7 @@ function StorePage() {
       header: <span className="h4">{t('StorePage.login')}</span>,
       body: (
         <StoreLogin
+          api={api}
           onLogin={saveToken}
           onClose={() => setStatePage((prev) => ({ ...prev, login: false }))}
         />
@@ -382,6 +402,32 @@ function StorePage() {
       css: 'emumodal--xs',
     };
   }, [login]);
+
+  const missingRomModal = useMemo(() => {
+    if (!missingRom) {
+      return false;
+    }
+    return {
+      active: true,
+      header: <span className="h4">{t('StorePage.missingRomTitle')}</span>,
+      body: (
+        <p>
+          {t('StorePage.missingRom', { name: game.name, platform: game.platform })}
+        </p>
+      ),
+      footer: (
+        <BtnSimple
+          css="btn-simple--1"
+          type="button"
+          aria={t('general.close')}
+          onClick={() => setStatePage((prev) => ({ ...prev, missingRom: false }))}
+        >
+          {t('general.close')}
+        </BtnSimple>
+      ),
+      css: 'emumodal--xs',
+    };
+  }, [missingRom, game]);
 
   return (
     <div className={`app ${system}`}>
@@ -471,8 +517,13 @@ function StorePage() {
       </div>
       <EmuModal modal={modal} />
       <EmuModal modal={loginModal} />
+      <EmuModal modal={missingRomModal} />
     </div>
   );
 }
+
+StorePage.propTypes = {
+  site: PropTypes.string,
+};
 
 export default StorePage;

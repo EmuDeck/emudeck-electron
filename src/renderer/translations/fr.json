@@ -135,6 +135,9 @@
         "library": {
           "description": "Parcourez et lancez vos jeux"
         },
+        "remix": {
+          "description": "Textures HD, audio et traductions pour vos jeux"
+        },
         "srm": {
           "description": "Ajoutez des émulateurs, des outils ou des ROMs à votre bibliothèque Steam"
         },
@@ -218,6 +221,7 @@
         "configure": "Configurer",
         "update": "Mettre à jour",
         "getFreeGames": "Jeux gratuits",
+        "browsePacks": "Voir les packs",
         "launch": "Lancer",
         "addMoreGames": "Ajouter des jeux",
         "reinstall": "Réinstaller",
@@ -899,6 +903,9 @@
       "title": "Boutique EmuDeck",
       "tabsAria": "Onglets de la démo"
     },
+    "RemixPage": {
+      "title": "EmuDeck Remix"
+    },
     "LibraryPage": {
       "title": "Bibliothèque",
       "description": "Parcourez et lancez vos jeux",
@@ -940,6 +947,9 @@
       "uninstallError": "Le jeu n'a pas pu être désinstallé.",
       "by": "par {{name}}",
       "noDescription": "Aucune description disponible.",
+      "missingRomTitle": "ROM introuvable",
+      "missingRom": "Pour installer ce pack, il vous faut la ROM de {{name}} dans votre dossier Emulation/roms/{{platform}}. Ajoutez-la et réessayez.",
+      "instructions": "Instructions",
       "comments": "Commentaires",
       "noComments": "Pas encore de commentaires.",
       "rated": "Merci pour ta note !",

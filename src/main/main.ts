@@ -1497,6 +1497,50 @@ ipcMain.on('store-installed', (event, command) => {
   event.reply('store-installed', installed);
 });
 
+ipcMain.on('installRemix', async (event, command) => {
+  const backChannel = 'installRemix';
+  const [url, system, name] = command;
+  const { bashCommand, preCommand } = homebrewCommand(
+    'emuDeckInstallRemixPack',
+    [system, name, url],
+  );
+
+  return exec(preCommand, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, {
+      ok: !error && String(stdout).includes('true'),
+      missingRom: String(stdout).includes('missing-rom'),
+      error: error ? String(error.message) : null,
+    });
+  });
+});
+
+ipcMain.on('uninstallRemix', async (event, command) => {
+  const backChannel = 'uninstallRemix';
+  const [system, name] = command;
+  const { bashCommand, preCommand } = homebrewCommand(
+    'emuDeckUnInstallRemixPack',
+    [system, name],
+  );
+
+  return exec(preCommand, shellType, (error, stdout, stderr) => {
+    logCommand(bashCommand, error, stdout, stderr);
+    event.reply(backChannel, {
+      ok: !error && String(stdout).includes('true'),
+      error: error ? String(error.message) : null,
+    });
+  });
+});
+
+ipcMain.on('remix-installed', (event, command) => {
+  const [system, name] = command;
+  const { storagePath } = readBackendSettings();
+  const installed =
+    Boolean(storagePath) &&
+    fs.existsSync(`${storagePath}/remix/${system}/${name}.json`);
+  event.reply('remix-installed', installed);
+});
+
 // Dependencies checks
 
 ipcMain.on('validate-git', async (event) => {

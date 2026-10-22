@@ -135,6 +135,9 @@
         "library": {
           "description": "Browse and launch your games"
         },
+        "remix": {
+          "description": "HD textures, audio and translations for your games"
+        },
         "srm": {
           "description": "Add emulators, tools, or ROMs to your Steam Library"
         },
@@ -218,6 +221,7 @@
         "configure": "Configure",
         "update": "Update",
         "getFreeGames": "Get free games",
+        "browsePacks": "Browse packs",
         "launch": "Launch",
         "addMoreGames": "Add more games",
         "reinstall": "Reinstall",
@@ -899,6 +903,9 @@
       "title": "EmuDeck Store",
       "tabsAria": "Demo Tabs"
     },
+    "RemixPage": {
+      "title": "EmuDeck Remix"
+    },
     "LibraryPage": {
       "title": "Library",
       "description": "Browse and launch your games",
@@ -940,6 +947,9 @@
       "uninstallError": "The game couldn't be uninstalled.",
       "by": "by {{name}}",
       "noDescription": "No description available.",
+      "missingRomTitle": "ROM not found",
+      "missingRom": "To install this pack you need the {{name}} ROM in your Emulation/roms/{{platform}} folder. Add it and try again.",
+      "instructions": "Instructions",
       "comments": "Comments",
       "noComments": "No comments yet.",
       "rated": "Thanks for rating!",

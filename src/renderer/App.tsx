@@ -642,7 +642,12 @@ export default function App() {
           />
 
           <Route exact path="/confirmation" element={<ConfirmationPage />} />
-          <Route exact path="/store" element={<StorePage />} />
+          <Route exact path="/store" element={<StorePage key="store" />} />
+          <Route
+            exact
+            path="/remix"
+            element={<StorePage key="remix" site="remix" />}
+          />
           <Route exact path="/library" element={<LibraryPage />} />
           <Route exact path="/metro-cop" element={<MetroCopPage />} />
 
