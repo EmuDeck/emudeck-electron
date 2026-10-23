@@ -584,6 +584,7 @@ function EmulatorsDetailPage() {
               installFrontends: {
                 ...installFrontends,
                 [emulator]: {
+                  ...installFrontends[emulator],
                   id: emulator,
                   name: code,
                   status: true,
@@ -596,6 +597,7 @@ function EmulatorsDetailPage() {
               installEmus: {
                 ...installEmus,
                 [emulator]: {
+                  ...installEmus[emulator],
                   id: emulator,
                   name: code,
                   status: true,
@@ -685,6 +687,7 @@ function EmulatorsDetailPage() {
             installEmus: {
               ...installEmus,
               [emulator]: {
+                ...installEmus[emulator],
                 id: emulator,
                 name: code,
                 status: true,
@@ -825,6 +828,7 @@ function EmulatorsDetailPage() {
             [installGroup]: {
               ...state[installGroup],
               [emulator]: {
+                ...state[installGroup][emulator],
                 id: emulator,
                 name: code,
                 status: true,
@@ -944,6 +948,7 @@ function EmulatorsDetailPage() {
               installFrontends: {
                 ...installFrontends,
                 [emulator]: {
+                  ...installFrontends[emulator],
                   id: emulator,
                   name: code,
                   status: false,
@@ -956,6 +961,7 @@ function EmulatorsDetailPage() {
               installEmus: {
                 ...installEmus,
                 [emulator]: {
+                  ...installEmus[emulator],
                   id: emulator,
                   name: code,
                   status: false,

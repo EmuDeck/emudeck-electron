@@ -189,7 +189,11 @@ function CheckUpdatePage() {
             second:
               settingsStorage.second === true ||
               localStorage.getItem('install_finished') === 'true',
-            installEmus: { ...installEmus, ...installEmusStored },
+            installEmus: Object.fromEntries(
+              Object.entries({ ...installEmus, ...installEmusStored }).map(
+                ([id, emu]) => [id, { ...installEmus[id], ...emu }],
+              ),
+            ),
             overwriteConfigEmus: {
               ...overwriteConfigEmus,
               ...overwriteConfigEmusStored,

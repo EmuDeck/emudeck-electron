@@ -416,7 +416,7 @@ function ManageEmulatorsPage() {
                   return;
                 }
 
-                if (item.id === 'steam') {
+                if (item.id === 'steam' || item.id === 'library') {
                   return;
                 }
 
