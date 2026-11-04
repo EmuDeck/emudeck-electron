@@ -888,6 +888,44 @@ ipcMain.on('window-control', (event, args) => {
   }
 });
 
+// Installs the Flathub branch for the channel on the host and relaunches into it
+const switchFlatpakChannel = (event: any, channel: string) => {
+  const backChannel = 'update-channel-out';
+  const appId = process.env.FLATPAK_ID;
+  const branch = channel === 'beta' ? 'beta' : 'stable';
+  const remote = channel === 'beta' ? 'flathub-beta' : 'flathub';
+  const scope = fs
+    .readFileSync('/.flatpak-info', 'utf8')
+    .includes('app-path=/var/lib/flatpak')
+    ? '--system'
+    : '--user';
+  const flatpak = 'flatpak-spawn --host flatpak';
+
+  logCommand(`UPDATE CHANNEL: switching to ${appId}//${branch} (${scope})`);
+  event.reply(backChannel, ['checking', channel]);
+  exec(
+    [
+      `${flatpak} remote-add ${scope} --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo`,
+      `${flatpak} install ${scope} -y --noninteractive --or-update ${remote} ${appId}//${branch}`,
+      `${flatpak} make-current ${scope} ${appId} ${branch}`,
+    ].join(' && '),
+    (error, _stdout, stderr) => {
+      if (error) {
+        logCommand(`UPDATE CHANNEL: ERROR ${stderr || error.message}`);
+        event.reply(backChannel, ['error', stderr || error.message]);
+        return;
+      }
+      event.reply(backChannel, ['installing']);
+      spawn(
+        'flatpak-spawn',
+        ['--host', 'sh', '-c', `sleep 3; flatpak run ${appId}`],
+        { detached: true, stdio: 'ignore' },
+      ).unref();
+      app.quit();
+    },
+  );
+};
+
 // Release channel switcher
 ipcMain.on('update-channel', async (event, args) => {
   const RELEASE_CHANNELS: Record<string, string> = {
@@ -899,6 +937,11 @@ ipcMain.on('update-channel', async (event, args) => {
   const backChannel = 'update-channel-out';
   const [channel] = args;
   const repo = RELEASE_CHANNELS[channel];
+
+  if (process.env.FLATPAK_ID) {
+    switchFlatpakChannel(event, channel);
+    return;
+  }
 
   if (process.env.NODE_ENV === 'development' || !app.isPackaged) {
     logCommand(
