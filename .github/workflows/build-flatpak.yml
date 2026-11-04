@@ -1,0 +1,61 @@
+name: Build Flatpak
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: Release channel written to src/data/branch.json
+        type: choice
+        default: main
+        options:
+          - main
+          - beta
+          - early
+          - early-unstable
+          - dev
+
+permissions:
+  contents: write
+
+jobs:
+  flatpak:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-24.08
+      options: --privileged
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Set channel
+        if: inputs.channel != 'main'
+        run: sed -i "s|main|${{ inputs.channel }}|g" ./src/data/branch.json
+
+      - name: Build bundle
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          manifest-path: flatpak/com.emudeck.EmuDeck.local.yaml
+          bundle: EmuDeck.flatpak
+          cache-key: flatpak-builder-${{ hashFiles('flatpak/generated-sources.json') }}
+
+      - name: Publish pre-release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: flatpak-${{ inputs.channel }}-${{ github.run_number }}
+          name: Flatpak ${{ inputs.channel }} ${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          prerelease: true
+          make_latest: false
+          files: EmuDeck.flatpak
+          body: |
+            Flatpak test build (${{ inputs.channel }} channel, ${{ github.sha }}).
+
+            Install:
+              flatpak install --user ./EmuDeck.flatpak
+              flatpak run com.emudeck.EmuDeck
+
+            Uninstall:
+              flatpak uninstall --user com.emudeck.EmuDeck

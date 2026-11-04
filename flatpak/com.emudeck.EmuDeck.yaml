@@ -36,7 +36,7 @@ modules:
       append-path: /usr/lib/sdk/node22/bin
       env:
         npm_config_offline: "true"
-        npm_config_cache: /run/build/emudeck/npm-cache
+        npm_config_cache: /run/build/emudeck/flatpak-node/npm-cache
         XDG_CACHE_HOME: /run/build/emudeck/flatpak-node/cache
         electron_config_cache: /run/build/emudeck/flatpak-node/cache/electron
     build-commands:
@@ -53,12 +53,12 @@ modules:
     sources:
       - type: git
         url: https://github.com/EmuDeck/emudeck-electron.git
-        branch: feature/updating
-        commit: bf654f80435f0e0113e90548e89fb2313ca45516
+        branch: dev
+        commit: b596d8f4a4f1f8e448e2446c1e92bfcbb51f64b4
 
       - type: git
         url: https://github.com/EmuDeck/emudeck-gui-components.git
-        commit: 1a2b9e7f6a05f344dbd3147d547587c508951f5b
+        commit: 53dbeb0c2c525808e31821246a1a99cf01665799
         dest: src/renderer/components
 
       - generated-sources.json

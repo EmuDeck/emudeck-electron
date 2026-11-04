@@ -53,4 +53,8 @@ modules:
           - release/build
           - release/flatpak-build
           - flatpak/.flatpak-builder
+          - .flatpak-builder
+          - flatpak_app
+          - repo
+          - EmuDeck.flatpak
       - generated-sources.json
