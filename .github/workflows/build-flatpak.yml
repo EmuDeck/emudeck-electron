@@ -44,14 +44,15 @@ jobs:
       - name: Publish pre-release
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: flatpak-${{ inputs.channel }}-${{ github.run_number }}
-          name: Flatpak ${{ inputs.channel }} ${{ github.run_number }}
+          tag_name: flatpak-${{ inputs.channel }}
+          name: Flatpak ${{ inputs.channel }}
           target_commitish: ${{ github.sha }}
           prerelease: true
           make_latest: false
+          overwrite_files: true
           files: EmuDeck.flatpak
           body: |
-            Flatpak test build (${{ inputs.channel }} channel, ${{ github.sha }}).
+            Flatpak test build (${{ inputs.channel }} channel, ${{ github.sha }}, run ${{ github.run_number }}).
 
             Install:
               flatpak install --user ./EmuDeck.flatpak

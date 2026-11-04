@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Install EmuDeck Flatpak
+Exec=bash -c "curl -fL --progress-bar -o /tmp/EmuDeck.flatpak https://github.com/EmuDeck/emudeck-electron-early-unstable/releases/download/flatpak-early-unstable/EmuDeck.flatpak && flatpak install --user -y --reinstall /tmp/EmuDeck.flatpak && rm -f /tmp/EmuDeck.flatpak; echo; read -n 1 -s -r -p 'Press any key to close'"
+Icon=steamdeck-gaming-return
+Terminal=true
+Type=Application
+StartupNotify=false
