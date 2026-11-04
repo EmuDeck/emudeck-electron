@@ -229,6 +229,8 @@ require(${JSON.stringify(standalonePath)}).default
 const resolveBash = (): string | undefined => {
   if (os.platform() === 'win32') return undefined;
   if (os.platform() === 'darwin') return '/bin/bash';
+  // Flatpak: run the backend with the host bash (git, flatpak, python...)
+  if (process.env.FLATPAK_ID) return '/app/bin/host-bash';
 
   const candidates = ['/usr/bin/bash', '/bin/bash'];
 
@@ -1605,7 +1607,7 @@ ipcMain.on('validate-git', async (event) => {
   const backChannel = 'validate-git';
   const bashCommand = 'git -v';
   // eslint-disable-next-line
-  return exec(`${bashCommand}`, (error: any, stdout: any, stderr: any) => {
+  return exec(`${bashCommand}`, shellType, (error: any, stdout: any, stderr: any) => {
     logCommand(bashCommand, error, stdout, stderr);
 
     let status;

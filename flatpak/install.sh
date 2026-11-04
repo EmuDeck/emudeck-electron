@@ -17,3 +17,9 @@ cat > /app/bin/emudeck <<'EOF'
 exec zypak-wrapper /app/emudeck/node_modules/electron/dist/electron /app/emudeck/app "$@"
 EOF
 chmod +x /app/bin/emudeck
+
+cat > /app/bin/host-bash <<'EOF'
+#!/bin/sh
+exec flatpak-spawn --host bash "$@"
+EOF
+chmod +x /app/bin/host-bash
