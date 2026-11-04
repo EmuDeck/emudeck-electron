@@ -65,6 +65,7 @@ import ControllerLayoutPage from 'pages/ControllerLayoutPage';
 import ConfirmationPage from 'pages/ConfirmationPage';
 import StorePage from 'pages/StorePage';
 import LibraryPage from 'pages/LibraryPage';
+import PortsPage from 'pages/PortsPage';
 import MetroCopPage from 'pages/MetroCopPage';
 import EmulatorResolutionPage from 'pages/EmulatorResolutionPage';
 import EmulatorConfigResolutionPage from 'pages/EmulatorConfigResolutionPage';
@@ -474,6 +475,13 @@ export default function App() {
         name: 'Steam Library',
         desc: 'frontends.steam.desc',
       },
+      library: {
+        id: 'library',
+        status: false,
+        installed: undefined,
+        name: 'EmuDeck Library',
+        desc: 'frontends.library.desc',
+      },
     },
     emulatorAlternative: {
       gba: 'multiemulator',
@@ -649,6 +657,7 @@ export default function App() {
             element={<StorePage key="remix" site="remix" />}
           />
           <Route exact path="/library" element={<LibraryPage />} />
+          <Route exact path="/ports" element={<PortsPage />} />
           <Route exact path="/metro-cop" element={<MetroCopPage />} />
 
           <Route

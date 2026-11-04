@@ -804,6 +804,19 @@ ipcMain.on('rom-library-build', (event) => {
   });
 });
 
+// Reads the ports catalog shipped with the backend (store format)
+ipcMain.on('ports-json', (event) => {
+  const file = isWin32()
+    ? `${appDataPath}/backend/python/ports.json`
+    : `${os.homedir()}/.config/EmuDeck/backend/python/ports.json`;
+  try {
+    event.reply('ports-json', JSON.parse(fs.readFileSync(file, 'utf8')));
+  } catch (error) {
+    console.error(error);
+    event.reply('ports-json', []);
+  }
+});
+
 // Last status line the backend wrote while building (msg.log)
 ipcMain.on('rom-library-status', (event) => {
   const file = romLibraryMsgFile();

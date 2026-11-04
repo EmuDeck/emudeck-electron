@@ -215,6 +215,9 @@
         },
         "uninstall": {
           "description": "Deinstalliere EmuDeck von deinem System"
+        },
+        "ports": {
+          "description": "Native PC-Ports von Retro-Klassikern"
         }
       },
       "buttons": {
@@ -783,6 +786,7 @@
       "integrationTitle": "Wähle deinen Integrationsgrad",
       "integrationDescription": "EmuDeck kann sich auf unterschiedliche Weise in dein System integrieren",
       "low": "Niedrig",
+      "medium": "Mittel",
       "highest": "Maximal",
       "esde": {
         "description": "EmulationStation wird als Nicht-Steam-Spiel hinzugefügt, damit du alle deine Spiele aus einer einzigen App starten kannst",
@@ -796,6 +800,12 @@
         "feature1": "Spiele nahtlos in deine Steam-Bibliothek integriert",
         "feature2": "Kann deine Bibliothek überfüllen, wenn du viele Spiele hast",
         "feature3": "Der Desktop-Modus ist nötig, um weitere Spiele hinzuzufügen"
+      },
+      "library": {
+        "description": "Durchsuche und starte alle deine Spiele direkt in der EmuDeck-App, ohne zusätzliche Frontends oder Steam-Verknüpfungen",
+        "feature1": "Grafiken werden automatisch heruntergeladen",
+        "feature2": "Überfüllt deine Bibliothek nicht",
+        "feature3": "Spiele sind nicht in Steam integriert"
       }
     },
     "GameModePage": {
@@ -1328,6 +1338,16 @@
       "maximize": "Maximieren",
       "restore": "Wiederherstellen",
       "close": "Schließen"
+    },
+    "PortsPage": {
+      "title": "Ports",
+      "play": "Spielen",
+      "installing": "Wird installiert…",
+      "uninstalling": "Wird deinstalliert…",
+      "installError": "Installation fehlgeschlagen",
+      "uninstallError": "Deinstallation fehlgeschlagen",
+      "launchError": "Spiel konnte nicht gestartet werden",
+      "unavailable": "Auf deinem System noch nicht verfügbar"
     }
   }
 }

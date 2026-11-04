@@ -215,6 +215,9 @@
         },
         "uninstall": {
           "description": "Uninstall EmuDeck from your system"
+        },
+        "ports": {
+          "description": "Native PC ports of retro classics"
         }
       },
       "buttons": {
@@ -783,6 +786,7 @@
       "integrationTitle": "Pick your level of integration",
       "integrationDescription": "EmuDeck can integrate into your system in different levels",
       "low": "Low",
+      "medium": "Medium",
       "highest": "Highest",
       "esde": {
         "description": "EmulationStation will be added as a non Steam Game so you can launch all your games from one single app",
@@ -796,6 +800,12 @@
         "feature1": "Games tightly integrated with your Steam Library",
         "feature2": "Can clutter your library if you have a lot of games",
         "feature3": "Desktop mode needed to add more games"
+      },
+      "library": {
+        "description": "Browse and launch all your games from the EmuDeck app, without extra frontends or Steam shortcuts",
+        "feature1": "Artwork downloaded automatically",
+        "feature2": "Doesn't clutter your library",
+        "feature3": "Games not integrated with Steam"
       }
     },
     "GameModePage": {
@@ -1275,6 +1285,16 @@
       "maximize": "Maximize",
       "restore": "Restore",
       "close": "Close"
+    },
+    "PortsPage": {
+      "title": "Ports",
+      "play": "Play",
+      "installing": "Installing…",
+      "uninstalling": "Uninstalling…",
+      "installError": "Installation failed",
+      "uninstallError": "Uninstall failed",
+      "launchError": "Could not launch the game",
+      "unavailable": "Not available on your system yet"
     }
   }
 }
