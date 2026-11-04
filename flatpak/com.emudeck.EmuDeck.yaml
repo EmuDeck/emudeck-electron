@@ -1,15 +1,15 @@
 # How to test in linux:
-#   flatpak install -y flathub org.freedesktop.Sdk//24.08 org.freedesktop.Platform//24.08 \
-#       org.electronjs.Electron2.BaseApp//24.08 org.freedesktop.Sdk.Extension.node22//24.08
+#   flatpak install -y flathub org.freedesktop.Sdk//26.08 org.freedesktop.Platform//26.08 \
+#       org.electronjs.Electron2.BaseApp//26.08 org.freedesktop.Sdk.Extension.node22//26.08
 #   flatpak-builder --user --install --force-clean build-dir flatpak/com.emudeck.EmuDeck.yaml
 #   flatpak run com.emudeck.EmuDeck
 
 app-id: com.emudeck.EmuDeck
 runtime: org.freedesktop.Platform
-runtime-version: "24.08"
+runtime-version: "26.08"
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
-base-version: "24.08"
+base-version: "26.08"
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.node22
 command: emudeck
