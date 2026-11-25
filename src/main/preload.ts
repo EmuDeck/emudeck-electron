@@ -13,6 +13,8 @@ contextBridge.exposeInMainWorld('backend', {
 contextBridge.exposeInMainWorld('electron', {
   // Real OS platform ('darwin' | 'win32' | 'linux'), not affected by fakeOS
   platform: process.platform,
+  // Route requested on the original launch, if any.
+  startupRoute: ipcRenderer.sendSync('get-startup-route') as string,
   // Running inside a Flatpak sandbox (channels come from Flathub branches)
   isFlatpak: Boolean(process.env.FLATPAK_ID),
   ipcRenderer: {
