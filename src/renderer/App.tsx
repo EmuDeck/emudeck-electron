@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   useLocation,
+  useNavigate,
 } from 'react-router-dom';
 
 import CheckUpdatePage from 'pages/CheckUpdatePage';
@@ -95,6 +96,29 @@ function RouteClass() {
     document.body.dataset.route = name;
     return () => delete document.body.dataset.route;
   }, [location]);
+
+  return null;
+}
+
+function LaunchRouteHandler() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = window.electron?.ipcRenderer?.on(
+      'navigate-to-route',
+      (route) => {
+        if (
+          typeof route === 'string' &&
+          route.startsWith('/emulators-detail/')
+        ) {
+          navigate(route);
+        }
+      },
+    );
+    return () => {
+      if (typeof unsubscribe === 'function') unsubscribe();
+    };
+  }, [navigate]);
 
   return null;
 }
@@ -586,8 +610,9 @@ export default function App() {
 
   return (
     <GlobalContext.Provider value={contextValue}>
-      <Router>
+      <Router initialEntries={[window.electron?.startupRoute || '/']}>
         <RouteClass />
+        <LaunchRouteHandler />
         <Routes>
           <Route exact path="/" element={<PatroenLoginPage />} />
           <Route exact path="/error" element={<ErrorPage />} />

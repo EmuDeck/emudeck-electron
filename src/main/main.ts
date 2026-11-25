@@ -23,6 +23,8 @@ import { resolveHtmlPath } from './util';
 import fakeOSFile from '../data/local-fake-os.json';
 
 import branchFile from '../data/branch.json';
+// eslint-disable-next-line import/extensions
+import routeFromLaunchArgs from './launchRoute';
 
 const { fakeOS } = fakeOSFile;
 const { branch: branchOG } = branchFile;
@@ -104,6 +106,13 @@ fs.exists(`${appDataPath}/logs/emudeckApp.log`, (exists: any) => {
 
 // Vars and consts
 let mainWindow: BrowserWindow | null = null;
+
+const startupRoute = routeFromLaunchArgs(process.argv);
+
+ipcMain.on('get-startup-route', (event) => {
+  event.returnValue = startupRoute;
+});
+
 // Prevent two instances
 const gotTheLock = app.requestSingleInstanceLock();
 
@@ -1783,18 +1792,19 @@ ipcMain.on('run-app', async (event, appPath) => {
   });
 });
 
-const myWindow: any = null;
 // no second instances
 if (!gotTheLock) {
   app.quit();
 } else {
-  app.on('second-instance', () => {
-    // Print out data received from the second instance.
+  app.on('second-instance', (_event, commandLine) => {
+    // A second launch focuses the running window and can navigate it to an
+    // emulator page when the command line names one.
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
 
-    // Someone tried to run a second instance, we should focus our window.
-    if (myWindow) {
-      if (myWindow.isMinimized()) myWindow.restore();
-      myWindow.focus();
+      const route = routeFromLaunchArgs(commandLine);
+      if (route) mainWindow.webContents.send('navigate-to-route', route);
     }
   });
 

@@ -4,6 +4,7 @@ declare global {
   interface Window {
     electron: {
       platform: string;
+      startupRoute: string;
       ipcRenderer: {
         sendMessage(channel: Channels, args: unknown[]): void;
         on(
